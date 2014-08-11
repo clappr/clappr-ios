@@ -10,19 +10,18 @@
 Pod::Spec.new do |s|
   s.name             = "Clappr"
   s.version          = "0.1.0"
-  s.summary          = "A short description of Clappr."
+  s.summary          = "An extensible Media Player for iOS"
   s.description      = <<-DESC
                        An optional longer description of Clappr
 
                        * Markdown format.
                        * Don't worry about the indent, we strip it!
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/Clappr"
+  s.homepage         = "https://github.com/globocom/clappr-ios"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "thiagopnts" => "thiagopnts@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/Clappr.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "https://github.com/globocom/clappr-ios.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true

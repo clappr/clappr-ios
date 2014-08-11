@@ -1,0 +1,17 @@
+PODS:
+  - Clappr (0.1.0)
+  - Kiwi (2.3.0)
+
+DEPENDENCIES:
+  - Clappr (from `../`)
+  - Kiwi
+
+EXTERNAL SOURCES:
+  Clappr:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Clappr: cd5ef59ce2e0582bc2da8488fdbee2895467d145
+  Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
+
+COCOAPODS: 0.33.1

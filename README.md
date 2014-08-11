@@ -1,6 +1,5 @@
 # Clappr
 
-[![CI Status](http://img.shields.io/travis/thiagopnts/Clappr.svg?style=flat)](https://travis-ci.org/thiagopnts/Clappr)
 [![Version](https://img.shields.io/cocoapods/v/Clappr.svg?style=flat)](http://cocoadocs.org/docsets/Clappr)
 [![License](https://img.shields.io/cocoapods/l/Clappr.svg?style=flat)](http://cocoadocs.org/docsets/Clappr)
 [![Platform](https://img.shields.io/cocoapods/p/Clappr.svg?style=flat)](http://cocoadocs.org/docsets/Clappr)
