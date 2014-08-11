@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Clappr: cd5ef59ce2e0582bc2da8488fdbee2895467d145
+  Clappr: bff4e4c8c74d55d0b095562547a56b5ec69ad112
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
 
 COCOAPODS: 0.33.1

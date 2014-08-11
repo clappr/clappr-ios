@@ -7,12 +7,21 @@
 //
 
 #import "Player.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface Player ()
+{
+    AVPlayer* player;
+}
 
 @end
 
 @implementation Player
+
++ (Player*) newPlayerWithOptions: (NSDictionary*) options
+{
+    return [[Player alloc] initWithNibName:@"Player" bundle:nil];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,15 +44,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void) attachTo:(UIViewController *)controller atView:(UIView *)container
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [controller addChildViewController: self];
+    [container addSubview: self.view];
+    self.view.frame = container.bounds;
 }
-*/
+
+- (CMTime) duration
+{
+    return player.currentItem.duration;
+}
 
 @end

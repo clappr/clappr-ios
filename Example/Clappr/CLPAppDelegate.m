@@ -7,11 +7,13 @@
 //
 
 #import "CLPAppDelegate.h"
+#import "CLPViewController.h"
 
 @implementation CLPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    Player* p;
     // Override point for customization after application launch.
     return YES;
 }

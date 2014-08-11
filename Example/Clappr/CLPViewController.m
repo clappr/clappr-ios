@@ -10,6 +10,10 @@
 
 @interface CLPViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *playerContainer;
+
+@property (strong, nonatomic) Player* player;
+
 @end
 
 @implementation CLPViewController
@@ -17,7 +21,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    self.player = [Player newPlayerWithOptions:nil];
+    
+    [self.player attachTo:self atView:self.playerContainer];
 }
 
 - (void)didReceiveMemoryWarning
