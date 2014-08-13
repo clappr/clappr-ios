@@ -114,7 +114,6 @@
 
 - (IBAction) toggleMediaControl:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"%d", mediaControlIsHidden);
     if (mediaControlIsHidden) {
         [self showMediaControl];
     } else {
@@ -122,11 +121,16 @@
     }
 }
 
+- (IBAction) dragScrubber: (UIPanGestureRecognizer *) sender
+{
+    CGPoint translation = [sender locationInView: _seekBarContainer];
+    [self updatePositionBarConstraints: translation.x];
+}
+
 - (IBAction) seekTo:(UITapGestureRecognizer *) sender
 {
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGPoint position = [sender locationInView: _seekBarContainer];
-        NSLog(@"translating to: %@", NSStringFromCGPoint(position));
         [self updatePositionBarConstraints: position.x];
     }
 }

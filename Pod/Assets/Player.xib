@@ -89,12 +89,16 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="uDb-7w-G5b" secondAttribute="centerY" id="XLJ-AM-EQp"/>
                                                 <constraint firstAttribute="height" constant="40" id="gO1-j9-MyD"/>
                                                 <constraint firstAttribute="width" constant="40" id="meh-gR-tpI"/>
                                                 <constraint firstAttribute="centerX" secondItem="uDb-7w-G5b" secondAttribute="centerX" id="ub9-f2-wkr"/>
                                             </constraints>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="c8u-Fn-wlL" appends="YES" id="3bX-6X-3xQ"/>
+                                            </connections>
                                         </view>
                                     </subviews>
                                     <gestureRecognizers/>
@@ -152,15 +156,20 @@
                 <outletCollection property="gestureRecognizers" destination="t1W-k2-tTA" appends="YES" id="wyX-fb-4jK"/>
             </connections>
         </view>
-        <tapGestureRecognizer id="BOy-iq-lIY" userLabel="seekTo">
+        <tapGestureRecognizer id="BOy-iq-lIY" userLabel="Seek To">
             <connections>
                 <action selector="seekTo:" destination="-1" id="i8K-ep-NGz"/>
             </connections>
         </tapGestureRecognizer>
-        <tapGestureRecognizer id="t1W-k2-tTA">
+        <tapGestureRecognizer id="t1W-k2-tTA" userLabel="Toggle Media Control">
             <connections>
                 <action selector="toggleMediaControl:" destination="-1" id="1vx-l4-Knc"/>
             </connections>
         </tapGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="c8u-Fn-wlL" userLabel="Seek Bar Drag">
+            <connections>
+                <action selector="dragScrubber:" destination="-1" id="eiO-vu-09h"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>
