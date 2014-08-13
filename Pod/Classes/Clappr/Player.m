@@ -12,11 +12,18 @@
 @interface Player ()
 {
     AVPlayer* player;
+    BOOL mediaControlIsHidden;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *controlsOverlay;
 @property (weak, nonatomic) IBOutlet UIView *scrubber;
 @property (weak, nonatomic) IBOutlet UIView *scrubberCenter;
+@property (weak, nonatomic) IBOutlet UIView *seekBarContainer;
+@property (weak, nonatomic) IBOutlet UIView *mediaControl;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *positionBar;
+
+@property (unsafe_unretained, nonatomic) IBOutlet NSLayoutConstraint *positionBarConstraint;
 
 @end
 
@@ -31,7 +38,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        mediaControlIsHidden = false;
     }
 
     return self;
@@ -81,6 +88,47 @@
     [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:@{@"view": self.view}]];
 
     [container setNeedsLayout];
+}
+
+- (void) showMediaControl
+{
+    [UIView animateWithDuration: .3 animations: ^{
+        _mediaControl.alpha = 1.0;
+    }];
+    mediaControlIsHidden = false;
+}
+
+- (void) hideMediaControl
+{
+    [UIView animateWithDuration: .3 animations: ^{
+        _mediaControl.alpha = .0;
+    }];
+    mediaControlIsHidden = true;
+}
+
+- (void) updatePositionBarConstraints: (CGFloat) width
+{
+    _positionBarConstraint.constant = width;
+    [_seekBarContainer setNeedsLayout];
+}
+
+- (IBAction) toggleMediaControl:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"%d", mediaControlIsHidden);
+    if (mediaControlIsHidden) {
+        [self showMediaControl];
+    } else {
+        [self hideMediaControl];
+    }
+}
+
+- (IBAction) seekTo:(UITapGestureRecognizer *) sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint position = [sender locationInView: _seekBarContainer];
+        NSLog(@"translating to: %@", NSStringFromCGPoint(position));
+        [self updatePositionBarConstraints: position.x];
+    }
 }
 
 - (CMTime) duration

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Player">
             <connections>
                 <outlet property="controlsOverlay" destination="ps9-h5-7Kk" id="bVD-Ys-dEZ"/>
+                <outlet property="mediaControl" destination="xP5-UL-qkk" id="Wwm-SB-pK5"/>
+                <outlet property="positionBar" destination="82D-Bh-tQP" id="hrq-Wq-TZ3"/>
+                <outlet property="positionBarConstraint" destination="Rf3-6a-9h6" id="hEG-kw-3Ad"/>
                 <outlet property="scrubber" destination="uDb-7w-G5b" id="YfO-6l-R31"/>
                 <outlet property="scrubberCenter" destination="sIr-Lb-mYB" id="YPv-bL-lvp"/>
+                <outlet property="seekBarContainer" destination="Bq6-bd-EM2" id="dPn-US-9QN"/>
                 <outlet property="view" destination="iN0-l3-epB" id="X24-c7-MNK"/>
             </connections>
         </placeholder>
@@ -34,7 +38,7 @@
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
-                            <rect key="frame" x="0.0" y="512" width="320" height="75"/>
+                            <rect key="frame" x="0.0" y="493" width="320" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
@@ -93,10 +97,10 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="82D-Bh-tQP" secondAttribute="trailing" constant="-20" id="1eQ-Wc-2gx"/>
                                         <constraint firstAttribute="trailing" secondItem="6qg-xT-VwA" secondAttribute="trailing" id="3jE-Z5-Dqd"/>
-                                        <constraint firstAttribute="trailing" secondItem="82D-Bh-tQP" secondAttribute="trailing" constant="110" id="BXA-H4-Bf9"/>
                                         <constraint firstItem="82D-Bh-tQP" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="DEu-X1-8bi"/>
                                         <constraint firstAttribute="height" constant="30" id="JhM-HH-ieG"/>
                                         <constraint firstAttribute="centerY" secondItem="6qg-xT-VwA" secondAttribute="centerY" constant="1" id="RIL-M4-sHl"/>
@@ -104,6 +108,9 @@
                                         <constraint firstAttribute="centerY" secondItem="82D-Bh-tQP" secondAttribute="centerY" constant="1" id="ZyB-gE-sHm"/>
                                         <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
                                     </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="BOy-iq-lIY" appends="YES" id="grg-oi-NHW"/>
+                                    </connections>
                                 </view>
                             </subviews>
                             <constraints>
@@ -116,6 +123,7 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="ps9-h5-7Kk" secondAttribute="trailing" id="5Kb-ds-kPd"/>
                         <constraint firstItem="ps9-h5-7Kk" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="Kf1-ot-PBW"/>
@@ -125,12 +133,13 @@
                         <constraint firstItem="jOc-mD-vPk" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="e9Z-fr-MsR"/>
                         <constraint firstAttribute="bottom" secondItem="ps9-h5-7Kk" secondAttribute="bottom" id="eZj-G3-Y1v"/>
                         <constraint firstAttribute="trailing" secondItem="jOc-mD-vPk" secondAttribute="trailing" id="q3a-bU-Z3k"/>
-                        <constraint firstAttribute="bottom" secondItem="BHP-U1-oat" secondAttribute="bottom" constant="-19" id="tSM-cp-zZH"/>
+                        <constraint firstAttribute="bottom" secondItem="BHP-U1-oat" secondAttribute="bottom" id="tSM-cp-zZH"/>
                         <constraint firstItem="BHP-U1-oat" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="uef-w8-0hH"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="xP5-UL-qkk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dBJ-j1-Lql"/>
                 <constraint firstAttribute="bottom" secondItem="xP5-UL-qkk" secondAttribute="bottom" id="hXs-H0-O7R"/>
@@ -139,6 +148,19 @@
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="t1W-k2-tTA" appends="YES" id="wyX-fb-4jK"/>
+            </connections>
         </view>
+        <tapGestureRecognizer id="BOy-iq-lIY" userLabel="seekTo">
+            <connections>
+                <action selector="seekTo:" destination="-1" id="i8K-ep-NGz"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="t1W-k2-tTA">
+            <connections>
+                <action selector="toggleMediaControl:" destination="-1" id="1vx-l4-Knc"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>
