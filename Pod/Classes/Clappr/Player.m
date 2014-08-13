@@ -73,6 +73,7 @@
 {
     _scrubber.layer.cornerRadius = _scrubber.frame.size.width / 2;
     _scrubberCenter.layer.cornerRadius = _scrubberCenter.frame.size.width / 2;
+    _scrubber.layer.borderColor = [UIColor colorWithRed: 192 / 255.0f green: 192 / 255.0f blue: 192 / 255.0f alpha: 1].CGColor;
 }
 
 - (void) attachTo:(UIViewController *)controller atView:(UIView *)container
@@ -125,6 +126,20 @@
 {
     CGPoint translation = [sender locationInView: _seekBarContainer];
     [self updatePositionBarConstraints: translation.x];
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [UIView animateWithDuration: .3 animations: ^{
+            _scrubber.layer.borderWidth = 1.0f / 1.5;
+            _scrubber.transform = CGAffineTransformScale(_scrubber.transform, 1.5, 1.5);
+            _scrubberCenter.transform = CGAffineTransformScale(_scrubberCenter.transform, 0.5, 0.5);
+        }];
+    }
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [UIView animateWithDuration: .3 animations: ^{
+            _scrubber.layer.borderWidth = 0.0f;
+            _scrubber.transform = CGAffineTransformIdentity;
+            _scrubberCenter.transform = CGAffineTransformIdentity;
+        }];
+    }
 }
 
 - (IBAction) seekTo:(UITapGestureRecognizer *) sender
