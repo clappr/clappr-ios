@@ -9,7 +9,7 @@
 #import "Player.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface Player ()
+@interface Player () <UIGestureRecognizerDelegate>
 {
     AVPlayer* player;
     BOOL mediaControlIsHidden;
@@ -21,9 +21,12 @@
 @property (weak, nonatomic) IBOutlet UIView *seekBarContainer;
 @property (weak, nonatomic) IBOutlet UIView *mediaControl;
 
-@property (unsafe_unretained, nonatomic) IBOutlet UIView *positionBar;
+@property (weak, nonatomic) IBOutlet UIView *positionBar;
 
-@property (unsafe_unretained, nonatomic) IBOutlet NSLayoutConstraint *positionBarConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *positionBarConstraint;
+
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *seekBarTap;
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *seekBarDrag;
 
 @end
 
@@ -113,6 +116,32 @@
     [_seekBarContainer setNeedsLayout];
 }
 
+- (void) scaleUpScrubber
+{
+    [UIView animateWithDuration: .3 animations: ^{
+        _scrubber.transform = CGAffineTransformMakeScale(1.5, 1.5);
+        _scrubber.layer.borderWidth = 1.0f / 1.5;
+        _scrubberCenter.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    }];
+}
+
+- (void) undoScrubberTransform
+{
+    [UIView animateWithDuration: .3 animations: ^{
+        _scrubber.layer.borderWidth = 0.0f;
+        _scrubber.transform = CGAffineTransformIdentity;
+        _scrubberCenter.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self scaleUpScrubber];
+    });
+    return YES;
+}
+
 - (IBAction) toggleMediaControl:(UITapGestureRecognizer *)sender
 {
     if (mediaControlIsHidden) {
@@ -126,19 +155,8 @@
 {
     CGPoint translation = [sender locationInView: _seekBarContainer];
     [self updatePositionBarConstraints: translation.x];
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [UIView animateWithDuration: .3 animations: ^{
-            _scrubber.layer.borderWidth = 1.0f / 1.5;
-            _scrubber.transform = CGAffineTransformScale(_scrubber.transform, 1.5, 1.5);
-            _scrubberCenter.transform = CGAffineTransformScale(_scrubberCenter.transform, 0.5, 0.5);
-        }];
-    }
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration: .3 animations: ^{
-            _scrubber.layer.borderWidth = 0.0f;
-            _scrubber.transform = CGAffineTransformIdentity;
-            _scrubberCenter.transform = CGAffineTransformIdentity;
-        }];
+        [self undoScrubberTransform];
     }
 }
 
@@ -147,6 +165,7 @@
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGPoint position = [sender locationInView: _seekBarContainer];
         [self updatePositionBarConstraints: position.x];
+        [self undoScrubberTransform];
     }
 }
 
