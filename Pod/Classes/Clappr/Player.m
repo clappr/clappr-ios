@@ -51,6 +51,12 @@
     return self;
 }
 
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self syncScrubber];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,18 +68,34 @@
 
     [self setupScrubber];
 
-    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"http://be.voddownload.globoi.com/03/e5/67/3064640_67b70de3abaeb35768f98b0dd01339c294b13da1/3064640-web360.mp4"]];
-    [_playerView setPlayer: _player];
+    [self setupDuration];
+
+    __weak Player* weakSelf = self;
+
+    [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 1) queue: nil usingBlock: ^(CMTime time) {
+        [weakSelf.currentTimeLabel setText: [weakSelf getFormattedTime: time]];
+        [weakSelf syncScrubber];
+    }];
 }
 
 - (void) setupControlsOverlay
 {
-    CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = _controlsOverlay.bounds;
-    UIColor* startColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
-    UIColor* endColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    gradient.colors = [NSArray arrayWithObjects:(id) [endColor CGColor], [startColor CGColor], nil];
-    [_controlsOverlay.layer insertSublayer:gradient atIndex:0];
+    // This creates a gradient using the C API, so we don't need to update the gradient layer
+    // when rotating the device
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGFloat locations[2] = {0.0f, 1.0f};
+    CGFloat components[8] = {
+        0, 0, 0, 0,
+        0, 0, 0, 0.9
+    };
+    CGGradientRef result = CGGradientCreateWithColorComponents(colorSpace, components, locations, 2);
+    CGColorSpaceRelease(colorSpace);
+    UIGraphicsBeginImageContext(_controlsOverlay.frame.size);
+    CGContextDrawLinearGradient(UIGraphicsGetCurrentContext(), result, CGPointMake(0, 0), CGPointMake(0, _controlsOverlay.frame.size.height), 0);
+    UIImage* gradientTexture = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    _controlsOverlay.backgroundColor = [UIColor colorWithPatternImage:gradientTexture];
 }
 
 - (void) setupScrubber
@@ -110,6 +132,14 @@
     [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:@{@"view": self.view}]];
 
     [container setNeedsLayout];
+}
+
+- (void) syncScrubber
+{
+    CGFloat current = ((CGFloat) CMTimeGetSeconds(_player.currentTime)) / CMTimeGetSeconds(_player.currentItem.asset.duration);
+    if (isfinite(current) && current > 0) {
+        [self updatePositionBarConstraints: current * _seekBarContainer.frame.size.width];
+    }
 }
 
 - (void) showMediaControl

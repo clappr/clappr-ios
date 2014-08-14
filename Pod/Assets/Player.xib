@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xP5-UL-qkk" userLabel="Media Control">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xP5-UL-qkk" userLabel="Media Control">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOc-mD-vPk" userLabel="Background">
@@ -181,7 +181,7 @@
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="centerY" secondItem="0V7-z5-rdA" secondAttribute="centerY" id="39s-z0-GAQ"/>
-                        <constraint firstAttribute="trailing" secondItem="ps9-h5-7Kk" secondAttribute="trailing" id="5Kb-ds-kPd"/>
+                        <constraint firstAttribute="trailing" secondItem="ps9-h5-7Kk" secondAttribute="trailing" id="KUI-eR-07B"/>
                         <constraint firstItem="ps9-h5-7Kk" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="Kf1-ot-PBW"/>
                         <constraint firstAttribute="trailing" secondItem="BHP-U1-oat" secondAttribute="trailing" id="RTX-fW-fkX"/>
                         <constraint firstItem="jOc-mD-vPk" firstAttribute="top" secondItem="xP5-UL-qkk" secondAttribute="top" id="X3J-h1-hR8"/>
@@ -195,12 +195,13 @@
                     </constraints>
                 </view>
             </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="xP5-UL-qkk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dBJ-j1-Lql"/>
-                <constraint firstAttribute="bottom" secondItem="xP5-UL-qkk" secondAttribute="bottom" id="hXs-H0-O7R"/>
-                <constraint firstAttribute="trailing" secondItem="xP5-UL-qkk" secondAttribute="trailing" id="hpC-Ha-s8b"/>
-                <constraint firstItem="xP5-UL-qkk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="viZ-Tm-QCG"/>
+                <constraint firstItem="xP5-UL-qkk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ju1-tr-SIy"/>
+                <constraint firstAttribute="bottom" secondItem="xP5-UL-qkk" secondAttribute="bottom" id="PYW-2i-xvb"/>
+                <constraint firstAttribute="trailing" secondItem="xP5-UL-qkk" secondAttribute="trailing" id="YFC-du-IEe"/>
+                <constraint firstItem="xP5-UL-qkk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="het-dX-fhR"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
