@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIView *seekBarContainer;
 @property (weak, nonatomic) IBOutlet UIView *mediaControl;
 @property (weak, nonatomic) IBOutlet UIButton *playPause;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *positionBar;
 
@@ -53,6 +55,9 @@
 {
     [super viewDidLoad];
 
+    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"http://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4"]];
+    [_playerView setPlayer: _player];
+
     [self setupControlsOverlay];
 
     [self setupScrubber];
@@ -76,6 +81,20 @@
     _scrubber.layer.cornerRadius = _scrubber.frame.size.width / 2;
     _scrubberCenter.layer.cornerRadius = _scrubberCenter.frame.size.width / 2;
     _scrubber.layer.borderColor = [UIColor colorWithRed: 192 / 255.0f green: 192 / 255.0f blue: 192 / 255.0f alpha: 1].CGColor;
+}
+
+- (void) setupDuration
+{
+    [_durationLabel setText: [self getFormattedTime: _player.currentItem.asset.duration]];
+}
+
+- (NSString*) getFormattedTime: (CMTime) time
+{
+    //FIXME: there is a better way to do it, without `+(NSString*) stringWithFormat:`
+    NSUInteger totalSeconds = CMTimeGetSeconds(time);
+    NSUInteger minutes = floor(totalSeconds % 3600 / 60);
+    NSUInteger seconds = floor(totalSeconds % 3600 % 60);
+    return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long) minutes, (unsigned long) seconds];
 }
 
 - (void) attachTo:(UIViewController *)controller atView:(UIView *)container

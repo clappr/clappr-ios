@@ -7,6 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Player">
             <connections>
                 <outlet property="controlsOverlay" destination="ps9-h5-7Kk" id="bVD-Ys-dEZ"/>
+                <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="hYw-B0-jnV"/>
+                <outlet property="durationLabel" destination="RMN-tb-gu1" id="hMF-GF-1IM"/>
                 <outlet property="mediaControl" destination="xP5-UL-qkk" id="Wwm-SB-pK5"/>
                 <outlet property="playPause" destination="0V7-z5-rdA" id="APL-pK-cz4"/>
                 <outlet property="playerView" destination="iN0-l3-epB" id="Me4-I4-HcY"/>
@@ -58,16 +60,16 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
-                                            <rect key="frame" x="0.0" y="14" width="210" height="1"/>
+                                            <rect key="frame" x="0.0" y="14" width="0.0" height="1"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
-                                                <constraint firstAttribute="width" constant="210" id="Rf3-6a-9h6"/>
+                                                <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber Container">
-                                            <rect key="frame" x="190" y="-11" width="50" height="50"/>
+                                            <rect key="frame" x="-20" y="-11" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber">
@@ -120,12 +122,41 @@
                                         <outletCollection property="gestureRecognizers" destination="BOy-iq-lIY" appends="YES" id="grg-oi-NHW"/>
                                     </connections>
                                 </view>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
+                                    <rect key="frame" x="20" y="34" width="34" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.75294117647058822" green="0.75294117647058822" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
+                                    <rect key="frame" x="60" y="34" width="1" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="2Yo-lf-9fz"/>
+                                        <constraint firstAttribute="width" constant="1" id="xHp-SL-wLk"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
+                                    <rect key="frame" x="67" y="34" width="34" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="HM3-hd-Lp9" firstAttribute="top" secondItem="Bq6-bd-EM2" secondAttribute="bottom" constant="4" id="MBx-bu-ags"/>
+                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="23.5" id="Rct-RO-ltg"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
+                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" constant="-0.5" id="TZJ-Qh-97k"/>
                                 <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
+                                <constraint firstItem="RMN-tb-gu1" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="47" id="m7j-sE-cyH"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
+                                <constraint firstItem="HM3-hd-Lp9" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="20" id="pWM-Jo-oPz"/>
                                 <constraint firstAttribute="height" constant="75" id="pZ0-eY-Pwa"/>
+                                <constraint firstItem="RMN-tb-gu1" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" id="ua1-y2-dKS"/>
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
