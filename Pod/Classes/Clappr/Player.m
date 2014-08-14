@@ -7,11 +7,12 @@
 //
 
 #import "Player.h"
+
 #import <AVFoundation/AVFoundation.h>
+#import "PlayerView.h"
 
 @interface Player () <UIGestureRecognizerDelegate>
 {
-    AVPlayer* player;
     BOOL mediaControlIsHidden;
 }
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *scrubberCenter;
 @property (weak, nonatomic) IBOutlet UIView *seekBarContainer;
 @property (weak, nonatomic) IBOutlet UIView *mediaControl;
+@property (weak, nonatomic) IBOutlet UIButton *playPause;
 
 @property (weak, nonatomic) IBOutlet UIView *positionBar;
 
@@ -52,14 +54,11 @@
     [super viewDidLoad];
 
     [self setupControlsOverlay];
-    [self setupScrubber];
-    // Do any additional setup after loading the view.
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self setupScrubber];
+
+    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"http://be.voddownload.globoi.com/03/e5/67/3064640_67b70de3abaeb35768f98b0dd01339c294b13da1/3064640-web360.mp4"]];
+    [_playerView setPlayer: _player];
 }
 
 - (void) setupControlsOverlay
@@ -151,6 +150,15 @@
     }
 }
 
+- (IBAction)togglePlayPause:(id)sender {
+    if (_playPause.selected) {
+        [_player pause];
+    } else {
+        [_player play];
+    }
+    _playPause.selected = !_playPause.selected;
+}
+
 - (IBAction) dragScrubber: (UIPanGestureRecognizer *) sender
 {
     CGPoint translation = [sender locationInView: _seekBarContainer];
@@ -171,7 +179,7 @@
 
 - (CMTime) duration
 {
-    return player.currentItem.duration;
+    return _player.currentItem.duration;
 }
 
 @end

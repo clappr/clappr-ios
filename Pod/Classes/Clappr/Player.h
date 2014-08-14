@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class AVPlayer;
+@class PlayerView;
+
 @interface Player : UIViewController
+
+@property (nonatomic) AVPlayer* player;
+
+@property (weak, nonatomic) IBOutlet PlayerView* playerView;
 
 + (Player*) newPlayerWithOptions: (NSDictionary*) options;
 
