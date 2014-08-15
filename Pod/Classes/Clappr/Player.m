@@ -82,6 +82,19 @@
         [weakSelf.currentTimeLabel setText: [weakSelf getFormattedTime: time]];
         [weakSelf syncScrubber];
     }];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver: self
+        selector: @selector(videoEnded)
+        name: AVPlayerItemDidPlayToEndTimeNotification
+        object: _player.currentItem];
+}
+
+- (void) videoEnded
+{
+    [_player seekToTime: kCMTimeZero];
+    [self syncScrubber];
+    _playPause.selected = !_playPause.selected;
 }
 
 - (void) setupControlsOverlay
@@ -218,7 +231,7 @@
 
 - (CMTime) positionToTime: (CGPoint) position
 {
-    return CMTimeMakeWithSeconds(position.x * CMTimeGetSeconds(_player.currentItem.asset.duration)/_seekBarContainer.frame.size.width, 1);
+    return CMTimeMakeWithSeconds(position.x * CMTimeGetSeconds(_player.currentItem.asset.duration) / _seekBarContainer.frame.size.width, 1);
 }
 
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
