@@ -182,6 +182,11 @@
     }];
 }
 
+- (CMTime) positionToTime: (CGPoint) position
+{
+    return CMTimeMakeWithSeconds(position.x * CMTimeGetSeconds(_player.currentItem.asset.duration)/_seekBarContainer.frame.size.width, 1);
+}
+
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -221,14 +226,10 @@
 {
     if (sender.state == UIGestureRecognizerStateEnded) {
         CGPoint position = [sender locationInView: _seekBarContainer];
+        [_player seekToTime: [self positionToTime: position]];
         [self updatePositionBarConstraints: position.x];
         [self undoScrubberTransform];
     }
-}
-
-- (CMTime) duration
-{
-    return _player.currentItem.duration;
 }
 
 @end
