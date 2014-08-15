@@ -14,6 +14,7 @@
 @interface Player () <UIGestureRecognizerDelegate>
 {
     BOOL mediaControlIsHidden;
+    BOOL shouldUpdate;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *controlsOverlay;
@@ -45,7 +46,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        mediaControlIsHidden = false;
+        mediaControlIsHidden = NO;
+        shouldUpdate = YES;
     }
 
     return self;
@@ -137,7 +139,7 @@
 - (void) syncScrubber
 {
     CGFloat current = ((CGFloat) CMTimeGetSeconds(_player.currentTime)) / CMTimeGetSeconds(_player.currentItem.asset.duration);
-    if (isfinite(current) && current > 0) {
+    if (isfinite(current) && current > 0 && shouldUpdate) {
         [self updatePositionBarConstraints: current * _seekBarContainer.frame.size.width];
     }
 }
@@ -215,11 +217,13 @@
 
 - (IBAction) dragScrubber: (UIPanGestureRecognizer *) sender
 {
+    shouldUpdate = NO;
     CGPoint translation = [sender locationInView: _seekBarContainer];
     [self updatePositionBarConstraints: translation.x];
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self undoScrubberTransform];
         [_player seekToTime: [self positionToTime: translation]];
+        shouldUpdate = YES;
     }
 }
 
