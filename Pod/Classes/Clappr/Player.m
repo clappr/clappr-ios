@@ -10,6 +10,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerView.h"
+#import <CoreText/CoreText.h>
 
 @interface Player () <UIGestureRecognizerDelegate>
 {
@@ -48,6 +49,7 @@
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
+
     }
 
     return self;
@@ -71,6 +73,8 @@
     [self setupScrubber];
 
     [self setupDuration];
+
+    [self loadPlayerFont];
 
     __weak Player* weakSelf = self;
 
@@ -98,6 +102,34 @@
     UIGraphicsEndImageContext();
 
     _controlsOverlay.backgroundColor = [UIColor colorWithPatternImage:gradientTexture];
+}
+
+- (void) loadPlayerFont
+{
+
+    NSString* fontPath = [[NSBundle mainBundle] pathForResource: @"Player-Regular" ofType: @"ttf"];
+    NSData *data = [NSData dataWithContentsOfFile: fontPath];
+    CFErrorRef error;
+
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
+
+    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+        CFStringRef errorDescription = CFErrorCopyDescription(error);
+
+        NSLog(@"Failed to load font: %@", errorDescription);
+        CFRelease(errorDescription);
+    }
+
+    CFRelease(font);
+    CFRelease(provider);
+
+    NSString* fontName = (NSString*) CFBridgingRelease(CGFontCopyPostScriptName(font));
+
+    // FIXME: the font size should be proporcional to the player size.
+    _playPause.titleLabel.font = [UIFont fontWithName: fontName size: 150];
+    [_playPause setTitle: @"\ue001" forState: UIControlStateNormal];
+    [_playPause setTitle: @"\ue002" forState: UIControlStateSelected];
 }
 
 - (void) setupScrubber

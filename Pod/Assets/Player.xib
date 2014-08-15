@@ -160,18 +160,20 @@
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
                             <rect key="frame" x="110" y="234" width="100" height="100"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="100" id="gVx-m8-JNG"/>
                                 <constraint firstAttribute="height" constant="100" id="pQV-FA-C1B"/>
                             </constraints>
-                            <state key="normal" backgroundImage="01-play.png">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <state key="normal">
+                                <color key="titleColor" white="1" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" backgroundImage="02-pause.png">
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <state key="selected">
+                                <color key="titleColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="togglePlayPause:" destination="-1" eventType="touchUpInside" id="f9P-kg-kag"/>
@@ -226,8 +228,4 @@
             </connections>
         </panGestureRecognizer>
     </objects>
-    <resources>
-        <image name="01-play.png" width="83" height="100"/>
-        <image name="02-pause.png" width="75" height="75"/>
-    </resources>
 </document>

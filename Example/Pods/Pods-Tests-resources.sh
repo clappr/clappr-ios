@@ -41,18 +41,7 @@ install_resource()
       ;;
   esac
 }
-install_resource "../../Pod/Assets/01-play.png"
-install_resource "../../Pod/Assets/02-pause.png"
-install_resource "../../Pod/Assets/03-stop.png"
-install_resource "../../Pod/Assets/04-volume.png"
-install_resource "../../Pod/Assets/05-mute.png"
-install_resource "../../Pod/Assets/06-expand.png"
-install_resource "../../Pod/Assets/07-hd.png"
-install_resource "../../Pod/Assets/08-elipse.png"
-install_resource "../../Pod/Assets/09-settings.png"
-install_resource "../../Pod/Assets/10-arrow_down.png"
-install_resource "../../Pod/Assets/11-arrow_up.png"
-install_resource "../../Pod/Assets/12-multicamera.png"
+install_resource "../../Pod/Assets/Player-Regular.ttf"
 install_resource "../../Pod/Assets/Player.xib"
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
