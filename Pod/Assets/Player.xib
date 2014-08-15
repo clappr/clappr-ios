@@ -43,8 +43,8 @@
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
-                            <rect key="frame" x="0.0" y="493" width="320" height="75"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
+                            <rect key="frame" x="1" y="493" width="320" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
@@ -130,7 +130,7 @@
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
-                                    <rect key="frame" x="60" y="34" width="1" height="20"/>
+                                    <rect key="frame" x="67" y="34" width="1" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <constraints>
@@ -139,7 +139,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
-                                    <rect key="frame" x="67" y="34" width="34" height="21"/>
+                                    <rect key="frame" x="76" y="34" width="34" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
@@ -148,11 +148,11 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="HM3-hd-Lp9" firstAttribute="top" secondItem="Bq6-bd-EM2" secondAttribute="bottom" constant="4" id="MBx-bu-ags"/>
-                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="23.5" id="Rct-RO-ltg"/>
+                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="30" id="Rct-RO-ltg"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
                                 <constraint firstItem="DmN-Rl-de9" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" constant="-0.5" id="TZJ-Qh-97k"/>
+                                <constraint firstItem="RMN-tb-gu1" firstAttribute="leading" secondItem="DmN-Rl-de9" secondAttribute="trailing" constant="8" id="cfE-ul-KAQ"/>
                                 <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
-                                <constraint firstItem="RMN-tb-gu1" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="47" id="m7j-sE-cyH"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
                                 <constraint firstItem="HM3-hd-Lp9" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="20" id="pWM-Jo-oPz"/>
                                 <constraint firstAttribute="height" constant="75" id="pZ0-eY-Pwa"/>
