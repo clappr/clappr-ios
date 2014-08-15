@@ -219,6 +219,7 @@
     [self updatePositionBarConstraints: translation.x];
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self undoScrubberTransform];
+        [_player seekToTime: [self positionToTime: translation]];
     }
 }
 
