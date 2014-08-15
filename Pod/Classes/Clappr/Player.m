@@ -78,7 +78,7 @@
 
     __weak Player* weakSelf = self;
 
-    [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 1) queue: nil usingBlock: ^(CMTime time) {
+    [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 3) queue: nil usingBlock: ^(CMTime time) {
         [weakSelf.currentTimeLabel setText: [weakSelf getFormattedTime: time]];
         [weakSelf syncScrubber];
     }];
