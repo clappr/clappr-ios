@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *playPause;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *fullscreenButton;
 
 @property (weak, nonatomic) IBOutlet UIView *positionBar;
 
@@ -143,6 +144,11 @@
     _playPause.titleLabel.font = [UIFont fontWithName: fontName size: 150];
     [_playPause setTitle: @"\ue001" forState: UIControlStateNormal];
     [_playPause setTitle: @"\ue002" forState: UIControlStateSelected];
+
+    _fullscreenButton.titleLabel.font = [UIFont fontWithName: fontName size: 30];
+
+    [_fullscreenButton setTitle: @"\ue006" forState: UIControlStateNormal];
+    [_fullscreenButton setTitle: @"\ue006" forState: UIControlStateSelected];
 }
 
 - (void) setupScrubber
@@ -280,6 +286,10 @@
         [self updatePositionBarConstraints: position.x];
         [self undoScrubberTransform];
     }
+}
+
+- (IBAction)fullscreen:(id)sender {
+    _fullscreenButton.selected = !_fullscreenButton.selected;
 }
 
 @end

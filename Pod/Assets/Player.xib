@@ -9,6 +9,7 @@
                 <outlet property="controlsOverlay" destination="ps9-h5-7Kk" id="bVD-Ys-dEZ"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="hYw-B0-jnV"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="hMF-GF-1IM"/>
+                <outlet property="fullscreenButton" destination="MQR-kY-jUF" id="NRz-ce-OKP"/>
                 <outlet property="mediaControl" destination="xP5-UL-qkk" id="Wwm-SB-pK5"/>
                 <outlet property="playPause" destination="0V7-z5-rdA" id="APL-pK-cz4"/>
                 <outlet property="playerView" destination="iN0-l3-epB" id="Me4-I4-HcY"/>
@@ -43,8 +44,8 @@
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
-                            <rect key="frame" x="1" y="493" width="320" height="75"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
+                            <rect key="frame" x="0.0" y="493" width="320" height="75"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
@@ -130,7 +131,7 @@
                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
-                                    <rect key="frame" x="67" y="34" width="1" height="20"/>
+                                    <rect key="frame" x="67" y="36" width="1" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <constraints>
@@ -145,18 +146,52 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-ku-Aso" userLabel="Fullscreen Container">
+                                    <rect key="frame" x="250" y="20" width="70" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQR-kY-jUF" userLabel="Fullscreen">
+                                            <rect key="frame" x="19" y="9" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="2vl-mS-nbs"/>
+                                                <constraint firstAttribute="width" constant="30" id="7Zn-5h-Ac9"/>
+                                            </constraints>
+                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <state key="normal">
+                                                <color key="titleColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="selected">
+                                                <color key="titleColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="BtG-Xa-rmm"/>
+                                        <constraint firstAttribute="height" constant="50" id="aPD-j3-ejt"/>
+                                        <constraint firstAttribute="centerX" secondItem="MQR-kY-jUF" secondAttribute="centerX" constant="1" id="gYX-vI-OzZ"/>
+                                        <constraint firstAttribute="centerY" secondItem="MQR-kY-jUF" secondAttribute="centerY" constant="1" id="jfi-5P-6zw"/>
+                                    </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="gQ0-6C-NEK" appends="YES" id="mde-Mh-6Vp"/>
+                                    </connections>
+                                </view>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="HM3-hd-Lp9" firstAttribute="top" secondItem="Bq6-bd-EM2" secondAttribute="bottom" constant="4" id="MBx-bu-ags"/>
+                                <constraint firstItem="4CD-ku-Aso" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" constant="1" id="RX6-eW-AaK"/>
                                 <constraint firstItem="DmN-Rl-de9" firstAttribute="centerX" secondItem="HM3-hd-Lp9" secondAttribute="centerX" constant="30" id="Rct-RO-ltg"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
-                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" constant="-0.5" id="TZJ-Qh-97k"/>
+                                <constraint firstItem="DmN-Rl-de9" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" constant="1" id="TZJ-Qh-97k"/>
                                 <constraint firstItem="RMN-tb-gu1" firstAttribute="leading" secondItem="DmN-Rl-de9" secondAttribute="trailing" constant="8" id="cfE-ul-KAQ"/>
                                 <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
                                 <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
                                 <constraint firstItem="HM3-hd-Lp9" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="20" id="pWM-Jo-oPz"/>
                                 <constraint firstAttribute="height" constant="75" id="pZ0-eY-Pwa"/>
                                 <constraint firstItem="RMN-tb-gu1" firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" id="ua1-y2-dKS"/>
+                                <constraint firstAttribute="trailing" secondItem="4CD-ku-Aso" secondAttribute="trailing" id="xKB-1a-QLQ"/>
                             </constraints>
                             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                         </view>
@@ -227,5 +262,10 @@
                 <outlet property="delegate" destination="-1" id="8Kn-bP-NW4"/>
             </connections>
         </panGestureRecognizer>
+        <tapGestureRecognizer id="gQ0-6C-NEK" userLabel="Fullscreen">
+            <connections>
+                <action selector="fullscreen:" destination="-1" id="dLs-6j-APO"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>
