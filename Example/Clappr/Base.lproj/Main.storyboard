@@ -17,14 +17,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-yT-kzS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fSg-yT-kzS" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-20" id="3u7-sH-Heg"/>
                             <constraint firstItem="fSg-yT-kzS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Rob-kS-Gp5"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fSg-yT-kzS" secondAttribute="bottom" id="dzV-uX-LRS"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fSg-yT-kzS" secondAttribute="bottom" constant="318" id="dzV-uX-LRS"/>
                             <constraint firstAttribute="trailing" secondItem="fSg-yT-kzS" secondAttribute="trailing" id="pUX-iD-5bP"/>
                         </constraints>
                     </view>
