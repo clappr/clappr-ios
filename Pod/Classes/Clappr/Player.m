@@ -16,6 +16,11 @@
 {
     BOOL mediaControlIsHidden;
     BOOL shouldUpdate;
+    UIWindow* fullscreenWindow;
+    UIWindow* appMainWindow;
+    UIView* innerContainer;
+    UIViewController* parentController;
+    UIView* parentView;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *controlsOverlay;
@@ -50,7 +55,10 @@
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
-
+        fullscreenWindow = [[UIWindow alloc]
+                            initWithFrame: CGRectMake(0, 0,
+                                               [[UIScreen mainScreen] applicationFrame].size.width,
+                                               [[UIScreen mainScreen] applicationFrame].size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
     }
 
     return self;
@@ -174,6 +182,9 @@
 
 - (void) attachTo:(UIViewController *)controller atView:(UIView *)container
 {
+    parentView = container;
+    parentController = controller;
+    appMainWindow = [[UIApplication sharedApplication] keyWindow];
     [controller addChildViewController:self];
     [container addSubview:self.view];
 
@@ -185,6 +196,9 @@
     [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:@{@"view": self.view}]];
 
     [container setNeedsLayout];
+
+    innerContainer = [[UIView alloc] initWithFrame: self.view.superview.bounds];
+    innerContainer.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void) syncScrubber
@@ -288,7 +302,44 @@
     }
 }
 
-- (IBAction)fullscreen:(id)sender {
+- (void) enterFullscreen
+{
+    [fullscreenWindow makeKeyAndVisible];
+    [self removeFromParentViewController];
+    [self.view removeFromSuperview];
+
+    [fullscreenWindow addSubview: innerContainer];
+    [innerContainer addSubview: self.view];
+
+    [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
+    [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
+
+    [UIView animateWithDuration:.2 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
+        [fullscreenWindow addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
+        [fullscreenWindow addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
+        [fullscreenWindow layoutIfNeeded];
+    } completion:nil];
+}
+
+- (void) exitFullscreen
+{
+    [appMainWindow makeKeyAndVisible];
+    [UIView animateWithDuration:.3 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
+        [fullscreenWindow removeConstraints: fullscreenWindow.constraints];
+        [fullscreenWindow layoutIfNeeded];
+        [innerContainer removeConstraints: innerContainer.constraints];
+        fullscreenWindow.hidden = YES;
+    } completion:nil];
+    [self.view removeFromSuperview];
+    [self attachTo: parentController atView: parentView];
+}
+
+- (IBAction)toggleFullscreen:(id)sender {
+    if (_fullscreenButton.selected) {
+        [self exitFullscreen];
+    } else {
+        [self enterFullscreen];
+    }
     _fullscreenButton.selected = !_fullscreenButton.selected;
 }
 
