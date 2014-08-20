@@ -16,7 +16,7 @@
 {
     BOOL mediaControlIsHidden;
     BOOL shouldUpdate;
-    UIWindow* fullscreenWindow;
+    UIView* fullscreenWindow;
     UIWindow* appMainWindow;
     UIView* innerContainer;
     UIViewController* parentController;
@@ -55,7 +55,7 @@
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
-        fullscreenWindow = [[UIWindow alloc]
+        fullscreenWindow = [[UIView alloc]
                             initWithFrame: CGRectMake(0, 0,
                                                [[UIScreen mainScreen] applicationFrame].size.width,
                                                [[UIScreen mainScreen] applicationFrame].size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
@@ -190,6 +190,7 @@
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     container.translatesAutoresizingMaskIntoConstraints = NO;
+    appMainWindow.translatesAutoresizingMaskIntoConstraints = NO;
 
     [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[view]|" options:0 metrics:nil views:@{@"view": self.view}]];
 
@@ -199,6 +200,8 @@
 
     innerContainer = [[UIView alloc] initWithFrame: self.view.superview.bounds];
     innerContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:[view(250)]" options:0 metrics:nil views: @{@"view": innerContainer}]];
+    [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"[view(320)]" options:0 metrics:nil views:@{@"view": innerContainer}]];
 }
 
 - (void) syncScrubber
@@ -304,13 +307,14 @@
 
 - (void) enterFullscreen
 {
-    [fullscreenWindow makeKeyAndVisible];
-    [self removeFromParentViewController];
-    [self.view removeFromSuperview];
-
+    fullscreenWindow.backgroundColor = [UIColor redColor];
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview: fullscreenWindow];
     [fullscreenWindow addSubview: innerContainer];
+    innerContainer.backgroundColor = [UIColor purpleColor];
     [innerContainer addSubview: self.view];
 
+    [innerContainer removeConstraints: innerContainer.constraints];
     [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
     [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
 
@@ -321,17 +325,19 @@
     } completion:nil];
 }
 
+- (BOOL) prefersStatusBarHidden
+{
+    return YES;
+}
+
 - (void) exitFullscreen
 {
-    [appMainWindow makeKeyAndVisible];
     [UIView animateWithDuration:.3 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
         [fullscreenWindow removeConstraints: fullscreenWindow.constraints];
         [fullscreenWindow layoutIfNeeded];
         [innerContainer removeConstraints: innerContainer.constraints];
         fullscreenWindow.hidden = YES;
     } completion:nil];
-    [self.view removeFromSuperview];
-    [self attachTo: parentController atView: parentView];
 }
 
 - (IBAction)toggleFullscreen:(id)sender {
