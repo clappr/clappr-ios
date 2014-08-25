@@ -183,13 +183,11 @@
 {
     parentView = container;
     parentController = controller;
-    appMainWindow = [[UIApplication sharedApplication] keyWindow];
     [controller addChildViewController:self];
     [container addSubview:self.view];
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     container.translatesAutoresizingMaskIntoConstraints = NO;
-    appMainWindow.translatesAutoresizingMaskIntoConstraints = NO;
 
     [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[view]|" options:0 metrics:nil views:@{@"view": self.view}]];
 
