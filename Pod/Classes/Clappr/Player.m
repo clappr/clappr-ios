@@ -332,11 +332,13 @@
 
 - (void) exitFullscreen
 {
+    [parentView addSubview: self.view];
+    [innerContainer removeFromSuperview];
+    [fullscreenWindow removeFromSuperview];
     [UIView animateWithDuration:.3 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
-        [fullscreenWindow removeConstraints: fullscreenWindow.constraints];
-        [fullscreenWindow layoutIfNeeded];
-        [innerContainer removeConstraints: innerContainer.constraints];
-        fullscreenWindow.hidden = YES;
+        [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
+        [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
+        [parentView layoutIfNeeded];
     } completion:nil];
 }
 
