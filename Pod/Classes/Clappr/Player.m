@@ -16,8 +16,7 @@
 {
     BOOL mediaControlIsHidden;
     BOOL shouldUpdate;
-    UIView* fullscreenWindow;
-    UIWindow* appMainWindow;
+    UIView* fullscreenView;
     UIView* innerContainer;
     UIViewController* parentController;
     UIView* parentView;
@@ -55,7 +54,7 @@
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
-        fullscreenWindow = [[UIView alloc]
+        fullscreenView = [[UIView alloc]
                             initWithFrame: CGRectMake(0, 0,
                                                [[UIScreen mainScreen] applicationFrame].size.width,
                                                [[UIScreen mainScreen] applicationFrame].size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
@@ -307,10 +306,10 @@
 
 - (void) enterFullscreen
 {
-    fullscreenWindow.backgroundColor = [UIColor redColor];
+    fullscreenView.backgroundColor = [UIColor redColor];
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
-    [window addSubview: fullscreenWindow];
-    [fullscreenWindow addSubview: innerContainer];
+    [window addSubview: fullscreenView];
+    [fullscreenView addSubview: innerContainer];
     innerContainer.backgroundColor = [UIColor purpleColor];
     [innerContainer addSubview: self.view];
 
@@ -319,9 +318,9 @@
     [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
 
     [UIView animateWithDuration:.2 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
-        [fullscreenWindow addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
-        [fullscreenWindow addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
-        [fullscreenWindow layoutIfNeeded];
+        [fullscreenView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
+        [fullscreenView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
+        [fullscreenView layoutIfNeeded];
     } completion:nil];
 }
 
@@ -334,7 +333,7 @@
 {
     [parentView addSubview: self.view];
     [innerContainer removeFromSuperview];
-    [fullscreenWindow removeFromSuperview];
+    [fullscreenView removeFromSuperview];
     [UIView animateWithDuration:.3 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
         [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
         [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
