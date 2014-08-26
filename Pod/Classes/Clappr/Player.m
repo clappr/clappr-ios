@@ -350,11 +350,6 @@
     } completion:nil];
 }
 
-- (BOOL) prefersStatusBarHidden
-{
-    return YES;
-}
-
 - (void) exitFullscreen
 {
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
