@@ -19,10 +19,11 @@
     BOOL shouldUpdate;
     UIView* fullscreenView;
     UIView* innerContainer;
+    UIView* parentView;
     UIWindow* appWindow;
     UIViewController* parentController;
     FullscreenViewController* fullscreenController;
-    UIView* parentView;
+    NSTimer* mediaControlTimer;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *controlsOverlay;
@@ -99,6 +100,20 @@
         selector: @selector(videoEnded)
         name: AVPlayerItemDidPlayToEndTimeNotification
         object: _player.currentItem];
+}
+
+- (void) startMediaControlTimer
+{
+    [self stopMediaControlTimer];
+    mediaControlTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(hideMediaControl) userInfo:nil repeats:NO];
+}
+
+- (void) stopMediaControlTimer
+{
+    if (mediaControlTimer && [mediaControlTimer isValid]) {
+        [mediaControlTimer invalidate];
+        mediaControlTimer = nil;
+    }
 }
 
 - (void) videoEnded
@@ -217,15 +232,18 @@
     [UIView animateWithDuration: .3 animations: ^{
         _mediaControl.alpha = 1.0;
     }];
+    [self startMediaControlTimer];
     mediaControlIsHidden = false;
 }
 
 - (void) hideMediaControl
 {
-    [UIView animateWithDuration: .3 animations: ^{
-        _mediaControl.alpha = .0;
-    }];
-    mediaControlIsHidden = true;
+    if (shouldUpdate) {
+        [UIView animateWithDuration: .3 animations: ^{
+            _mediaControl.alpha = .0;
+        }];
+        mediaControlIsHidden = true;
+    }
 }
 
 - (void) updatePositionBarConstraints: (CGFloat) width
@@ -277,8 +295,10 @@
 - (IBAction)togglePlayPause:(id)sender {
     if (_playPause.selected) {
         [_player pause];
+        [self stopMediaControlTimer];
     } else {
         [_player play];
+        [self startMediaControlTimer];
     }
     _playPause.selected = !_playPause.selected;
 }
@@ -292,6 +312,7 @@
         [self undoScrubberTransform];
         [_player seekToTime: [self positionToTime: translation]];
         shouldUpdate = YES;
+        [self startMediaControlTimer];
     }
 }
 
