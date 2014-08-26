@@ -9,8 +9,9 @@
 #import "Player.h"
 
 #import <AVFoundation/AVFoundation.h>
-#import "PlayerView.h"
 #import <CoreText/CoreText.h>
+#import "PlayerView.h"
+#import "FullscreenViewController.h"
 
 @interface Player () <UIGestureRecognizerDelegate>
 {
@@ -18,7 +19,9 @@
     BOOL shouldUpdate;
     UIView* fullscreenView;
     UIView* innerContainer;
+    UIWindow* appWindow;
     UIViewController* parentController;
+    FullscreenViewController* fullscreenController;
     UIView* parentView;
 }
 
@@ -54,10 +57,9 @@
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
-        fullscreenView = [[UIView alloc]
-                            initWithFrame: CGRectMake(0, 0,
-                                               [[UIScreen mainScreen] applicationFrame].size.width,
-                                               [[UIScreen mainScreen] applicationFrame].size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
+        appWindow = [UIApplication sharedApplication].keyWindow;
+        fullscreenController = [[FullscreenViewController alloc] init];
+        fullscreenView = fullscreenController.view;
     }
 
     return self;
@@ -69,11 +71,12 @@
     [self syncScrubber];
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"http://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4"]];
+    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"https://googledrive.com/host/0B9wX51CJ98nndHdOdmR6eWpWdkk/surf.mp4"]];
     [_playerView setPlayer: _player];
 
     [self setupControlsOverlay];
@@ -185,7 +188,7 @@
     parentController = controller;
     [controller addChildViewController:self];
     [container addSubview:self.view];
-
+    
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     container.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -304,11 +307,15 @@
 
 - (void) enterFullscreen
 {
-    fullscreenView.backgroundColor = [UIColor redColor];
+    [self removeFromParentViewController];
+
     UIWindow* window = [UIApplication sharedApplication].keyWindow;
+
+    window.rootViewController = fullscreenController;
     [window addSubview: fullscreenView];
+
     [fullscreenView addSubview: innerContainer];
-    innerContainer.backgroundColor = [UIColor purpleColor];
+
     [innerContainer addSubview: self.view];
 
     [innerContainer removeConstraints: innerContainer.constraints];
@@ -329,6 +336,10 @@
 
 - (void) exitFullscreen
 {
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    window.rootViewController = parentController;
+    [parentController addChildViewController: self];
+
     [parentView addSubview: self.view];
     [innerContainer removeFromSuperview];
     [fullscreenView removeFromSuperview];
