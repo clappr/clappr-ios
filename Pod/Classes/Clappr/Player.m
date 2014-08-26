@@ -222,7 +222,7 @@
 - (void) syncScrubber
 {
     CGFloat current = ((CGFloat) CMTimeGetSeconds(_player.currentTime)) / CMTimeGetSeconds(_player.currentItem.asset.duration);
-    if (isfinite(current) && current > 0 && shouldUpdate) {
+    if (isfinite(current) && current >= 0 && shouldUpdate) {
         [self updatePositionBarConstraints: current * _seekBarContainer.frame.size.width];
     }
 }
