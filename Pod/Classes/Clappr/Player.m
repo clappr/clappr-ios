@@ -350,6 +350,15 @@
     } completion:nil];
 }
 
+- (IBAction)cancelMediaControlHide:(UILongPressGestureRecognizer *)sender
+{
+    [self stopMediaControlTimer];
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [self undoScrubberTransform];
+        [self startMediaControlTimer];
+    }
+}
+
 - (void) exitFullscreen
 {
     UIWindow* window = [UIApplication sharedApplication].keyWindow;

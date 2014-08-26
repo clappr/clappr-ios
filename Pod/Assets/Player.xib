@@ -105,6 +105,7 @@
                                             </constraints>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="c8u-Fn-wlL" appends="YES" id="3bX-6X-3xQ"/>
+                                                <outletCollection property="gestureRecognizers" destination="QLO-67-VVi" appends="YES" id="Ryd-kV-NSL"/>
                                             </connections>
                                         </view>
                                     </subviews>
@@ -267,5 +268,10 @@
                 <action selector="toggleFullscreen:" destination="-1" id="SPf-81-In5"/>
             </connections>
         </tapGestureRecognizer>
+        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="QLO-67-VVi" userLabel="Long Press Scrubber">
+            <connections>
+                <action selector="cancelMediaControlHide:" destination="-1" id="eWO-ss-RXq"/>
+            </connections>
+        </pongPressGestureRecognizer>
     </objects>
 </document>
