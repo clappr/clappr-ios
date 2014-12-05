@@ -8,50 +8,43 @@
 
 #import <Clappr/Clappr.h>
 
-@interface DummyObject : NSObject
-@property (nonatomic, assign) BOOL methodWasCalled;
-- (void)dummy;
-@end
-
-@implementation DummyObject
-- (void)dummy { _methodWasCalled = YES; }
-@end
-
 
 SPEC_BEGIN(BaseObject)
 
 describe(@"Callback", ^{
 
     __block CLPBaseObject *baseObject;
-    __block DummyObject *dummyObject;
-    __block CLPCallback *callback;
+    __block BOOL callbackWasCalled;
 
     beforeEach(^{
         baseObject = [CLPBaseObject new];
-
-        dummyObject = [DummyObject new];
-        callback = [CLPCallback callbackWithTarget:dummyObject selector:@selector(dummy)];
+        callbackWasCalled = NO;
     });
 
     it(@"should be called on event trigger", ^{
-        [baseObject on:@"some-event" callback:callback];
+        [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
+        
         [baseObject trigger:@"some-event"];
 
-        [[theValue(dummyObject.methodWasCalled) should] equal:theValue(YES)];
+        [[theValue(callbackWasCalled) should] equal:theValue(YES)];
     });
 
     it(@"should be called for every callback registered", ^{
-        [baseObject on:@"some-event" callback:callback];
+        [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
 
-        DummyObject *anotherDummyObject = [DummyObject new];
-        CLPCallback *anotherCallback = [CLPCallback callbackWithTarget:anotherDummyObject
-                                                              selector:@selector(dummy)];
-        [baseObject on:@"some-event" callback:anotherCallback];
+        __block BOOL anotherCallbackWasCalled = NO;
+        [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            anotherCallbackWasCalled = YES;
+        }];
 
         [baseObject trigger:@"some-event"];
 
-        [[theValue(dummyObject.methodWasCalled) should] equal:theValue(YES)];
-        [[theValue(anotherDummyObject.methodWasCalled) should] equal:theValue(YES)];
+        [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+        [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
     });
 
     it(@"should not raise an exception if it is nil", ^{
@@ -61,26 +54,37 @@ describe(@"Callback", ^{
     });
 
     it(@"should not be called for another event trigger", ^{
-        [baseObject on:@"some-event" callback:callback];
+        [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
+
         [baseObject trigger:@"another-event"];
 
-        [[theValue(dummyObject.methodWasCalled) should] equal:theValue(NO)];
+        [[theValue(callbackWasCalled) should] equal:theValue(NO)];
     });
 
     it(@"should not be called for another context object", ^{
         CLPBaseObject *anotherObject = [CLPBaseObject new];
-        [baseObject on:@"some-event" callback:callback];
+        [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
+
         [anotherObject trigger:@"some-event"];
 
-        [[theValue(dummyObject.methodWasCalled) should] equal:theValue(NO)];
+        [[theValue(callbackWasCalled) should] equal:theValue(NO)];
     });
 
     it(@"should not be called when handler is removed", ^{
+        EventCallback callback = ^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        };
+
         [baseObject on:@"some-event" callback:callback];
         [baseObject off:@"some-event" callback:callback];
+
         [baseObject trigger:@"some-event"];
 
-        [[theValue(dummyObject.methodWasCalled) should] equal:theValue(NO)];
+        [[theValue(callbackWasCalled) should] equal:theValue(NO)];
     });
 
     pending(@"should not be called if removed, but the others should", ^{});

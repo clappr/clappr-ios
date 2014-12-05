@@ -7,7 +7,6 @@
 //
 
 #import "CLPBaseObject.h"
-#import "CLPCallback.h"
 
 
 @interface CLPBaseObject ()
@@ -27,7 +26,7 @@
     return self;
 }
 
-- (void)on:(NSString *)eventName callback:(CLPCallback *)callback
+- (void)on:(NSString *)eventName callback:(EventCallback)callback
 {
     if (!callback)
         return;
@@ -38,21 +37,21 @@
     [eventHandlers[eventName] addObject:callback];
 }
 
-- (void)off:(NSString *)eventName callback:(CLPCallback *)callback
+- (void)off:(NSString *)eventName callback:(EventCallback)callback
 {
     if (!callback)
         return;
 
-    for (CLPCallback *c in eventHandlers[eventName]) {
-        if ([c isEqualToCallback:callback])
+    for (EventCallback c in eventHandlers[eventName]) {
+        if (c == callback)
             [eventHandlers[eventName] removeObject:callback];
     }
 }
 
 - (void)trigger:(NSString *)eventName
 {
-    for (CLPCallback *callback in eventHandlers[eventName]) {
-        [callback execute];
+    for (EventCallback callback in eventHandlers[eventName]) {
+        callback(@{});
     }
 }
 

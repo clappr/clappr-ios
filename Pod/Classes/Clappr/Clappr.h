@@ -12,6 +12,5 @@
 #import <Clappr/Player.h>
 
 #import <Clappr/CLPBaseObject.h>
-#import <Clappr/CLPCallback.h>
 
 #endif
