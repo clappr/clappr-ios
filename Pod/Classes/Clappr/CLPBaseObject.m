@@ -10,9 +10,9 @@
 
 
 @interface CLPBaseObject ()
-{
-    NSMutableDictionary *eventHandlers;
-}
+
+@property (nonatomic, strong) NSMutableDictionary *eventHandlers;
+
 @end
 
 @implementation CLPBaseObject
@@ -21,7 +21,7 @@
 {
     self = [super init];
     if (self) {
-        eventHandlers = [@{} mutableCopy];
+        _eventHandlers = [@{} mutableCopy];
     }
     return self;
 }
@@ -31,10 +31,15 @@
     if (!callback)
         return;
 
-    if (!eventHandlers[eventName])
-        eventHandlers[eventName] = [@[] mutableCopy];
+    [self addEventHandler:callback forEventName:eventName];
+}
 
-    [eventHandlers[eventName] addObject:callback];
+- (void)addEventHandler:(EventCallback)callback forEventName:(NSString *)eventName
+{
+    if (!_eventHandlers[eventName])
+        _eventHandlers[eventName] = [@[] mutableCopy];
+
+    [_eventHandlers[eventName] addObject:callback];
 }
 
 - (void)once:(NSString *)eventName callback:(EventCallback)callback
@@ -59,8 +64,13 @@
     if (!callback)
         return;
 
+    [self removeEventHandler:callback forEventName:eventName];
+}
+
+- (void)removeEventHandler:(EventCallback)callback forEventName:(NSString *)eventName
+{
     BOOL callbackWasFound = NO;
-    for (EventCallback c in eventHandlers[eventName]) {
+    for (EventCallback c in _eventHandlers[eventName]) {
         if (c == callback) {
             callbackWasFound = YES;
             break;
@@ -68,19 +78,33 @@
     }
 
     if (callbackWasFound)
-        [eventHandlers[eventName] removeObject:callback];
+        [_eventHandlers[eventName] removeObject:callback];
 }
 
 - (void)trigger:(NSString *)eventName
 {
-    for (EventCallback callback in eventHandlers[eventName]) {
+    for (EventCallback callback in _eventHandlers[eventName]) {
         callback(@{});
     }
 }
 
+- (void)listenTo:(CLPBaseObject *)contextObject
+       eventName:(NSString *)eventName
+        callback:(EventCallback)callback
+{
+    [contextObject addEventHandler:callback forEventName:eventName];
+}
+
 - (void)stopListening
 {
-    [eventHandlers removeAllObjects];
+    [_eventHandlers removeAllObjects];
+}
+
+- (void)stopListening:(CLPBaseObject *)contextObject
+            eventName:(NSString *)eventName
+             callback:(EventCallback)callback
+{
+    [contextObject removeEventHandler:callback forEventName:eventName];
 }
 
 @end

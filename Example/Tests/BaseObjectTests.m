@@ -147,6 +147,22 @@ describe(@"BaseObject", ^{
         });
     });
 
+    describe(@"listenTo", ^{
+
+        it(@"should fire callback for an event on a given context object", ^{
+            CLPBaseObject *contextObject = [CLPBaseObject new];
+            __block BOOL callbackWasCalled = NO;
+            EventCallback callback = ^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            };
+
+            [baseObject listenTo:contextObject eventName:@"some-event" callback:callback];
+            [contextObject trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+        });
+    });
+
     describe(@"stopListening", ^{
 
         it(@"should cancel all event handlers", ^{
@@ -190,7 +206,24 @@ describe(@"BaseObject", ^{
             [[theValue(callbackWasCalled) should] equal:theValue(NO)];
             [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
         });
+
+        it(@"should cancel handler for an event on a given context object", ^{
+            CLPBaseObject *contextObject = [CLPBaseObject new];
+
+            __block BOOL callbackWasCalled = NO;
+            EventCallback callback = ^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            };
+
+            [baseObject listenTo:contextObject eventName:@"some-event" callback:callback];
+            [baseObject stopListening:contextObject eventName:@"some-event" callback:callback];
+
+            [contextObject trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+        });
     });
+
 });
 
 SPEC_END

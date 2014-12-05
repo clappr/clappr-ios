@@ -22,6 +22,14 @@ typedef void (^EventCallback)(NSDictionary *userInfo);
 
 - (void)trigger:(NSString *)eventName;
 
+- (void)listenTo:(CLPBaseObject *)contextObject
+       eventName:(NSString *)eventName
+        callback:(EventCallback)callback;
+
 - (void)stopListening;
+
+- (void)stopListening:(CLPBaseObject *)contextObject
+            eventName:(NSString *)eventName
+             callback:(EventCallback)callback;
 
 @end
