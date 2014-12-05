@@ -19,11 +19,6 @@ describe(@"BaseObject", ^{
         baseObject = [CLPBaseObject new];
     });
 
-    it(@"should not raise an exception if its callback is nil", ^{
-        [baseObject on:@"some-event" callback:nil];
-        [[theBlock(^{ [baseObject trigger:@"some-event"]; }) shouldNot] raise];
-    });
-
     describe(@"on", ^{
 
         __block BOOL callbackWasCalled;
@@ -40,6 +35,11 @@ describe(@"BaseObject", ^{
             [baseObject trigger:@"some-event"];
 
             [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+        });
+
+        it(@"should not raise an exception if its callback is nil", ^{
+            [baseObject on:@"some-event" callback:nil];
+            [[theBlock(^{ [baseObject trigger:@"some-event"]; }) shouldNot] raise];
         });
 
         it(@"callback should be called for every callback registered", ^{
@@ -144,6 +144,51 @@ describe(@"BaseObject", ^{
             [baseObject trigger:@"some-event"];
 
             [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+        });
+    });
+
+    describe(@"stopListening", ^{
+
+        it(@"should cancel all event handlers", ^{
+            __block BOOL callbackWasCalled = NO;
+            [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            }];
+
+            __block BOOL anotherCallbackWasCalled = NO;
+            [baseObject on:@"another-event" callback:^(NSDictionary *userInfo) {
+                anotherCallbackWasCalled = YES;
+            }];
+
+            [baseObject stopListening];
+
+            [baseObject trigger:@"some-event"];
+            [baseObject trigger:@"another-event"];
+
+            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(anotherCallbackWasCalled) should] equal:theValue(NO)];
+        });
+
+        it(@"should cancel event handlers only on context object", ^{
+            __block BOOL callbackWasCalled = NO;
+            [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            }];
+
+            CLPBaseObject *anotherObject = [CLPBaseObject new];
+
+            __block BOOL anotherCallbackWasCalled = NO;
+            [anotherObject on:@"another-event" callback:^(NSDictionary *userInfo) {
+                anotherCallbackWasCalled = YES;
+            }];
+
+            [baseObject stopListening];
+
+            [baseObject trigger:@"some-event"];
+            [anotherObject trigger:@"another-event"];
+
+            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
         });
     });
 });

@@ -40,7 +40,6 @@
 - (void)once:(NSString *)eventName callback:(EventCallback)callback
 {
     __weak typeof(self) weakSelf = self;
-
     __weak __block EventCallback blockSelf;
 
     EventCallback wrapperCallback = [^(NSDictionary *userInfo) {
@@ -77,6 +76,11 @@
     for (EventCallback callback in eventHandlers[eventName]) {
         callback(@{});
     }
+}
+
+- (void)stopListening
+{
+    [eventHandlers removeAllObjects];
 }
 
 @end
