@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef void (^EventCallback)(NSDictionary *userInfo);
-
-@class CLPCallback;
+#import "CLPEventHandler.h"
 
 @interface CLPBaseObject : NSObject
 

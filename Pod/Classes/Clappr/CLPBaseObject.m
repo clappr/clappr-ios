@@ -15,6 +15,7 @@
 
 @end
 
+
 @implementation CLPBaseObject
 
 - (instancetype)init
@@ -26,20 +27,41 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [self stopListening];
+}
+
 - (void)on:(NSString *)eventName callback:(EventCallback)callback
+{
+    [self on:eventName contextObject:self callback:callback];
+}
+
+- (void)on:(NSString *)eventName contextObject:(CLPBaseObject *)contextObject callback:(EventCallback)callback
 {
     if (!callback)
         return;
 
-    [self addEventHandler:callback forEventName:eventName];
+    CLPEventHandler *eventHandler = [[CLPEventHandler alloc] initWithCallback:callback];
+
+    [[NSNotificationCenter defaultCenter] addObserver:eventHandler
+                                             selector:@selector(handleEvent)
+                                                 name:eventName
+                                               object:contextObject];
+
+    id key = [self keyForEventName:eventName callback:callback contextObject:contextObject];
+    _eventHandlers[key] = eventHandler;
 }
 
-- (void)addEventHandler:(EventCallback)callback forEventName:(NSString *)eventName
+- (id)keyForEventName:(NSString *)eventName
+             callback:(EventCallback)callback
+        contextObject:(CLPBaseObject *)contextObject
 {
-    if (!_eventHandlers[eventName])
-        _eventHandlers[eventName] = [@[] mutableCopy];
-
-    [_eventHandlers[eventName] addObject:callback];
+    return @{
+        @"name": eventName,
+        @"callback": callback,
+        @"obj": contextObject
+    };
 }
 
 - (void)once:(NSString *)eventName callback:(EventCallback)callback
@@ -61,42 +83,43 @@
 
 - (void)off:(NSString *)eventName callback:(EventCallback)callback
 {
+    [self off:eventName contextObject:self callback:callback];
+}
+
+- (void)off:(NSString *)eventName contextObject:(CLPBaseObject *)contextObject callback:(EventCallback)callback
+{
     if (!callback)
         return;
 
-    [self removeEventHandler:callback forEventName:eventName];
-}
+    id key = [self keyForEventName:eventName callback:callback contextObject:contextObject];
+    CLPEventHandler *eventHandler = _eventHandlers[key];
 
-- (void)removeEventHandler:(EventCallback)callback forEventName:(NSString *)eventName
-{
-    BOOL callbackWasFound = NO;
-    for (EventCallback c in _eventHandlers[eventName]) {
-        if (c == callback) {
-            callbackWasFound = YES;
-            break;
-        }
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:eventHandler
+                                                    name:eventName
+                                                  object:contextObject];
 
-    if (callbackWasFound)
-        [_eventHandlers[eventName] removeObject:callback];
+    [_eventHandlers removeObjectForKey:key];
 }
 
 - (void)trigger:(NSString *)eventName
 {
-    for (EventCallback callback in _eventHandlers[eventName]) {
-        callback(@{});
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self];
 }
 
 - (void)listenTo:(CLPBaseObject *)contextObject
        eventName:(NSString *)eventName
         callback:(EventCallback)callback
 {
-    [contextObject addEventHandler:callback forEventName:eventName];
+    [self on:eventName contextObject:contextObject callback:callback];
 }
 
 - (void)stopListening
 {
+    for (id key in _eventHandlers.allKeys) {
+        CLPEventHandler *eventHandler = _eventHandlers[key];
+        [[NSNotificationCenter defaultCenter] removeObserver:eventHandler];
+    }
+
     [_eventHandlers removeAllObjects];
 }
 
@@ -104,7 +127,7 @@
             eventName:(NSString *)eventName
              callback:(EventCallback)callback
 {
-    [contextObject removeEventHandler:callback forEventName:eventName];
+    [self off:eventName contextObject:contextObject callback:callback];
 }
 
 @end
