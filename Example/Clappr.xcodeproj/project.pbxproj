@@ -22,6 +22,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		BC1F18EC96A346EBBD5D05A1 /* libPods-Clappr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD39FC62AD948D5BDFCDC13 /* libPods-Clappr.a */; };
+		E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */; };
 		E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		765B2275C5C4484BBE9E3780 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		7FAAF24F5FFF420E8E13F7DA /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Clappr.podspec; path = ../Clappr.podspec; sourceTree = "<group>"; };
 		DF38B8233EFC57C47A83D04D /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIObjectTests.m; sourceTree = "<group>"; };
 		E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseObjectTests.m; sourceTree = "<group>"; };
 		F8D91A529FF548AA8E13CED7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 			children = (
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */,
+				E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,
 				E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

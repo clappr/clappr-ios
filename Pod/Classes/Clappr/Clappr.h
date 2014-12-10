@@ -9,8 +9,8 @@
 #ifndef Pods_Clappr_h
 #define Pods_Clappr_h
 
+#import <Foundation/Foundation.h>
 #import <Clappr/Player.h>
-
-#import <Clappr/CLPBaseObject.h>
+#import <Clappr/CLPUIObject.h>
 
 #endif
