@@ -77,7 +77,7 @@
 {
     [super viewDidLoad];
 
-    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"https://googledrive.com/host/0B9wX51CJ98nndHdOdmR6eWpWdkk/surf.mp4"]];
+    _player = [AVPlayer playerWithURL: [NSURL URLWithString: @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4"]];
     [_playerView setPlayer: _player];
 
     [self setupControlsOverlay];
