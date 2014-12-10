@@ -9,26 +9,35 @@
 #import "PlayerView.h"
 #import <AVFoundation/AVFoundation.h>
 
+@interface PlayerView ()
+
+@property (nonatomic, readonly) AVPlayerLayer *playerLayer;
+
+@end
+
+
 @implementation PlayerView
 
-+ (Class) layerClass
++ (Class)layerClass
 {
     return [AVPlayerLayer class];
 }
 
-- (AVPlayerLayer*) playerLayer
+- (AVPlayer *)player
 {
-    return (AVPlayerLayer*) self.layer;
+    return self.playerLayer.player;
 }
 
-- (AVPlayer*) player
+- (void)setPlayer:(AVPlayer *)player
 {
-    return [self playerLayer].player;
+    self.playerLayer.player = player;
 }
 
-- (void) setPlayer:(AVPlayer *)player
+#pragma mark - Accessors
+
+- (AVPlayerLayer *)playerLayer
 {
-    [self playerLayer].player = player;
+    return (AVPlayerLayer *)self.layer;
 }
 
 @end

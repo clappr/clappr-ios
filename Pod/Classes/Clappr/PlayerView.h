@@ -12,8 +12,6 @@
 
 @interface PlayerView : UIView
 
-@property (nonatomic, strong) AVPlayer* player;
-
-- (void) setPlayer: (AVPlayer*) player;
+@property (nonatomic, strong) AVPlayer *player;
 
 @end

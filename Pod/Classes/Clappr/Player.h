@@ -13,12 +13,12 @@
 
 @interface Player : UIViewController
 
-@property (nonatomic) AVPlayer* player;
+@property (nonatomic, strong) AVPlayer *player;
 
-@property (weak, nonatomic) IBOutlet PlayerView* playerView;
+@property (nonatomic, weak) IBOutlet PlayerView *playerView;
 
-+ (Player*) newPlayerWithOptions: (NSDictionary*) options;
++ (Player *)newPlayerWithOptions:(NSDictionary *)options;
 
-- (void) attachTo: (UIViewController*) controller atView: (UIView*) container;
+- (void)attachTo:(UIViewController *)controller atView:(UIView *)container;
 
 @end
