@@ -1,9 +1,9 @@
 //
 //  Clappr.h
-//  Pods
+//  Clappr
 //
 //  Created by Thiago Pontes on 8/11/14.
-//
+//  Copyright (c) 2014 globo.com. All rights reserved.
 //
 
 #ifndef Pods_Clappr_h

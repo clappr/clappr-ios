@@ -1,9 +1,9 @@
 //
 //  FullscreenViewController.h
-//  Pods
+//  Clappr
 //
 //  Created by Thiago Pontes on 8/25/14.
-//
+//  Copyright (c) 2014 globo.com. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
