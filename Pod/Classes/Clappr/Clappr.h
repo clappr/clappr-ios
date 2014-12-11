@@ -15,5 +15,6 @@
 #import <Clappr/CLPBaseObject.h>
 #import <Clappr/CLPUIObject.h>
 #import <Clappr/CLPContainer.h>
+#import <Clappr/CLPPlayback.h>
 
 #endif
