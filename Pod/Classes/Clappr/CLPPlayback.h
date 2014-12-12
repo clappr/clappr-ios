@@ -8,6 +8,23 @@
 
 #import "CLPUIObject.h"
 
+extern NSString *const CLPPlaybackEventProgress;
+extern NSString *const CLPPlaybackEventTimeUpdated;
+extern NSString *const CLPPlaybackEventReady;
+extern NSString *const CLPPlaybackEventBuffering;
+extern NSString *const CLPPlaybackEventBufferFull;
+extern NSString *const CLPPlaybackEventSettingsUdpdated;
+extern NSString *const CLPPlaybackEventLoadedMetadata;
+extern NSString *const CLPPlaybackEventHighDefinitionUpdate;
+extern NSString *const CLPPlaybackEventBitRate;
+extern NSString *const CLPPlaybackEventStateChanged;
+extern NSString *const CLPPlaybackEventDVRStateChanged;
+extern NSString *const CLPPlaybackEventMediaControlDisabled;
+extern NSString *const CLPPlaybackEventMediaControlEnabled;
+extern NSString *const CLPPlaybackEventEnded;
+extern NSString *const CLPPlaybackEventPlay;
+extern NSString *const CLPPlaybackEventError;
+
 typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
     CLPPlaybackTypeUnknown
 };

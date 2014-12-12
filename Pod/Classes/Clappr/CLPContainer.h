@@ -8,8 +8,13 @@
 
 #import "CLPUIObject.h"
 
+@class CLPPlayback;
+
 @interface CLPContainer : CLPUIObject
 
 @property (nonatomic, strong, readonly) NSString *name;
+@property (nonatomic, strong, readwrite) CLPPlayback *playback;
+
+- (instancetype)initWithPlayback:(CLPPlayback *)playback;
 
 @end

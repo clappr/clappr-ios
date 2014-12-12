@@ -13,48 +13,121 @@ SPEC_BEGIN(Container)
 describe(@"Container", ^{
 
     __block CLPContainer *container;
+    __block CLPPlayback *playback;
 
-    beforeEach(^{
-        container = [CLPContainer new];
+    context(@"Instantiation", ^{
+
+        it(@"cannot be instatiated without a playback", ^{
+            [[theBlock(^{
+                [CLPContainer new];
+            }) should] raiseWithName:NSInternalInconsistencyException];
+        });
+
+        it(@"should receive a playback in the constructor", ^{
+            playback = [CLPPlayback new];
+            container = [[CLPContainer alloc] initWithPlayback:playback];
+            [[container.playback should] equal:playback];
+        });
     });
 
-    it(@"should have a default name", ^{
-        [[container.name should] equal:@"Container"];
+    context(@"General", ^{
+
+        beforeEach(^{
+            playback = [CLPPlayback new];
+            container = [[CLPContainer alloc] initWithPlayback:playback];
+        });
+
+        it(@"should have a default name", ^{
+            [[container.name should] equal:@"Container"];
+        });
     });
 
     context(@"event binding", ^{
 
-        pending(@"should listen to playback progress", ^{});
+        beforeEach(^{
+            playback = [CLPPlayback new];
+            container = [[CLPContainer alloc] initWithPlayback:playback];
+        });
 
-        pending(@"should listen to playback time updated", ^{});
+        it(@"should listen to playback's progress event", ^{
+            [[container should] receive:@selector(progress)];
+            [playback trigger:CLPPlaybackEventProgress];
+        });
 
-        pending(@"should listen to playback ready", ^{});
+        it(@"should listen to playback's time updated event", ^{
+            [[container should] receive:@selector(timeUpdated)];
+            [playback trigger:CLPPlaybackEventTimeUpdated];
+        });
 
-        pending(@"should listen to playback buffering", ^{});
+        it(@"should listen to playback's ready event", ^{
+            [[container should] receive:@selector(ready)];
+            [playback trigger:CLPPlaybackEventReady];
+        });
 
-        pending(@"should listen to playback buffer full", ^{});
+        it(@"should listen to playback's buffering event", ^{
+            [[container should] receive:@selector(buffering)];
+            [playback trigger:CLPPlaybackEventBuffering];
+        });
 
-        pending(@"should listen to playback settings update", ^{});
+        it(@"should listen to playback's buffer full event", ^{
+            [[container should] receive:@selector(bufferFull)];
+            [playback trigger:CLPPlaybackEventBufferFull];
+        });
 
-        pending(@"should listen to playback loaded metadata", ^{});
+        it(@"should listen to playback's settings update event", ^{
+            [[container should] receive:@selector(settingsUpdated)];
+            [playback trigger:CLPPlaybackEventSettingsUdpdated];
+        });
 
-        pending(@"should listen to playback high definition update", ^{});
+        it(@"should listen to playback's loaded metadata event", ^{
+            [[container should] receive:@selector(loadedMetadata)];
+            [playback trigger:CLPPlaybackEventLoadedMetadata];
+        });
 
-        pending(@"should listen to playback bit rate", ^{});
+        it(@"should listen to playback's HD update event", ^{
+            [[container should] receive:@selector(highDefinitionUpdated)];
+            [playback trigger:CLPPlaybackEventHighDefinitionUpdate];
+        });
 
-        pending(@"should listen to playback state changed", ^{});
+        it(@"should listen to playback's bit rate event", ^{
+            [[container should] receive:@selector(updateBitrate)];
+            [playback trigger:CLPPlaybackEventBitRate];
+        });
 
-        pending(@"should listen to playback DVR state changed", ^{});
+        it(@"should listen to playback's state changed event", ^{
+            [[container should] receive:@selector(stateChanged)];
+            [playback trigger:CLPPlaybackEventStateChanged];
+        });
 
-        pending(@"should listen to playback disable media control", ^{});
+        it(@"should listen to playback's DVR state changed event", ^{
+            [[container should] receive:@selector(dvrStateChanged)];
+            [playback trigger:CLPPlaybackEventDVRStateChanged];
+        });
 
-        pending(@"should listen to playback enable media control", ^{});
+        it(@"should listen to playback's disable media control event", ^{
+            [[container should] receive:@selector(disableMediaControl)];
+            [playback trigger:CLPPlaybackEventMediaControlDisabled];
+        });
 
-        pending(@"should listen to playback ended", ^{});
+        it(@"should listen to playback's enable media control event", ^{
+            [[container should] receive:@selector(enableMediaControl)];
+            [playback trigger:CLPPlaybackEventMediaControlEnabled];
+        });
 
-        pending(@"should listen to playback play", ^{});
+        it(@"should listen to playback's end event", ^{
+            [[container should] receive:@selector(ended)];
+            [playback trigger:CLPPlaybackEventEnded];
+        });
 
-        pending(@"should listen to playback error", ^{});
+        it(@"should listen to playback's play event", ^{
+            [[container should] receive:@selector(playing)];
+            [playback trigger:CLPPlaybackEventPlay];
+        });
+
+        it(@"should listen to playback's error event", ^{
+            [[container should] receive:@selector(error)];
+            [playback trigger:CLPPlaybackEventError];
+        });
     });
 });
 
