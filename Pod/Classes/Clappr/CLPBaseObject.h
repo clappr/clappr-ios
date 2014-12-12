@@ -17,6 +17,7 @@
 - (void)off:(NSString *)eventName callback:(EventCallback)callback;
 
 - (void)trigger:(NSString *)eventName;
+- (void)trigger:(NSString *)eventName userInfo:(NSDictionary *)userInfo;
 
 - (void)listenTo:(CLPBaseObject *)contextObject
        eventName:(NSString *)eventName

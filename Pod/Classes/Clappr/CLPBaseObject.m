@@ -45,7 +45,7 @@
     CLPEventHandler *eventHandler = [[CLPEventHandler alloc] initWithCallback:callback];
 
     [[NSNotificationCenter defaultCenter] addObserver:eventHandler
-                                             selector:@selector(handleEvent)
+                                             selector:@selector(handleEvent:)
                                                  name:eventName
                                                object:contextObject];
 
@@ -103,7 +103,12 @@
 
 - (void)trigger:(NSString *)eventName
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self userInfo:@{}];
+}
+
+- (void)trigger:(NSString *)eventName userInfo:(NSDictionary *)userInfo
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self userInfo:userInfo];
 }
 
 - (void)listenTo:(CLPBaseObject *)contextObject

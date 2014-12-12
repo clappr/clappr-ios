@@ -37,6 +37,17 @@ describe(@"BaseObject", ^{
             [[theValue(callbackWasCalled) should] equal:theValue(YES)];
         });
 
+        it(@"callback should receive userInfo on trigger with params", ^{
+            __block NSString *value = @"foo";
+            [baseObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+                value = userInfo[@"new_value"];
+            }];
+
+            [baseObject trigger:@"some-event" userInfo:@{@"new_value":@"bar"}];
+
+            [[value should] equal:@"bar"];
+        });
+
         it(@"should not raise an exception if its callback is nil", ^{
             [baseObject on:@"some-event" callback:nil];
             [[theBlock(^{ [baseObject trigger:@"some-event"]; }) shouldNot] raise];

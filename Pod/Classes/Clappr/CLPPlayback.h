@@ -9,6 +9,10 @@
 #import "CLPUIObject.h"
 
 extern NSString *const CLPPlaybackEventProgress;
+extern NSString *const CLPPlaybackEventProgressStartPositionKey;
+extern NSString *const CLPPlaybackEventProgressEndPositionKey;
+extern NSString *const CLPPlaybackEventProgressDurationKey;
+
 extern NSString *const CLPPlaybackEventTimeUpdated;
 extern NSString *const CLPPlaybackEventReady;
 extern NSString *const CLPPlaybackEventBuffering;

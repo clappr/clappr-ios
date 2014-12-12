@@ -33,7 +33,13 @@
 - (void)bindEventListeners
 {
     __weak typeof(self) weakSelf = self;
-    [self listenTo:_playback eventName:CLPPlaybackEventProgress callback:^(NSDictionary *userInfo) { [weakSelf progress]; }];
+    [self listenTo:_playback eventName:CLPPlaybackEventProgress callback:^(NSDictionary *userInfo) {
+        CGFloat startPosition = [userInfo[CLPPlaybackEventProgressStartPositionKey] floatValue];
+        CGFloat endPosition = [userInfo[CLPPlaybackEventProgressEndPositionKey] floatValue];
+        NSTimeInterval duration = [userInfo[CLPPlaybackEventProgressDurationKey] doubleValue];
+        [weakSelf progressWithStartPosition:startPosition endPosition:endPosition duration:duration];
+    }];
+    
     [self listenTo:_playback eventName:CLPPlaybackEventTimeUpdated callback:^(NSDictionary *userInfo) { [weakSelf timeUpdated]; }];
     [self listenTo:_playback eventName:CLPPlaybackEventReady callback:^(NSDictionary *userInfo) { [weakSelf ready]; }];
     [self listenTo:_playback eventName:CLPPlaybackEventBuffering callback:^(NSDictionary *userInfo) { [weakSelf buffering]; }];
@@ -53,8 +59,12 @@
 
 #pragma mark - Event Callbacks
 
-- (void)progress
-{}
+- (void)progressWithStartPosition:(CGFloat)startPosition
+                      endPosition:(CGFloat)endPosition
+                         duration:(NSTimeInterval)duration
+{
+    NSLog(@">>>>>> %f, %f, %f", startPosition, endPosition, duration);
+}
 
 - (void)timeUpdated
 {}

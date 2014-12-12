@@ -14,6 +14,6 @@ typedef void (^EventCallback)(NSDictionary *userInfo);
 @interface CLPEventHandler : NSObject
 
 - (instancetype)initWithCallback:(EventCallback)callback;
-- (void)handleEvent;
+- (void)handleEvent:(NSNotification *)notification;
 
 @end

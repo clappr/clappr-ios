@@ -22,10 +22,10 @@
     return self;
 }
 
-- (void)handleEvent
+- (void)handleEvent:(NSNotification *)notification;
 {
     if (_callback)
-        _callback(@{});
+        _callback(notification.userInfo);
 }
 
 @end
