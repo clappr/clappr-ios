@@ -9,10 +9,6 @@
 #import "CLPUIObject.h"
 
 extern NSString *const CLPPlaybackEventProgress;
-extern NSString *const CLPPlaybackEventProgressStartPositionKey;
-extern NSString *const CLPPlaybackEventProgressEndPositionKey;
-extern NSString *const CLPPlaybackEventProgressDurationKey;
-
 extern NSString *const CLPPlaybackEventTimeUpdated;
 extern NSString *const CLPPlaybackEventReady;
 extern NSString *const CLPPlaybackEventBuffering;
@@ -40,6 +36,7 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
 @property (nonatomic, assign, readonly, getter=isPlaying) BOOL playing;
 @property (nonatomic, assign, readonly) CLPPlaybackType type;
 @property (nonatomic, assign, readonly, getter=isHighDefinitionInUse) BOOL highDefinitionInUse;
+@property (nonatomic, assign, readonly) NSDictionary *settings;
 
 - (void)play;
 - (void)pause;

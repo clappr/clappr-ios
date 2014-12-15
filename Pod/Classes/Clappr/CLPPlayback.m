@@ -9,10 +9,6 @@
 #import "CLPPlayback.h"
 
 NSString *const CLPPlaybackEventProgress = @"clappr:playback:progress";
-NSString *const CLPPlaybackEventProgressStartPositionKey = @"startPosition";
-NSString *const CLPPlaybackEventProgressEndPositionKey = @"endPosition";
-NSString *const CLPPlaybackEventProgressDurationKey = @"duration";
-
 NSString *const CLPPlaybackEventTimeUpdated = @"clappr:playback:time_updated";
 NSString *const CLPPlaybackEventReady = @"clappr:playback:ready";
 NSString *const CLPPlaybackEventBuffering = @"clappr:playback:buffering";

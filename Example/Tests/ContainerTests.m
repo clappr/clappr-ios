@@ -56,70 +56,76 @@ describe(@"Container", ^{
                           withArguments:theValue(startPosition), theValue(endPosition), theValue(duration)];
 
             NSDictionary *userInfo = @{
-                CLPPlaybackEventProgressStartPositionKey: @(startPosition),
-                CLPPlaybackEventProgressEndPositionKey: @(endPosition),
-                CLPPlaybackEventProgressDurationKey: @(duration)
+                @"startPosition": @(startPosition),
+                @"endPosition": @(endPosition),
+                @"duration": @(duration)
             };
 
             [playback trigger:CLPPlaybackEventProgress userInfo:userInfo];
         });
 
         it(@"should listen to playback's time updated event", ^{
-            [[container should] receive:@selector(timeUpdated)];
-            [playback trigger:CLPPlaybackEventTimeUpdated];
+            CGFloat position = 10.3f;
+            NSTimeInterval duration = 12.78;
+            [[container should] receive:@selector(timeUpdatedWithPosition:duration:) withArguments:theValue(position), theValue(duration)];
 
-            // param position, duration
-            // this.trigger(Events.CONTAINER_TIMEUPDATE, position, duration, this.name);
+            NSDictionary *userInfo = @{
+                @"position": @(position),
+                @"duration":@(duration)
+            };
+
+            [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
         });
 
         it(@"should listen to playback's ready event", ^{
-            [[container should] receive:@selector(ready)];
+            [[theValue([container isReady]) should] beFalse];
+
             [playback trigger:CLPPlaybackEventReady];
 
-            // this.isReady = true;
-            // this.trigger(Events.CONTAINER_READY, this.name);
+            [[theValue([container isReady]) should] beTrue];
         });
 
         it(@"should listen to playback's buffering event", ^{
             [[container should] receive:@selector(buffering)];
             [playback trigger:CLPPlaybackEventBuffering];
-
-            // this.trigger(Events.CONTAINER_STATE_BUFFERING, this.name);
         });
 
         it(@"should listen to playback's buffer full event", ^{
             [[container should] receive:@selector(bufferFull)];
             [playback trigger:CLPPlaybackEventBufferFull];
-
-            // this.trigger(Events.CONTAINER_STATE_BUFFERFULL, this.name);
         });
 
         it(@"should listen to playback's settings update event", ^{
-            [[container should] receive:@selector(settingsUpdated)];
+            [playback stub:@selector(settings) andReturn:@{@"foo": @"bar"}];
+
             [playback trigger:CLPPlaybackEventSettingsUdpdated];
 
-            // this.settings = this.playback.settings;
-            // this.trigger(Events.CONTAINER_SETTINGSUPDATE);
+            [[container.settings should] equal:playback.settings];
         });
 
         it(@"should listen to playback's loaded metadata event", ^{
-            [[container should] receive:@selector(loadedMetadata)];
-            [playback trigger:CLPPlaybackEventLoadedMetadata];
+            NSTimeInterval duration = 20;
 
-            // param duration
-            // this.trigger(Events.CONTAINER_LOADEDMETADATA, duration);
+            [[container should] receive:@selector(loadedMetadataWithDuration:)
+                          withArguments:theValue(duration)];
+
+            NSDictionary *userInfo = @{@"duration":@(duration)};
+            [playback trigger:CLPPlaybackEventLoadedMetadata userInfo:userInfo];
         });
 
         it(@"should listen to playback's HD update event", ^{
             [[container should] receive:@selector(highDefinitionUpdated)];
             [playback trigger:CLPPlaybackEventHighDefinitionUpdate];
-
-            // this.trigger(Events.CONTAINER_HIGHDEFINITIONUPDATES);
         });
 
         it(@"should listen to playback's bit rate event", ^{
-            [[container should] receive:@selector(updateBitrate)];
-            [playback trigger:CLPPlaybackEventBitRate];
+            float bitRate = 12.34;
+            [[container should] receive:@selector(updateBitrate:)
+                          withArguments:theValue(bitRate)];
+
+            NSDictionary *userInfo = @{@"bit_rate": @(bitRate)};
+
+            [playback trigger:CLPPlaybackEventBitRate userInfo:userInfo];
 
             // param newBitrate
             // this.trigger(Events.CONTAINER_BITRATE, newBitrate)
@@ -128,57 +134,44 @@ describe(@"Container", ^{
         it(@"should listen to playback's state changed event", ^{
             [[container should] receive:@selector(stateChanged)];
             [playback trigger:CLPPlaybackEventStateChanged];
-
-            // this.trigger(Events.CONTAINER_PLAYBACKSTATE);
         });
 
         it(@"should listen to playback's DVR state changed event", ^{
-            [[container should] receive:@selector(dvrStateChanged)];
-            [playback trigger:CLPPlaybackEventDVRStateChanged];
+            [[theValue(container.dvrInUse) should] beFalse];
 
-            // param dvrInUse
-            // this.settings = this.playback.settings
-            // this.dvrInUse = dvrInUse
-            // this.trigger(Events.CONTAINER_PLAYBACKDVRSTATECHANGED, dvrInUse)
+            NSDictionary *userInfo = @{@"dvr_in_use": @(YES)};
+            [playback trigger:CLPPlaybackEventDVRStateChanged userInfo:userInfo];
+
+            [[theValue(container.dvrInUse) should] beTrue];
         });
 
         it(@"should listen to playback's disable media control event", ^{
-            [[container should] receive:@selector(disableMediaControl)];
             [playback trigger:CLPPlaybackEventMediaControlDisabled];
-
-            // this.mediaControlDisabled = true;
-            // this.trigger(Events.CONTAINER_MEDIACONTROL_DISABLE);
+            [[theValue(container.mediaControlDisabled) should] beTrue];
         });
 
         it(@"should listen to playback's enable media control event", ^{
-            [[container should] receive:@selector(enableMediaControl)];
             [playback trigger:CLPPlaybackEventMediaControlEnabled];
-
-            // this.mediaControlDisabled = false;
-            // this.trigger(Events.CONTAINER_MEDIACONTROL_ENABLE);
+            [[theValue(container.mediaControlDisabled) should] beFalse];
         });
 
         it(@"should listen to playback's end event", ^{
             [[container should] receive:@selector(ended)];
             [playback trigger:CLPPlaybackEventEnded];
-
-            // this.trigger(Events.CONTAINER_ENDED, this, this.name);
         });
 
         it(@"should listen to playback's play event", ^{
             [[container should] receive:@selector(playing)];
             [playback trigger:CLPPlaybackEventPlay];
-
-            // this.trigger(Events.CONTAINER_PLAY, this.name);
         });
 
         it(@"should listen to playback's error event", ^{
-            [[container should] receive:@selector(error)];
-            [playback trigger:CLPPlaybackEventError];
+            NSError *errorObj = [NSError new];
 
-            // param errorObj
-            // this.$el.append(errorObj.render().el)
-            // this.trigger(Events.CONTAINER_ERROR, {error: errorObj, container: this}, this.name);
+            [[container should] receive:@selector(error:)
+                          withArguments:errorObj];
+
+            [playback trigger:CLPPlaybackEventError userInfo:@{@"error":errorObj}];
         });
     });
 });
