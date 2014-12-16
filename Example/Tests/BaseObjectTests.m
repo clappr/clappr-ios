@@ -34,7 +34,7 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beTrue];
         });
 
         it(@"callback should receive userInfo on trigger with params", ^{
@@ -65,8 +65,8 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(YES)];
-            [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beTrue];
+            [[theValue(anotherCallbackWasCalled) should] beTrue];
         });
 
         it(@"callback should not be called for another event trigger", ^{
@@ -76,7 +76,7 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"another-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
         });
 
         it(@"callback should not be called for another context object", ^{
@@ -87,7 +87,7 @@ describe(@"BaseObject", ^{
 
             [anotherObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
         });
 
         it(@"callback should not be called when handler is removed", ^{
@@ -100,7 +100,7 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
         });
 
         it(@"callback should not be called if removed, but the others should", ^{
@@ -120,8 +120,8 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
             
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
-            [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beFalse];
+            [[theValue(anotherCallbackWasCalled) should] beTrue];
         });
 
     });
@@ -138,7 +138,7 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beTrue];
         });
 
         it(@"callback should not be called twice", ^{
@@ -154,7 +154,7 @@ describe(@"BaseObject", ^{
 
             [baseObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
         });
     });
 
@@ -170,7 +170,7 @@ describe(@"BaseObject", ^{
             [baseObject listenTo:contextObject eventName:@"some-event" callback:callback];
             [contextObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beTrue];
         });
     });
 
@@ -192,8 +192,8 @@ describe(@"BaseObject", ^{
             [baseObject trigger:@"some-event"];
             [baseObject trigger:@"another-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
-            [[theValue(anotherCallbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
+            [[theValue(anotherCallbackWasCalled) should] beFalse];
         });
 
         it(@"should cancel event handlers only on context object", ^{
@@ -214,8 +214,8 @@ describe(@"BaseObject", ^{
             [baseObject trigger:@"some-event"];
             [anotherObject trigger:@"another-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
-            [[theValue(anotherCallbackWasCalled) should] equal:theValue(YES)];
+            [[theValue(callbackWasCalled) should] beFalse];
+            [[theValue(anotherCallbackWasCalled) should] beTrue];
         });
 
         it(@"should cancel handler for an event on a given context object", ^{
@@ -231,7 +231,7 @@ describe(@"BaseObject", ^{
 
             [contextObject trigger:@"some-event"];
 
-            [[theValue(callbackWasCalled) should] equal:theValue(NO)];
+            [[theValue(callbackWasCalled) should] beFalse];
         });
     });
 
