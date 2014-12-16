@@ -10,6 +10,31 @@
 
 #import "CLPPlayback.h"
 
+NSString *const CLPContainerEventPlaybackStateChanged = @"clappr:container:playback_state_changed";
+NSString *const CLPContainerEventPlaybackStateDVRStateChanged = @"clappr:container:playback_dvr_state_changed";
+NSString *const CLPContainerEventBitRate = @"clappr:container:bit_rate";
+NSString *const CLPContainerEventStatsReport = @"clappr:container:stats_report";
+NSString *const CLPContainerEventDestroyed = @"clappr:container:destroyed";
+NSString *const CLPContainerEventReady = @"clappr:container:ready";
+NSString *const CLPContainerEventError = @"clappr:container:error";
+NSString *const CLPContainerEventLoadedMetadata = @"clappr:container:loaded_metadata";
+NSString *const CLPContainerEventTimeUpdate = @"clappr:container:time_update";
+NSString *const CLPContainerEventProgress = @"clappr:container:progress";
+NSString *const CLPContainerEventPlay = @"clappr:container:play";
+NSString *const CLPContainerEventStop = @"clappr:container:stop";
+NSString *const CLPContainerEventPause = @"clappr:container:pause";
+NSString *const CLPContainerEventEnded = @"clappr:container:ended";
+NSString *const CLPContainerEventTap = @"clappr:container:tap";
+NSString *const CLPContainerEventSeek = @"clappr:container:seek";
+NSString *const CLPContainerEventVolume = @"clappr:container:volume";
+NSString *const CLPContainerEventFullscreen = @"clappr:container:fullscreen";
+NSString *const CLPContainerEventBuffering = @"clappr:container:buffering";
+NSString *const CLPContainerEventBufferFull = @"clappr:container:buffer_full";
+NSString *const CLPContainerEventSettingsUpdated = @"clappr:container:settings_updated";
+NSString *const CLPContainerEventHighDefinitionUpdated = @"clappr:container:hd_updated";
+NSString *const CLPContainerEventMediaControlDisabled = @"clappr:container:media_control_disabled";
+NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_control_enabled";
+
 
 @implementation CLPContainer
 
