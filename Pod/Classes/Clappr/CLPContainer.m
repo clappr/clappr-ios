@@ -211,21 +211,31 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 }
 
 - (void)buffering
-{}
+{
+    [self trigger:CLPContainerEventBuffering];
+}
 
 - (void)bufferFull
-{}
+{
+    [self trigger:CLPContainerEventBufferFull];
+}
 
 - (void)settingsUpdated
 {
     _settings = _playback.settings;
+    [self trigger:CLPContainerEventSettingsUpdated];
 }
 
 - (void)loadedMetadataWithDuration:(NSTimeInterval)duration
-{}
+{
+    NSDictionary *userInfo = @{@"duration": @(duration)};
+    [self trigger:CLPContainerEventLoadedMetadata userInfo:userInfo];
+}
 
 - (void)highDefinitionUpdated
-{}
+{
+    [self trigger:CLPContainerEventHighDefinitionUpdated];
+}
 
 - (void)updateBitrate:(float)bitRate
 {
@@ -246,27 +256,39 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
 - (void)dvrStateChanged:(BOOL)dvrInUse
 {
+    _settings = _playback.settings;
     _dvrInUse = dvrInUse;
+
+    NSDictionary *userInfo = @{@"dvr_in_use": @(dvrInUse)};
+    [self trigger:CLPContainerEventPlaybackStateDVRStateChanged userInfo:userInfo];
 }
 
 - (void)disableMediaControl
 {
     _mediaControlDisabled = YES;
+    [self trigger:CLPContainerEventMediaControlDisabled];
 }
 
 - (void)enableMediaControl
 {
     _mediaControlDisabled = NO;
+    [self trigger:CLPContainerEventMediaControlEnabled];
 }
 
 - (void)ended
-{}
+{
+    [self trigger:CLPContainerEventEnded];
+}
 
 - (void)playing
-{}
+{
+    [self trigger:CLPContainerEventPlay];
+}
 
 - (void)error:(NSError *)errorObj
-{}
+{
+    [self trigger:CLPContainerEventError userInfo:@{@"error": errorObj}];
+}
 
 - (void)destroy
 {

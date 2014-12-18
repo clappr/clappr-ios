@@ -60,7 +60,7 @@ describe(@"Container", ^{
             container = [[CLPContainer alloc] initWithPlayback:playback];
         });
 
-        it(@"should listen to playback's progress event", ^{
+        it(@"should trigger its event after listen to playback's progress event with the respective params", ^{
             // Given
             float expectedStartPosition = 0.7f, expectedEndPosition = 15.4f;
             NSTimeInterval expectedDuration = 10.0f;
@@ -88,7 +88,7 @@ describe(@"Container", ^{
             [[theValue(duration) should] equal:theValue(expectedDuration)];
         });
 
-        it(@"should listen to playback's time updated event", ^{
+        it(@"should trigger its event after listen to playback's time updated event with the respective params", ^{
             // Given
             float expectedPosition = 10.3f;
             NSTimeInterval expectedDuration = 12.78;
@@ -112,7 +112,7 @@ describe(@"Container", ^{
             [[theValue(duration) should] equal:theValue(expectedDuration)];
         });
 
-        it(@"should listen to playback's ready event", ^{
+        it(@"should be ready after listen to playback's ready event", ^{
             [[theValue([container isReady]) should] beFalse];
 
             [playback trigger:CLPPlaybackEventReady];
@@ -120,58 +120,109 @@ describe(@"Container", ^{
             [[theValue([container isReady]) should] beTrue];
         });
 
-        it(@"should listen to playback's buffering event", ^{
-            [[container should] receive:@selector(buffering)];
+        it(@"should trigger its event after listen to playback's buffering event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventBuffering callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventBuffering];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's buffer full event", ^{
-            [[container should] receive:@selector(bufferFull)];
+        it(@"should trigger its event after listen to playback's buffer full event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventBufferFull callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventBufferFull];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's settings update event", ^{
+        it(@"should update its settings after listen to playback's settings update event", ^{
             [playback stub:@selector(settings) andReturn:@{@"foo": @"bar"}];
 
             [playback trigger:CLPPlaybackEventSettingsUdpdated];
 
-            [[container.settings should] equal:playback.settings];
+            [[container.settings should] equal:@{@"foo": @"bar"}];
         });
 
-        it(@"should listen to playback's loaded metadata event", ^{
-            NSTimeInterval duration = 20;
+        it(@"should trigger its event after listen to playback settings update event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventSettingsUpdated callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
 
-            [[container should] receive:@selector(loadedMetadataWithDuration:)
-                          withArguments:theValue(duration)];
+            [playback trigger:CLPPlaybackEventSettingsUdpdated];
 
-            NSDictionary *userInfo = @{@"duration":@(duration)};
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
+        it(@"should trigger its event after listen to playback's loaded metadata event with the respective params", ^{
+            NSTimeInterval expectedDuration = 20.0;
+
+            __block NSTimeInterval duration = 0.0;
+            [container once:CLPContainerEventLoadedMetadata callback:^(NSDictionary *userInfo) {
+                duration = [userInfo[@"duration"] doubleValue];
+            }];
+
+            NSDictionary *userInfo = @{@"duration":@(expectedDuration)};
             [playback trigger:CLPPlaybackEventLoadedMetadata userInfo:userInfo];
+
+            [[theValue(duration) should] equal:theValue(expectedDuration)];
         });
 
-        it(@"should listen to playback's HD update event", ^{
-            [[container should] receive:@selector(highDefinitionUpdated)];
+        it(@"should trigger its event after listen to playback's HD update event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventHighDefinitionUpdated callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventHighDefinitionUpdate];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's bit rate event", ^{
-            float bitRate = 12.34;
-            [[container should] receive:@selector(updateBitrate:)
-                          withArguments:theValue(bitRate)];
+        it(@"should trigger its event after listen to playback's bit rate event with the respective params", ^{
+            float expectedBitRate = 12.34;
 
-            NSDictionary *userInfo = @{@"bit_rate": @(bitRate)};
+            __block float bitRate = 0.0;
+            [container once:CLPContainerEventBitRate callback:^(NSDictionary *userInfo) {
+                bitRate = [userInfo[@"bit_rate"] floatValue];
+            }];
 
+            NSDictionary *userInfo = @{@"bit_rate": @(expectedBitRate)};
             [playback trigger:CLPPlaybackEventBitRate userInfo:userInfo];
 
-            // param newBitrate
-            // this.trigger(Events.CONTAINER_BITRATE, newBitrate)
+            [[theValue(bitRate) should] equal:theValue(expectedBitRate)];
         });
 
-        it(@"should listen to playback's state changed event", ^{
-            [[container should] receive:@selector(stateChanged)];
+        it(@"should trigger its event after listen to playback's state changed event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventPlaybackStateChanged callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventStateChanged];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's DVR state changed event", ^{
+        it(@"should trigger its event after listen to playback's DVR state changed event with the respective params", ^{
+            __block BOOL dvrInUse = NO;
+            [container once:CLPContainerEventPlaybackStateDVRStateChanged callback:^(NSDictionary *userInfo) {
+                dvrInUse = [userInfo[@"dvr_in_use"] boolValue];
+            }];
+
+            [playback trigger:CLPPlaybackEventDVRStateChanged userInfo:@{@"dvr_in_use": @(YES)}];
+
+            [[theValue(dvrInUse) should] beTrue];
+        });
+
+        it(@"should update dvrInUse flag after listen to playback's DVR state changed event", ^{
             [[theValue(container.dvrInUse) should] beFalse];
 
             NSDictionary *userInfo = @{@"dvr_in_use": @(YES)};
@@ -180,33 +231,85 @@ describe(@"Container", ^{
             [[theValue(container.dvrInUse) should] beTrue];
         });
 
-        it(@"should listen to playback's disable media control event", ^{
+        it(@"should update its settings after listen to playback's DVR state changed event", ^{
+            [playback stub:@selector(settings) andReturn:@{@"foo": @"bar"}];
+
+            [[container.settings should] beNil];
+
+            [playback trigger:CLPPlaybackEventDVRStateChanged];
+
+            [[container.settings should] equal:@{@"foo": @"bar"}];
+        });
+
+        it(@"should disable media control after listen to playback's disable media control event", ^{
             [playback trigger:CLPPlaybackEventMediaControlDisabled];
             [[theValue(container.mediaControlDisabled) should] beTrue];
         });
 
-        it(@"should listen to playback's enable media control event", ^{
+        it(@"should trigger its event after listen to playbacks's disable media control event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventMediaControlDisabled callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [playback trigger:CLPPlaybackEventMediaControlDisabled];
+
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
+        it(@"should enable media control after listen to playback's enable media control event", ^{
+            // just to not get the default value and we think the test
+            // result is what we're expecting
+            [container setValue:@(YES) forKey:@"mediaControlDisabled"];
+
             [playback trigger:CLPPlaybackEventMediaControlEnabled];
             [[theValue(container.mediaControlDisabled) should] beFalse];
         });
 
-        it(@"should listen to playback's end event", ^{
-            [[container should] receive:@selector(ended)];
+        it(@"should trigger its event after listen to playbacks's enable media control event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventMediaControlEnabled callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [playback trigger:CLPPlaybackEventMediaControlEnabled];
+
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
+        it(@"should trigger its event after listen to playback's end event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventEnded callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventEnded];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's play event", ^{
-            [[container should] receive:@selector(playing)];
+        it(@"should trigger its event after listen to playback's play event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
             [playback trigger:CLPPlaybackEventPlay];
+
+            [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should listen to playback's error event", ^{
-            NSError *errorObj = [NSError new];
+        it(@"should trigger its event after listen to playback's error event with respective params", ^{
+            NSError *expectedErrorObject = [NSError new];
 
-            [[container should] receive:@selector(error:)
-                          withArguments:errorObj];
+            __block NSError *error = nil;
+            [container once:CLPContainerEventError callback:^(NSDictionary *userInfo) {
+                error = expectedErrorObject;
+            }];
 
-            [playback trigger:CLPPlaybackEventError userInfo:@{@"error":errorObj}];
+            [playback trigger:CLPPlaybackEventError userInfo:@{@"error":expectedErrorObject}];
+
+            [[error should] equal:expectedErrorObject];
         });
     });
 });
