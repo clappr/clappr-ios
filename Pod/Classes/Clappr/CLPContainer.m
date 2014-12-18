@@ -62,8 +62,8 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
          eventName:CLPPlaybackEventProgress
           callback:^(NSDictionary *userInfo) {
 
-        CGFloat startPosition = [userInfo[@"startPosition"] floatValue];
-        CGFloat endPosition = [userInfo[@"endPosition"] floatValue];
+        float startPosition = [userInfo[@"start_position"] floatValue];
+        float endPosition = [userInfo[@"end_position"] floatValue];
         NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
         [weakSelf progressWithStartPosition:startPosition endPosition:endPosition duration:duration];
     }];
@@ -72,7 +72,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
          eventName:CLPPlaybackEventTimeUpdated
           callback:^(NSDictionary *userInfo) {
 
-        CGFloat position = [userInfo[@"position"] floatValue];
+        float position = [userInfo[@"position"] floatValue];
         NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
         [weakSelf timeUpdatedWithPosition:position duration:duration];
     }];
@@ -182,18 +182,32 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
 #pragma mark - Event Callbacks
 
-- (void)progressWithStartPosition:(CGFloat)startPosition
-                      endPosition:(CGFloat)endPosition
+- (void)progressWithStartPosition:(float)startPosition
+                      endPosition:(float)endPosition
                          duration:(NSTimeInterval)duration
-{}
+{
+    NSDictionary *userInfo = @{
+        @"start_position": @(startPosition),
+        @"end_position": @(endPosition),
+        @"duration": @(duration)
+    };
+    [self trigger:CLPContainerEventProgress userInfo:userInfo];
+}
 
-- (void)timeUpdatedWithPosition:(CGFloat)position
+- (void)timeUpdatedWithPosition:(float)position
                        duration:(NSTimeInterval)duration
-{}
+{
+    NSDictionary *userInfo = @{
+        @"position": @(position),
+        @"duration": @(duration)
+    };
+    [self trigger:CLPContainerEventTimeUpdate userInfo:userInfo];
+}
 
 - (void)ready
 {
     _ready = YES;
+    [self trigger:CLPContainerEventReady];
 }
 
 - (void)buffering
@@ -214,10 +228,21 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 {}
 
 - (void)updateBitrate:(float)bitRate
-{}
+{
+    NSDictionary *userInfo = @{@"bit_rate": @(bitRate)};
+    [self trigger:CLPContainerEventBitRate userInfo:userInfo];
+}
+
+- (void)statsReport
+{
+    // check what we need to do here
+    [self trigger:CLPContainerEventStatsReport];
+}
 
 - (void)stateChanged
-{}
+{
+    [self trigger:CLPContainerEventPlaybackStateChanged];
+}
 
 - (void)dvrStateChanged:(BOOL)dvrInUse
 {
@@ -242,6 +267,13 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
 - (void)error:(NSError *)errorObj
 {}
+
+- (void)destroy
+{
+    [self.view removeFromSuperview];
+    [_playback destroy];
+    [self trigger:CLPContainerEventDestroyed userInfo:@{@"name": self.name}];
+}
 
 #pragma mark - Accessors
 

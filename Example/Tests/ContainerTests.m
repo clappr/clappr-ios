@@ -40,6 +40,21 @@ describe(@"Container", ^{
         it(@"should have a default name", ^{
             [[container.name should] equal:@"Container"];
         });
+
+        it(@"can be destroyed property", ^{
+            UIView *wrapperView = [UIView new];
+            [wrapperView addSubview:container.view];
+
+            __block NSString *containerName;
+            [container once:CLPContainerEventDestroyed callback:^(NSDictionary *userInfo) {
+                containerName = userInfo[@"name"];
+            }];
+
+            [[playback should] receive:@selector(destroy)];
+            [container destroy];
+            [[container.view.superview should] beNil];
+            [[containerName should] equal:@"Container"];
+        });
     });
 
     context(@"event binding", ^{
@@ -50,31 +65,55 @@ describe(@"Container", ^{
         });
 
         it(@"should listen to playback's progress event", ^{
-            CGFloat startPosition = 0.0f, endPosition = 15.4f;
-            NSTimeInterval duration = 10.0f;
-            [[container should] receive:@selector(progressWithStartPosition:endPosition:duration:)
-                          withArguments:theValue(startPosition), theValue(endPosition), theValue(duration)];
+            // Given
+            float expectedStartPosition = 0.7f, expectedEndPosition = 15.4f;
+            NSTimeInterval expectedDuration = 10.0f;
 
+            __block float startPosition, endPosition;
+            __block NSTimeInterval duration;
+
+            [container once:CLPContainerEventProgress callback:^(NSDictionary *userInfo) {
+                startPosition = [userInfo[@"start_position"] floatValue];
+                endPosition = [userInfo[@"end_position"] floatValue];
+                duration = [userInfo[@"duration"] doubleValue];
+            }];
+
+            // When
             NSDictionary *userInfo = @{
-                @"startPosition": @(startPosition),
-                @"endPosition": @(endPosition),
-                @"duration": @(duration)
+                @"start_position": @(expectedStartPosition),
+                @"end_position": @(expectedEndPosition),
+                @"duration": @(expectedDuration)
             };
-
             [playback trigger:CLPPlaybackEventProgress userInfo:userInfo];
+
+            // Then
+            [[theValue(startPosition) should] equal:theValue(expectedStartPosition)];
+            [[theValue(endPosition) should] equal:theValue(expectedEndPosition)];
+            [[theValue(duration) should] equal:theValue(expectedDuration)];
         });
 
         it(@"should listen to playback's time updated event", ^{
-            CGFloat position = 10.3f;
-            NSTimeInterval duration = 12.78;
-            [[container should] receive:@selector(timeUpdatedWithPosition:duration:) withArguments:theValue(position), theValue(duration)];
+            // Given
+            float expectedPosition = 10.3f;
+            NSTimeInterval expectedDuration = 12.78;
 
+            __block float position = 0.0;
+            __block NSTimeInterval duration = 0.0;
+            [container once:CLPContainerEventTimeUpdate callback:^(NSDictionary *userInfo) {
+                position = [userInfo[@"position"] floatValue];
+                duration = [userInfo[@"duration"] doubleValue];
+            }];
+
+            // When
             NSDictionary *userInfo = @{
-                @"position": @(position),
-                @"duration":@(duration)
+                @"position": @(expectedPosition),
+                @"duration":@(expectedDuration)
             };
-
             [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+
+            // Then
+            [[theValue(position) should] equal:theValue(expectedPosition)];
+            [[theValue(duration) should] equal:theValue(expectedDuration)];
         });
 
         it(@"should listen to playback's ready event", ^{
