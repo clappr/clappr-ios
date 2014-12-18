@@ -37,7 +37,6 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 
 @interface CLPContainer : CLPUIObject
 
-@property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, assign, readonly, getter=isReady) BOOL ready;
 @property (nonatomic, assign, readonly) NSDictionary *settings;
 @property (nonatomic, assign, readonly, getter=isDVRInUse) BOOL dvrInUse;

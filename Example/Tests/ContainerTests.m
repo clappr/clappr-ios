@@ -37,10 +37,6 @@ describe(@"Container", ^{
             container = [[CLPContainer alloc] initWithPlayback:playback];
         });
 
-        it(@"should have a default name", ^{
-            [[container.name should] equal:@"Container"];
-        });
-
         it(@"can be destroyed property", ^{
             UIView *wrapperView = [UIView new];
             [wrapperView addSubview:container.view];
