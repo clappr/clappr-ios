@@ -290,6 +290,11 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self trigger:CLPContainerEventError userInfo:@{@"error": errorObj}];
 }
 
+- (void)play
+{
+    [_playback play];
+}
+
 - (void)destroy
 {
     [self.view removeFromSuperview];

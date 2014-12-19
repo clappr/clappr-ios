@@ -8,6 +8,15 @@
 
 #import "CLPUIObject.h"
 
+@class CLPContainer;
+
 @interface CLPMediaControl : CLPUIObject
+
+@property (nonatomic, strong, readwrite) CLPContainer *container;
+@property (nonatomic, assign, readwrite) float volume;
+
+- (instancetype)initWithContainer:(CLPContainer *)container;
+
+- (void)play;
 
 @end

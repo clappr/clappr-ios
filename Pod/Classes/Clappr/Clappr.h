@@ -16,5 +16,6 @@
 #import <Clappr/CLPUIObject.h>
 #import <Clappr/CLPContainer.h>
 #import <Clappr/CLPPlayback.h>
+#import <Clappr/CLPMediaControl.h>
 
 #endif

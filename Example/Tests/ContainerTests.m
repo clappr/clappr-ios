@@ -37,7 +37,7 @@ describe(@"Container", ^{
             container = [[CLPContainer alloc] initWithPlayback:playback];
         });
 
-        it(@"can be destroyed property", ^{
+        it(@"can be destroyed properly", ^{
             UIView *wrapperView = [UIView new];
             [wrapperView addSubview:container.view];
 
@@ -50,6 +50,11 @@ describe(@"Container", ^{
             [container destroy];
             [[container.view.superview should] beNil];
             [[containerName should] equal:@"Container"];
+        });
+
+        it(@"should call playback's play method after its play method has been called", ^{
+            [[playback should] receive:@selector(play)];
+            [container play];
         });
     });
 
