@@ -9,6 +9,9 @@
 #import "CLPMediaControl.h"
 #import "CLPContainer.h"
 
+NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
+NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
+
 @implementation CLPMediaControl
 
 #pragma mark - Ctors
@@ -18,8 +21,17 @@
     self = [super init];
     if (self) {
         self.container = container;
+        [self bindEventListeners];
     }
     return self;
+}
+
+- (void)bindEventListeners
+{
+    __weak typeof(self) weakSelf = self;
+    [self listenTo:_container eventName:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
+        [weakSelf togglePlay];
+    }];
 }
 
 #pragma mark - Accessors
@@ -40,6 +52,15 @@
 - (void)play
 {
     [_container play];
+}
+
+- (void)togglePlay
+{
+    if ([_container isPlaying]) {
+        [self trigger:CLPMediaControlEventPlaying];
+    } else {
+        [self trigger:CLPMediaControlEventNotPlaying];
+    }
 }
 
 @end

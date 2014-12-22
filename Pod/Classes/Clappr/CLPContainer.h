@@ -39,6 +39,7 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 
 @property (nonatomic, strong, readwrite) CLPPlayback *playback;
 @property (nonatomic, assign, readonly, getter=isReady) BOOL ready;
+@property (nonatomic, assign, readonly, getter=isPlaying) BOOL playing;
 @property (nonatomic, assign, readonly) NSDictionary *settings;
 @property (nonatomic, assign, readonly, getter=isDVRInUse) BOOL dvrInUse;
 @property (nonatomic, assign, readonly, getter=isMediaControlDisabled) BOOL mediaControlDisabled;

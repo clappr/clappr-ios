@@ -50,12 +50,48 @@ describe(@"Media Control", ^{
 
         });
 
-        it(@"should trigger media control's playing event after listen to container's play event", ^{
+        it(@"should trigger media control's playing event after listen to container's play event when container is playing", ^{
 
+            [container stub:@selector(isPlaying) andReturn:theValue(YES)];
+
+            __block BOOL playingCallbackWasCalled = NO;
+            [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
+                playingCallbackWasCalled = YES;
+            }];
+
+            __block BOOL notPlayingCallbackWasCalled = NO;
+            [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
+                notPlayingCallbackWasCalled = YES;
+            }];
+
+            [container trigger:CLPContainerEventPlay];
+
+            [[theValue(playingCallbackWasCalled) should] beTrue];
+            [[theValue(notPlayingCallbackWasCalled) should] beFalse];
+        });
+
+        it(@"should trigger media control's not playing event after listen to container's play event when container is not playing", ^{
+
+            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
+
+            __block BOOL playingCallbackWasCalled = NO;
+            [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
+                playingCallbackWasCalled = YES;
+            }];
+
+            __block BOOL notPlayingCallbackWasCalled = NO;
+            [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
+                notPlayingCallbackWasCalled = YES;
+            }];
+
+            [container trigger:CLPContainerEventPlay];
+
+            [[theValue(playingCallbackWasCalled) should] beFalse];
+            [[theValue(notPlayingCallbackWasCalled) should] beTrue];
         });
 
         it(@"should update seek bar after listen to container's time update event", ^{
-
+            
         });
 
         it(@"should update progress bar after listen to container's progress event", ^{

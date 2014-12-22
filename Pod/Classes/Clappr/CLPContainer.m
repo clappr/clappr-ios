@@ -168,7 +168,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
          eventName:CLPPlaybackEventPlay
           callback:^(NSDictionary *userInfo) {
 
-        [weakSelf playing];
+        [weakSelf play];
     }];
 
     [self listenTo:_playback
@@ -280,11 +280,6 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self trigger:CLPContainerEventEnded];
 }
 
-- (void)playing
-{
-    [self trigger:CLPContainerEventPlay];
-}
-
 - (void)error:(NSError *)errorObj
 {
     [self trigger:CLPContainerEventError userInfo:@{@"error": errorObj}];
@@ -293,6 +288,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 - (void)play
 {
     [_playback play];
+    [self trigger:CLPContainerEventPlay];
 }
 
 - (void)destroy
@@ -307,6 +303,11 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 - (NSString *)name
 {
     return @"Container";
+}
+
+- (BOOL)isPlaying
+{
+    return [_playback isPlaying];
 }
 
 - (void)setPlayback:(CLPPlayback *)playback

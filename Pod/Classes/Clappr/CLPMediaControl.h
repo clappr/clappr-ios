@@ -8,6 +8,9 @@
 
 #import "CLPUIObject.h"
 
+extern NSString *const CLPMediaControlEventPlaying;
+extern NSString *const CLPMediaControlEventNotPlaying;
+
 @class CLPContainer;
 
 @interface CLPMediaControl : CLPUIObject
