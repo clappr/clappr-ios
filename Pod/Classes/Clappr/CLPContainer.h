@@ -47,6 +47,7 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 - (instancetype)initWithPlayback:(CLPPlayback *)playback;
 
 - (void)play;
+- (void)pause;
 - (void)destroy;
 
 @end

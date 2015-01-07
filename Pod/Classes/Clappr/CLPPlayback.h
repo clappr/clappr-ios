@@ -23,6 +23,7 @@ extern NSString *const CLPPlaybackEventMediaControlDisabled;
 extern NSString *const CLPPlaybackEventMediaControlEnabled;
 extern NSString *const CLPPlaybackEventEnded;
 extern NSString *const CLPPlaybackEventPlay;
+extern NSString *const CLPPlaybackEventPause;
 extern NSString *const CLPPlaybackEventError;
 
 typedef NS_ENUM(NSUInteger, CLPPlaybackType) {

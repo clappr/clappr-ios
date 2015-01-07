@@ -56,6 +56,11 @@ describe(@"Container", ^{
             [[playback should] receive:@selector(play)];
             [container play];
         });
+
+        it(@"should call playback's pause method after its pause method has been called", ^{
+            [[playback should] receive:@selector(pause)];
+            [container pause];
+        });
     });
 
     context(@"event binding", ^{
@@ -293,13 +298,24 @@ describe(@"Container", ^{
             [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should trigger its event after listen to playback's play event", ^{
+        it(@"should trigger its play event after listen to playback's play event", ^{
             __block BOOL eventWasTriggered = NO;
             [container once:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
                 eventWasTriggered = YES;
             }];
 
             [playback trigger:CLPPlaybackEventPlay];
+
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
+        it(@"should trigger its pause event after listen to playback's pause event", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [playback trigger:CLPPlaybackEventPause];
 
             [[theValue(eventWasTriggered) should] beTrue];
         });

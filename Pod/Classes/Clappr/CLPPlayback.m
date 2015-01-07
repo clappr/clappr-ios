@@ -23,6 +23,7 @@ NSString *const CLPPlaybackEventMediaControlDisabled = @"clappr:playback:media_c
 NSString *const CLPPlaybackEventMediaControlEnabled = @"clappr:playback:media_control_enabled";
 NSString *const CLPPlaybackEventEnded = @"clappr:playback:ended";
 NSString *const CLPPlaybackEventPlay = @"clappr:playback:play";
+NSString *const CLPPlaybackEventPause = @"clappr:playback:pause";
 NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 @implementation CLPPlayback

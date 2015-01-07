@@ -23,29 +23,83 @@ describe(@"Media Control", ^{
         mediaControl = [[CLPMediaControl alloc] initWithContainer:container];
     });
 
-    it(@"should have a volume property accepting values between 0 and 100", ^{
-        mediaControl.volume = 57.0;
-        [[theValue(mediaControl.volume) should] equal:theValue(57.0)];
+    describe(@"Volume", ^{
+
+        it(@"should accept values between 0 and 100", ^{
+            mediaControl.volume = 57.0;
+            [[theValue(mediaControl.volume) should] equal:theValue(57.0)];
+        });
+
+        it(@"should not have a value less than 0", ^{
+            mediaControl.volume = -45.0f;
+            [[theValue(mediaControl.volume) should] equal:theValue(0.0)];
+        });
+
+        it(@"should not have a value greater than 100", ^{
+            mediaControl.volume = 101.2;
+            [[theValue(mediaControl.volume) should] equal:theValue(100.0)];
+        });
     });
 
-    it(@"should not have a volume less than 0", ^{
-        mediaControl.volume = -45.0f;
-        [[theValue(mediaControl.volume) should] equal:theValue(0.0)];
+    describe(@"Play", ^{
+
+        it(@"should contain a play/pause button embed in its container view", ^{
+            UIButton *playPauseButton = mediaControl.playPauseButton;
+            [[playPauseButton.superview should] equal:container.view];
+        });
+
+        it(@"should be triggered after touch the button when it is not playing", ^{
+
+            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
+
+            [[mediaControl should] receive:@selector(play)];
+
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+        it(@"should call container play after its play method has been called", ^{
+
+            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
+
+            [[container should] receive:@selector(play)];
+
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+        it(@"should trigger playing event", ^{
+
+            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
+
+            __block BOOL callbackWasCalled = NO;
+            [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            }];
+
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+            [[theValue(callbackWasCalled) should] beTrue];
+        });
     });
 
-    it(@"should not have a volume greater than 100", ^{
-        mediaControl.volume = 101.2;
-        [[theValue(mediaControl.volume) should] equal:theValue(100.0)];
-    });
+    describe(@"Pause", ^{
 
-    it(@"should call container play after its play method has been called", ^{
-        [[container should] receive:@selector(play)];
-        [mediaControl play];
-    });
+        it(@"should be triggered after touch the button when it is playing", ^{
 
-    it(@"should contain a play/pause button embed in its container view", ^{
-        UIButton *playPauseButton = mediaControl.playPauseButton;
-        [[playPauseButton.superview should] equal:container.view];
+            [container stub:@selector(isPlaying) andReturn:theValue(YES)];
+
+            [[mediaControl should] receive:@selector(pause)];
+
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+        it(@"should call container pause after its pause method has been called", ^{
+
+            [container stub:@selector(isPlaying) andReturn:theValue(YES)];
+
+            [[container should] receive:@selector(pause)];
+
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
     });
 
     describe(@"Event listening", ^{
@@ -54,44 +108,28 @@ describe(@"Media Control", ^{
             // change the view
         });
 
-        it(@"should trigger media control's playing event after listen to container's play event when container is playing", ^{
+        it(@"should trigger media control's playing event after listen to container's play event", ^{
 
-            [container stub:@selector(isPlaying) andReturn:theValue(YES)];
-
-            __block BOOL playingCallbackWasCalled = NO;
+            __block BOOL callbackWasCalled = NO;
             [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
-                playingCallbackWasCalled = YES;
-            }];
-
-            __block BOOL notPlayingCallbackWasCalled = NO;
-            [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
-                notPlayingCallbackWasCalled = YES;
+                callbackWasCalled = YES;
             }];
 
             [container trigger:CLPContainerEventPlay];
 
-            [[theValue(playingCallbackWasCalled) should] beTrue];
-            [[theValue(notPlayingCallbackWasCalled) should] beFalse];
+            [[theValue(callbackWasCalled) should] beTrue];
         });
 
-        it(@"should trigger media control's not playing event after listen to container's play event when container is not playing", ^{
+        it(@"should trigger media control's not playing event after listen to container's pause event", ^{
 
-            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
-
-            __block BOOL playingCallbackWasCalled = NO;
-            [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
-                playingCallbackWasCalled = YES;
-            }];
-
-            __block BOOL notPlayingCallbackWasCalled = NO;
+            __block BOOL callbackWasCalled = NO;
             [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
-                notPlayingCallbackWasCalled = YES;
+                callbackWasCalled = YES;
             }];
 
-            [container trigger:CLPContainerEventPlay];
+            [container trigger:CLPContainerEventPause];
 
-            [[theValue(playingCallbackWasCalled) should] beFalse];
-            [[theValue(notPlayingCallbackWasCalled) should] beTrue];
+            [[theValue(callbackWasCalled) should] beTrue];
         });
 
         it(@"should update seek bar after listen to container's time update event", ^{
