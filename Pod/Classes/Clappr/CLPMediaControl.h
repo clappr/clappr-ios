@@ -16,6 +16,8 @@ extern NSString *const CLPMediaControlEventNotPlaying;
 @interface CLPMediaControl : CLPUIObject
 
 @property (nonatomic, strong, readwrite) CLPContainer *container;
+@property (nonatomic, strong, readonly) UIButton *playPauseButton;
+
 @property (nonatomic, assign, readwrite) float volume;
 
 - (instancetype)initWithContainer:(CLPContainer *)container;

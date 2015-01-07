@@ -20,7 +20,11 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 {
     self = [super init];
     if (self) {
-        self.container = container;
+        _container = container;
+
+        _playPauseButton = [UIButton new];
+        [_container.view addSubview:_playPauseButton];
+
         [self bindEventListeners];
     }
     return self;

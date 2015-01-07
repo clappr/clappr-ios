@@ -43,11 +43,15 @@ describe(@"Media Control", ^{
         [mediaControl play];
     });
 
+    it(@"should contain a play/pause button embed in its container view", ^{
+        UIButton *playPauseButton = mediaControl.playPauseButton;
+        [[playPauseButton.superview should] equal:container.view];
+    });
 
     describe(@"Event listening", ^{
 
         it(@"should toggle play after listen to container's play event", ^{
-
+            // change the view
         });
 
         it(@"should trigger media control's playing event after listen to container's play event when container is playing", ^{
@@ -91,7 +95,7 @@ describe(@"Media Control", ^{
         });
 
         it(@"should update seek bar after listen to container's time update event", ^{
-            
+
         });
 
         it(@"should update progress bar after listen to container's progress event", ^{
