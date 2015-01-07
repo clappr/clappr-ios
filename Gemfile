@@ -1,2 +1,2 @@
-cocoapods
-xcpretty
+gem 'cocoapods'
+gem 'xcpretty'
