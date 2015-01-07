@@ -4,7 +4,9 @@
 
 ## Running Tests
 
-You can run the tests directly via Xcode or via command line using [xctool](https://github.com/facebook/xctool). Make sure you have it installed via Homebrew.
+You can run the tests directly via Xcode or via command line: 
+
 ```
 $ make test
 ```
+
