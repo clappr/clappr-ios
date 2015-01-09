@@ -22,13 +22,25 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     if (self) {
         _container = container;
 
-        _playPauseButton = [UIButton new];
-        [_playPauseButton addTarget:self action:@selector(togglePlay) forControlEvents:UIControlEventTouchUpInside];
-        [_container.view addSubview:_playPauseButton];
-
+        [self addControlButtons];
         [self bindEventListeners];
     }
     return self;
+}
+
+- (void)addControlButtons
+{
+    _playPauseButton = [UIButton new];
+    [_playPauseButton addTarget:self
+                         action:@selector(togglePlay)
+               forControlEvents:UIControlEventTouchUpInside];
+    [_container.view addSubview:_playPauseButton];
+
+    _stopButton = [UIButton new];
+    [_stopButton addTarget:self
+                    action:@selector(stop)
+          forControlEvents:UIControlEventTouchUpInside];
+    [_container.view addSubview:_stopButton];
 }
 
 - (void)bindEventListeners
@@ -41,7 +53,6 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     [self listenTo:_container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
         [weakSelf containerDidPause];
     }];
-
 }
 
 #pragma mark - Accessors
@@ -78,6 +89,15 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     } else {
         [self play];
     }
+}
+
+- (void)stop
+{
+    if (!_container.playing)
+        return;
+
+    [_container stop];
+    [self trigger:CLPMediaControlEventNotPlaying];
 }
 
 #pragma mark - Notification handling

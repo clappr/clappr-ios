@@ -320,6 +320,22 @@ describe(@"Container", ^{
             [[theValue(eventWasTriggered) should] beTrue];
         });
 
+        it(@"should call playback's stop method after call its stop method", ^{
+            [[playback should] receive:@selector(stop)];
+            [container stop];
+        });
+
+        it(@"should trigger its stop event after calls stop method", ^{
+            __block BOOL eventWasTriggered = NO;
+            [container once:CLPContainerEventStop callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [container stop];
+
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
         it(@"should trigger its event after listen to playback's error event with respective params", ^{
             NSError *expectedErrorObject = [NSError new];
 

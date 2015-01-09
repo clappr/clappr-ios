@@ -102,6 +102,59 @@ describe(@"Media Control", ^{
         });
     });
 
+    describe(@"Stop", ^{
+
+        it(@"button should be embed in its container view", ^{
+            UIButton *stopButton = mediaControl.stopButton;
+            [[stopButton.superview should] equal:container.view];
+        });
+
+        it(@"should be called after touch the button", ^{
+
+            [[mediaControl should] receive:@selector(stop)];
+
+            [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+        it(@"should call container stop method", ^{
+
+            [playback stub:@selector(isPlaying) andReturn:theValue(YES)];
+
+            [[container should] receive:@selector(stop)];
+
+            [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        });
+
+        it(@"should trigger 'not playing' event", ^{
+
+            [playback stub:@selector(isPlaying) andReturn:theValue(YES)];
+
+            __block BOOL eventWasTriggered = NO;
+            [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+            [[theValue(eventWasTriggered) should] beTrue];
+        });
+
+        it(@"should not trigger 'not playing' event if it was already not playing", ^{
+
+            [playback stub:@selector(isPlaying) andReturn:theValue(NO)];
+
+            __block BOOL eventWasTriggered = NO;
+            [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
+                eventWasTriggered = YES;
+            }];
+
+            [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+            [[theValue(eventWasTriggered) should] beFalse];
+
+        });
+    });
+
     describe(@"Event listening", ^{
 
         it(@"should toggle play after listen to container's play event", ^{
