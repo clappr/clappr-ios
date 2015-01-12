@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
 
 @interface CLPPlayback : CLPUIObject
 
-@property (nonatomic, assign, readwrite) CGFloat volume;
+@property (nonatomic, assign, readwrite) float volume;
 @property (nonatomic, assign, readonly) NSUInteger duration;
 @property (nonatomic, assign, readonly, getter=isPlaying) BOOL playing;
 @property (nonatomic, assign, readonly) CLPPlaybackType type;

@@ -25,19 +25,9 @@ describe(@"Media Control", ^{
 
     describe(@"Volume", ^{
 
-        it(@"should accept values between 0 and 1", ^{
-            mediaControl.volume = 0.57f;
-            [[theValue(mediaControl.volume) should] equal:theValue(0.57f)];
-        });
-
-        it(@"should not have a value less than 0", ^{
-            mediaControl.volume = -0.45f;
-            [[theValue(mediaControl.volume) should] equal:theValue(0.0f)];
-        });
-
-        it(@"should not have a value greater than 1", ^{
-            mediaControl.volume = 1.2f;
-            [[theValue(mediaControl.volume) should] equal:theValue(1.0f)];
+        it(@"should have a slider to control itself", ^{
+            UISlider *volumeSlider = mediaControl.volumeSlider;
+            [[volumeSlider.superview should] equal:container.view];
         });
     });
 

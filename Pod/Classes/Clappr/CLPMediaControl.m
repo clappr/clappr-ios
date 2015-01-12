@@ -22,13 +22,13 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     if (self) {
         _container = container;
 
-        [self addControlButtons];
+        [self addControlViews];
         [self bindEventListeners];
     }
     return self;
 }
 
-- (void)addControlButtons
+- (void)addControlViews
 {
     _playPauseButton = [UIButton new];
     [_playPauseButton addTarget:self
@@ -41,6 +41,9 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
                     action:@selector(stop)
           forControlEvents:UIControlEventTouchUpInside];
     [_container.view addSubview:_stopButton];
+
+    _volumeSlider = [UISlider new];
+    [_container.view addSubview:_volumeSlider];
 }
 
 - (void)bindEventListeners
@@ -53,19 +56,6 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     [self listenTo:_container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
         [weakSelf containerDidPause];
     }];
-}
-
-#pragma mark - Accessors
-
-- (void)setVolume:(float)volume
-{
-    if (volume < 0.0) {
-        _volume = 0.0;
-    } else if (volume > 1.0) {
-        _volume = 1.0;
-    } else {
-        _volume = volume;
-    }
 }
 
 #pragma mark - Methods

@@ -54,4 +54,17 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
     [self.view removeFromSuperview];
 }
 
+#pragma mark - Accessors
+
+- (void)setVolume:(float)volume
+{
+    if (volume < 0.0) {
+        _volume = 0.0;
+    } else if (volume > 1.0) {
+        _volume = 1.0;
+    } else {
+        _volume = volume;
+    }
+}
+
 @end

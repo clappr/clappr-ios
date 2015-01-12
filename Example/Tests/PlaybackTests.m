@@ -19,6 +19,24 @@ describe(@"Playback", ^{
         playback = [CLPPlayback new];
     });
 
+    describe(@"Volume", ^{
+
+        it(@"should accept values between 0 and 1", ^{
+            playback.volume = 0.57f;
+            [[theValue(playback.volume) should] equal:theValue(0.57f)];
+        });
+
+        it(@"should not have a value less than 0", ^{
+            playback.volume = -0.45f;
+            [[theValue(playback.volume) should] equal:theValue(0.0f)];
+        });
+
+        it(@"should not have a value greater than 1", ^{
+            playback.volume = 1.2f;
+            [[theValue(playback.volume) should] equal:theValue(1.0f)];
+        });
+    });
+
     it(@"should have a play method", ^{
         BOOL responds = [playback respondsToSelector:@selector(play)];
         [[theValue(responds) should] beTrue];
@@ -38,14 +56,6 @@ describe(@"Playback", ^{
         [[theBlock(^{
             [playback seekTo:10];
         }) shouldNot] raise];
-    });
-
-    it(@"should have a volume property with a default value 0 and settable", ^{
-        [[theValue(playback.volume) should] equal:theValue(0)];
-
-        playback.volume = 0.5f;
-
-        [[theValue(playback.volume) should] equal:theValue(0.5f)];
     });
 
     it(@"should have a duration property with a default value 0", ^{
