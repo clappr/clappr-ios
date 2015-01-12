@@ -110,18 +110,13 @@ describe(@"Media Control", ^{
         });
 
         it(@"should be called after touch the button", ^{
-
             [[mediaControl should] receive:@selector(stop)];
-
             [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         });
 
         it(@"should call container stop method", ^{
-
             [playback stub:@selector(isPlaying) andReturn:theValue(YES)];
-
             [[container should] receive:@selector(stop)];
-
             [mediaControl.stopButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         });
 

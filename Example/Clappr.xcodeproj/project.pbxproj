@@ -177,8 +177,8 @@
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */,
 				E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */,
-				E4A7FB131A39D79C00C568DC /* ContainerTests.m */,
 				E4A7FB181A3A118D00C568DC /* PlaybackTests.m */,
+				E4A7FB131A39D79C00C568DC /* ContainerTests.m */,
 				E401F2071A43709A00F41E8C /* MediaControlTests.m */,
 			);
 			path = Tests;

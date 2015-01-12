@@ -15,7 +15,7 @@ describe(@"Container", ^{
     __block CLPContainer *container;
     __block CLPPlayback *playback;
 
-    context(@"Instantiation", ^{
+    describe(@"Instantiation", ^{
 
         it(@"cannot be instatiated without a playback", ^{
             [[theBlock(^{
@@ -63,7 +63,7 @@ describe(@"Container", ^{
         });
     });
 
-    context(@"event binding", ^{
+    describe(@"event binding", ^{
 
         beforeEach(^{
             playback = [CLPPlayback new];
