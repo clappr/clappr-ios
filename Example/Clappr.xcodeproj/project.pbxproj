@@ -23,6 +23,7 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		BC1F18EC96A346EBBD5D05A1 /* libPods-Clappr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD39FC62AD948D5BDFCDC13 /* libPods-Clappr.a */; };
 		E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E401F2071A43709A00F41E8C /* MediaControlTests.m */; };
+		E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C99A21A64510100EB5C21 /* CoreTests.m */; };
 		E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */; };
 		E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB131A39D79C00C568DC /* ContainerTests.m */; };
 		E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB181A3A118D00C568DC /* PlaybackTests.m */; };
@@ -68,6 +69,7 @@
 		7FAAF24F5FFF420E8E13F7DA /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Clappr.podspec; path = ../Clappr.podspec; sourceTree = "<group>"; };
 		DF38B8233EFC57C47A83D04D /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E401F2071A43709A00F41E8C /* MediaControlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaControlTests.m; sourceTree = "<group>"; };
+		E45C99A21A64510100EB5C21 /* CoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTests.m; sourceTree = "<group>"; };
 		E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIObjectTests.m; sourceTree = "<group>"; };
 		E4A7FB131A39D79C00C568DC /* ContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerTests.m; sourceTree = "<group>"; };
 		E4A7FB181A3A118D00C568DC /* PlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackTests.m; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				E4A7FB181A3A118D00C568DC /* PlaybackTests.m */,
 				E4A7FB131A39D79C00C568DC /* ContainerTests.m */,
 				E401F2071A43709A00F41E8C /* MediaControlTests.m */,
+				E45C99A21A64510100EB5C21 /* CoreTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */,
 				E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */,
 				E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */,
 				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,
