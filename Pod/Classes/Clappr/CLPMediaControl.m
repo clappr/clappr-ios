@@ -61,8 +61,8 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 {
     if (volume < 0.0) {
         _volume = 0.0;
-    } else if (volume > 100.0) {
-        _volume = 100.0;
+    } else if (volume > 1.0) {
+        _volume = 1.0;
     } else {
         _volume = volume;
     }

@@ -20,15 +20,18 @@ describe(@"Playback", ^{
     });
 
     it(@"should have a play method", ^{
-        [[playback should] respondsToSelector:@selector(play)];
+        BOOL responds = [playback respondsToSelector:@selector(play)];
+        [[theValue(responds) should] beTrue];
     });
 
     it(@"should have a pause method", ^{
-        [[playback should] respondsToSelector:@selector(pause)];
+        BOOL responds = [playback respondsToSelector:@selector(pause)];
+        [[theValue(responds) should] beTrue];
     });
 
     it(@"should have a stop method", ^{
-        [[playback should] respondsToSelector:@selector(stop)];
+        BOOL responds = [playback respondsToSelector:@selector(stop)];
+        [[theValue(responds) should] beTrue];
     });
 
     it(@"should have a seekTo method receiving the time", ^{
@@ -54,7 +57,8 @@ describe(@"Playback", ^{
     });
 
     it(@"should responds to isPlaying as a getter to the property", ^{
-        [[playback should] respondsToSelector:@selector(isPlaying)];
+        BOOL responds = [playback respondsToSelector:@selector(isPlaying)];
+        [[theValue(responds) should] beTrue];
     });
 
     it(@"should have a type property with a default value unknown", ^{
@@ -66,7 +70,8 @@ describe(@"Playback", ^{
     });
 
     it(@"should responds to isHighDefinitionInUse as a getter to the property", ^{
-        [[playback should] respondsToSelector:@selector(isHighDefinitionInUse)];
+        BOOL responds = [playback respondsToSelector:@selector(isHighDefinitionInUse)];
+        [[theValue(responds) should] beTrue];
     });
 
     it(@"should be removed from superview when call destroy", ^{

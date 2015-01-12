@@ -25,19 +25,19 @@ describe(@"Media Control", ^{
 
     describe(@"Volume", ^{
 
-        it(@"should accept values between 0 and 100", ^{
-            mediaControl.volume = 57.0;
-            [[theValue(mediaControl.volume) should] equal:theValue(57.0)];
+        it(@"should accept values between 0 and 1", ^{
+            mediaControl.volume = 0.57f;
+            [[theValue(mediaControl.volume) should] equal:theValue(0.57f)];
         });
 
         it(@"should not have a value less than 0", ^{
-            mediaControl.volume = -45.0f;
-            [[theValue(mediaControl.volume) should] equal:theValue(0.0)];
+            mediaControl.volume = -0.45f;
+            [[theValue(mediaControl.volume) should] equal:theValue(0.0f)];
         });
 
-        it(@"should not have a value greater than 100", ^{
-            mediaControl.volume = 101.2;
-            [[theValue(mediaControl.volume) should] equal:theValue(100.0)];
+        it(@"should not have a value greater than 1", ^{
+            mediaControl.volume = 1.2f;
+            [[theValue(mediaControl.volume) should] equal:theValue(1.0f)];
         });
     });
 
