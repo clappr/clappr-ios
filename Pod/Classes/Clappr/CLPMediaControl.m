@@ -8,6 +8,7 @@
 
 #import "CLPMediaControl.h"
 #import "CLPContainer.h"
+#import "CLPPlayback.h"
 
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
 NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
@@ -43,6 +44,10 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     [_container.view addSubview:_stopButton];
 
     _volumeSlider = [UISlider new];
+    _volumeSlider.continuous = YES;
+    [_volumeSlider addTarget:self
+                      action:@selector(volumeSliderValueDidChange)
+            forControlEvents:UIControlEventValueChanged];
     [_container.view addSubview:_volumeSlider];
 }
 
@@ -88,6 +93,11 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 
     [_container stop];
     [self trigger:CLPMediaControlEventNotPlaying];
+}
+
+- (void)volumeSliderValueDidChange
+{
+    _container.playback.volume = _volumeSlider.value;
 }
 
 #pragma mark - Notification handling

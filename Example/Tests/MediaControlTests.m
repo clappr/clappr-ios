@@ -29,6 +29,22 @@ describe(@"Media Control", ^{
             UISlider *volumeSlider = mediaControl.volumeSlider;
             [[volumeSlider.superview should] equal:container.view];
         });
+
+        it(@"slider should change playback's volume", ^{
+            mediaControl.volumeSlider.value = 0.5f;
+            [mediaControl.volumeSlider sendActionsForControlEvents:UIControlEventValueChanged];
+            [[theValue(playback.volume) should] equal:theValue(0.5f)];
+        });
+
+        it(@"should have a min value of 0", ^{
+            mediaControl.volumeSlider.value = -1.0f;
+            [[theValue(mediaControl.volumeSlider.value) should] equal:theValue(0.0f)];
+        });
+
+        it(@"should have a max value of 1", ^{
+            mediaControl.volumeSlider.value = 1.1f;
+            [[theValue(mediaControl.volumeSlider.value) should] equal:theValue(1.0f)];
+        });
     });
 
     describe(@"Play", ^{
