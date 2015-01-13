@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CLPUIObject.h"
 
-@interface CLPCore : NSObject
+@interface CLPCore : CLPUIObject
+
+@property (nonatomic, copy, readonly) NSArray *sources;
+@property (nonatomic, copy, readonly) NSArray *containers;
+
+- (instancetype)initWithSources:(NSArray *)sources;
 
 @end

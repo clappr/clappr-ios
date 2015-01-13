@@ -28,6 +28,26 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 @implementation CLPPlayback
 
+#pragma mark - Ctors
+
+- (instancetype)initWithURL:(NSURL *)url
+{
+    self = [super init];
+    if (self) {
+        _url = url;
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"Use initWithURL: instead"
+                                 userInfo:nil];
+}
+
+#pragma mark -
+
 - (void)play
 {
 }

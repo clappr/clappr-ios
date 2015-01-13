@@ -17,8 +17,10 @@ describe(@"Media Control", ^{
     __block CLPContainer *container;
     __block CLPPlayback *playback;
 
+    NSURL *sourceURL = [NSURL URLWithString:@"http://globo.com/video.mp4"];
+
     beforeEach(^{
-        playback = [[CLPPlayback alloc] init];
+        playback = [[CLPPlayback alloc] initWithURL:sourceURL];
         container = [[CLPContainer alloc] initWithPlayback:playback];
         mediaControl = [[CLPMediaControl alloc] initWithContainer:container];
     });

@@ -15,8 +15,16 @@ describe(@"Playback", ^{
 
     __block CLPPlayback *playback;
 
+    NSURL *sourceURL = [NSURL URLWithString:@"http://globo.com/video.mp4"];
+
     beforeAll(^{
-        playback = [CLPPlayback new];
+        playback = [[CLPPlayback alloc] initWithURL:sourceURL];
+    });
+
+    it(@"should raise an exception for its default init method", ^{
+        [[theBlock(^{
+            [CLPPlayback new];
+        }) should] raiseWithName:NSInternalInconsistencyException];
     });
 
     describe(@"Volume", ^{

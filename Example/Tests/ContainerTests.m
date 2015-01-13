@@ -15,6 +15,8 @@ describe(@"Container", ^{
     __block CLPContainer *container;
     __block CLPPlayback *playback;
 
+    NSURL *sourceURL = [NSURL URLWithString:@"http://globo.com/video.mp4"];
+
     describe(@"Instantiation", ^{
 
         it(@"cannot be instatiated without a playback", ^{
@@ -24,7 +26,7 @@ describe(@"Container", ^{
         });
 
         it(@"should receive a playback in the constructor", ^{
-            playback = [CLPPlayback new];
+            playback = [[CLPPlayback alloc] initWithURL:sourceURL];
             container = [[CLPContainer alloc] initWithPlayback:playback];
             [[container.playback should] equal:playback];
         });
@@ -33,7 +35,7 @@ describe(@"Container", ^{
     context(@"General", ^{
 
         beforeEach(^{
-            playback = [CLPPlayback new];
+            playback = [[CLPPlayback alloc] initWithURL:sourceURL];
             container = [[CLPContainer alloc] initWithPlayback:playback];
         });
 
@@ -66,7 +68,7 @@ describe(@"Container", ^{
     describe(@"event binding", ^{
 
         beforeEach(^{
-            playback = [CLPPlayback new];
+            playback = [[CLPPlayback alloc] initWithURL:sourceURL];
             container = [[CLPContainer alloc] initWithPlayback:playback];
         });
 
