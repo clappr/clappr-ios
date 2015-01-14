@@ -8,6 +8,7 @@
 
 #import "CLPCore.h"
 
+#import "CLPMediaControl.h"
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
 
@@ -26,6 +27,7 @@
     if (self) {
         _sources = sources;
         [self createContainers];
+        [self createMediaControl];
     }
     return self;
 }
@@ -56,6 +58,13 @@
         CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
         [containers addObject:container];
     }
+}
+
+- (void)createMediaControl
+{
+    CLPContainer *topContainer = [containers firstObject];
+    if (topContainer)
+        _mediaControl = [[CLPMediaControl alloc] initWithContainer:topContainer];
 }
 
 #pragma mark - Accessors

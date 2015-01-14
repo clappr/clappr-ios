@@ -28,18 +28,20 @@ describe(@"Core", ^{
         });
 
         it(@"should raise an exception for its default initializer", ^{
-
             [[theBlock(^{
                 [CLPCore new];
             }) should] raiseWithName:NSInternalInconsistencyException];
         });
+    });
 
-        it(@"should create containers given an array of sources as strings", ^{
+    describe(@"Containers", ^{
+
+        it(@"should be created given an array of sources as strings", ^{
 
             NSArray *sources = @[
-                @"http://my.awesomevideo.globo.com/123456",
-                @"http://another.awesomevideo.globo.com/123456"
-            ];
+                                 @"http://my.awesomevideo.globo.com/123456",
+                                 @"http://another.awesomevideo.globo.com/123456"
+                                 ];
 
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
 
@@ -52,12 +54,12 @@ describe(@"Core", ^{
             [[secondContainer.playback.url.absoluteString should] equal:sources[1]];
         });
 
-        it(@"should create containers given an array of sources as urls", ^{
+        it(@"should be created given an array of sources as urls", ^{
 
             NSArray *sources = @[
-                [NSURL URLWithString:@"http://my.awesomevideo.globo.com/123456"],
-                [NSURL URLWithString:@"http://another.awesomevideo.globo.com/123456"]
-            ];
+                                 [NSURL URLWithString:@"http://my.awesomevideo.globo.com/123456"],
+                                 [NSURL URLWithString:@"http://another.awesomevideo.globo.com/123456"]
+                                 ];
 
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
 
@@ -70,13 +72,47 @@ describe(@"Core", ^{
             [[secondContainer.playback.url should] equal:sources[1]];
         });
 
-        it(@"should not create containers given an array of anything else", ^{
+        it(@"should not be created given an array of anything else", ^{
 
             NSArray *sources = @[ @{}, @123 ];
 
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
-            
+
             [[theValue(core.containers.count) should] equal:theValue(0)];
+        });
+    });
+
+    describe(@"MediaControl", ^{
+
+        __block CLPCore *core;
+        const NSString *source = @"http://my.video.com/v.mp4";
+
+        beforeEach(^{
+            core = [[CLPCore alloc] initWithSources:@[source]];
+        });
+
+        it(@"should be created in the top most container", ^{
+
+            [[core.mediaControl shouldNot] beNil];
+
+            CLPContainer *topMostContainer = [core.containers firstObject];
+            [[core.mediaControl.container should] equal:topMostContainer];
+        });
+
+        it(@"should be visible by default", ^{
+            [[theValue(core.mediaControl.view.hidden) should] beFalse];
+        });
+
+        pending(@"should be hidden after a single tap", ^{
+
+        });
+
+        pending(@"should not be hidden after tap to hide and then tap again", ^{
+
+        });
+
+        pending(@"should be hidden after displaying for 3 seconds", ^{
+
         });
     });
 });
