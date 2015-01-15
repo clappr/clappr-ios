@@ -13,6 +13,13 @@
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
 NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
 
+static CGFloat const kMediaControlAnimationDuration = 0.3;
+
+NSTimeInterval CLPAnimationDuration(BOOL animated) {
+    return animated ? kMediaControlAnimationDuration : 0.0;
+}
+
+
 @implementation CLPMediaControl
 
 #pragma mark - Ctors
@@ -25,6 +32,7 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 
         [self addControlViews];
         [self bindEventListeners];
+        [self addTapGestureToShowOrHideControls];
     }
     return self;
 }
@@ -63,6 +71,12 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
     }];
 }
 
+- (void)addTapGestureToShowOrHideControls
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] init];
+    [self.view addGestureRecognizer:tapGesture];
+}
+
 #pragma mark - Methods
 
 - (void)play
@@ -98,6 +112,37 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 - (void)volumeSliderValueDidChange
 {
     _container.playback.volume = _volumeSlider.value;
+}
+
+- (void)show
+{
+    [self showAnimated:NO];
+}
+
+- (void)showAnimated:(BOOL)animated
+{
+    self.view.alpha = 0.0;
+    self.view.hidden = NO;
+
+    [UIView animateWithDuration:CLPAnimationDuration(animated) animations:^{
+        self.view.alpha = 1.0;
+    }];
+}
+
+- (void)hide
+{
+    [self hideAnimated:NO];
+}
+
+- (void)hideAnimated:(BOOL)animated
+{
+    __weak typeof(self) weakSelf = self;
+
+    [UIView animateWithDuration:CLPAnimationDuration(animated) animations:^{
+        self.view.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        weakSelf.view.hidden = finished;
+    }];
 }
 
 #pragma mark - Notification handling
