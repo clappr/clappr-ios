@@ -103,17 +103,6 @@ describe(@"Core", ^{
             [[theValue(core.mediaControl.view.hidden) should] beFalse];
         });
 
-        pending(@"should be hidden after a single tap", ^{
-
-        });
-
-        pending(@"should not be hidden after tap to hide and then tap again", ^{
-
-        });
-
-        pending(@"should be hidden after displaying for 3 seconds", ^{
-
-        });
     });
 });
 
