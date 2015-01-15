@@ -8,27 +8,27 @@
 
 #import "CLPViewController.h"
 
+#import <Clappr/Clappr.h>
+
+
 @interface CLPViewController ()
+{
+    Player *player;
+}
 
 @property (weak, nonatomic) IBOutlet UIView *playerContainer;
 
-@property (strong, nonatomic) Player* player;
-
 @end
+
 
 @implementation CLPViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.player = [Player newPlayerWithOptions:nil];
-    
-    [self.player attachTo:self atView:self.playerContainer];
+
+    player = [Player new];
+    [player attachTo:self atView:_playerContainer];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 @end

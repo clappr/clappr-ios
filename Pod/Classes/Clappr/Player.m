@@ -47,14 +47,16 @@
 
 @implementation Player
 
-+ (Player *)newPlayerWithOptions:(NSDictionary *)options
+#pragma mark - Ctors
+
+- (instancetype)init
 {
-    return [[Player alloc] initWithNibName:@"Player" bundle:nil];
+    return [self initWithOptions:nil];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithOptions:(NSDictionary *)options
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"Player" bundle:nil];
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
@@ -62,17 +64,10 @@
         fullscreenController = [[FullscreenViewController alloc] init];
         fullscreenView = fullscreenController.view;
     }
-
     return self;
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                         duration:(NSTimeInterval)duration
-{
-    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation
-                                            duration:duration];
-    [self syncScrubber];
-}
+#pragma mark - Life cycle
 
 - (void)viewDidLoad
 {
@@ -236,7 +231,7 @@
 
 - (void)syncScrubber
 {
-    CGFloat current = ((CGFloat) CMTimeGetSeconds(_player.currentTime)) / CMTimeGetSeconds(_player.currentItem.asset.duration);
+    float current = ((float) CMTimeGetSeconds(_player.currentTime)) / CMTimeGetSeconds(_player.currentItem.asset.duration);
     if (isfinite(current) && current >= 0 && shouldUpdate) {
         [self updatePositionBarConstraints: current * _seekBarContainer.frame.size.width];
     }
@@ -398,6 +393,16 @@
         [self enterFullscreen];
     }
     _fullscreenButton.selected = !_fullscreenButton.selected;
+}
+
+#pragma mark - Rotation
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation
+                                            duration:duration];
+    [self syncScrubber];
 }
 
 @end

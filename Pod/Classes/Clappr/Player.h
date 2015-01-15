@@ -14,11 +14,9 @@
 @interface Player : UIViewController
 
 @property (nonatomic, strong) AVPlayer *player;
-
 @property (nonatomic, weak) IBOutlet PlayerView *playerView;
 
-+ (Player *)newPlayerWithOptions:(NSDictionary *)options;
-
+- (instancetype)initWithOptions:(NSDictionary *)options;
 - (void)attachTo:(UIViewController *)controller atView:(UIView *)container;
 
 @end

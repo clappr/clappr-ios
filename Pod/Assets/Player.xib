@@ -12,7 +12,7 @@
                 <outlet property="fullscreenButton" destination="MQR-kY-jUF" id="NRz-ce-OKP"/>
                 <outlet property="mediaControl" destination="xP5-UL-qkk" id="Wwm-SB-pK5"/>
                 <outlet property="playPause" destination="0V7-z5-rdA" id="APL-pK-cz4"/>
-                <outlet property="playerView" destination="iN0-l3-epB" id="Me4-I4-HcY"/>
+                <outlet property="playerView" destination="iN0-l3-epB" id="JsM-4e-rkZ"/>
                 <outlet property="positionBar" destination="82D-Bh-tQP" id="hrq-Wq-TZ3"/>
                 <outlet property="positionBarConstraint" destination="Rf3-6a-9h6" id="hEG-kw-3Ad"/>
                 <outlet property="scrubber" destination="uDb-7w-G5b" id="YfO-6l-R31"/>
@@ -54,7 +54,7 @@
                                                 <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
                                             <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
