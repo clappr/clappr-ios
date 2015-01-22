@@ -13,6 +13,14 @@
 #import "PlayerView.h"
 #import "FullscreenViewController.h"
 
+static NSString *const kMediaControlTitlePlay = @"\ue001";
+static NSString *const kMediaControlTitlePause = @"\ue002";
+static NSString *const kMediaControlTitleStop = @"\ue003";
+static NSString *const kMediaControlTitleVolume = @"\ue004";
+static NSString *const kMediaControlTitleMute = @"\ue005";
+static NSString *const kMediaControlTitleFullscreen = @"\ue006";
+static NSString *const kMediaControlTitleHD = @"\ue007";
+
 @interface Player () <UIGestureRecognizerDelegate>
 {
     BOOL mediaControlIsHidden;
@@ -161,14 +169,14 @@
     NSString *fontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
 
     // FIXME: the font size should be proporcional to the player size.
-    _playPause.titleLabel.font = [UIFont fontWithName:fontName size:150.0f];
-    [_playPause setTitle:@"\ue001" forState:UIControlStateNormal];
-    [_playPause setTitle:@"\ue002" forState:UIControlStateSelected];
+    _playPause.titleLabel.font = [UIFont fontWithName:fontName size:60.0f];
+    [_playPause setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
+    [_playPause setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
 
     _fullscreenButton.titleLabel.font = [UIFont fontWithName:fontName size:30.0f];
 
-    [_fullscreenButton setTitle:@"\ue006" forState:UIControlStateNormal];
-    [_fullscreenButton setTitle:@"\ue006" forState:UIControlStateSelected];
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
 }
 
 - (void)setupScrubber
