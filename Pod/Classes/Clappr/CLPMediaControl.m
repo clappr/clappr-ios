@@ -15,6 +15,7 @@
 // Clappr
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
+#import "UIView+NSLayoutConstraints.h"
 
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
 NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
@@ -56,6 +57,8 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
         UINib *nib = [UINib nibWithNibName:@"CLPMediaControlView" bundle:nil];
         self.view = [[nib instantiateWithOwner:self options:nil] lastObject];
+
+        [container.view clappr_addSubviewMatchingFrameOfView:self.view];
 
         _container = container;
 

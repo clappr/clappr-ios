@@ -42,7 +42,7 @@ static NSString *const kPlayerSampleMP4 = @"https://github.com/globocom/clappr-w
 {
     core.view.backgroundColor = [UIColor blackColor];
 
-    [container clappr_addSubviewMatchingFrame:core.view];
+    [container clappr_addSubviewMatchingFrameOfView:core.view];
 }
 
 

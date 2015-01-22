@@ -10,7 +10,7 @@
 
 @implementation UIView (NSLayoutConstraints)
 
-- (void)clappr_addSubviewMatchingFrame:(UIView *)view
+- (void)clappr_addSubviewMatchingFrameOfView:(UIView *)view
 {
     [self addSubview:view];
 

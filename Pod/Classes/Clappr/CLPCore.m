@@ -11,6 +11,7 @@
 #import "CLPMediaControl.h"
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
+#import "UIView+NSLayoutConstraints.h"
 
 @interface CLPCore ()
 {
@@ -56,6 +57,9 @@
 
         CLPPlayback *playback = [[CLPPlayback alloc] initWithURL:sourceURL];
         CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
+
+        [self.view clappr_addSubviewMatchingFrameOfView:container.view];
+
         [containers addObject:container];
     }
 }
@@ -63,8 +67,9 @@
 - (void)createMediaControl
 {
     CLPContainer *topContainer = [containers firstObject];
-    if (topContainer)
+    if (topContainer) {
         _mediaControl = [[CLPMediaControl alloc] initWithContainer:topContainer];
+    }
 }
 
 #pragma mark - Accessors
