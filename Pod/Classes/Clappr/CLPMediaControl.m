@@ -7,17 +7,42 @@
 //
 
 #import "CLPMediaControl.h"
+
+// System
+#import <CoreText/CoreText.h>
+#import <AVFoundation/AVFoundation.h>
+
+// Clappr
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
 
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
 NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
 
+static NSString *const kMediaControlTitlePlay = @"\ue001";
+static NSString *const kMediaControlTitlePause = @"\ue002";
+static NSString *const kMediaControlTitleStop = @"\ue003";
+static NSString *const kMediaControlTitleVolume = @"\ue004";
+static NSString *const kMediaControlTitleMute = @"\ue005";
+static NSString *const kMediaControlTitleFullscreen = @"\ue006";
+static NSString *const kMediaControlTitleHD = @"\ue007";
+
 static CGFloat const kMediaControlAnimationDuration = 0.3;
 
 NSTimeInterval CLPAnimationDuration(BOOL animated) {
     return animated ? kMediaControlAnimationDuration : 0.0;
 }
+
+@interface CLPMediaControl ()
+{
+    __weak IBOutlet UIButton *_playPauseButton;
+
+    __weak IBOutlet UILabel *_durationLabel;
+    __weak IBOutlet UILabel *_currentTimeLabel;
+
+    __weak IBOutlet UIButton *_fullscreenButton;
+}
+@end
 
 
 @implementation CLPMediaControl
@@ -28,35 +53,67 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 {
     self = [super init];
     if (self) {
+
+        UINib *nib = [UINib nibWithNibName:@"CLPMediaControlView" bundle:nil];
+        self.view = [[nib instantiateWithOwner:self options:nil] lastObject];
+
         _container = container;
 
-        [self addControlViews];
         [self bindEventListeners];
         [self addTapGestureToShowOrHideControls];
+
+        // AVPlayer
+//        [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 3) queue: nil usingBlock: ^(CMTime time) {
+//            [weakSelf.currentTimeLabel setText:[weakSelf getFormattedTime: time]];
+//            [weakSelf syncScrubber];
+//        }];
     }
     return self;
 }
 
-- (void)addControlViews
+- (void)loadPlayerFont
 {
-    _playPauseButton = [UIButton new];
-    [_playPauseButton addTarget:self
-                         action:@selector(togglePlay)
-               forControlEvents:UIControlEventTouchUpInside];
-    [_container.view addSubview:_playPauseButton];
+    NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"Player-Regular" ofType:@"ttf"];
+    NSData *data = [NSData dataWithContentsOfFile:fontPath];
+    CFErrorRef error;
 
-    _stopButton = [UIButton new];
-    [_stopButton addTarget:self
-                    action:@selector(stop)
-          forControlEvents:UIControlEventTouchUpInside];
-    [_container.view addSubview:_stopButton];
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
 
-    _volumeSlider = [UISlider new];
-    _volumeSlider.continuous = YES;
-    [_volumeSlider addTarget:self
-                      action:@selector(volumeSliderValueDidChange)
-            forControlEvents:UIControlEventValueChanged];
-    [_container.view addSubview:_volumeSlider];
+    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+        CFStringRef errorDescription = CFErrorCopyDescription(error);
+
+        NSLog(@"Failed to load font: %@", errorDescription);
+        CFRelease(errorDescription);
+    }
+
+    CFRelease(font);
+    CFRelease(provider);
+
+    NSString *fontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
+
+    _playPauseButton.titleLabel.font = [UIFont fontWithName:fontName size:60.0f];
+    [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
+    [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
+
+    _fullscreenButton.titleLabel.font = [UIFont fontWithName:fontName size:30.0f];
+
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
+}
+
+- (void)setupDuration
+{
+//    [_durationLabel setText:[self getFormattedTime:_player.currentItem.asset.duration]];
+}
+
+- (NSString *)getFormattedTime:(CMTime)time
+{
+    //FIXME: there is a better way to do it, without `+(NSString*) stringWithFormat:`
+    NSUInteger totalSeconds = CMTimeGetSeconds(time);
+    NSUInteger minutes = floor(totalSeconds % 3600 / 60);
+    NSUInteger seconds = floor(totalSeconds % 3600 % 60);
+    return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long) minutes, (unsigned long) seconds];
 }
 
 - (void)bindEventListeners
@@ -91,7 +148,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     [self trigger:CLPMediaControlEventNotPlaying];
 }
 
-- (void)togglePlay
+- (IBAction)togglePlay
 {
     if ([_container isPlaying]) {
         [self pause];
@@ -107,11 +164,6 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
     [_container stop];
     [self trigger:CLPMediaControlEventNotPlaying];
-}
-
-- (void)volumeSliderValueDidChange
-{
-    _container.playback.volume = _volumeSlider.value;
 }
 
 - (void)show

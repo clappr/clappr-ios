@@ -8,28 +8,21 @@
 
 #import "Player.h"
 
+// System
 #import <AVFoundation/AVFoundation.h>
-#import <CoreText/CoreText.h>
+
+// Clappr
 #import "PlayerView.h"
 #import "FullscreenViewController.h"
 
-static NSString *const kMediaControlTitlePlay = @"\ue001";
-static NSString *const kMediaControlTitlePause = @"\ue002";
-static NSString *const kMediaControlTitleStop = @"\ue003";
-static NSString *const kMediaControlTitleVolume = @"\ue004";
-static NSString *const kMediaControlTitleMute = @"\ue005";
-static NSString *const kMediaControlTitleFullscreen = @"\ue006";
-static NSString *const kMediaControlTitleHD = @"\ue007";
 
 @interface Player () <UIGestureRecognizerDelegate>
 {
     BOOL mediaControlIsHidden;
     BOOL shouldUpdate;
-    UIView *fullscreenView;
     UIView *innerContainer;
     UIView *parentView;
-    UIWindow *appWindow;
-    UIViewController *parentController;
+    __weak UIViewController *parentController;
     FullscreenViewController *fullscreenController;
     NSTimer *mediaControlTimer;
 }
@@ -39,9 +32,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 @property (nonatomic, weak) IBOutlet UIView *scrubberCenter;
 @property (nonatomic, weak) IBOutlet UIView *seekBarContainer;
 @property (nonatomic, weak) IBOutlet UIView *mediaControl;
-@property (nonatomic, weak) IBOutlet UIButton *playPause;
-@property (nonatomic, weak) IBOutlet UILabel *durationLabel;
-@property (nonatomic, weak) IBOutlet UILabel *currentTimeLabel;
+
 @property (nonatomic, weak) IBOutlet UIButton *fullscreenButton;
 
 @property (nonatomic, weak) IBOutlet UIView *positionBar;
@@ -64,13 +55,11 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 
 - (instancetype)initWithOptions:(NSDictionary *)options
 {
-    self = [super initWithNibName:@"Player" bundle:nil];
+    self = [super init];
     if (self) {
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
-        appWindow = [UIApplication sharedApplication].keyWindow;
         fullscreenController = [[FullscreenViewController alloc] init];
-        fullscreenView = fullscreenController.view;
     }
     return self;
 }
@@ -86,15 +75,13 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 
     [self setupControlsOverlay];
     [self setupScrubber];
-    [self setupDuration];
-    [self loadPlayerFont];
 
-    __weak Player *weakSelf = self;
-
-    [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 3) queue: nil usingBlock: ^(CMTime time) {
-        [weakSelf.currentTimeLabel setText:[weakSelf getFormattedTime: time]];
-        [weakSelf syncScrubber];
-    }];
+//    __weak Player *weakSelf = self;
+//
+//    [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 3) queue: nil usingBlock: ^(CMTime time) {
+//        [weakSelf.currentTimeLabel setText:[weakSelf getFormattedTime: time]];
+//        [weakSelf syncScrubber];
+//    }];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoEnded)
@@ -124,7 +111,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 {
     [_player seekToTime: kCMTimeZero];
     [self syncScrubber];
-    _playPause.selected = !_playPause.selected;
+//    _playPause.selected = !_playPause.selected;
 }
 
 - (void)setupControlsOverlay
@@ -147,37 +134,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
     _controlsOverlay.backgroundColor = [UIColor colorWithPatternImage:gradientTexture];
 }
 
-- (void)loadPlayerFont
-{
-    NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"Player-Regular" ofType:@"ttf"];
-    NSData *data = [NSData dataWithContentsOfFile:fontPath];
-    CFErrorRef error;
 
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
-    CGFontRef font = CGFontCreateWithDataProvider(provider);
-
-    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-        CFStringRef errorDescription = CFErrorCopyDescription(error);
-
-        NSLog(@"Failed to load font: %@", errorDescription);
-        CFRelease(errorDescription);
-    }
-
-    CFRelease(font);
-    CFRelease(provider);
-
-    NSString *fontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
-
-    // FIXME: the font size should be proporcional to the player size.
-    _playPause.titleLabel.font = [UIFont fontWithName:fontName size:60.0f];
-    [_playPause setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
-    [_playPause setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
-
-    _fullscreenButton.titleLabel.font = [UIFont fontWithName:fontName size:30.0f];
-
-    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
-    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
-}
 
 - (void)setupScrubber
 {
@@ -189,19 +146,9 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
                                                   alpha:1.0f].CGColor;
 }
 
-- (void)setupDuration
-{
-    [_durationLabel setText:[self getFormattedTime:_player.currentItem.asset.duration]];
-}
 
-- (NSString *)getFormattedTime:(CMTime)time
-{
-    //FIXME: there is a better way to do it, without `+(NSString*) stringWithFormat:`
-    NSUInteger totalSeconds = CMTimeGetSeconds(time);
-    NSUInteger minutes = floor(totalSeconds % 3600 / 60);
-    NSUInteger seconds = floor(totalSeconds % 3600 % 60);
-    return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long) minutes, (unsigned long) seconds];
-}
+
+
 
 - (void)attachTo:(UIViewController *)controller atView:(UIView *)container
 {
@@ -311,16 +258,16 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
     }
 }
 
-- (IBAction)togglePlayPause:(id)sender {
-    if (_playPause.selected) {
-        [_player pause];
-        [self stopMediaControlTimer];
-    } else {
-        [_player play];
-        [self startMediaControlTimer];
-    }
-    _playPause.selected = !_playPause.selected;
-}
+//- (IBAction)togglePlayPause:(id)sender {
+//    if (_playPause.selected) {
+//        [_player pause];
+//        [self stopMediaControlTimer];
+//    } else {
+//        [_player play];
+//        [self startMediaControlTimer];
+//    }
+//    _playPause.selected = !_playPause.selected;
+//}
 
 - (IBAction)dragScrubber:(UIPanGestureRecognizer *) sender
 {
@@ -352,20 +299,26 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
 
     window.rootViewController = fullscreenController;
-    [window addSubview: fullscreenView];
+    [window addSubview:fullscreenController.view];
 
-    [fullscreenView addSubview: innerContainer];
+    [fullscreenController.view addSubview:innerContainer];
 
-    [innerContainer addSubview: self.view];
+    [innerContainer addSubview:self.view];
 
     [innerContainer removeConstraints: innerContainer.constraints];
     [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
     [innerContainer addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
 
+    [fullscreenController.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|"
+                                                                                       options:0
+                                                                                       metrics:0
+                                                                                         views:@{@"view": innerContainer}]];
+    [fullscreenController.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|"
+                                                                                       options:0
+                                                                                       metrics:0
+                                                                                         views:@{@"view": innerContainer}]];
     [UIView animateWithDuration:.2 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
-        [fullscreenView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
-        [fullscreenView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": innerContainer}]];
-        [fullscreenView layoutIfNeeded];
+        [fullscreenController.view layoutIfNeeded];
     } completion:nil];
 }
 
@@ -386,7 +339,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 
     [parentView addSubview: self.view];
     [innerContainer removeFromSuperview];
-    [fullscreenView removeFromSuperview];
+    [fullscreenController.view removeFromSuperview];
     [UIView animateWithDuration:.3 delay:0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
         [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
         [parentView addConstraints: [NSLayoutConstraint constraintsWithVisualFormat: @"V:|[view]|" options:0 metrics:0 views:@{@"view": self.view}]];
