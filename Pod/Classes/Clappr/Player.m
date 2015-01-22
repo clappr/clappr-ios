@@ -149,10 +149,6 @@
                                                   alpha:1.0f].CGColor;
 }
 
-
-
-
-
 - (void)attachTo:(UIViewController *)controller atView:(UIView *)container
 {
     parentView = container;

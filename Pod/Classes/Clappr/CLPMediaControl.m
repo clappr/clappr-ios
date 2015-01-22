@@ -30,6 +30,8 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 
 static CGFloat const kMediaControlAnimationDuration = 0.3;
 
+static NSString *clapprFontName;
+
 NSTimeInterval CLPAnimationDuration(BOOL animated) {
     return animated ? kMediaControlAnimationDuration : 0.0;
 }
@@ -50,6 +52,13 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
 #pragma mark - Ctors
 
++ (void)initialize
+{
+    if (self == [CLPMediaControl class]) {
+        [self loadPlayerFont];
+    }
+}
+
 - (instancetype)initWithContainer:(CLPContainer *)container
 {
     self = [super init];
@@ -57,12 +66,14 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
         UINib *nib = [UINib nibWithNibName:@"CLPMediaControlView" bundle:nil];
         self.view = [[nib instantiateWithOwner:self options:nil] lastObject];
+        self.view.backgroundColor = [UIColor clearColor];
 
         [container.view clappr_addSubviewMatchingFrameOfView:self.view];
 
         _container = container;
 
         [self bindEventListeners];
+        [self setupControls];
         [self addTapGestureToShowOrHideControls];
 
         // AVPlayer
@@ -72,37 +83,6 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 //        }];
     }
     return self;
-}
-
-- (void)loadPlayerFont
-{
-    NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"Player-Regular" ofType:@"ttf"];
-    NSData *data = [NSData dataWithContentsOfFile:fontPath];
-    CFErrorRef error;
-
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
-    CGFontRef font = CGFontCreateWithDataProvider(provider);
-
-    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-        CFStringRef errorDescription = CFErrorCopyDescription(error);
-
-        NSLog(@"Failed to load font: %@", errorDescription);
-        CFRelease(errorDescription);
-    }
-
-    CFRelease(font);
-    CFRelease(provider);
-
-    NSString *fontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
-
-    _playPauseButton.titleLabel.font = [UIFont fontWithName:fontName size:60.0f];
-    [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
-    [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
-
-    _fullscreenButton.titleLabel.font = [UIFont fontWithName:fontName size:30.0f];
-
-    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
-    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
 }
 
 - (void)setupDuration
@@ -131,6 +111,18 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     }];
 }
 
+- (void)setupControls
+{
+    _playPauseButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:60.0f];
+    [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
+    [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
+
+    _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
+
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
+    [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
+}
+
 - (void)addTapGestureToShowOrHideControls
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] init];
@@ -141,12 +133,14 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
 - (void)play
 {
+    _playPauseButton.selected = YES;
     [_container play];
     [self trigger:CLPMediaControlEventPlaying];
 }
 
 - (void)pause
 {
+    _playPauseButton.selected = NO;
     [_container pause];
     [self trigger:CLPMediaControlEventNotPlaying];
 }
@@ -210,6 +204,30 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 - (void)containerDidPause
 {
     [self trigger:CLPMediaControlEventNotPlaying];
+}
+
+#pragma mark - Private
+
++ (void)loadPlayerFont
+{
+    NSString *fontPath = [[NSBundle mainBundle] pathForResource:@"Player-Regular" ofType:@"ttf"];
+    NSData *data = [NSData dataWithContentsOfFile:fontPath];
+    CFErrorRef error;
+
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) data);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
+
+    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+        CFStringRef errorDescription = CFErrorCopyDescription(error);
+
+        NSLog(@"Failed to load font: %@", errorDescription);
+        CFRelease(errorDescription);
+    }
+
+    CFRelease(font);
+    CFRelease(provider);
+
+    clapprFontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
 }
 
 @end

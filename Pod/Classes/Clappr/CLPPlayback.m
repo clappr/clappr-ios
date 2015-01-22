@@ -8,6 +8,13 @@
 
 #import "CLPPlayback.h"
 
+// System
+#import <AVFoundation/AVFoundation.h>
+
+// Clappr
+#import "PlayerView.h"
+#import "UIView+NSLayoutConstraints.h"
+
 NSString *const CLPPlaybackEventProgress = @"clappr:playback:progress";
 NSString *const CLPPlaybackEventTimeUpdated = @"clappr:playback:time_updated";
 NSString *const CLPPlaybackEventReady = @"clappr:playback:ready";
@@ -26,6 +33,13 @@ NSString *const CLPPlaybackEventPlay = @"clappr:playback:play";
 NSString *const CLPPlaybackEventPause = @"clappr:playback:pause";
 NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
+@interface CLPPlayback ()
+{
+    AVPlayer *avPlayer;
+    PlayerView *playerView;
+}
+@end
+
 @implementation CLPPlayback
 
 #pragma mark - Ctors
@@ -35,6 +49,14 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
     self = [super init];
     if (self) {
         _url = url;
+
+        playerView = [PlayerView new];
+        [self.view clappr_addSubviewMatchingFrameOfView:playerView];
+
+        if (_url) {
+            avPlayer = [AVPlayer playerWithURL:_url];
+            [playerView setPlayer:avPlayer];
+        }
     }
     return self;
 }
@@ -50,10 +72,12 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 - (void)play
 {
+    [avPlayer play];
 }
 
 - (void)pause
 {
+    [avPlayer pause];
 }
 
 - (void)stop

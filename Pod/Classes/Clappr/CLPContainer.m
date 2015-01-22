@@ -9,6 +9,7 @@
 #import "CLPContainer.h"
 
 #import "CLPPlayback.h"
+#import "UIView+NSLayoutConstraints.h"
 
 NSString *const CLPContainerEventPlaybackStateChanged = @"clappr:container:playback_state_changed";
 NSString *const CLPContainerEventPlaybackStateDVRStateChanged = @"clappr:container:playback_dvr_state_changed";
@@ -49,7 +50,8 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 {
     self = [super init];
     if (self) {
-        self.playback = playback;
+        _playback = playback;
+        [self.view clappr_addSubviewMatchingFrameOfView:_playback.view];
     }
 
     return self;
