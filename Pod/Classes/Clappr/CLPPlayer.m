@@ -10,6 +10,7 @@
 
 // Clappr
 #import "CLPCore.h"
+#import "UIView+NSLayoutConstraints.h"
 
 static NSString *const kPlayerSampleMP4 = @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4";
 
@@ -41,19 +42,9 @@ static NSString *const kPlayerSampleMP4 = @"https://github.com/globocom/clappr-w
 {
     core.view.backgroundColor = [UIColor blackColor];
 
-    [container addSubview:core.view];
-
-    core.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[view]|"
-                                                                      options:0
-                                                                      metrics:nil
-                                                                        views:@{@"view": core.view}]];
-
-    [container addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-                                                                      options:0
-                                                                      metrics:nil
-                                                                        views:@{@"view": core.view}]];
+    [container clappr_addSubviewMatchingFrame:core.view];
 }
+
 
 #pragma mark - Life cycle
 
