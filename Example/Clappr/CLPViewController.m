@@ -13,7 +13,7 @@
 
 @interface CLPViewController ()
 {
-    Player *player;
+    CLPPlayer *player;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *playerContainer;
@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
 
-    player = [Player new];
+    player = [CLPPlayer new];
     [player attachTo:self atView:_playerContainer];
 }
 

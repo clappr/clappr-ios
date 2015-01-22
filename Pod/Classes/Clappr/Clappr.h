@@ -18,5 +18,6 @@
 #import <Clappr/CLPPlayback.h>
 #import <Clappr/CLPMediaControl.h>
 #import <Clappr/CLPCore.h>
+#import <Clappr/CLPPlayer.h>
 
 #endif

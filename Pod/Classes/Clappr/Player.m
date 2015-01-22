@@ -25,6 +25,8 @@
     __weak UIViewController *parentController;
     FullscreenViewController *fullscreenController;
     NSTimer *mediaControlTimer;
+
+
 }
 
 @property (nonatomic, weak) IBOutlet UIView *controlsOverlay;
@@ -60,6 +62,7 @@
         mediaControlIsHidden = NO;
         shouldUpdate = YES;
         fullscreenController = [[FullscreenViewController alloc] init];
+
     }
     return self;
 }
