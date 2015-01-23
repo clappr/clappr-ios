@@ -101,11 +101,24 @@ describe(@"Media Control", ^{
 
         it(@"should contain a label displaying the current playback time", ^{
             UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
-            [[currentTimeLabel.text should] equal:@"0:00"];
+            [[currentTimeLabel.text should] equal:@"00:00"];
         });
 
-        pending(@"should update its value after listen to playback's current time update", ^{
+        it(@"should update its value after listen to playback's current time update", ^{
+            NSDictionary *userInfo = @{@"position": @78};
+            [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
 
+            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
+            [[currentTimeLabel.text should] equal:@"01:18"];
+        });
+
+        it(@"should be able to display current time greater than 1 hour", ^{
+            NSUInteger position = (1 * 60 * 60) + (54 * 60) + 32;
+            NSDictionary *userInfo = @{@"position": @(position)};
+            [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+
+            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
+            [[currentTimeLabel.text should] equal:@"01:54:32"];
         });
 
     });

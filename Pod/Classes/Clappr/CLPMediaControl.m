@@ -80,16 +80,19 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     return self;
 }
 
-//- (void)setupDuration
-//{
-//    [_durationLabel setText:[self getFormattedTime:_player.currentItem.asset.duration]];
-//}
-
-- (NSString *)getFormattedTime:(NSUInteger)totalSeconds
+- (NSString *)formattedTime:(NSUInteger)totalSeconds
 {
-    NSUInteger minutes = floor(totalSeconds % 3600 / 60);
-    NSUInteger seconds = floor(totalSeconds % 3600 % 60);
-    return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long) minutes, (unsigned long) seconds];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+
+    NSUInteger oneHour = 1 * 60 * 60;
+    if (totalSeconds < oneHour)
+        [formatter setDateFormat:@"mm:ss"];
+    else
+        [formatter setDateFormat:@"HH:mm:ss"];
+
+    return [formatter stringFromDate:date];
 }
 
 - (void)bindEventListeners
@@ -117,8 +120,9 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
     [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
 
-    _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
+    _currentTimeLabel.text = @"00:00";
 
+    _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
 }
@@ -209,7 +213,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 - (void)containerDidUpdateTimeToPosition:(float)position
                                 duration:(NSTimeInterval)duration
 {
-    _currentTimeLabel.text = [self getFormattedTime:position];
+    _currentTimeLabel.text = [self formattedTime:position];
 }
 
 #pragma mark - Private
