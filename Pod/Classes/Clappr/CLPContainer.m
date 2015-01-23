@@ -50,7 +50,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 {
     self = [super init];
     if (self) {
-        _playback = playback;
+        self.playback = playback;
         [self.view clappr_addSubviewMatchingFrameOfView:_playback.view];
     }
 

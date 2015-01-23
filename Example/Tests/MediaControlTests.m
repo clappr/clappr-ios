@@ -50,16 +50,14 @@ describe(@"Media Control", ^{
             [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         });
 
-        it(@"should trigger playing event", ^{
-
-            [container stub:@selector(isPlaying) andReturn:theValue(NO)];
+        it(@"should trigger playing event after listen to container's play event", ^{
 
             __block BOOL callbackWasCalled = NO;
             [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
                 callbackWasCalled = YES;
             }];
 
-            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            [container trigger:CLPContainerEventPlay];
 
             [[theValue(callbackWasCalled) should] beTrue];
         });
@@ -84,27 +82,8 @@ describe(@"Media Control", ^{
 
             [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         });
-    });
 
-    describe(@"Event listening", ^{
-
-        it(@"should toggle play after listen to container's play event", ^{
-            // change the view
-        });
-
-        it(@"should trigger media control's playing event after listen to container's play event", ^{
-
-            __block BOOL callbackWasCalled = NO;
-            [mediaControl once:CLPMediaControlEventPlaying callback:^(NSDictionary *userInfo) {
-                callbackWasCalled = YES;
-            }];
-
-            [container trigger:CLPContainerEventPlay];
-
-            [[theValue(callbackWasCalled) should] beTrue];
-        });
-
-        it(@"should trigger media control's not playing event after listen to container's pause event", ^{
+        it(@"should trigger 'not playing event' after listen to container's pause event", ^{
 
             __block BOOL callbackWasCalled = NO;
             [mediaControl once:CLPMediaControlEventNotPlaying callback:^(NSDictionary *userInfo) {
@@ -116,37 +95,19 @@ describe(@"Media Control", ^{
             [[theValue(callbackWasCalled) should] beTrue];
         });
 
-        it(@"should update seek bar after listen to container's time update event", ^{
+    });
+
+    describe(@"Current Time", ^{
+
+        it(@"should contain a label displaying the current playback time", ^{
+            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
+            [[currentTimeLabel.text should] equal:@"0:00"];
+        });
+
+        pending(@"should update its value after listen to playback's current time update", ^{
 
         });
 
-        it(@"should update progress bar after listen to container's progress event", ^{
-
-        });
-
-        it(@"should handle container's settings update event properly", ^{
-
-        });
-
-        it(@"should handle container's DVR state event properly ", ^{
-
-        });
-
-        it(@"should handle container's HD update properly", ^{
-
-        });
-
-        it(@"should disable after listen to container's media control disable event", ^{
-
-        });
-
-        it(@"should enable after listen to container's media control enable event", ^{
-
-        });
-
-        it(@"should handle container's ended event properly", ^{
-
-        });
     });
 });
 

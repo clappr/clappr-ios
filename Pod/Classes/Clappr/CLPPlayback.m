@@ -35,9 +35,10 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 @interface CLPPlayback ()
 {
-    AVPlayer *avPlayer;
     PlayerView *playerView;
 }
+@property (nonatomic, strong) AVPlayer *avPlayer;
+
 @end
 
 @implementation CLPPlayback
@@ -54,8 +55,9 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
         [self.view clappr_addSubviewMatchingFrameOfView:playerView];
 
         if (_url) {
-            avPlayer = [AVPlayer playerWithURL:_url];
-            [playerView setPlayer:avPlayer];
+            _avPlayer = [AVPlayer playerWithURL:_url];
+            [playerView setPlayer:_avPlayer];
+            [self addTimeElapsedCallbackHandler];
         }
     }
     return self;
@@ -68,16 +70,31 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
                                  userInfo:nil];
 }
 
+- (void)addTimeElapsedCallbackHandler
+{
+    __weak typeof(self) weakSelf = self;
+    [_avPlayer addPeriodicTimeObserverForInterval:CMTimeMake(1, 3) queue:nil usingBlock:^(CMTime time) {
+
+        NSDictionary *userInfo = @{
+            @"position": @(CMTimeGetSeconds(time)),
+            @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
+        };
+        [[NSNotificationCenter defaultCenter] postNotificationName:CLPPlaybackEventTimeUpdated
+                                                            object:nil
+                                                          userInfo:userInfo];
+    }];
+}
+
 #pragma mark -
 
 - (void)play
 {
-    [avPlayer play];
+    [_avPlayer play];
 }
 
 - (void)pause
 {
-    [avPlayer pause];
+    [_avPlayer pause];
 }
 
 - (void)stop

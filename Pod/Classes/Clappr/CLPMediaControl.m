@@ -31,6 +31,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 static CGFloat const kMediaControlAnimationDuration = 0.3;
 
 static NSString *clapprFontName;
+static UINib *mediaControlNib;
 
 NSTimeInterval CLPAnimationDuration(BOOL animated) {
     return animated ? kMediaControlAnimationDuration : 0.0;
@@ -45,6 +46,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
     __weak IBOutlet UIButton *_fullscreenButton;
 }
+
 @end
 
 
@@ -56,6 +58,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 {
     if (self == [CLPMediaControl class]) {
         [self loadPlayerFont];
+        mediaControlNib = [UINib nibWithNibName:@"CLPMediaControlView" bundle:nil];
     }
 }
 
@@ -63,9 +66,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 {
     self = [super init];
     if (self) {
-
-        UINib *nib = [UINib nibWithNibName:@"CLPMediaControlView" bundle:nil];
-        self.view = [[nib instantiateWithOwner:self options:nil] lastObject];
+        self.view = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
         self.view.backgroundColor = [UIColor clearColor];
 
         [container.view clappr_addSubviewMatchingFrameOfView:self.view];
@@ -75,25 +76,17 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
         [self bindEventListeners];
         [self setupControls];
         [self addTapGestureToShowOrHideControls];
-
-        // AVPlayer
-//        [_player addPeriodicTimeObserverForInterval: CMTimeMake(1, 3) queue: nil usingBlock: ^(CMTime time) {
-//            [weakSelf.currentTimeLabel setText:[weakSelf getFormattedTime: time]];
-//            [weakSelf syncScrubber];
-//        }];
     }
     return self;
 }
 
-- (void)setupDuration
-{
+//- (void)setupDuration
+//{
 //    [_durationLabel setText:[self getFormattedTime:_player.currentItem.asset.duration]];
-}
+//}
 
-- (NSString *)getFormattedTime:(CMTime)time
+- (NSString *)getFormattedTime:(NSUInteger)totalSeconds
 {
-    //FIXME: there is a better way to do it, without `+(NSString*) stringWithFormat:`
-    NSUInteger totalSeconds = CMTimeGetSeconds(time);
     NSUInteger minutes = floor(totalSeconds % 3600 / 60);
     NSUInteger seconds = floor(totalSeconds % 3600 % 60);
     return [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long) minutes, (unsigned long) seconds];
@@ -108,6 +101,13 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
     [self listenTo:_container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
         [weakSelf containerDidPause];
+    }];
+
+    [self listenTo:_container eventName:CLPContainerEventTimeUpdate callback:^(NSDictionary *userInfo) {
+        float position = [userInfo[@"position"] floatValue];
+        NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
+        [weakSelf containerDidUpdateTimeToPosition:position
+                                          duration:duration];
     }];
 }
 
@@ -204,6 +204,12 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 - (void)containerDidPause
 {
     [self trigger:CLPMediaControlEventNotPlaying];
+}
+
+- (void)containerDidUpdateTimeToPosition:(float)position
+                                duration:(NSTimeInterval)duration
+{
+    _currentTimeLabel.text = [self getFormattedTime:position];
 }
 
 #pragma mark - Private
