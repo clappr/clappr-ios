@@ -96,9 +96,7 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
             @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
         };
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:CLPPlaybackEventTimeUpdated object:userInfo];
-
-//        [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+        [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
     }];
 }
 
