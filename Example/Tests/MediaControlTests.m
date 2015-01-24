@@ -100,8 +100,7 @@ describe(@"Media Control", ^{
     describe(@"Current Time", ^{
 
         it(@"should contain a label displaying the current playback time", ^{
-            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
-            [[currentTimeLabel.text should] equal:@"00:00"];
+            [[mediaControl.currentTimeLabel.text should] equal:@"00:00"];
         });
 
         it(@"should update its value after listen to playback's current time update", ^{
@@ -119,6 +118,19 @@ describe(@"Media Control", ^{
 
             UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
             [[currentTimeLabel.text should] equal:@"01:54:32"];
+        });
+    });
+
+    describe(@"Duration", ^{
+
+        it(@"should display its initial value", ^{
+            [[mediaControl.durationLabel.text should] equal:@"00:00"];
+        });
+
+        it(@"should contain a label displaying the playback's duration", ^{
+            [playback stub:@selector(duration) andReturn:theValue(36)];
+            [container trigger:CLPContainerEventReady userInfo:nil];
+            [[mediaControl.durationLabel.text should] equal:@"00:36"];
         });
 
     });

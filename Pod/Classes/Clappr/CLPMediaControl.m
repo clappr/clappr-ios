@@ -38,14 +38,11 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 }
 
 @interface CLPMediaControl ()
-{
-    __weak IBOutlet UIButton *_playPauseButton;
 
-    __weak IBOutlet UILabel *_durationLabel;
-    __weak IBOutlet UILabel *_currentTimeLabel;
-
-    __weak IBOutlet UIButton *_fullscreenButton;
-}
+@property (nonatomic, weak, readwrite) IBOutlet UIButton *playPauseButton;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *durationLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *currentTimeLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UIButton *fullscreenButton;
 
 @end
 
@@ -80,24 +77,10 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     return self;
 }
 
-- (NSString *)formattedTime:(NSUInteger)totalSeconds
-{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-
-    NSUInteger oneHour = 1 * 60 * 60;
-    if (totalSeconds < oneHour)
-        [formatter setDateFormat:@"mm:ss"];
-    else
-        [formatter setDateFormat:@"HH:mm:ss"];
-
-    return [formatter stringFromDate:date];
-}
-
 - (void)bindEventListeners
 {
     __weak typeof(self) weakSelf = self;
+
     [self listenTo:_container eventName:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
         [weakSelf containerDidPlay];
     }];
@@ -112,6 +95,12 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
         [weakSelf containerDidUpdateTimeToPosition:position
                                           duration:duration];
     }];
+
+    [self listenTo:_container eventName:CLPContainerEventReady callback:^(NSDictionary *userInfo) {
+
+        NSUInteger duration = weakSelf.container.playback.duration;
+        weakSelf.durationLabel.text = [weakSelf formattedTime:duration];
+    }];
 }
 
 - (void)setupControls
@@ -121,6 +110,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
 
     _currentTimeLabel.text = @"00:00";
+    _durationLabel.text = @"00:00";
 
     _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
@@ -133,7 +123,7 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     [self.view addGestureRecognizer:tapGesture];
 }
 
-#pragma mark - Methods
+#pragma mark - Control Actions
 
 - (void)play
 {
@@ -238,6 +228,21 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
     CFRelease(provider);
 
     clapprFontName = (NSString *)CFBridgingRelease(CGFontCopyPostScriptName(font));
+}
+
+- (NSString *)formattedTime:(NSUInteger)totalSeconds
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:totalSeconds];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+
+    NSUInteger oneHour = 1 * 60 * 60;
+    if (totalSeconds < oneHour)
+        [formatter setDateFormat:@"mm:ss"];
+    else
+        [formatter setDateFormat:@"HH:mm:ss"];
+
+    return [formatter stringFromDate:date];
 }
 
 @end

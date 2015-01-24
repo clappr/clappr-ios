@@ -54,9 +54,12 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
         playerView = [PlayerView new];
         [self.view clappr_addSubviewMatchingFrameOfView:playerView];
 
+        [self bindEventListeners];
+
         if (_url) {
             _avPlayer = [AVPlayer playerWithURL:_url];
             [playerView setPlayer:_avPlayer];
+            [_avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
             [self addTimeElapsedCallbackHandler];
         }
     }
@@ -70,6 +73,19 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
                                  userInfo:nil];
 }
 
+#pragma mark - Dtor
+
+- (void)dealloc
+{
+    [_avPlayer removeObserver:self forKeyPath:@"status"];
+}
+
+#pragma mark - Setup
+
+- (void)bindEventListeners
+{
+}
+
 - (void)addTimeElapsedCallbackHandler
 {
     __weak typeof(self) weakSelf = self;
@@ -79,13 +95,14 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
             @"position": @(CMTimeGetSeconds(time)),
             @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
         };
-        [[NSNotificationCenter defaultCenter] postNotificationName:CLPPlaybackEventTimeUpdated
-                                                            object:nil
-                                                          userInfo:userInfo];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:CLPPlaybackEventTimeUpdated object:userInfo];
+
+//        [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
     }];
 }
 
-#pragma mark -
+#pragma mark - Controls
 
 - (void)play
 {
@@ -117,14 +134,28 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 #pragma mark - Accessors
 
-- (void)setVolume:(float)volume
+- (NSUInteger)duration
 {
-    if (volume < 0.0) {
-        _volume = 0.0;
-    } else if (volume > 1.0) {
-        _volume = 1.0;
-    } else {
-        _volume = volume;
+    BOOL playerIsReady = _avPlayer.status == AVPlayerStatusReadyToPlay;
+    if (!playerIsReady)
+        return 0;
+
+    return CMTimeGetSeconds(_avPlayer.currentItem.asset.duration);
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == _avPlayer && [keyPath isEqualToString:@"status"]) {
+        if (_avPlayer.status == AVPlayerStatusReadyToPlay) {
+            [self trigger:CLPPlaybackEventReady];
+        } else if (_avPlayer.status == AVPlayerStatusFailed) {
+            [self trigger:CLPPlaybackEventError];
+        }
     }
 }
 

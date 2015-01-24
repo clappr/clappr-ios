@@ -16,7 +16,11 @@ extern NSString *const CLPMediaControlEventNotPlaying;
 @interface CLPMediaControl : CLPUIObject
 
 @property (nonatomic, strong, readwrite) CLPContainer *container;
+
 @property (nonatomic, weak, readonly) UIButton *playPauseButton;
+@property (nonatomic, weak, readonly) UILabel *durationLabel;
+@property (nonatomic, weak, readonly) UILabel *currentTimeLabel;
+@property (nonatomic, weak, readonly) UIButton *fullscreenButton;
 
 - (instancetype)initWithContainer:(CLPContainer *)container;
 

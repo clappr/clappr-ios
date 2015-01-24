@@ -20,7 +20,7 @@
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-yT-kzS">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="qpd-lz-FH5"/>
+                                    <constraint firstAttribute="height" constant="180" id="qpd-lz-FH5"/>
                                 </constraints>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">

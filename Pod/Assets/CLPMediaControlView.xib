@@ -12,10 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl">
             <connections>
-                <outlet property="_currentTimeLabel" destination="HM3-hd-Lp9" id="M4y-sT-Fqm"/>
-                <outlet property="_durationLabel" destination="RMN-tb-gu1" id="0Jk-Cb-h9c"/>
-                <outlet property="_fullscreenButton" destination="MQR-kY-jUF" id="lU0-tG-spk"/>
-                <outlet property="_playPauseButton" destination="0V7-z5-rdA" id="wqV-4G-dpO"/>
+                <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="PuI-u9-r4C"/>
+                <outlet property="durationLabel" destination="RMN-tb-gu1" id="qO4-hD-Ybz"/>
+                <outlet property="fullscreenButton" destination="MQR-kY-jUF" id="cu2-DR-g6H"/>
+                <outlet property="playPauseButton" destination="0V7-z5-rdA" id="SzV-CV-Wii"/>
                 <outlet property="view" destination="xP5-UL-qkk" id="Tgj-xc-t6H"/>
             </connections>
         </placeholder>
