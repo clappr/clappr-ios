@@ -141,6 +141,11 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
     return CMTimeGetSeconds(_avPlayer.currentItem.asset.duration);
 }
 
+- (BOOL)isPlaying
+{
+    return _avPlayer.rate > 0.0f;
+}
+
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
