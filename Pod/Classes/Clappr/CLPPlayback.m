@@ -77,8 +77,11 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 - (void)dealloc
 {
-    [_avPlayer removeObserver:self forKeyPath:@"status"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    @try {
+        [_avPlayer removeObserver:self forKeyPath:@"status"];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+    @catch (NSException *__unused exception) {}
 }
 
 #pragma mark - Setup
