@@ -57,10 +57,7 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
         [self bindEventListeners];
 
         if (_url) {
-            _avPlayer = [AVPlayer playerWithURL:_url];
-            [playerView setPlayer:_avPlayer];
-            [_avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
-            [self addTimeElapsedCallbackHandler];
+            [self setupPlayer];
         }
     }
     return self;
@@ -92,6 +89,14 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
                                              selector:@selector(playbackDidEnd)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:_avPlayer.currentItem];
+}
+
+- (void)setupPlayer
+{
+    _avPlayer = [AVPlayer playerWithURL:_url];
+    [playerView setPlayer:_avPlayer];
+    [_avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
+    [self addTimeElapsedCallbackHandler];
 }
 
 - (void)addTimeElapsedCallbackHandler

@@ -24,10 +24,4 @@ extern NSString *const CLPMediaControlEventNotPlaying;
 
 - (instancetype)initWithContainer:(CLPContainer *)container;
 
-- (void)show;
-- (void)showAnimated:(BOOL)animated;
-
-- (void)hide;
-- (void)hideAnimated:(BOOL)animated;
-
 @end

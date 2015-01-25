@@ -28,14 +28,8 @@ static NSString *const kMediaControlTitleMute = @"\ue005";
 static NSString *const kMediaControlTitleFullscreen = @"\ue006";
 static NSString *const kMediaControlTitleHD = @"\ue007";
 
-static CGFloat const kMediaControlAnimationDuration = 0.3;
-
 static NSString *clapprFontName;
 static UINib *mediaControlNib;
-
-NSTimeInterval CLPAnimationDuration(BOOL animated) {
-    return animated ? kMediaControlAnimationDuration : 0.0;
-}
 
 @interface CLPMediaControl ()
 
@@ -159,37 +153,6 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
 
     [_container stop];
     [self trigger:CLPMediaControlEventNotPlaying];
-}
-
-- (void)show
-{
-    [self showAnimated:NO];
-}
-
-- (void)showAnimated:(BOOL)animated
-{
-    self.view.alpha = 0.0;
-    self.view.hidden = NO;
-
-    [UIView animateWithDuration:CLPAnimationDuration(animated) animations:^{
-        self.view.alpha = 1.0;
-    }];
-}
-
-- (void)hide
-{
-    [self hideAnimated:NO];
-}
-
-- (void)hideAnimated:(BOOL)animated
-{
-    __weak typeof(self) weakSelf = self;
-
-    [UIView animateWithDuration:CLPAnimationDuration(animated) animations:^{
-        self.view.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        weakSelf.view.hidden = finished;
-    }];
 }
 
 #pragma mark - Notification handling

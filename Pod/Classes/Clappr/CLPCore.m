@@ -13,10 +13,15 @@
 #import "CLPPlayback.h"
 #import "UIView+NSLayoutConstraints.h"
 
+static NSTimeInterval const kCoreMediaControlAnimationDuration = 0.3;
+
 @interface CLPCore ()
 {
     NSMutableArray *containers;
 }
+
+@property (nonatomic, assign) BOOL mediaControlHidden;
+
 @end
 
 
@@ -29,6 +34,9 @@
         _sources = sources;
         [self createContainers];
         [self createMediaControl];
+        [self addTapGestureToShowAndHideMediaControl];
+
+        self.view.backgroundColor = [UIColor greenColor];
     }
     return self;
 }
@@ -70,6 +78,48 @@
     if (topContainer) {
         _mediaControl = [[CLPMediaControl alloc] initWithContainer:topContainer];
     }
+}
+
+- (void)addTapGestureToShowAndHideMediaControl
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(toggleMediaControlVisibility)];
+    [self.mediaControl.view addGestureRecognizer:tapGesture];
+}
+
+- (void)toggleMediaControlVisibility
+{
+    if (_mediaControlHidden) {
+        [self showMediaControl];
+    } else {
+        [self hideMediaControl];
+    }
+}
+
+- (void)showMediaControl
+{
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:kCoreMediaControlAnimationDuration animations:^{
+        for (UIView *subview in _mediaControl.view.subviews) {
+            subview.alpha = 1.0;
+        }
+    } completion:^(BOOL finished) {
+        if (finished)
+            weakSelf.mediaControlHidden = NO;
+    }];
+}
+
+- (void)hideMediaControl
+{
+    __weak typeof(self) weakSelf = self;
+    [UIView animateWithDuration:kCoreMediaControlAnimationDuration animations:^{
+        for (UIView *subview in _mediaControl.view.subviews) {
+            subview.alpha = 0.0;
+        }
+    } completion:^(BOOL finished) {
+        if (finished)
+            weakSelf.mediaControlHidden = YES;
+    }];
 }
 
 #pragma mark - Accessors
