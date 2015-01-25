@@ -105,10 +105,10 @@ describe(@"Media Control", ^{
 
         it(@"should update its value after listen to playback's current time update", ^{
             NSDictionary *userInfo = @{@"position": @78};
+
             [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
 
-            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
-            [[currentTimeLabel.text should] equal:@"01:18"];
+            [[mediaControl.currentTimeLabel.text should] equal:@"01:18"];
         });
 
         it(@"should be able to display current time greater than 1 hour", ^{
@@ -116,8 +116,7 @@ describe(@"Media Control", ^{
             NSDictionary *userInfo = @{@"position": @(position)};
             [playback trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
 
-            UILabel *currentTimeLabel = [mediaControl valueForKey:@"_currentTimeLabel"];
-            [[currentTimeLabel.text should] equal:@"01:54:32"];
+            [[mediaControl.currentTimeLabel.text should] equal:@"01:54:32"];
         });
     });
 
@@ -132,7 +131,19 @@ describe(@"Media Control", ^{
             [container trigger:CLPContainerEventReady userInfo:nil];
             [[mediaControl.durationLabel.text should] equal:@"00:36"];
         });
+    });
 
+    context(@"General", ^{
+
+        it(@"should reset it's play button state after listen to container's end event", ^{
+            [mediaControl.playPauseButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+            [[theValue(mediaControl.playPauseButton.selected) should] beTrue];
+
+            [container trigger:CLPContainerEventEnded];
+
+            [[theValue(mediaControl.playPauseButton.selected) should] beFalse];
+        });
     });
 });
 

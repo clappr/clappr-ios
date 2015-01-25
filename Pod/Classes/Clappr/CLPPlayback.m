@@ -78,12 +78,17 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 - (void)dealloc
 {
     [_avPlayer removeObserver:self forKeyPath:@"status"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Setup
 
 - (void)bindEventListeners
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackDidEnd)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:_avPlayer.currentItem];
 }
 
 - (void)addTimeElapsedCallbackHandler
@@ -144,6 +149,14 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 - (BOOL)isPlaying
 {
     return _avPlayer.rate > 0.0f;
+}
+
+#pragma mark - Playback event handlers
+
+- (void)playbackDidEnd
+{
+    [_avPlayer.currentItem seekToTime:kCMTimeZero];
+    [self trigger:CLPPlaybackEventEnded];
 }
 
 #pragma mark - KVO

@@ -101,6 +101,10 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
         NSUInteger duration = weakSelf.container.playback.duration;
         weakSelf.durationLabel.text = [weakSelf formattedTime:duration];
     }];
+
+    [self listenTo:_container eventName:CLPContainerEventEnded callback:^(NSDictionary *userInfo) {
+        [weakSelf containerDidEnd];
+    }];
 }
 
 - (void)setupControls
@@ -204,6 +208,11 @@ NSTimeInterval CLPAnimationDuration(BOOL animated) {
                                 duration:(NSTimeInterval)duration
 {
     _currentTimeLabel.text = [self formattedTime:position];
+}
+
+- (void)containerDidEnd
+{
+    _playPauseButton.selected = NO;
 }
 
 #pragma mark - Private
