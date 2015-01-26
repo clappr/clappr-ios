@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E41FFE991A76A2CA00FCAB8C"
+               BuildableName = "AcceptanceTests.xctest"
+               BlueprintName = "AcceptanceTests"
+               ReferencedContainer = "container:Clappr.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -33,8 +47,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6003F5AD195388D20070C39A"
-               BuildableName = "Tests.xctest"
-               BlueprintName = "Tests"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:Clappr.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E41FFE991A76A2CA00FCAB8C"
+               BuildableName = "AcceptanceTests.xctest"
+               BlueprintName = "AcceptanceTests"
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </TestableReference>

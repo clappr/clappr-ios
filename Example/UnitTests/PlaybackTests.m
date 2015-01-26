@@ -29,7 +29,7 @@ describe(@"Playback", ^{
 
     it(@"should have a play method", ^{
         BOOL responds = [playback respondsToSelector:@selector(play)];
-        [[theValue(responds) should] beTrue];
+        [[theValue(responds) should] beFalse];
     });
 
     it(@"should have a pause method", ^{

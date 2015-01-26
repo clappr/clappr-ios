@@ -2,8 +2,13 @@ target 'Clappr', :exclusive => true do
   pod "Clappr", :path => "../"
 end
 
-target 'Tests', :exclusive => true do
+target 'UnitTests', :exclusive => true do
   pod "Clappr", :path => "../"
-
   pod 'Kiwi'
+end
+
+target 'AcceptanceTests', :exclusive => true do
+    pod "Clappr", :path => "../"
+    pod 'KIF', '~> 3.0', :configurations => ['Debug']
+    pod 'KIF-Kiwi'
 end

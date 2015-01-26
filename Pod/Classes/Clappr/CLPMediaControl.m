@@ -59,6 +59,7 @@ static UINib *mediaControlNib;
     if (self) {
         self.view = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
         self.view.backgroundColor = [UIColor clearColor];
+        self.view.accessibilityLabel = @"Media Control";
 
         [container.view clappr_addSubviewMatchingFrameOfView:self.view];
 
