@@ -57,19 +57,26 @@ static UINib *mediaControlNib;
 {
     self = [super init];
     if (self) {
-        self.view = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
-        self.view.backgroundColor = [UIColor clearColor];
-        self.view.accessibilityLabel = @"Media Control";
-
-        [container.view clappr_addSubviewMatchingFrameOfView:self.view];
-
         _container = container;
 
+        self.view = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
+        self.view.backgroundColor = [UIColor clearColor];
+        [container.view clappr_addSubviewMatchingFrameOfView:self.view];
+
+        [self addAccessibilityLabels];
         [self bindEventListeners];
         [self setupControls];
-        [self addTapGestureToShowOrHideControls];
     }
     return self;
+}
+
+- (void)addAccessibilityLabels
+{
+    self.view.accessibilityLabel = @"media control";
+    _playPauseButton.accessibilityLabel = @"play/pause";
+    _fullscreenButton.accessibilityLabel = @"toggle fullscreen";
+    _currentTimeLabel.accessibilityLabel = @"current time";
+    _durationLabel.accessibilityLabel = @"duration";
 }
 
 - (void)bindEventListeners
@@ -108,18 +115,9 @@ static UINib *mediaControlNib;
     [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
     [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
 
-    _currentTimeLabel.text = @"00:00";
-    _durationLabel.text = @"00:00";
-
     _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
-}
-
-- (void)addTapGestureToShowOrHideControls
-{
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] init];
-    [self.view addGestureRecognizer:tapGesture];
 }
 
 #pragma mark - Control Actions
@@ -154,6 +152,10 @@ static UINib *mediaControlNib;
 
     [_container stop];
     [self trigger:CLPMediaControlEventNotPlaying];
+}
+
+- (IBAction)toggleFullscreen
+{
 }
 
 #pragma mark - Notification handling

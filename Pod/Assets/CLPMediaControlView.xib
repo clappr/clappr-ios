@@ -100,22 +100,22 @@
                                 <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
-                            <rect key="frame" x="20" y="34" width="34" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
+                            <rect key="frame" x="20" y="34" width="43" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
-                            <rect key="frame" x="67" y="36" width="1" height="20"/>
+                            <rect key="frame" x="71" y="36" width="1" height="20"/>
                             <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="2Yo-lf-9fz"/>
                                 <constraint firstAttribute="width" constant="1" id="xHp-SL-wLk"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
-                            <rect key="frame" x="76" y="34" width="34" height="21"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
+                            <rect key="frame" x="80" y="34" width="43" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -124,10 +124,10 @@
                             <rect key="frame" x="397" y="20" width="70" height="50"/>
                             <subviews>
                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQR-kY-jUF" userLabel="Fullscreen">
-                                    <rect key="frame" x="19" y="9" width="30" height="30"/>
+                                    <rect key="frame" x="18" y="8" width="32" height="32"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="2vl-mS-nbs"/>
-                                        <constraint firstAttribute="width" constant="30" id="7Zn-5h-Ac9"/>
+                                        <constraint firstAttribute="height" constant="32" id="2vl-mS-nbs"/>
+                                        <constraint firstAttribute="width" constant="32" id="7Zn-5h-Ac9"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="player" family="Player" pointSize="30"/>
                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -138,6 +138,9 @@
                                     <state key="selected">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="toggleFullscreen" destination="-1" eventType="touchUpInside" id="jIq-iP-fex"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <gestureRecognizers/>
