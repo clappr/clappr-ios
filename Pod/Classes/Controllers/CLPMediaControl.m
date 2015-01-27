@@ -193,8 +193,6 @@ static UINib *mediaControlNib;
 
     scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
     [_scrubberView setNeedsLayout];
-
-    NSLog(@"delta: %f", delta);
 }
 
 - (void)containerDidEnd
