@@ -31,4 +31,9 @@
     [player attachTo:self atView:_playerContainer];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 @end
