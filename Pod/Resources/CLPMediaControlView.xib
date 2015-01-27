@@ -48,14 +48,14 @@
                                         <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
                                     <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber Container">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber Container" customClass="CLPScrubberView">
                                     <rect key="frame" x="-20" y="-11" width="50" height="50"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber">
@@ -86,6 +86,10 @@
                                         <constraint firstAttribute="width" constant="50" id="meh-gR-tpI"/>
                                         <constraint firstAttribute="centerX" secondItem="uDb-7w-G5b" secondAttribute="centerX" id="ub9-f2-wkr"/>
                                     </constraints>
+                                    <connections>
+                                        <outlet property="innerCircle" destination="sIr-Lb-mYB" id="xlc-Po-Ihw"/>
+                                        <outlet property="outerCircle" destination="uDb-7w-G5b" id="ISb-9p-9Vm"/>
+                                    </connections>
                                 </view>
                             </subviews>
                             <gestureRecognizers/>

@@ -9,7 +9,7 @@
 #import <Clappr/Clappr.h>
 #import <KIF-Kiwi/KIF-Kiwi.h>
 
-SPEC_BEGIN(MainViewAppSpec)
+SPEC_BEGIN(MediaControlSpec)
 
 describe(@"Media Control", ^{
 

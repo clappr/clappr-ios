@@ -1,13 +1,13 @@
 //
-//  CLPScrubber.m
+//  CLPScrubberView.h
 //  Clappr
 //
 //  Created by Gustavo Barbosa on 1/27/15.
 //  Copyright (c) 2014 globo.com. All rights reserved.
 //
 
-#import "CLPScrubber.h"
+#import <UIKit/UIKit.h>
 
-@implementation CLPScrubber
+@interface CLPScrubberView : UIView
 
 @end
