@@ -16,6 +16,10 @@
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="qO4-hD-Ybz"/>
                 <outlet property="fullscreenButton" destination="MQR-kY-jUF" id="cu2-DR-g6H"/>
                 <outlet property="playPauseButton" destination="0V7-z5-rdA" id="SzV-CV-Wii"/>
+                <outlet property="positionBarView" destination="82D-Bh-tQP" id="r5I-Hu-Q2c"/>
+                <outlet property="scrubberLeftConstraint" destination="1eQ-Wc-2gx" id="dwR-ue-OGw"/>
+                <outlet property="scrubberView" destination="3Wv-Cd-358" id="Oc8-2h-vqT"/>
+                <outlet property="seekBarView" destination="6qg-xT-VwA" id="8sU-8S-6zz"/>
                 <outlet property="view" destination="xP5-UL-qkk" id="Tgj-xc-t6H"/>
             </connections>
         </placeholder>
@@ -55,13 +59,13 @@
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber Container" customClass="CLPScrubberView">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" customClass="CLPScrubberView">
                                     <rect key="frame" x="-20" y="-11" width="50" height="50"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
                                             <rect key="frame" x="10" y="10" width="30" height="30"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Center">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle">
                                                     <rect key="frame" x="10" y="10" width="10" height="10"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>

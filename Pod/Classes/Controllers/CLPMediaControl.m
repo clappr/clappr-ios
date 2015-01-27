@@ -15,6 +15,7 @@
 // Clappr
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
+#import "CLPScrubberView.h"
 #import "UIView+NSLayoutConstraints.h"
 
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
@@ -32,8 +33,18 @@ static NSString *clapprFontName;
 static UINib *mediaControlNib;
 
 @interface CLPMediaControl ()
+{
+    __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
+    __weak IBOutlet UIView *positionBarView;
+    __weak IBOutlet UIView *seekBarView;
+
+    CGFloat scrubberInitialPosition;
+}
 
 @property (nonatomic, weak, readwrite) IBOutlet UIButton *playPauseButton;
+
+@property (nonatomic, weak, readwrite) IBOutlet CLPScrubberView *scrubberView;
+
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *durationLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *currentTimeLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UIButton *fullscreenButton;
@@ -115,6 +126,8 @@ static UINib *mediaControlNib;
     [_playPauseButton setTitle:kMediaControlTitlePlay forState:UIControlStateNormal];
     [_playPauseButton setTitle:kMediaControlTitlePause forState:UIControlStateSelected];
 
+    scrubberInitialPosition = scrubberLeftConstraint.constant;
+
     _fullscreenButton.titleLabel.font = [UIFont fontWithName:clapprFontName size:30.0f];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateNormal];
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
@@ -174,6 +187,14 @@ static UINib *mediaControlNib;
                                 duration:(NSTimeInterval)duration
 {
     _currentTimeLabel.text = [self formattedTime:position];
+
+    float percentage = duration == 0 ? 0 : position / duration;
+    CGFloat delta = CGRectGetWidth(seekBarView.frame) * percentage;
+
+    scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
+    [_scrubberView setNeedsLayout];
+
+    NSLog(@"delta: %f", delta);
 }
 
 - (void)containerDidEnd
