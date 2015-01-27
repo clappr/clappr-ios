@@ -35,8 +35,6 @@ static NSTimeInterval const kCoreMediaControlAnimationDuration = 0.3;
         [self createContainers];
         [self createMediaControl];
         [self addTapGestureToShowAndHideMediaControl];
-
-        self.view.backgroundColor = [UIColor greenColor];
     }
     return self;
 }
