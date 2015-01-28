@@ -1,13 +1,4 @@
-//
-//  UIObjectTests.m
-//  Clappr
-//
-//  Created by Gustavo Barbosa on 12/10/14.
-//  Copyright (c) 2014 globo.com. All rights reserved.
-//
-
 #import <Clappr/Clappr.h>
-
 
 SPEC_BEGIN(UIObject)
 

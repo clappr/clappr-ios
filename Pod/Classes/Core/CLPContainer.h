@@ -1,11 +1,3 @@
-//
-//  CLPContainer.h
-//  Clappr
-//
-//  Created by Gustavo Barbosa on 12/11/14.
-//  Copyright (c) 2014 globo.com. All rights reserved.
-//
-
 #import "CLPUIObject.h"
 
 extern NSString *const CLPContainerEventPlaybackStateChanged;
