@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl">
             <connections>
+                <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="5zy-o5-dtI"/>
+                <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="EHm-oc-S4h"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="PuI-u9-r4C"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="qO4-hD-Ybz"/>
                 <outlet property="fullscreenButton" destination="MQR-kY-jUF" id="cu2-DR-g6H"/>

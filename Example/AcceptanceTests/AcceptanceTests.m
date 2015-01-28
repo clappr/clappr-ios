@@ -13,20 +13,6 @@ SPEC_BEGIN(MediaControlSpec)
 
 describe(@"Media Control", ^{
 
-    context(@"General", ^{
-        it(@"should start with all its controls appearing", ^{
-
-            [tester waitForTappableViewWithAccessibilityLabel:@"play/pause"];
-            // [tester waitForTappableViewWithAccessibilityLabel:@"toggle fullscreen"];
-
-            [tester waitForViewWithAccessibilityLabel:@"current time"];
-            [tester waitForViewWithAccessibilityLabel:@"duration"];
-
-            // [tester waitForViewWithAccessibilityLabel:@"scrubber"];
-            // [tester waitForViewWithAccessibilityLabel:@"seek bar"];
-        });
-    });
-
     describe(@"Play", ^{
 
         __block UIButton *playPauseButton;
@@ -63,8 +49,35 @@ describe(@"Media Control", ^{
             [[durationLabel.text should] equal:@"00:00"];
         });
 
-        it(@"should be update after load the playback", ^{
+        pending(@"should be update after load the playback", ^{
 
+        });
+    });
+
+    describe(@"Visibility", ^{
+
+        it(@"should start with all its controls appearing", ^{
+
+            [tester waitForTappableViewWithAccessibilityLabel:@"play/pause"];
+            // [tester waitForTappableViewWithAccessibilityLabel:@"toggle fullscreen"];
+
+            [tester waitForViewWithAccessibilityLabel:@"current time"];
+            [tester waitForViewWithAccessibilityLabel:@"duration"];
+
+             [tester waitForViewWithAccessibilityLabel:@"scrubber"];
+             [tester waitForViewWithAccessibilityLabel:@"seek bar"];
+        });
+
+        it(@"should be hidden after touch an area without button", ^{
+
+            [tester tapScreenAtPoint:CGPointMake(10, 10)];
+
+            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"play/pause"];
+//            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"toggle fullscreen"];
+            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"current time"];
+            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"duration"];
+            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"scrubber"];
+            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"seek bar"];
         });
     });
 });

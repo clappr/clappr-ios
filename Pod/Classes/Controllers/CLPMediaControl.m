@@ -18,6 +18,8 @@
 #import "CLPScrubberView.h"
 #import "UIView+NSLayoutConstraints.h"
 
+static NSTimeInterval const kMediaControlAnimationDuration = 0.3;
+
 NSString *const CLPMediaControlEventPlaying = @"clappr:media_control:playing";
 NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_playing";
 
@@ -43,8 +45,10 @@ static UINib *mediaControlNib;
 
 @property (nonatomic, weak, readwrite) IBOutlet UIButton *playPauseButton;
 
-@property (nonatomic, weak, readwrite) IBOutlet CLPScrubberView *scrubberView;
+@property (nonatomic, weak, readwrite) IBOutlet UIView *controlsOverlayView;
+@property (nonatomic, weak, readwrite) IBOutlet UIView *controlsWrapperView;
 
+@property (nonatomic, weak, readwrite) IBOutlet CLPScrubberView *scrubberView;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *durationLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *currentTimeLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UIButton *fullscreenButton;
@@ -88,6 +92,8 @@ static UINib *mediaControlNib;
     _fullscreenButton.accessibilityLabel = @"toggle fullscreen";
     _currentTimeLabel.accessibilityLabel = @"current time";
     _durationLabel.accessibilityLabel = @"duration";
+    _scrubberView.accessibilityLabel = @"scrubber";
+    seekBarView.accessibilityLabel = @"seek bar";
 }
 
 - (void)bindEventListeners
@@ -198,6 +204,55 @@ static UINib *mediaControlNib;
 - (void)containerDidEnd
 {
     _playPauseButton.selected = NO;
+}
+
+#pragma mark - Show / Hide
+
+- (void)hide
+{
+    [self hideAnimated:NO];
+}
+
+- (void)hideAnimated:(BOOL)animated
+{
+    __weak typeof(self) weakSelf = self;
+
+    NSTimeInterval duration = animated ? kMediaControlAnimationDuration : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        for (UIView *subview in self.view.subviews) {
+            subview.alpha = 0.0;
+        }
+    } completion:^(BOOL finished) {
+        for (UIView *subview in self.view.subviews)
+            subview.hidden = YES;
+
+        if (finished)
+            weakSelf.controlsHidden = YES;
+    }];
+}
+
+- (void)show
+{
+    [self showAnimated:NO];
+}
+
+- (void)showAnimated:(BOOL)animated
+{
+    for (UIView *subview in self.view.subviews) {
+        subview.hidden = NO;
+    }
+
+    __weak typeof(self) weakSelf = self;
+
+    NSTimeInterval duration = animated ? kMediaControlAnimationDuration : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        for (UIView *subview in self.view.subviews) {
+            subview.alpha = 1.0;
+        }
+    } completion:^(BOOL finished) {
+        if (finished)
+            weakSelf.controlsHidden = NO;
+    }];
 }
 
 #pragma mark - Private

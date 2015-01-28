@@ -13,15 +13,10 @@
 #import "CLPPlayback.h"
 #import "UIView+NSLayoutConstraints.h"
 
-static NSTimeInterval const kCoreMediaControlAnimationDuration = 0.3;
-
 @interface CLPCore ()
 {
     NSMutableArray *containers;
 }
-
-@property (nonatomic, assign) BOOL mediaControlHidden;
-
 @end
 
 
@@ -82,42 +77,16 @@ static NSTimeInterval const kCoreMediaControlAnimationDuration = 0.3;
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(toggleMediaControlVisibility)];
-    [self.mediaControl.view addGestureRecognizer:tapGesture];
+    [_mediaControl.view addGestureRecognizer:tapGesture];
 }
 
 - (void)toggleMediaControlVisibility
 {
-    if (_mediaControlHidden) {
-        [self showMediaControl];
+    if ([_mediaControl areControlsHidden]) {
+        [_mediaControl showAnimated:YES];
     } else {
-        [self hideMediaControl];
+        [_mediaControl hideAnimated:YES];
     }
-}
-
-- (void)showMediaControl
-{
-    __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:kCoreMediaControlAnimationDuration animations:^{
-        for (UIView *subview in _mediaControl.view.subviews) {
-            subview.alpha = 1.0;
-        }
-    } completion:^(BOOL finished) {
-        if (finished)
-            weakSelf.mediaControlHidden = NO;
-    }];
-}
-
-- (void)hideMediaControl
-{
-    __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:kCoreMediaControlAnimationDuration animations:^{
-        for (UIView *subview in _mediaControl.view.subviews) {
-            subview.alpha = 0.0;
-        }
-    } completion:^(BOOL finished) {
-        if (finished)
-            weakSelf.mediaControlHidden = YES;
-    }];
 }
 
 #pragma mark - Accessors

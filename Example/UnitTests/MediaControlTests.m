@@ -133,6 +133,39 @@ describe(@"Media Control", ^{
         });
     });
 
+    context(@"Controls Visibility", ^{
+
+        it(@"should start visible", ^{
+            [[theValue(mediaControl.playPauseButton.hidden) should] beFalse];
+            [[theValue(mediaControl.controlsWrapperView.hidden) should] beFalse];
+            [[theValue(mediaControl.controlsOverlayView.hidden) should] beFalse];
+        });
+
+        it(@"should hide its controls after call hide", ^{
+
+            [mediaControl hide];
+
+            [[expectFutureValue(theValue(mediaControl.playPauseButton.hidden)) shouldEventually] beTrue];
+            [[expectFutureValue(theValue(mediaControl.controlsWrapperView.hidden)) shouldEventually] beTrue];
+            [[expectFutureValue(theValue(mediaControl.controlsOverlayView.hidden)) shouldEventually] beTrue];
+        });
+
+        it(@"should show its controls again after call hide and then show", ^{
+
+            [mediaControl hide];
+
+            [[expectFutureValue(theValue(mediaControl.playPauseButton.hidden)) shouldEventually] beTrue];
+            [[expectFutureValue(theValue(mediaControl.controlsWrapperView.hidden)) shouldEventually] beTrue];
+            [[expectFutureValue(theValue(mediaControl.controlsOverlayView.hidden)) shouldEventually] beTrue];
+
+            [mediaControl show];
+
+            [[expectFutureValue(theValue(mediaControl.playPauseButton.hidden)) shouldEventually] beFalse];
+            [[expectFutureValue(theValue(mediaControl.controlsWrapperView.hidden)) shouldEventually] beFalse];
+            [[expectFutureValue(theValue(mediaControl.controlsOverlayView.hidden)) shouldEventually] beFalse];
+        });
+    });
+
     context(@"General", ^{
 
         it(@"should reset it's play button state after listen to container's end event", ^{

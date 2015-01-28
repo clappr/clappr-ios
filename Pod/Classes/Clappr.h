@@ -20,4 +20,6 @@
 #import <Clappr/CLPCore.h>
 #import <Clappr/CLPPlayer.h>
 
+#import <Clappr/CLPScrubberView.h>
+
 #endif
