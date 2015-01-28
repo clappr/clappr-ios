@@ -17,33 +17,70 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-yT-kzS">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-yT-kzS">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="qpd-lz-FH5"/>
+                                    <constraint firstAttribute="height" constant="180" id="0x9-xj-JTM"/>
+                                    <constraint firstAttribute="height" constant="180" id="1Ov-F5-ejR"/>
+                                    <constraint firstAttribute="height" constant="180" id="1cR-Wr-gbc"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0x9-xj-JTM"/>
+                                        <exclude reference="1Ov-F5-ejR"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
-                                        <exclude reference="qpd-lz-FH5"/>
+                                        <exclude reference="1cR-Wr-gbc"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="0x9-xj-JTM"/>
+                                        <exclude reference="1cR-Wr-gbc"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <exclude reference="1cR-Wr-gbc"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="0x9-xj-JTM"/>
+                                        <exclude reference="1cR-Wr-gbc"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="1Ov-F5-ejR"/>
                                     </mask>
                                 </variation>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fSg-yT-kzS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Rob-kS-Gp5"/>
-                            <constraint firstItem="fSg-yT-kzS" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="YJQ-3P-QY9"/>
-                            <constraint firstAttribute="trailing" secondItem="fSg-yT-kzS" secondAttribute="trailing" id="pUX-iD-5bP"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fSg-yT-kzS" secondAttribute="bottom" id="pZJ-D3-JVt"/>
+                            <constraint firstItem="fSg-yT-kzS" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="BZd-yp-SZo"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fSg-yT-kzS" secondAttribute="bottom" id="Ct7-G9-y9l"/>
+                            <constraint firstAttribute="trailing" secondItem="fSg-yT-kzS" secondAttribute="trailing" id="Czi-TK-bop"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="fSg-yT-kzS" secondAttribute="bottom" id="VE4-Nz-BLh"/>
+                            <constraint firstItem="fSg-yT-kzS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="bzh-l9-Jga"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="pZJ-D3-JVt"/>
+                                <exclude reference="Ct7-G9-y9l"/>
+                                <exclude reference="VE4-Nz-BLh"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="pZJ-D3-JVt"/>
+                                <include reference="VE4-Nz-BLh"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="Ct7-G9-y9l"/>
                             </mask>
                         </variation>
                     </view>
@@ -53,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="954.375" y="391.90140845070414"/>
+            <point key="canvasLocation" x="954" y="390"/>
         </scene>
     </scenes>
 </document>
