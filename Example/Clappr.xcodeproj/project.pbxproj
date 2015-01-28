@@ -25,6 +25,7 @@
 		C43ABEAFAD6C024B657FBF7B /* libPods-AcceptanceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF378E268C4A99AF78E54455 /* libPods-AcceptanceTests.a */; };
 		E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E401F2071A43709A00F41E8C /* MediaControlTests.m */; };
 		E41FFE9F1A76A2CA00FCAB8C /* AcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */; };
+		E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */; };
 		E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C99A21A64510100EB5C21 /* CoreTests.m */; };
 		E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */; };
 		E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB131A39D79C00C568DC /* ContainerTests.m */; };
@@ -87,6 +88,7 @@
 		E41FFE9A1A76A2CA00FCAB8C /* AcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41FFE9D1A76A2CA00FCAB8C /* AcceptanceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AcceptanceTests-Info.plist"; sourceTree = "<group>"; };
 		E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AcceptanceTests.m; sourceTree = "<group>"; };
+		E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTests.m; sourceTree = "<group>"; };
 		E45C99A21A64510100EB5C21 /* CoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTests.m; sourceTree = "<group>"; };
 		E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIObjectTests.m; sourceTree = "<group>"; };
 		E4A7FB131A39D79C00C568DC /* ContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerTests.m; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				E4A7FB131A39D79C00C568DC /* ContainerTests.m */,
 				E401F2071A43709A00F41E8C /* MediaControlTests.m */,
 				E45C99A21A64510100EB5C21 /* CoreTests.m */,
+				E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,
 				E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */,
 				E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */,
+				E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
