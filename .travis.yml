@@ -3,7 +3,7 @@
 language: objective-c
 env:
   - TEST_SUITE=unit
-  - TEST_SUITE=interface
+  - TEST_SUITE=acceptance
 before_install:
   - export LANG=en_US.UTF-8
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
