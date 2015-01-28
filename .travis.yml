@@ -1,10 +1,14 @@
 # reference: http://www.objc.io/issue-6/travis-ci.html
 
 language: objective-c
+env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=interface
 before_install:
   - export LANG=en_US.UTF-8
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
   - cd Example && pod update && cd -
+  - make clean
 script:
-  - make clean test
+  - make $TEST_SUITE
