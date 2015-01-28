@@ -1,5 +1,4 @@
 #import <Clappr/Clappr.h>
-#import <objc/runtime.h>
 
 SPEC_BEGIN(MediaControl)
 
