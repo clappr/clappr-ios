@@ -4,7 +4,7 @@
 
 static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4";
 
-@interface CLPViewController ()
+@interface CLPViewController () <UITextFieldDelegate>
 {
     CLPPlayer *player;
 }
@@ -21,6 +21,8 @@ static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-w
 {
     [super viewDidLoad];
 
+    _mediaURLTextField.text = kSourceURLString;
+
     NSURL *sourceURL = [NSURL URLWithString:kSourceURLString];
     player = [[CLPPlayer alloc] initWithSourceURL:sourceURL];
     [player attachTo:self atView:_playerContainer];
@@ -28,8 +30,21 @@ static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-w
 
 - (IBAction)loadButtonDidTap
 {
-    NSLog(@">>> %@", _mediaURLTextField.text);
+    NSURL *url = [NSURL URLWithString:_mediaURLTextField.text];
+
+    if (url)
+        player.sourceURL = url;
 }
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.view endEditing:YES];
+    return NO;
+}
+
+#pragma mark - UIStatusBarStyle
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

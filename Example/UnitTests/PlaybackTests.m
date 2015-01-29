@@ -74,6 +74,10 @@ describe(@"Playback", ^{
         [[playback.view.superview should] beNil];
     });
 
+    pending(@"should stop to listen events after destroy has been called", ^{
+
+    });
+
     it(@"should have a class method to check if a source can be played and its default value is NO", ^{
         BOOL canPlay = [playback canPlayURL:[NSURL new]];
         [[theValue(canPlay) should] equal:theValue(NO)];

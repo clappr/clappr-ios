@@ -35,15 +35,15 @@ describe(@"Container", ^{
             UIView *wrapperView = [UIView new];
             [wrapperView addSubview:container.view];
 
-            __block NSString *containerName;
-            [container once:CLPContainerEventDestroyed callback:^(NSDictionary *userInfo) {
-                containerName = userInfo[@"name"];
-            }];
+            [container once:CLPContainerEventDestroyed callback:nil];
 
             [[playback should] receive:@selector(destroy)];
             [container destroy];
             [[container.view.superview should] beNil];
-            [[containerName should] equal:@"Container"];
+        });
+
+        pending(@"should stop to listen events after destroy has been called", ^{
+
         });
 
         it(@"should call playback's play method after its play method has been called", ^{

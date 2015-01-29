@@ -306,8 +306,11 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
 - (void)destroy
 {
-    [self.view removeFromSuperview];
+    [self stopListening];
     [_playback destroy];
+
+    [self.view removeFromSuperview];
+    
     [self trigger:CLPContainerEventDestroyed userInfo:@{@"name": self.name}];
 }
 

@@ -2,6 +2,7 @@
 
 // Clappr
 #import "CLPCore.h"
+#import "CLPContainer.h"
 #import "UIView+NSLayoutConstraints.h"
 
 @implementation CLPPlayer
@@ -30,6 +31,12 @@
     _core.view.backgroundColor = [UIColor blackColor];
 
     [container clappr_addSubviewMatchingFrameOfView:_core.view];
+}
+
+- (void)setSourceURL:(NSURL *)sourceURL
+{
+    _sourceURL = sourceURL;
+    [_core loadSources:@[sourceURL]];
 }
 
 @end

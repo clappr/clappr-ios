@@ -11,4 +11,6 @@
 
 - (instancetype)initWithSources:(NSArray *)sources;
 
+- (void)loadSources:(NSArray *)sources;
+
 @end

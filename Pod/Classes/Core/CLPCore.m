@@ -11,26 +11,39 @@
 }
 @end
 
-
 @implementation CLPCore
-
-- (instancetype)initWithSources:(NSArray *)sources
-{
-    self = [super init];
-    if (self) {
-        _sources = sources;
-        [self createContainers];
-        [self createMediaControl];
-        [self addTapGestureToShowAndHideMediaControl];
-    }
-    return self;
-}
 
 - (instancetype)init
 {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:@"Use initWithSources: instead"
                                  userInfo:nil];
+}
+
+- (instancetype)initWithSources:(NSArray *)sources
+{
+    self = [super init];
+    if (self) {
+        [self loadSources:sources];
+    }
+    return self;
+}
+
+- (void)loadSources:(NSArray *)sources
+{
+    _sources = sources;
+
+    [self recreateContainers];
+    [self createMediaControl];
+    [self addTapGestureToShowAndHideMediaControl];
+}
+
+- (void)recreateContainers
+{
+    for (CLPContainer *container in containers)
+        [container destroy];
+
+    [self createContainers];
 }
 
 - (void)createContainers

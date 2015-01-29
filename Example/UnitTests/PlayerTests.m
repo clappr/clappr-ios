@@ -12,19 +12,9 @@ describe(@"Player", ^{
         [[mainContainer.playback.url should] equal:sourceURL];
     });
 
-    it(@"can be instantiated passing an array of URLS", ^{
-        NSURL *firstSource = [NSURL URLWithString:@"http://www.site1.com/video.mp4"];
-        NSURL *secondsSource = [NSURL URLWithString:@"http://www.site2.com/video.mp4"];
-        NSURL *thirdSource = [NSURL URLWithString:@"http://www.site3.com/video.mp4"];
-        CLPPlayer *player = [[CLPPlayer alloc] initWithSourcesURLs:@[firstSource, secondsSource, thirdSource]];
+    pending(@"should receive a NSURL and reload the playback", ^{
 
-        [[player.core.containers should] haveCountOf:3];
-
-        [[[player.core.containers[0] playback].url should] equal:firstSource];
-        [[[player.core.containers[1] playback].url should] equal:secondsSource];
-        [[[player.core.containers[2] playback].url should] equal:thirdSource];
     });
-
 });
 
 SPEC_END
