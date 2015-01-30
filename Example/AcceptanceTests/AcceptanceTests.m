@@ -3,7 +3,8 @@
 
 static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4";
 
-void resetPlayer() {
+void resetPlayer()
+{
     [tester clearTextFromAndThenEnterText:kSourceURLString intoViewWithAccessibilityLabel:@"source url"];
     [tester tapViewWithAccessibilityLabel:@"load button"];
 }
@@ -59,32 +60,38 @@ describe(@"Media Control", ^{
 
     describe(@"Visibility", ^{
 
-        beforeAll(^{
+        NSArray *controlNames = @[@"play/pause", @"current time", @"duration", @"scrubber", @"seek bar" /*, @"toggle fullscreen"*/];
+
+        beforeEach(^{
             resetPlayer();
         });
 
         it(@"should start with all its controls appearing", ^{
-
-            [tester waitForTappableViewWithAccessibilityLabel:@"play/pause"];
-            // [tester waitForTappableViewWithAccessibilityLabel:@"toggle fullscreen"];
-
-            [tester waitForViewWithAccessibilityLabel:@"current time"];
-            [tester waitForViewWithAccessibilityLabel:@"duration"];
-
-             [tester waitForViewWithAccessibilityLabel:@"scrubber"];
-             [tester waitForViewWithAccessibilityLabel:@"seek bar"];
+            [controlNames enumerateObjectsUsingBlock:^(NSString *accessibilityLabel, NSUInteger idx, BOOL *stop) {
+                [tester waitForViewWithAccessibilityLabel:accessibilityLabel];
+            }];
         });
 
         it(@"should be hidden after touch an area without button", ^{
 
             [tester tapScreenAtPoint:CGPointMake(10, 10)];
 
-            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"play/pause"];
-//            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"toggle fullscreen"];
-            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"current time"];
-            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"duration"];
-            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"scrubber"];
-            [tester waitForAbsenceOfViewWithAccessibilityLabel:@"seek bar"];
+            [controlNames enumerateObjectsUsingBlock:^(NSString *accessibilityLabel, NSUInteger idx, BOOL *stop) {
+                [tester waitForAbsenceOfViewWithAccessibilityLabel:accessibilityLabel];
+            }];
+        });
+
+        it(@"should be hidden after sometime when playback is playing", ^{
+
+            [tester tapViewWithAccessibilityLabel:@"play/pause"];
+
+            [tester waitForAnimationsToFinish];
+
+            [tester waitForTimeInterval:3.0];
+
+            [controlNames enumerateObjectsUsingBlock:^(NSString *accessibilityLabel, NSUInteger idx, BOOL *stop) {
+                [tester waitForAbsenceOfViewWithAccessibilityLabel:accessibilityLabel];
+            }];
         });
     });
 });

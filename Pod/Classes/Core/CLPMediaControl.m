@@ -33,6 +33,7 @@ static UINib *mediaControlNib;
     __weak IBOutlet UIView *seekBarView;
 
     CGFloat scrubberInitialPosition;
+    NSTimer *hideControlsTimer;
 }
 
 @property (nonatomic, weak, readwrite) IBOutlet UIButton *playPauseButton;
@@ -49,6 +50,13 @@ static UINib *mediaControlNib;
 
 
 @implementation CLPMediaControl
+
+#pragma mark - Dtor
+
+- (void)dealloc
+{
+    [hideControlsTimer invalidate];
+}
 
 #pragma mark - Ctors
 
@@ -153,6 +161,7 @@ static UINib *mediaControlNib;
         [self pause];
     } else {
         [self play];
+        hideControlsTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(hideAfterStartToPlay) userInfo:nil repeats:NO];
     }
 }
 
@@ -284,6 +293,15 @@ static UINib *mediaControlNib;
         [formatter setDateFormat:@"HH:mm:ss"];
 
     return [formatter stringFromDate:date];
+}
+
+- (void)hideAfterStartToPlay
+{
+    if (_container.isPlaying) {
+        [self hideAnimated:YES];
+    }
+
+    [hideControlsTimer invalidate];
 }
 
 @end
