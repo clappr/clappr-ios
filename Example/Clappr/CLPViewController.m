@@ -11,6 +11,7 @@ static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-w
 
 @property (weak, nonatomic) IBOutlet UIView *playerContainer;
 @property (weak, nonatomic) IBOutlet UITextField *mediaURLTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loadButton;
 
 @end
 
@@ -22,6 +23,9 @@ static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-w
     [super viewDidLoad];
 
     _mediaURLTextField.text = kSourceURLString;
+
+    _mediaURLTextField.accessibilityLabel = @"source url";
+    _loadButton.accessibilityLabel = @"load button";
 
     NSURL *sourceURL = [NSURL URLWithString:kSourceURLString];
     player = [[CLPPlayer alloc] initWithSourceURL:sourceURL];

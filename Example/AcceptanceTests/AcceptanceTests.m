@@ -1,6 +1,13 @@
 #import <Clappr/Clappr.h>
 #import <KIF-Kiwi/KIF-Kiwi.h>
 
+static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4";
+
+void resetPlayer() {
+    [tester clearTextFromAndThenEnterText:kSourceURLString intoViewWithAccessibilityLabel:@"source url"];
+    [tester tapViewWithAccessibilityLabel:@"load button"];
+}
+
 SPEC_BEGIN(MediaControlSpec)
 
 describe(@"Media Control", ^{
@@ -10,6 +17,7 @@ describe(@"Media Control", ^{
         __block UIButton *playPauseButton;
 
         beforeAll(^{
+            resetPlayer();
             playPauseButton = (UIButton *)[tester waitForTappableViewWithAccessibilityLabel:@"play/pause"];
         });
 
@@ -22,6 +30,8 @@ describe(@"Media Control", ^{
 
             [tester tapViewWithAccessibilityLabel:playPauseButton.accessibilityLabel];
 
+            [tester waitForAnimationsToFinish];
+
             [[theValue(playPauseButton.state) should] equal:theValue(UIControlStateSelected)];
             [[[playPauseButton titleForState:UIControlStateSelected] should] equal:@"\ue002"];
         });
@@ -33,6 +43,7 @@ describe(@"Media Control", ^{
         __block UILabel *durationLabel;
 
         beforeAll(^{
+            resetPlayer();
             playPauseButton = (UIButton *)[tester waitForTappableViewWithAccessibilityLabel:@"play/pause"];
             durationLabel = (UILabel *)[tester waitForViewWithAccessibilityLabel:@"duration"];
         });
@@ -47,6 +58,10 @@ describe(@"Media Control", ^{
     });
 
     describe(@"Visibility", ^{
+
+        beforeAll(^{
+            resetPlayer();
+        });
 
         it(@"should start with all its controls appearing", ^{
 

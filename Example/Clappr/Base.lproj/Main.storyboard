@@ -111,6 +111,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="loadButton" destination="fSV-wO-MmS" id="9R0-ye-5Qm"/>
                         <outlet property="mediaURLTextField" destination="H1d-Xq-YIb" id="oaC-aa-HiR"/>
                         <outlet property="playerContainer" destination="fSg-yT-kzS" id="u9h-7Q-sJ3"/>
                     </connections>
