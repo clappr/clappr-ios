@@ -39,9 +39,6 @@
     _avPlayer = [AVPlayer playerWithURL:self.url];
     [self.playerView setPlayer:_avPlayer];
     [_avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
-
-    [_avPlayer.currentItem addObserver:self forKeyPath:@"status" options:0 context:nil];
-
     [self addTimeElapsedCallbackHandler];
 }
 

@@ -79,7 +79,7 @@ describe(@"Playback", ^{
     });
 
     it(@"should have a class method to check if a source can be played and its default value is NO", ^{
-        BOOL canPlay = [playback canPlayURL:[NSURL new]];
+        BOOL canPlay = [[playback class] canPlayURL:[NSURL new]];
         [[theValue(canPlay) should] equal:theValue(NO)];
     });
 });

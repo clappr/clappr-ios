@@ -1,5 +1,7 @@
 #import "CLPUIObject.h"
 
+#import "PlayerView.h"
+
 extern NSString *const CLPPlaybackEventProgress;
 extern NSString *const CLPPlaybackEventTimeUpdated;
 extern NSString *const CLPPlaybackEventReady;
@@ -24,6 +26,8 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
 
 @interface CLPPlayback : CLPUIObject
 
+@property (nonatomic, strong, readonly) PlayerView *playerView;
+
 @property (nonatomic, strong, readonly) NSURL *url;
 @property (nonatomic, assign, readonly) NSUInteger duration;
 @property (nonatomic, assign, readonly, getter=isPlaying) BOOL playing;
@@ -38,7 +42,7 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
 - (void)stop;
 - (void)seekTo:(NSTimeInterval)timeInterval;
 
-- (BOOL)canPlayURL:(NSURL *)url;
++ (BOOL)canPlayURL:(NSURL *)url;
 - (void)destroy;
 
 @end

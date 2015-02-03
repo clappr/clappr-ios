@@ -3,6 +3,7 @@
 #import "CLPMediaControl.h"
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
+#import "CLPPlayback+Factory.h"
 #import "UIView+NSLayoutConstraints.h"
 
 @interface CLPCore ()
@@ -61,7 +62,7 @@
         if (!sourceURL)
             continue;
 
-        CLPPlayback *playback = [[CLPPlayback alloc] initWithURL:sourceURL];
+        CLPPlayback *playback = [CLPPlayback playbackForURL:sourceURL];
         CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
 
         [self.view clappr_addSubviewMatchingFrameOfView:container.view];
