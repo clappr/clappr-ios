@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = "An extensible media player for iOS"
   s.homepage         = "http://clappr.io"
   s.license          = 'MIT'
-  s.author           = { 
+  s.authors          = {
     "Thiago Pontes" => "thiagopnts@gmail.com",
     "Gustavo Barbosa" => "gustavocsb@gmail.com"
   }
