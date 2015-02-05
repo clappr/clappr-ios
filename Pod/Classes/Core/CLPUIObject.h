@@ -2,7 +2,7 @@
 
 @interface CLPUIObject : CLPBaseObject
 
-@property (nonatomic, readwrite) IBOutlet UIView *view;
+@property (nonatomic, strong, readwrite) IBOutlet UIView *view;
 
 - (instancetype)remove;
 
