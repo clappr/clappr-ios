@@ -20,6 +20,7 @@
 #import <Clappr/CLPLoader.h>
 
 // Plugins
+#import <Clappr/CLPUIContainerPlugin.h>
 #import <Clappr/CLPAVFoundationPlayback.h>
 
 // Views
