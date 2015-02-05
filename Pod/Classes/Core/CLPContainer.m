@@ -311,15 +311,10 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
     [self.view removeFromSuperview];
     
-    [self trigger:CLPContainerEventDestroyed userInfo:@{@"name": self.name}];
+    [self trigger:CLPContainerEventDestroyed];
 }
 
 #pragma mark - Accessors
-
-- (NSString *)name
-{
-    return @"Container";
-}
 
 - (BOOL)isPlaying
 {
