@@ -18,11 +18,12 @@
     }
 
     _enabled = enabled;
-    self.view.hidden = !_enabled;
 
     if (!_enabled) {
         [self stopListening];
     }
+
+    self.view.hidden = !_enabled;
 }
 
 @end

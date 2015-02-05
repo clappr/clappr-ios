@@ -4,7 +4,6 @@
 
 @property (nonatomic, readwrite) IBOutlet UIView *view;
 
-- (instancetype)render;
 - (instancetype)remove;
 
 @end

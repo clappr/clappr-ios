@@ -11,14 +11,10 @@
     return self;
 }
 
-- (instancetype)render
-{
-    return self;
-}
-
 - (instancetype)remove
 {
     [_view removeFromSuperview];
+    [self stopListening];
     return self;
 }
 

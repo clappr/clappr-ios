@@ -14,11 +14,6 @@ describe(@"UIObject", ^{
         [[uiObject.view shouldNot] beNil];
     });
 
-    it(@"should return self when call render", ^{
-        CLPUIObject *returnedObject = [uiObject render];
-        [[returnedObject should] equal:uiObject];
-    });
-
     it(@"should be removed from its superview when call remove", ^{
         UIView *containerView = [UIView new];
         [containerView addSubview:uiObject.view];
@@ -27,7 +22,21 @@ describe(@"UIObject", ^{
 
         [uiObject remove];
 
-        [[uiObject.view.superview  should] beNil];
+        [[uiObject.view.superview should] beNil];
+    });
+
+    it(@"should stop listening events when call remove", ^{
+
+        __block BOOL callbackWasCalled = NO;
+        [uiObject on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
+
+        [uiObject remove];
+
+        [uiObject trigger:@"some-event"];
+
+        [[theValue(callbackWasCalled) should] beFalse];
     });
 });
 
