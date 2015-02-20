@@ -72,61 +72,11 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     }];
 
     [self listenTo:_playback
-         eventName:CLPPlaybackEventReady
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf ready];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventBuffering
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf buffering];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventBufferFull
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf bufferFull];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventSettingsUdpdated
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf settingsUpdated];
-    }];
-
-    [self listenTo:_playback
          eventName:CLPPlaybackEventLoadedMetadata
           callback:^(NSDictionary *userInfo) {
 
         NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
         [weakSelf loadedMetadataWithDuration:duration];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventHighDefinitionUpdate
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf highDefinitionUpdated];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventBitRate
-          callback:^(NSDictionary *userInfo) {
-
-        float bitRate = [userInfo[@"bit_rate"] floatValue];
-        [weakSelf updateBitrate:bitRate];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventStateChanged
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf stateChanged];
     }];
 
     [self listenTo:_playback
@@ -138,46 +88,39 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     }];
 
     [self listenTo:_playback
-         eventName:CLPPlaybackEventMediaControlDisabled
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf disableMediaControl];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventMediaControlEnabled
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf enableMediaControl];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventEnded
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf ended];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventPlay
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf play];
-    }];
-
-    [self listenTo:_playback
-         eventName:CLPPlaybackEventPause
-          callback:^(NSDictionary *userInfo) {
-
-        [weakSelf pause];
-    }];
-
-    [self listenTo:_playback
          eventName:CLPPlaybackEventError
           callback:^(NSDictionary *userInfo) {
 
         NSError *errorObj = userInfo[@"error"];
         [weakSelf error:errorObj];
+    }];
+
+    [self listenTo:_playback
+         eventName:CLPPlaybackEventBitRate
+          callback:^(NSDictionary *userInfo) {
+
+        float bitRate = [userInfo[@"bit_rate"] floatValue];
+        [weakSelf updateBitrate:bitRate];
+    }];
+
+    NSDictionary *eventsToForward = @{
+        CLPPlaybackEventReady: ^{ [weakSelf ready]; },
+        CLPPlaybackEventBuffering: ^{ [weakSelf buffering]; },
+        CLPPlaybackEventBufferFull: ^{ [weakSelf bufferFull]; },
+        CLPPlaybackEventSettingsUdpdated: ^{ [weakSelf settingsUpdated]; },
+        CLPPlaybackEventHighDefinitionUpdate: ^{ [weakSelf highDefinitionUpdated]; },
+        CLPPlaybackEventStateChanged: ^{ [weakSelf stateChanged]; },
+        CLPPlaybackEventMediaControlDisabled: ^{ [weakSelf disableMediaControl]; },
+        CLPPlaybackEventMediaControlEnabled: ^{ [weakSelf enableMediaControl]; },
+        CLPPlaybackEventEnded: ^{ [weakSelf ended]; },
+        CLPPlaybackEventPlay: ^{ [weakSelf play]; },
+        CLPPlaybackEventPause: ^{ [weakSelf pause]; }
+    };
+
+    [eventsToForward enumerateKeysAndObjectsUsingBlock:^(NSString *eventName, void(^executionBlock)(), BOOL *stop) {
+        [weakSelf listenTo:weakSelf.playback
+                 eventName:eventName
+                  callback:^(NSDictionary *userInfo) { executionBlock(); }];
     }];
 }
 
