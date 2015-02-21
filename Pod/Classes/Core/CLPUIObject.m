@@ -13,8 +13,8 @@
 
 - (instancetype)remove
 {
-    [_view removeFromSuperview];
     [self stopListening];
+    [_view removeFromSuperview];
     return self;
 }
 
