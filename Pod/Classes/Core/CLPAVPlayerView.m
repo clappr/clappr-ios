@@ -1,14 +1,14 @@
-#import "PlayerView.h"
+#import "CLPAVPlayerView.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface PlayerView ()
+@interface CLPAVPlayerView ()
 
 @property (nonatomic, readonly) AVPlayerLayer *playerLayer;
 
 @end
 
 
-@implementation PlayerView
+@implementation CLPAVPlayerView
 
 + (Class)layerClass
 {

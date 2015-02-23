@@ -4,7 +4,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 // Clappr
-#import "PlayerView.h"
+#import "CLPAVPlayerView.h"
 #import "FullscreenViewController.h"
 
 

@@ -2,7 +2,7 @@
 
 @class AVPlayer;
 
-@interface PlayerView : UIView
+@interface CLPAVPlayerView : UIView
 
 @property (nonatomic, strong) AVPlayer *player;
 
