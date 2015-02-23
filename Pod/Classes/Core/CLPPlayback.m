@@ -31,8 +31,6 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
     self = [super init];
     if (self) {
         _url = url;
-        _playerView = [PlayerView new];
-        [self.view clappr_addSubviewMatchingFrameOfView:_playerView];
     }
     return self;
 }

@@ -1,12 +1,16 @@
 #import "CLPAVFoundationPlayback.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import "UIView+NSLayoutConstraints.h"
 
 @interface CLPAVFoundationPlayback ()
-
+{
+    AVPlayerLayer *avPlayerLayer;
+}
 @property (nonatomic, strong) AVPlayer *avPlayer;
 
 @end
+
 
 @implementation CLPAVFoundationPlayback
 
@@ -15,7 +19,7 @@
 - (void)dealloc
 {
     @try {
-        [_avPlayer removeObserver:self forKeyPath:@"status"];
+        [_avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
     @catch (NSException *__unused exception) {}
@@ -37,8 +41,12 @@
 - (void)setupPlayer
 {
     _avPlayer = [AVPlayer playerWithURL:self.url];
-    [self.playerView setPlayer:_avPlayer];
-    [_avPlayer addObserver:self forKeyPath:@"status" options:0 context:nil];
+
+    _playerView = [CLPAVPlayerView new];
+    _playerView.player = _avPlayer;
+    [self.view clappr_addSubviewMatchingFrameOfView:_playerView];
+
+    [_avPlayer.currentItem addObserver:self forKeyPath:@"status" options:0 context:nil];
     [self addTimeElapsedCallbackHandler];
 }
 
@@ -115,11 +123,13 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == _avPlayer && [keyPath isEqualToString:@"status"]) {
-        if (_avPlayer.status == AVPlayerStatusReadyToPlay) {
+    if (object == _avPlayer.currentItem && [keyPath isEqualToString:@"status"]) {
+        if (_avPlayer.currentItem.status == AVPlayerItemStatusReadyToPlay) {
+            avPlayerLayer.frame = avPlayerLayer.superlayer.bounds;
             [self trigger:CLPPlaybackEventReady];
-        } else if (_avPlayer.status == AVPlayerStatusFailed) {
-            [self trigger:CLPPlaybackEventError];
+        } else if (_avPlayer.currentItem.status == AVPlayerItemStatusFailed) {
+            [self trigger:CLPPlaybackEventError userInfo:@{@"error": _avPlayer.currentItem.error}];
+            [_avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
         }
     }
 }

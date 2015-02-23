@@ -1,6 +1,6 @@
 #import "CLPUIObject.h"
 
-#import "PlayerView.h"
+#import "CLPAVPlayerView.h"
 
 extern NSString *const CLPPlaybackEventProgress;
 extern NSString *const CLPPlaybackEventTimeUpdated;
@@ -25,8 +25,6 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
 };
 
 @interface CLPPlayback : CLPUIObject
-
-@property (nonatomic, strong, readonly) PlayerView *playerView;
 
 @property (nonatomic, strong, readonly) NSURL *url;
 @property (nonatomic, assign, readonly) NSUInteger duration;
