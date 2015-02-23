@@ -2,7 +2,7 @@
 
 #import <Clappr/Clappr.h>
 
-static NSString *const kSourceURLString = @"https://github.com/globocom/clappr-website/raw/gh-pages/highline.mp4";
+static NSString *const kSourceURLString = @"http://clappr.io/highline.mp4";
 
 @interface CLPViewController () <UITextFieldDelegate>
 {
