@@ -30,7 +30,7 @@ describe(@"UICorePlugin", ^{
             }) should] raiseWithName:NSInternalInconsistencyException];
         });
 
-        it(@"should start enabled by default", ^{
+        it(@"should enabled the plugin by default", ^{
             CLPUICorePlugin *plugin = [[CLPUICorePlugin alloc] initWithCore:core];
             [[theValue(plugin.enabled) should] beTrue];
         });
