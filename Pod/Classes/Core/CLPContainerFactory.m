@@ -1,4 +1,4 @@
-#import "CLPContainer+Factory.h"
+#import "CLPContainer.h"
 
 @implementation CLPContainer (Factory)
 
