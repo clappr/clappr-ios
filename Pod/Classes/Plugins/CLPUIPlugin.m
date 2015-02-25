@@ -1,23 +1,14 @@
-#import "CLPUICorePlugin.h"
+#import "CLPUIPlugin.h"
 
-@implementation CLPUICorePlugin
-
-- (instancetype)initWithCore:(CLPCore *)core
-{
-    self = [super init];
-    if (self) {
-        _core = core;
-        self.enabled = YES;
-        [_core.view addSubview:self.view];
-    }
-    return self;
-}
+@implementation CLPUIPlugin
 
 - (instancetype)init
 {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"Use initWithCore: instead"
-                                 userInfo:nil];
+    self = [super init];
+    if (self) {
+        self.enabled = YES;
+    }
+    return self;
 }
 
 - (void)setEnabled:(BOOL)enabled

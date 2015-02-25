@@ -33,6 +33,7 @@
 		E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB131A39D79C00C568DC /* ContainerTests.m */; };
 		E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB181A3A118D00C568DC /* PlaybackTests.m */; };
 		E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */; };
+		E4E7E2F01A9E23C4006EA4F9 /* UIPluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */; };
 		E4FD9A421A9BA1060013DA44 /* UICorePluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4FD9A411A9BA1060013DA44 /* UICorePluginTests.m */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		E4A7FB131A39D79C00C568DC /* ContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerTests.m; sourceTree = "<group>"; };
 		E4A7FB181A3A118D00C568DC /* PlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackTests.m; sourceTree = "<group>"; };
 		E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseObjectTests.m; sourceTree = "<group>"; };
+		E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPluginTests.m; sourceTree = "<group>"; };
 		E4FD9A411A9BA1060013DA44 /* UICorePluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICorePluginTests.m; sourceTree = "<group>"; };
 		EA3EA6BE4C30F8C48B9C1626 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F8D91A529FF548AA8E13CED7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				E456F7021A7FF89A00BA8BFD /* LoaderTests.m */,
 				E47842D01A8260D5006D8B4A /* UIContainerPluginTests.m */,
 				E4FD9A411A9BA1060013DA44 /* UICorePluginTests.m */,
+				E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				E47842D11A8260D5006D8B4A /* UIContainerPluginTests.m in Sources */,
 				E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */,
 				E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */,
+				E4E7E2F01A9E23C4006EA4F9 /* UIPluginTests.m in Sources */,
 				E4FD9A421A9BA1060013DA44 /* UICorePluginTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

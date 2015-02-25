@@ -1,11 +1,10 @@
-#import "CLPUIObject.h"
+#import "CLPUIPlugin.h"
 
 @class CLPContainer;
 
-@interface CLPUIContainerPlugin : CLPUIObject
+@interface CLPUIContainerPlugin : CLPUIPlugin
 
 @property (nonatomic, strong, readonly) CLPContainer *container;
-@property (nonatomic, assign, readwrite, getter=isEnabled) BOOL enabled;
 
 - (instancetype)initWithContainer:(CLPContainer *)container;
 
