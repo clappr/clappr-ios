@@ -1,3 +1,5 @@
 coverage_service: coveralls
 xcodeproj: Example/Clappr.xcodeproj
-source_directory: Pod/Classes
+source_directory: ./Pod/Classes
+ignore:
+  - Example/*
