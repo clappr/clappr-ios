@@ -1,0 +1,2 @@
+coverage_service: coveralls
+xcodeproj: Example/Clappr.xcodeproj

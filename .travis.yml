@@ -14,3 +14,4 @@ script:
   - make $TEST_SUITE
 notifications:
   slack: globo:F1iVlyrzR4iX8OS7h8fwMcqx
+after_success: slather
