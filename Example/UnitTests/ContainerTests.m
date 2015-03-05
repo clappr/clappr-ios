@@ -42,8 +42,16 @@ describe(@"Container", ^{
             [[container.view.superview should] beNil];
         });
 
-        pending(@"should stop to listen events after destroy has been called", ^{
+        it(@"should stop to listen events after destroy has been called", ^{
+            __block BOOL callbackWasCalled = NO;
+            [container on:@"some-event" callback:^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            }];
 
+            [container destroy];
+            [container trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] beFalse];
         });
 
         it(@"should call playback's play method after its play method has been called", ^{

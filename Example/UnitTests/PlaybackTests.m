@@ -74,8 +74,17 @@ describe(@"Playback", ^{
         [[playback.view.superview should] beNil];
     });
 
-    pending(@"should stop to listen events after destroy has been called", ^{
+    it(@"should stop to listen events after destroy has been called", ^{
+        __block BOOL callbackWasCalled = NO;
+        [playback on:@"some-event" callback:^(NSDictionary *userInfo) {
+            callbackWasCalled = YES;
+        }];
 
+        [playback destroy];
+
+        [playback trigger:@"some-event"];
+
+        [[theValue(callbackWasCalled) should] beFalse];
     });
 
     it(@"should have a class method to check if a source can be played and its default value is NO", ^{

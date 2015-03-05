@@ -11,10 +11,6 @@ describe(@"Player", ^{
         CLPContainer *mainContainer = player.core.containers.firstObject;
         [[mainContainer.playback.url should] equal:sourceURL];
     });
-
-    pending(@"should receive a NSURL and reload the playback", ^{
-
-    });
 });
 
 SPEC_END
