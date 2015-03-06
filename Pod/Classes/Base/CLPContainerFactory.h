@@ -1,7 +1,14 @@
-#import "CLPContainer.h"
+#import "CLPBaseObject.h"
 
-@interface CLPContainer (Factory)
+@class CLPLoader;
 
-+ (void)createContainersForSources:(NSArray *)sources;
+@interface CLPContainerFactory : CLPBaseObject
+
+@property (nonatomic, strong, readonly) NSArray *sources;
+@property (nonatomic, strong, readonly) CLPLoader *loader;
+
+- (instancetype)initWithSources:(NSArray *)sources loader:(CLPLoader *)loader;
+
+- (void)createContainers;
 
 @end
