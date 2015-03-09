@@ -1,5 +1,21 @@
 #import <Clappr/Clappr.h>
 
+#pragma mark - Fake plugins
+
+@interface FakeContainerUIPlugin : CLPUIContainerPlugin
+@end
+
+@implementation FakeContainerUIPlugin
+@end
+
+@interface FakePlugin : NSObject
+@end
+
+@implementation FakePlugin
+@end
+
+#pragma mark - Spec
+
 SPEC_BEGIN(Container)
 
 describe(@"Container", ^{
@@ -9,7 +25,7 @@ describe(@"Container", ^{
 
     NSURL *sourceURL = [NSURL URLWithString:@"http://globo.com/video.mp4"];
 
-    describe(@"Instantiation", ^{
+    describe(@"instantiation", ^{
 
         it(@"cannot be instatiated without a playback", ^{
             [[theBlock(^{
@@ -24,7 +40,7 @@ describe(@"Container", ^{
         });
     });
 
-    context(@"General", ^{
+    context(@"general", ^{
 
         beforeEach(^{
             playback = [[CLPPlayback alloc] initWithURL:sourceURL];
@@ -349,6 +365,41 @@ describe(@"Container", ^{
             [playback trigger:CLPPlaybackEventError userInfo:@{@"error":expectedErrorObject}];
 
             [[error should] equal:expectedErrorObject];
+        });
+    });
+
+    describe(@"plugins", ^{
+
+        beforeEach(^{
+            playback = [[CLPPlayback alloc] initWithURL:sourceURL];
+            container = [[CLPContainer alloc] initWithPlayback:playback];
+        });
+
+        context(@"list is empty", ^{
+
+            beforeAll(^{
+                [container stub:@selector(plugins) andReturn:@[]];
+            });
+
+            xit(@"should be able to add a new container plugin", ^{
+
+            });
+
+            it(@"should be able to add a new container UI plugin", ^{
+                FakeContainerUIPlugin *uiPlugin = [FakeContainerUIPlugin new];
+                [container addPlugin:uiPlugin];
+
+                BOOL containsPlugin = [container hasPlugin:[FakeContainerUIPlugin class]];
+                [[theValue(containsPlugin) should] beTrue];
+            });
+
+            it(@"should not be able to add a plugin that isnt a container plugin", ^{
+                FakePlugin *plugin = [FakePlugin new];
+                [container addPlugin:plugin];
+
+                BOOL containsPlugin = [container hasPlugin:[FakePlugin class]];
+                [[theValue(containsPlugin) should] beFalse];
+            });
         });
     });
 });

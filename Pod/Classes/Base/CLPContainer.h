@@ -35,12 +35,17 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 @property (nonatomic, assign, readonly) NSDictionary *settings;
 @property (nonatomic, assign, readonly, getter=isDVRInUse) BOOL dvrInUse;
 @property (nonatomic, assign, readonly, getter=isMediaControlDisabled) BOOL mediaControlDisabled;
+@property (nonatomic, copy, readonly) NSSet *plugins;
 
 - (instancetype)initWithPlayback:(CLPPlayback *)playback;
 
 - (void)play;
 - (void)pause;
 - (void)stop;
+
 - (void)destroy;
+
+- (void)addPlugin:(id)plugin;
+- (BOOL)hasPlugin:(Class)pluginClass;
 
 @end

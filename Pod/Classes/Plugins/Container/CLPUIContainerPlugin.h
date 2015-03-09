@@ -4,8 +4,6 @@
 
 @interface CLPUIContainerPlugin : CLPUIPlugin
 
-@property (nonatomic, strong, readonly) CLPContainer *container;
-
-- (instancetype)initWithContainer:(CLPContainer *)container;
+@property (nonatomic, strong) CLPContainer *container;
 
 @end

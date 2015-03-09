@@ -11,13 +11,13 @@
 
 - (instancetype)initWithContainer:(CLPContainer *)container
 {
-    self = [super initWithContainer:container];
+    self = [super init];
     if (self) {
         loadingLabel = [UILabel new];
         loadingLabel.text = @"loading...";
         loadingLabel.textColor = [UIColor whiteColor];
         loadingLabel.hidden = YES;
-        [container.view addSubview:loadingLabel];
+        [self.view addSubview:loadingLabel];
     }
     return self;
 }

@@ -55,8 +55,8 @@
 - (void)p_addContainerPlugins:(CLPContainer *)container
 {
     for (Class pluginClass in _loader.containerPlugins) {
-//        id containerPlugin = [pluginClass new];
-//        [container addPlugin:containerPlugin];
+        id containerPlugin = [pluginClass new];
+        [container addPlugin:containerPlugin];
     }
 }
 

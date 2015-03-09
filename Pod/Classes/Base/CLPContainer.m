@@ -1,6 +1,7 @@
 #import "CLPContainer.h"
 
 #import "CLPPlayback.h"
+#import "CLPUIContainerPlugin.h"
 #import "UIView+NSLayoutConstraints.h"
 
 NSString *const CLPContainerEventPlaybackStateChanged = @"clappr:container:playback_state_changed";
@@ -28,6 +29,12 @@ NSString *const CLPContainerEventHighDefinitionUpdated = @"clappr:container:hd_u
 NSString *const CLPContainerEventMediaControlDisabled = @"clappr:container:media_control_disabled";
 NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_control_enabled";
 
+@interface CLPContainer ()
+{
+    NSMutableSet *p_plugins;
+}
+@end
+
 
 @implementation CLPContainer
 
@@ -44,6 +51,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     if (self) {
         self.playback = playback;
         [self.view clappr_addSubviewMatchingFrameOfView:_playback.view];
+        p_plugins = [@[] mutableCopy];
     }
 
     return self;
@@ -257,6 +265,25 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self trigger:CLPContainerEventDestroyed];
 }
 
+- (void)addPlugin:(id)plugin
+{
+    if ([[plugin class] isSubclassOfClass:[CLPUIContainerPlugin class]]) {
+        [p_plugins addObject:plugin];
+//    [self.view addSubview:plugin.view];
+    }
+}
+
+- (BOOL)hasPlugin:(Class)pluginClass
+{
+    for (id plugin in p_plugins) {
+        if ([plugin class] == pluginClass) {
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
 #pragma mark - Accessors
 
 - (BOOL)isPlaying
@@ -271,5 +298,10 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self stopListening];
     [self bindEventListeners];
 }
+
+//- (NSArray *)plugins
+//{
+//    return [plugins copy];
+//}
 
 @end
