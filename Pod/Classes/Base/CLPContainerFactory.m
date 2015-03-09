@@ -1,6 +1,7 @@
 #import "CLPContainerFactory.h"
 #import "CLPContainer.h"
 #import "CLPLoader.h"
+#import "CLPPlayback.h"
 
 @implementation CLPContainerFactory
 
@@ -24,19 +25,39 @@
 
 - (void)createContainers
 {
-    [_sources enumerateObjectsUsingBlock:^(NSURL *source, NSUInteger idx, BOOL *stop) {
+    for (NSURL *source in _sources) {
         [self p_createContainer:source];
-    }];
+    }
 }
 
 - (void)p_createContainer:(NSURL *)sourceURL
 {
-    
+    Class playbackPlugin = [self p_findPlaybackPlugin:sourceURL];
+    CLPPlayback *playback = [[playbackPlugin alloc] initWithURL:sourceURL];
+    CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
+    [self p_addContainerPlugins:container];
 }
 
-- (void)p_findPlaybackPlugin:(NSURL *)sourceURL
+- (Class)p_findPlaybackPlugin:(NSURL *)sourceURL
 {
+    __block Class klass;
 
+    for (Class pluginClass in _loader.playbackPlugins) {
+        if ([pluginClass isSubclassOfClass:[CLPPlayback class]] &&
+            [pluginClass canPlayURL:sourceURL]) {
+            klass = pluginClass;
+        }
+    }
+
+    return klass;
+}
+
+- (void)p_addContainerPlugins:(CLPContainer *)container
+{
+    for (Class pluginClass in _loader.containerPlugins) {
+//        id containerPlugin = [pluginClass new];
+//        [container addPlugin:containerPlugin];
+    }
 }
 
 @end
