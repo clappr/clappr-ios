@@ -2,16 +2,16 @@
 
 #pragma mark - Fake plugins
 
-@interface FakeContainerUIPlugin : CLPUIContainerPlugin
+@interface SomeContainerUIPlugin : CLPUIContainerPlugin
 @end
 
-@implementation FakeContainerUIPlugin
+@implementation SomeContainerUIPlugin
 @end
 
-@interface FakePlugin : NSObject
+@interface OtherKindOfPlugin : NSObject
 @end
 
-@implementation FakePlugin
+@implementation OtherKindOfPlugin
 @end
 
 #pragma mark - Spec
@@ -386,18 +386,18 @@ describe(@"Container", ^{
             });
 
             it(@"should be able to add a new container UI plugin", ^{
-                FakeContainerUIPlugin *uiPlugin = [FakeContainerUIPlugin new];
+                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
                 [container addPlugin:uiPlugin];
 
-                BOOL containsPlugin = [container hasPlugin:[FakeContainerUIPlugin class]];
+                BOOL containsPlugin = [container hasPlugin:[SomeContainerUIPlugin class]];
                 [[theValue(containsPlugin) should] beTrue];
             });
 
             it(@"should not be able to add a plugin that isnt a container plugin", ^{
-                FakePlugin *plugin = [FakePlugin new];
+                OtherKindOfPlugin *plugin = [OtherKindOfPlugin new];
                 [container addPlugin:plugin];
 
-                BOOL containsPlugin = [container hasPlugin:[FakePlugin class]];
+                BOOL containsPlugin = [container hasPlugin:[OtherKindOfPlugin class]];
                 [[theValue(containsPlugin) should] beFalse];
             });
         });
