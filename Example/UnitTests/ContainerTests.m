@@ -381,7 +381,7 @@ describe(@"Container", ^{
                 [container stub:@selector(plugins) andReturn:@[]];
             });
 
-            xit(@"should be able to add a new container plugin", ^{
+            xit(@"should be able to add a new simple container plugin", ^{
 
             });
 
@@ -399,6 +399,19 @@ describe(@"Container", ^{
 
                 BOOL containsPlugin = [container hasPlugin:[OtherKindOfPlugin class]];
                 [[theValue(containsPlugin) should] beFalse];
+            });
+
+            it(@"should have a container reference after being added", ^{
+                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
+                [container addPlugin:uiPlugin];
+
+                [[uiPlugin.container should] equal:container];
+            });
+
+            it(@"should have its view as a container's subview", ^{
+                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
+                [container addPlugin:uiPlugin];
+                [[uiPlugin.view.superview should] equal:container.view];
             });
         });
     });

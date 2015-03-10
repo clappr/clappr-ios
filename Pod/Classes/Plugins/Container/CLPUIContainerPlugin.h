@@ -4,6 +4,6 @@
 
 @interface CLPUIContainerPlugin : CLPUIPlugin
 
-@property (nonatomic, strong) CLPContainer *container;
+@property (nonatomic, weak) CLPContainer *container;
 
 @end
