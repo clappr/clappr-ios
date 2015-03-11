@@ -1,3 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'Clappr', :exclusive => true do
   pod "Clappr", :path => "../"
 end
