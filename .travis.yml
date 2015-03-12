@@ -1,19 +1,16 @@
 # reference: http://www.objc.io/issue-6/travis-ci.html
 
+sudo: false
+
 language: objective-c
 
-env:
-  - TEST_SUITE=unit
-  - TEST_SUITE=acceptance
-
 before_install:
-  - export LANG=en_US.UTF-8
-  - bundle install
-  - cd Example && pod update && cd -
-  - make clean
+  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+  - gem install slather --no-rdoc --no-ri --no-document --quiet
+  - cd Example && pod install && cd $TRAVIS_BUILD_DIR
 
 script:
-  - make $TEST_SUITE
+  - xctool test -workspace Example/Clappr.xcworkspace -scheme UnitTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 
 notifications:
   slack: globo:F1iVlyrzR4iX8OS7h8fwMcqx
