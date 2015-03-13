@@ -63,6 +63,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   cocoapods
   slather
   xcpretty
