@@ -29,35 +29,6 @@ describe(@"Loader", ^{
             [[theValue(containsPlugin) should] beTrue];
         });
     });
-
-    xdescribe(@"container plugins", ^{
-
-        it(@"should look into container plugins if I'm searching for a container plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
-
-            NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
-            [loader setValue:plugins forKey:@"_playbackPlugins"];
-
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
-            [[theValue(containsPlugin) should] beTrue];
-        });
-    });
-
-    xdescribe(@"core plugins", ^{
-
-        xit(@"should look into playback plugins if I'm searching for a playback plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
-
-            NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
-            [loader setValue:plugins forKey:@"_playbackPlugins"];
-
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
-            [[theValue(containsPlugin) should] beTrue];
-        });
-    });
-
 });
 
 SPEC_END
