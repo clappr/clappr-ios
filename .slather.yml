@@ -3,3 +3,4 @@ xcodeproj: Example/Clappr.xcodeproj
 source_directory: ./Pod/Classes
 ignore:
   - Example/*
+  - Pod/Classes/Legacy/*
