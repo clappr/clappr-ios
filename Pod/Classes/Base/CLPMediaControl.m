@@ -17,7 +17,6 @@ NSString *const CLPMediaControlEventNotPlaying = @"clappr:media_control:not_play
 
 static NSString *const kMediaControlTitlePlay = @"\ue001";
 static NSString *const kMediaControlTitlePause = @"\ue002";
-static NSString *const kMediaControlTitleStop = @"\ue003";
 static NSString *const kMediaControlTitleVolume = @"\ue004";
 static NSString *const kMediaControlTitleMute = @"\ue005";
 static NSString *const kMediaControlTitleFullscreen = @"\ue006";
@@ -44,7 +43,6 @@ static UINib *mediaControlNib;
 @property (nonatomic, weak, readwrite) IBOutlet CLPScrubberView *scrubberView;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *durationLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *currentTimeLabel;
-@property (nonatomic, weak, readwrite) IBOutlet UIButton *fullscreenButton;
 
 @end
 
@@ -89,7 +87,6 @@ static UINib *mediaControlNib;
 {
     self.view.accessibilityLabel = @"media control";
     _playPauseButton.accessibilityLabel = @"play/pause";
-    _fullscreenButton.accessibilityLabel = @"toggle fullscreen";
     _currentTimeLabel.accessibilityLabel = @"current time";
     _durationLabel.accessibilityLabel = @"duration";
     _scrubberView.accessibilityLabel = @"scrubber";
