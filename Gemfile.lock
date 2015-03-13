@@ -57,7 +57,6 @@ GEM
     xcodeproj (0.23.0)
       activesupport (>= 3)
       colored (~> 1.2)
-    xcpretty (0.1.7)
 
 PLATFORMS
   ruby
@@ -66,4 +65,3 @@ DEPENDENCIES
   activesupport
   cocoapods
   slather
-  xcpretty
