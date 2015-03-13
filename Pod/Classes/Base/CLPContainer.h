@@ -3,7 +3,6 @@
 extern NSString *const CLPContainerEventPlaybackStateChanged;
 extern NSString *const CLPContainerEventPlaybackStateDVRStateChanged;
 extern NSString *const CLPContainerEventBitRate;
-extern NSString *const CLPContainerEventStatsReport;
 extern NSString *const CLPContainerEventDestroyed;
 extern NSString *const CLPContainerEventReady;
 extern NSString *const CLPContainerEventError;

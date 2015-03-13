@@ -7,7 +7,6 @@
 NSString *const CLPContainerEventPlaybackStateChanged = @"clappr:container:playback_state_changed";
 NSString *const CLPContainerEventPlaybackStateDVRStateChanged = @"clappr:container:playback_dvr_state_changed";
 NSString *const CLPContainerEventBitRate = @"clappr:container:bit_rate";
-NSString *const CLPContainerEventStatsReport = @"clappr:container:stats_report";
 NSString *const CLPContainerEventDestroyed = @"clappr:container:destroyed";
 NSString *const CLPContainerEventReady = @"clappr:container:ready";
 NSString *const CLPContainerEventError = @"clappr:container:error";
@@ -193,12 +192,6 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 {
     NSDictionary *userInfo = @{@"bit_rate": @(bitRate)};
     [self trigger:CLPContainerEventBitRate userInfo:userInfo];
-}
-
-- (void)statsReport
-{
-    // check what we need to do here
-    [self trigger:CLPContainerEventStatsReport];
 }
 
 - (void)stateChanged
