@@ -165,19 +165,6 @@ static UINib *mediaControlNib;
     }
 }
 
-- (void)stop
-{
-    if (!_container.playing)
-        return;
-
-    [_container stop];
-    [self trigger:CLPMediaControlEventNotPlaying];
-}
-
-- (IBAction)toggleFullscreen
-{
-}
-
 #pragma mark - Notification handling
 
 - (void)containerDidPlay
