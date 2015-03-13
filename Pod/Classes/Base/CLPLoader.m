@@ -5,11 +5,11 @@
 #import "CLPAVFoundationPlayback.h"
 
 @interface CLPLoader ()
-
-@property (nonatomic, strong, readwrite) NSArray *playbackPlugins;
-@property (nonatomic, strong, readwrite) NSArray *containerPlugins;
-@property (nonatomic, strong, readwrite) NSArray *corePlugins;
-
+{
+    NSArray *_playbackPlugins;
+    NSArray *_containerPlugins;
+    NSArray *_corePlugins;
+}
 @end
 
 @implementation CLPLoader
