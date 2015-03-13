@@ -22,10 +22,10 @@ describe(@"Loader", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
             NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlayback class]];
+            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
             [loader setValue:plugins forKey:@"_playbackPlugins"];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlayback class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
     });
@@ -36,10 +36,10 @@ describe(@"Loader", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
             NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlayback class]];
+            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
             [loader setValue:plugins forKey:@"_playbackPlugins"];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlayback class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
     });
@@ -50,10 +50,10 @@ describe(@"Loader", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
             NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlayback class]];
+            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
             [loader setValue:plugins forKey:@"_playbackPlugins"];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlayback class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
     });
