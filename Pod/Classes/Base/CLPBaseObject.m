@@ -1,9 +1,9 @@
 #import "CLPBaseObject.h"
 
 @interface CLPBaseObject ()
-
-@property (nonatomic, strong) NSMutableDictionary *eventHandlers;
-
+{
+    NSMutableDictionary *_eventHandlers;
+}
 @end
 
 

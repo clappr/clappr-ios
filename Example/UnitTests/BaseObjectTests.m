@@ -94,27 +94,6 @@ describe(@"BaseObject", ^{
             [[theValue(callbackWasCalled) should] beFalse];
         });
 
-        it(@"callback should not be called if removed, but the others should", ^{
-            EventCallback callback = ^(NSDictionary *userInfo) {
-                callbackWasCalled = YES;
-            };
-
-            __block BOOL anotherCallbackWasCalled = NO;
-            EventCallback anotherCallback = ^(NSDictionary *userInfo) {
-                anotherCallbackWasCalled = YES;
-            };
-
-            [baseObject on:@"some-event" callback:callback];
-            [baseObject on:@"some-event" callback:anotherCallback];
-
-            [baseObject off:@"some-event" callback:callback];
-
-            [baseObject trigger:@"some-event"];
-            
-            [[theValue(callbackWasCalled) should] beFalse];
-            [[theValue(anotherCallbackWasCalled) should] beTrue];
-        });
-
     });
 
     describe(@"once", ^{
@@ -160,6 +139,62 @@ describe(@"BaseObject", ^{
 
             [baseObject listenTo:contextObject eventName:@"some-event" callback:callback];
             [contextObject trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] beTrue];
+        });
+    });
+
+    describe(@"off", ^{
+
+        CLPBaseObject *contextObject = [CLPBaseObject new];
+        __block BOOL callbackWasCalled;
+
+        beforeEach(^{
+            callbackWasCalled = NO;
+        });
+
+        it(@"callback should not be called if removed", ^{
+            EventCallback callback = ^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            };
+
+            [baseObject on:@"some-event" callback:callback];
+            [baseObject off:@"some-event" callback:callback];
+            [contextObject trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] beFalse];
+        });
+
+        it(@"callback should not be called if removed, but the others should", ^{
+            EventCallback callback = ^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            };
+
+            __block BOOL anotherCallbackWasCalled = NO;
+            EventCallback anotherCallback = ^(NSDictionary *userInfo) {
+                anotherCallbackWasCalled = YES;
+            };
+
+            [baseObject on:@"some-event" callback:callback];
+            [baseObject on:@"some-event" callback:anotherCallback];
+
+            [baseObject off:@"some-event" callback:callback];
+
+            [baseObject trigger:@"some-event"];
+
+            [[theValue(callbackWasCalled) should] beFalse];
+            [[theValue(anotherCallbackWasCalled) should] beTrue];
+        });
+
+        it(@"should be ok if there is no callback", ^{
+            EventCallback callback = ^(NSDictionary *userInfo) {
+                callbackWasCalled = YES;
+            };
+
+            [baseObject on:@"some-event" callback:callback];
+            [baseObject off:@"some-event" callback:nil];
+
+            [baseObject trigger:@"some-event"];
 
             [[theValue(callbackWasCalled) should] beTrue];
         });
