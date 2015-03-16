@@ -100,11 +100,6 @@
     return _avPlayer.rate > 0.0f;
 }
 
-- (void)destroy
-{
-    [super destroy];
-}
-
 + (BOOL)canPlayURL:(NSURL *)url
 {
     return YES; //TODO
