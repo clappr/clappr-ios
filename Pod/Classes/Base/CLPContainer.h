@@ -26,6 +26,7 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 
 @class CLPPlayback;
 
+
 @interface CLPContainer : CLPUIObject
 
 @property (nonatomic, strong, readwrite) CLPPlayback *playback;

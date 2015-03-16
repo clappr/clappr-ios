@@ -1,5 +1,6 @@
 #import "CLPEventHandler.h"
 
+
 @interface CLPBaseObject : NSObject
 
 - (void)on:(NSString *)eventName callback:(EventCallback)callback;

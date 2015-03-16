@@ -6,6 +6,7 @@ extern NSString *const CLPMediaControlEventNotPlaying;
 @class CLPContainer;
 @class CLPScrubberView;
 
+
 @interface CLPMediaControl : CLPUIObject
 
 @property (nonatomic, strong, readwrite) CLPContainer *container;

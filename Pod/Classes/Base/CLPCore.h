@@ -3,6 +3,7 @@
 
 @class CLPMediaControl;
 
+
 @interface CLPCore : CLPUIObject
 
 @property (nonatomic, copy, readonly) NSArray *sources;

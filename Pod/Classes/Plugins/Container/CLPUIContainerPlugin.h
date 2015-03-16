@@ -2,6 +2,7 @@
 
 @class CLPContainer;
 
+
 @interface CLPUIContainerPlugin : CLPUIPlugin
 
 @property (nonatomic, weak) CLPContainer *container;

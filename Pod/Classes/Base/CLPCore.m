@@ -6,11 +6,14 @@
 #import "CLPPlayback+Factory.h"
 #import "UIView+NSLayoutConstraints.h"
 
+
 @interface CLPCore ()
 {
     NSMutableArray *containers;
 }
+
 @end
+
 
 @implementation CLPCore
 
@@ -41,8 +44,10 @@
 
 - (void)recreateContainers
 {
-    for (CLPContainer *container in containers)
+    for (CLPContainer *container in containers) {
         [container destroy];
+    }
+    
 
     [self createContainers];
 }
@@ -54,10 +59,11 @@
     for (id source in _sources) {
 
         NSURL *sourceURL;
-        if ([source isKindOfClass:[NSString class]])
+        if ([source isKindOfClass:[NSString class]]) {
             sourceURL = [NSURL URLWithString:source];
-        else if ([source isKindOfClass:[NSURL class]])
+        } else if ([source isKindOfClass:[NSURL class]]) {
             sourceURL = source;
+        }
 
         if (!sourceURL)
             continue;

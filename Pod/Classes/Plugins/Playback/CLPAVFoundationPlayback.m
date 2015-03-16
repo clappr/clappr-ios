@@ -3,10 +3,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIView+NSLayoutConstraints.h"
 
+
 @interface CLPAVFoundationPlayback ()
 {
     AVPlayerLayer *avPlayerLayer;
 }
+
 @property (nonatomic, strong) AVPlayer *avPlayer;
 
 @end

@@ -2,6 +2,7 @@
 
 @class CLPCore;
 
+
 @interface CLPPlayer : UIViewController
 
 @property (nonatomic, strong, readonly) CLPCore *core;

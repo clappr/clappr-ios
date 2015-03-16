@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackType) {
     CLPPlaybackTypeUnknown
 };
 
+
 @interface CLPPlayback : CLPUIObject
 
 @property (nonatomic, strong, readonly) NSURL *url;

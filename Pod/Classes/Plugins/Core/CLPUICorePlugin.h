@@ -2,6 +2,7 @@
 
 @class CLPCore;
 
+
 @interface CLPUICorePlugin : CLPUIPlugin
 
 @property (nonatomic, readonly, strong) CLPCore *core;

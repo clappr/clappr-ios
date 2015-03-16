@@ -25,6 +25,7 @@ static NSString *const kMediaControlTitleHD = @"\ue007";
 static NSString *clapprFontName;
 static UINib *mediaControlNib;
 
+
 @interface CLPMediaControl ()
 {
     __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
@@ -208,8 +209,9 @@ static UINib *mediaControlNib;
             subview.alpha = 0.0;
         }
     } completion:^(BOOL finished) {
-        for (UIView *subview in self.view.subviews)
+        for (UIView *subview in self.view.subviews) {
             subview.hidden = YES;
+        }
 
         if (finished)
             weakSelf.controlsHidden = YES;
@@ -271,10 +273,11 @@ static UINib *mediaControlNib;
     [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
     NSUInteger oneHour = 1 * 60 * 60;
-    if (totalSeconds < oneHour)
+    if (totalSeconds < oneHour) {
         [formatter setDateFormat:@"mm:ss"];
-    else
+    } else {
         [formatter setDateFormat:@"HH:mm:ss"];
+    }
 
     return [formatter stringFromDate:date];
 }

@@ -4,13 +4,16 @@
 #import "CLPContainer.h"
 #import "CLPAVFoundationPlayback.h"
 
+
 @interface CLPLoader ()
 {
     NSArray *_playbackPlugins;
     NSArray *_containerPlugins;
     NSArray *_corePlugins;
 }
+
 @end
+
 
 @implementation CLPLoader
 
@@ -40,12 +43,13 @@
 - (BOOL)containsPlugin:(Class)pluginClass
 {
     NSArray *plugins;
-    if ([pluginClass isSubclassOfClass:[CLPPlayback class]])
+    if ([pluginClass isSubclassOfClass:[CLPPlayback class]]) {
         plugins = _playbackPlugins;
-    else if ([pluginClass isSubclassOfClass:[CLPContainer class]])
+    } else if ([pluginClass isSubclassOfClass:[CLPContainer class]]) {
         plugins = _containerPlugins;
-    else if ([pluginClass isSubclassOfClass:[CLPCore class]])
+    } else if ([pluginClass isSubclassOfClass:[CLPCore class]]) {
         plugins = _corePlugins;
+    }
 
     __block NSInteger pluginIndex = NSNotFound;
     [plugins enumerateObjectsUsingBlock:^(Class objClass, NSUInteger idx, BOOL *stop) {

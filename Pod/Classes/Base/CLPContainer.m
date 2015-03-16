@@ -28,10 +28,12 @@ NSString *const CLPContainerEventHighDefinitionUpdated = @"clappr:container:hd_u
 NSString *const CLPContainerEventMediaControlDisabled = @"clappr:container:media_control_disabled";
 NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_control_enabled";
 
+
 @interface CLPContainer ()
 {
     NSMutableSet *p_plugins;
 }
+
 @end
 
 
@@ -298,5 +300,4 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 //{
 //    return [plugins copy];
 //}
-
 @end

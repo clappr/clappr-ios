@@ -1,6 +1,7 @@
 #import "CLPAVPlayerView.h"
 #import <AVFoundation/AVFoundation.h>
 
+
 @interface CLPAVPlayerView ()
 
 @property (nonatomic, readonly) AVPlayerLayer *playerLayer;

@@ -1,11 +1,14 @@
 #import "CLPScrubberView.h"
 
+
 @interface CLPScrubberView ()
 {
     __weak IBOutlet UIView *outerCircle;
     __weak IBOutlet UIView *innerCircle;
 }
+
 @end
+
 
 @implementation CLPScrubberView
 

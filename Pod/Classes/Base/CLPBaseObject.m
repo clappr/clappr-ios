@@ -1,9 +1,11 @@
 #import "CLPBaseObject.h"
 
+
 @interface CLPBaseObject ()
 {
     NSMutableDictionary *_eventHandlers;
 }
+
 @end
 
 

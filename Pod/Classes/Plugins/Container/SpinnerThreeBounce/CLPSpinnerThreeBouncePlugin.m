@@ -1,11 +1,14 @@
 #import "CLPSpinnerThreeBouncePlugin.h"
 #import "CLPContainer.h"
 
+
 @interface CLPSpinnerThreeBouncePlugin ()
 {
     UILabel *loadingLabel;
 }
+
 @end
+
 
 @implementation CLPSpinnerThreeBouncePlugin
 
