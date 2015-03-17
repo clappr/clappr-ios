@@ -26,6 +26,7 @@
 		E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E401F2071A43709A00F41E8C /* MediaControlTests.m */; };
 		E41FFE9F1A76A2CA00FCAB8C /* AcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */; };
 		E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */; };
+		E43D33D91AB7895500D10C3E /* AVFoundationPlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E43D33D81AB7895500D10C3E /* AVFoundationPlaybackTests.m */; };
 		E456F7031A7FF89A00BA8BFD /* LoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E456F7021A7FF89A00BA8BFD /* LoaderTests.m */; };
 		E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C99A21A64510100EB5C21 /* CoreTests.m */; };
 		E47842D11A8260D5006D8B4A /* UIContainerPluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E47842D01A8260D5006D8B4A /* UIContainerPluginTests.m */; };
@@ -94,6 +95,7 @@
 		E41FFE9D1A76A2CA00FCAB8C /* AcceptanceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AcceptanceTests-Info.plist"; sourceTree = "<group>"; };
 		E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AcceptanceTests.m; sourceTree = "<group>"; };
 		E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTests.m; sourceTree = "<group>"; };
+		E43D33D81AB7895500D10C3E /* AVFoundationPlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVFoundationPlaybackTests.m; sourceTree = "<group>"; };
 		E456F7021A7FF89A00BA8BFD /* LoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoaderTests.m; sourceTree = "<group>"; };
 		E45C99A21A64510100EB5C21 /* CoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTests.m; sourceTree = "<group>"; };
 		E47842D01A8260D5006D8B4A /* UIContainerPluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContainerPluginTests.m; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				E4FD9A411A9BA1060013DA44 /* UICorePluginTests.m */,
 				E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */,
 				E4C1C0031AAA3B530078B531 /* ContainerFactoryTests.m */,
+				E43D33D81AB7895500D10C3E /* AVFoundationPlaybackTests.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,
 				E456F7031A7FF89A00BA8BFD /* LoaderTests.m in Sources */,
 				E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */,
+				E43D33D91AB7895500D10C3E /* AVFoundationPlaybackTests.m in Sources */,
 				E47842D11A8260D5006D8B4A /* UIContainerPluginTests.m in Sources */,
 				E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */,
 				E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */,
@@ -688,6 +692,7 @@
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_OBJCLEAN = 1;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -713,6 +718,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_OBJCLEAN = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clappr.app/Clappr";
 			};
 			name = Debug;
@@ -790,6 +796,7 @@
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_OBJCLEAN = 1;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -815,6 +822,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_OBJCLEAN = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clappr.app/Clappr";
 			};
 			name = Release;
