@@ -14,4 +14,7 @@
 
 - (void)loadSources:(NSArray *)sources;
 
+- (void)addPlugin:(id)plugin;
+- (BOOL)hasPlugin:(Class)pluginClass;
+
 @end

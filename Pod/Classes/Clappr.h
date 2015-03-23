@@ -19,6 +19,7 @@
 // Components
 #import <Clappr/CLPLoader.h>
 #import <Clappr/CLPContainerFactory.h>
+#import <Clappr/CLPCoreFactory.h>
 
 // Plugins
 #import <Clappr/CLPUIPlugin.h>

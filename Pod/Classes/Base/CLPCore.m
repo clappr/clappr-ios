@@ -101,6 +101,18 @@
     }
 }
 
+#pragma mark - Plugins
+
+- (void)addPlugin:(id)plugin
+{
+    
+}
+
+- (BOOL)hasPlugin:(Class)pluginClass
+{
+    return NO;
+}
+
 #pragma mark - Accessors
 
 - (NSArray *)containers

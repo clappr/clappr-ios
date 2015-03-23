@@ -33,6 +33,7 @@
 		E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */; };
 		E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB131A39D79C00C568DC /* ContainerTests.m */; };
 		E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB181A3A118D00C568DC /* PlaybackTests.m */; };
+		E4AFBF5B1AC0AAC70067A76B /* CoreFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AFBF5A1AC0AAC70067A76B /* CoreFactoryTests.m */; };
 		E4C1C0041AAA3B530078B531 /* ContainerFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C1C0031AAA3B530078B531 /* ContainerFactoryTests.m */; };
 		E4CB2C891A3099AA00D341EE /* BaseObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */; };
 		E4E7E2F01A9E23C4006EA4F9 /* UIPluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */; };
@@ -102,6 +103,7 @@
 		E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIObjectTests.m; sourceTree = "<group>"; };
 		E4A7FB131A39D79C00C568DC /* ContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerTests.m; sourceTree = "<group>"; };
 		E4A7FB181A3A118D00C568DC /* PlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackTests.m; sourceTree = "<group>"; };
+		E4AFBF5A1AC0AAC70067A76B /* CoreFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreFactoryTests.m; sourceTree = "<group>"; };
 		E4C1C0031AAA3B530078B531 /* ContainerFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerFactoryTests.m; sourceTree = "<group>"; };
 		E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseObjectTests.m; sourceTree = "<group>"; };
 		E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPluginTests.m; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				E4FD9A411A9BA1060013DA44 /* UICorePluginTests.m */,
 				E4E7E2EF1A9E23C4006EA4F9 /* UIPluginTests.m */,
 				E4C1C0031AAA3B530078B531 /* ContainerFactoryTests.m */,
+				E4AFBF5A1AC0AAC70067A76B /* CoreFactoryTests.m */,
 				E43D33D81AB7895500D10C3E /* AVFoundationPlaybackTests.m */,
 			);
 			path = UnitTests;
@@ -555,6 +558,7 @@
 				E4C1C0041AAA3B530078B531 /* ContainerFactoryTests.m in Sources */,
 				E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */,
 				E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */,
+				E4AFBF5B1AC0AAC70067A76B /* CoreFactoryTests.m in Sources */,
 				E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */,
 				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,
 				E456F7031A7FF89A00BA8BFD /* LoaderTests.m in Sources */,
