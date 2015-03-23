@@ -1,5 +1,17 @@
 #import <Clappr/Clappr.h>
 
+@interface FakeContainerPlugin: CLPUIContainerPlugin
+@end
+
+@implementation FakeContainerPlugin
+@end
+
+@interface DummyContainerPlugin: CLPUIContainerPlugin
+@end
+
+@implementation DummyContainerPlugin
+@end
+
 SPEC_BEGIN(ContainerFactory)
 
 describe(@"ContainerFactory", ^{
@@ -47,6 +59,18 @@ describe(@"ContainerFactory", ^{
 
             CLPContainer *container = containers.firstObject;
             [[container.playback.class should] equal:[CLPAVFoundationPlayback class]];
+        });
+
+        it(@"should add all container plugins from loader", ^{
+            NSArray *fakePlugins = @[[FakeContainerPlugin class], [DummyContainerPlugin class]];
+            [loader stub:@selector(containerPlugins) andReturn:fakePlugins];
+
+            NSArray *containers = [factory createContainers];
+
+            CLPContainer *container = containers.firstObject;
+
+            [[theValue([container hasPlugin:[FakeContainerPlugin class]]) should] beTrue];
+            [[theValue([container hasPlugin:[DummyContainerPlugin class]]) should] beTrue];
         });
     });
 
