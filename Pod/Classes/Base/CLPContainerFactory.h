@@ -10,6 +10,6 @@
 
 - (instancetype)initWithSources:(NSArray *)sources loader:(CLPLoader *)loader;
 
-- (void)createContainers;
+- (NSArray *)createContainers;
 
 @end

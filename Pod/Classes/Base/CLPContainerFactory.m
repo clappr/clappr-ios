@@ -24,19 +24,24 @@
     return self;
 }
 
-- (void)createContainers
+- (NSArray *)createContainers
 {
+    NSMutableArray *containers = [@[] mutableCopy];
     for (NSURL *source in _sources) {
-        [self p_createContainer:source];
+        [containers addObject:[self p_createContainer:source]];
     }
+
+    return [containers copy];
 }
 
-- (void)p_createContainer:(NSURL *)sourceURL
+- (CLPContainer *)p_createContainer:(NSURL *)sourceURL
 {
     Class playbackPlugin = [self p_findPlaybackPlugin:sourceURL];
     CLPPlayback *playback = [[playbackPlugin alloc] initWithURL:sourceURL];
     CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
     [self p_addContainerPlugins:container];
+
+    return container;
 }
 
 - (Class)p_findPlaybackPlugin:(NSURL *)sourceURL
