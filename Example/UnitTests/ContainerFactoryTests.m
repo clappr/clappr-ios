@@ -22,17 +22,31 @@ describe(@"ContainerFactory", ^{
     });
 
     describe(@"container creation", ^{
+        __block NSArray *sources;
+        __block CLPLoader *loader;
+        __block CLPContainerFactory *factory;
+
+        beforeEach(^{
+            NSURL *url = [NSURL URLWithString:@"http://test.com"];
+            sources = @[url];
+
+            loader = [CLPLoader new];
+            factory = [[CLPContainerFactory alloc] initWithSources:sources loader:loader];
+        });
+
         it(@"should create a container for each source", ^{
-            NSURL *url1 = [NSURL URLWithString:@"http://test1.com"];
-            NSURL *url2 = [NSURL URLWithString:@"http://test2.com"];
-            NSArray *sources = @[url1, url2];
-
-            CLPLoader *loader = [CLPLoader new];
-            CLPContainerFactory *factory = [[CLPContainerFactory alloc] initWithSources:sources loader:loader];
-
             NSArray *containers = [factory createContainers];
 
             [[theValue(containers.count) should] equal:theValue(sources.count)];
+        });
+
+        it(@"should use the default playback if it is the only one available", ^{
+            [loader stub:@selector(playbackPlugins) andReturn:@[[CLPAVFoundationPlayback class]]];
+
+            NSArray *containers = [factory createContainers];
+
+            CLPContainer *container = containers.firstObject;
+            [[container.playback.class should] equal:[CLPAVFoundationPlayback class]];
         });
     });
 
