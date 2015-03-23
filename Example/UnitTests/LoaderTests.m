@@ -81,7 +81,7 @@ describe(@"Loader", ^{
     });
 
     describe(@"core plugins", ^{
-q
+
         it(@"should look into core plugins if I'm searching for a core plugin", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
