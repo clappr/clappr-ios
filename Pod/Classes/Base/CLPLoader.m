@@ -44,11 +44,11 @@
 {
     NSArray *plugins;
     if ([pluginClass isSubclassOfClass:[CLPPlayback class]]) {
-        plugins = _playbackPlugins;
+        plugins = self.playbackPlugins;
     } else if ([pluginClass isSubclassOfClass:[CLPContainer class]]) {
-        plugins = _containerPlugins;
+        plugins = self.containerPlugins;
     } else if ([pluginClass isSubclassOfClass:[CLPCore class]]) {
-        plugins = _corePlugins;
+        plugins = self.corePlugins;
     }
 
     __block NSInteger pluginIndex = NSNotFound;

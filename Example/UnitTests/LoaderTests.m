@@ -1,10 +1,23 @@
 #import <Clappr/Clappr.h>
 
-@interface FakePlaybackPlugin : CLPPlayback
+@interface FakePlaybackLoaderPlugin : CLPPlayback
 @end
 
-@implementation FakePlaybackPlugin
+@implementation FakePlaybackLoaderPlugin
 @end
+
+@interface FakeContainerLoaderPlugin : CLPContainer
+@end
+
+@implementation FakeContainerLoaderPlugin
+@end
+
+@interface FakeCoreLoaderPlugin : CLPCore
+@end
+
+@implementation FakeCoreLoaderPlugin
+@end
+
 
 SPEC_BEGIN(Loader)
 
@@ -21,12 +34,70 @@ describe(@"Loader", ^{
         it(@"should look into playback plugins if I'm searching for a playback plugin", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
-            NSArray *installedPlugins = [loader valueForKey:@"_playbackPlugins"];
-            NSArray *plugins = [installedPlugins arrayByAddingObject:[FakePlaybackPlugin class]];
-            [loader setValue:plugins forKey:@"_playbackPlugins"];
+            [loader stub:@selector(playbackPlugins) andReturn:@[[FakePlaybackLoaderPlugin class]]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
+        });
+
+        it(@"should only match plugin subclass", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(playbackPlugins) andReturn:@[[CLPPlayback class]]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beFalse];
+        });
+
+        it(@"should not match for an empty plugin list", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(playbackPlugins) andReturn:@[]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beFalse];
+        });
+    });
+
+    describe(@"container plugins", ^{
+
+        it(@"should look into container plugins if I'm searching for a container plugin", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(containerPlugins) andReturn:@[[FakeContainerLoaderPlugin class]]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakeContainerLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beTrue];
+        });
+
+        it(@"should not match for an empty plugin list", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(containerPlugins) andReturn:@[]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakeContainerLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beFalse];
+        });
+    });
+
+    describe(@"core plugins", ^{
+q
+        it(@"should look into core plugins if I'm searching for a core plugin", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(corePlugins) andReturn:@[[FakeCoreLoaderPlugin class]]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakeCoreLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beTrue];
+        });
+
+        it(@"should not match for an empty plugin list", ^{
+            CLPLoader *loader = [CLPLoader sharedInstance];
+
+            [loader stub:@selector(corePlugins) andReturn:@[]];
+
+            BOOL containsPlugin = [loader containsPlugin:[FakeCoreLoaderPlugin class]];
+            [[theValue(containsPlugin) should] beFalse];
         });
     });
 });
