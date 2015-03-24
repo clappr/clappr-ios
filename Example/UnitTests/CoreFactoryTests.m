@@ -1,11 +1,5 @@
 #import <Clappr/Clappr.h>
 
-@interface FakeCorePlugin : NSObject
-@end
-
-@implementation FakeCorePlugin
-@end
-
 SPEC_BEGIN(CoreFactory)
 
 describe(@"CoreFactory", ^{
@@ -40,11 +34,11 @@ describe(@"CoreFactory", ^{
         pending(@"should be able to create a container with plugins from loader", ^{
 
             CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
-            [loader stub:@selector(corePlugins) andReturn:@[[FakeCorePlugin class]]];
+            [loader stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];
 
             CLPCore *core = [factory create];
 
-            BOOL containsPlugin = [core hasPlugin:[FakeCorePlugin class]];
+            BOOL containsPlugin = [core hasPlugin:[FakeUICorePlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
     });

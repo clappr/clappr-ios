@@ -1,24 +1,5 @@
 #import <Clappr/Clappr.h>
 
-@interface FakePlaybackLoaderPlugin : CLPPlayback
-@end
-
-@implementation FakePlaybackLoaderPlugin
-@end
-
-@interface FakeContainerLoaderPlugin : CLPContainer
-@end
-
-@implementation FakeContainerLoaderPlugin
-@end
-
-@interface FakeCoreLoaderPlugin : CLPCore
-@end
-
-@implementation FakeCoreLoaderPlugin
-@end
-
-
 SPEC_BEGIN(Loader)
 
 describe(@"Loader", ^{
@@ -34,9 +15,9 @@ describe(@"Loader", ^{
         it(@"should look into playback plugins if I'm searching for a playback plugin", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
-            [loader stub:@selector(playbackPlugins) andReturn:@[[FakePlaybackLoaderPlugin class]]];
+            [loader stub:@selector(playbackPlugins) andReturn:@[[FakePlaybackPlugin class]]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
 
@@ -45,7 +26,7 @@ describe(@"Loader", ^{
 
             [loader stub:@selector(playbackPlugins) andReturn:@[[CLPPlayback class]]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beFalse];
         });
 
@@ -54,7 +35,7 @@ describe(@"Loader", ^{
 
             [loader stub:@selector(playbackPlugins) andReturn:@[]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakePlaybackPlugin class]];
             [[theValue(containsPlugin) should] beFalse];
         });
     });
@@ -64,9 +45,9 @@ describe(@"Loader", ^{
         it(@"should look into container plugins if I'm searching for a container plugin", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
-            [loader stub:@selector(containerPlugins) andReturn:@[[FakeContainerLoaderPlugin class]]];
+            [loader stub:@selector(containerPlugins) andReturn:@[[FakeUIContainerPlugin class]]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakeContainerLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakeUIContainerPlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
 
@@ -75,7 +56,7 @@ describe(@"Loader", ^{
 
             [loader stub:@selector(containerPlugins) andReturn:@[]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakeContainerLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakeUIContainerPlugin class]];
             [[theValue(containsPlugin) should] beFalse];
         });
     });
@@ -85,9 +66,9 @@ describe(@"Loader", ^{
         it(@"should look into core plugins if I'm searching for a core plugin", ^{
             CLPLoader *loader = [CLPLoader sharedInstance];
 
-            [loader stub:@selector(corePlugins) andReturn:@[[FakeCoreLoaderPlugin class]]];
+            [loader stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakeCoreLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakeUICorePlugin class]];
             [[theValue(containsPlugin) should] beTrue];
         });
 
@@ -96,7 +77,7 @@ describe(@"Loader", ^{
 
             [loader stub:@selector(corePlugins) andReturn:@[]];
 
-            BOOL containsPlugin = [loader containsPlugin:[FakeCoreLoaderPlugin class]];
+            BOOL containsPlugin = [loader containsPlugin:[FakeUICorePlugin class]];
             [[theValue(containsPlugin) should] beFalse];
         });
     });

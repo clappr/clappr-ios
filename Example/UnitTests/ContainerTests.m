@@ -1,21 +1,5 @@
 #import <Clappr/Clappr.h>
 
-#pragma mark - Fake plugins
-
-@interface SomeContainerUIPlugin : CLPUIContainerPlugin
-@end
-
-@implementation SomeContainerUIPlugin
-@end
-
-@interface OtherKindOfPlugin : NSObject
-@end
-
-@implementation OtherKindOfPlugin
-@end
-
-#pragma mark - Spec
-
 SPEC_BEGIN(Container)
 
 describe(@"Container", ^{
@@ -386,10 +370,10 @@ describe(@"Container", ^{
             });
 
             it(@"should be able to add a new container UI plugin", ^{
-                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
+                FakeUIContainerPlugin *uiPlugin = [FakeUIContainerPlugin new];
                 [container addPlugin:uiPlugin];
 
-                BOOL containsPlugin = [container hasPlugin:[SomeContainerUIPlugin class]];
+                BOOL containsPlugin = [container hasPlugin:[FakeUIContainerPlugin class]];
                 [[theValue(containsPlugin) should] beTrue];
             });
 
@@ -402,14 +386,14 @@ describe(@"Container", ^{
             });
 
             it(@"should have a container reference after being added", ^{
-                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
+                FakeUIContainerPlugin *uiPlugin = [FakeUIContainerPlugin new];
                 [container addPlugin:uiPlugin];
 
                 [[uiPlugin.container should] equal:container];
             });
 
             it(@"should have its view as a container's subview", ^{
-                SomeContainerUIPlugin *uiPlugin = [SomeContainerUIPlugin new];
+                FakeUIContainerPlugin *uiPlugin = [FakeUIContainerPlugin new];
                 [container addPlugin:uiPlugin];
                 [[uiPlugin.view.superview should] equal:container.view];
             });

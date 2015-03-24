@@ -30,6 +30,7 @@
 		E456F7031A7FF89A00BA8BFD /* LoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E456F7021A7FF89A00BA8BFD /* LoaderTests.m */; };
 		E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E45C99A21A64510100EB5C21 /* CoreTests.m */; };
 		E47842D11A8260D5006D8B4A /* UIContainerPluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E47842D01A8260D5006D8B4A /* UIContainerPluginTests.m */; };
+		E47E84221AC1B336006C5A74 /* FakePlugins.m in Sources */ = {isa = PBXBuildFile; fileRef = E47E84211AC1B336006C5A74 /* FakePlugins.m */; };
 		E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */; };
 		E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB131A39D79C00C568DC /* ContainerTests.m */; };
 		E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A7FB181A3A118D00C568DC /* PlaybackTests.m */; };
@@ -100,6 +101,8 @@
 		E456F7021A7FF89A00BA8BFD /* LoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoaderTests.m; sourceTree = "<group>"; };
 		E45C99A21A64510100EB5C21 /* CoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTests.m; sourceTree = "<group>"; };
 		E47842D01A8260D5006D8B4A /* UIContainerPluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContainerPluginTests.m; sourceTree = "<group>"; };
+		E47E84201AC1B336006C5A74 /* FakePlugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakePlugins.h; sourceTree = "<group>"; };
+		E47E84211AC1B336006C5A74 /* FakePlugins.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakePlugins.m; sourceTree = "<group>"; };
 		E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIObjectTests.m; sourceTree = "<group>"; };
 		E4A7FB131A39D79C00C568DC /* ContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContainerTests.m; sourceTree = "<group>"; };
 		E4A7FB181A3A118D00C568DC /* PlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackTests.m; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				6003F5B7195388D20070C39A /* UnitTests-Info.plist */,
 				6003F5B8195388D20070C39A /* InfoPlist.strings */,
 				606FC2411953D9B200FFA9A0 /* UnitTests-Prefix.pch */,
+				E47E84201AC1B336006C5A74 /* FakePlugins.h */,
+				E47E84211AC1B336006C5A74 /* FakePlugins.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -535,7 +540,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}/../Pod/Classes\"?CLP\nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\"\nfi\nfi";
+			shellScript = "#if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\n#if [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then\n#\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}/../Pod/Classes\"?CLP\n#else\n#echo \"warning: You have to install and set up Objective-Clean to use its features!\"\n#fi\n#fi";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -558,6 +563,7 @@
 				E4C1C0041AAA3B530078B531 /* ContainerFactoryTests.m in Sources */,
 				E45C99A31A64510100EB5C21 /* CoreTests.m in Sources */,
 				E4A7FB191A3A118D00C568DC /* PlaybackTests.m in Sources */,
+				E47E84221AC1B336006C5A74 /* FakePlugins.m in Sources */,
 				E4AFBF5B1AC0AAC70067A76B /* CoreFactoryTests.m in Sources */,
 				E4A7FB141A39D79C00C568DC /* ContainerTests.m in Sources */,
 				E4A7FB0F1A38DA1F00C568DC /* UIObjectTests.m in Sources */,

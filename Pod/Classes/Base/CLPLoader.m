@@ -1,7 +1,7 @@
 #import "CLPLoader.h"
 
-#import "CLPCore.h"
-#import "CLPContainer.h"
+#import "CLPUICorePlugin.h"
+#import "CLPUIContainerPlugin.h"
 #import "CLPAVFoundationPlayback.h"
 
 
@@ -45,9 +45,9 @@
     NSArray *plugins;
     if ([pluginClass isSubclassOfClass:[CLPPlayback class]]) {
         plugins = self.playbackPlugins;
-    } else if ([pluginClass isSubclassOfClass:[CLPContainer class]]) {
+    } else if ([pluginClass isSubclassOfClass:[CLPUIContainerPlugin class]]) {
         plugins = self.containerPlugins;
-    } else if ([pluginClass isSubclassOfClass:[CLPCore class]]) {
+    } else if ([pluginClass isSubclassOfClass:[CLPUICorePlugin class]]) {
         plugins = self.corePlugins;
     }
 
