@@ -5,7 +5,7 @@
 
 @interface CLPUICorePlugin : CLPUIPlugin
 
-@property (nonatomic, readonly, strong) CLPCore *core;
+@property (nonatomic, readonly, weak) CLPCore *core;
 
 - (instancetype)initWithCore:(CLPCore *)core;
 

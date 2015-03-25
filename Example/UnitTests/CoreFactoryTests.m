@@ -31,6 +31,12 @@ describe(@"CoreFactory", ^{
 
     describe(@"core creation", ^{
 
+        it(@"should be able to create a container using its create method", ^{
+            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
+            CLPCore *core = [factory create];
+            [[core shouldNot] beNil];
+        });
+
         pending(@"should be able to create a container with plugins from loader", ^{
 
             CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];

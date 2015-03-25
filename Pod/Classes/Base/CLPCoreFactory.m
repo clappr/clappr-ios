@@ -1,6 +1,7 @@
 #import "CLPCoreFactory.h"
 #import "CLPPlayer.h"
 #import "CLPLoader.h"
+#import "CLPCore.h"
 
 @implementation CLPCoreFactory
 
@@ -24,7 +25,8 @@
 
 - (CLPCore *)create
 {
-    return nil;
+    CLPCore *core = [[CLPCore alloc] initWithSources:@[]];
+    return core;
 }
 
 @end

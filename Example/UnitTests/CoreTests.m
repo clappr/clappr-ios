@@ -4,7 +4,7 @@ SPEC_BEGIN(Core)
 
 describe(@"Core", ^{
 
-    describe(@"Creation", ^{
+    describe(@"creation", ^{
 
         it(@"should have a designated initializer receiving an array of sources", ^{
 
@@ -25,7 +25,7 @@ describe(@"Core", ^{
         });
     });
 
-    describe(@"Containers", ^{
+    describe(@"containers", ^{
 
         it(@"should be created given an array of sources as strings", ^{
 
@@ -73,7 +73,7 @@ describe(@"Core", ^{
         });
     });
 
-    describe(@"MediaControl", ^{
+    describe(@"mediaControl", ^{
 
         __block CLPCore *core;
         const NSString *source = @"http://my.video.com/v.mp4";
@@ -92,6 +92,65 @@ describe(@"Core", ^{
 
         it(@"should be visible by default", ^{
             [[theValue(core.mediaControl.view.hidden) should] beFalse];
+        });
+
+    });
+
+    describe(@"plugins", ^{
+
+        __block CLPCore *core;
+        __block FakeUICorePlugin *fakeCorePlugin;
+
+        beforeEach(^{
+            core = [[CLPCore alloc] initWithSources:@[]];
+            fakeCorePlugin = [[FakeUICorePlugin alloc] initWithCore:core];
+        });
+
+        describe(@"addition", ^{
+
+            it(@"should be able to add core plugins", ^{
+                NSUInteger initialPluginsCount = core.plugins.count;
+
+                [core addPlugin:fakeCorePlugin];
+
+                [[core.plugins should] haveCountOf:initialPluginsCount+1];
+            });
+
+            it(@"should not be able to add another kind of plugin", ^{
+                NSUInteger initialPluginsCount = core.plugins.count;
+
+                FakeUIContainerPlugin *fakeContainerPlugin = [FakeUIContainerPlugin new];
+                [core addPlugin:fakeContainerPlugin];
+
+                [[core.plugins should] haveCountOf:initialPluginsCount];
+            });
+
+            context(@"ui plugin", ^{
+                it(@"should be a subview of core's view", ^{
+                    [core addPlugin:fakeCorePlugin];
+                    [[fakeCorePlugin.view.superview should] equal:core.view];
+                });
+            });
+        });
+
+        describe(@"verification", ^{
+
+            it(@"should return YES if a core plugin is installed", ^{
+                [core addPlugin:fakeCorePlugin];
+
+                BOOL containsPlugin = [core hasPlugin:[fakeCorePlugin class]];
+
+                [[theValue(containsPlugin) should] beTrue];
+            });
+
+            it(@"should return NO if a core plugin is not installed", ^{
+                FakeUIContainerPlugin *fakeContainerPlugin = [FakeUIContainerPlugin new];
+                [core addPlugin:fakeContainerPlugin];
+
+                BOOL containsPlugin = [core hasPlugin:[fakeContainerPlugin class]];
+
+                [[theValue(containsPlugin) should] beFalse];
+            });
         });
 
     });

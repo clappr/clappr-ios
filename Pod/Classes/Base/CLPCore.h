@@ -9,6 +9,7 @@
 @property (nonatomic, copy, readonly) NSArray *sources;
 @property (nonatomic, copy, readonly) NSArray *containers;
 @property (nonatomic, strong, readonly) CLPMediaControl *mediaControl;
+@property (nonatomic, copy, readonly) NSSet *plugins;
 
 - (instancetype)initWithSources:(NSArray *)sources;
 

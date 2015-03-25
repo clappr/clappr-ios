@@ -4,12 +4,14 @@
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
 #import "CLPPlayback+Factory.h"
+#import "CLPUICorePlugin.h"
 #import "UIView+NSLayoutConstraints.h"
 
 
 @interface CLPCore ()
 {
     NSMutableArray *containers;
+    NSMutableSet *_plugins;
 }
 
 @end
@@ -28,6 +30,7 @@
 {
     self = [super init];
     if (self) {
+        _plugins = [@[] mutableCopy];
         [self loadSources:sources];
     }
     return self;
@@ -47,7 +50,6 @@
     for (CLPContainer *container in containers) {
         [container destroy];
     }
-    
 
     [self createContainers];
 }
@@ -105,11 +107,19 @@
 
 - (void)addPlugin:(id)plugin
 {
-    
+    if ([[plugin class] isSubclassOfClass:[CLPUICorePlugin class]]) {
+        [_plugins addObject:plugin];
+    }
 }
 
 - (BOOL)hasPlugin:(Class)pluginClass
 {
+    for (id plugin in _plugins) {
+        if ([plugin isMemberOfClass:pluginClass]) {
+            return YES;
+        }
+    }
+
     return NO;
 }
 
@@ -118,6 +128,11 @@
 - (NSArray *)containers
 {
     return [containers copy];
+}
+
+- (NSSet *)plugins
+{
+    return [_plugins copy];
 }
 
 @end
