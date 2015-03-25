@@ -37,7 +37,7 @@ describe(@"CoreFactory", ^{
             [[core shouldNot] beNil];
         });
 
-        pending(@"should be able to create a container with plugins from loader", ^{
+        it(@"should be able to create a container with plugins from loader", ^{
 
             CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
             [loader stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];

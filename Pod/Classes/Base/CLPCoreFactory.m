@@ -26,6 +26,9 @@
 - (CLPCore *)create
 {
     CLPCore *core = [[CLPCore alloc] initWithSources:@[]];
+    for (id plugin in _loader.corePlugins) {
+        [core addPlugin:plugin];
+    }
     return core;
 }
 

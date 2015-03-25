@@ -115,7 +115,7 @@
 - (BOOL)hasPlugin:(Class)pluginClass
 {
     for (id plugin in _plugins) {
-        if ([plugin isMemberOfClass:pluginClass]) {
+        if ([[plugin class] isSubclassOfClass:pluginClass]) {
             return YES;
         }
     }
