@@ -2,7 +2,9 @@
 
 // Clappr
 #import "CLPCore.h"
+#import "CLPCoreFactory.h"
 #import "CLPContainer.h"
+#import "CLPLoader.h"
 #import "UIView+NSLayoutConstraints.h"
 
 
@@ -22,7 +24,11 @@
 {
     self = [super init];
     if (self) {
-        _core = [[CLPCore alloc] initWithSources:sourcesURLs ?: @[]];
+        CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:self loader:[CLPLoader new]];
+        _core = [factory create];
+        if (sourcesURLs) {
+            [_core loadSources:sourcesURLs];
+        }
     }
     return self;
 }

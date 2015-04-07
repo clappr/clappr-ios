@@ -1,9 +1,11 @@
 #import "CLPCore.h"
 
+#import "CLPLoader.h"
 #import "CLPMediaControl.h"
 #import "CLPContainer.h"
 #import "CLPPlayback.h"
 #import "CLPPlayback+Factory.h"
+#import "CLPContainerFactory.h"
 #import "CLPUICorePlugin.h"
 #import "UIView+NSLayoutConstraints.h"
 
@@ -58,23 +60,11 @@
 {
     containers = [@[] mutableCopy];
 
-    for (id source in _sources) {
+    CLPContainerFactory *containerFactory = [[CLPContainerFactory alloc] initWithSources:_sources loader:[CLPLoader new]];
 
-        NSURL *sourceURL;
-        if ([source isKindOfClass:[NSString class]]) {
-            sourceURL = [NSURL URLWithString:source];
-        } else if ([source isKindOfClass:[NSURL class]]) {
-            sourceURL = source;
-        }
-
-        if (!sourceURL)
-            continue;
-
-        CLPPlayback *playback = [CLPPlayback playbackForURL:sourceURL];
-        CLPContainer *container = [[CLPContainer alloc] initWithPlayback:playback];
-
+    NSArray *createdContainers = [containerFactory createContainers];
+    for (CLPContainer *container in createdContainers) {
         [self.view clappr_addSubviewMatchingFrameOfView:container.view];
-
         [containers addObject:container];
     }
 }
