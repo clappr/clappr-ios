@@ -9,8 +9,8 @@ describe(@"Core", ^{
         it(@"should have a designated initializer receiving an array of sources", ^{
 
             NSArray *sources = @[
-                @"http://my.awesomevideo.globo.com/123456",
-                @"http://another.awesomevideo.globo.com/123456"
+                [NSURL URLWithString:@"http://my.awesomevideo.globo.com/123456"],
+                [NSURL URLWithString:@"http://another.awesomevideo.globo.com/123456"]
             ];
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
 
@@ -27,30 +27,12 @@ describe(@"Core", ^{
 
     describe(@"containers", ^{
 
-        it(@"should be created given an array of sources as strings", ^{
-
-            NSArray *sources = @[
-                                 @"http://my.awesomevideo.globo.com/123456",
-                                 @"http://another.awesomevideo.globo.com/123456"
-                                 ];
-
-            CLPCore *core = [[CLPCore alloc] initWithSources:sources];
-
-            [[theValue(core.containers.count) should] equal:theValue(2)];
-
-            CLPContainer *firstContainer = core.containers[0];
-            [[firstContainer.playback.url.absoluteString should] equal:sources[0]];
-
-            CLPContainer *secondContainer = core.containers[1];
-            [[secondContainer.playback.url.absoluteString should] equal:sources[1]];
-        });
-
         it(@"should be created given an array of sources as urls", ^{
 
             NSArray *sources = @[
-                                 [NSURL URLWithString:@"http://my.awesomevideo.globo.com/123456"],
-                                 [NSURL URLWithString:@"http://another.awesomevideo.globo.com/123456"]
-                                 ];
+                [NSURL URLWithString:@"http://my.awesomevideo.globo.com/123456"],
+                [NSURL URLWithString:@"http://another.awesomevideo.globo.com/123456"]
+            ];
 
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
 
@@ -65,7 +47,11 @@ describe(@"Core", ^{
 
         it(@"should not be created given an array of anything else", ^{
 
-            NSArray *sources = @[ @{}, @123 ];
+            // an array of strings, for example
+            NSArray *sources = @[
+                @"http://my.awesomevideo.globo.com/123456",
+                @"http://my.awesomevideo.globo.com/123456"
+            ];
 
             CLPCore *core = [[CLPCore alloc] initWithSources:sources];
 
@@ -76,7 +62,7 @@ describe(@"Core", ^{
     describe(@"mediaControl", ^{
 
         __block CLPCore *core;
-        const NSString *source = @"http://my.video.com/v.mp4";
+        const NSURL *source = [NSURL URLWithString:@"http://my.video.com/v.mp4"];
 
         beforeEach(^{
             core = [[CLPCore alloc] initWithSources:@[source]];

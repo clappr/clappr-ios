@@ -17,11 +17,23 @@
 {
     self = [super init];
     if (self) {
-        _sources = [sources copy];
+        _sources = [self p_filterSources:sources];
         _loader = loader;
     }
 
     return self;
+}
+
+- (NSArray *)p_filterSources:(NSArray *)sources
+{
+    NSMutableArray *filteredArray = [@[] mutableCopy];
+    for (id source in sources) {
+        if ([source isKindOfClass:[NSURL class]]) {
+            [filteredArray addObject:source];
+        }
+    }
+
+    return [filteredArray copy];
 }
 
 - (NSArray *)createContainers
