@@ -267,6 +267,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
         containerPlugin.container = self;
         [p_plugins addObject:containerPlugin];
         [self.view addSubview:containerPlugin.view];
+        [containerPlugin wasInstalled];
     }
 }
 

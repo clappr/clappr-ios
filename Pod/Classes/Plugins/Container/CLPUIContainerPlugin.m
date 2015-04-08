@@ -3,5 +3,10 @@
 
 @implementation CLPUIContainerPlugin
 
+- (void)wasInstalled
+{
+    
+}
+
 @end
 

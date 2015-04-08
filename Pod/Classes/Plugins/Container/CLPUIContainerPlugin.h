@@ -7,4 +7,6 @@
 
 @property (nonatomic, weak) CLPContainer *container;
 
+- (void)wasInstalled;
+
 @end
