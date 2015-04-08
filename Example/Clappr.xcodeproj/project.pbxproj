@@ -24,6 +24,7 @@
 		BC1F18EC96A346EBBD5D05A1 /* libPods-Clappr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD39FC62AD948D5BDFCDC13 /* libPods-Clappr.a */; };
 		C43ABEAFAD6C024B657FBF7B /* libPods-AcceptanceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF378E268C4A99AF78E54455 /* libPods-AcceptanceTests.a */; };
 		E401F2081A43709A00F41E8C /* MediaControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E401F2071A43709A00F41E8C /* MediaControlTests.m */; };
+		E417D3921AD3175E00BB7912 /* SpinnerThreeBouncePluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E417D3911AD3175E00BB7912 /* SpinnerThreeBouncePluginTests.m */; };
 		E41FFE9F1A76A2CA00FCAB8C /* AcceptanceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */; };
 		E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E41FFEAD1A7964F700FCAB8C /* PlayerTests.m */; };
 		E43D33D91AB7895500D10C3E /* AVFoundationPlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E43D33D81AB7895500D10C3E /* AVFoundationPlaybackTests.m */; };
@@ -93,6 +94,7 @@
 		CCF3E537B214D7F3BB4F1658 /* Pods-InterfaceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InterfaceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InterfaceTests/Pods-InterfaceTests.release.xcconfig"; sourceTree = "<group>"; };
 		DF38B8233EFC57C47A83D04D /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E401F2071A43709A00F41E8C /* MediaControlTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaControlTests.m; sourceTree = "<group>"; };
+		E417D3911AD3175E00BB7912 /* SpinnerThreeBouncePluginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpinnerThreeBouncePluginTests.m; sourceTree = "<group>"; };
 		E41FFE9A1A76A2CA00FCAB8C /* AcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41FFE9D1A76A2CA00FCAB8C /* AcceptanceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AcceptanceTests-Info.plist"; sourceTree = "<group>"; };
 		E41FFE9E1A76A2CA00FCAB8C /* AcceptanceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AcceptanceTests.m; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F5B6195388D20070C39A /* Supporting Files */,
+				E417D3901AD316F900BB7912 /* Plugins */,
 				E4CB2C881A3099AA00D341EE /* BaseObjectTests.m */,
 				E4A7FB0E1A38DA1F00C568DC /* UIObjectTests.m */,
 				E4A7FB181A3A118D00C568DC /* PlaybackTests.m */,
@@ -274,6 +277,14 @@
 				F8D91A529FF548AA8E13CED7 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		E417D3901AD316F900BB7912 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				E417D3911AD3175E00BB7912 /* SpinnerThreeBouncePluginTests.m */,
+			);
+			name = Plugins;
 			sourceTree = "<group>";
 		};
 		E41FFE9B1A76A2CA00FCAB8C /* AcceptanceTests */ = {
@@ -575,6 +586,7 @@
 				E41FFEAE1A7964F700FCAB8C /* PlayerTests.m in Sources */,
 				E4E7E2F01A9E23C4006EA4F9 /* UIPluginTests.m in Sources */,
 				E4FD9A421A9BA1060013DA44 /* UICorePluginTests.m in Sources */,
+				E417D3921AD3175E00BB7912 /* SpinnerThreeBouncePluginTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
