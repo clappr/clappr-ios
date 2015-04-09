@@ -12,12 +12,11 @@
                                  userInfo:nil];
 }
 
-- (instancetype)initWithPlayer:(CLPPlayer *)player loader:(CLPLoader *)loader
+- (instancetype)initWithPlayer:(CLPPlayer *)player
 {
     self = [super init];
     if (self) {
         _player = player;
-        _loader = loader;
     }
 
     return self;
@@ -26,7 +25,7 @@
 - (CLPCore *)create
 {
     CLPCore *core = [[CLPCore alloc] initWithSources:@[]];
-    for (id plugin in _loader.corePlugins) {
+    for (id plugin in [CLPLoader sharedLoader].corePlugins) {
         [core addPlugin:plugin];
     }
     return core;

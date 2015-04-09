@@ -24,7 +24,7 @@
 {
     self = [super init];
     if (self) {
-        CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:self loader:[CLPLoader new]];
+        CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:self];
         _core = [factory create];
         if (sourcesURLs) {
             [_core loadSources:sourcesURLs];

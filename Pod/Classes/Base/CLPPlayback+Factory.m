@@ -7,10 +7,8 @@
 
 + (instancetype)playbackForURL:(NSURL *)url
 {
-    CLPLoader *loader = [CLPLoader sharedInstance];
-
     __block Class playbackClass;
-    [loader.playbackPlugins enumerateObjectsUsingBlock:^(id pluginClass, NSUInteger idx, BOOL *stop) {
+    [[CLPLoader sharedLoader].playbackPlugins enumerateObjectsUsingBlock:^(id pluginClass, NSUInteger idx, BOOL *stop) {
 
         if ([pluginClass canPlayURL:url]) {
             playbackClass = pluginClass;

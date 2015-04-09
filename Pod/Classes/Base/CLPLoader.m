@@ -17,16 +17,15 @@
 
 @implementation CLPLoader
 
-+ (instancetype)sharedInstance
++ (instancetype)sharedLoader
 {
-    static CLPLoader *sharedLoader;
+    static CLPLoader *sharedInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedLoader = [self new];
-
+        sharedInstance = [self new];
     });
 
-    return sharedLoader;
+    return sharedInstance;
 }
 
 - (instancetype)init

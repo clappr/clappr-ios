@@ -7,13 +7,13 @@ describe(@"Loader", ^{
     describe(@"playback plugins", ^{
 
         it(@"should contain the AVFoundation playback as a default plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
             BOOL containsPlugin = [loader containsPlugin:[CLPAVFoundationPlayback class]];
             [[theValue(containsPlugin) should] beTrue];
         });
 
         it(@"should look into playback plugins if I'm searching for a playback plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(playbackPlugins) andReturn:@[[FakePlaybackPlugin class]]];
 
@@ -22,7 +22,7 @@ describe(@"Loader", ^{
         });
 
         it(@"should only match plugin subclass", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(playbackPlugins) andReturn:@[[CLPPlayback class]]];
 
@@ -31,7 +31,7 @@ describe(@"Loader", ^{
         });
 
         it(@"should not match for an empty plugin list", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(playbackPlugins) andReturn:@[]];
 
@@ -43,7 +43,7 @@ describe(@"Loader", ^{
     describe(@"container plugins", ^{
 
         it(@"should look into container plugins if I'm searching for a container plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(containerPlugins) andReturn:@[[FakeUIContainerPlugin class]]];
 
@@ -52,7 +52,7 @@ describe(@"Loader", ^{
         });
 
         it(@"should not match for an empty plugin list", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(containerPlugins) andReturn:@[]];
 
@@ -64,7 +64,7 @@ describe(@"Loader", ^{
     describe(@"core plugins", ^{
 
         it(@"should look into core plugins if I'm searching for a core plugin", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];
 
@@ -73,7 +73,7 @@ describe(@"Loader", ^{
         });
 
         it(@"should not match for an empty plugin list", ^{
-            CLPLoader *loader = [CLPLoader sharedInstance];
+            CLPLoader *loader = [CLPLoader sharedLoader];
 
             [loader stub:@selector(corePlugins) andReturn:@[]];
 

@@ -5,11 +5,9 @@ SPEC_BEGIN(CoreFactory)
 describe(@"CoreFactory", ^{
 
     __block CLPPlayer *player;
-    __block CLPLoader *loader;
 
     beforeEach(^{
         player = [CLPPlayer new];
-        loader = [CLPLoader new];
     });
 
     describe(@"instantiation", ^{
@@ -20,27 +18,26 @@ describe(@"CoreFactory", ^{
             }) should] raiseWithName:NSInternalInconsistencyException];
         });
 
-        it(@"shoud have a designated initializer receiving the player and the loader", ^{
+        it(@"shoud have a designated initializer receiving the player", ^{
 
-            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
+            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player];
 
             [[factory.player should] equal:player];
-            [[factory.loader should] equal:loader];
         });
     });
 
     describe(@"core creation", ^{
 
         it(@"should be able to create a container using its create method", ^{
-            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
+            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player];
             CLPCore *core = [factory create];
             [[core shouldNot] beNil];
         });
 
         it(@"should be able to create a container with plugins from loader", ^{
 
-            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player loader:loader];
-            [loader stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];
+            CLPCoreFactory *factory = [[CLPCoreFactory alloc] initWithPlayer:player];
+            [[CLPLoader sharedLoader] stub:@selector(corePlugins) andReturn:@[[FakeUICorePlugin class]]];
 
             CLPCore *core = [factory create];
 

@@ -7,9 +7,8 @@
 @interface CLPCoreFactory : CLPBaseObject
 
 @property (nonatomic, strong, readonly) CLPPlayer *player;
-@property (nonatomic, strong, readonly) CLPLoader *loader;
 
-- (instancetype)initWithPlayer:(CLPPlayer *)player loader:(CLPLoader *)loader;
+- (instancetype)initWithPlayer:(CLPPlayer *)player;
 
 - (CLPCore *)create;
 

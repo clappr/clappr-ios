@@ -7,7 +7,7 @@
 @property (nonatomic, strong, readonly) NSArray *containerPlugins;
 @property (nonatomic, strong, readonly) NSArray *corePlugins;
 
-+ (instancetype)sharedInstance;
++ (instancetype)sharedLoader;
 
 - (BOOL)containsPlugin:(Class)pluginClass;
 
