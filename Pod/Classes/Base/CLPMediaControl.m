@@ -28,9 +28,13 @@ static UINib *mediaControlNib;
 
 @interface CLPMediaControl ()
 {
+    float bufferPercentage;
+
     __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
-    __weak IBOutlet UIView *positionBarView;
+    __weak IBOutlet NSLayoutConstraint *bufferBarWidthConstraint;
     __weak IBOutlet UIView *seekBarView;
+    __weak IBOutlet UIView *bufferBarView;
+    __weak IBOutlet UIView *progressBarView;
 
     CGFloat scrubberInitialPosition;
     NSTimer *hideControlsTimer;
@@ -91,7 +95,7 @@ static UINib *mediaControlNib;
     _currentTimeLabel.accessibilityLabel = @"current time";
     _durationLabel.accessibilityLabel = @"duration";
     _scrubberView.accessibilityLabel = @"scrubber";
-    seekBarView.accessibilityLabel = @"seek bar";
+    progressBarView.accessibilityLabel = @"seek bar";
 }
 
 - (void)bindEventListeners
@@ -111,6 +115,15 @@ static UINib *mediaControlNib;
         NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
         [weakSelf containerDidUpdateTimeToPosition:position
                                           duration:duration];
+    }];
+
+    [self listenTo:_container eventName:CLPContainerEventProgress callback:^(NSDictionary *userInfo) {
+        float startPosition = [userInfo[@"start_position"] floatValue];
+        float endPosition = [userInfo[@"end_position"] floatValue];
+        NSTimeInterval duration = [userInfo[@"duration"] doubleValue];
+        [weakSelf containerDidUpdateProgressWithStartPosition:startPosition
+                                                  endPosition:endPosition
+                                                     duration:duration];
     }];
 
     [self listenTo:_container eventName:CLPContainerEventReady callback:^(NSDictionary *userInfo) {
@@ -185,6 +198,18 @@ static UINib *mediaControlNib;
 
     scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
     [_scrubberView setNeedsLayout];
+    [progressBarView setNeedsLayout];
+
+    bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage;
+    [bufferBarView layoutIfNeeded];
+}
+
+- (void)containerDidUpdateProgressWithStartPosition:(float)startPosition
+                                        endPosition:(float)endPosition
+                                           duration:(NSTimeInterval)duration
+{
+    bufferPercentage = endPosition / duration;
+    NSLog(@"%.2f", bufferPercentage);
 }
 
 - (void)containerDidEnd

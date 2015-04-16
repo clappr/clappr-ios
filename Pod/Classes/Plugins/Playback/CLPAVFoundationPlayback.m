@@ -3,6 +3,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIView+NSLayoutConstraints.h"
 
+void *kStatusDidChangeKVO = &kStatusDidChangeKVO;
+void *kTimeRangesKVO = &kTimeRangesKVO;
 
 @interface CLPAVFoundationPlayback ()
 {
@@ -20,9 +22,15 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeKeyValueObservers];
+}
+
+- (void)removeKeyValueObservers
+{
     @try {
-        [_avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [_avPlayer removeObserver:self forKeyPath:@"currentItem.status"];
+
     }
     @catch (NSException *__unused exception) {}
 }
@@ -48,21 +56,29 @@
     _playerView.player = _avPlayer;
     [self.view clappr_addSubviewMatchingFrameOfView:_playerView];
 
-    [_avPlayer.currentItem addObserver:self forKeyPath:@"status" options:0 context:nil];
+    [self addKeyValueObservers];
+
     [self addTimeElapsedCallbackHandler];
+}
+
+- (void)addKeyValueObservers
+{
+    [_avPlayer addObserver:self forKeyPath:@"currentItem.status" options:NSKeyValueObservingOptionNew context:kStatusDidChangeKVO];
+    [_avPlayer addObserver:self forKeyPath:@"currentItem.loadedTimeRanges" options:NSKeyValueObservingOptionNew context:kTimeRangesKVO];
 }
 
 - (void)addTimeElapsedCallbackHandler
 {
     __weak typeof(self) weakSelf = self;
-    [_avPlayer addPeriodicTimeObserverForInterval:CMTimeMake(1, 3) queue:nil usingBlock:^(CMTime time) {
+    [_avPlayer addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
+        if (weakSelf.isPlaying) {
+            NSDictionary *userInfo = @{
+                @"position": @(CMTimeGetSeconds(time)),
+                @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
+            };
 
-        NSDictionary *userInfo = @{
-                                   @"position": @(CMTimeGetSeconds(time)),
-                                   @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
-                                   };
-
-        [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+            [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+        }
     }];
 }
 
@@ -120,13 +136,25 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == _avPlayer.currentItem && [keyPath isEqualToString:@"status"]) {
+    if (context == kStatusDidChangeKVO) {
         if (_avPlayer.currentItem.status == AVPlayerItemStatusReadyToPlay) {
             avPlayerLayer.frame = avPlayerLayer.superlayer.bounds;
             [self trigger:CLPPlaybackEventReady];
         } else if (_avPlayer.currentItem.status == AVPlayerItemStatusFailed) {
             [self trigger:CLPPlaybackEventError userInfo:@{@"error": _avPlayer.currentItem.error}];
-            [_avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
+            [self removeKeyValueObservers];
+        }
+    } else if (context == kTimeRangesKVO) {
+        NSArray *timeRanges = (NSArray *)[change objectForKey:NSKeyValueChangeNewKey];
+        if (timeRanges != (id)[NSNull null] && timeRanges.count) {
+            CMTimeRange timerange = [timeRanges[0] CMTimeRangeValue];
+
+            NSDictionary *userInfo = @{
+                @"start_position": @(CMTimeGetSeconds(timerange.start)),
+                @"end_position": @(CMTimeGetSeconds(CMTimeAdd(timerange.start, timerange.duration))),
+                @"duration": @(CMTimeGetSeconds(_avPlayer.currentItem.asset.duration))
+            };
+            [self trigger:CLPPlaybackEventProgress userInfo:userInfo];
         }
     }
 }

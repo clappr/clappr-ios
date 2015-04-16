@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Player-Regular.ttf">
@@ -12,15 +12,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl">
             <connections>
+                <outlet property="bufferBarView" destination="82D-Bh-tQP" id="5CE-Qu-Rfg"/>
+                <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="OhT-dJ-qEo"/>
                 <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="5zy-o5-dtI"/>
                 <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="EHm-oc-S4h"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="PuI-u9-r4C"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="qO4-hD-Ybz"/>
                 <outlet property="playPauseButton" destination="0V7-z5-rdA" id="SzV-CV-Wii"/>
-                <outlet property="positionBarView" destination="82D-Bh-tQP" id="r5I-Hu-Q2c"/>
-                <outlet property="scrubberLeftConstraint" destination="1eQ-Wc-2gx" id="dwR-ue-OGw"/>
+                <outlet property="progressBarView" destination="6qg-xT-VwA" id="LfS-KJ-8Tg"/>
+                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="LYo-cX-V9X"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="Oc8-2h-vqT"/>
-                <outlet property="seekBarView" destination="6qg-xT-VwA" id="8sU-8S-6zz"/>
+                <outlet property="seekBarView" destination="7KX-hC-K7v" id="O5r-zh-Be0"/>
                 <outlet property="view" destination="xP5-UL-qkk" id="Tgj-xc-t6H"/>
             </connections>
         </placeholder>
@@ -46,21 +48,28 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
                             <rect key="frame" x="0.0" y="0.0" width="467" height="10"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Seek Bar">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
                                     <rect key="frame" x="0.0" y="4" width="467" height="1"/>
                                     <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="IpY-wK-Wjn"/>
+                                        <constraint firstAttribute="height" constant="1" id="SQ0-82-2hK"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Position Bar">
-                                    <color key="backgroundColor" red="0.0" green="0.3529411764705882" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
+                                    <color key="backgroundColor" red="1" green="1" blue="0.35734477799999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" customClass="CLPScrubberView">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
+                                    <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber" customClass="CLPScrubberView">
                                     <rect key="frame" x="-20" y="-21" width="50" height="50"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
@@ -99,14 +108,17 @@
                             </subviews>
                             <gestureRecognizers/>
                             <constraints>
-                                <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="82D-Bh-tQP" secondAttribute="trailing" constant="-20" id="1eQ-Wc-2gx"/>
-                                <constraint firstAttribute="trailing" secondItem="6qg-xT-VwA" secondAttribute="trailing" id="3jE-Z5-Dqd"/>
                                 <constraint firstItem="82D-Bh-tQP" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="DEu-X1-8bi"/>
+                                <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="6qg-xT-VwA" secondAttribute="leading" constant="-20" id="Jfk-YR-geh"/>
                                 <constraint firstAttribute="height" constant="10" id="JhM-HH-ieG"/>
                                 <constraint firstAttribute="centerY" secondItem="6qg-xT-VwA" secondAttribute="centerY" constant="1" id="RIL-M4-sHl"/>
                                 <constraint firstItem="6qg-xT-VwA" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="S0Q-ik-r7w"/>
+                                <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="6qg-xT-VwA" secondAttribute="trailing" constant="-20" id="Txo-gr-RDL"/>
                                 <constraint firstAttribute="centerY" secondItem="82D-Bh-tQP" secondAttribute="centerY" constant="1" id="ZyB-gE-sHm"/>
+                                <constraint firstAttribute="trailing" secondItem="7KX-hC-K7v" secondAttribute="trailing" id="cYV-IA-LDd"/>
+                                <constraint firstItem="7KX-hC-K7v" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="mto-Vc-7ch"/>
                                 <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
+                                <constraint firstAttribute="centerY" secondItem="7KX-hC-K7v" secondAttribute="centerY" constant="1" id="urs-Mr-Exy"/>
                             </constraints>
                         </view>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
@@ -194,7 +206,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="634.5" y="461"/>
+            <point key="canvasLocation" x="336.5" y="495"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
