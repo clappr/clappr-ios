@@ -57,7 +57,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
-                                    <color key="backgroundColor" red="1" green="1" blue="0.35734477799999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
