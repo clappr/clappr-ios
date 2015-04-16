@@ -36,7 +36,7 @@
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-h5-7Kk" userLabel="Controls Overlay">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-h5-7Kk" userLabel="Controls Overlay" customClass="CLPGradientView">
                     <rect key="frame" x="0.0" y="152" width="467" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="jwY-XU-yDx"/>
