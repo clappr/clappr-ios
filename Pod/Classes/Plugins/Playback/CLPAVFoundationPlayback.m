@@ -30,7 +30,7 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 {
     @try {
         [_avPlayer removeObserver:self forKeyPath:@"currentItem.status"];
-
+        [_avPlayer removeObserver:self forKeyPath:@"currentItem.loadedTimeRanges"];
     }
     @catch (NSException *__unused exception) {}
 }
