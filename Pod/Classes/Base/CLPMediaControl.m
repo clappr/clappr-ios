@@ -216,7 +216,7 @@ static UINib *mediaControlNib;
                                         endPosition:(float)endPosition
                                            duration:(NSTimeInterval)duration
 {
-    bufferPercentage = endPosition / duration;
+    bufferPercentage = duration ? endPosition / duration : 0;
     NSLog(@"%.2f", bufferPercentage);
 }
 
