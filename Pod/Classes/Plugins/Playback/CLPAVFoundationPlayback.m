@@ -102,6 +102,11 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
     [_avPlayer pause];
 }
 
+- (void)seekTo:(NSTimeInterval)timeInterval
+{
+    [_avPlayer.currentItem seekToTime:CMTimeMakeWithSeconds(timeInterval, NSEC_PER_SEC)];
+}
+
 - (NSUInteger)duration
 {
     BOOL playerIsReady = _avPlayer.status == AVPlayerStatusReadyToPlay;

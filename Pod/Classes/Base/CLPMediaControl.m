@@ -29,7 +29,7 @@ static UINib *mediaControlNib;
 @interface CLPMediaControl () <UIGestureRecognizerDelegate>
 {
     float bufferPercentage;
-    BOOL wasPlayingBeforeSeeking;
+    BOOL isSeeking;
 
     __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
     __weak IBOutlet NSLayoutConstraint *bufferBarWidthConstraint;
@@ -202,9 +202,11 @@ static UINib *mediaControlNib;
     float percentage = duration == 0 ? 0 : position / duration;
     CGFloat delta = CGRectGetWidth(seekBarView.frame) * percentage;
 
-    scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
-    [_scrubberView setNeedsLayout];
-    [progressBarView setNeedsLayout];
+    if (!isSeeking) {
+        scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
+        [_scrubberView setNeedsLayout];
+        [progressBarView setNeedsLayout];
+    }
 
     bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage;
     [bufferBarView layoutIfNeeded];
@@ -323,20 +325,16 @@ static UINib *mediaControlNib;
 - (void)handlePan:(UIPanGestureRecognizer *)panGesture
 {
     if (panGesture.state == UIGestureRecognizerStateBegan) {
-        wasPlayingBeforeSeeking = [_container isPlaying];
-        if (wasPlayingBeforeSeeking) {
-            [self pause];
-        }
+        isSeeking = YES;
     } else if (panGesture.state == UIGestureRecognizerStateChanged) {
         CGPoint touchPoint = [panGesture locationInView:seekBarView];
         scrubberLeftConstraint.constant = scrubberInitialPosition + touchPoint.x;
         [_scrubberView setNeedsLayout];
     } else if (panGesture.state == UIGestureRecognizerStateEnded) {
         CGPoint touchPoint = [panGesture locationInView:seekBarView];
-        [_container ]touchPoint.x / seekBarView.frame.size.width;
-        if (wasPlayingBeforeSeeking) {
-            [self play];
-        }
+        float percentage = touchPoint.x / seekBarView.frame.size.width;
+        [_container seekTo:_container.playback.duration * percentage];
+        isSeeking = NO;
     }
 }
 

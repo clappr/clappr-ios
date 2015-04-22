@@ -252,7 +252,9 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 
 - (void)seekTo:(NSTimeInterval)timeInterval
 {
-    
+    // trigger pause?
+    [_playback seekTo:timeInterval];
+    // trigger play?
 }
 
 - (void)destroy
