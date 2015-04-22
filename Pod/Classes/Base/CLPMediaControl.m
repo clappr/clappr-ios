@@ -26,9 +26,10 @@ static NSString *clapprFontName;
 static UINib *mediaControlNib;
 
 
-@interface CLPMediaControl ()
+@interface CLPMediaControl () <UIGestureRecognizerDelegate>
 {
     float bufferPercentage;
+    BOOL wasPlayingBeforeSeeking;
 
     __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
     __weak IBOutlet NSLayoutConstraint *bufferBarWidthConstraint;
@@ -321,9 +322,22 @@ static UINib *mediaControlNib;
 
 - (void)handlePan:(UIPanGestureRecognizer *)panGesture
 {
-    CGPoint touchPoint = [panGesture locationInView:self.view];
-    scrubberLeftConstraint.constant = scrubberInitialPosition + touchPoint.x;
-    [_scrubberView setNeedsLayout];
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
+        wasPlayingBeforeSeeking = [_container isPlaying];
+        if (wasPlayingBeforeSeeking) {
+            [self pause];
+        }
+    } else if (panGesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint touchPoint = [panGesture locationInView:seekBarView];
+        scrubberLeftConstraint.constant = scrubberInitialPosition + touchPoint.x;
+        [_scrubberView setNeedsLayout];
+    } else if (panGesture.state == UIGestureRecognizerStateEnded) {
+        CGPoint touchPoint = [panGesture locationInView:seekBarView];
+        [_container ]touchPoint.x / seekBarView.frame.size.width;
+        if (wasPlayingBeforeSeeking) {
+            [self play];
+        }
+    }
 }
 
 @end

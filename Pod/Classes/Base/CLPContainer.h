@@ -42,6 +42,7 @@ extern NSString *const CLPContainerEventMediaControlEnabled;
 - (void)play;
 - (void)pause;
 - (void)stop;
+- (void)seekTo:(NSTimeInterval)timeInterval;
 
 - (void)destroy;
 

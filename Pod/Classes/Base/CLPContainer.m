@@ -250,6 +250,11 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self trigger:CLPContainerEventStop];
 }
 
+- (void)seekTo:(NSTimeInterval)timeInterval
+{
+    
+}
+
 - (void)destroy
 {
     [self stopListening];
