@@ -27,11 +27,6 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tapGestureRecognizer id="BOy-iq-lIY" userLabel="Seek To"/>
-        <tapGestureRecognizer id="t1W-k2-tTA" userLabel="Toggle Media Control"/>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="c8u-Fn-wlL" userLabel="Seek Bar Drag"/>
-        <tapGestureRecognizer id="gQ0-6C-NEK" userLabel="Fullscreen"/>
-        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="QLO-67-VVi" userLabel="Long Press Scrubber"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control">
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -48,7 +43,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
                             <rect key="frame" x="0.0" y="0.0" width="467" height="10"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
                                     <rect key="frame" x="0.0" y="4" width="467" height="1"/>
                                     <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -56,26 +51,26 @@
                                         <constraint firstAttribute="height" constant="1" id="SQ0-82-2hK"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
                                     <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber" customClass="CLPScrubberView">
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber" customClass="CLPScrubberView">
                                     <rect key="frame" x="-20" y="-21" width="50" height="50"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
+                                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
                                             <rect key="frame" x="10" y="10" width="30" height="30"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle">
                                                     <rect key="frame" x="10" y="10" width="10" height="10"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -93,6 +88,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="0.35734477799999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="uDb-7w-G5b" secondAttribute="centerY" id="XLJ-AM-EQp"/>
@@ -127,7 +123,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
                             <rect key="frame" x="71" y="15" width="1" height="20"/>
                             <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
@@ -174,10 +170,11 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
-                    <rect key="frame" x="184" y="76" width="100" height="100"/>
+                    <rect key="frame" x="199" y="91" width="70" height="70"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.69194547549999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="gVx-m8-JNG"/>
-                        <constraint firstAttribute="height" constant="100" id="pQV-FA-C1B"/>
+                        <constraint firstAttribute="width" constant="70" id="gVx-m8-JNG"/>
+                        <constraint firstAttribute="height" constant="70" id="pQV-FA-C1B"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="player" family="Player" pointSize="60"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

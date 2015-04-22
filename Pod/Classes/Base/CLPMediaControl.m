@@ -81,6 +81,11 @@ static UINib *mediaControlNib;
         self.view.backgroundColor = [UIColor clearColor];
         [container.view clappr_addSubviewMatchingFrameOfView:self.view];
 
+        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        panGesture.delaysTouchesBegan = NO;
+        panGesture.delaysTouchesEnded = NO;
+        [self.scrubberView addGestureRecognizer:panGesture];
+
         [self addAccessibilityLabels];
         [self bindEventListeners];
         [self setupControls];
@@ -280,8 +285,6 @@ static UINib *mediaControlNib;
 
     if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
         CFStringRef errorDescription = CFErrorCopyDescription(error);
-
-        NSLog(@"Failed to load font: %@", errorDescription);
         CFRelease(errorDescription);
     }
 
@@ -314,6 +317,13 @@ static UINib *mediaControlNib;
     }
 
     [hideControlsTimer invalidate];
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)panGesture
+{
+    CGPoint touchPoint = [panGesture locationInView:self.view];
+    scrubberLeftConstraint.constant = scrubberInitialPosition + touchPoint.x;
+    [_scrubberView setNeedsLayout];
 }
 
 @end

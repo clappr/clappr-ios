@@ -22,6 +22,7 @@
         loadingLabel.layer.cornerRadius = 3.0;
         loadingLabel.layer.masksToBounds = NO;
         [loadingLabel sizeToFit];
+        loadingLabel.hidden = YES;
     }
     return self;
 }
@@ -34,6 +35,8 @@
 - (void)wasInstalled
 {
     [super wasInstalled];
+
+    [self bindEventListeners];
 
     loadingLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.container.view addConstraint:[NSLayoutConstraint constraintWithItem:loadingLabel
@@ -51,6 +54,18 @@
                                                                     attribute:NSLayoutAttributeCenterY
                                                                    multiplier:1.0
                                                                      constant:0.0]];
+}
+
+- (void)bindEventListeners
+{
+    __weak typeof(loadingLabel) weakLabel = loadingLabel;
+    [self listenTo:self.container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
+//        weakLabel.hidden = NO;
+    }];
+
+    [self listenTo:self.container eventName:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
+//        weakLabel.hidden = YES;
+    }];
 }
 
 @end

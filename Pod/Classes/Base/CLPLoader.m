@@ -3,6 +3,7 @@
 #import "CLPUICorePlugin.h"
 #import "CLPUIContainerPlugin.h"
 #import "CLPAVFoundationPlayback.h"
+#import "CLPSpinnerThreeBouncePlugin.h"
 
 
 @interface CLPLoader ()
@@ -33,7 +34,7 @@
     self = [super init];
     if (self) {
         _playbackPlugins = @[[CLPAVFoundationPlayback class]];
-        _containerPlugins = @[];
+        _containerPlugins = @[[CLPSpinnerThreeBouncePlugin class]];
         _corePlugins = @[];
     }
     return self;

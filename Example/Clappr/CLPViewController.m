@@ -2,7 +2,8 @@
 
 #import <Clappr/Clappr.h>
 
-static NSString *const kSourceURLString = @"http://clappr.io/highline.mp4";
+//static NSString *const kSourceURLString = @"http://clappr.io/highline.mp4";
+static NSString *const kSourceURLString = @"http://nba.cdn.turner.com/nba/big/channels/top_plays/2012/02/03/20120203_top10.nba_nba_ipad.mp4";
 
 @interface CLPViewController () <UITextFieldDelegate>
 {
