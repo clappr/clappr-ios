@@ -33,13 +33,13 @@ describe(@"Container", ^{
 
         it(@"can be destroyed properly", ^{
             UIView *wrapperView = [UIView new];
-            [wrapperView addSubview:container.view];
+            [wrapperView addSubview:container];
 
             [container once:CLPContainerEventDestroyed callback:nil];
 
             [[playback should] receive:@selector(destroy)];
             [container destroy];
-            [[container.view.superview should] beNil];
+            [[container.superview should] beNil];
         });
 
         it(@"should stop to listen events after destroy has been called", ^{
@@ -395,7 +395,7 @@ describe(@"Container", ^{
             it(@"should have its view as a container's subview", ^{
                 FakeUIContainerPlugin *uiPlugin = [FakeUIContainerPlugin new];
                 [container addPlugin:uiPlugin];
-                [[uiPlugin.view.superview should] equal:container.view];
+                [[uiPlugin.superview should] equal:container];
             });
         });
     });

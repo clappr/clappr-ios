@@ -40,7 +40,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:eventHandler
                                              selector:@selector(handleEvent:)
                                                  name:eventName
-                                               object:contextObject];
+                                               object:nil];
 
     id key = [self keyForEventName:eventName callback:callback contextObject:contextObject];
     _eventHandlers[key] = eventHandler;
@@ -89,22 +89,22 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:eventHandler
                                                     name:eventName
-                                                  object:contextObject];
+                                                  object:nil];
 
     [_eventHandlers removeObjectForKey:key];
 }
 
 - (void)trigger:(NSString *)eventName
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self userInfo:@{}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:nil userInfo:@{}];
 }
 
 - (void)trigger:(NSString *)eventName userInfo:(NSDictionary *)userInfo
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:nil userInfo:userInfo];
 }
 
-- (void)listenTo:(CLPBaseObject *)contextObject
+- (void)listenTo:(id<CLPEventProtocol>)contextObject
        eventName:(NSString *)eventName
         callback:(EventCallback)callback
 {
@@ -121,7 +121,7 @@
     [_eventHandlers removeAllObjects];
 }
 
-- (void)stopListening:(CLPBaseObject *)contextObject
+- (void)stopListening:(id<CLPEventProtocol>)contextObject
             eventName:(NSString *)eventName
              callback:(EventCallback)callback
 {

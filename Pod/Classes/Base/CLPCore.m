@@ -64,7 +64,7 @@
 
     NSArray *createdContainers = [containerFactory createContainers];
     for (CLPContainer *container in createdContainers) {
-        [self.view clappr_addSubviewMatchingFrameOfView:container.view];
+        [self clappr_addSubviewMatchingFrameOfView:container];
         [containers addObject:container];
     }
 }
@@ -81,7 +81,7 @@
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(toggleMediaControlVisibility)];
-    [_mediaControl.view addGestureRecognizer:tapGesture];
+    [_mediaControl addGestureRecognizer:tapGesture];
 }
 
 - (void)toggleMediaControlVisibility

@@ -67,11 +67,11 @@ describe(@"Playback", ^{
 
     it(@"should be removed from superview when call destroy", ^{
         UIView *containerView = [UIView new];
-        [containerView addSubview:playback.view];
+        [containerView addSubview:playback];
 
         [playback destroy];
 
-        [[playback.view.superview should] beNil];
+        [[playback.superview should] beNil];
     });
 
     it(@"should stop to listen events after destroy has been called", ^{

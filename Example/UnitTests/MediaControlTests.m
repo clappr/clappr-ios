@@ -20,7 +20,7 @@ describe(@"Media Control", ^{
 
         it(@"should contain a play/pause button embed in its view", ^{
             UIButton *playPauseButton = mediaControl.playPauseButton;
-            [[playPauseButton.superview should] equal:mediaControl.view];
+            [[playPauseButton.superview should] equal:mediaControl];
         });
 
         it(@"should be triggered after touch the button when it is not playing", ^{

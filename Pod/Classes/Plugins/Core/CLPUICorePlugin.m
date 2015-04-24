@@ -9,7 +9,7 @@
     self = [super init];
     if (self) {
         _core = core;
-        [_core.view addSubview:self.view];
+        [_core addSubview:self];
     }
     return self;
 }

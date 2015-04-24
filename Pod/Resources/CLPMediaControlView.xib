@@ -23,7 +23,6 @@
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="LYo-cX-V9X"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="Oc8-2h-vqT"/>
                 <outlet property="seekBarView" destination="7KX-hC-K7v" id="O5r-zh-Be0"/>
-                <outlet property="view" destination="xP5-UL-qkk" id="Tgj-xc-t6H"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -32,7 +31,7 @@
         <panGestureRecognizer minimumNumberOfTouches="1" id="c8u-Fn-wlL" userLabel="Seek Bar Drag"/>
         <tapGestureRecognizer id="gQ0-6C-NEK" userLabel="Fullscreen"/>
         <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="QLO-67-VVi" userLabel="Long Press Scrubber"/>
-        <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control">
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control" customClass="CLPMediaControl">
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>

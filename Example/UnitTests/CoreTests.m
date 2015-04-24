@@ -77,7 +77,7 @@ describe(@"Core", ^{
         });
 
         it(@"should be visible by default", ^{
-            [[theValue(core.mediaControl.view.hidden) should] beFalse];
+            [[theValue(core.mediaControl.hidden) should] beFalse];
         });
 
     });
@@ -114,7 +114,7 @@ describe(@"Core", ^{
             context(@"ui plugin", ^{
                 it(@"should be a subview of core's view", ^{
                     [core addPlugin:fakeCorePlugin];
-                    [[fakeCorePlugin.view.superview should] equal:core.view];
+                    [[fakeCorePlugin.superview should] equal:core];
                 });
             });
         });

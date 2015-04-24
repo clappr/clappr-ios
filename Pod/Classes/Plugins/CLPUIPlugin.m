@@ -16,12 +16,12 @@
 {
     if (!enabled) {
         [self stopListening];
-        self.view.hidden = YES;
+        self.hidden = YES;
         _enabled = NO;
     } else {
         if (![self isEnabled]) {
             [self bindEvents];
-            self.view.hidden = NO;
+            self.hidden = NO;
             _enabled = YES;
         }
     }

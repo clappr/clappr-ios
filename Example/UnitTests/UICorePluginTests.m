@@ -21,7 +21,7 @@ describe(@"UICorePlugin", ^{
 
         it(@"should have its view as a child of core's view", ^{
             CLPUICorePlugin *plugin = [[CLPUICorePlugin alloc] initWithCore:core];
-            [[plugin.view.superview should] equal:core.view];
+            [[plugin.superview should] equal:core];
         });
     });
 

@@ -35,9 +35,9 @@
 
 - (void)attachTo:(UIViewController *)controller atView:(UIView *)container
 {
-    _core.view.backgroundColor = [UIColor blackColor];
+    _core.backgroundColor = [UIColor blackColor];
 
-    [container clappr_addSubviewMatchingFrameOfView:_core.view];
+    [container clappr_addSubviewMatchingFrameOfView:_core];
 }
 
 - (void)setSourceURL:(NSURL *)sourceURL
