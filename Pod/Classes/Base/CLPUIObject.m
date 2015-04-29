@@ -38,6 +38,11 @@
     return self;
 }
 
+- (CLPBaseObject *)getEventContextObject
+{
+    return _baseObject;
+}
+
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
     if ([_baseObject respondsToSelector:[anInvocation selector]]) {

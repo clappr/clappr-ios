@@ -24,6 +24,8 @@
             eventName:(NSString *)eventName
              callback:(EventCallback)callback;
 
+- (CLPBaseObject *)getEventContextObject;
+
 @end
 
 
