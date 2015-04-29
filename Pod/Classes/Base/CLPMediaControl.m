@@ -74,13 +74,12 @@ static UINib *mediaControlNib;
 
 - (instancetype)initWithContainer:(CLPContainer *)container
 {
-    self = [super init];
+    self = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
     if (self) {
         _container = container;
 
-        self.view = [[mediaControlNib instantiateWithOwner:self options:nil] lastObject];
-        self.view.backgroundColor = [UIColor clearColor];
-        [container.view clappr_addSubviewMatchingFrameOfView:self.view];
+        self.backgroundColor = [UIColor clearColor];
+        [container clappr_addSubviewMatchingFrameOfView:self];
 
         UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         panGesture.delaysTouchesBegan = NO;
@@ -96,7 +95,7 @@ static UINib *mediaControlNib;
 
 - (void)addAccessibilityLabels
 {
-    self.view.accessibilityLabel = @"media control";
+    self.accessibilityLabel = @"media control";
     _playPauseButton.accessibilityLabel = @"play/pause";
     _currentTimeLabel.accessibilityLabel = @"current time";
     _durationLabel.accessibilityLabel = @"duration";
@@ -238,11 +237,11 @@ static UINib *mediaControlNib;
 
     NSTimeInterval duration = animated ? kMediaControlAnimationDuration : 0.0;
     [UIView animateWithDuration:duration animations:^{
-        for (UIView *subview in self.view.subviews) {
+        for (UIView *subview in self.subviews) {
             subview.alpha = 0.0;
         }
     } completion:^(BOOL finished) {
-        for (UIView *subview in self.view.subviews) {
+        for (UIView *subview in self.subviews) {
             subview.hidden = YES;
         }
 
@@ -258,7 +257,7 @@ static UINib *mediaControlNib;
 
 - (void)showAnimated:(BOOL)animated
 {
-    for (UIView *subview in self.view.subviews) {
+    for (UIView *subview in self.subviews) {
         subview.hidden = NO;
     }
 
@@ -266,7 +265,7 @@ static UINib *mediaControlNib;
 
     NSTimeInterval duration = animated ? kMediaControlAnimationDuration : 0.0;
     [UIView animateWithDuration:duration animations:^{
-        for (UIView *subview in self.view.subviews) {
+        for (UIView *subview in self.subviews) {
             subview.alpha = 1.0;
         }
     } completion:^(BOOL finished) {

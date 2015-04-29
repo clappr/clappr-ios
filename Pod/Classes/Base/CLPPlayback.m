@@ -73,7 +73,7 @@ NSString *const CLPPlaybackEventError = @"clappr:playback:error";
 
 - (void)destroy
 {
-    [self.view removeFromSuperview];
+    [self removeFromSuperview];
     [self stopListening];
 }
 

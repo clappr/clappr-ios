@@ -54,7 +54,7 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 
     _playerView = [CLPAVPlayerView new];
     _playerView.player = _avPlayer;
-    [self.view clappr_addSubviewMatchingFrameOfView:_playerView];
+    [self clappr_addSubviewMatchingFrameOfView:_playerView];
 
     [self addKeyValueObservers];
 

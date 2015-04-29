@@ -1,7 +1,9 @@
 #import "CLPEventHandler.h"
 
+@class CLPBaseObject;
 
-@interface CLPBaseObject : NSObject
+
+@protocol CLPEventProtocol <NSObject>
 
 - (void)on:(NSString *)eventName callback:(EventCallback)callback;
 
@@ -12,14 +14,21 @@
 - (void)trigger:(NSString *)eventName;
 - (void)trigger:(NSString *)eventName userInfo:(NSDictionary *)userInfo;
 
-- (void)listenTo:(CLPBaseObject *)contextObject
+- (void)listenTo:(id<CLPEventProtocol>)contextObject
        eventName:(NSString *)eventName
         callback:(EventCallback)callback;
 
 - (void)stopListening;
 
-- (void)stopListening:(CLPBaseObject *)contextObject
+- (void)stopListening:(id<CLPEventProtocol>)contextObject
             eventName:(NSString *)eventName
              callback:(EventCallback)callback;
+
+- (CLPBaseObject *)getEventContextObject;
+
+@end
+
+
+@interface CLPBaseObject : NSObject <CLPEventProtocol>
 
 @end

@@ -51,7 +51,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     self = [super init];
     if (self) {
         self.playback = playback;
-        [self.view clappr_addSubviewMatchingFrameOfView:_playback.view];
+        [self clappr_addSubviewMatchingFrameOfView:_playback];
         p_plugins = [@[] mutableCopy];
     }
 
@@ -262,7 +262,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
     [self stopListening];
     [_playback destroy];
 
-    [self.view removeFromSuperview];
+    [self removeFromSuperview];
     
     [self trigger:CLPContainerEventDestroyed];
 }
@@ -273,7 +273,7 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
         CLPUIContainerPlugin *containerPlugin = (CLPUIContainerPlugin *)plugin;
         containerPlugin.container = self;
         [p_plugins addObject:containerPlugin];
-        [self.view addSubview:containerPlugin.view];
+        [self addSubview:containerPlugin];
         [containerPlugin wasInstalled];
     }
 }

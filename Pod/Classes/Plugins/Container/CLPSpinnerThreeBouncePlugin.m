@@ -39,21 +39,21 @@
     [self bindEventListeners];
 
     loadingLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.container.view addConstraint:[NSLayoutConstraint constraintWithItem:loadingLabel
-                                                                    attribute:NSLayoutAttributeCenterX
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.container.view
-                                                                    attribute:NSLayoutAttributeCenterX
-                                                                   multiplier:1.0
-                                                                     constant:0.0]];
+    [self.container addConstraint:[NSLayoutConstraint constraintWithItem:loadingLabel
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.container
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0
+                                                                constant:0.0]];
 
-    [self.container.view addConstraint:[NSLayoutConstraint constraintWithItem:loadingLabel
-                                                                    attribute:NSLayoutAttributeCenterY
-                                                                    relatedBy:NSLayoutRelationEqual
-                                                                       toItem:self.container.view
-                                                                    attribute:NSLayoutAttributeCenterY
-                                                                   multiplier:1.0
-                                                                     constant:0.0]];
+    [self.container addConstraint:[NSLayoutConstraint constraintWithItem:loadingLabel
+                                                               attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.container
+                                                               attribute:NSLayoutAttributeCenterY
+                                                              multiplier:1.0
+                                                                constant:0.0]];
 }
 
 - (void)bindEventListeners

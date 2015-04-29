@@ -104,11 +104,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:eventName object:self userInfo:userInfo];
 }
 
-- (void)listenTo:(CLPBaseObject *)contextObject
+- (void)listenTo:(id<CLPEventProtocol>)contextObject
        eventName:(NSString *)eventName
         callback:(EventCallback)callback
 {
-    [self on:eventName contextObject:contextObject callback:callback];
+    [self on:eventName contextObject:contextObject.getEventContextObject callback:callback];
 }
 
 - (void)stopListening
@@ -121,11 +121,16 @@
     [_eventHandlers removeAllObjects];
 }
 
-- (void)stopListening:(CLPBaseObject *)contextObject
+- (void)stopListening:(id<CLPEventProtocol>)contextObject
             eventName:(NSString *)eventName
              callback:(EventCallback)callback
 {
-    [self off:eventName contextObject:contextObject callback:callback];
+    [self off:eventName contextObject:contextObject.getEventContextObject callback:callback];
+}
+
+- (CLPBaseObject *)getEventContextObject
+{
+    return self;
 }
 
 @end

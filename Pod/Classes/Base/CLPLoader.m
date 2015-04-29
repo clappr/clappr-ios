@@ -34,7 +34,9 @@
     self = [super init];
     if (self) {
         _playbackPlugins = @[[CLPAVFoundationPlayback class]];
-        _containerPlugins = @[[CLPSpinnerThreeBouncePlugin class]];
+        //TODO enable container plugins
+        //_containerPlugins = @[[CLPSpinnerThreeBouncePlugin class]];
+        _containerPlugins = @[];
         _corePlugins = @[];
     }
     return self;

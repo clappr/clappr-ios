@@ -28,7 +28,7 @@ describe(@"UIPlugin", ^{
 
         it(@"should not be hidden", ^{
             plugin.enabled = YES;
-            [[theValue(plugin.view.hidden) should] beFalse];
+            [[theValue(plugin.hidden) should] beFalse];
         });
 
         it(@"should not bind events again if already enabled", ^{
@@ -63,7 +63,7 @@ describe(@"UIPlugin", ^{
 
         it(@"should be hidden", ^{
             plugin.enabled = NO;
-            [[theValue(plugin.view.hidden) should] beTrue];
+            [[theValue(plugin.hidden) should] beTrue];
         });
         
     });
