@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14A379a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Player-Regular.ttf">
@@ -10,21 +10,7 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl">
-            <connections>
-                <outlet property="bufferBarView" destination="82D-Bh-tQP" id="5CE-Qu-Rfg"/>
-                <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="OhT-dJ-qEo"/>
-                <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="5zy-o5-dtI"/>
-                <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="EHm-oc-S4h"/>
-                <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="PuI-u9-r4C"/>
-                <outlet property="durationLabel" destination="RMN-tb-gu1" id="qO4-hD-Ybz"/>
-                <outlet property="playPauseButton" destination="0V7-z5-rdA" id="SzV-CV-Wii"/>
-                <outlet property="progressBarView" destination="6qg-xT-VwA" id="LfS-KJ-8Tg"/>
-                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="LYo-cX-V9X"/>
-                <outlet property="scrubberView" destination="3Wv-Cd-358" id="Oc8-2h-vqT"/>
-                <outlet property="seekBarView" destination="7KX-hC-K7v" id="O5r-zh-Be0"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tapGestureRecognizer id="BOy-iq-lIY" userLabel="Seek To"/>
         <tapGestureRecognizer id="t1W-k2-tTA" userLabel="Toggle Media Control"/>
@@ -55,14 +41,14 @@
                                         <constraint firstAttribute="height" constant="1" id="SQ0-82-2hK"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
+                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
                                     <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
@@ -187,7 +173,7 @@
                         <color key="titleColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="togglePlay" destination="-1" eventType="touchUpInside" id="4WY-iz-5PW"/>
+                        <action selector="togglePlay" destination="xP5-UL-qkk" eventType="touchUpInside" id="Srs-Kc-URH"/>
                     </connections>
                 </button>
             </subviews>
@@ -205,6 +191,19 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bufferBarView" destination="82D-Bh-tQP" id="Ga6-s3-4hO"/>
+                <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="Jzk-Qr-lyJ"/>
+                <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="Jka-U3-hfV"/>
+                <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="rtN-pb-QAr"/>
+                <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="FxU-Ra-VoM"/>
+                <outlet property="durationLabel" destination="RMN-tb-gu1" id="aUN-tR-muV"/>
+                <outlet property="playPauseButton" destination="0V7-z5-rdA" id="2ps-9T-1Md"/>
+                <outlet property="progressBarView" destination="6qg-xT-VwA" id="2yl-za-Hoc"/>
+                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="gsw-13-Vxd"/>
+                <outlet property="scrubberView" destination="3Wv-Cd-358" id="FXg-3N-EXm"/>
+                <outlet property="seekBarView" destination="7KX-hC-K7v" id="TLy-cY-ixp"/>
+            </connections>
             <point key="canvasLocation" x="336.5" y="495"/>
         </view>
     </objects>
