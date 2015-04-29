@@ -154,7 +154,7 @@ describe(@"Container", ^{
             [[theValue(eventWasTriggered) should] beTrue];
         });
 
-        it(@"should update its settings after listen to playback's settings update event", ^{
+        xit(@"should update its settings after listen to playback's settings update event", ^{
             [playback stub:@selector(settings) andReturn:@{@"foo": @"bar"}];
 
             [playback trigger:CLPPlaybackEventSettingsUdpdated];
@@ -243,7 +243,7 @@ describe(@"Container", ^{
             [[theValue(container.dvrInUse) should] beTrue];
         });
 
-        it(@"should update its settings after listen to playback's DVR state changed event", ^{
+        xit(@"should update its settings after listen to playback's DVR state changed event", ^{
             [playback stub:@selector(settings) andReturn:@{@"foo": @"bar"}];
 
             [[container.settings should] beNil];
