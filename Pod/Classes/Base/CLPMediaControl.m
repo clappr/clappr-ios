@@ -47,6 +47,7 @@ static UINib *mediaControlNib;
 @property (nonatomic, weak, readwrite) IBOutlet UIView *controlsWrapperView;
 
 @property (nonatomic, weak, readwrite) IBOutlet CLPScrubberView *scrubberView;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *scrubberLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *durationLabel;
 @property (nonatomic, weak, readwrite) IBOutlet UILabel *currentTimeLabel;
 
@@ -100,6 +101,7 @@ static UINib *mediaControlNib;
     _currentTimeLabel.accessibilityLabel = @"current time";
     _durationLabel.accessibilityLabel = @"duration";
     _scrubberView.accessibilityLabel = @"scrubber";
+    _scrubberLabel.accessibilityLabel = @"scrubber time";
     progressBarView.accessibilityLabel = @"seek bar";
 }
 
@@ -325,15 +327,20 @@ static UINib *mediaControlNib;
 {
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         isSeeking = YES;
+        _scrubberLabel.hidden = FALSE;
     } else if (panGesture.state == UIGestureRecognizerStateChanged) {
         CGPoint touchPoint = [panGesture locationInView:seekBarView];
         scrubberLeftConstraint.constant = scrubberInitialPosition + touchPoint.x;
+        float percentage = touchPoint.x / seekBarView.frame.size.width;
+        NSUInteger duration = _container.playback.duration;
+        _scrubberLabel.text = [self formattedTime:duration * percentage];
         [_scrubberView setNeedsLayout];
     } else if (panGesture.state == UIGestureRecognizerStateEnded) {
         CGPoint touchPoint = [panGesture locationInView:seekBarView];
         float percentage = touchPoint.x / seekBarView.frame.size.width;
         [_container seekTo:_container.playback.duration * percentage];
         isSeeking = NO;
+        _scrubberLabel.hidden = TRUE;
     }
 }
 

@@ -33,6 +33,13 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
                             <rect key="frame" x="0.0" y="0.0" width="467" height="10"/>
                             <subviews>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PX7-VD-Gf1" userLabel="Scrubber Label">
+                                    <rect key="frame" x="226" y="-2" width="15" height="15"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
                                     <rect key="frame" x="0.0" y="4" width="467" height="1"/>
                                     <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,14 +48,14 @@
                                         <constraint firstAttribute="height" constant="1" id="SQ0-82-2hK"/>
                                     </constraints>
                                 </view>
-                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
                                         <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
                                     </constraints>
                                 </view>
-                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
                                     <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
@@ -78,7 +85,6 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="1" green="1" blue="0.35734477799999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="uDb-7w-G5b" secondAttribute="centerY" id="XLJ-AM-EQp"/>
@@ -105,6 +111,8 @@
                                 <constraint firstItem="7KX-hC-K7v" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="mto-Vc-7ch"/>
                                 <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
                                 <constraint firstAttribute="centerY" secondItem="7KX-hC-K7v" secondAttribute="centerY" constant="1" id="urs-Mr-Exy"/>
+                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="centerX" secondItem="3Wv-Cd-358" secondAttribute="centerX" id="ydp-DB-oOq"/>
+                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="bottom" secondItem="uDb-7w-G5b" secondAttribute="top" id="yjq-UB-7OQ"/>
                             </constraints>
                         </view>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
@@ -161,7 +169,6 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
                     <rect key="frame" x="199" y="91" width="70" height="70"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.69194547549999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="gVx-m8-JNG"/>
                         <constraint firstAttribute="height" constant="70" id="pQV-FA-C1B"/>
@@ -202,6 +209,7 @@
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="aUN-tR-muV"/>
                 <outlet property="playPauseButton" destination="0V7-z5-rdA" id="2ps-9T-1Md"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="2yl-za-Hoc"/>
+                <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="RPr-0P-sts"/>
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="gsw-13-Vxd"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="FXg-3N-EXm"/>
                 <outlet property="seekBarView" destination="7KX-hC-K7v" id="TLy-cY-ixp"/>

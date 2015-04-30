@@ -17,6 +17,7 @@ extern NSString *const CLPMediaControlEventNotPlaying;
 @property (nonatomic, weak, readonly) UIView *controlsWrapperView;
 
 @property (nonatomic, weak, readonly) CLPScrubberView *scrubberView;
+@property (nonatomic, weak, readonly) UILabel *scrubberLabel;
 @property (nonatomic, weak, readonly) UILabel *durationLabel;
 @property (nonatomic, weak, readonly) UILabel *currentTimeLabel;
 @property (nonatomic, weak, readonly) UIButton *fullscreenButton;
