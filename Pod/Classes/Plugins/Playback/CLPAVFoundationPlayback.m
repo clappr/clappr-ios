@@ -67,17 +67,22 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
     [_avPlayer addObserver:self forKeyPath:@"currentItem.loadedTimeRanges" options:NSKeyValueObservingOptionNew context:kTimeRangesKVO];
 }
 
+- (void)triggerTimeUpdated:(CMTime)time
+{
+    NSDictionary *userInfo = @{
+                               @"position": @(CMTimeGetSeconds(time)),
+                               @"duration": @(CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration))
+                               };
+
+    [self trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+}
+
 - (void)addTimeElapsedCallbackHandler
 {
     __weak typeof(self) weakSelf = self;
     [_avPlayer addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.5, 600) queue:nil usingBlock:^(CMTime time) {
         if (weakSelf.isPlaying) {
-            NSDictionary *userInfo = @{
-                @"position": @(CMTimeGetSeconds(time)),
-                @"duration": @(CMTimeGetSeconds(weakSelf.avPlayer.currentItem.asset.duration))
-            };
-
-            [weakSelf trigger:CLPPlaybackEventTimeUpdated userInfo:userInfo];
+            [weakSelf triggerTimeUpdated:time];
         }
     }];
 }
@@ -104,7 +109,10 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 
 - (void)seekTo:(NSTimeInterval)timeInterval
 {
-    [_avPlayer.currentItem seekToTime:CMTimeMakeWithSeconds(timeInterval, NSEC_PER_SEC)];
+    CMTime time = CMTimeMakeWithSeconds(timeInterval, NSEC_PER_SEC);
+
+    [_avPlayer.currentItem seekToTime:time];
+    [self triggerTimeUpdated:time];
 }
 
 - (NSUInteger)duration
