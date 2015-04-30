@@ -29,6 +29,7 @@ static UINib *mediaControlNib;
 @interface CLPMediaControl () <UIGestureRecognizerDelegate>
 {
     float bufferPercentage;
+    float seekPercentage;
     BOOL isSeeking;
 
     __weak IBOutlet NSLayoutConstraint *scrubberLeftConstraint;
@@ -86,6 +87,9 @@ static UINib *mediaControlNib;
         panGesture.delaysTouchesBegan = NO;
         panGesture.delaysTouchesEnded = NO;
         [self.scrubberView addGestureRecognizer:panGesture];
+
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
 
         [self addAccessibilityLabels];
         [self bindEventListeners];
@@ -157,6 +161,24 @@ static UINib *mediaControlNib;
     [_fullscreenButton setTitle:kMediaControlTitleFullscreen forState:UIControlStateSelected];
 }
 
+- (void)deviceOrientationDidChange
+{
+    // Views bounds are not updated at the time of this event
+    [self performSelector:@selector(orientationChanged) withObject:nil afterDelay:0];
+}
+
+- (void)orientationChanged
+{
+    CGFloat delta = CGRectGetWidth(seekBarView.frame) * seekPercentage;
+
+    scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
+    [_scrubberView setNeedsLayout];
+    [progressBarView setNeedsLayout];
+
+    bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage;
+    [bufferBarView layoutIfNeeded];
+}
+
 #pragma mark - Control Actions
 
 - (void)play
@@ -200,8 +222,8 @@ static UINib *mediaControlNib;
 {
     _currentTimeLabel.text = [self formattedTime:position];
 
-    float percentage = duration == 0 ? 0 : position / duration;
-    CGFloat delta = CGRectGetWidth(seekBarView.frame) * percentage;
+    seekPercentage = duration == 0 ? 0 : position / duration;
+    CGFloat delta = CGRectGetWidth(seekBarView.frame) * seekPercentage;
 
     if (!isSeeking) {
         scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
