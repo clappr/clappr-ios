@@ -169,12 +169,21 @@ static UINib *mediaControlNib;
 
 - (void)orientationChanged
 {
+    [self updateScrubberPosition];
+    [self updateBars];
+}
+
+- (void)updateScrubberPosition
+{
     CGFloat delta = CGRectGetWidth(seekBarView.frame) * seekPercentage;
 
     scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
     [_scrubberView setNeedsLayout];
     [progressBarView setNeedsLayout];
+}
 
+- (void)updateBars
+{
     bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage;
     [bufferBarView layoutIfNeeded];
 }
@@ -223,16 +232,12 @@ static UINib *mediaControlNib;
     _currentTimeLabel.text = [self formattedTime:position];
 
     seekPercentage = duration == 0 ? 0 : position / duration;
-    CGFloat delta = CGRectGetWidth(seekBarView.frame) * seekPercentage;
 
     if (!isSeeking) {
-        scrubberLeftConstraint.constant = scrubberInitialPosition + delta;
-        [_scrubberView setNeedsLayout];
-        [progressBarView setNeedsLayout];
+        [self updateScrubberPosition];
     }
 
-    bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage;
-    [bufferBarView layoutIfNeeded];
+    [self updateBars];
 }
 
 - (void)containerDidUpdateProgressWithStartPosition:(float)startPosition
