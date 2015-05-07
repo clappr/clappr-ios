@@ -23,13 +23,10 @@
         loadingLabel.layer.masksToBounds = NO;
         [loadingLabel sizeToFit];
         loadingLabel.hidden = YES;
+
+        [self addSubview:loadingLabel];
     }
     return self;
-}
-
-- (UIView *)view
-{
-    return loadingLabel;
 }
 
 - (void)wasInstalled
@@ -60,11 +57,11 @@
 {
     __weak typeof(loadingLabel) weakLabel = loadingLabel;
     [self listenTo:self.container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
-//        weakLabel.hidden = NO;
+        weakLabel.hidden = NO;
     }];
 
     [self listenTo:self.container eventName:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
-//        weakLabel.hidden = YES;
+        weakLabel.hidden = YES;
     }];
 }
 
