@@ -122,8 +122,8 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
         CLPPlaybackEventMediaControlDisabled: ^{ [weakSelf disableMediaControl]; },
         CLPPlaybackEventMediaControlEnabled: ^{ [weakSelf enableMediaControl]; },
         CLPPlaybackEventEnded: ^{ [weakSelf ended]; },
-        CLPPlaybackEventPlay: ^{ [weakSelf play]; },
-        CLPPlaybackEventPause: ^{ [weakSelf pause]; }
+        CLPPlaybackEventPlay: ^{ [weakSelf playing]; },
+        CLPPlaybackEventPause: ^{ [weakSelf paused]; }
     };
 
     [eventsToForward enumerateKeysAndObjectsUsingBlock:^(NSString *eventName, void(^executionBlock)(), BOOL *stop) {
@@ -235,12 +235,20 @@ NSString *const CLPContainerEventMediaControlEnabled = @"clappr:container:media_
 - (void)play
 {
     [_playback play];
+}
+
+- (void)playing
+{
     [self trigger:CLPContainerEventPlay];
 }
 
 - (void)pause
 {
     [_playback pause];
+}
+
+- (void)paused
+{
     [self trigger:CLPContainerEventPause];
 }
 
