@@ -4,7 +4,16 @@
 #import "UIView+NSLayoutConstraints.h"
 
 void *kStatusDidChangeKVO = &kStatusDidChangeKVO;
+void *kBufferingDidChangeKVO = &kBufferingDidChangeKVO;
 void *kTimeRangesKVO = &kTimeRangesKVO;
+
+typedef NS_ENUM(NSUInteger, CLPPlaybackState) {
+    CLPPlaybackStateIdle,
+    CLPPlaybackStatePaused,
+    CLPPlaybackStatePlaying,
+    CLPPlaybackStatePlayingBuffering,
+    CLPPlaybackStatePausedBufering
+};
 
 @interface CLPAVFoundationPlayback ()
 {
@@ -12,6 +21,7 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 }
 
 @property (nonatomic, strong) AVPlayer *avPlayer;
+@property (nonatomic) CLPPlaybackState currentState;
 
 @end
 
@@ -36,6 +46,9 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
     @try {
         [_avPlayer removeObserver:self forKeyPath:@"currentItem.status"];
         [_avPlayer removeObserver:self forKeyPath:@"currentItem.loadedTimeRanges"];
+        [_avPlayer removeObserver:self forKeyPath:@"currentItem.playbackBufferEmpty"];
+        [_avPlayer removeObserver:self forKeyPath:@"currentItem.playbackLikelyToKeepUp"];
+        [_avPlayer removeObserver:self forKeyPath:@"currentItem.playbackBufferFull"];
     }
     @catch (NSException *__unused exception) {}
 }
@@ -55,6 +68,8 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 
 - (void)setupPlayer
 {
+    [self updateCurrentState:CLPPlaybackStateIdle];
+
     _avPlayer = [AVPlayer playerWithURL:self.url];
 
     _playerView = [CLPAVPlayerView new];
@@ -70,6 +85,9 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 {
     [_avPlayer addObserver:self forKeyPath:@"currentItem.status" options:NSKeyValueObservingOptionNew context:kStatusDidChangeKVO];
     [_avPlayer addObserver:self forKeyPath:@"currentItem.loadedTimeRanges" options:NSKeyValueObservingOptionNew context:kTimeRangesKVO];
+    [_avPlayer addObserver:self forKeyPath:@"currentItem.playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:kBufferingDidChangeKVO];
+    [_avPlayer addObserver:self forKeyPath:@"currentItem.playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:kBufferingDidChangeKVO];
+    [_avPlayer addObserver:self forKeyPath:@"currentItem.playbackBufferFull" options:NSKeyValueObservingOptionNew context:kBufferingDidChangeKVO];
 }
 
 - (void)triggerTimeUpdated:(CMTime)time
@@ -100,16 +118,34 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
                                                object:_avPlayer.currentItem];
 }
 
+- (void)updateCurrentState:(CLPPlaybackState)newState
+{
+    if (_currentState == CLPPlaybackStatePlayingBuffering && newState == CLPPlaybackStatePlaying) {
+        [self trigger:CLPPlaybackEventBufferFull];
+    } else if (_currentState == CLPPlaybackStatePlaying && newState == CLPPlaybackStatePlayingBuffering) {
+        [self trigger:CLPPlaybackEventBuffering];
+    } else if (newState == CLPPlaybackStatePlaying) {
+        [self trigger:CLPPlaybackEventPlay];
+    } else if (newState == CLPPlaybackStatePaused) {
+        [self trigger:CLPPlaybackEventPause];
+    }
+    _currentState = newState;
+}
+
 #pragma mark - Controls
 
 - (void)play
 {
     [_avPlayer play];
+
+    [self updateCurrentState:CLPPlaybackStatePlaying];
 }
 
 - (void)pause
 {
     [_avPlayer pause];
+
+    [self updateCurrentState:CLPPlaybackStatePaused];
 }
 
 - (void)seekTo:(NSTimeInterval)timeInterval
@@ -143,6 +179,7 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 
 - (void)playbackDidEnd
 {
+    [self updateCurrentState:CLPPlaybackStateIdle];
     [_avPlayer.currentItem seekToTime:kCMTimeZero];
     [self trigger:CLPPlaybackEventEnded];
 }
@@ -173,6 +210,29 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
                 @"duration": @(CMTimeGetSeconds(_avPlayer.currentItem.asset.duration))
             };
             [self trigger:CLPPlaybackEventProgress userInfo:userInfo];
+        }
+    } else if (context == kBufferingDidChangeKVO) {
+        NSLog(@"Buffer: %@", keyPath);
+        NSLog(@"%d / %d / %d", _avPlayer.currentItem.playbackBufferEmpty, _avPlayer.currentItem.playbackBufferFull, _avPlayer.currentItem.playbackLikelyToKeepUp);
+        if ([keyPath isEqualToString:@"currentItem.playbackLikelyToKeepUp"]) {
+            if (_avPlayer.currentItem.playbackLikelyToKeepUp) {
+                if (_currentState == CLPPlaybackStatePlayingBuffering) {
+                    [self play];
+                }
+            } else {
+                if (_currentState == CLPPlaybackStatePlaying) {
+                    [self updateCurrentState:CLPPlaybackStatePlayingBuffering];
+                }
+            }
+        } else if ([keyPath isEqualToString:@"currentItem.playbackFull"]) {
+        } else if ([keyPath isEqualToString:@"currentItem.playbackBufferEmpty"]) {
+            if (_avPlayer.currentItem.playbackBufferEmpty) {
+                if (_currentState == CLPPlaybackStatePaused) {
+                    [self updateCurrentState:CLPPlaybackStatePausedBufering];
+                } else if (_currentState == CLPPlaybackStatePlaying) {
+                    [self updateCurrentState:CLPPlaybackStatePlayingBuffering];
+                }
+            }
         }
     }
 }
