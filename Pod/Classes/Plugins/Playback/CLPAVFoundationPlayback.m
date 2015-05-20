@@ -30,15 +30,10 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackState) {
 
 #pragma mark - Dtor
 
-- (void)destroy
+- (void)dealloc
 {
-    [super destroy];
-
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeKeyValueObservers];
-
-    [_avPlayer pause];
-    _avPlayer = nil;
 }
 
 - (void)removeKeyValueObservers
@@ -51,6 +46,14 @@ typedef NS_ENUM(NSUInteger, CLPPlaybackState) {
         [_avPlayer removeObserver:self forKeyPath:@"currentItem.playbackBufferFull"];
     }
     @catch (NSException *__unused exception) {}
+}
+
+- (void)destroy
+{
+    [super destroy];
+    
+    [_avPlayer pause];
+    _avPlayer = nil;
 }
 
 #pragma mark - Ctors
