@@ -56,11 +56,11 @@
 - (void)bindEventListeners
 {
     __weak typeof(loadingLabel) weakLabel = loadingLabel;
-    [self listenTo:self.container eventName:CLPContainerEventPause callback:^(NSDictionary *userInfo) {
+    [self listenTo:self.container eventName:CLPContainerEventBuffering callback:^(NSDictionary *userInfo) {
         weakLabel.hidden = NO;
     }];
 
-    [self listenTo:self.container eventName:CLPContainerEventPlay callback:^(NSDictionary *userInfo) {
+    [self listenTo:self.container eventName:CLPContainerEventBufferFull callback:^(NSDictionary *userInfo) {
         weakLabel.hidden = YES;
     }];
 }
