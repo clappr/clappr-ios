@@ -20,10 +20,15 @@ void *kTimeRangesKVO = &kTimeRangesKVO;
 
 #pragma mark - Dtor
 
-- (void)dealloc
+- (void)destroy
 {
+    [super destroy];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeKeyValueObservers];
+
+    [_avPlayer pause];
+    _avPlayer = nil;
 }
 
 - (void)removeKeyValueObservers
