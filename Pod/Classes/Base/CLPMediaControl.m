@@ -246,6 +246,8 @@ static UINib *mediaControlNib;
 {
     bufferPercentage = duration ? endPosition / duration : 0;
     NSLog(@"%.2f", bufferPercentage);
+
+    [self updateBars];
 }
 
 - (void)containerDidEnd
