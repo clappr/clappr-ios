@@ -1,12 +1,12 @@
 PODS:
   - Clappr (0.1.0)
-  - KIF (3.2.1):
-    - KIF/XCTest (= 3.2.1)
+  - KIF (3.3.0):
+    - KIF/Core (= 3.3.0)
   - KIF-Kiwi (0.2.4):
     - KIF (~> 3.0)
     - Kiwi (~> 2.0)
-  - KIF/XCTest (3.2.1)
-  - Kiwi (2.3.1)
+  - KIF/Core (3.3.0)
+  - Kiwi (2.4.0)
 
 DEPENDENCIES:
   - Clappr (from `../`)
@@ -16,12 +16,12 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Clappr:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Clappr: f767cb2b7bf4f965bad69fb20317d4db8f9a5ef4
-  KIF: ef1691e54e1d969c3b4fd0b5b56a3d7ddf37f216
+  KIF: 0a82046d06f3648799cac522d2d0f7934214caac
   KIF-Kiwi: fd9f800ca56db7cd98059fbd997158e76012bcaf
-  Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
+  Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.39.0
