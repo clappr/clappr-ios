@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-#plugin 'slather'
+plugin 'slather'
 
 target 'Clappr', :exclusive => true do
   pod "Clappr", :path => "../"
