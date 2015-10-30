@@ -42,7 +42,7 @@ GEM
     fuzzy_match (2.0.4)
     i18n (0.7.0)
     json (1.8.3)
-    minitest (5.8.1)
+    minitest (5.8.2)
     molinillo (0.4.0)
     nap (1.0.0)
     netrc (0.7.8)
@@ -66,4 +66,4 @@ DEPENDENCIES
   slather
 
 BUNDLED WITH
-   1.10.5
+   1.10.6
