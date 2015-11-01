@@ -7,16 +7,13 @@ language: objective-c
 
 before_install:
   - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
-  - gem install slather --no-rdoc --no-ri --no-document --quiet
   - gem install activesupport --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
   - cd Example && pod install && cd $TRAVIS_BUILD_DIR
-  - slather setup Example/Clappr.xcodeproj
 
 script:
-  - xctool test -workspace Example/Clappr.xcworkspace -scheme UnitTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xcodebuild test -workspace Example/Clappr.xcworkspace -scheme UnitTests -sdk iphonesimulator | xcpretty
 
 notifications:
   slack: globo:F1iVlyrzR4iX8OS7h8fwMcqx
 
-after_success:
-  - slather

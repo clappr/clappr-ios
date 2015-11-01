@@ -1,7 +1,0 @@
-[
-  "-workspace", "Example/Clappr.xcworkspace",
-  "-scheme", "UnitTests",
-  "-configuration", "Debug",
-  "-sdk", "iphonesimulator",
-  "-arch", "i386"
-]
