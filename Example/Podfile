@@ -1,0 +1,15 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'Clappr_Example', :exclusive => true do
+  pod "Clappr", :path => "../"
+end
+
+target 'Clappr_Tests', :exclusive => true do
+  pod "Clappr", :path => "../"
+
+  pod 'Quick'
+  pod 'Nimble'
+  pod 'FBSnapshotTestCase'
+  pod 'Nimble-Snapshots'
+end
