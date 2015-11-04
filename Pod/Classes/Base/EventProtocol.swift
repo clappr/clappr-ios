@@ -9,4 +9,6 @@ protocol EventProtocol {
     func startListening(contextObject: EventProtocol, eventName: String, callback: EventCallback)
     func stopListening()
     func stopListening(contextObject: EventProtocol, eventName: String, callback: EventCallback)
+    
+    func getEventContextObject() -> BaseObject
 }
