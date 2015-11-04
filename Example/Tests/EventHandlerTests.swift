@@ -4,7 +4,7 @@ import Clappr
 
 class EventHandlerSpec: QuickSpec {
     override func spec() {
-        describe("Initialization") {
+        describe("EventHandler") {
             
             it("Should receive the user info back") {
                 var control: String!

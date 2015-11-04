@@ -1,4 +1,4 @@
-protocol EventProtocol {
+public protocol EventProtocol {
     func on(eventName:String, callback: EventCallback)
     func once(eventName:String, callback: EventCallback)
     func off(eventName:String, callback: EventCallback)
