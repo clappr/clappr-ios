@@ -1,7 +1,6 @@
 import Foundation
 
 public class BaseObject: NSObject, EventProtocol {
-    
     private var eventHandlers = [String: EventHandler]()
     
     public func on(eventName: String, callback: EventCallback) {
@@ -13,7 +12,7 @@ public class BaseObject: NSObject, EventProtocol {
         
         notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
         
-        let key = keyForEvent(eventName, contextObject: contextObject)
+        let key = keyForEvent(eventName, contextObject: contextObject, callback: callback)
         eventHandlers[key] = eventHandler
     }
     
@@ -36,7 +35,7 @@ public class BaseObject: NSObject, EventProtocol {
     }
     
     private func off(eventName: String, callback: EventCallback, contextObject: BaseObject) {
-        let key = keyForEvent(eventName, contextObject: contextObject)
+        let key = keyForEvent(eventName, contextObject: contextObject, callback:callback)
         let eventHandler = eventHandlers[key]!
         
         notificationCenter().removeObserver(eventHandler, name: eventName, object: contextObject)
@@ -71,9 +70,17 @@ public class BaseObject: NSObject, EventProtocol {
         return self
     }
     
-    private func keyForEvent(eventName: String, contextObject: BaseObject) -> String {
+    private func keyForEvent(eventName: String, contextObject: BaseObject, callback: EventCallback) -> String {
         let contextObjectHash = ObjectIdentifier(contextObject).hashValue
-        return eventName + String(contextObjectHash)
+        return eventName + String(contextObjectHash) + hashForCallback(callback)
+    }
+    
+    private func hashForCallback<A,R>(f:A -> R) -> String {
+        let (_, lo) = unsafeBitCast(f, (Int, Int).self)
+        let offset = sizeof(Int) == 8 ? 16 : 12
+        let ptr  = UnsafePointer<Int>(bitPattern: lo+offset)
+        
+        return String(ptr.memory) + String(ptr.successor().memory)
     }
     
     private func notificationCenter() -> NSNotificationCenter {
