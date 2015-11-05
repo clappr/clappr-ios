@@ -9,18 +9,14 @@ class BaseObjectTests: QuickSpec {
         describe("BaseObject") {
             
             var baseObject: BaseObject!
+            var callbackWasCalled: Bool!
             
             beforeEach {
                 baseObject = BaseObject()
+                callbackWasCalled = false
             }
             
             describe("on") {
-                var callbackWasCalled: Bool!
-                
-                beforeEach {
-                    callbackWasCalled = false
-                }
-                
                 it("Callback should be called on event trigger") {
                     baseObject.on(self.eventName) { userInfo in
                         callbackWasCalled = true
