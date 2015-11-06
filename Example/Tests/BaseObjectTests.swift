@@ -139,6 +139,40 @@ class BaseObjectTests: QuickSpec {
                     expect(callbackWasCalled) == true
                 }
             }
+            
+            describe("off") {
+                it("Callback should not be called if removed") {
+                    let callback: EventCallback = { userInfo in
+                        callbackWasCalled = true
+                    }
+                    
+                    baseObject.on(self.eventName, callback: callback)
+                    baseObject.off(self.eventName, callback: callback)
+                    baseObject.trigger(self.eventName)
+                    
+                    expect(callbackWasCalled) == false
+                    
+                }
+                it("Callback should not be called if removed, but the others should") {
+                    let callback: EventCallback = { userInfo in
+                        callbackWasCalled = true
+                    }
+                    
+                    var anotherCallbackWasCalled = false
+                    let anotherCallback: EventCallback = { userInfo in
+                        anotherCallbackWasCalled = true
+                    }
+                    
+                    baseObject.on(self.eventName, callback: callback)
+                    baseObject.on(self.eventName, callback: anotherCallback)
+                    
+                    baseObject.off(self.eventName, callback: callback)
+                    baseObject.trigger(self.eventName)
+                    
+                    expect(callbackWasCalled) == false
+                    expect(anotherCallbackWasCalled) == true
+                }
+            }
         }
     }
 }
