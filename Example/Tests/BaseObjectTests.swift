@@ -49,10 +49,6 @@ class BaseObjectTests: QuickSpec {
                         secondCallbackWasCalled = true
                     }
                     
-                    baseObject.on(self.eventName) { userInfo in
-                        callbackWasCalled = true
-                    }
-                    
                     baseObject.trigger(self.eventName)
                     
                     expect(callbackWasCalled) == true
@@ -104,7 +100,30 @@ class BaseObjectTests: QuickSpec {
                     
                     expect(callbackWasCalled) == false
                 }
+            }
+            
+            describe("once") {
+                it("Callback should be called on event trigger") {
+                    baseObject.once(self.eventName) { userInfo in
+                        callbackWasCalled = true
+                    }
+                    
+                    baseObject.trigger(self.eventName)
+                    
+                    expect(callbackWasCalled) == true
+                }
                 
+                it("Callback should not be called twice") {
+                    baseObject.once(self.eventName) { userInfo in
+                        callbackWasCalled = true
+                    }
+                    
+                    baseObject.trigger(self.eventName)
+                    callbackWasCalled = false
+                    baseObject.trigger(self.eventName)
+                    
+                    expect(callbackWasCalled) == false
+                }
             }
         }
     }

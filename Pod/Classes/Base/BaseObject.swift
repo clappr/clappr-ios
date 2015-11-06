@@ -2,13 +2,14 @@ import Foundation
 
 public class BaseObject: NSObject, EventProtocol {
     private var eventHandlers = [String: EventHandler]()
+    private var onceEventsHashes = [String]()
     
     public func on(eventName: String, callback: EventCallback) {
         on(eventName, callback: callback, contextObject: self)
     }
     
     private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) {
-        let eventHandler = EventHandler(callback: callback)
+        let eventHandler = EventHandler(callback: wrapEventCallback(eventName, callback: callback))
         
         notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
         
@@ -16,18 +17,23 @@ public class BaseObject: NSObject, EventProtocol {
         eventHandlers[key] = eventHandler
     }
     
-    public func once(eventName: String, callback: EventCallback) {
-        weak var weakSelf = self
-        var blockSelf: EventCallback!
-        
-        let wrapperCallback: EventCallback = { userInfo in
+    private func wrapEventCallback(eventName: String, callback: EventCallback) -> EventCallback {
+        return { userInfo in
             callback(userInfo: userInfo)
-            weakSelf?.off(eventName, callback: blockSelf)
+            self.removeListenerIfOnce(eventName, callback: callback)
         }
-        
-        blockSelf = wrapperCallback
-        
-        on(eventName, callback: wrapperCallback)
+    }
+    
+    private func removeListenerIfOnce(eventName: String, callback: EventCallback) {
+        if let index = self.onceEventsHashes.indexOf(hashForCallback(callback)) {
+            onceEventsHashes.removeAtIndex(index)
+            off(eventName, callback: callback)
+        }
+    }
+    
+    public func once(eventName: String, callback: EventCallback) {
+        onceEventsHashes.append(hashForCallback(callback))
+        on(eventName, callback: callback)
     }
     
     public func off(eventName: String, callback: EventCallback) {
