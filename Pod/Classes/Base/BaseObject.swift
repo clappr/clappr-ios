@@ -11,7 +11,7 @@ public class BaseObject: NSObject, EventProtocol {
     private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) {
         let eventHandler = EventHandler(callback: wrapEventCallback(eventName, callback: callback))
         
-        notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
+        notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: self)
         
         let key = keyForEvent(eventName, contextObject: contextObject, callback: callback)
         eventHandlers[key] = eventHandler
