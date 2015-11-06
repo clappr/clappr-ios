@@ -70,14 +70,6 @@ class BaseObjectTests: QuickSpec {
                     
                     expect(callbackWasCalled) == false
                 }
-                
-                it("Callback should not be called when stop listening is called") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.on("another-event", callback: callback)
-                    baseObject.stopListening()
-                    
-                    expect(callbackWasCalled) == false
-                }
             }
             
             describe("once") {
@@ -133,6 +125,50 @@ class BaseObjectTests: QuickSpec {
                     
                     expect(callbackWasCalled) == false
                     expect(anotherCallbackWasCalled) == true
+                }
+            }
+            
+            describe("stopListening") {
+                it("Should cancel all event handlers") {
+                    baseObject.on(eventName, callback: callback)
+                    baseObject.on("another-event", callback: callback)
+                    
+                    baseObject.stopListening()
+                    
+                    baseObject.trigger(eventName)
+                    baseObject.trigger("another-event")
+                    
+                    expect(callbackWasCalled) == false
+                }
+                
+                
+                it("Should cancel event handlers only on context object") {
+                    let anotherObject = BaseObject()
+                    var anotherCallbackWasCalled = false
+                    anotherObject.on(eventName) { userInfo in
+                        anotherCallbackWasCalled = true
+                    }
+                    
+                    baseObject.on(eventName, callback: callback)
+                    
+                    baseObject.stopListening()
+                    
+                    baseObject.trigger(eventName)
+                    anotherObject.trigger(eventName)
+                    
+                    expect(callbackWasCalled) == false
+                    expect(anotherCallbackWasCalled) == true
+                }
+                
+                it("Should cancel handler for an event on a given context object") {
+                    let contextObject = BaseObject()
+                    
+                    baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+                    baseObject.stopListening(contextObject, eventName: eventName, callback: callback)
+                    
+                    baseObject.trigger(eventName)
+                    
+                    expect(callbackWasCalled) == false
                 }
             }
         }
