@@ -37,7 +37,6 @@ class BaseObjectTests: QuickSpec {
                     baseObject.trigger(eventName, userInfo: ["new_value": "Expected"])
                     
                     expect(value) == "Expected"
-                    
                 }
                 
                 it("Callback should be called for every callback registered") {
@@ -68,14 +67,6 @@ class BaseObjectTests: QuickSpec {
                     baseObject.on(eventName, callback: callback)
                     
                     anotherObject.trigger(eventName);
-                    
-                    expect(callbackWasCalled) == false
-                }
-                
-                it("Callback should not be called when handler is removed") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.off(eventName, callback: callback)
-                    baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
                 }
