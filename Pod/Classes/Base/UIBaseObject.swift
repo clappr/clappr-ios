@@ -1,7 +1,6 @@
 import Foundation
 
-public
-class UIBaseObject: UIView, EventProtocol {
+public class UIBaseObject: UIView, EventProtocol {
     private let baseObject = BaseObject()
     
     public func on(eventName:String, callback: EventCallback) {
