@@ -44,6 +44,28 @@ class ContainerTests: QuickSpec {
                     expect(callbackWasCalled) == false
                 }
             }
+            
+            describe("Event Binding") {
+                it("Should trigger container progress event when playback progress event happens") {
+                    let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: NSTimeInterval = 10
+                    var start: Float!, end: Float!, duration: NSTimeInterval!
+                    
+                    container.once(ContainerEvent.Progress.rawValue) { userInfo in
+                        start = userInfo?["start_position"] as! Float
+                        end = userInfo?["end_position"] as! Float
+                        duration = userInfo?["duration"] as! NSTimeInterval
+                    }
+                    
+                    let userInfo: EventUserInfo = ["start_position": expectedStart,
+                        "end_position": expectedEnd,
+                        "duration": expectedDuration]
+                    playback.trigger(PlaybackEvent.Progress.rawValue, userInfo: userInfo)
+                    
+                    expect(start) == expectedStart
+                    expect(end) == expectedEnd
+                    expect(duration) == expectedDuration
+                }
+            }
         }
     }
 }

@@ -1,10 +1,16 @@
 public class Container: UIBaseObject {
-    public internal(set) var playback: Playback
+    public internal(set) var playback: Playback {
+        didSet {
+            stopListening()
+            bindEventListeners()
+        }
+    }
     
     public init (playback: Playback) {
         self.playback = playback
         super.init(frame: CGRect.zero)
         self.addSubview(playback)
+        bindEventListeners()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -32,5 +38,27 @@ public class Container: UIBaseObject {
     
     public func seekTo(timeInterval: NSTimeInterval) {
         playback.seekTo(timeInterval)
+    }
+    
+    private func bindEventListeners() {
+        bind(PlaybackEvent.Progress) {[weak self] userInfo in
+            let start = userInfo?["start_position"] as! Float
+            let end = userInfo?["end_position"] as! Float
+            let duration = userInfo?["duration"] as! NSTimeInterval
+            
+            self?.postProgress(start, endPosition: end, duration: duration)
+        }
+    }
+    
+    private func bind(event: PlaybackEvent, callback: EventCallback) {
+        playback.listenTo(playback, eventName: event.rawValue, callback: callback)
+    }
+    
+    private func postProgress(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
+        let userInfo: EventUserInfo = ["start_position": startPosition,
+                                         "end_position": endPosition,
+                                             "duration": duration]
+        
+        trigger(ContainerEvent.Progress.rawValue, userInfo: userInfo)
     }
 }

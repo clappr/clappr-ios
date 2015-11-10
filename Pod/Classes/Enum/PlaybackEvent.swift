@@ -1,4 +1,4 @@
-enum PlaybackEvent: String {
+public enum PlaybackEvent: String {
     case Progress = "clappr:playback:progress"
     case TimeUpdated = "clappr:playback:time_updated"
     case Ready = "clappr:playback:ready"

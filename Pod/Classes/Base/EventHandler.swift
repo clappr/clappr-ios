@@ -1,6 +1,7 @@
 import Foundation
 
-public typealias EventCallback = ((userInfo: [NSObject : AnyObject]?) -> ())
+public typealias EventUserInfo = [NSObject : AnyObject]?
+public typealias EventCallback = ((userInfo: EventUserInfo) -> ())
 
 public class EventHandler: NSObject {
     
