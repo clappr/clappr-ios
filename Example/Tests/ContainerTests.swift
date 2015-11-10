@@ -15,11 +15,14 @@ class ContainerTests: QuickSpec {
                 container = Container(playback: playback)
             }
             
-            describe("General") {
+            describe("Initialization") {
                 it("Should have the playback as subview") {
                     expect(playback.superview) == container
                 }
                 
+            }
+            
+            describe("Destroy") {
                 it("Should be removed from superview and destroy playback when destroy is called") {
                     let wrapperView = UIView()
                     wrapperView.addSubview(container)
@@ -29,7 +32,19 @@ class ContainerTests: QuickSpec {
                     expect(playback.superview).to(beNil())
                     expect(container.superview).to(beNil())
                 }
-
+                
+                it("Should stop listening to events after destroy is called") {
+                    var callbackWasCalled = false
+                    container.on("some-event") { _ in
+                        callbackWasCalled = true
+                    }
+                    
+                    container.destroy()
+                    container.trigger("some-event")
+                    
+                    expect(callbackWasCalled) == false
+                    
+                }
             }
         }
     }

@@ -17,5 +17,20 @@ public class Container: UIBaseObject {
         
         removeFromSuperview()
     }
-}
     
+    public func play() {
+        playback.play()
+    }
+    
+    public func pause() {
+        playback.pause()
+    }
+    
+    public func stop() {
+        playback.stop()
+    }
+    
+    public func seekTo(timeInterval: NSTimeInterval) {
+        playback.seekTo(timeInterval)
+    }
+}
