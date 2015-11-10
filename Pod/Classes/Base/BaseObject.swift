@@ -56,7 +56,7 @@ public class BaseObject: NSObject, EventProtocol {
         notificationCenter().postNotificationName(eventName, object: self, userInfo: userInfo)
     }
     
-    public func listenTo(contextObject: BaseObject, eventName: String, callback: EventCallback) {
+    public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
         on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
     
@@ -68,7 +68,7 @@ public class BaseObject: NSObject, EventProtocol {
         eventHandlers.removeAll()
     }
     
-    public func stopListening(contextObject: BaseObject, eventName: String, callback: EventCallback) {
+    public func stopListening<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
         off(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
     

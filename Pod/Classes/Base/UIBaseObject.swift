@@ -23,7 +23,7 @@ public class UIBaseObject: UIView, EventProtocol {
         baseObject.trigger(eventName, userInfo: userInfo)
     }
     
-    public func listenTo(contextObject: BaseObject, eventName: String, callback: EventCallback) {
+    public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
         baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
     
@@ -31,7 +31,7 @@ public class UIBaseObject: UIView, EventProtocol {
         baseObject.stopListening()
     }
     
-    public func stopListening(contextObject: BaseObject, eventName: String, callback: EventCallback) {
+    public func stopListening<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
         baseObject.stopListening(contextObject, eventName: eventName, callback: callback)
     }
     
