@@ -1,6 +1,5 @@
 import Foundation
 
-
 public class Playback: UIBaseObject {
     public internal(set) var url: NSURL
     
