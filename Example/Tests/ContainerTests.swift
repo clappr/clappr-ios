@@ -19,7 +19,6 @@ class ContainerTests: QuickSpec {
                 it("Should have the playback as subview") {
                     expect(playback.superview) == container
                 }
-                
             }
             
             describe("Destroy") {
@@ -43,7 +42,6 @@ class ContainerTests: QuickSpec {
                     container.trigger("some-event")
                     
                     expect(callbackWasCalled) == false
-                    
                 }
             }
         }

@@ -20,7 +20,7 @@ public class Playback: UIBaseObject {
         return 0
     }
     
-    public func type() -> ClapprPlaybackType {
+    public func type() -> PlaybackType {
         return .Unknown
     }
     

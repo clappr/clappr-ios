@@ -42,7 +42,7 @@ class PlaybackTests: QuickSpec {
             }
             
             it("Should have a type function with a default value Unknown") {
-                expect(playback.type()).to(equal(ClapprPlaybackType.Unknown))
+                expect(playback.type()).to(equal(PlaybackType.Unknown))
             }
 
             it("Should have a isHighDefinitionInUse function with a default value false") {
