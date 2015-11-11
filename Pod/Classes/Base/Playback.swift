@@ -3,6 +3,10 @@ import Foundation
 public class Playback: UIBaseObject {
     public internal(set) var url: NSURL
     public internal(set) var settings: [String : AnyObject] = [:]
+    public internal(set) var duration: Int = 0
+    public internal(set) var type: PlaybackType = .Unknown
+    public internal(set) var isPlaying = false
+    public internal(set) var isHighDefinitionInUse = false
     
     public init (url: NSURL) {
         self.url = url
@@ -11,22 +15,6 @@ public class Playback: UIBaseObject {
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Use init(url: NSURL) instead")
-    }
-    
-    public func isPlaying() -> Bool {
-        return false
-    }
-    
-    public func duration() -> Int {
-        return 0
-    }
-    
-    public func type() -> PlaybackType {
-        return .Unknown
-    }
-    
-    public func isHighDefinitionInUse() -> Bool {
-        return false
     }
     
     public func destroy() {

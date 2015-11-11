@@ -33,20 +33,20 @@ class PlaybackTests: QuickSpec {
                 expect(responds).to(beTrue())
             }
             
-            it("Should have a duration function with a default value 0") {
-                expect(playback.duration()) == 0
+            it("Should have a duration var with a default value 0") {
+                expect(playback.duration) == 0
             }
             
-            it("Should have a isPlaying function with a default value false") {
-                expect(playback.isPlaying()).to(beFalse())
+            it("Should have a isPlaying var with a default value false") {
+                expect(playback.isPlaying).to(beFalse())
             }
             
-            it("Should have a type function with a default value Unknown") {
-                expect(playback.type()).to(equal(PlaybackType.Unknown))
+            it("Should have a type var with a default value Unknown") {
+                expect(playback.type).to(equal(PlaybackType.Unknown))
             }
 
-            it("Should have a isHighDefinitionInUse function with a default value false") {
-                expect(playback.isHighDefinitionInUse()).to(beFalse())
+            it("Should have a isHighDefinitionInUse var with a default value false") {
+                expect(playback.isHighDefinitionInUse).to(beFalse())
             }
             
             it("Should be removed from superview when destroy is called") {
