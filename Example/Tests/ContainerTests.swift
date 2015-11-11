@@ -46,6 +46,16 @@ class ContainerTests: QuickSpec {
             }
             
             describe("Event Binding") {
+                var eventWasTriggered = false
+                let eventCallback: EventCallback = { _ in
+                    eventWasTriggered = true
+                }
+                
+                beforeEach{
+                    eventWasTriggered = false
+                }
+                
+                
                 it("Should trigger container progress event when playback progress event happens") {
                     let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: NSTimeInterval = 10
                     var start: Float!, end: Float!, duration: NSTimeInterval!
@@ -86,6 +96,12 @@ class ContainerTests: QuickSpec {
                     expect(container.ready) == false
                     playback.trigger(PlaybackEvent.Ready.rawValue)
                     expect(container.ready) == true
+                }
+                
+                it("Should trigger buffering event after playback respective event is triggered") {
+                    container.on(ContainerEvent.Buffering.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.Buffering.rawValue)
+                    expect(eventWasTriggered) == true
                 }
             }
         }

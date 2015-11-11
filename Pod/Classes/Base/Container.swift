@@ -51,6 +51,7 @@ public class Container: UIBaseObject {
     private func eventBindings() -> [PlaybackEvent : EventCallback]{
         return [
             .Ready : { [weak self] _ in self?.setReady() },
+            .Buffering : {[weak self] _ in self?.trigger(.Buffering)},
             .Progress : progressBindingCallback(),
             .TimeUpdated : timeUpdatedBindingCallback()
         ]
@@ -90,6 +91,10 @@ public class Container: UIBaseObject {
     
     private func setReady() {
         ready = true
-        trigger(ContainerEvent.Ready.rawValue)
+        trigger(ContainerEvent.Ready)
+    }
+    
+    private func trigger(event: ContainerEvent) {
+        trigger(event.rawValue)
     }
 }
