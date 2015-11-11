@@ -2,6 +2,7 @@ import Foundation
 
 public class Playback: UIBaseObject {
     public internal(set) var url: NSURL
+    public internal(set) var settings: [String : AnyObject] = [:]
     
     public init (url: NSURL) {
         self.url = url

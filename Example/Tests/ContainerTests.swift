@@ -158,6 +158,27 @@ class ContainerTests: QuickSpec {
                     expect(eventWasTriggered) == true
                 }
                 
+                context("Bindings with stubed playback settings") {
+                    class MockedSettingsPlayback: Playback {
+                        override var settings: [String: AnyObject] {
+                            get {
+                                return ["foo": "bar"]
+                            }
+                        }
+                    }
+                    
+                    beforeEach() {
+                        playback = MockedSettingsPlayback(url: sourceURL)
+                        container = Container(playback: playback)
+                    }
+                    
+                    it("Should update it's settings after playback's settings update event") {
+                        playback.trigger(PlaybackEvent.SettingsUpdated.rawValue)
+                        let fooSetting = container.settings["foo"] as? String
+                        expect(fooSetting) == "bar"
+                    }
+                }
+                
             }
         }
     }

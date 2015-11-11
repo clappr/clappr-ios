@@ -1,5 +1,6 @@
 public class Container: UIBaseObject {
     public internal(set) var ready = false
+    public internal(set) var settings: [String : AnyObject] = [:]
     
     public internal(set) var playback: Playback {
         didSet {
@@ -53,7 +54,7 @@ public class Container: UIBaseObject {
             .Ready                  : { [weak self] _ in self?.setReady() },
             .Buffering              : { [weak self] _ in self?.trigger(.Buffering)},
             .BufferFull             : { [weak self] _ in self?.trigger(.BufferFull)},
-            .SettingsUpdated        : { [weak self] _ in self?.trigger(.SettingsUpdated)},
+            .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
             .HighDefinitionUpdated  : { [weak self] _ in self?.trigger(.HighDefinitionUpdated)},
             .StateChanged           : { [weak self] _ in self?.trigger(.PlaybackStateChanged)},
             .MediaControlDisabled   : { [weak self] _ in self?.trigger(.MediaControlDisabled)},
@@ -72,7 +73,7 @@ public class Container: UIBaseObject {
             let end = userInfo?["end_position"] as! Float
             let duration = userInfo?["duration"] as! NSTimeInterval
             
-            self?.postProgress(start, endPosition: end, duration: duration)
+            self?.progressUpdated(start, endPosition: end, duration: duration)
         }
     }
     
@@ -85,10 +86,15 @@ public class Container: UIBaseObject {
         }
     }
     
-    private func postProgress(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
-        let userInfo: EventUserInfo = ["start_position": startPosition,
-                                         "end_position": endPosition,
-                                             "duration": duration]
+    private func settingsUpdated() {
+        settings = playback.settings
+        self.trigger(.SettingsUpdated)
+    }
+    
+    private func progressUpdated(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
+        let userInfo: EventUserInfo = ["start_position" : startPosition,
+                                         "end_position" : endPosition,
+                                             "duration" : duration]
         
         trigger(ContainerEvent.Progress.rawValue, userInfo: userInfo)
     }
