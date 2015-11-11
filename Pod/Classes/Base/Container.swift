@@ -43,32 +43,36 @@ public class Container: UIBaseObject {
     }
     
     private func bindEventListeners() {
-        var eventBindings: [PlaybackEvent: EventCallback] = [
-            PlaybackEvent.Ready : { [weak self] _ in self?.setReady()}
+        for (event, callback) in eventBindings() {
+            playback.listenTo(self, eventName: event.rawValue, callback: callback)
+        }
+    }
+    
+    private func eventBindings() -> [PlaybackEvent : EventCallback]{
+        return [
+            .Ready : { [weak self] _ in self?.setReady() },
+            .Progress : progressBindingCallback(),
+            .TimeUpdated : timeUpdatedBindingCallback()
         ]
-        
-        eventBindings[PlaybackEvent.Progress] = {[weak self] userInfo in
+    }
+    
+    private func progressBindingCallback() -> EventCallback {
+        return { [weak self] userInfo in
             let start = userInfo?["start_position"] as! Float
             let end = userInfo?["end_position"] as! Float
             let duration = userInfo?["duration"] as! NSTimeInterval
             
             self?.postProgress(start, endPosition: end, duration: duration)
         }
-        
-        eventBindings[PlaybackEvent.TimeUpdated] =  { [weak self] userInfo in
+    }
+    
+    private func timeUpdatedBindingCallback() -> EventCallback {
+        return { [weak self] userInfo in
             let position = userInfo?["position"] as! Float
             let duration = userInfo?["duration"] as! NSTimeInterval
             
             self?.timeUpdated(position, duration: duration)
         }
-        
-        for (event, callback) in eventBindings {
-            bind(event, callback: callback)
-        }
-    }
-    
-    private func bind(event: PlaybackEvent, callback: EventCallback) {
-        playback.listenTo(self, eventName: event.rawValue, callback: callback)
     }
     
     private func postProgress(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
