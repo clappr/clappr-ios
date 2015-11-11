@@ -50,10 +50,19 @@ public class Container: UIBaseObject {
     
     private func eventBindings() -> [PlaybackEvent : EventCallback]{
         return [
-            .Ready : { [weak self] _ in self?.setReady() },
-            .Buffering : {[weak self] _ in self?.trigger(.Buffering)},
-            .Progress : progressBindingCallback(),
-            .TimeUpdated : timeUpdatedBindingCallback()
+            .Ready                  : { [weak self] _ in self?.setReady() },
+            .Buffering              : { [weak self] _ in self?.trigger(.Buffering)},
+            .BufferFull             : { [weak self] _ in self?.trigger(.BufferFull)},
+            .SettingsUpdated        : { [weak self] _ in self?.trigger(.SettingsUpdated)},
+            .HighDefinitionUpdated  : { [weak self] _ in self?.trigger(.HighDefinitionUpdated)},
+            .StateChanged           : { [weak self] _ in self?.trigger(.PlaybackStateChanged)},
+            .MediaControlDisabled   : { [weak self] _ in self?.trigger(.MediaControlDisabled)},
+            .MediaControlEnabled    : { [weak self] _ in self?.trigger(.MediaControlEnabled)},
+            .Ended                  : { [weak self] _ in self?.trigger(.Ended)},
+            .Play                   : { [weak self] _ in self?.trigger(.Play)},
+            .Pause                  : { [weak self] _ in self?.trigger(.Pause)},
+            .Progress               : progressBindingCallback(),
+            .TimeUpdated            : timeUpdatedBindingCallback()
         ]
     }
     

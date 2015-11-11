@@ -103,6 +103,61 @@ class ContainerTests: QuickSpec {
                     playback.trigger(PlaybackEvent.Buffering.rawValue)
                     expect(eventWasTriggered) == true
                 }
+                
+                it("Should trigger buffer full event after playback respective event is triggered") {
+                    container.on(ContainerEvent.BufferFull.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.BufferFull.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger settings event after playback respective event is triggered") {
+                    container.on(ContainerEvent.SettingsUpdated.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.SettingsUpdated.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger HD updated event after playback respective event is triggered") {
+                    container.on(ContainerEvent.HighDefinitionUpdated.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.HighDefinitionUpdated.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger State Changed event after playback respective event is triggered") {
+                    container.on(ContainerEvent.PlaybackStateChanged.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.StateChanged.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger Media Control Disabled event after playback respective event is triggered") {
+                    container.on(ContainerEvent.MediaControlDisabled.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.MediaControlDisabled.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger Media Control Enabled event after playback respective event is triggered") {
+                    container.on(ContainerEvent.MediaControlEnabled.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.MediaControlEnabled.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger Ended event after playback respective event is triggered") {
+                    container.on(ContainerEvent.Ended.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.Ended.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger Play event after playback respective event is triggered") {
+                    container.on(ContainerEvent.Play.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.Play.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
+                it("Should trigger Pause event after playback respective event is triggered") {
+                    container.on(ContainerEvent.Pause.rawValue, callback: eventCallback)
+                    playback.trigger(PlaybackEvent.Pause.rawValue)
+                    expect(eventWasTriggered) == true
+                }
+                
             }
         }
     }
