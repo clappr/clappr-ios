@@ -81,6 +81,12 @@ class ContainerTests: QuickSpec {
                     expect(position) == expectedPosition
                     expect(duration) == expectedDuration
                 }
+                
+                it("Should be ready after playback ready event is triggered") {
+                    expect(container.ready) == false
+                    playback.trigger(PlaybackEvent.Ready.rawValue)
+                    expect(container.ready) == true
+                }
             }
         }
     }

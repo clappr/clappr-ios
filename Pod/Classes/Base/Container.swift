@@ -1,11 +1,13 @@
 public class Container: UIBaseObject {
+    public internal(set) var ready = false
+    
     public internal(set) var playback: Playback {
         didSet {
             stopListening()
             bindEventListeners()
         }
     }
-    
+
     public init (playback: Playback) {
         self.playback = playback
         super.init(frame: CGRect.zero)
@@ -55,6 +57,10 @@ public class Container: UIBaseObject {
             
             self?.timeUpdated(position, duration: duration)
         }
+        
+        bind(PlaybackEvent.Ready) { [weak self] _ in
+            self?.setReady()
+        }
     }
     
     private func bind(event: PlaybackEvent, callback: EventCallback) {
@@ -72,5 +78,10 @@ public class Container: UIBaseObject {
     private func timeUpdated(position: Float, duration: NSTimeInterval) {
         let userInfo: EventUserInfo = ["position": position, "duration": duration]
         trigger(ContainerEvent.TimeUpdated.rawValue, userInfo: userInfo)
+    }
+    
+    private func setReady() {
+        ready = true
+        trigger(ContainerEvent.Ready.rawValue)
     }
 }
