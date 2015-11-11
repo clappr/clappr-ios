@@ -44,7 +44,7 @@ public class BaseObject: NSObject, EventProtocol {
         let key = keyForEvent(eventName, contextObject: contextObject, callback:callback)
         let eventHandler = eventHandlers[key]!
         
-        notificationCenter().removeObserver(eventHandler, name: eventName, object: contextObject)
+        notificationCenter().removeObserver(eventHandler, name: eventName, object: self)
         eventHandlers.removeValueForKey(key)
     }
     

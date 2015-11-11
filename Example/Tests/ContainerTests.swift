@@ -65,6 +65,22 @@ class ContainerTests: QuickSpec {
                     expect(end) == expectedEnd
                     expect(duration) == expectedDuration
                 }
+                
+                it("Should trigger container time updated event when playback respective event happens") {
+                    let expectedPosition: Float = 10.3, expectedDuration: NSTimeInterval = 12.7
+                    var position: Float!, duration: NSTimeInterval!
+                    
+                    container.once(ContainerEvent.TimeUpdated.rawValue) { userInfo in
+                        position = userInfo?["position"] as! Float
+                        duration = userInfo?["duration"] as! NSTimeInterval
+                    }
+                    
+                    let userInfo: EventUserInfo = ["position": expectedPosition, "duration": expectedDuration]
+                    playback.trigger(PlaybackEvent.TimeUpdated.rawValue, userInfo: userInfo)
+                    
+                    expect(position) == expectedPosition
+                    expect(duration) == expectedDuration
+                }
             }
         }
     }

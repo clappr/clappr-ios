@@ -48,10 +48,17 @@ public class Container: UIBaseObject {
             
             self?.postProgress(start, endPosition: end, duration: duration)
         }
+        
+        bind(PlaybackEvent.TimeUpdated) { [weak self] userInfo in
+            let position = userInfo?["position"] as! Float
+            let duration = userInfo?["duration"] as! NSTimeInterval
+            
+            self?.timeUpdated(position, duration: duration)
+        }
     }
     
     private func bind(event: PlaybackEvent, callback: EventCallback) {
-        playback.listenTo(playback, eventName: event.rawValue, callback: callback)
+        playback.listenTo(self, eventName: event.rawValue, callback: callback)
     }
     
     private func postProgress(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
@@ -60,5 +67,10 @@ public class Container: UIBaseObject {
                                              "duration": duration]
         
         trigger(ContainerEvent.Progress.rawValue, userInfo: userInfo)
+    }
+    
+    private func timeUpdated(position: Float, duration: NSTimeInterval) {
+        let userInfo: EventUserInfo = ["position": position, "duration": duration]
+        trigger(ContainerEvent.TimeUpdated.rawValue, userInfo: userInfo)
     }
 }
