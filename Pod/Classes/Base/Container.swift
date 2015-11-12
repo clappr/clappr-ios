@@ -1,5 +1,6 @@
 public class Container: UIBaseObject {
     public internal(set) var ready = false
+    public internal(set) var dvrInUse = false
     public internal(set) var settings: [String : AnyObject] = [:]
     
     public internal(set) var playback: Playback {
@@ -62,6 +63,7 @@ public class Container: UIBaseObject {
             .Pause                  : { [weak self] _ in self?.trigger(.Pause)},
             .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
             .Ready                  : { [weak self] _ in self?.setReady() },
+            .DVRStateChanged        : { [weak self] info in self?.setDvrInUse(info) },
             .Progress               : { [weak self] info in self?.forward(.Progress, userInfo:info)},
             .TimeUpdated            : { [weak self] info in self?.forward(.TimeUpdated, userInfo:info)},
             .LoadedMetadata         : { [weak self] info in self?.forward(.LoadedMetadata, userInfo:info)},
@@ -71,12 +73,22 @@ public class Container: UIBaseObject {
     
     private func settingsUpdated() {
         settings = playback.settings
-        self.trigger(.SettingsUpdated)
+        self.trigger(ContainerEvent.SettingsUpdated)
     }
     
     private func setReady() {
         ready = true
         trigger(ContainerEvent.Ready)
+    }
+    
+    private func setDvrInUse(userInfo: EventUserInfo) {
+        settingsUpdated()
+        
+        if let playbackDvrInUse = userInfo!["dvr_in_use"] as? Bool {
+            dvrInUse = playbackDvrInUse
+        }
+        
+        forward(ContainerEvent.PlaybackDVRStateChanged, userInfo: userInfo)
     }
     
     private func trigger(event: ContainerEvent) {
