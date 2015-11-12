@@ -214,30 +214,66 @@ class ContainerTests: QuickSpec {
                     expect(eventWasTriggered) == true
                 }
                 
-                context("Bindings with stubed playback settings") {
+                it("Should trigger it's Stop event after stop is called") {
+                    container.on(ContainerEvent.Stop.rawValue, callback: eventCallback)
+                    container.stop()
+                    expect(eventWasTriggered) == true
+                }
+                
+                context("Bindings with mocked playback") {
                     class MockedSettingsPlayback: Playback {
+                        var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
                         override var settings: [String: AnyObject] {
                             get {
                                 return ["foo": "bar"]
                             }
                         }
+                        
+                        override private func stop() {
+                            stopWasCalled = true
+                        }
+                        
+                        override private func pause() {
+                            pauseWasCalled = true
+                        }
+                        
+                        private override func play() {
+                            playWasCalled = true
+                        }
                     }
                     
+                    var mockedPlayback: MockedSettingsPlayback!
+                    
                     beforeEach() {
-                        playback = MockedSettingsPlayback(url: sourceURL)
-                        container = Container(playback: playback)
+                        mockedPlayback = MockedSettingsPlayback(url: sourceURL)
+                        container = Container(playback: mockedPlayback)
                     }
                     
                     it("Should update it's settings after playback's settings update event") {
-                        playback.trigger(PlaybackEvent.SettingsUpdated.rawValue)
+                        mockedPlayback.trigger(PlaybackEvent.SettingsUpdated.rawValue)
                         let fooSetting = container.settings["foo"] as? String
                         expect(fooSetting) == "bar"
                     }
                     
                     it("Should update it's settings after playback's DVR State changed event") {
-                        playback.trigger(PlaybackEvent.DVRStateChanged.rawValue)
+                        mockedPlayback.trigger(PlaybackEvent.DVRStateChanged.rawValue)
                         let fooSetting = container.settings["foo"] as? String
                         expect(fooSetting) == "bar"
+                    }
+                    
+                    it("Should call playback's stop method after calling respective method on container") {
+                        container.stop()
+                        expect(mockedPlayback.stopWasCalled).to(beTrue())
+                    }
+                    
+                    it("Should call playback's play method after calling respective method on container") {
+                        container.play()
+                        expect(mockedPlayback.playWasCalled).to(beTrue())
+                    }
+                    
+                    it("Should call playback's pause method after calling respective method on container") {
+                        container.pause()
+                        expect(mockedPlayback.pauseWasCalled).to(beTrue())
                     }
                 }
                 

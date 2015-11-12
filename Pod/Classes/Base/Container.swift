@@ -45,6 +45,7 @@ public class Container: UIBaseObject {
     
     public func stop() {
         playback.stop()
+        trigger(ContainerEvent.Stop)
     }
     
     public func seekTo(timeInterval: NSTimeInterval) {
