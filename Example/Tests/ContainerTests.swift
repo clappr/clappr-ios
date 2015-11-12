@@ -182,11 +182,18 @@ class ContainerTests: QuickSpec {
                     playback.trigger(PlaybackEvent.MediaControlDisabled.rawValue)
                     expect(eventWasTriggered) == true
                 }
-                
+
                 it("Should trigger Media Control Enabled event after playback respective event is triggered") {
                     container.on(ContainerEvent.MediaControlEnabled.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.MediaControlEnabled.rawValue)
                     expect(eventWasTriggered) == true
+                }
+                
+                it("Should update mediaControlEnabled property after playback MediaControleEnabled or Disabled is triggered") {
+                    playback.trigger(PlaybackEvent.MediaControlEnabled.rawValue)
+                    expect(container.mediaControlEnabled).to(beTrue())
+                    playback.trigger(PlaybackEvent.MediaControlDisabled.rawValue)
+                    expect(container.mediaControlEnabled).to(beFalse())
                 }
                 
                 it("Should trigger Ended event after playback respective event is triggered") {

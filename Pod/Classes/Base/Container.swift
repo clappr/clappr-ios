@@ -3,6 +3,13 @@ public class Container: UIBaseObject {
     public internal(set) var dvrInUse = false
     public internal(set) var settings: [String : AnyObject] = [:]
     
+    public internal(set) var mediaControlEnabled = false {
+        didSet {
+            let eventToTrigger: ContainerEvent = mediaControlEnabled ? .MediaControlEnabled : .MediaControlDisabled
+            trigger(eventToTrigger)
+        }
+    }
+    
     public internal(set) var playback: Playback {
         didSet {
             stopListening()
@@ -56,11 +63,11 @@ public class Container: UIBaseObject {
             .BufferFull             : { [weak self] _ in self?.trigger(.BufferFull)},
             .HighDefinitionUpdated  : { [weak self] _ in self?.trigger(.HighDefinitionUpdated)},
             .StateChanged           : { [weak self] _ in self?.trigger(.PlaybackStateChanged)},
-            .MediaControlDisabled   : { [weak self] _ in self?.trigger(.MediaControlDisabled)},
-            .MediaControlEnabled    : { [weak self] _ in self?.trigger(.MediaControlEnabled)},
             .Ended                  : { [weak self] _ in self?.trigger(.Ended)},
             .Play                   : { [weak self] _ in self?.trigger(.Play)},
             .Pause                  : { [weak self] _ in self?.trigger(.Pause)},
+            .MediaControlDisabled   : { [weak self] _ in self?.mediaControlEnabled = false },
+            .MediaControlEnabled    : { [weak self] _ in self?.mediaControlEnabled = true },
             .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
             .Ready                  : { [weak self] _ in self?.setReady() },
             .DVRStateChanged        : { [weak self] info in self?.setDvrInUse(info) },
