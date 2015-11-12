@@ -63,7 +63,9 @@ public class Container: UIBaseObject {
             .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
             .Ready                  : { [weak self] _ in self?.setReady() },
             .Progress               : { [weak self] info in self?.forward(.Progress, userInfo:info)},
-            .TimeUpdated            : { [weak self] info in self?.forward(.TimeUpdated, userInfo:info)}
+            .TimeUpdated            : { [weak self] info in self?.forward(.TimeUpdated, userInfo:info)},
+            .LoadedMetadata         : { [weak self] info in self?.forward(.LoadedMetadata, userInfo:info)},
+            .BitRate                : { [weak self] info in self?.forward(.BitRate, userInfo:info)},
         ]
     }
     

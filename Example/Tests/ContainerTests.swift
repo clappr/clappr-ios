@@ -92,6 +92,34 @@ class ContainerTests: QuickSpec {
                     expect(duration) == expectedDuration
                 }
                 
+                it("Should trigger container loaded metadata event when playback respective event happens") {
+                    let expectedDuration: NSTimeInterval = 20.0
+                    var duration: NSTimeInterval!
+                    
+                    container.once(ContainerEvent.LoadedMetadata.rawValue) { userInfo in
+                        duration = userInfo?["duration"] as! NSTimeInterval
+                    }
+                    
+                    let userInfo: EventUserInfo = ["duration": expectedDuration]
+                    playback.trigger(PlaybackEvent.LoadedMetadata.rawValue, userInfo: userInfo)
+                    
+                    expect(duration) == expectedDuration
+                }
+                
+                it("Should trigger container bit rate event when playback respective event happens") {
+                    let expectedBitRate: NSTimeInterval = 11.0
+                    var bitRate: NSTimeInterval!
+                    
+                    container.once(ContainerEvent.BitRate.rawValue) { userInfo in
+                        bitRate = userInfo?["bit_rate"] as! NSTimeInterval
+                    }
+                    
+                    let userInfo: EventUserInfo = ["bit_rate": expectedBitRate]
+                    playback.trigger(PlaybackEvent.BitRate.rawValue, userInfo: userInfo)
+                    
+                    expect(bitRate) == expectedBitRate
+                }
+                
                 it("Should be ready after playback ready event is triggered") {
                     expect(container.ready) == false
                     playback.trigger(PlaybackEvent.Ready.rawValue)
