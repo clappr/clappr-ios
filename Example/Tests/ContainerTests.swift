@@ -133,6 +133,19 @@ class ContainerTests: QuickSpec {
                     expect(dvrInUse).to(beTrue())
                 }
                 
+                it("Should trigger container Error event when playback respective event happens with params") {
+                    var error = ""
+                    
+                    container.once(ContainerEvent.Error.rawValue) { userInfo in
+                        error = userInfo?["error"] as! String
+                    }
+                    
+                    let userInfo: EventUserInfo = ["error": "Error"]
+                    playback.trigger(PlaybackEvent.Error.rawValue, userInfo: userInfo)
+                    
+                    expect(error) == "Error"
+                }
+                
                 it("Should update container dvrInUse property on playback DVRSTateChanged event") {
                     let userInfo: EventUserInfo = ["dvr_in_use": true]
                     
