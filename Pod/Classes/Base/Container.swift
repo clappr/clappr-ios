@@ -49,12 +49,10 @@ public class Container: UIBaseObject {
         }
     }
     
-    private func eventBindings() -> [PlaybackEvent : EventCallback]{
+    private func eventBindings() -> [PlaybackEvent : EventCallback] {
         return [
-            .Ready                  : { [weak self] _ in self?.setReady() },
             .Buffering              : { [weak self] _ in self?.trigger(.Buffering)},
             .BufferFull             : { [weak self] _ in self?.trigger(.BufferFull)},
-            .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
             .HighDefinitionUpdated  : { [weak self] _ in self?.trigger(.HighDefinitionUpdated)},
             .StateChanged           : { [weak self] _ in self?.trigger(.PlaybackStateChanged)},
             .MediaControlDisabled   : { [weak self] _ in self?.trigger(.MediaControlDisabled)},
@@ -62,46 +60,16 @@ public class Container: UIBaseObject {
             .Ended                  : { [weak self] _ in self?.trigger(.Ended)},
             .Play                   : { [weak self] _ in self?.trigger(.Play)},
             .Pause                  : { [weak self] _ in self?.trigger(.Pause)},
-            .Progress               : progressBindingCallback(),
-            .TimeUpdated            : timeUpdatedBindingCallback()
+            .SettingsUpdated        : { [weak self] _ in self?.settingsUpdated()},
+            .Ready                  : { [weak self] _ in self?.setReady() },
+            .Progress               : { [weak self] info in self?.forward(.Progress, userInfo:info)},
+            .TimeUpdated            : { [weak self] info in self?.forward(.TimeUpdated, userInfo:info)}
         ]
-    }
-    
-    private func progressBindingCallback() -> EventCallback {
-        return { [weak self] userInfo in
-            let start = userInfo?["start_position"] as! Float
-            let end = userInfo?["end_position"] as! Float
-            let duration = userInfo?["duration"] as! NSTimeInterval
-            
-            self?.progressUpdated(start, endPosition: end, duration: duration)
-        }
-    }
-    
-    private func timeUpdatedBindingCallback() -> EventCallback {
-        return { [weak self] userInfo in
-            let position = userInfo?["position"] as! Float
-            let duration = userInfo?["duration"] as! NSTimeInterval
-            
-            self?.timeUpdated(position, duration: duration)
-        }
     }
     
     private func settingsUpdated() {
         settings = playback.settings
         self.trigger(.SettingsUpdated)
-    }
-    
-    private func progressUpdated(startPosition: Float, endPosition: Float, duration: NSTimeInterval) {
-        let userInfo: EventUserInfo = ["start_position" : startPosition,
-                                         "end_position" : endPosition,
-                                             "duration" : duration]
-        
-        trigger(ContainerEvent.Progress.rawValue, userInfo: userInfo)
-    }
-    
-    private func timeUpdated(position: Float, duration: NSTimeInterval) {
-        let userInfo: EventUserInfo = ["position": position, "duration": duration]
-        trigger(ContainerEvent.TimeUpdated.rawValue, userInfo: userInfo)
     }
     
     private func setReady() {
@@ -111,5 +79,9 @@ public class Container: UIBaseObject {
     
     private func trigger(event: ContainerEvent) {
         trigger(event.rawValue)
+    }
+    
+    private func forward(event: ContainerEvent, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
     }
 }
