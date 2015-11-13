@@ -65,6 +65,10 @@ public class Container: UIBaseObject {
         plugins.append(plugin)
     }
     
+    public func hasPlugin(pluginClass: AnyClass) -> Bool {
+        return plugins.filter({$0.isKindOfClass(pluginClass)}).count > 0
+    }
+    
     private func bindEventListeners() {
         for (event, callback) in eventBindings() {
             playback.listenTo(self, eventName: event.rawValue, callback: callback)

@@ -303,10 +303,21 @@ class ContainerTests: QuickSpec {
             
             describe("Plugins") {
                 class FakeUIContainerPlugin: UIContainerPlugin {}
+                class AnotherUIContainerPlugin: UIContainerPlugin {}
                 
                 it("Should be able to add a new container UIPlugin") {
                     container.addPlugin(FakeUIContainerPlugin())
                     expect(container.plugins).toNot(beEmpty())
+                }
+                
+                it("Should be able to check if has a plugin with given class") {
+                    container.addPlugin(FakeUIContainerPlugin())
+                    expect(container.hasPlugin(FakeUIContainerPlugin)).to(beTrue())
+                }
+                
+                it("Should return false if plugin isn't on container") {
+                    container.addPlugin(FakeUIContainerPlugin())
+                    expect(container.hasPlugin(AnotherUIContainerPlugin)).to(beFalse())
                 }
             }
         }
