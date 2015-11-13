@@ -325,6 +325,12 @@ class ContainerTests: QuickSpec {
                     container.addPlugin(plugin)
                     expect(plugin.container) == container
                 }
+                
+                it("Should add plugin as subview") {
+                    let plugin = FakeUIContainerPlugin()
+                    container.addPlugin(plugin)
+                    expect(plugin.superview) == container
+                }
             }
         }
     }
