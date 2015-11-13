@@ -1,8 +1,11 @@
+import Foundation
+
 public class Container: UIBaseObject {
     public internal(set) var ready = false
     public internal(set) var dvrInUse = false
     public internal(set) var settings: [String : AnyObject] = [:]
-
+    public internal(set) var plugins: [UIContainerPlugin] = []
+    
     public var isPlaying: Bool {
         get {
             return playback.isPlaying
@@ -56,6 +59,10 @@ public class Container: UIBaseObject {
     
     public func seekTo(timeInterval: NSTimeInterval) {
         playback.seekTo(timeInterval)
+    }
+    
+    public func addPlugin(plugin: UIContainerPlugin) {
+        plugins.append(plugin)
     }
     
     private func bindEventListeners() {

@@ -300,6 +300,15 @@ class ContainerTests: QuickSpec {
                     }
                 }
             }
+            
+            describe("Plugins") {
+                class FakeUIContainerPlugin: UIContainerPlugin {}
+                
+                it("Should be able to add a new container UIPlugin") {
+                    container.addPlugin(FakeUIContainerPlugin())
+                    expect(container.plugins).toNot(beEmpty())
+                }
+            }
         }
     }
 }
