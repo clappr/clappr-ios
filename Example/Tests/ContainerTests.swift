@@ -319,6 +319,12 @@ class ContainerTests: QuickSpec {
                     container.addPlugin(FakeUIContainerPlugin())
                     expect(container.hasPlugin(AnotherUIContainerPlugin)).to(beFalse())
                 }
+                
+                it("Should add self reference on the plugin") {
+                    let plugin = FakeUIContainerPlugin()
+                    container.addPlugin(plugin)
+                    expect(plugin.container) == container
+                }
             }
         }
     }
