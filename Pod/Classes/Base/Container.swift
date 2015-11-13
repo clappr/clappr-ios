@@ -2,6 +2,12 @@ public class Container: UIBaseObject {
     public internal(set) var ready = false
     public internal(set) var dvrInUse = false
     public internal(set) var settings: [String : AnyObject] = [:]
+
+    public var isPlaying: Bool {
+        get {
+            return playback.isPlaying
+        }
+    }
     
     public internal(set) var mediaControlEnabled = false {
         didSet {

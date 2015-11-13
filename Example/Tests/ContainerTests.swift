@@ -242,6 +242,12 @@ class ContainerTests: QuickSpec {
                             }
                         }
                         
+                        override var isPlaying: Bool {
+                            get {
+                                return true
+                            }
+                        }
+                        
                         override private func stop() {
                             stopWasCalled = true
                         }
@@ -288,8 +294,11 @@ class ContainerTests: QuickSpec {
                         container.pause()
                         expect(mockedPlayback.pauseWasCalled).to(beTrue())
                     }
+                    
+                    it("Should return playback 'isPlaying' status when respective property is accessed") {
+                        expect(container.isPlaying) == mockedPlayback.isPlaying
+                    }
                 }
-                
             }
         }
     }
