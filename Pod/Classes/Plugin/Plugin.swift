@@ -1,3 +1,3 @@
-class Plugin: BaseObject {
+public class Plugin: BaseObject {
     
 }
