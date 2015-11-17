@@ -8,7 +8,7 @@ public class Playback: UIBaseObject {
     public internal(set) var isPlaying = false
     public internal(set) var isHighDefinitionInUse = false
     
-    public init (url: NSURL) {
+    public init(url: NSURL) {
         self.url = url
         super.init(frame: CGRect.zero)
     }

@@ -222,7 +222,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bufferBarView" destination="82D-Bh-tQP" id="978-gx-QRB"/>
-                <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="Jzk-Qr-lyJ"/>
+                <outlet property="bufferBarWidthContraint" destination="Rf3-6a-9h6" id="5CU-r4-dQf"/>
                 <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="Uw6-tg-Rxi"/>
                 <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="Ow8-bS-zke"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="znc-H8-Ghd"/>
@@ -230,7 +230,7 @@
                 <outlet property="playPauseButton" destination="0V7-z5-rdA" id="nEw-5L-Aid"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
-                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="gsw-13-Vxd"/>
+                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>
                 <outlet property="seekBarView" destination="7KX-hC-K7v" id="BmN-BO-nGf"/>
             </connections>
