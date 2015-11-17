@@ -6,7 +6,7 @@ PODS:
   - FBSnapshotTestCase/SwiftSupport (2.0.7):
     - FBSnapshotTestCase/Core
   - Nimble (3.0.0)
-  - Nimble-Snapshots (2.0.0):
+  - Nimble-Snapshots (3.0.0):
     - FBSnapshotTestCase (~> 2.0.7)
     - Nimble
     - Quick
@@ -24,10 +24,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Clappr: 1460c8ae25ef8a6ca578c89c5a78f2fab9ca3ef0
+  Clappr: 068e20985956b7b03fad33cad131db6d16a0c979
   FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
-  Nimble-Snapshots: 6ea674f21e2795e20e116fa1f18a397a1b21e610
+  Nimble-Snapshots: ab41dd737dcd33a0b0cb005a30465fef70b7207a
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
 
 COCOAPODS: 0.39.0
