@@ -1,10 +1,10 @@
 import UIKit
 
-class GradientView: UIView {
+public class GradientView: UIView {
     
     private var gradientLayer: CAGradientLayer!
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         
         gradientLayer = CAGradientLayer()
@@ -13,7 +13,7 @@ class GradientView: UIView {
         self.layer.insertSublayer(gradientLayer, atIndex: 0)
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = self.bounds
     }
