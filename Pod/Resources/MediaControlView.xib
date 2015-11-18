@@ -39,6 +39,7 @@
                                     <rect key="frame" x="-10" y="-23" width="30" height="12"/>
                                     <animations/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <accessibility key="accessibilityConfiguration" label="scrubber time"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -65,6 +66,7 @@
                                     <rect key="frame" x="0.0" y="4" width="0.0" height="1"/>
                                     <animations/>
                                     <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="seek bar"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
                                     </constraints>
@@ -96,6 +98,7 @@
                                         </view>
                                     </subviews>
                                     <animations/>
+                                    <accessibility key="accessibilityConfiguration" label="scrubber"/>
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="uDb-7w-G5b" secondAttribute="centerY" id="XLJ-AM-EQp"/>
@@ -130,6 +133,7 @@
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
                             <rect key="frame" x="20" y="15" width="46" height="21"/>
                             <animations/>
+                            <accessibility key="accessibilityConfiguration" label="current time"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -146,6 +150,7 @@
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
                             <rect key="frame" x="83" y="15" width="46" height="21"/>
                             <animations/>
+                            <accessibility key="accessibilityConfiguration" label="duration"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -187,6 +192,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
                     <rect key="frame" x="199" y="91" width="70" height="70"/>
                     <animations/>
+                    <accessibility key="accessibilityConfiguration" label="play/pause"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="gVx-m8-JNG"/>
                         <constraint firstAttribute="height" constant="70" id="pQV-FA-C1B"/>
@@ -207,6 +213,7 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" label="media control"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="0V7-z5-rdA" secondAttribute="centerY" id="39s-z0-GAQ"/>
