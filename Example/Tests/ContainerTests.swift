@@ -236,27 +236,24 @@ class ContainerTests: QuickSpec {
                 context("Bindings with mocked playback") {
                     class MockedSettingsPlayback: Playback {
                         var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
-                        override var settings: [String: AnyObject] {
-                            get {
-                                return ["foo": "bar"]
-                            }
+
+                        override func settings() -> [String: AnyObject] {
+                            return ["foo": "bar"]
                         }
                         
-                        override var isPlaying: Bool {
-                            get {
-                                return true
-                            }
+                        override func isPlaying() -> Bool {
+                            return true
                         }
                         
-                        override private func stop() {
+                        override func stop() {
                             stopWasCalled = true
                         }
                         
-                        override private func pause() {
+                        override func pause() {
                             pauseWasCalled = true
                         }
                         
-                        private override func play() {
+                        override func play() {
                             playWasCalled = true
                         }
                     }
@@ -296,7 +293,7 @@ class ContainerTests: QuickSpec {
                     }
                     
                     it("Should return playback 'isPlaying' status when respective property is accessed") {
-                        expect(container.isPlaying) == mockedPlayback.isPlaying
+                        expect(container.isPlaying) == mockedPlayback.isPlaying()
                     }
                 }
             }

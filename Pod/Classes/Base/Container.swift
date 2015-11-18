@@ -8,7 +8,7 @@ public class Container: UIBaseObject {
     
     public var isPlaying: Bool {
         get {
-            return playback.isPlaying
+            return playback.isPlaying()
         }
     }
     
@@ -100,7 +100,7 @@ public class Container: UIBaseObject {
     }
     
     private func settingsUpdated() {
-        settings = playback.settings
+        settings = playback.settings()
         self.trigger(ContainerEvent.SettingsUpdated)
     }
     
