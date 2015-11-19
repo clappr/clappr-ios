@@ -25,7 +25,21 @@ public class MediaControl: UIBaseObject {
         let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.container = container
+        mediaControl.bindEventListeners()
         return mediaControl
+    }
+    
+    private func bindEventListeners() {
+        for (event, callback) in eventBindings() {
+            listenTo(container, eventName: event.rawValue, callback: callback)
+        }
+    }
+    
+    private func eventBindings() -> [ContainerEvent : EventCallback] {
+        return [
+            .Play  : { [weak self] _ in self?.trigger(MediaControlEvent.Playing.rawValue) },
+            .Pause : { [weak self] _ in self?.trigger(MediaControlEvent.NotPlaying.rawValue) }
+        ]
     }
     
     public func hide() {
@@ -53,11 +67,13 @@ public class MediaControl: UIBaseObject {
     private func pause() {
         playPauseButton.selected = false
         container.pause()
+        trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func play() {
         playPauseButton.selected = true
         container.play()
+        trigger(MediaControlEvent.Playing.rawValue)
     }
     
 }

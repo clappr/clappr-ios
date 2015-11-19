@@ -69,6 +69,17 @@ class MediaControlTests: QuickSpec {
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playPauseButton.selected).to(beTrue())
                     }
+                    
+                    it("Should trigger playing event ") {
+                        var callbackWasCalled = false
+                        mediaControl.once(MediaControlEvent.Playing.rawValue) { _ in
+                            callbackWasCalled = true
+                        }
+                        
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
                 }
                 
                 context("Pause") {
@@ -85,6 +96,17 @@ class MediaControlTests: QuickSpec {
                         mediaControl.playPauseButton.selected = true
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playPauseButton.selected).to(beFalse())
+                    }
+                    
+                    it("Should trigger not playing event ") {
+                        var callbackWasCalled = false
+                        mediaControl.once(MediaControlEvent.NotPlaying.rawValue) { _ in
+                            callbackWasCalled = true
+                        }
+                        
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        
+                        expect(callbackWasCalled).to(beTrue())
                     }
                 }
             }
