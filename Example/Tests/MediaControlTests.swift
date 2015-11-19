@@ -7,10 +7,10 @@ class MediaControlTests: QuickSpec {
     override func spec() {
         describe("MediaControl") {
             let sourceUrl = NSURL(string: "http://globo.com/video.mp4")!
-            var container: Container!
+            var container: StubedContainer!
             
             beforeEach() {
-                container = Container(playback: Playback(url: sourceUrl))
+                container = StubedContainer(playback: Playback(url: sourceUrl))
             }
             
             context("Initialization") {
@@ -54,7 +54,34 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.controlsWrapperView.hidden).to(beFalse())
                     }
                 }
+                
+                context("Play") {
+                    it("Should call container play") {
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        expect(container.playWasCalled).to(beTrue())
+                        expect(container.pauseWasCalled).to(beFalse())
+                    }
+                    
+                    it("Should change button state to selected") {
+                        expect(mediaControl.playPauseButton.selected).to(beFalse())
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        expect(mediaControl.playPauseButton.selected).to(beTrue())
+                    }
+                }
             }
+        }
+    }
+    
+    class StubedContainer: Container {
+        var playWasCalled = false
+        var pauseWasCalled = false
+        
+        override func play() {
+            playWasCalled = true
+        }
+        
+        override func pause() {
+            pauseWasCalled = true
         }
     }
 }

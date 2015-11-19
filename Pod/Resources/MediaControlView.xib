@@ -206,8 +206,7 @@
                         <color key="titleColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="togglePlay" destination="xP5-UL-qkk" eventType="touchUpInside" id="Srs-Kc-URH"/>
-                        <action selector="togglePlay:" destination="xP5-UL-qkk" eventType="touchUpInside" id="h50-77-5sZ"/>
+                        <action selector="togglePlay:" destination="xP5-UL-qkk" eventType="touchUpInside" id="a1b-Mc-f2N"/>
                     </connections>
                 </button>
             </subviews>
