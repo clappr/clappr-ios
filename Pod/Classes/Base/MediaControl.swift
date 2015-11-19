@@ -41,6 +41,7 @@ public class MediaControl: UIBaseObject {
             .Pause      : { [weak self] _ in self?.trigger(.NotPlaying) },
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
+            .Ended      : { [weak self] _ in self?.playPauseButton.selected = false }
         ]
     }
     

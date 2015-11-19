@@ -134,6 +134,15 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.durationLabel.text) == "00:30"
                     }
                 }
+                
+                context("End") {
+                    it("Should reset play button state after container end event") {
+                        mediaControl.playPauseButton.selected = true
+                        container.trigger(ContainerEvent.Ended.rawValue)
+                        
+                        expect(mediaControl.playPauseButton.selected).to(beFalse())
+                    }
+                }
             }
         }
     }
