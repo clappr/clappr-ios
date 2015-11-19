@@ -122,6 +122,18 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.currentTimeLabel.text) == "01:18"
                     }
                 }
+                
+                context("Duration") {
+                    it("Should start with 00:00 as duration") {
+                        expect(mediaControl.currentTimeLabel.text) == "00:00"
+                    }
+                    
+                    it ("Should listen to Ready event ") {
+                        playback.trigger(PlaybackEvent.Ready.rawValue)
+                        
+                        expect(mediaControl.durationLabel.text) == "00:30"
+                    }
+                }
             }
         }
     }
@@ -139,6 +151,10 @@ class MediaControlTests: QuickSpec {
         
         override func pause() {
             playing = false
+        }
+        
+        override func duration() -> Double {
+            return 30
         }
     }
 }

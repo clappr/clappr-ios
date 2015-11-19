@@ -25,7 +25,7 @@ public class Playback: UIBaseObject {
         return [:]
     }
     
-    public func duration() -> Int {
+    public func duration() -> Double {
         return 0
     }
     

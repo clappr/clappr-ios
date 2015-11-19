@@ -5,11 +5,11 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var bufferBarView: UIView!
     @IBOutlet weak var progressBarView: UIView!
     @IBOutlet weak var scrubberView: ScrubberView!
-    @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var scrubberLabel: UILabel!
     @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
     @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak public var durationLabel: UILabel!
     @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
     @IBOutlet weak public var controlsWrapperView: UIView!
@@ -39,7 +39,8 @@ public class MediaControl: UIBaseObject {
         return [
             .Play       : { [weak self] _ in self?.trigger(.Playing) },
             .Pause      : { [weak self] _ in self?.trigger(.NotPlaying) },
-            .TimeUpdated: { [weak self] info in self?.timeUpdated(info) }
+            .Ready      : { [weak self] _ in self?.containerReady() },
+            .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
         ]
     }
     
@@ -47,6 +48,10 @@ public class MediaControl: UIBaseObject {
         if let position = info!["position"] as? NSTimeInterval {
             currentTimeLabel.text = DateFormatter.formatSeconds(position)
         }
+    }
+    
+    private func containerReady() {
+        durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
     }
     
     public func hide() {
