@@ -7,10 +7,12 @@ class MediaControlTests: QuickSpec {
     override func spec() {
         describe("MediaControl") {
             let sourceUrl = NSURL(string: "http://globo.com/video.mp4")!
-            var container: StubedContainer!
+            var container: Container!
+            var playback: StubedPlayback!
             
             beforeEach() {
-                container = StubedContainer(playback: Playback(url: sourceUrl))
+                playback = StubedPlayback(url: sourceUrl)
+                container = Container(playback: playback)
             }
             
             context("Initialization") {
@@ -56,32 +58,52 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 context("Play") {
-                    it("Should call container play") {
+                    it("Should call container play when is paused") {
+                        playback.playing = false
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-                        expect(container.playWasCalled).to(beTrue())
-                        expect(container.pauseWasCalled).to(beFalse())
+                        expect(container.isPlaying).to(beTrue())
                     }
                     
                     it("Should change button state to selected") {
-                        expect(mediaControl.playPauseButton.selected).to(beFalse())
+                        mediaControl.playPauseButton.selected = false
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playPauseButton.selected).to(beTrue())
+                    }
+                }
+                
+                context("Pause") {
+                    beforeEach() {
+                        playback.playing = true
+                    }
+                    
+                    it("Should call container pause when is playing") {
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        expect(container.isPlaying).to(beFalse())
+                    }
+                    
+                    it("Should change button state to not selected") {
+                        mediaControl.playPauseButton.selected = true
+                        mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        expect(mediaControl.playPauseButton.selected).to(beFalse())
                     }
                 }
             }
         }
     }
     
-    class StubedContainer: Container {
-        var playWasCalled = false
-        var pauseWasCalled = false
+    class StubedPlayback: Playback {
+        var playing = false
+        
+        override func isPlaying() -> Bool {
+            return playing
+        }
         
         override func play() {
-            playWasCalled = true
+            playing = true
         }
         
         override func pause() {
-            pauseWasCalled = true
+            playing = false
         }
     }
 }

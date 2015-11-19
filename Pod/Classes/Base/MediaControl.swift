@@ -43,13 +43,21 @@ public class MediaControl: UIBaseObject {
     }
 
     @IBAction func togglePlay(sender: UIButton) {
-        play()
+        if container.isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    private func pause() {
+        playPauseButton.selected = false
+        container.pause()
     }
     
     private func play() {
         playPauseButton.selected = true
         container.play()
-        
     }
     
 }
