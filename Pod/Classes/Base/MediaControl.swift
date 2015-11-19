@@ -6,11 +6,11 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var progressBarView: UIView!
     @IBOutlet weak var scrubberView: ScrubberView!
     @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var scrubberLabel: UILabel!
     @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
     @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
     @IBOutlet weak public var controlsWrapperView: UIView!
     @IBOutlet weak public var playPauseButton: UIButton!
@@ -31,14 +31,14 @@ public class MediaControl: UIBaseObject {
     
     private func bindEventListeners() {
         for (event, callback) in eventBindings() {
-            listenTo(container, eventName: event.rawValue, callback: callback)
+            container.listenTo(self, eventName: event.rawValue, callback: callback)
         }
     }
     
     private func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] _ in self?.trigger(MediaControlEvent.Playing.rawValue) },
-            .Pause : { [weak self] _ in self?.trigger(MediaControlEvent.NotPlaying.rawValue) }
+            .Play  : { [weak self] _ in self?.trigger(.Playing) },
+            .Pause : { [weak self] _ in self?.trigger(.NotPlaying) }
         ]
     }
     
@@ -76,4 +76,7 @@ public class MediaControl: UIBaseObject {
         trigger(MediaControlEvent.Playing.rawValue)
     }
     
+    private func trigger(event: MediaControlEvent) {
+        trigger(event.rawValue)
+    }
 }

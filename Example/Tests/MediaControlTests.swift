@@ -109,6 +109,12 @@ class MediaControlTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
                 }
+                
+                context("Current Time") {
+                    it("Should start with 00:00 as current time") {
+                        expect(mediaControl.currentTimeLabel.text) == "00:00"
+                    }
+                }
             }
         }
     }
