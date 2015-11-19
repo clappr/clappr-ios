@@ -19,6 +19,7 @@
 		969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9697039F1BEA716100B7F282 /* EventHandlerTests.swift */; };
 		969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */; };
 		96A979731BFBB65E00E5EA01 /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */; };
+		96A9797D1BFE2BCC00E5EA01 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */; };
 		96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B465691BF6027F0025975A /* UIPluginTests.swift */; };
 		D288014A37C71C9D540A3B9D /* Pods_Clappr_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B3F00F7073DDF93614B664 /* Pods_Clappr_Example.framework */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		9697039F1BEA716100B7F282 /* EventHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandlerTests.swift; sourceTree = "<group>"; };
 		969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
+		96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		96B465691BF6027F0025975A /* UIPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPluginTests.swift; sourceTree = "<group>"; };
 		97B3F00F7073DDF93614B664 /* Pods_Clappr_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA36F39DA8D5F805DEE57599 /* Pods-Clappr_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */,
 				96664E6B1BF209CB00095E6E /* ContainerTests.swift */,
+				96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */,
 				9697039F1BEA716100B7F282 /* EventHandlerTests.swift */,
 				96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */,
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
@@ -386,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A9797D1BFE2BCC00E5EA01 /* DateFormatterTests.swift in Sources */,
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
