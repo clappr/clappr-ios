@@ -37,9 +37,16 @@ public class MediaControl: UIBaseObject {
     
     private func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] _ in self?.trigger(.Playing) },
-            .Pause : { [weak self] _ in self?.trigger(.NotPlaying) }
+            .Play       : { [weak self] _ in self?.trigger(.Playing) },
+            .Pause      : { [weak self] _ in self?.trigger(.NotPlaying) },
+            .TimeUpdated: { [weak self] info in self?.timeUpdated(info) }
         ]
+    }
+    
+    private func timeUpdated(info: EventUserInfo) {
+        if let position = info!["position"] as? NSTimeInterval {
+            currentTimeLabel.text = DateFormatter.formatSeconds(position)
+        }
     }
     
     public func hide() {

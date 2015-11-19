@@ -114,6 +114,13 @@ class MediaControlTests: QuickSpec {
                     it("Should start with 00:00 as current time") {
                         expect(mediaControl.currentTimeLabel.text) == "00:00"
                     }
+                    
+                    it ("Should listen to current time updates") {
+                        let info: EventUserInfo = ["position" : 78]
+                        playback.trigger(PlaybackEvent.TimeUpdated.rawValue, userInfo: info)
+                        
+                        expect(mediaControl.currentTimeLabel.text) == "01:18"
+                    }
                 }
             }
         }
