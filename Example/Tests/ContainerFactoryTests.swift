@@ -9,15 +9,19 @@ class ContainerFactoryTests: QuickSpec {
         let secondUrl = NSURL(string: "http://test2.com")!
         let invalidUrl = NSURL(string: "invalid")!
         var factory: ContainerFactory!
-        let loader = Loader()
-        loader.playbackPlugins.append(StubPlayback)
+        var loader: Loader!
+        let validSources = [firstUrl, secondUrl]
+        
+        beforeEach() {
+            loader = Loader()
+            loader.playbackPlugins = [StubPlayback.self]
+        }
     
         context("Container creation") {
             it("Should create a container for each source") {
-                let sources = [firstUrl, secondUrl]
-                factory = ContainerFactory(sources: sources, loader: loader)
+                factory = ContainerFactory(sources: validSources, loader: loader)
                 
-                expect(factory.createContainers().count) == sources.count
+                expect(factory.createContainers().count) == validSources.count
             }
             
             it("Should not create container for url that cannot be played") {
@@ -33,6 +37,29 @@ class ContainerFactoryTests: QuickSpec {
                 
                 expect(factory.createContainers().count) == 2
             }
+            
+            it("Should add container plugins from loader") {
+                loader.containerPlugins = [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self]
+                
+                factory = ContainerFactory(sources: validSources, loader: loader)
+                let containers = factory.createContainers()
+                
+                expect(containers[0].hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(containers[0].hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
+                expect(containers[1].hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(containers[1].hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
+            }
+            
+            it("Should add valid plugins only") {
+                loader.containerPlugins = [InvalidContainerPlugin.self, FakeContainerPlugin.self]
+                factory = ContainerFactory(sources: validSources, loader: loader)
+                let containers = factory.createContainers()
+                
+                expect(containers[0].hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(containers[0].hasPlugin(InvalidContainerPlugin)).to(beFalse())
+                expect(containers[1].hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(containers[1].hasPlugin(InvalidContainerPlugin)).to(beFalse())
+            }
         }
     }
     
@@ -41,4 +68,8 @@ class ContainerFactoryTests: QuickSpec {
             return url.absoluteString != "invalid"
         }
     }
+    
+    class FakeContainerPlugin: UIContainerPlugin {}
+    class AnotherFakeContainerPlugin: UIContainerPlugin {}
+    class InvalidContainerPlugin: NSObject {}
 }
