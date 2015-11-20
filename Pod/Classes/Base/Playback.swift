@@ -3,7 +3,7 @@ import Foundation
 public class Playback: UIBaseObject {
     public internal(set) var url: NSURL
     
-    public init(url: NSURL) {
+    public required init(url: NSURL) {
         self.url = url
         super.init(frame: CGRect.zero)
     }

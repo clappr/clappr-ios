@@ -1,11 +1,11 @@
 public class Loader {
     public static let sharedInstance = Loader()
     
-    public internal(set) var playbackPlugins: [Playback]
-    public internal(set) var containerPlugins: [UIContainerPlugin]
-    public internal(set) var corePlugins: [Plugin]
+    public var playbackPlugins: [AnyClass]
+    public var containerPlugins: [UIContainerPlugin]
+    public var corePlugins: [Plugin]
     
-    init() {
+    public init() {
         playbackPlugins = []
         containerPlugins = []
         corePlugins = []
