@@ -13,7 +13,7 @@ class UIPluginTests: QuickSpec {
             }
         }
         
-        describe("Behaviour") {
+        describe("Behavior") {
             var plugin: UIPlugin!
             
             beforeEach() {
