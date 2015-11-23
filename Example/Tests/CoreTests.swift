@@ -35,6 +35,22 @@ class CoreTests: QuickSpec {
                     expect(core.mediaControl.container) == core.containers.first
                 }
             }
+            
+            describe("Plugins") {
+                context("Addition") {
+                    it("Should be able to add plugins") {
+                        core.addPlugin(FakeCorePlugin())
+                        expect(core.plugins.count) == 1
+                    }
+                    
+                    it("Should add plugin as subview") {
+                        let plugin = FakeCorePlugin()
+                        core.addPlugin(plugin)
+                        
+                        expect(plugin.superview) == core
+                    }
+                }
+            }
         }
     }
     
@@ -43,4 +59,6 @@ class CoreTests: QuickSpec {
             return true
         }
     }
+    
+    class FakeCorePlugin: UICorePlugin {}
 }

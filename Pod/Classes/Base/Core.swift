@@ -2,6 +2,7 @@ public class Core: UIBaseObject {
     public private(set) var sources: [NSURL]
     public private(set) var containers: [Container]!
     public private(set) var mediaControl: MediaControl!
+    public private(set) var plugins: [UICorePlugin] = []
     private var loader: Loader
     
     public convenience init(sources: [NSURL]) {
@@ -33,5 +34,11 @@ public class Core: UIBaseObject {
         if let topContainer = containers.first {
             mediaControl = MediaControl.initWithContainer(topContainer)
         }
+    }
+    
+    public func addPlugin(plugin: UICorePlugin) {
+        plugin.core = self
+        plugins.append(plugin)
+        addSubview(plugin)
     }
 }
