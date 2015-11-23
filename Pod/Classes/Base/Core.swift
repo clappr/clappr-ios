@@ -41,4 +41,8 @@ public class Core: UIBaseObject {
         plugins.append(plugin)
         addSubview(plugin)
     }
+    
+    public func hasPlugin(pluginClass: AnyClass) -> Bool {
+        return plugins.filter({$0.isKindOfClass(pluginClass)}).count > 0
+    }
 }
