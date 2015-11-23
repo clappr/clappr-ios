@@ -1,6 +1,7 @@
 public class Core: UIBaseObject {
-    public private(set) var sources:[NSURL]
-    public private(set) var containers:[Container]!
+    public private(set) var sources: [NSURL]
+    public private(set) var containers: [Container]!
+    public private(set) var mediaControl: MediaControl!
     private var loader: Loader
     
     public convenience init(sources: [NSURL]) {
@@ -11,15 +12,26 @@ public class Core: UIBaseObject {
         self.sources = sources
         self.loader = loader
         super.init(frame: CGRectZero)
-        self.createContainers()
+        self.load()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
+    private func load() {
+        createContainers()
+        createMediaControl()
+    }
+    
     private func createContainers() {
         let factory = ContainerFactory(sources: sources, loader: loader)
         containers = factory.createContainers()
+    }
+    
+    private func createMediaControl() {
+        if let topContainer = containers.first {
+            mediaControl = MediaControl.initWithContainer(topContainer)
+        }
     }
 }

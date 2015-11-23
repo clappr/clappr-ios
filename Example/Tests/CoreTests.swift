@@ -28,6 +28,13 @@ class CoreTests: QuickSpec {
                     expect(core.containers[1].playback.url) == sources[1]
                 }
             }
+            
+            context("Media Control") {
+                it("Should be created in top most container") {
+                    expect(core.mediaControl).toNot(beNil())
+                    expect(core.mediaControl.container) == core.containers.first
+                }
+            }
         }
     }
     
