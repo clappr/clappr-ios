@@ -33,7 +33,7 @@ public class ContainerFactory {
     }
     
     private func addPlugins(container: Container) -> Container {
-        for type:UIContainerPlugin.Type in plugins as! [UIContainerPlugin.Type]{
+        for type in plugins as! [UIContainerPlugin.Type]{
             container.addPlugin(type.init())
         }
         return container

@@ -1,7 +1,7 @@
 public class Loader {
     public var playbackPlugins: [AnyClass]
     public var containerPlugins: [AnyClass]
-    public var corePlugins: [Plugin]
+    public var corePlugins: [AnyClass]
     
     public init() {
         playbackPlugins = []
