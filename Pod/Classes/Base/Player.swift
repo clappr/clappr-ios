@@ -14,5 +14,6 @@ public class Player {
     public func attachTo(view: UIView) {
         view.addSubviewMatchingContraints(core)
         core.load()
+        core.containers.first?.play()
     }
 }
