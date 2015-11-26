@@ -12,6 +12,7 @@ public class Player {
     }
     
     public func attachTo(view: UIView) {
-        view.addSubview(core)
+        view.addSubviewMatchingContraints(core)
+        core.load()
     }
 }

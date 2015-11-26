@@ -26,11 +26,11 @@ public class Container: UIBaseObject {
         }
     }
 
-    public init (playback: Playback) {
+    public init(playback: Playback) {
         self.playback = playback
         super.init(frame: CGRect.zero)
-        self.addSubview(playback)
         bindEventListeners()
+        addSubviewMatchingContraints(playback)
     }
     
     public required init?(coder aDecoder: NSCoder) {

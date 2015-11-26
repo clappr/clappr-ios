@@ -13,14 +13,13 @@ public class Core: UIBaseObject {
         self.sources = sources
         self.loader = loader
         super.init(frame: CGRectZero)
-        self.load()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
-    private func load() {
+    public func load() {
         createContainers()
         createMediaControl()
     }
@@ -28,11 +27,16 @@ public class Core: UIBaseObject {
     private func createContainers() {
         let factory = ContainerFactory(sources: sources, loader: loader)
         containers = factory.createContainers()
+        
+        for container in containers {
+            addSubviewMatchingContraints(container)
+        }
     }
     
     private func createMediaControl() {
         if let topContainer = containers.first {
             mediaControl = MediaControl.initWithContainer(topContainer)
+            topContainer.addSubviewMatchingContraints(mediaControl)
         }
     }
     

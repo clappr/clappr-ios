@@ -23,6 +23,10 @@ public class AVFoundationPlayback: Playback {
         avPlayer.play()
     }
     
+    public override func layoutSubviews() {
+        avPlayerLayer.frame = self.bounds
+    }
+    
     public override func pause() {
         avPlayer.pause()
     }
