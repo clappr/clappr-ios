@@ -41,6 +41,14 @@ public class Playback: UIBaseObject {
         return false
     }
     
+    internal func trigger(event: PlaybackEvent) {
+        trigger(event.rawValue)
+    }
+    
+    internal func trigger(event: PlaybackEvent, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
+    }
+    
     public func play() {}
     public func pause() {}
     public func stop() {}
