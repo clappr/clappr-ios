@@ -19,16 +19,20 @@ public class AVFoundationPlayback: Playback {
         self.layer.addSublayer(avPlayerLayer)
     }
     
-    public override func play() {
-        avPlayer.play()
-    }
-    
     public override func layoutSubviews() {
         avPlayerLayer.frame = self.bounds
     }
     
+    public override func play() {
+        avPlayer.play()
+    }
+    
     public override func pause() {
         avPlayer.pause()
+    }
+    
+    public override func isPlaying() -> Bool {
+        return avPlayer.rate > 0
     }
     
     public override class func canPlay(url: NSURL) -> Bool {
