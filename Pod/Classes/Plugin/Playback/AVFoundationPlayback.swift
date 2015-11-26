@@ -59,15 +59,18 @@ public class AVFoundationPlayback: Playback {
         change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
             switch context {
             case &kvoStatusDidChangeContext:
-                if player.status == .ReadyToPlay {
-                    self.trigger(.Ready)
-                } else if player.status == .Failed {
-                    self.trigger(.Error, userInfo: ["error": player.currentItem!.error!])
-                }
-                
+                handleStatusChangedEvent()
             default:
                 break
             }
+    }
+    
+    private func handleStatusChangedEvent() {
+        if player.status == .ReadyToPlay {
+            self.trigger(.Ready)
+        } else if player.status == .Failed {
+            self.trigger(.Error, userInfo: ["error": player.currentItem!.error!])
+        }
     }
     
     deinit {
