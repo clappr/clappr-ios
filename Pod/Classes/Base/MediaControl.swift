@@ -26,6 +26,7 @@ public class MediaControl: UIBaseObject {
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.container = container
         mediaControl.bindEventListeners()
+        mediaControl.backgroundColor = UIColor.clearColor()
         return mediaControl
     }
     
