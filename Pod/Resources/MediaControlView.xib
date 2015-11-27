@@ -17,6 +17,11 @@
         <tapGestureRecognizer id="t1W-k2-tTA" userLabel="Toggle Media Control"/>
         <panGestureRecognizer minimumNumberOfTouches="1" id="c8u-Fn-wlL" userLabel="Seek Bar Drag"/>
         <tapGestureRecognizer id="gQ0-6C-NEK" userLabel="Fullscreen"/>
+        <tapGestureRecognizer id="JsT-9Y-ACx">
+            <connections>
+                <action selector="toggleVisibility:" destination="xP5-UL-qkk" id="AYm-1V-7Up"/>
+            </connections>
+        </tapGestureRecognizer>
         <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="QLO-67-VVi" userLabel="Long Press Scrubber"/>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control" customClass="MediaControl" customModule="Clappr" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
@@ -239,6 +244,7 @@
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>
                 <outlet property="seekBarView" destination="7KX-hC-K7v" id="BmN-BO-nGf"/>
+                <outletCollection property="gestureRecognizers" destination="JsT-9Y-ACx" appends="YES" id="fVo-S1-QIW"/>
             </connections>
             <point key="canvasLocation" x="336.5" y="495"/>
         </view>

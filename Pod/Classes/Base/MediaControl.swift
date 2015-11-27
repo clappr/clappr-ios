@@ -1,6 +1,8 @@
 import Foundation
 
 public class MediaControl: UIBaseObject {
+    private let animationDuration = 0.3
+    
     @IBOutlet weak var seekBarView: UIView!
     @IBOutlet weak var bufferBarView: UIView!
     @IBOutlet weak var progressBarView: UIView!
@@ -16,6 +18,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var playPauseButton: UIButton!
     
     public internal(set) var container: Container!
+    public internal(set) var controlsHidden = false
     
     private var bufferPercentage:CGFloat = 0.0
     private var seekPercentage:CGFloat = 0.0
@@ -100,11 +103,29 @@ public class MediaControl: UIBaseObject {
     public func show() {
         setSubviewsVisibility(hidden: false)
     }
+
+    public func showAnimated() {
+        setSubviewsVisibility(hidden: false, animated: true)
+    }
     
-    private func setSubviewsVisibility(hidden hidden: Bool) {
-        for subview in subviews {
-            subview.hidden = hidden
-        }
+    public func hideAnimated() {
+        setSubviewsVisibility(hidden: true, animated: true)
+    }
+    
+    private func setSubviewsVisibility(hidden hidden: Bool, animated: Bool = false) {
+        let duration = animated ? animationDuration : 0
+        
+        UIView.animateWithDuration(duration, animations: {
+            for subview in self.subviews {
+                subview.alpha = hidden ? 0 : 1
+            }
+        })
+        
+        self.controlsHidden = hidden
+    }
+    
+    @IBAction func toggleVisibility(sender: AnyObject) {
+        controlsHidden ? showAnimated() : hideAnimated()
     }
 
     @IBAction func togglePlay(sender: UIButton) {
