@@ -16,6 +16,15 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var playPauseButton: UIButton!
     
     public internal(set) var container: Container!
+    
+    private var bufferPercentage:CGFloat = 0.0
+    private var seekPercentage:CGFloat = 0.0
+    private var isSeeking = false
+    private var duration: CGFloat {
+        get {
+            return CGFloat(container.playback.duration())
+        }
+    }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,14 +51,42 @@ public class MediaControl: UIBaseObject {
             .Pause      : { [weak self] _ in self?.trigger(.NotPlaying) },
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
+            .Progress   : { [weak self] info in self?.progressUpdated(info) },
             .Ended      : { [weak self] _ in self?.playPauseButton.selected = false }
         ]
     }
     
     private func timeUpdated(info: EventUserInfo) {
-        if let position = info!["position"] as? NSTimeInterval {
-            currentTimeLabel.text = DateFormatter.formatSeconds(position)
+        guard let position = info!["position"] as? NSTimeInterval else {
+            return
         }
+        
+        currentTimeLabel.text = DateFormatter.formatSeconds(position)
+        seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
+        updateScrubberPosition()
+    }
+    
+    private func progressUpdated(info: EventUserInfo) {
+        guard let end = info!["end_position"] as? CGFloat else {
+            return
+        }
+        
+        bufferPercentage = duration == 0 ? 0 : end / duration
+        updateBars()
+    }
+    
+    private func updateScrubberPosition() {
+        if !isSeeking {
+            let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
+            scrubberLeftConstraint.constant = delta
+            scrubberView.setNeedsLayout()
+            progressBarView.setNeedsLayout()
+        }
+    }
+    
+    private func updateBars() {
+        bufferBarWidthContraint.constant = seekBarView.frame.size.width * bufferPercentage
+        bufferBarView.layoutIfNeeded()
     }
     
     private func containerReady() {
