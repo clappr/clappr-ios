@@ -14,6 +14,7 @@ public class AVFoundationPlayback: Playback {
         super.init(url: url)
         setupPlayer()
         addKeyValueObservers()
+        addTimeElapsedCallback()
     }
     
     private func setupPlayer() {
@@ -25,6 +26,20 @@ public class AVFoundationPlayback: Playback {
     private func addKeyValueObservers() {
         player.addObserver(self, forKeyPath: "currentItem.status",
             options: .New, context: &kvoStatusDidChangeContext)
+        player.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
+            options: .New, context: &kvoTimeRangesContext)
+    }
+    
+    private func addTimeElapsedCallback() {
+        player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.5, 600), queue: nil) { [weak self] time in
+            self?.timeUpdated(time)
+        }
+    }
+    
+    private func timeUpdated(time: CMTime) {
+        if isPlaying() {
+            self.trigger(PlaybackEvent.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
+        }
     }
     
     public override func layoutSubviews() {
