@@ -2,6 +2,7 @@ import AVFoundation
 
 public class AVFoundationPlayback: Playback {
     private var kvoStatusDidChangeContext = 0
+    private var kvoTimeRangesContext = 0
     
     private var player: AVPlayer!
     private var playerLayer: AVPlayerLayer!
@@ -75,6 +76,8 @@ public class AVFoundationPlayback: Playback {
             switch context {
             case &kvoStatusDidChangeContext:
                 handleStatusChangedEvent()
+            case &kvoTimeRangesContext:
+                handleTimeRangesEvent()
             default:
                 break
             }
@@ -88,7 +91,20 @@ public class AVFoundationPlayback: Playback {
         }
     }
     
+    private func handleTimeRangesEvent() {
+        guard let timeRange = player.currentItem?.loadedTimeRanges.first?.CMTimeRangeValue else {
+            return
+        }
+        
+        let info = ["start_position" : CMTimeGetSeconds(timeRange.start),
+                      "end_position" : CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
+                          "duration" : CMTimeGetSeconds(timeRange.start)]
+        
+        trigger(.Progress, userInfo: info)
+    }
+    
     deinit {
         player.removeObserver(self, forKeyPath: "currentItem.status")
+        player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
     }
 }
