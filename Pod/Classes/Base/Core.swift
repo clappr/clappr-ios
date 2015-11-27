@@ -5,6 +5,10 @@ public class Core: UIBaseObject {
     public private(set) var plugins: [UICorePlugin] = []
     private var loader: Loader
     
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("Should be using init(sources:[NSURL]) instead")
+    }
+    
     public convenience init(sources: [NSURL]) {
         self.init(sources: sources, loader: Loader())
     }
@@ -13,10 +17,6 @@ public class Core: UIBaseObject {
         self.sources = sources
         self.loader = loader
         super.init(frame: CGRectZero)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
     public func load() {
