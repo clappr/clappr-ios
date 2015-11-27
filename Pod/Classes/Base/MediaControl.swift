@@ -22,7 +22,14 @@ public class MediaControl: UIBaseObject {
     
     private var bufferPercentage:CGFloat = 0.0
     private var seekPercentage:CGFloat = 0.0
-    private var isSeeking = false
+    private var scrubberInitialPosition: CGFloat!
+    
+    private var isSeeking = false {
+        didSet {
+            scrubberLabel.hidden = !isSeeking
+        }
+    }
+    
     private var duration: CGFloat {
         get {
             return CGFloat(container.playback.duration())
@@ -37,9 +44,14 @@ public class MediaControl: UIBaseObject {
         let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.container = container
-        mediaControl.bindEventListeners()
-        mediaControl.backgroundColor = UIColor.clearColor()
+        mediaControl.setup()
         return mediaControl
+    }
+    
+    private func setup() {
+        bindEventListeners()
+        backgroundColor = UIColor.clearColor()
+        scrubberInitialPosition = scrubberLeftConstraint.constant
     }
     
     private func bindEventListeners() {
@@ -81,7 +93,7 @@ public class MediaControl: UIBaseObject {
     private func updateScrubberPosition() {
         if !isSeeking {
             let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
-            scrubberLeftConstraint.constant = delta
+            scrubberLeftConstraint.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
             progressBarView.setNeedsLayout()
         }
@@ -148,6 +160,28 @@ public class MediaControl: UIBaseObject {
         trigger(MediaControlEvent.Playing.rawValue)
     }
     
+    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
+        let touchPoint = panGesture.locationInView(seekBarView)
+        
+        switch panGesture.state {
+        case .Began:
+            isSeeking = true
+        case .Changed:
+            scrubberLeftConstraint.constant = touchPoint.x + scrubberInitialPosition
+            scrubberLabel.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            scrubberView.setNeedsLayout()
+        case .Ended:
+            container.seekTo(secondsRelativeToPoint(touchPoint))
+            isSeeking = false
+        default: break
+        }
+    }
+    
+    private func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
+        let positionPercentage = touchPoint.x / seekBarView.frame.size.width
+        return Double(duration * positionPercentage)
+    }
+
     private func trigger(event: MediaControlEvent) {
         trigger(event.rawValue)
     }

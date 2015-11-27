@@ -39,7 +39,7 @@ public class AVFoundationPlayback: Playback {
     
     private func timeUpdated(time: CMTime) {
         if isPlaying() {
-            self.trigger(PlaybackEvent.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
+            trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
         }
     }
     
@@ -63,7 +63,7 @@ public class AVFoundationPlayback: Playback {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
         
         player.currentItem?.seekToTime(time)
-        timeUpdated(time)
+        trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
     }
     
     public override func duration() -> Double {
