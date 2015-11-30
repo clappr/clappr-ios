@@ -11,7 +11,7 @@ public class BaseObject: NSObject, EventProtocol {
     private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) {
         let eventHandler = EventHandler(callback: wrapEventCallback(eventName, callback: callback))
         
-        notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: self)
+        notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
         
         let key = keyForEvent(eventName, contextObject: contextObject, callback: callback)
         eventHandlers[key] = eventHandler
@@ -44,7 +44,7 @@ public class BaseObject: NSObject, EventProtocol {
         let key = keyForEvent(eventName, contextObject: contextObject, callback:callback)
         let eventHandler = eventHandlers[key]!
         
-        notificationCenter().removeObserver(eventHandler, name: eventName, object: self)
+        notificationCenter().removeObserver(eventHandler, name: eventName, object: contextObject)
         eventHandlers.removeValueForKey(key)
     }
     

@@ -73,7 +73,7 @@ public class Container: UIBaseObject {
     
     private func bindEventListeners() {
         for (event, callback) in eventBindings() {
-            playback.listenTo(self, eventName: event.rawValue, callback: callback)
+            listenTo(playback, eventName: event.rawValue, callback: callback)
         }
     }
     

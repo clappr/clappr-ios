@@ -96,7 +96,7 @@ class BaseObjectTests: QuickSpec {
                     let contextObject = BaseObject()
                     
                     baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
-                    baseObject.trigger(eventName)
+                    contextObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == true
                 }

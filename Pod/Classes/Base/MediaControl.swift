@@ -56,7 +56,7 @@ public class MediaControl: UIBaseObject {
     
     private func bindEventListeners() {
         for (event, callback) in eventBindings() {
-            container.listenTo(self, eventName: event.rawValue, callback: callback)
+            listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
     
