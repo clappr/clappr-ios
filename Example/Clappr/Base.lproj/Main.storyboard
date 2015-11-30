@@ -19,18 +19,24 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-hA-IRs" userLabel="Player Container">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="30R-xP-Ym2"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="30R-xP-Ym2"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5zE-hA-IRs" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-20" id="2V5-15-1vR"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="5zE-hA-IRs" secondAttribute="bottom" id="ULG-ic-dbv"/>
                             <constraint firstItem="5zE-hA-IRs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-20" id="gHG-UN-LaX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5zE-hA-IRs" secondAttribute="trailing" constant="-20" id="t57-9V-Zkj"/>
                         </constraints>
