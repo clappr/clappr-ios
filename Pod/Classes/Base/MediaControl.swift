@@ -23,6 +23,7 @@ public class MediaControl: UIBaseObject {
     private var bufferPercentage:CGFloat = 0.0
     private var seekPercentage:CGFloat = 0.0
     private var scrubberInitialPosition: CGFloat!
+    private var hideControlsTimer: NSTimer!
     
     private var isSeeking = false {
         didSet {
@@ -145,6 +146,7 @@ public class MediaControl: UIBaseObject {
             pause()
         } else {
             play()
+            scheduleTimerToHideControls()
         }
     }
     
@@ -158,6 +160,19 @@ public class MediaControl: UIBaseObject {
         playPauseButton.selected = true
         container.play()
         trigger(MediaControlEvent.Playing.rawValue)
+    }
+    
+    private func scheduleTimerToHideControls() {
+        hideControlsTimer = NSTimer.scheduledTimerWithTimeInterval(3.0,
+            target: self, selector: "hideAfterPlay", userInfo: nil, repeats: false)
+    }
+    
+    func hideAfterPlay() {
+        if container.isPlaying {
+            hideAnimated()
+        }
+        
+        hideControlsTimer.invalidate()
     }
     
     @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
