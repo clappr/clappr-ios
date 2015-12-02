@@ -14,7 +14,7 @@ public class AVFoundationPlayback: Playback {
     public required init(url: NSURL) {
         super.init(url: url)
         setupPlayer()
-        addKeyValueObservers()
+        addObservers()
         addTimeElapsedCallback()
     }
     
@@ -24,11 +24,19 @@ public class AVFoundationPlayback: Playback {
         self.layer.addSublayer(playerLayer)
     }
     
-    private func addKeyValueObservers() {
+    private func addObservers() {
         player.addObserver(self, forKeyPath: "currentItem.status",
             options: .New, context: &kvoStatusDidChangeContext)
         player.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
             options: .New, context: &kvoTimeRangesContext)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playbackDidEnd",
+            name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
+    }
+    
+    func playbackDidEnd() {
+        player.seekToTime(kCMTimeZero)
+        trigger(.Ended)
     }
     
     private func addTimeElapsedCallback() {
@@ -113,5 +121,6 @@ public class AVFoundationPlayback: Playback {
     deinit {
         player.removeObserver(self, forKeyPath: "currentItem.status")
         player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
