@@ -5,7 +5,7 @@ public class Loader {
     
     public init() {
         playbackPlugins = [AVFoundationPlayback.self]
-        containerPlugins = []
+        containerPlugins = [LoadingContainerPlugin.self]
         corePlugins = []
     }
 }
