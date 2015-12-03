@@ -1,11 +1,17 @@
 import AVFoundation
 
+enum PlaybackState {
+    case Idle, Paused, Playing
+}
+
 public class AVFoundationPlayback: Playback {
     private var kvoStatusDidChangeContext = 0
     private var kvoTimeRangesContext = 0
+    private var kvoBufferingContext = 0
     
     private var player: AVPlayer!
     private var playerLayer: AVPlayerLayer!
+    private var currentState = PlaybackState.Idle
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Use init(url: NSURL) instead")
@@ -29,12 +35,17 @@ public class AVFoundationPlayback: Playback {
             options: .New, context: &kvoStatusDidChangeContext)
         player.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
             options: .New, context: &kvoTimeRangesContext)
+        player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
+            options: .New, context: &kvoBufferingContext)
+        player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
+            options: .New, context: &kvoBufferingContext)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playbackDidEnd",
             name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
     }
     
     func playbackDidEnd() {
+        currentState = .Idle
         player.seekToTime(kCMTimeZero)
         trigger(.Ended)
     }
@@ -57,10 +68,14 @@ public class AVFoundationPlayback: Playback {
     
     public override func play() {
         player.play()
+        currentState = .Playing
+        trigger(.Play)
     }
     
     public override func pause() {
         player.pause()
+        currentState = .Paused
+        trigger(.Pause)
     }
     
     public override func isPlaying() -> Bool {
@@ -93,6 +108,8 @@ public class AVFoundationPlayback: Playback {
                 handleStatusChangedEvent()
             case &kvoTimeRangesContext:
                 handleTimeRangesEvent()
+            case &kvoBufferingContext:
+                handleBufferingEvent(keyPath!)
             default:
                 break
             }
@@ -118,9 +135,26 @@ public class AVFoundationPlayback: Playback {
         trigger(.Progress, userInfo: info)
     }
     
+    private func handleBufferingEvent(keyPath: String) {
+        if keyPath == "currentItem.playbackLikelyToKeepUp" {
+            if shouldResumePlayAfterBufferEvent() {
+                play()
+            }
+        } else if keyPath == "currentItem.playbackBufferEmpty" {
+            trigger(.Buffering)
+        }
+    }
+    
+    private func shouldResumePlayAfterBufferEvent() -> Bool {
+        return player.rate == 0 && currentState == .Playing
+            && player.currentItem!.playbackLikelyToKeepUp
+    }
+    
     deinit {
         player.removeObserver(self, forKeyPath: "currentItem.status")
         player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+        player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
+        player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
