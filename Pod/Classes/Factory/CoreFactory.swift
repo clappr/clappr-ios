@@ -2,11 +2,7 @@ public class CoreFactory {
     private var sources: [NSURL]
     private var loader: Loader
     
-    public convenience init(sources: [NSURL]) {
-        self.init(sources: sources, loader: Loader())
-    }
-    
-    public init(sources: [NSURL], loader: Loader) {
+    public init(sources: [NSURL], loader: Loader = Loader()) {
         self.sources = sources
         self.loader = loader
     }
