@@ -64,7 +64,7 @@ public class Container: UIBaseObject {
     public func addPlugin(plugin: UIContainerPlugin) {
         plugin.container = self
         plugins.append(plugin)
-        addSubviewMatchingContraints(plugin)
+        addSubview(plugin)
         plugin.wasIntalled()
     }
     
