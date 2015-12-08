@@ -37,7 +37,13 @@ public class Core: UIBaseObject {
         if let topContainer = containers.first {
             mediaControl = MediaControl.initWithContainer(topContainer)
             topContainer.addSubviewMatchingContraints(mediaControl)
+            addTapRecognizer()
         }
+    }
+    
+    private func addTapRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: "toggleVisibility")
+        containers.first?.addGestureRecognizer(tapRecognizer)
     }
     
     public func addPlugin(plugin: UICorePlugin) {

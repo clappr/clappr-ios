@@ -137,7 +137,7 @@ public class MediaControl: UIBaseObject {
         self.controlsHidden = hidden
     }
     
-    @IBAction func toggleVisibility(sender: AnyObject) {
+    public func toggleVisibility() {
         controlsHidden ? showAnimated() : hideAnimated()
     }
 
