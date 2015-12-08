@@ -20,15 +20,23 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     }
     
     private func addCenteringConstraints() {
-        spinningWheel.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
         
-        let xCenterConstraint = NSLayoutConstraint(item: spinningWheel, attribute: .CenterX,
-            relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0)
-        addConstraint(xCenterConstraint)
+        let widthConstraint = NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal,
+            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.width)
+        addConstraint(widthConstraint)
         
-        let yCenterConstraint = NSLayoutConstraint(item: spinningWheel, attribute: .CenterY,
-            relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
-        addConstraint(yCenterConstraint)
+        let heightConstraint = NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal,
+            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.height)
+        addConstraint(heightConstraint)
+        
+        let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterX,
+            relatedBy: .Equal, toItem: container!, attribute: .CenterX, multiplier: 1, constant: 0)
+        container!.addConstraint(xCenterConstraint)
+        
+        let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterY,
+            relatedBy: .Equal, toItem: container!, attribute: .CenterY, multiplier: 1, constant: 0)
+        container!.addConstraint(yCenterConstraint)
     }
     
     private func bindEventListeners() {
