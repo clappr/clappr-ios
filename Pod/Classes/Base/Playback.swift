@@ -6,6 +6,7 @@ public class Playback: UIBaseObject {
     public required init(url: NSURL) {
         self.url = url
         super.init(frame: CGRect.zero)
+        userInteractionEnabled = false
     }
 
     public required init?(coder aDecoder: NSCoder) {
