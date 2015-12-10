@@ -1,4 +1,4 @@
-public class Core: UIBaseObject {
+public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var sources: [NSURL]
     public private(set) var containers: [Container]!
     public private(set) var mediaControl: MediaControl!
@@ -43,6 +43,7 @@ public class Core: UIBaseObject {
     
     private func addTapRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: "toggleVisibility")
+        tapRecognizer.delegate = self
         containers.first?.addGestureRecognizer(tapRecognizer)
     }
     
@@ -54,5 +55,9 @@ public class Core: UIBaseObject {
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {
         return plugins.filter({$0.isKindOfClass(pluginClass)}).count > 0
+    }
+    
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return touch.view == containers.first! || touch.view == mediaControl
     }
 }

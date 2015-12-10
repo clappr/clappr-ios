@@ -134,7 +134,8 @@ public class MediaControl: UIBaseObject {
             }
         })
         
-        self.controlsHidden = hidden
+        userInteractionEnabled = !hidden
+        controlsHidden = hidden
     }
     
     public func toggleVisibility() {
