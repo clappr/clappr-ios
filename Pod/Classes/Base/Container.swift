@@ -65,7 +65,7 @@ public class Container: UIBaseObject {
         plugin.container = self
         plugins.append(plugin)
         addSubview(plugin)
-        plugin.wasIntalled()
+        plugin.wasInstalled()
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {

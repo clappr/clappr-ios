@@ -7,4 +7,6 @@ public class UIPlugin: UIBaseObject {
             }
         }
     }
+    
+    public func wasInstalled() {}
 }
