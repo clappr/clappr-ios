@@ -7,6 +7,7 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         spinningWheel.startAnimating()
         super.init(frame: CGRectZero)
         addSubview(spinningWheel)
+        userInteractionEnabled = false
     }
     
     required public init?(coder aDecoder: NSCoder) {
