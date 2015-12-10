@@ -12,6 +12,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let player = Player(source: NSURL(string: "http://clappr.io/highline.mp4")!)
-        player.attachTo(playerContainer)
+        player.attachTo(playerContainer, controller: self)
     }
 }

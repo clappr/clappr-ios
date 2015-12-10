@@ -3,6 +3,8 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var containers: [Container]!
     public private(set) var mediaControl: MediaControl!
     public private(set) var plugins: [UICorePlugin] = []
+    public var parentController: UIViewController?
+    
     private var loader: Loader
     
     required public init?(coder aDecoder: NSCoder) {

@@ -11,8 +11,9 @@ public class Player {
         self.core = CoreFactory(sources: sources, loader: loader).create()
     }
     
-    public func attachTo(view: UIView) {
+    public func attachTo(view: UIView, controller: UIViewController) {
         view.addSubviewMatchingContraints(core)
+        core.parentController = controller
         core.load()
     }
 }
