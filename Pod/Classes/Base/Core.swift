@@ -38,7 +38,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private func createMediaControl() {
         if let topContainer = containers.first {
             mediaControl = MediaControl.initWithContainer(topContainer)
-            topContainer.addSubviewMatchingContraints(mediaControl)
+            addSubviewMatchingContraints(mediaControl)
             addTapRecognizer()
         }
     }
@@ -46,7 +46,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private func addTapRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: "toggleVisibility")
         tapRecognizer.delegate = self
-        containers.first?.addGestureRecognizer(tapRecognizer)
+        addGestureRecognizer(tapRecognizer)
     }
     
     public func addPlugin(plugin: UICorePlugin) {
@@ -61,6 +61,6 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        return touch.view == containers.first! || touch.view == mediaControl
+        return touch.view!.isKindOfClass(Container) || touch.view == mediaControl
     }
 }
