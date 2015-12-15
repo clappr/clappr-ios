@@ -17,8 +17,9 @@ class MediaControlTests: QuickSpec {
             
             context("Initialization") {
                 
-                it("Should have a init method that receives a container") {
-                    let mediaControl = MediaControl.initWithContainer(container)
+                it("Should have a init method to setup with container") {
+                    let mediaControl = MediaControl.initFromNib()
+                    mediaControl.setup(container)
                     
                     expect(mediaControl).toNot(beNil())
                     expect(mediaControl.container) == container
@@ -29,7 +30,8 @@ class MediaControlTests: QuickSpec {
                 var mediaControl: MediaControl!
                 
                 beforeEach() {
-                    mediaControl = MediaControl.initWithContainer(container)
+                    mediaControl = MediaControl.initFromNib()
+                    mediaControl.setup(container)
                 }
                 
                 context("Visibility") {

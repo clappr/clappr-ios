@@ -39,20 +39,20 @@ public class MediaControl: UIBaseObject {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        backgroundColor = UIColor.clearColor()
     }
     
-    public class func initWithContainer(container: Container) -> MediaControl {
+    public class func initFromNib() -> MediaControl {
         let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
-        mediaControl.container = container
-        mediaControl.setup()
+        mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
         return mediaControl
     }
     
-    private func setup() {
+    public func setup(container: Container) {
+        stopListening()
+        self.container = container
         bindEventListeners()
-        backgroundColor = UIColor.clearColor()
-        scrubberInitialPosition = scrubberLeftConstraint.constant
     }
     
     private func bindEventListeners() {
