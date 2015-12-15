@@ -15,9 +15,10 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         self.sources = sources
         self.loader = loader
         super.init(frame: CGRectZero)
+        setup()
     }
     
-    public func load() {
+    private func setup() {
         createContainers()
         createMediaControl()
     }

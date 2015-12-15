@@ -11,7 +11,6 @@ class CoreTests: QuickSpec {
         
         beforeEach() {
             core = Core(sources: sources, loader: loader)
-            core.load()
         }
         
         describe("Core") {
