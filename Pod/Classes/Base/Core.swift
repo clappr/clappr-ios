@@ -50,9 +50,14 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     public func addPlugin(plugin: UICorePlugin) {
         plugin.core = self
+        installPlugin(plugin)
+        plugin.wasInstalled()
+    }
+    
+    private func installPlugin(plugin: UICorePlugin) {
         plugins.append(plugin)
         addSubview(plugin)
-        plugin.wasInstalled()
+        bringSubviewToFront(mediaControl)
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {
