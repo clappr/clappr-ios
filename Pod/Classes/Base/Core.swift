@@ -47,9 +47,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     public func addPlugin(plugin: UICorePlugin) {
         plugin.core = self
-        plugin.wasInstalled()
         plugins.append(plugin)
         addSubview(plugin)
+        plugin.wasInstalled()
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {
