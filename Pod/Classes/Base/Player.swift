@@ -1,14 +1,12 @@
 public class Player {
-    public private(set) var sources: [NSURL]
     public private(set) var core: Core
     
-    public convenience init(source: NSURL, loader: Loader = Loader()) {
-        self.init(sources: [source], loader: loader)
+    public convenience init(source: NSURL, loader: Loader = Loader(), options: [String: AnyObject] = [:]) {
+        self.init(sources: [source], loader: loader, options: options)
     }
     
-    public init(sources: [NSURL], loader: Loader = Loader()) {
-        self.sources = sources
-        self.core = CoreFactory(sources: sources, loader: loader).create()
+    public init(sources: [NSURL], loader: Loader = Loader(), options: [String: AnyObject] = [:]) {
+        self.core = CoreFactory.create(sources, loader: loader, options: options)
     }
     
     public func attachTo(view: UIView, controller: UIViewController) {

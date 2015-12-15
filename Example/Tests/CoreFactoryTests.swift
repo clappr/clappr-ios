@@ -9,8 +9,7 @@ class CoreFactoryTests: QuickSpec {
             context("Creation") {
                 it("Should be able to create a core") {
                     let source = NSURL(string: "testUrl")!
-                    let factory = CoreFactory(sources: [source])
-                    let core = factory.create()
+                    let core = CoreFactory.create([source])
                     
                     expect(core).toNot(beNil())
                     expect(core.sources.first) == source
@@ -20,8 +19,7 @@ class CoreFactoryTests: QuickSpec {
                     let loader = Loader()
                     loader.corePlugins = [FakeUICorePlugin.self]
 
-                    let factory = CoreFactory(sources: [], loader: loader)
-                    let core = factory.create()
+                    let core = CoreFactory.create([], loader: loader)
                     
                     expect(core.hasPlugin(FakeUICorePlugin)).to(beTrue())
                 }
