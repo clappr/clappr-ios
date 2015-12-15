@@ -11,11 +11,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
-    public convenience init(sources: [NSURL]) {
-        self.init(sources: sources, loader: Loader())
-    }
-    
-    public required init(sources: [NSURL], loader: Loader) {
+    public required init(sources: [NSURL], loader: Loader = Loader()) {
         self.sources = sources
         self.loader = loader
         super.init(frame: CGRectZero)
