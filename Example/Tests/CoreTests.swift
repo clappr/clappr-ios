@@ -14,6 +14,15 @@ class CoreTests: QuickSpec {
         }
         
         describe("Core") {
+            context("Options") {
+                it("Should have a constructor with options") {
+                    let options = ["SomeOption" : true]
+                    let core = Core(sources: sources, loader: loader, options: options)
+                    
+                    expect(core.options["SomeOption"] as? Bool) == true
+                }
+            }
+            
             context("Sources") {
                 it("Should store sources added on initialization") {
                     expect(core.sources[0]) == sources[0]
