@@ -19,6 +19,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func setup() {
+        backgroundColor = UIColor.blackColor()
         createContainers()
         createMediaControl()
     }

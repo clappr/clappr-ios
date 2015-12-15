@@ -7,10 +7,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         let player = Player(source: NSURL(string: "http://clappr.io/highline.mp4")!)
         player.attachTo(playerContainer, controller: self)
     }
