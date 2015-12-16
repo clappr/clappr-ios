@@ -10,7 +10,13 @@ public class PosterPlugin: UIContainerPlugin {
     
     public init() {
         super.init(frame: CGRectZero)
+        translatesAutoresizingMaskIntoConstraints = false
         userInteractionEnabled = false
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        poster.hnk_setImageFromURL(url)
     }
     
     public override func wasInstalled() {
@@ -20,17 +26,11 @@ public class PosterPlugin: UIContainerPlugin {
         }
         
         url = NSURL(string: urlString)!
-        addConstraints()
-    }
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        poster.hnk_setImageFromURL(url)
+        addConstraints()   
     }
     
     private func addConstraints() {
-        removeFromSuperview()
-        container!.addSubviewMatchingConstraints(self)
+        container!.addMatchingConstraints(self)
         addSubviewMatchingConstraints(poster)
     }
 }
