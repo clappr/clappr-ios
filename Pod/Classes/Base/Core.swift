@@ -1,5 +1,5 @@
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
-    public private(set) var options: [String : AnyObject]
+    public private(set) var options: Options
     public private(set) var sources: [NSURL]
     public private(set) var containers: [Container]!
     public private(set) var mediaControl: MediaControl!
@@ -12,7 +12,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
-    public required init(sources: [NSURL], loader: Loader = Loader(), options: [String : AnyObject] = [:]) {
+    public required init(sources: [NSURL], loader: Loader = Loader(), options: Options = [:]) {
         self.sources = sources
         self.loader = loader
         self.options = options

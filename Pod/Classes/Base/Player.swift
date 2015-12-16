@@ -1,11 +1,11 @@
 public class Player {
     public private(set) var core: Core
     
-    public convenience init(source: NSURL, loader: Loader = Loader(), options: [String: AnyObject] = [:]) {
+    public convenience init(source: NSURL, loader: Loader = Loader(), options: Options = [:]) {
         self.init(sources: [source], loader: loader, options: options)
     }
     
-    public init(sources: [NSURL], loader: Loader = Loader(), options: [String: AnyObject] = [:]) {
+    public init(sources: [NSURL], loader: Loader = Loader(), options: Options = [:]) {
         self.core = CoreFactory.create(sources, loader: loader, options: options)
     }
     
