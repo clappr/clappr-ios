@@ -2,6 +2,7 @@ import Haneke
 
 public class PosterPlugin: UIContainerPlugin {
     private var poster = UIImageView(frame: CGRectZero)
+    private var playButton = UIButton(frame: CGRectZero)
     private var url: NSURL!
     
     required public init?(coder aDecoder: NSCoder) {
@@ -11,7 +12,7 @@ public class PosterPlugin: UIContainerPlugin {
     public init() {
         super.init(frame: CGRectZero)
         translatesAutoresizingMaskIntoConstraints = false
-        userInteractionEnabled = false
+        poster.contentMode = .ScaleAspectFit
     }
     
     public override func layoutSubviews() {
@@ -26,11 +27,33 @@ public class PosterPlugin: UIContainerPlugin {
         }
         
         url = NSURL(string: urlString)!
-        addConstraints()   
+        configurePlayButton()
+        addConstraints()
+    }
+    
+    private func configurePlayButton() {
+        addSubview(playButton)
+        playButton.backgroundColor = UIColor.redColor()
+        playButton.setTitle("Play", forState: .Normal)
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        playButton.addTarget(self, action: "playTouched", forControlEvents: .TouchUpInside)
+    }
+    
+    func playTouched() {
+        container!.mediaControlEnabled = true
+        hidden = true
     }
     
     private func addConstraints() {
         container!.addMatchingConstraints(self)
         addSubviewMatchingConstraints(poster)
+        
+        let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .CenterX,
+            relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0)
+        addConstraint(xCenterConstraint)
+        
+        let yCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .CenterY,
+            relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
+        addConstraint(yCenterConstraint)
     }
 }
