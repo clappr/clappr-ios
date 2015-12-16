@@ -24,6 +24,7 @@ public class MediaControl: UIBaseObject {
     private var seekPercentage:CGFloat = 0.0
     private var scrubberInitialPosition: CGFloat!
     private var hideControlsTimer: NSTimer!
+    private var enabled: Bool = false
     
     private var isSeeking = false {
         didSet {
@@ -46,6 +47,7 @@ public class MediaControl: UIBaseObject {
         let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
+        mediaControl.hide()
         return mediaControl
     }
     
@@ -68,8 +70,20 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
             .Progress   : { [weak self] info in self?.progressUpdated(info) },
-            .Ended      : { [weak self] _ in self?.playPauseButton.selected = false }
+            .Ended      : { [weak self] _ in self?.playPauseButton.selected = false },
+            .MediaControlDisabled : { [weak self] _ in self?.disable() },
+            .MediaControlEnabled  : { [weak self] _ in self?.enable() },
         ]
+    }
+    
+    private func disable() {
+        enabled = false
+        hide()
+    }
+    
+    private func enable() {
+        enabled = true
+        show()
     }
     
     private func timeUpdated(info: EventUserInfo) {
@@ -126,6 +140,10 @@ public class MediaControl: UIBaseObject {
     }
     
     private func setSubviewsVisibility(hidden hidden: Bool, animated: Bool = false) {
+        if (!hidden && !enabled) {
+            return
+        }
+        
         let duration = animated ? animationDuration : 0
         
         UIView.animateWithDuration(duration, animations: {

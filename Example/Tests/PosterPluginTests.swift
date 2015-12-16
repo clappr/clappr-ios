@@ -40,6 +40,5 @@ class PosterPluginTests: QuickSpec {
                 }
             }
         }
-        
     }
 }

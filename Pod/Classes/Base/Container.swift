@@ -13,7 +13,7 @@ public class Container: UIBaseObject {
         }
     }
     
-    public internal(set) var mediaControlEnabled = false {
+    public var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: ContainerEvent = mediaControlEnabled ? .MediaControlEnabled : .MediaControlDisabled
             trigger(eventToTrigger)
