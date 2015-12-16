@@ -5,6 +5,7 @@ public class Container: UIBaseObject {
     public internal(set) var dvrInUse = false
     public internal(set) var settings: [String : AnyObject] = [:]
     public internal(set) var plugins: [UIContainerPlugin] = []
+    public internal(set) var options: Options
     
     public var isPlaying: Bool {
         get {
@@ -26,8 +27,9 @@ public class Container: UIBaseObject {
         }
     }
 
-    public init(playback: Playback) {
+    public init(playback: Playback, options: Options = [:]) {
         self.playback = playback
+        self.options = options
         super.init(frame: CGRect.zero)
         bindEventListeners()
         addSubviewMatchingContraints(playback)

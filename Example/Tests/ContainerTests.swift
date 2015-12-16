@@ -19,6 +19,15 @@ class ContainerTests: QuickSpec {
                 it("Should have the playback as subview") {
                     expect(playback.superview) == container
                 }
+                
+                it("Should have a constructor that receive options") {
+                    let options = ["aOption" : "option"]
+                    let container = Container(playback: playback, options: options)
+                    
+                    let option = container.options["aOption"] as! String
+                    
+                    expect(option) == "option"
+                }
             }
             
             describe("Destroy") {
