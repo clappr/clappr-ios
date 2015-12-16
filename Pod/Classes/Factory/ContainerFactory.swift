@@ -1,11 +1,13 @@
 public class ContainerFactory {
     private var sources: [NSURL]
     private var loader: Loader
+    private var options: Options
     private var plugins: [AnyClass]
  
-    public init(sources: [NSURL], loader: Loader) {
+    public init(sources: [NSURL], loader: Loader, options: Options = [:]) {
         self.sources = sources
         self.loader = loader
+        self.options = options
         self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
     }
     
@@ -21,7 +23,7 @@ public class ContainerFactory {
         }
         
         let type = availablePlaybacks[0] as! Playback.Type
-        return Container(playback: type.init(url: url))
+        return Container(playback: type.init(url: url), options: options)
     }
     
     private func canPlay(type: AnyClass, url: NSURL) -> Bool {

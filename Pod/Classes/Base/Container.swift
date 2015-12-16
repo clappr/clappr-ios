@@ -32,7 +32,7 @@ public class Container: UIBaseObject {
         self.options = options
         super.init(frame: CGRect.zero)
         bindEventListeners()
-        addSubviewMatchingContraints(playback)
+        addSubviewMatchingConstraints(playback)
     }
     
     public required init?(coder aDecoder: NSCoder) {

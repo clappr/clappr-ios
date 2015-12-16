@@ -27,17 +27,17 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func createContainers() {
-        let factory = ContainerFactory(sources: sources, loader: loader)
+        let factory = ContainerFactory(sources: sources, loader: loader, options: options)
         containers = factory.createContainers()
         
         for container in containers {
-            addSubviewMatchingContraints(container)
+            addSubviewMatchingConstraints(container)
         }
     }
     
     private func createMediaControl() {
         mediaControl = MediaControl.initFromNib()
-        addSubviewMatchingContraints(mediaControl)
+        addSubviewMatchingConstraints(mediaControl)
         addTapRecognizer()
         
         if let topContainer = containers.first {
