@@ -21,18 +21,17 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     public override func wasInstalled() {
-        guard let urlString = container!.options[posterUrl] as? String  else {
+        guard let urlString = container!.options[posterUrl] as? String else {
             removeFromSuperview()
             return
         }
         
         url = NSURL(string: urlString)!
         configurePlayButton()
-        addConstraints()
+        configureViews()
     }
     
     private func configurePlayButton() {
-        addSubview(playButton)
         playButton.backgroundColor = UIColor.redColor()
         playButton.setTitle("Play", forState: .Normal)
         playButton.translatesAutoresizingMaskIntoConstraints = false
@@ -41,12 +40,15 @@ public class PosterPlugin: UIContainerPlugin {
     
     func playTouched() {
         container!.mediaControlEnabled = true
+        container!.play()
         hidden = true
     }
     
-    private func addConstraints() {
+    private func configureViews() {
         container!.addMatchingConstraints(self)
         addSubviewMatchingConstraints(poster)
+        
+        addSubview(playButton)
         
         let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .CenterX,
             relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0)
