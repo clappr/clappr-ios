@@ -36,7 +36,6 @@ class MediaControlTests: QuickSpec {
                 
                 context("Visibility") {
                     it("Should start with controls hidden") {
-                        expect(mediaControl.playPauseButton.alpha) == 0
                         expect(mediaControl.controlsOverlayView.alpha) == 0
                         expect(mediaControl.controlsWrapperView.alpha) == 0
                         expect(mediaControl.controlsHidden).to(beTrue())
@@ -45,7 +44,6 @@ class MediaControlTests: QuickSpec {
                     it("Should show it's control after when media control is enabled on container") {
                         container.mediaControlEnabled = true
                         
-                        expect(mediaControl.playPauseButton.alpha) == 1
                         expect(mediaControl.controlsOverlayView.alpha) == 1
                         expect(mediaControl.controlsWrapperView.alpha) == 1
                         expect(mediaControl.controlsHidden).to(beFalse())
@@ -55,7 +53,6 @@ class MediaControlTests: QuickSpec {
                         container.mediaControlEnabled = true
                         mediaControl.hide()
                         
-                        expect(mediaControl.playPauseButton.alpha) == 0
                         expect(mediaControl.controlsOverlayView.alpha) == 0
                         expect(mediaControl.controlsWrapperView.alpha) == 0
                         expect(mediaControl.controlsHidden).to(beTrue())
@@ -66,7 +63,6 @@ class MediaControlTests: QuickSpec {
                         mediaControl.hide()
                         mediaControl.show()
                         
-                        expect(mediaControl.playPauseButton.alpha) == 1
                         expect(mediaControl.controlsOverlayView.alpha) == 1
                         expect(mediaControl.controlsWrapperView.alpha) == 1
                         expect(mediaControl.controlsHidden).to(beFalse())
