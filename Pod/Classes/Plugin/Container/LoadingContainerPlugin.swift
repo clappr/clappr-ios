@@ -4,7 +4,6 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     
     public init() {
         spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        spinningWheel.startAnimating()
         super.init(frame: CGRectZero)
         addSubview(spinningWheel)
         userInteractionEnabled = false
