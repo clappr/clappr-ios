@@ -29,6 +29,7 @@ public class PosterPlugin: UIContainerPlugin {
         url = NSURL(string: urlString)!
         configurePlayButton()
         configureViews()
+        bindEvents()
     }
     
     private func configurePlayButton() {
@@ -41,7 +42,7 @@ public class PosterPlugin: UIContainerPlugin {
     func playTouched() {
         container!.mediaControlEnabled = true
         container!.play()
-        hidden = true
+        playButton.hidden = true
     }
     
     private func configureViews() {
@@ -57,5 +58,27 @@ public class PosterPlugin: UIContainerPlugin {
         let yCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .CenterY,
             relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
         addConstraint(yCenterConstraint)
+    }
+    
+    private func bindEvents() {
+        for (event, callback) in eventsToBind() {
+            listenTo(container!, eventName: event.rawValue, callback: callback)
+        }
+    }
+    
+    private func eventsToBind() -> [ContainerEvent : EventCallback] {
+        return [
+            .TimeUpdated : { [weak self] info in self?.timeUpdated(info) },
+            .Ended       : { [weak self] _ in self?.playbackEnded() },
+        ]
+    }
+    
+    private func timeUpdated(info: EventUserInfo) {
+        hidden = true
+    }
+    
+    private func playbackEnded() {
+        playButton.hidden = false
+        hidden = false
     }
 }
