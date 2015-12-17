@@ -48,7 +48,19 @@ public class MediaControl: UIBaseObject {
         let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
         mediaControl.hide()
+        mediaControl.bindOrientationChangedListener()
         return mediaControl
+    }
+    
+    private func bindOrientationChangedListener() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
+            name: UIDeviceOrientationDidChangeNotification, object: nil)
+
+    }
+    
+    func didRotate() {
+        updateBars()
+        updateScrubberPosition()
     }
     
     public func setup(container: Container) {
@@ -218,5 +230,10 @@ public class MediaControl: UIBaseObject {
 
     private func trigger(event: MediaControlEvent) {
         trigger(event.rawValue)
+    }
+    
+    deinit {
+        stopListening()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
