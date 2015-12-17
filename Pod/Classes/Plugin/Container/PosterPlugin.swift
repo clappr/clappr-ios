@@ -78,6 +78,7 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     private func playbackEnded() {
+        container!.mediaControlEnabled = false
         playButton.hidden = false
         hidden = false
     }
