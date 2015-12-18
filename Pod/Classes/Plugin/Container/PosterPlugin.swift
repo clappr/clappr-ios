@@ -40,7 +40,6 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
-        container!.mediaControlEnabled = true
         container!.play()
         playButton.hidden = true
     }
@@ -75,6 +74,7 @@ public class PosterPlugin: UIContainerPlugin {
     
     private func playbackStarted() {
         hidden = true
+        container!.mediaControlEnabled = true
     }
     
     private func playbackEnded() {
