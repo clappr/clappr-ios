@@ -13,21 +13,12 @@ public class AVFoundationPlayback: Playback {
     private var playerLayer: AVPlayerLayer!
     private var currentState = PlaybackState.Idle
     
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("Use init(url: NSURL) instead")
-    }
-    
-    public required init(url: NSURL) {
-        super.init(url: url)
-        setupPlayer()
-        addObservers()
-        addTimeElapsedCallback()
-    }
-    
     private func setupPlayer() {
         player = AVPlayer(URL: url)
         playerLayer = AVPlayerLayer(player: player)
         self.layer.addSublayer(playerLayer)
+        addObservers()
+        addTimeElapsedCallback()
     }
     
     private func addObservers() {
@@ -64,10 +55,16 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func layoutSubviews() {
-        playerLayer.frame = self.bounds
+        if playerLayer != nil {
+            playerLayer.frame = self.bounds
+        }
     }
     
     public override func play() {
+        if player == nil {
+            setupPlayer()
+        }
+        
         player.play()
         
         if !player.currentItem!.playbackLikelyToKeepUp {
