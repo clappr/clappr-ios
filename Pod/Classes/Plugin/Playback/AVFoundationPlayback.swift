@@ -164,10 +164,12 @@ public class AVFoundationPlayback: Playback {
     }
     
     deinit {
-        player.removeObserver(self, forKeyPath: "currentItem.status")
-        player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
-        player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
-        player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
+        if player != nil {
+            player.removeObserver(self, forKeyPath: "currentItem.status")
+            player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+            player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
+            player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
+        }
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
