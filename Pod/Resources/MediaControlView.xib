@@ -7,7 +7,6 @@
     <customFonts key="customFonts">
         <mutableArray key="Player-Regular.ttf">
             <string>player</string>
-            <string>player</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -163,32 +162,14 @@
                             <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQR-kY-jUF" userLabel="Fullscreen">
-                            <rect key="frame" x="427" y="9" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="2vl-mS-nbs"/>
-                                <constraint firstAttribute="width" constant="32" id="7Zn-5h-Ac9"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="player" family="Player" pointSize="30"/>
-                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <state key="normal" title="">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="selected">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                            </state>
-                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="MQR-kY-jUF" secondAttribute="trailing" constant="8" id="028-BF-pcG"/>
                         <constraint firstAttribute="centerY" secondItem="RMN-tb-gu1" secondAttribute="centerY" id="3dJ-g0-HNX"/>
                         <constraint firstAttribute="centerY" secondItem="DmN-Rl-de9" secondAttribute="centerY" id="FYD-LA-LYs"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
                         <constraint firstItem="RMN-tb-gu1" firstAttribute="leading" secondItem="DmN-Rl-de9" secondAttribute="trailing" constant="8" id="gDn-uN-5bo"/>
                         <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
                         <constraint firstItem="0V7-z5-rdA" firstAttribute="centerY" secondItem="BHP-U1-oat" secondAttribute="centerY" id="iIM-7q-DAv"/>
-                        <constraint firstAttribute="centerY" secondItem="MQR-kY-jUF" secondAttribute="centerY" id="kze-Lu-YQP"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
                         <constraint firstAttribute="height" constant="50" id="pZ0-eY-Pwa"/>
                         <constraint firstItem="0V7-z5-rdA" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="10" id="rQw-YO-nQH"/>
