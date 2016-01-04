@@ -33,8 +33,9 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     private func configurePlayButton() {
-        playButton.backgroundColor = UIColor.redColor()
-        playButton.setTitle("Play", forState: .Normal)
+        let image = UIImage(named: "poster-play", inBundle: NSBundle(forClass: PosterPlugin.self),
+            compatibleWithTraitCollection: nil)
+        playButton.setBackgroundImage(image, forState: .Normal)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.addTarget(self, action: "playTouched", forControlEvents: .TouchUpInside)
     }
