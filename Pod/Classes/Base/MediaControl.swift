@@ -55,7 +55,6 @@ public class MediaControl: UIBaseObject {
     private func bindOrientationChangedListener() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
             name: UIDeviceOrientationDidChangeNotification, object: nil)
-
     }
     
     func didRotate() {
