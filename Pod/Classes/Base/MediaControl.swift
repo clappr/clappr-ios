@@ -76,8 +76,8 @@ public class MediaControl: UIBaseObject {
     
     private func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play       : { [weak self] _ in self?.trigger(.Playing) },
-            .Pause      : { [weak self] _ in self?.trigger(.NotPlaying) },
+            .Play       : { [weak self] _ in self?.triggerPlay() },
+            .Pause      : { [weak self] _ in self?.triggerPause() },
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
             .Progress   : { [weak self] info in self?.progressUpdated(info) },
@@ -85,6 +85,16 @@ public class MediaControl: UIBaseObject {
             .MediaControlDisabled : { [weak self] _ in self?.disable() },
             .MediaControlEnabled  : { [weak self] _ in self?.enable() },
         ]
+    }
+    
+    private func triggerPlay() {
+        playPauseButton.selected = true
+        trigger(.Playing)
+    }
+    
+    private func triggerPause() {
+        playPauseButton.selected = false
+        trigger(.NotPlaying)
     }
     
     private func disable() {
