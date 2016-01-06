@@ -92,7 +92,12 @@ public class AVFoundationPlayback: Playback {
         guard player.status == .ReadyToPlay, let item = player.currentItem else {
             return 0
         }
-        
+        if item.asset.duration.value == 0  {
+            //CMTime(value: 69718, timescale: 1000, flags: __C.CMTimeFlags(rawValue: 1), epoch: 0) .mp4
+            //print(item.asset.duration)//CMTime(value: 0, timescale: 0, flags: __C.CMTimeFlags(rawValue: 17), epoch: 0) .m3u8
+            //print(CMTimeGetSeconds(item.asset.duration))//nan
+            return 0
+        }
         return CMTimeGetSeconds(item.asset.duration)
     }
     
