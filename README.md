@@ -1,5 +1,40 @@
 # Clappr for iOS
 
-## License
+![image](https://cloud.githubusercontent.com/assets/1156242/12205646/0d5f7d0a-b623-11e5-81c6-79714a3673ef.png)
 
-Clappr is available under the MIT license. See the LICENSE file for more info.
+### Using the Player
+
+Create
+```swift
+let url = NSURL(string: "http://clappr.io/highline.mp4")!
+let player = Player(source: url)
+``` 
+
+Add it in your view
+
+```swift
+player.attachTo(yourView, controller: self)
+```
+
+
+### Built-in Plugins
+
+To add plugins parameters use the options parameter on constructor. Example:
+
+```Swift
+let options = [parameter1: "value1", parameter2: true]
+let player = Player(source: url, options: options)
+```
+
+##### Poster
+Define a poster by adding `posterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
+
+
+### License
+
+You can find it [here](https://github.com/clappr/clappr-ios/blob/master/LICENSE).
+
+
+### Sponsor
+
+[![image](https://cloud.githubusercontent.com/assets/244265/5900100/ef156258-a54b-11e4-9862-7e5851ed9b81.png)](http://globo.com)
