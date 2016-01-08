@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
+
 # Clappr for iOS
 
 ![image](https://cloud.githubusercontent.com/assets/1156242/12205646/0d5f7d0a-b623-11e5-81c6-79714a3673ef.png)
