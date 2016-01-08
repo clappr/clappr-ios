@@ -78,7 +78,7 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func isPlaying() -> Bool {
-        return player.rate > 0
+        return player != nil &&  player.rate > 0
     }
     
     public override func seekTo(timeInterval: NSTimeInterval) {

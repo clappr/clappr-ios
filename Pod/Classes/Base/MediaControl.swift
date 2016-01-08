@@ -66,6 +66,8 @@ public class MediaControl: UIBaseObject {
         stopListening()
         self.container = container
         bindEventListeners()
+        container.mediaControlEnabled ? enable() : disable()
+        playPauseButton.selected = container.isPlaying
     }
     
     private func bindEventListeners() {
