@@ -1,18 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
 
-plugin 'slather'
-
-target 'Clappr', :exclusive => true do
+target 'Clappr_Example', :exclusive => true do
   pod "Clappr", :path => "../"
 end
 
-target 'UnitTests', :exclusive => true do
+target 'Clappr_Tests', :exclusive => true do
   pod "Clappr", :path => "../"
-  pod 'Kiwi'
-end
 
-target 'AcceptanceTests', :exclusive => true do
-    pod "Clappr", :path => "../"
-    pod 'KIF', '~> 3.0', :configurations => ['Debug']
-    pod 'KIF-Kiwi'
+  pod 'Quick'
+  pod 'Nimble'
+  pod 'FBSnapshotTestCase'
+  pod 'Nimble-Snapshots'
 end

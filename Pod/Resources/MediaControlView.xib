@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <panGestureRecognizer delaysTouchesEnded="NO" minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="TNM-hZ-5T3" userLabel="Scrubber Dragger">
+            <connections>
+                <action selector="handleScrubberPan:" destination="xP5-UL-qkk" id="Q0A-fD-BIF"/>
+            </connections>
+        </panGestureRecognizer>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control" customClass="MediaControl" customModule="Clappr" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-h5-7Kk" userLabel="Controls Overlay" customClass="GradientView" customModule="Clappr" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="152" width="467" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="jwY-XU-yDx"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
+                    <rect key="frame" x="0.0" y="202" width="467" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
+                            <rect key="frame" x="10" y="10" width="30" height="30"/>
+                            <accessibility key="accessibilityConfiguration" label="play/pause"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="gVx-m8-JNG"/>
+                                <constraint firstAttribute="height" constant="30" id="pQV-FA-C1B"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                            <state key="normal" image="play">
+                                <color key="titleColor" white="1" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="pause">
+                                <color key="titleColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="togglePlay:" destination="xP5-UL-qkk" eventType="touchUpInside" id="a1b-Mc-f2N"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
+                            <rect key="frame" x="0.0" y="0.0" width="467" height="10"/>
+                            <subviews>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PX7-VD-Gf1" userLabel="Scrubber Label">
+                                    <rect key="frame" x="-10" y="-23" width="30" height="12"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <accessibility key="accessibilityConfiguration" label="scrubber time"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
+                                    <rect key="frame" x="0.0" y="4" width="467" height="1"/>
+                                    <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="IpY-wK-Wjn"/>
+                                        <constraint firstAttribute="height" constant="1" id="SQ0-82-2hK"/>
+                                    </constraints>
+                                </view>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="82D-Bh-tQP" userLabel="Buffer Bar">
+                                    <rect key="frame" x="0.0" y="4" width="0.0" height="1"/>
+                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="QsQ-rQ-swp"/>
+                                        <constraint firstAttribute="width" id="Rf3-6a-9h6"/>
+                                    </constraints>
+                                </view>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qg-xT-VwA" userLabel="Progress Bar">
+                                    <rect key="frame" x="0.0" y="4" width="0.0" height="1"/>
+                                    <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="seek bar"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="1PV-Go-ahi"/>
+                                    </constraints>
+                                </view>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber" customClass="ScrubberView" customModule="Clappr" customModuleProvider="target">
+                                    <rect key="frame" x="-20" y="-21" width="50" height="50"/>
+                                    <subviews>
+                                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
+                                            <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                            <subviews>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle">
+                                                    <rect key="frame" x="10" y="10" width="10" height="10"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="10" id="53X-SI-Hq3"/>
+                                                        <constraint firstAttribute="height" constant="10" id="EgG-uS-Yr4"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="sIr-Lb-mYB" secondAttribute="centerY" id="4a6-zG-GdP"/>
+                                                <constraint firstAttribute="height" constant="30" id="f0d-bF-rz9"/>
+                                                <constraint firstAttribute="centerX" secondItem="sIr-Lb-mYB" secondAttribute="centerX" id="vHN-8R-E2t"/>
+                                                <constraint firstAttribute="width" constant="30" id="zMc-sL-9j8"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <accessibility key="accessibilityConfiguration" label="scrubber"/>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="uDb-7w-G5b" secondAttribute="centerY" id="XLJ-AM-EQp"/>
+                                        <constraint firstAttribute="height" constant="50" id="gO1-j9-MyD"/>
+                                        <constraint firstAttribute="width" constant="50" id="meh-gR-tpI"/>
+                                        <constraint firstAttribute="centerX" secondItem="uDb-7w-G5b" secondAttribute="centerX" id="ub9-f2-wkr"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="innerCircle" destination="sIr-Lb-mYB" id="xlc-Po-Ihw"/>
+                                        <outlet property="outerCircle" destination="uDb-7w-G5b" id="ISb-9p-9Vm"/>
+                                        <outletCollection property="gestureRecognizers" destination="TNM-hZ-5T3" appends="YES" id="TKe-Sz-ySH"/>
+                                    </connections>
+                                </view>
+                            </subviews>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstItem="82D-Bh-tQP" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="DEu-X1-8bi"/>
+                                <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="6qg-xT-VwA" secondAttribute="leading" constant="-20" id="Jfk-YR-geh"/>
+                                <constraint firstAttribute="height" constant="10" id="JhM-HH-ieG"/>
+                                <constraint firstAttribute="centerY" secondItem="6qg-xT-VwA" secondAttribute="centerY" constant="1" id="RIL-M4-sHl"/>
+                                <constraint firstItem="6qg-xT-VwA" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="S0Q-ik-r7w"/>
+                                <constraint firstItem="3Wv-Cd-358" firstAttribute="leading" secondItem="6qg-xT-VwA" secondAttribute="trailing" constant="-20" id="Txo-gr-RDL"/>
+                                <constraint firstAttribute="centerY" secondItem="82D-Bh-tQP" secondAttribute="centerY" constant="1" id="ZyB-gE-sHm"/>
+                                <constraint firstAttribute="trailing" secondItem="7KX-hC-K7v" secondAttribute="trailing" id="cYV-IA-LDd"/>
+                                <constraint firstItem="7KX-hC-K7v" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="mto-Vc-7ch"/>
+                                <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
+                                <constraint firstAttribute="centerY" secondItem="7KX-hC-K7v" secondAttribute="centerY" constant="1" id="urs-Mr-Exy"/>
+                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="centerX" secondItem="3Wv-Cd-358" secondAttribute="centerX" id="ydp-DB-oOq"/>
+                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="bottom" secondItem="uDb-7w-G5b" secondAttribute="top" id="yjq-UB-7OQ"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HM3-hd-Lp9" userLabel="Current Time">
+                            <rect key="frame" x="45" y="15" width="46" height="21"/>
+                            <accessibility key="accessibilityConfiguration" label="current time"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </label>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Rl-de9" userLabel="Separator">
+                            <rect key="frame" x="99" y="15" width="1" height="20"/>
+                            <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="2Yo-lf-9fz"/>
+                                <constraint firstAttribute="width" constant="1" id="xHp-SL-wLk"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMN-tb-gu1" userLabel="Duration">
+                            <rect key="frame" x="108" y="15" width="46" height="21"/>
+                            <accessibility key="accessibilityConfiguration" label="duration"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="RMN-tb-gu1" secondAttribute="centerY" id="3dJ-g0-HNX"/>
+                        <constraint firstAttribute="centerY" secondItem="DmN-Rl-de9" secondAttribute="centerY" id="FYD-LA-LYs"/>
+                        <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
+                        <constraint firstItem="RMN-tb-gu1" firstAttribute="leading" secondItem="DmN-Rl-de9" secondAttribute="trailing" constant="8" id="gDn-uN-5bo"/>
+                        <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
+                        <constraint firstItem="0V7-z5-rdA" firstAttribute="centerY" secondItem="BHP-U1-oat" secondAttribute="centerY" id="iIM-7q-DAv"/>
+                        <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
+                        <constraint firstAttribute="height" constant="50" id="pZ0-eY-Pwa"/>
+                        <constraint firstItem="0V7-z5-rdA" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="10" id="rQw-YO-nQH"/>
+                        <constraint firstItem="HM3-hd-Lp9" firstAttribute="leading" secondItem="0V7-z5-rdA" secondAttribute="trailing" constant="5" id="s0V-iR-FP9"/>
+                        <constraint firstAttribute="centerY" secondItem="HM3-hd-Lp9" secondAttribute="centerY" id="wKb-lW-lr5"/>
+                        <constraint firstItem="DmN-Rl-de9" firstAttribute="leading" secondItem="HM3-hd-Lp9" secondAttribute="trailing" constant="8" id="wvt-lE-ghv"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" label="media control"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ps9-h5-7Kk" secondAttribute="trailing" id="KUI-eR-07B"/>
+                <constraint firstItem="ps9-h5-7Kk" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="Kf1-ot-PBW"/>
+                <constraint firstAttribute="trailing" secondItem="BHP-U1-oat" secondAttribute="trailing" id="RTX-fW-fkX"/>
+                <constraint firstAttribute="bottom" secondItem="ps9-h5-7Kk" secondAttribute="bottom" id="eZj-G3-Y1v"/>
+                <constraint firstAttribute="bottom" secondItem="BHP-U1-oat" secondAttribute="bottom" id="tSM-cp-zZH"/>
+                <constraint firstItem="BHP-U1-oat" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="uef-w8-0hH"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bufferBarView" destination="82D-Bh-tQP" id="978-gx-QRB"/>
+                <outlet property="bufferBarWidthContraint" destination="Rf3-6a-9h6" id="5CU-r4-dQf"/>
+                <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="Uw6-tg-Rxi"/>
+                <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="Ow8-bS-zke"/>
+                <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="znc-H8-Ghd"/>
+                <outlet property="durationLabel" destination="RMN-tb-gu1" id="kRE-7Y-pNv"/>
+                <outlet property="playPauseButton" destination="0V7-z5-rdA" id="nEw-5L-Aid"/>
+                <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
+                <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
+                <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>
+                <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>
+                <outlet property="seekBarView" destination="7KX-hC-K7v" id="BmN-BO-nGf"/>
+            </connections>
+            <point key="canvasLocation" x="336.5" y="495"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pause" width="30" height="30"/>
+        <image name="play" width="30" height="30"/>
+    </resources>
+</document>
