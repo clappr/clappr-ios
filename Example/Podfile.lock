@@ -1,5 +1,5 @@
 PODS:
-  - Clappr (0.1.2):
+  - Clappr (0.1.3):
     - HanekeSwift (~> 0.10)
   - FBSnapshotTestCase (2.0.7):
     - FBSnapshotTestCase/SwiftSupport (= 2.0.7)
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Clappr: 885c390438327e3321e02cd634eb8db49e2a0f3c
+  Clappr: c5f53d9a4e37b7dcc09fc6cb58710f371d00b0fd
   FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
