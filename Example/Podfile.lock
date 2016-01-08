@@ -6,7 +6,7 @@ PODS:
   - FBSnapshotTestCase/Core (2.0.7)
   - FBSnapshotTestCase/SwiftSupport (2.0.7):
     - FBSnapshotTestCase/Core
-  - HanekeSwift (0.10.0)
+  - HanekeSwift (0.10.1)
   - Nimble (3.0.0)
   - Nimble-Snapshots (3.0.0):
     - FBSnapshotTestCase (~> 2.0.7)
@@ -28,7 +28,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Clappr: 885c390438327e3321e02cd634eb8db49e2a0f3c
   FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
-  HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
+  HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   Nimble-Snapshots: ab41dd737dcd33a0b0cb005a30465fef70b7207a
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
