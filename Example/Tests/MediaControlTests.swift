@@ -70,14 +70,17 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 context("Play") {
+                    
+                    beforeEach() {
+                        mediaControl.playPauseButton.selected = false
+                    }
+                    
                     it("Should call container play when is paused") {
-                        playback.playing = false
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(container.isPlaying).to(beTrue())
                     }
                     
                     it("Should change button state to selected") {
-                        mediaControl.playPauseButton.selected = false
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playPauseButton.selected).to(beTrue())
                     }
@@ -96,7 +99,7 @@ class MediaControlTests: QuickSpec {
                 
                 context("Pause") {
                     beforeEach() {
-                        playback.playing = true
+                        mediaControl.playPauseButton.selected = true
                     }
                     
                     it("Should call container pause when is playing") {
@@ -105,7 +108,6 @@ class MediaControlTests: QuickSpec {
                     }
                     
                     it("Should change button state to not selected") {
-                        mediaControl.playPauseButton.selected = true
                         mediaControl.playPauseButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playPauseButton.selected).to(beFalse())
                     }
