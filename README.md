@@ -4,6 +4,14 @@
 
 ![image](https://cloud.githubusercontent.com/assets/1156242/12205646/0d5f7d0a-b623-11e5-81c6-79714a3673ef.png)
 
+### Installation
+
+The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
+
+```ruby
+pod 'Clappr', '~> 0.1'
+```
+
 ### Using the Player
 
 Create
