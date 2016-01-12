@@ -76,12 +76,12 @@ class MediaControlTests: QuickSpec {
                     }
                     
                     it("Should call container play when is paused") {
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(container.isPlaying).to(beTrue())
                     }
                     
                     it("Should change button state to selected") {
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playbackControlState) == PlaybackControlState.Playing
                     }
                     
@@ -91,7 +91,7 @@ class MediaControlTests: QuickSpec {
                             callbackWasCalled = true
                         }
                         
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         
                         expect(callbackWasCalled).to(beTrue())
                     }
@@ -103,12 +103,12 @@ class MediaControlTests: QuickSpec {
                     }
                     
                     it("Should call container pause when is playing") {
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(container.isPlaying).to(beFalse())
                     }
                     
                     it("Should change button state to not selected") {
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         expect(mediaControl.playbackControlState) == PlaybackControlState.Paused
                     }
                     
@@ -118,7 +118,7 @@ class MediaControlTests: QuickSpec {
                             callbackWasCalled = true
                         }
                         
-                        mediaControl.mediaControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        mediaControl.playbackControlButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
                         
                         expect(callbackWasCalled).to(beTrue())
                     }
@@ -151,7 +151,7 @@ class MediaControlTests: QuickSpec {
                 
                 context("End") {
                     it("Should reset play button state after container end event") {
-                        mediaControl.mediaControlButton.selected = true
+                        mediaControl.playbackControlState = .Playing
                         container.trigger(ContainerEvent.Ended.rawValue)
                         
                         expect(mediaControl.playbackControlState) == PlaybackControlState.Stopped

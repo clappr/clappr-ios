@@ -25,7 +25,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHP-U1-oat" userLabel="Controls Wrapper">
                     <rect key="frame" x="0.0" y="202" width="467" height="50"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Play Pause">
+                        <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-z5-rdA" userLabel="Playback Control Button">
                             <rect key="frame" x="10" y="10" width="30" height="30"/>
                             <accessibility key="accessibilityConfiguration" label="play/pause"/>
                             <constraints>
@@ -194,7 +194,7 @@
                 <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="Ow8-bS-zke"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="znc-H8-Ghd"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="kRE-7Y-pNv"/>
-                <outlet property="mediaControlButton" destination="0V7-z5-rdA" id="1D1-jn-c7d"/>
+                <outlet property="playbackControlButton" destination="0V7-z5-rdA" id="3dr-Z2-ZnT"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>

@@ -15,7 +15,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
     @IBOutlet weak public var controlsWrapperView: UIView!
-    @IBOutlet weak public var mediaControlButton: UIButton!
+    @IBOutlet weak public var playbackControlButton: UIButton!
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
@@ -62,7 +62,7 @@ public class MediaControl: UIBaseObject {
         let imageName = playbackControlState == .Playing ? "pause" : "play"
         let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
             compatibleWithTraitCollection: nil)
-        mediaControlButton.setImage(image, forState: .Normal)
+        playbackControlButton.setImage(image, forState: .Normal)
     }
     
     private func bindOrientationChangedListener() {
