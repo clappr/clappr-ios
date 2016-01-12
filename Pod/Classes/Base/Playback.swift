@@ -2,6 +2,7 @@ import Foundation
 
 public class Playback: UIBaseObject {
     public internal(set) var url: NSURL
+    public internal(set) var type = PlaybackType.Unknown
     
     public required init(url: NSURL) {
         self.url = url
@@ -29,11 +30,7 @@ public class Playback: UIBaseObject {
     public func duration() -> Double {
         return 0
     }
-    
-    public func type() -> PlaybackType {
-        return .Unknown
-    }
-    
+
     public func isPlaying() -> Bool {
         return false
     }

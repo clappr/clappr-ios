@@ -1,3 +1,3 @@
 public enum PlaybackType {
-    case Unknown
+    case Unknown, Live, VOD
 }

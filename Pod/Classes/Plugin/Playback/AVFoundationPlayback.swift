@@ -89,10 +89,10 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func duration() -> Double {
-        guard player.status == .ReadyToPlay, let item = player.currentItem else {
+        guard player.status == .ReadyToPlay && type == .VOD, let item = player.currentItem else {
             return 0
         }
-        
+
         return CMTimeGetSeconds(item.asset.duration)
     }
     
@@ -133,10 +133,16 @@ public class AVFoundationPlayback: Playback {
     
     private func handleStatusChangedEvent() {
         if player.status == .ReadyToPlay {
+            updatePlaybackType()
             self.trigger(.Ready)
         } else if player.status == .Failed {
             self.trigger(.Error, userInfo: ["error": player.currentItem!.error!])
         }
+    }
+    
+    private func updatePlaybackType() {
+        let isTimeIndefinite = player.currentItem!.asset.duration == kCMTimeIndefinite
+        type = isTimeIndefinite ? .Live : .VOD
     }
     
     private func handleTimeRangesEvent() {
