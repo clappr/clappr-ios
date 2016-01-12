@@ -59,7 +59,14 @@ public class MediaControl: UIBaseObject {
     }
     
     private func updatePlaybackControlButtonIcon() {
-        let imageName = playbackControlState == .Playing ? "pause" : "play"
+        var imageName: String
+        
+        if playbackControlState == .Playing {
+            imageName = container.playback.type() == .Live ? "stop" : "pause"
+        } else {
+            imageName = "play"
+        }
+        
         let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
             compatibleWithTraitCollection: nil)
         playbackControlButton.setImage(image, forState: .Normal)
@@ -80,7 +87,7 @@ public class MediaControl: UIBaseObject {
         self.container = container
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
-        playbackControlState = container.isPlaying ? .Playing : .Paused
+        playbackControlState = container.isPlaying ? .Playing : .Stopped
     }
     
     private func bindEventListeners() {
@@ -156,6 +163,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func containerReady() {
+        updatePlaybackControlButtonIcon()
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
     }
     
@@ -198,7 +206,7 @@ public class MediaControl: UIBaseObject {
 
     @IBAction func togglePlay(sender: UIButton) {
         if playbackControlState == .Playing {
-            pause()
+            container.playback.type() == .Live ? stop() : pause()
         } else {
             play()
             scheduleTimerToHideControls()
@@ -215,6 +223,12 @@ public class MediaControl: UIBaseObject {
         playbackControlState = .Playing
         container.play()
         trigger(MediaControlEvent.Playing.rawValue)
+    }
+    
+    private func stop() {
+        playbackControlState = .Stopped
+        container.stop()
+        trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func scheduleTimerToHideControls() {
