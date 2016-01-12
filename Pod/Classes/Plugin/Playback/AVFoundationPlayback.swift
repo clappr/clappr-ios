@@ -77,6 +77,14 @@ public class AVFoundationPlayback: Playback {
         updateState(.Paused)
     }
     
+    public override func stop() {
+        player.pause()
+        playbackDidEnd()
+        removeObservers()
+        playerLayer.removeFromSuperlayer()
+        player = nil
+    }
+    
     public override func isPlaying() -> Bool {
         return player != nil &&  player.rate > 0
     }
@@ -170,6 +178,10 @@ public class AVFoundationPlayback: Playback {
     }
     
     deinit {
+        removeObservers()
+    }
+    
+    private func removeObservers() {
         if player != nil {
             player.removeObserver(self, forKeyPath: "currentItem.status")
             player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
