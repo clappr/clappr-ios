@@ -51,12 +51,12 @@ class PosterPluginTests: QuickSpec {
                 
                 it("Should be hidden after container Play event ") {
                     expect(posterPlugin.hidden).to(beFalse())
-                    container.trigger(ContainerEvent.Play.rawValue)
+                    container.trigger(ContainerEvent.Ready.rawValue)
                     expect(posterPlugin.hidden).to(beTrue())
                 }
                 
                 it("Should be not hidden after container Ended event") {
-                    container.trigger(ContainerEvent.Play.rawValue)
+                    container.trigger(ContainerEvent.Ready.rawValue)
                     container.trigger(ContainerEvent.Ended.rawValue)
                     
                     expect(posterPlugin.hidden).to(beFalse())

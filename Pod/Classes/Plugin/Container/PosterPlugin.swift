@@ -69,7 +69,7 @@ public class PosterPlugin: UIContainerPlugin {
     
     private func eventsToBind() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] _ in self?.playbackStarted() },
+            .Ready  : { [weak self] _ in self?.playbackStarted() },
             .Ended : { [weak self] _ in self?.playbackEnded() },
         ]
     }
