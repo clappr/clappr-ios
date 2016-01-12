@@ -26,6 +26,12 @@ public class MediaControl: UIBaseObject {
     private var hideControlsTimer: NSTimer!
     private var enabled: Bool = false
     
+    public var playbackControlState: PlaybackControlState = .Stopped {
+        didSet {
+            updatePlaybackControlButtonIcon()
+        }
+    }
+    
     private var isSeeking = false {
         didSet {
             scrubberLabel.hidden = !isSeeking
@@ -52,6 +58,13 @@ public class MediaControl: UIBaseObject {
         return mediaControl
     }
     
+    private func updatePlaybackControlButtonIcon() {
+        let imageName = playbackControlState == .Playing ? "pause" : "play"
+        let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
+            compatibleWithTraitCollection: nil)
+        mediaControlButton.setImage(image, forState: .Normal)
+    }
+    
     private func bindOrientationChangedListener() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
             name: UIDeviceOrientationDidChangeNotification, object: nil)
@@ -67,7 +80,7 @@ public class MediaControl: UIBaseObject {
         self.container = container
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
-        mediaControlButton.selected = container.isPlaying
+        playbackControlState = container.isPlaying ? .Playing : .Paused
     }
     
     private func bindEventListeners() {
@@ -83,19 +96,19 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
             .Progress   : { [weak self] info in self?.progressUpdated(info) },
-            .Ended      : { [weak self] _ in self?.mediaControlButton.selected = false },
+            .Ended      : { [weak self] _ in self?.playbackControlState = .Stopped },
             .MediaControlDisabled : { [weak self] _ in self?.disable() },
             .MediaControlEnabled  : { [weak self] _ in self?.enable() },
         ]
     }
     
     private func triggerPlay() {
-        mediaControlButton.selected = true
+        playbackControlState = .Playing
         trigger(.Playing)
     }
     
     private func triggerPause() {
-        mediaControlButton.selected = false
+        playbackControlState = .Paused
         trigger(.NotPlaying)
     }
     
@@ -184,7 +197,7 @@ public class MediaControl: UIBaseObject {
     }
 
     @IBAction func togglePlay(sender: UIButton) {
-        if mediaControlButton.selected {
+        if playbackControlState == .Playing {
             pause()
         } else {
             play()
@@ -193,13 +206,13 @@ public class MediaControl: UIBaseObject {
     }
     
     private func pause() {
-        mediaControlButton.selected = false
+        playbackControlState = .Paused
         container.pause()
         trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func play() {
-        mediaControlButton.selected = true
+        playbackControlState = .Playing
         container.play()
         trigger(MediaControlEvent.Playing.rawValue)
     }
