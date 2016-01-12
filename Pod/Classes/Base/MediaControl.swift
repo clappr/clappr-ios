@@ -15,7 +15,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
     @IBOutlet weak public var controlsWrapperView: UIView!
-    @IBOutlet weak public var playPauseButton: UIButton!
+    @IBOutlet weak public var mediaControlButton: UIButton!
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
@@ -67,7 +67,7 @@ public class MediaControl: UIBaseObject {
         self.container = container
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
-        playPauseButton.selected = container.isPlaying
+        mediaControlButton.selected = container.isPlaying
     }
     
     private func bindEventListeners() {
@@ -83,19 +83,19 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
             .Progress   : { [weak self] info in self?.progressUpdated(info) },
-            .Ended      : { [weak self] _ in self?.playPauseButton.selected = false },
+            .Ended      : { [weak self] _ in self?.mediaControlButton.selected = false },
             .MediaControlDisabled : { [weak self] _ in self?.disable() },
             .MediaControlEnabled  : { [weak self] _ in self?.enable() },
         ]
     }
     
     private func triggerPlay() {
-        playPauseButton.selected = true
+        mediaControlButton.selected = true
         trigger(.Playing)
     }
     
     private func triggerPause() {
-        playPauseButton.selected = false
+        mediaControlButton.selected = false
         trigger(.NotPlaying)
     }
     
@@ -184,7 +184,7 @@ public class MediaControl: UIBaseObject {
     }
 
     @IBAction func togglePlay(sender: UIButton) {
-        if playPauseButton.selected {
+        if mediaControlButton.selected {
             pause()
         } else {
             play()
@@ -193,13 +193,13 @@ public class MediaControl: UIBaseObject {
     }
     
     private func pause() {
-        playPauseButton.selected = false
+        mediaControlButton.selected = false
         container.pause()
         trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func play() {
-        playPauseButton.selected = true
+        mediaControlButton.selected = true
         container.play()
         trigger(MediaControlEvent.Playing.rawValue)
     }

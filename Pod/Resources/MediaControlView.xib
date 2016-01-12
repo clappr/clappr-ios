@@ -194,7 +194,7 @@
                 <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="Ow8-bS-zke"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="znc-H8-Ghd"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="kRE-7Y-pNv"/>
-                <outlet property="playPauseButton" destination="0V7-z5-rdA" id="nEw-5L-Aid"/>
+                <outlet property="mediaControlButton" destination="0V7-z5-rdA" id="1D1-jn-c7d"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>
