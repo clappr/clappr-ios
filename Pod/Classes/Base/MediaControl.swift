@@ -131,7 +131,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func timeUpdated(info: EventUserInfo) {
-        guard let position = info!["position"] as? NSTimeInterval else {
+        guard let position = info!["position"] as? NSTimeInterval where !livePlayback else {
             return
         }
         
@@ -141,7 +141,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func progressUpdated(info: EventUserInfo) {
-        guard let end = info!["end_position"] as? CGFloat else {
+        guard let end = info!["end_position"] as? CGFloat where !livePlayback else {
             return
         }
         
@@ -165,7 +165,20 @@ public class MediaControl: UIBaseObject {
     
     private func containerReady() {
         livePlayback = container.playback.type() == .Live
+        livePlayback ? setupForLive() : setupForVOD()
+        updateBars()
         updatePlaybackControlButtonIcon()
+    }
+    
+    private func setupForLive() {
+        bufferPercentage = 1
+        bufferBarView.backgroundColor = UIColor.redColor()
+        durationLabel.text = ""
+        currentTimeLabel.text = ""
+    }
+    
+    private func setupForVOD() {
+        bufferBarView.backgroundColor = UIColor.whiteColor()
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
     }
     
