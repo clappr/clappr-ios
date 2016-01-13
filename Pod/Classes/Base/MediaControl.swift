@@ -20,11 +20,12 @@ public class MediaControl: UIBaseObject {
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
     
-    private var bufferPercentage:CGFloat = 0.0
-    private var seekPercentage:CGFloat = 0.0
+    private var bufferPercentage: CGFloat = 0.0
+    private var seekPercentage: CGFloat = 0.0
     private var scrubberInitialPosition: CGFloat!
     private var hideControlsTimer: NSTimer!
-    private var enabled: Bool = false
+    private var enabled = false
+    private var livePlayback = false
     
     public var playbackControlState: PlaybackControlState = .Stopped {
         didSet {
@@ -62,7 +63,7 @@ public class MediaControl: UIBaseObject {
         var imageName: String
         
         if playbackControlState == .Playing {
-            imageName = container.playback.type() == .Live ? "stop" : "pause"
+            imageName = livePlayback ? "stop" : "pause"
         } else {
             imageName = "play"
         }
@@ -163,6 +164,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func containerReady() {
+        livePlayback = container.playback.type() == .Live
         updatePlaybackControlButtonIcon()
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
     }
@@ -206,7 +208,7 @@ public class MediaControl: UIBaseObject {
 
     @IBAction func togglePlay(sender: UIButton) {
         if playbackControlState == .Playing {
-            container.playback.type() == .Live ? stop() : pause()
+            livePlayback ? stop() : pause()
         } else {
             play()
             scheduleTimerToHideControls()
