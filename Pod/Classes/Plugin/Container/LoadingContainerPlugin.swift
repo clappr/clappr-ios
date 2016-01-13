@@ -44,7 +44,7 @@ public class LoadingContainerPlugin: UIContainerPlugin {
             self?.spinningWheel.startAnimating()
         }
         
-        listenTo(container!, eventName: ContainerEvent.Ready.rawValue, callback: stopAnimating)
+        listenTo(container!, eventName: ContainerEvent.Play.rawValue, callback: stopAnimating)
         listenTo(container!, eventName: ContainerEvent.Ended.rawValue, callback: stopAnimating)
     }
     
