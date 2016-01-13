@@ -151,7 +151,7 @@ public class MediaControl: UIBaseObject {
     
     private func updateScrubberPosition() {
         if !isSeeking {
-            let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
+            let delta = (CGRectGetWidth(seekBarView.frame) - scrubberView.innerCircle.frame.width) * seekPercentage
             scrubberLeftConstraint.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
             progressBarView.setNeedsLayout()
@@ -167,18 +167,19 @@ public class MediaControl: UIBaseObject {
         livePlayback = container.playback.type() == .Live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
+        updateScrubberPosition()
         updatePlaybackControlButtonIcon()
     }
     
     private func setupForLive() {
-        bufferPercentage = 1
-        bufferBarView.backgroundColor = UIColor.redColor()
+        seekPercentage = 1
+        progressBarView.backgroundColor = UIColor.redColor()
         durationLabel.text = ""
         currentTimeLabel.text = ""
     }
     
     private func setupForVOD() {
-        bufferBarView.backgroundColor = UIColor.whiteColor()
+        progressBarView.backgroundColor = UIColor.blueColor()
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
     }
     
