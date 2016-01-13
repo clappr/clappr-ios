@@ -126,6 +126,7 @@ class MediaControlTests: QuickSpec {
                     beforeEach() {
                         mediaControl.playbackControlState = .Playing
                         playback.playbackType = .Live
+                        container.trigger(ContainerEvent.Ready.rawValue)
                     }
                     
                     it("Should call container pause when is live video is playing") {
