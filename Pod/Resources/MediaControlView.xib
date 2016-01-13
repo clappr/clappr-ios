@@ -196,6 +196,7 @@
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="kRE-7Y-pNv"/>
                 <outlet property="playbackControlButton" destination="0V7-z5-rdA" id="3dr-Z2-ZnT"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
+                <outlet property="scrubberDragger" destination="TNM-hZ-5T3" id="7cR-lc-hi3"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
                 <outlet property="scrubberLeftConstraint" destination="Jfk-YR-geh" id="ORW-lJ-tCX"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>

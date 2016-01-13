@@ -8,6 +8,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var progressBarView: UIView!
     @IBOutlet weak var scrubberView: ScrubberView!
     @IBOutlet weak var scrubberLabel: UILabel!
+    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer!
     @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
     @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
 
@@ -176,11 +177,13 @@ public class MediaControl: UIBaseObject {
         progressBarView.backgroundColor = UIColor.redColor()
         durationLabel.text = ""
         currentTimeLabel.text = ""
+        scrubberDragger.enabled = false
     }
     
     private func setupForVOD() {
         progressBarView.backgroundColor = UIColor.blueColor()
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
+        scrubberDragger.enabled = true
     }
     
     public func hide() {
@@ -260,7 +263,7 @@ public class MediaControl: UIBaseObject {
         hideControlsTimer.invalidate()
     }
     
-    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
+    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {        
         let touchPoint = panGesture.locationInView(seekBarView)
         
         switch panGesture.state {
