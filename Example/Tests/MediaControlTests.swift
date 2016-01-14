@@ -151,6 +151,16 @@ class MediaControlTests: QuickSpec {
                     }
                 }
                 
+                context("Live") {
+                    it("Should hide labels when playback is live") {
+                        mediaControl.playbackControlState = .Playing
+                        playback.playbackType = .Live
+                        container.trigger(ContainerEvent.Ready.rawValue)
+                        
+                        expect(mediaControl.labelsWrapperView.hidden).to(beTrue())
+                    }
+                }
+                
                 context("Current Time") {
                     it("Should start with 00:00 as current time") {
                         expect(mediaControl.currentTimeLabel.text) == "00:00"

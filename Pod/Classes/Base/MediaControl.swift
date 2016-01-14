@@ -12,6 +12,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
     @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak public var labelsWrapperView: UIView!
     @IBOutlet weak public var durationLabel: UILabel!
     @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
@@ -175,13 +176,13 @@ public class MediaControl: UIBaseObject {
     private func setupForLive() {
         seekPercentage = 1
         progressBarView.backgroundColor = UIColor.redColor()
-        durationLabel.text = ""
-        currentTimeLabel.text = ""
+        labelsWrapperView.hidden = true
         scrubberDragger.enabled = false
     }
     
     private func setupForVOD() {
         progressBarView.backgroundColor = UIColor.blueColor()
+        labelsWrapperView.hidden = false
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
         scrubberDragger.enabled = true
     }
@@ -263,7 +264,7 @@ public class MediaControl: UIBaseObject {
         hideControlsTimer.invalidate()
     }
     
-    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {        
+    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
         let touchPoint = panGesture.locationInView(seekBarView)
         
         switch panGesture.state {
