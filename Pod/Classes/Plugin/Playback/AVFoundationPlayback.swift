@@ -12,13 +12,34 @@ public class AVFoundationPlayback: Playback {
     private var player: AVPlayer!
     private var playerLayer: AVPlayerLayer!
     private var currentState = PlaybackState.Idle
+
+    public override class func canPlay(url: NSURL) -> Bool {
+        return true
+    }
+    
+    public override func layoutSubviews() {
+        if playerLayer != nil {
+            playerLayer.frame = self.bounds
+        }
+    }
+    
+    public override func play() {
+        if player == nil {
+            setupPlayer()
+        }
+        
+        player.play()
+        
+        if !player.currentItem!.playbackLikelyToKeepUp {
+            updateState(.Buffering)
+        }
+    }
     
     private func setupPlayer() {
         player = AVPlayer(URL: url)
         playerLayer = AVPlayerLayer(player: player)
         self.layer.addSublayer(playerLayer)
         addObservers()
-        addTimeElapsedCallback()
     }
     
     private func addObservers() {
@@ -41,40 +62,17 @@ public class AVFoundationPlayback: Playback {
         player.seekToTime(kCMTimeZero)
     }
     
-    private func addTimeElapsedCallback() {
-        player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
-            self?.timeUpdated(time)
-        }
-    }
-    
-    private func timeUpdated(time: CMTime) {
-        if isPlaying() {
-            updateState(.Playing)
-            trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
-        }
-    }
-    
-    public override func layoutSubviews() {
-        if playerLayer != nil {
-            playerLayer.frame = self.bounds
-        }
-    }
-    
-    public override func play() {
-        if player == nil {
-            setupPlayer()
-        }
-        
-        player.play()
-        
-        if !player.currentItem!.playbackLikelyToKeepUp {
-            updateState(.Buffering)
-        }
-    }
-    
     public override func pause() {
         player.pause()
         updateState(.Paused)
+    }
+    
+    public override func stop() {
+        player.pause()
+        playbackDidEnd()
+        removeObservers()
+        playerLayer.removeFromSuperlayer()
+        player = nil
     }
     
     public override func isPlaying() -> Bool {
@@ -89,15 +87,19 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func duration() -> Double {
-        guard player.status == .ReadyToPlay, let item = player.currentItem else {
+        guard type() == .VOD, let item = player.currentItem else {
             return 0
         }
-        
+
         return CMTimeGetSeconds(item.asset.duration)
     }
     
-    public override class func canPlay(url: NSURL) -> Bool {
-        return true
+    public override func type() -> PlaybackType {
+        guard player != nil, let duration = player.currentItem?.asset.duration else {
+            return .Unknown
+        }
+        
+        return duration == kCMTimeIndefinite ? .Live : .VOD
     }
     
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?,
@@ -133,9 +135,27 @@ public class AVFoundationPlayback: Playback {
     
     private func handleStatusChangedEvent() {
         if player.status == .ReadyToPlay {
-            self.trigger(.Ready)
+            readyToPlay()
         } else if player.status == .Failed {
             self.trigger(.Error, userInfo: ["error": player.currentItem!.error!])
+        }
+    }
+    
+    private func readyToPlay() {
+        self.trigger(.Ready)
+        addTimeElapsedCallback()
+    }
+    
+    private func addTimeElapsedCallback() {
+        player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
+            self?.timeUpdated(time)
+        }
+    }
+    
+    private func timeUpdated(time: CMTime) {
+        if isPlaying() {
+            updateState(.Playing)
+            trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
         }
     }
     
@@ -164,6 +184,10 @@ public class AVFoundationPlayback: Playback {
     }
     
     deinit {
+        removeObservers()
+    }
+    
+    private func removeObservers() {
         if player != nil {
             player.removeObserver(self, forKeyPath: "currentItem.status")
             player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")

@@ -8,23 +8,32 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var progressBarView: UIView!
     @IBOutlet weak var scrubberView: ScrubberView!
     @IBOutlet weak var scrubberLabel: UILabel!
+    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer!
     @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
     @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak public var labelsWrapperView: UIView!
     @IBOutlet weak public var durationLabel: UILabel!
     @IBOutlet weak public var currentTimeLabel: UILabel!
     @IBOutlet weak public var controlsOverlayView: GradientView!
     @IBOutlet weak public var controlsWrapperView: UIView!
-    @IBOutlet weak public var playPauseButton: UIButton!
+    @IBOutlet weak public var playbackControlButton: UIButton!
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
     
-    private var bufferPercentage:CGFloat = 0.0
-    private var seekPercentage:CGFloat = 0.0
+    private var bufferPercentage: CGFloat = 0.0
+    private var seekPercentage: CGFloat = 0.0
     private var scrubberInitialPosition: CGFloat!
     private var hideControlsTimer: NSTimer!
-    private var enabled: Bool = false
+    private var enabled = false
+    private var livePlayback = false
+    
+    public var playbackControlState: PlaybackControlState = .Stopped {
+        didSet {
+            updatePlaybackControlButtonIcon()
+        }
+    }
     
     private var isSeeking = false {
         didSet {
@@ -52,6 +61,20 @@ public class MediaControl: UIBaseObject {
         return mediaControl
     }
     
+    private func updatePlaybackControlButtonIcon() {
+        var imageName: String
+        
+        if playbackControlState == .Playing {
+            imageName = livePlayback ? "stop" : "pause"
+        } else {
+            imageName = "play"
+        }
+        
+        let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
+            compatibleWithTraitCollection: nil)
+        playbackControlButton.setImage(image, forState: .Normal)
+    }
+    
     private func bindOrientationChangedListener() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
             name: UIDeviceOrientationDidChangeNotification, object: nil)
@@ -67,7 +90,7 @@ public class MediaControl: UIBaseObject {
         self.container = container
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
-        playPauseButton.selected = container.isPlaying
+        playbackControlState = container.isPlaying ? .Playing : .Stopped
     }
     
     private func bindEventListeners() {
@@ -83,19 +106,19 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] _ in self?.containerReady() },
             .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
             .Progress   : { [weak self] info in self?.progressUpdated(info) },
-            .Ended      : { [weak self] _ in self?.playPauseButton.selected = false },
+            .Ended      : { [weak self] _ in self?.playbackControlState = .Stopped },
             .MediaControlDisabled : { [weak self] _ in self?.disable() },
             .MediaControlEnabled  : { [weak self] _ in self?.enable() },
         ]
     }
     
     private func triggerPlay() {
-        playPauseButton.selected = true
+        playbackControlState = .Playing
         trigger(.Playing)
     }
     
     private func triggerPause() {
-        playPauseButton.selected = false
+        playbackControlState = .Paused
         trigger(.NotPlaying)
     }
     
@@ -110,7 +133,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func timeUpdated(info: EventUserInfo) {
-        guard let position = info!["position"] as? NSTimeInterval else {
+        guard let position = info!["position"] as? NSTimeInterval where !livePlayback else {
             return
         }
         
@@ -120,7 +143,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func progressUpdated(info: EventUserInfo) {
-        guard let end = info!["end_position"] as? CGFloat else {
+        guard let end = info!["end_position"] as? CGFloat where !livePlayback else {
             return
         }
         
@@ -130,7 +153,7 @@ public class MediaControl: UIBaseObject {
     
     private func updateScrubberPosition() {
         if !isSeeking {
-            let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
+            let delta = (CGRectGetWidth(seekBarView.frame) - scrubberView.innerCircle.frame.width) * seekPercentage
             scrubberLeftConstraint.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
             progressBarView.setNeedsLayout()
@@ -143,7 +166,25 @@ public class MediaControl: UIBaseObject {
     }
     
     private func containerReady() {
+        livePlayback = container.playback.type() == .Live
+        livePlayback ? setupForLive() : setupForVOD()
+        updateBars()
+        updateScrubberPosition()
+        updatePlaybackControlButtonIcon()
+    }
+    
+    private func setupForLive() {
+        seekPercentage = 1
+        progressBarView.backgroundColor = UIColor.redColor()
+        labelsWrapperView.hidden = true
+        scrubberDragger.enabled = false
+    }
+    
+    private func setupForVOD() {
+        progressBarView.backgroundColor = UIColor.blueColor()
+        labelsWrapperView.hidden = false
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
+        scrubberDragger.enabled = true
     }
     
     public func hide() {
@@ -184,8 +225,8 @@ public class MediaControl: UIBaseObject {
     }
 
     @IBAction func togglePlay(sender: UIButton) {
-        if playPauseButton.selected {
-            pause()
+        if playbackControlState == .Playing {
+            livePlayback ? stop() : pause()
         } else {
             play()
             scheduleTimerToHideControls()
@@ -193,15 +234,21 @@ public class MediaControl: UIBaseObject {
     }
     
     private func pause() {
-        playPauseButton.selected = false
+        playbackControlState = .Paused
         container.pause()
         trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func play() {
-        playPauseButton.selected = true
+        playbackControlState = .Playing
         container.play()
         trigger(MediaControlEvent.Playing.rawValue)
+    }
+    
+    private func stop() {
+        playbackControlState = .Stopped
+        container.stop()
+        trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
     private func scheduleTimerToHideControls() {
