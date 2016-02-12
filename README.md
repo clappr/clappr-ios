@@ -16,9 +16,9 @@ pod 'Clappr', '~> 0.1'
 
 Create
 ```swift
-let url = NSURL(string: "http://clappr.io/highline.mp4")!
-let player = Player(source: url)
-``` 
+let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
+let player = Player(options: options)
+```
 
 Add it in your view
 
@@ -32,12 +32,12 @@ player.attachTo(yourView, controller: self)
 To add plugins parameters use the options parameter on constructor. Example:
 
 ```Swift
-let options = [parameter1: "value1", parameter2: true]
-let player = Player(source: url, options: options)
+let options = [kSourceUrl : "http://clappr.io/highline.mp4", pluginParameter1: "value1", pluginParameter2: true]
+let player = Player(options: options)
 ```
 
 ##### Poster
-Define a poster by adding `posterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
+Define a poster by adding `kPosterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
 
 
 ### License
