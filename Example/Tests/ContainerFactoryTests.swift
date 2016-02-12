@@ -5,12 +5,10 @@ import Clappr
 class ContainerFactoryTests: QuickSpec {
     
     override func spec() {
-        let firstUrl = NSURL(string: "http://test.com")!
-        let secondUrl = NSURL(string: "http://test2.com")!
-        let invalidUrl = NSURL(string: "invalid")!
+        let optionsWithValidSource = [kSourceUrl : "http://test.com"]
+        let optionsWithInvalidSource = [kSourceUrl : "invalid"]
         var factory: ContainerFactory!
         var loader: Loader!
-        let validSources = [firstUrl, secondUrl]
         
         beforeEach() {
             loader = Loader()
@@ -18,47 +16,35 @@ class ContainerFactoryTests: QuickSpec {
         }
     
         context("Container creation") {
-            it("Should create a container for each source") {
-                factory = ContainerFactory(sources: validSources, loader: loader)
+            it("Should create a container for a valid source") {
+                factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
                 
-                expect(factory.createContainers().count) == validSources.count
+                expect(factory.createContainers()).toNot(beEmpty())
             }
             
             it("Should not create container for url that cannot be played") {
-                let invalidSources = [invalidUrl]
-                factory = ContainerFactory(sources: invalidSources, loader: loader)
+                factory = ContainerFactory(loader: loader, options: optionsWithInvalidSource)
                 
                 expect(factory.createContainers()).to(beEmpty())
-            }
-            
-            it("Should create container just for valid sources and ignore invalid") {
-                let mixedSouces = [firstUrl, invalidUrl, secondUrl]
-                factory = ContainerFactory(sources: mixedSouces, loader: loader)
-                
-                expect(factory.createContainers().count) == 2
             }
             
             it("Should add container plugins from loader") {
                 loader.containerPlugins = [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self]
                 
-                factory = ContainerFactory(sources: validSources, loader: loader)
-                let containers = factory.createContainers()
+                factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
+                let container = factory.createContainers().first!
                 
-                expect(containers[0].hasPlugin(FakeContainerPlugin)).to(beTrue())
-                expect(containers[0].hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
-                expect(containers[1].hasPlugin(FakeContainerPlugin)).to(beTrue())
-                expect(containers[1].hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
+                expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
             }
             
             it("Should add valid plugins only") {
                 loader.containerPlugins = [InvalidContainerPlugin.self, FakeContainerPlugin.self]
-                factory = ContainerFactory(sources: validSources, loader: loader)
-                let containers = factory.createContainers()
+                factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
+                let container = factory.createContainers().first!
                 
-                expect(containers[0].hasPlugin(FakeContainerPlugin)).to(beTrue())
-                expect(containers[0].hasPlugin(InvalidContainerPlugin)).to(beFalse())
-                expect(containers[1].hasPlugin(FakeContainerPlugin)).to(beTrue())
-                expect(containers[1].hasPlugin(InvalidContainerPlugin)).to(beFalse())
+                expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
+                expect(container.hasPlugin(InvalidContainerPlugin)).to(beFalse())
             }
         }
     }

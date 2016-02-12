@@ -8,18 +8,18 @@ class CoreFactoryTests: QuickSpec {
         describe("Core Factory") {
             context("Creation") {
                 it("Should be able to create a core") {
-                    let source = NSURL(string: "testUrl")!
-                    let core = CoreFactory.create([source])
+                    let options = [kSourceUrl : "testUrl"]
+                    let core = CoreFactory.create(options: options)
                     
                     expect(core).toNot(beNil())
-                    expect(core.sources.first) == source
+                    expect(core.containers).toNot(beEmpty())
                 }
                 
                 it("Should be able to create container with plugins") {
                     let loader = Loader()
                     loader.corePlugins = [FakeUICorePlugin.self]
 
-                    let core = CoreFactory.create([], loader: loader)
+                    let core = CoreFactory.create(loader)
                     
                     expect(core.hasPlugin(FakeUICorePlugin)).to(beTrue())
                 }

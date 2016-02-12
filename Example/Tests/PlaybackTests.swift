@@ -7,10 +7,10 @@ class PlaybackTests: QuickSpec {
     override func spec() {
         describe("Playback") {
             var playback: Playback!
-            let sourceURL = NSURL(string: "http://globo.com/video.mp4")!
+            let options = [kSourceUrl : "http://globo.com/video.mp4"]
             
             beforeEach() {
-                playback = Playback(url: sourceURL)
+                playback = Playback(options: options)
             }
             
             it("Should have a play method") {
