@@ -27,7 +27,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func createContainers() {
-        let factory = ContainerFactory(sources: sources, loader: loader, options: options)
+        let factory = ContainerFactory(loader: loader, options: options)
         containers = factory.createContainers()
         
         for container in containers {

@@ -1,11 +1,13 @@
 public class ContainerFactory {
-    private var sources: [NSURL]
+    private var sources: [NSURL] = []
     private var loader: Loader
     private var options: Options
     private var plugins: [AnyClass]
  
-    public init(sources: [NSURL], loader: Loader, options: Options = [:]) {
-        self.sources = sources
+    public init(loader: Loader, options: Options = [:]) {
+        if let urlString = options[kSourceUrl] as? String {
+            self.sources = [NSURL(string: urlString)!]
+        }
         self.loader = loader
         self.options = options
         self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
