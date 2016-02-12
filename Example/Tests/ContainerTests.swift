@@ -8,10 +8,10 @@ class ContainerTests: QuickSpec {
         describe("Container") {
             var container: Container!
             var playback: Playback!
-            let sourceURL = NSURL(string: "http://globo.com/video.mp4")!
+            let options = [kSourceUrl : "http://globo.com/video.mp4"]
             
             beforeEach() {
-                playback = Playback(url: sourceURL)
+                playback = Playback(options: options)
                 container = Container(playback: playback)
             }
             
@@ -270,7 +270,7 @@ class ContainerTests: QuickSpec {
                     var mockedPlayback: MockedSettingsPlayback!
                     
                     beforeEach() {
-                        mockedPlayback = MockedSettingsPlayback(url: sourceURL)
+                        mockedPlayback = MockedSettingsPlayback(options: options)
                         container = Container(playback: mockedPlayback)
                     }
                     

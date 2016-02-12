@@ -1,10 +1,10 @@
 import Foundation
 
 public class Playback: UIBaseObject {
-    public internal(set) var url: NSURL
+    public internal(set) var options: Options
     
-    public required init(url: NSURL) {
-        self.url = url
+    public required init(options: Options) {
+        self.options = options
         super.init(frame: CGRect.zero)
         userInteractionEnabled = false
     }

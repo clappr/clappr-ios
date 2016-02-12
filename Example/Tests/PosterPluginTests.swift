@@ -8,8 +8,10 @@ class PosterPluginTests: QuickSpec {
         describe("Poster Plugin") {
             var container: Container!
             let sourceURL = NSURL(string: "http://globo.com/video.mp4")!
-            let playback = Playback(url: sourceURL)
-            let options = [posterUrl: "http://clappr.io/poster.png"]
+            let options = [kSourceUrl : "http://globo.com/video.mp4",
+                           kPosterUrl : "http://clappr.io/poster.png"]
+            let playback = Playback(options: options)
+            
 
             context("Initialization") {
                 it("Should not be added if container has no options") {

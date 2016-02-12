@@ -12,9 +12,23 @@ public class AVFoundationPlayback: Playback {
     private var player: AVPlayer!
     private var playerLayer: AVPlayerLayer!
     private var currentState = PlaybackState.Idle
+    
+    public var url: NSURL?
 
     public override class func canPlay(url: NSURL) -> Bool {
         return true
+    }
+    
+    public required init(options: Options) {
+        if let urlString = options[kSourceUrl] as? String {
+            self.url = NSURL(string: urlString)
+        }
+        
+        super.init(options: options)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override func layoutSubviews() {
@@ -34,12 +48,16 @@ public class AVFoundationPlayback: Playback {
             updateState(.Buffering)
         }
     }
-    
+
     private func setupPlayer() {
-        player = AVPlayer(URL: url)
-        playerLayer = AVPlayerLayer(player: player)
-        self.layer.addSublayer(playerLayer)
-        addObservers()
+        if let url = self.url {
+            player = AVPlayer(URL: url)
+            playerLayer = AVPlayerLayer(player: player)
+            self.layer.addSublayer(playerLayer)
+            addObservers()
+        } else {
+            trigger(.Error)
+        }
     }
     
     private func addObservers() {

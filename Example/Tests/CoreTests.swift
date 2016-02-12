@@ -33,8 +33,6 @@ class CoreTests: QuickSpec {
             context("Containers"){
                 it("Should be created given an array of sources") {
                     expect(core.containers.count) == sources.count
-                    expect(core.containers[0].playback.url) == sources[0]
-                    expect(core.containers[1].playback.url) == sources[1]
                 }
             }
             

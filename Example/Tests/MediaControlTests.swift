@@ -6,12 +6,12 @@ class MediaControlTests: QuickSpec {
     
     override func spec() {
         describe("MediaControl") {
-            let sourceUrl = NSURL(string: "http://globo.com/video.mp4")!
+            let options = [kSourceUrl : "http://globo.com/video.mp4"]
             var container: Container!
             var playback: StubedPlayback!
             
             beforeEach() {
-                playback = StubedPlayback(url: sourceUrl)
+                playback = StubedPlayback(options: options)
                 container = Container(playback: playback)
             }
             

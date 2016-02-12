@@ -23,7 +23,7 @@ public class ContainerFactory {
         }
         
         let type = availablePlaybacks[0] as! Playback.Type
-        return Container(playback: type.init(url: url), options: options)
+        return Container(playback: type.init(options: options), options: options)
     }
     
     private func canPlay(type: AnyClass, url: NSURL) -> Bool {
