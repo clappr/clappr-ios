@@ -5,22 +5,13 @@ import Clappr
 class PlayerTests: QuickSpec {
     override func spec() {
         describe("Player") {
-            let firstUrl = NSURL(string: "http://someUrl.com")!
-            let secondUrl = NSURL(string: "http://anotherUrl.com")!
+            
+            let options = [kSourceUrl : "http://someUrl.com"]
             
             it("Should load source on core when initializing") {
-                let player = Player(source: firstUrl)
+                let player = Player(options: options)
                 
-                expect(player.core.sources.count) == 1
-                expect(player.core.sources[0]) == firstUrl
-            }
-            
-            it("Should load sources array on core when initializing") {
-                let player = Player(sources: [firstUrl, secondUrl])
-                
-                expect(player.core.sources.count) == 2
-                expect(player.core.sources[0]) == firstUrl
-                expect(player.core.sources[1]) == secondUrl
+                expect(player.core.containers).toNot(beEmpty())
             }
         }
     }

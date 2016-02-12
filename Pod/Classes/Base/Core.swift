@@ -1,6 +1,5 @@
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
-    public private(set) var sources: [NSURL]
     public private(set) var containers: [Container]!
     public private(set) var mediaControl: MediaControl!
     public private(set) var plugins: [UICorePlugin] = []
@@ -12,8 +11,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
     
-    public required init(sources: [NSURL], loader: Loader = Loader(), options: Options = [:]) {
-        self.sources = sources
+    public required init(loader: Loader = Loader(), options: Options = [:]) {
         self.loader = loader
         self.options = options
         super.init(frame: CGRectZero)
