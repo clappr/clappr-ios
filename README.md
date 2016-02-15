@@ -9,7 +9,7 @@
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod 'Clappr', '~> 0.1'
+pod 'Clappr', '~> 0.2'
 ```
 
 ### Using the Player
