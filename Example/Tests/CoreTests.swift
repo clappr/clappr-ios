@@ -69,7 +69,7 @@ class CoreTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(url: NSURL) -> Bool {
+        override class func canPlay(options: Options) -> Bool {
             return true
         }
     }

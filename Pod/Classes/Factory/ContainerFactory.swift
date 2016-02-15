@@ -1,13 +1,9 @@
 public class ContainerFactory {
-    private var source: NSURL?
     private var loader: Loader
     private var options: Options
     private var plugins: [AnyClass]
  
     public init(loader: Loader, options: Options = [:]) {
-        if let urlString = options[kSourceUrl] as? String {
-            self.source = NSURL(string: urlString)
-        }
         self.loader = loader
         self.options = options
         self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
@@ -25,23 +21,16 @@ public class ContainerFactory {
     }
     
     private func availablePlaybacks() -> [Playback.Type] {
-        var availablePlaybacks: [AnyObject]
-        
-        if let url = source {
-            availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type, url:url)})
-        } else {
-            availablePlaybacks = loader.playbackPlugins
-        }
-        
+        let availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
         return availablePlaybacks as! [Playback.Type]
     }
     
-    private func canPlay(type: AnyClass, url: NSURL) -> Bool {
+    private func canPlay(type: AnyClass) -> Bool {
         guard let type = type as? Playback.Type else {
             return false
         }
         
-        return type.canPlay(url)
+        return type.canPlay(self.options)
     }
     
     private func addPlugins(container: Container) -> Container {

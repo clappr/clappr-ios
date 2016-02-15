@@ -50,8 +50,8 @@ class ContainerFactoryTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(url: NSURL) -> Bool {
-            return url.absoluteString != "invalid"
+        override class func canPlay(options: Options) -> Bool {
+            return options[kSourceUrl] as! String != "invalid"
         }
     }
     

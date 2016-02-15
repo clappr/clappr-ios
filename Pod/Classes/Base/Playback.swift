@@ -18,7 +18,7 @@ public class Playback: UIBaseObject {
         self.stopListening()
     }
     
-    public class func canPlay(url: NSURL) -> Bool {
+    public class func canPlay(options: Options) -> Bool {
         return false
     }
     
