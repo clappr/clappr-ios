@@ -7,7 +7,6 @@ class PosterPluginTests: QuickSpec {
     override func spec() {
         describe("Poster Plugin") {
             var container: Container!
-            let sourceURL = NSURL(string: "http://globo.com/video.mp4")!
             let options = [kSourceUrl : "http://globo.com/video.mp4",
                            kPosterUrl : "http://clappr.io/poster.png"]
             let playback = Playback(options: options)
