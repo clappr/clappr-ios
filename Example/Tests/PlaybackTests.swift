@@ -72,7 +72,7 @@ class PlaybackTests: QuickSpec {
             }
             
             it("Should have a class function to check if a source can be played with default value false") {
-                let canPlay = Playback.canPlay(NSURL())
+                let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
             }
         }

@@ -1,39 +1,36 @@
 public class ContainerFactory {
-    private var sources: [NSURL] = []
     private var loader: Loader
     private var options: Options
     private var plugins: [AnyClass]
  
     public init(loader: Loader, options: Options = [:]) {
-        if let urlString = options[kSourceUrl] as? String {
-            self.sources = [NSURL(string: urlString)!]
-        }
         self.loader = loader
         self.options = options
         self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
     }
     
-    public func createContainers() -> [Container] {
-        return sources.flatMap(createContainer).map(addPlugins)
-    }
-    
-    private func createContainer(url: NSURL) -> Container? {
-        let availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type, url:url)})
+    public func createContainer() -> Container? {
+        var availablePlaybacks = self.availablePlaybacks()
         
         if availablePlaybacks.count == 0 {
             return nil
         }
         
-        let type = availablePlaybacks[0] as! Playback.Type
-        return Container(playback: type.init(options: options), options: options)
+        let container = Container(playback: availablePlaybacks[0].init(options: options), options: options)
+        return addPlugins(container)
     }
     
-    private func canPlay(type: AnyClass, url: NSURL) -> Bool {
+    private func availablePlaybacks() -> [Playback.Type] {
+        let availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
+        return availablePlaybacks as! [Playback.Type]
+    }
+    
+    private func canPlay(type: AnyClass) -> Bool {
         guard let type = type as? Playback.Type else {
             return false
         }
         
-        return type.canPlay(url)
+        return type.canPlay(self.options)
     }
     
     private func addPlugins(container: Container) -> Container {

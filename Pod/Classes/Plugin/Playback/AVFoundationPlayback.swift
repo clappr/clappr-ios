@@ -15,7 +15,11 @@ public class AVFoundationPlayback: Playback {
     
     public var url: NSURL?
 
-    public override class func canPlay(url: NSURL) -> Bool {
+    public override class func canPlay(options: Options) -> Bool {
+        guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
+            return false
+        }
+        
         return true
     }
     

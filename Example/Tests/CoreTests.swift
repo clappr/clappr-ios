@@ -25,14 +25,14 @@ class CoreTests: QuickSpec {
             
             context("Containers"){
                 it("Should be created given a source") {
-                    expect(core.containers).toNot(beEmpty())
+                    expect(core.container).toNot(beNil())
                 }
             }
             
             context("Media Control") {
                 it("Should be created in top most container") {
                     expect(core.mediaControl).toNot(beNil())
-                    expect(core.mediaControl.container) == core.containers.first
+                    expect(core.mediaControl.container) == core.container
                 }
             }
             
@@ -69,7 +69,7 @@ class CoreTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(url: NSURL) -> Bool {
+        override class func canPlay(options: Options) -> Bool {
             return true
         }
     }
