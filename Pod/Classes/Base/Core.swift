@@ -1,6 +1,6 @@
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
-    public private(set) var containers: [Container]!
+    public private(set) var container: Container?
     public private(set) var mediaControl: MediaControl!
     public private(set) var plugins: [UICorePlugin] = []
     
@@ -26,9 +26,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     private func createContainers() {
         let factory = ContainerFactory(loader: loader, options: options)
-        containers = factory.createContainers()
         
-        for container in containers {
+        if let container = factory.createContainer() {
+            self.container = container
             addSubviewMatchingConstraints(container)
         }
     }
@@ -38,8 +38,8 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addSubviewMatchingConstraints(mediaControl)
         addTapRecognizer()
         
-        if let topContainer = containers.first {
-            mediaControl.setup(topContainer)
+        if let container = container {
+            mediaControl.setup(container)
         }
     }
     

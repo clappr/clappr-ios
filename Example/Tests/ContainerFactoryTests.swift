@@ -19,20 +19,20 @@ class ContainerFactoryTests: QuickSpec {
             it("Should create a container for a valid source") {
                 factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
                 
-                expect(factory.createContainers()).toNot(beEmpty())
+                expect(factory.createContainer()).toNot(beNil())
             }
             
             it("Should not create container for url that cannot be played") {
                 factory = ContainerFactory(loader: loader, options: optionsWithInvalidSource)
                 
-                expect(factory.createContainers()).to(beEmpty())
+                expect(factory.createContainer()).to(beNil())
             }
             
             it("Should add container plugins from loader") {
                 loader.containerPlugins = [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self]
                 
                 factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
-                let container = factory.createContainers().first!
+                let container = factory.createContainer()!
                 
                 expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                 expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
@@ -41,7 +41,7 @@ class ContainerFactoryTests: QuickSpec {
             it("Should add valid plugins only") {
                 loader.containerPlugins = [InvalidContainerPlugin.self, FakeContainerPlugin.self]
                 factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
-                let container = factory.createContainers().first!
+                let container = factory.createContainer()!
                 
                 expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                 expect(container.hasPlugin(InvalidContainerPlugin)).to(beFalse())

@@ -12,7 +12,7 @@ class CoreFactoryTests: QuickSpec {
                     let core = CoreFactory.create(options: options)
                     
                     expect(core).toNot(beNil())
-                    expect(core.containers).toNot(beEmpty())
+                    expect(core.container).toNot(beNil())
                 }
                 
                 it("Should be able to create container with plugins") {
