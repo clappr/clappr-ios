@@ -29,6 +29,12 @@ public class MediaControl: UIBaseObject {
     private var enabled = false
     private var livePlayback = false
     
+    public lazy var liveProgressBarColor = UIColor.redColor()
+    public lazy var vodProgressBarColor = UIColor.blueColor()
+    public lazy var playButtonImage: UIImage? = self.imageFromName("play")
+    public lazy var pauseButtonImage: UIImage? = self.imageFromName("pause")
+    public lazy var stopButtonImage: UIImage? = self.imageFromName("stop")
+    
     public var playbackControlState: PlaybackControlState = .Stopped {
         didSet {
             updatePlaybackControlButtonIcon()
@@ -63,34 +69,21 @@ public class MediaControl: UIBaseObject {
         mediaControl.bindOrientationChangedListener()
         return mediaControl
     }
+
+    private func imageFromName(name: String) -> UIImage? {
+        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self), compatibleWithTraitCollection: nil)
+    }
     
     private func updatePlaybackControlButtonIcon() {
         var image: UIImage?
         
         if playbackControlState == .Playing {
-            image = livePlayback ? stopImage() : pauseImage()
+            image = livePlayback ? stopButtonImage : pauseButtonImage
         } else {
-            image = playImage()
+            image = playButtonImage
         }
         
         playbackControlButton.setImage(image, forState: .Normal)
-    }
-    
-    public func playImage() -> UIImage? {
-        return imageFromName("play")
-    }
-    
-    public func pauseImage() -> UIImage? {
-        return imageFromName("pause")
-    }
-    
-    public func stopImage() -> UIImage? {
-        return imageFromName("stop")
-    }
-    
-    private func imageFromName(name: String) -> UIImage? {
-        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self),
-            compatibleWithTraitCollection: nil)
     }
     
     private func bindOrientationChangedListener() {
@@ -193,24 +186,16 @@ public class MediaControl: UIBaseObject {
     
     private func setupForLive() {
         seekPercentage = 1
-        progressBarView.backgroundColor = liveProgressBarColor()
+        progressBarView.backgroundColor = liveProgressBarColor
         labelsWrapperView.hidden = true
         scrubberDragger.enabled = false
     }
     
-    public func liveProgressBarColor() -> UIColor {
-        return UIColor.redColor()
-    }
-    
     private func setupForVOD() {
-        progressBarView.backgroundColor = vodProgressBarColor()
+        progressBarView.backgroundColor = vodProgressBarColor
         labelsWrapperView.hidden = false
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
         scrubberDragger.enabled = true
-    }
-    
-    public func vodProgressBarColor() -> UIColor {
-        return UIColor.blueColor()
     }
     
     public func hide() {
