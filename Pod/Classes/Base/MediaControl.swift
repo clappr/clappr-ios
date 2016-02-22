@@ -52,9 +52,12 @@ public class MediaControl: UIBaseObject {
         backgroundColor = UIColor.clearColor()
     }
     
+    public class func loadNib() -> UINib {
+        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+    }
+    
     public class func initFromNib() -> MediaControl {
-        let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
-        let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
+        let mediaControl = loadNib().instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
