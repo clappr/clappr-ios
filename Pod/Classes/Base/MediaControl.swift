@@ -178,16 +178,24 @@ public class MediaControl: UIBaseObject {
     
     private func setupForLive() {
         seekPercentage = 1
-        progressBarView.backgroundColor = UIColor.redColor()
+        progressBarView.backgroundColor = liveProgressBarColor()
         labelsWrapperView.hidden = true
         scrubberDragger.enabled = false
     }
     
+    public func liveProgressBarColor() -> UIColor {
+        return UIColor.redColor()
+    }
+    
     private func setupForVOD() {
-        progressBarView.backgroundColor = UIColor.blueColor()
+        progressBarView.backgroundColor = vodProgressBarColor()
         labelsWrapperView.hidden = false
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
         scrubberDragger.enabled = true
+    }
+    
+    public func vodProgressBarColor() -> UIColor {
+        return UIColor.blueColor()
     }
     
     public func hide() {
