@@ -65,17 +65,32 @@ public class MediaControl: UIBaseObject {
     }
     
     private func updatePlaybackControlButtonIcon() {
-        var imageName: String
+        var image: UIImage?
         
         if playbackControlState == .Playing {
-            imageName = livePlayback ? "stop" : "pause"
+            image = livePlayback ? stopImage() : pauseImage()
         } else {
-            imageName = "play"
+            image = playImage()
         }
         
-        let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
-            compatibleWithTraitCollection: nil)
         playbackControlButton.setImage(image, forState: .Normal)
+    }
+    
+    public func playImage() -> UIImage? {
+        return imageFromName("play")
+    }
+    
+    public func pauseImage() -> UIImage? {
+        return imageFromName("pause")
+    }
+    
+    public func stopImage() -> UIImage? {
+        return imageFromName("stop")
+    }
+    
+    private func imageFromName(name: String) -> UIImage? {
+        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self),
+            compatibleWithTraitCollection: nil)
     }
     
     private func bindOrientationChangedListener() {
