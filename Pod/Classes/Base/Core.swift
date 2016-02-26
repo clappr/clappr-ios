@@ -34,7 +34,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func createMediaControl() {
-        mediaControl = MediaControl.initFromNib()
+        mediaControl = loader.mediaControl.initFromNib()
         addSubviewMatchingConstraints(mediaControl)
         addTapRecognizer()
         

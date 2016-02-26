@@ -29,6 +29,12 @@ public class MediaControl: UIBaseObject {
     private var enabled = false
     private var livePlayback = false
     
+    public lazy var liveProgressBarColor = UIColor.redColor()
+    public lazy var vodProgressBarColor = UIColor.blueColor()
+    public lazy var playButtonImage: UIImage? = self.imageFromName("play")
+    public lazy var pauseButtonImage: UIImage? = self.imageFromName("pause")
+    public lazy var stopButtonImage: UIImage? = self.imageFromName("stop")
+    
     public var playbackControlState: PlaybackControlState = .Stopped {
         didSet {
             updatePlaybackControlButtonIcon()
@@ -52,26 +58,31 @@ public class MediaControl: UIBaseObject {
         backgroundColor = UIColor.clearColor()
     }
     
+    public class func loadNib() -> UINib {
+        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+    }
+    
     public class func initFromNib() -> MediaControl {
-        let nib = UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
-        let mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
+        let mediaControl = loadNib().instantiateWithOwner(self, options: nil).last as! MediaControl
         mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         return mediaControl
     }
+
+    private func imageFromName(name: String) -> UIImage? {
+        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self), compatibleWithTraitCollection: nil)
+    }
     
     private func updatePlaybackControlButtonIcon() {
-        var imageName: String
+        var image: UIImage?
         
         if playbackControlState == .Playing {
-            imageName = livePlayback ? "stop" : "pause"
+            image = livePlayback ? stopButtonImage : pauseButtonImage
         } else {
-            imageName = "play"
+            image = playButtonImage
         }
         
-        let image = UIImage(named: imageName, inBundle: NSBundle(forClass: MediaControl.self),
-            compatibleWithTraitCollection: nil)
         playbackControlButton.setImage(image, forState: .Normal)
     }
     
@@ -175,13 +186,13 @@ public class MediaControl: UIBaseObject {
     
     private func setupForLive() {
         seekPercentage = 1
-        progressBarView.backgroundColor = UIColor.redColor()
+        progressBarView.backgroundColor = liveProgressBarColor
         labelsWrapperView.hidden = true
         scrubberDragger.enabled = false
     }
     
     private func setupForVOD() {
-        progressBarView.backgroundColor = UIColor.blueColor()
+        progressBarView.backgroundColor = vodProgressBarColor
         labelsWrapperView.hidden = false
         durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
         scrubberDragger.enabled = true
