@@ -9,6 +9,10 @@ public class PosterPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func name() -> String {
+        return "Poster"
+    }
+    
     public init() {
         super.init(frame: CGRectZero)
         translatesAutoresizingMaskIntoConstraints = false

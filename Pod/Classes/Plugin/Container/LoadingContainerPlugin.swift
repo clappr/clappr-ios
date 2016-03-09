@@ -13,6 +13,10 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func name() -> String {
+        return "Spinner"
+    }
+    
     override public func wasInstalled() {
         super.wasInstalled()
         addCenteringConstraints()

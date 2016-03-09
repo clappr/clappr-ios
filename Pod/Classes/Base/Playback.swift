@@ -1,6 +1,6 @@
 import Foundation
 
-public class Playback: UIBaseObject {
+public class Playback: UIBaseObject, PluginInfo {
     public internal(set) var options: Options
     
     public required init(options: Options) {
@@ -11,6 +11,14 @@ public class Playback: UIBaseObject {
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Use init(url: NSURL) instead")
+    }
+    
+    public func name() -> String {
+        fatalError("Must Override Plugin Name information")
+    }
+    
+    public func pluginType() -> PluginType {
+        return .Playback
     }
     
     public func destroy() {
