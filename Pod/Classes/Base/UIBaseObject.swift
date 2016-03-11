@@ -7,8 +7,8 @@ public class UIBaseObject: UIView, EventProtocol {
         return baseObject.on(eventName, callback: callback)
     }
     
-    public func once(eventName:String, callback: EventCallback) {
-        baseObject.once(eventName, callback: callback)
+    public func once(eventName:String, callback: EventCallback) -> String {
+        return baseObject.once(eventName, callback: callback)
     }
     
     public func off(listenId: String) {

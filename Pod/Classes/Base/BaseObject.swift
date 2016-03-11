@@ -44,8 +44,10 @@ public class BaseObject: NSObject, EventProtocol {
         }
     }
     
-    public func once(eventName: String, callback: EventCallback) {
-        onceEventsHashes.append(on(eventName, callback: callback))
+    public func once(eventName: String, callback: EventCallback) -> String {
+        let listenId = on(eventName, callback: callback)
+        onceEventsHashes.append(listenId)
+        return listenId
     }
     
     public func off(listenId: String) {

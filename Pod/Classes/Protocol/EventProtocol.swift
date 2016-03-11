@@ -1,6 +1,6 @@
 public protocol EventProtocol {
     func on(eventName:String, callback: EventCallback) -> String
-    func once(eventName:String, callback: EventCallback)
+    func once(eventName:String, callback: EventCallback) -> String
     func off(listenId: String)
     
     func trigger(eventName:String)

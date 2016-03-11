@@ -89,6 +89,14 @@ class BaseObjectTests: QuickSpec {
                     
                     expect(callbackWasCalled) == false
                 }
+                
+                it("Callback should not be called if removed") {
+                    let listenId = baseObject.once(eventName, callback: callback)
+                    baseObject.off(listenId)
+                    baseObject.trigger(eventName)
+                    
+                    expect(callbackWasCalled) == false
+                }
             }
             
             describe("listenTo") {
