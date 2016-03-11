@@ -1,51 +1,61 @@
 import Foundation
 
+private struct Event {
+    var eventHandler: EventHandler
+    var contextObject: BaseObject
+    var name: String
+    
+    init(name: String, handler: EventHandler, contextObject: BaseObject) {
+        self.name = name
+        self.eventHandler = handler
+        self.contextObject = contextObject
+    }
+}
+
 public class BaseObject: NSObject, EventProtocol {
-    private var eventHandlers = [String: EventHandler]()
+    private var events = [String: Event]()
     private var onceEventsHashes = [String]()
     
-    public func on(eventName: String, callback: EventCallback) {
-        on(eventName, callback: callback, contextObject: self)
+    public func on(eventName: String, callback: EventCallback) -> String {
+        return on(eventName, callback: callback, contextObject: self)
     }
     
-    private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) {
-        let eventHandler = EventHandler(callback: wrapEventCallback(eventName, callback: callback))
+    private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) -> String {
+        let key = keyForEvent(eventName, contextObject: contextObject)
+        let eventHandler = EventHandler(callback: wrapEventCallback(key, callback: callback))
         
+        events[key] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
         notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
-        
-        let key = keyForEvent(eventName, contextObject: contextObject, callback: callback)
-        eventHandlers[key] = eventHandler
+
+        return key
     }
     
-    private func wrapEventCallback(eventName: String, callback: EventCallback) -> EventCallback {
+    private func wrapEventCallback(eventKey: String, callback: EventCallback) -> EventCallback {
         return { userInfo in
             callback(userInfo: userInfo)
-            self.removeListenerIfOnce(eventName, callback: callback)
+            self.removeListenerIfOnce(eventKey, callback: callback)
         }
     }
     
-    private func removeListenerIfOnce(eventName: String, callback: EventCallback) {
-        if let index = self.onceEventsHashes.indexOf(hashForCallback(callback)) {
+    private func removeListenerIfOnce(eventKey: String, callback: EventCallback) {
+        if let index = self.onceEventsHashes.indexOf(eventKey) {
             onceEventsHashes.removeAtIndex(index)
-            off(eventName, callback: callback)
+            off(eventKey)
         }
     }
     
     public func once(eventName: String, callback: EventCallback) {
-        onceEventsHashes.append(hashForCallback(callback))
-        on(eventName, callback: callback)
+        onceEventsHashes.append(on(eventName, callback: callback))
     }
     
-    public func off(eventName: String, callback: EventCallback) {
-        off(eventName, callback: callback, contextObject: self)
-    }
-    
-    private func off(eventName: String, callback: EventCallback, contextObject: BaseObject) {
-        let key = keyForEvent(eventName, contextObject: contextObject, callback:callback)
-        let eventHandler = eventHandlers[key]!
+    public func off(eventKey: String) {
+        guard let event = events[eventKey] else {
+            print("BaseObject Error: Could not find any event with give event key")
+            return
+        }
         
-        notificationCenter().removeObserver(eventHandler, name: eventName, object: contextObject)
-        eventHandlers.removeValueForKey(key)
+        notificationCenter().removeObserver(event.eventHandler, name: event.name, object: event.contextObject)
+        events.removeValueForKey(eventKey)
     }
     
     public func trigger(eventName: String) {
@@ -56,37 +66,29 @@ public class BaseObject: NSObject, EventProtocol {
         notificationCenter().postNotificationName(eventName, object: self, userInfo: userInfo)
     }
     
-    public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
-        on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
+    public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+        return on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
     
     public func stopListening() {
-        for (_, eventHandler) in eventHandlers {
-            notificationCenter().removeObserver(eventHandler)
+        for (_, event) in events {
+            notificationCenter().removeObserver(event.eventHandler)
         }
         
-        eventHandlers.removeAll()
+        events.removeAll()
     }
     
-    public func stopListening<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
-        off(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
+    public func stopListening(eventKey: String) {
+        off(eventKey)
     }
     
     public func getEventContextObject() -> BaseObject {
         return self
     }
     
-    private func keyForEvent(eventName: String, contextObject: BaseObject, callback: EventCallback) -> String {
+    private func keyForEvent(eventName: String, contextObject: BaseObject) -> String {
         let contextObjectHash = ObjectIdentifier(contextObject).hashValue
-        return eventName + String(contextObjectHash) + hashForCallback(callback)
-    }
-    
-    private func hashForCallback<A,R>(f:A -> R) -> String {
-        let (_, lo) = unsafeBitCast(f, (Int, Int).self)
-        let offset = sizeof(Int) == 8 ? 16 : 12
-        let ptr  = UnsafePointer<Int>(bitPattern: lo+offset)
-        
-        return String(ptr.memory) + String(ptr.successor().memory)
+        return eventName + String(contextObjectHash) + String(NSDate().timeIntervalSince1970)
     }
     
     private func notificationCenter() -> NSNotificationCenter {
