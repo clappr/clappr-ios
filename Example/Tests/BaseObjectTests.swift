@@ -89,6 +89,14 @@ class BaseObjectTests: QuickSpec {
                     
                     expect(callbackWasCalled) == false
                 }
+                
+                it("Callback should not be called if removed") {
+                    let listenId = baseObject.once(eventName, callback: callback)
+                    baseObject.off(listenId)
+                    baseObject.trigger(eventName)
+                    
+                    expect(callbackWasCalled) == false
+                }
             }
             
             describe("listenTo") {
@@ -104,8 +112,8 @@ class BaseObjectTests: QuickSpec {
             
             describe("off") {
                 it("Callback should not be called if removed") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.off(eventName, callback: callback)
+                    let listenId = baseObject.on(eventName, callback: callback)
+                    baseObject.off(listenId)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
@@ -117,10 +125,10 @@ class BaseObjectTests: QuickSpec {
                         anotherCallbackWasCalled = true
                     }
                     
-                    baseObject.on(eventName, callback: callback)
+                    let listenId = baseObject.on(eventName, callback: callback)
                     baseObject.on(eventName, callback: anotherCallback)
                     
-                    baseObject.off(eventName, callback: callback)
+                    baseObject.off(listenId)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
@@ -163,10 +171,10 @@ class BaseObjectTests: QuickSpec {
                 it("Should cancel handler for an event on a given context object") {
                     let contextObject = BaseObject()
                     
-                    baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
-                    baseObject.stopListening(contextObject, eventName: eventName, callback: callback)
+                    let listenId = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+                    baseObject.stopListening(listenId)
                     
-                    baseObject.trigger(eventName)
+                    contextObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
                 }

@@ -3,16 +3,16 @@ import Foundation
 public class UIBaseObject: UIView, EventProtocol {
     private let baseObject = BaseObject()
     
-    public func on(eventName:String, callback: EventCallback) {
-        baseObject.on(eventName, callback: callback)
+    public func on(eventName:String, callback: EventCallback) -> String {
+        return baseObject.on(eventName, callback: callback)
     }
     
-    public func once(eventName:String, callback: EventCallback) {
-        baseObject.once(eventName, callback: callback)
+    public func once(eventName:String, callback: EventCallback) -> String {
+        return baseObject.once(eventName, callback: callback)
     }
     
-    public func off(eventName:String, callback: EventCallback) {
-        baseObject.off(eventName, callback: callback)
+    public func off(listenId: String) {
+        baseObject.off(listenId)
     }
     
     public func trigger(eventName:String) {
@@ -23,16 +23,16 @@ public class UIBaseObject: UIView, EventProtocol {
         baseObject.trigger(eventName, userInfo: userInfo)
     }
     
-    public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
-        baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+    public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+        return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
     
     public func stopListening() {
         baseObject.stopListening()
     }
     
-    public func stopListening<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) {
-        baseObject.stopListening(contextObject, eventName: eventName, callback: callback)
+    public func stopListening(listenId: String) {
+        baseObject.stopListening(listenId)
     }
     
     public func getEventContextObject() -> BaseObject {
