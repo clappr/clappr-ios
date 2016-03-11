@@ -21,26 +21,26 @@ public class BaseObject: NSObject, EventProtocol {
     }
     
     private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) -> String {
-        let key = keyForEvent(eventName, contextObject: contextObject)
-        let eventHandler = EventHandler(callback: wrapEventCallback(key, callback: callback))
+        let listenId = createListenId(eventName, contextObject: contextObject)
+        let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
         
-        events[key] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
+        events[listenId] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
         notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
 
-        return key
+        return listenId
     }
     
-    private func wrapEventCallback(eventKey: String, callback: EventCallback) -> EventCallback {
+    private func wrapEventCallback(listenId: String, callback: EventCallback) -> EventCallback {
         return { userInfo in
             callback(userInfo: userInfo)
-            self.removeListenerIfOnce(eventKey, callback: callback)
+            self.removeListenerIfOnce(listenId, callback: callback)
         }
     }
     
-    private func removeListenerIfOnce(eventKey: String, callback: EventCallback) {
-        if let index = self.onceEventsHashes.indexOf(eventKey) {
+    private func removeListenerIfOnce(listenId: String, callback: EventCallback) {
+        if let index = self.onceEventsHashes.indexOf(listenId) {
             onceEventsHashes.removeAtIndex(index)
-            off(eventKey)
+            off(listenId)
         }
     }
     
@@ -48,14 +48,14 @@ public class BaseObject: NSObject, EventProtocol {
         onceEventsHashes.append(on(eventName, callback: callback))
     }
     
-    public func off(eventKey: String) {
-        guard let event = events[eventKey] else {
-            print("BaseObject Error: Could not find any event with give event key")
+    public func off(listenId: String) {
+        guard let event = events[listenId] else {
+            print("BaseObject Error: Could not find any event with give event listenId")
             return
         }
         
         notificationCenter().removeObserver(event.eventHandler, name: event.name, object: event.contextObject)
-        events.removeValueForKey(eventKey)
+        events.removeValueForKey(listenId)
     }
     
     public func trigger(eventName: String) {
@@ -78,15 +78,15 @@ public class BaseObject: NSObject, EventProtocol {
         events.removeAll()
     }
     
-    public func stopListening(eventKey: String) {
-        off(eventKey)
+    public func stopListening(listenId: String) {
+        off(listenId)
     }
     
     public func getEventContextObject() -> BaseObject {
         return self
     }
     
-    private func keyForEvent(eventName: String, contextObject: BaseObject) -> String {
+    private func createListenId(eventName: String, contextObject: BaseObject) -> String {
         let contextObjectHash = ObjectIdentifier(contextObject).hashValue
         return eventName + String(contextObjectHash) + String(NSDate().timeIntervalSince1970)
     }

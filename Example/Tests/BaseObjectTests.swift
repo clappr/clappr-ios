@@ -104,8 +104,8 @@ class BaseObjectTests: QuickSpec {
             
             describe("off") {
                 it("Callback should not be called if removed") {
-                    let key = baseObject.on(eventName, callback: callback)
-                    baseObject.off(key)
+                    let listenId = baseObject.on(eventName, callback: callback)
+                    baseObject.off(listenId)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
@@ -117,10 +117,10 @@ class BaseObjectTests: QuickSpec {
                         anotherCallbackWasCalled = true
                     }
                     
-                    let key = baseObject.on(eventName, callback: callback)
+                    let listenId = baseObject.on(eventName, callback: callback)
                     baseObject.on(eventName, callback: anotherCallback)
                     
-                    baseObject.off(key)
+                    baseObject.off(listenId)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == false
@@ -163,8 +163,8 @@ class BaseObjectTests: QuickSpec {
                 it("Should cancel handler for an event on a given context object") {
                     let contextObject = BaseObject()
                     
-                    let key = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
-                    baseObject.stopListening(key)
+                    let listenId = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+                    baseObject.stopListening(listenId)
                     
                     contextObject.trigger(eventName)
                     

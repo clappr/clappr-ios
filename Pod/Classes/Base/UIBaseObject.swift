@@ -11,8 +11,8 @@ public class UIBaseObject: UIView, EventProtocol {
         baseObject.once(eventName, callback: callback)
     }
     
-    public func off(eventKey: String) {
-        baseObject.off(eventKey)
+    public func off(listenId: String) {
+        baseObject.off(listenId)
     }
     
     public func trigger(eventName:String) {
@@ -31,8 +31,8 @@ public class UIBaseObject: UIView, EventProtocol {
         baseObject.stopListening()
     }
     
-    public func stopListening(eventKey: String) {
-        baseObject.stopListening(eventKey)
+    public func stopListening(listenId: String) {
+        baseObject.stopListening(listenId)
     }
     
     public func getEventContextObject() -> BaseObject {
