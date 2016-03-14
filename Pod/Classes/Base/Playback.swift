@@ -1,13 +1,13 @@
 import Foundation
 
 public class Playback: UIBaseObject, Plugin {
-    class var type: PluginType { return .Playback }
+    public class var type: PluginType { return .Playback }
     
-    class var name: String {
+    public class var name: String {
         return self.init().pluginName
     }
     
-    var pluginName: String {
+    public var pluginName: String {
         NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }

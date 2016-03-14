@@ -1,13 +1,13 @@
 public class UICorePlugin: UIPlugin, Plugin {
     public weak var core: Core?
     
-    class var type: PluginType { return .Core }
+    public class var type: PluginType { return .Core }
     
-    class var name: String {
+    public class var name: String {
         return ""
     }
     
-    var pluginName: String {
+    public var pluginName: String {
         NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }

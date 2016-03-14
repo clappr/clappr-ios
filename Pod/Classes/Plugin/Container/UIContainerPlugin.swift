@@ -1,13 +1,13 @@
 public class UIContainerPlugin: UIPlugin, Plugin {
     public weak var container: Container?
     
-    class var type: PluginType { return .Container }
+    public class var type: PluginType { return .Container }
     
-    class var name: String {
+    public class var name: String {
         return ""
     }
     
-    var pluginName: String {
+    public var pluginName: String {
         NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }

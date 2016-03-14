@@ -3,7 +3,7 @@ public class ContainerFactory {
     private var options: Options
     private var plugins: [AnyClass]
  
-    public init(loader: Loader, options: Options = [:]) {
+    public init(loader: Loader = Loader(), options: Options = [:]) {
         self.loader = loader
         self.options = options
         self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
