@@ -14,6 +14,10 @@ public class AVFoundationPlayback: Playback {
     private var currentState = PlaybackState.Idle
     
     public var url: NSURL?
+    
+    public override var pluginName: String {
+        return "AVPlayback"
+    }
 
     public override class func canPlay(options: Options) -> Bool {
         guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
@@ -36,7 +40,7 @@ public class AVFoundationPlayback: Playback {
     }
 
     public required init() {
-        fatalError("init() has not been implemented")
+        super.init()
     }
     
     public override func layoutSubviews() {

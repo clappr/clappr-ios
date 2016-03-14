@@ -6,11 +6,11 @@ class PlaybackTests: QuickSpec {
     
     override func spec() {
         describe("Playback") {
-            var playback: Playback!
+            var playback: StubPlayback!
             let options = [kSourceUrl : "http://globo.com/video.mp4"]
             
             beforeEach() {
-                playback = Playback(options: options)
+                playback = StubPlayback(options: options)
             }
             
             it("Should have a play method") {
@@ -75,6 +75,12 @@ class PlaybackTests: QuickSpec {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
             }
+        }
+    }
+    
+    class StubPlayback: Playback {
+        override var pluginName: String {
+            return "stupPlayback"
         }
     }
 }

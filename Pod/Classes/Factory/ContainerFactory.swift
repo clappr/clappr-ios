@@ -1,31 +1,25 @@
 public class ContainerFactory {
     private var loader: Loader
     private var options: Options
-    private var plugins: [AnyClass]
  
     public init(loader: Loader = Loader(), options: Options = [:]) {
         self.loader = loader
         self.options = options
-        self.plugins = loader.containerPlugins.filter({ $0 is UIContainerPlugin.Type })
     }
     
     public func createContainer() -> Container? {
-        var availablePlaybacks = self.availablePlaybacks()
+        var availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
         
         if availablePlaybacks.count == 0 {
             return nil
         }
         
-        let container = Container(playback: availablePlaybacks[0].init(options: options), options: options)
+        let playback = availablePlaybacks[0] as! Playback.Type
+        let container = Container(playback: playback.init(options: options), options: options)
         return addPlugins(container)
     }
-    
-    private func availablePlaybacks() -> [Playback.Type] {
-        let availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
-        return availablePlaybacks as! [Playback.Type]
-    }
-    
-    private func canPlay(type: AnyClass) -> Bool {
+
+    private func canPlay(type: Plugin.Type) -> Bool {
         guard let type = type as? Playback.Type else {
             return false
         }
@@ -34,8 +28,8 @@ public class ContainerFactory {
     }
     
     private func addPlugins(container: Container) -> Container {
-        for type in plugins as! [UIContainerPlugin.Type]{
-            container.addPlugin(type.init())
+        for type in loader.containerPlugins {
+            container.addPlugin(type.init() as! UIContainerPlugin)
         }
         return container
     }

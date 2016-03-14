@@ -202,6 +202,10 @@ class MediaControlTests: QuickSpec {
         var playing = false
         var type = PlaybackType.VOD
         
+        override var pluginName: String {
+            return "Playback"
+        }
+        
         override func isPlaying() -> Bool {
             return playing
         }

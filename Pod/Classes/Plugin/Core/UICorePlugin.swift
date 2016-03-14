@@ -4,11 +4,11 @@ public class UICorePlugin: UIPlugin, Plugin {
     public class var type: PluginType { return .Core }
     
     public class var name: String {
-        return ""
+        return self.init().pluginName
     }
     
     public var pluginName: String {
-        NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: "MissingPluginName", reason: "Core Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
     

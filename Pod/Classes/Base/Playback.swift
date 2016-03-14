@@ -8,7 +8,7 @@ public class Playback: UIBaseObject, Plugin {
     }
     
     public var pluginName: String {
-        NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: "MissingPluginName", reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
     

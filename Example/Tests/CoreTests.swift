@@ -6,8 +6,7 @@ class CoreTests: QuickSpec {
     override func spec() {
         let options = [kSourceUrl : "http//test.com"]
         var core: Core!
-        let loader = Loader()
-        loader.playbackPlugins = [StubPlayback.self]
+        let loader = Loader(externalPlugins: [StubPlayback.self])
         
         beforeEach() {
             core = Core(loader: loader, options: options)
@@ -69,10 +68,14 @@ class CoreTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(options: Options) -> Bool {
-            return true
+        override var pluginName: String {
+            return "stupPlayback"
         }
     }
     
-    class FakeCorePlugin: UICorePlugin {}
+    class FakeCorePlugin: UICorePlugin {
+        override var pluginName: String {
+            return "FakeCorePLugin"
+        }
+    }
 }

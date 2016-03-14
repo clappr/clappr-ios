@@ -9,6 +9,10 @@ public class PosterPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override var pluginName: String {
+        return "poster"
+    }
+    
     public required init() {
         super.init()
         translatesAutoresizingMaskIntoConstraints = false

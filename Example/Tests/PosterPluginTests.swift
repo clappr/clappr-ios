@@ -9,7 +9,7 @@ class PosterPluginTests: QuickSpec {
             var container: Container!
             let options = [kSourceUrl : "http://globo.com/video.mp4",
                            kPosterUrl : "http://clappr.io/poster.png"]
-            let playback = Playback(options: options)
+            let playback = StubPlayback(options: options)
             
 
             context("Initialization") {
@@ -64,6 +64,12 @@ class PosterPluginTests: QuickSpec {
                 }
                 
             }
+        }
+    }
+    
+    class StubPlayback: Playback {
+        override var pluginName: String {
+            return "stupPlayback"
         }
     }
 }

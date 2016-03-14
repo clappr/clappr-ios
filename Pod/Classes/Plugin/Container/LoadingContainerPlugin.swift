@@ -9,6 +9,10 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         userInteractionEnabled = false
     }
     
+    public override var pluginName: String {
+        return "spinner"
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -4,11 +4,11 @@ public class UIContainerPlugin: UIPlugin, Plugin {
     public class var type: PluginType { return .Container }
     
     public class var name: String {
-        return ""
+        return self.init().pluginName
     }
     
     public var pluginName: String {
-        NSException(name: "MissingPluginName", reason: "Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: "MissingPluginName", reason: "Container Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
     

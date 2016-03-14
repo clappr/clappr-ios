@@ -7,11 +7,11 @@ class ContainerTests: QuickSpec {
     override func spec() {
         describe("Container") {
             var container: Container!
-            var playback: Playback!
+            var playback: StubPlayback!
             let options = [kSourceUrl : "http://globo.com/video.mp4"]
             
             beforeEach() {
-                playback = Playback(options: options)
+                playback = StubPlayback(options: options)
                 container = Container(playback: playback)
             }
             
@@ -338,6 +338,12 @@ class ContainerTests: QuickSpec {
                     expect(plugin.superview) == container
                 }
             }
+        }
+    }
+    
+    class StubPlayback: Playback {
+        override var pluginName: String {
+            return "stupPlayback"
         }
     }
 }
