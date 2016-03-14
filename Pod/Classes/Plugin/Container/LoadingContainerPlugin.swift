@@ -2,19 +2,15 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     
     private var spinningWheel: UIActivityIndicatorView
     
-    public init() {
+    public required init() {
         spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        super.init(frame: CGRectZero)
+        super.init()
         addSubview(spinningWheel)
         userInteractionEnabled = false
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func name() -> String {
-        return "Spinner"
     }
     
     override public func wasInstalled() {

@@ -177,7 +177,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func containerReady() {
-        livePlayback = container.playback.type() == .Live
+        livePlayback = container.playback.playbackType() == .Live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
         updateScrubberPosition()
