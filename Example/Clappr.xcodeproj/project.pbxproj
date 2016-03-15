@@ -159,6 +159,7 @@
 				96A979861BFF964C00E5EA01 /* CoreTests.swift */,
 				96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */,
 				9697039F1BEA716100B7F282 /* EventHandlerTests.swift */,
+				96A9CE371C97387000C21E80 /* LoaderTests.swift */,
 				96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */,
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
@@ -166,7 +167,6 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				96664E551BF0CBD100095E6E /* UIBaseObjectTests.swift */,
 				96B465691BF6027F0025975A /* UIPluginTests.swift */,
-				96A9CE371C97387000C21E80 /* LoaderTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

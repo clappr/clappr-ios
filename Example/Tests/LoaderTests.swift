@@ -33,6 +33,18 @@ class LoaderTests: QuickSpec {
                 expect(spinnerPlugins.count) == 1
                 expect(spinner).toNot(beNil())
             }
+            
+            it("Should be able to set custom Media Control") {
+                let loader = Loader(externalPlugins: [], options: [kMediaControl : StubMediaControl.self])
+                expect(loader.mediaControl.loadNib()).to(raiseException(named: "StubMediaControl"))
+            }
+        }
+    }
+    
+    class StubMediaControl: MediaControl {
+        override class func loadNib() -> UINib {
+            NSException(name: "StubMediaControl", reason: "", userInfo: nil).raise()
+            return UINib()
         }
     }
     

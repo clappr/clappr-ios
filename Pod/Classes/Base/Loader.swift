@@ -2,7 +2,7 @@ public class Loader {
     public var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
     public var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
     public var corePlugins = [Plugin.Type]()
-    public var mediaControl: MediaControl.Type
+    public var mediaControl: MediaControl.Type = MediaControl.self
     
     private var externalPlugins = [Plugin.Type]()
     
@@ -10,12 +10,19 @@ public class Loader {
         self.init(externalPlugins: [])
     }
     
-    public init(externalPlugins: [Plugin.Type]) {
-        mediaControl = MediaControl.self
+    public init(externalPlugins: [Plugin.Type], options: Options = [:]) {
         self.externalPlugins = externalPlugins
+
+        loadExternalMediaControl(options)
         
         if !externalPlugins.isEmpty {
             addExternalPlugins(externalPlugins)
+        }
+    }
+    
+    private func loadExternalMediaControl(options: Options) {
+        if let externalMediaControl = options[kMediaControl] as? MediaControl.Type {
+            mediaControl = externalMediaControl
         }
     }
     
