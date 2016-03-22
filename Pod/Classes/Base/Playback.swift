@@ -1,6 +1,22 @@
 import Foundation
 
-public class Playback: UIBaseObject {
+public class Playback: UIBaseObject, Plugin {
+    public class var type: PluginType { return .Playback }
+    
+    public class var name: String {
+        return self.init().pluginName
+    }
+    
+    public var pluginName: String {
+        NSException(name: "MissingPluginName", reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
+        return ""
+    }
+    
+    public required init() {
+        options = [:]
+        super.init(frame: CGRectZero)
+    }
+
     public internal(set) var options: Options
     
     public required init(options: Options) {
@@ -13,15 +29,15 @@ public class Playback: UIBaseObject {
         fatalError("Use init(url: NSURL) instead")
     }
     
-    public func destroy() {
-        self.removeFromSuperview()
-        self.stopListening()
-    }
-    
     public class func canPlay(options: Options) -> Bool {
         return false
     }
     
+    public func destroy() {
+        self.removeFromSuperview()
+        self.stopListening()
+    }
+
     public func settings() -> [String : AnyObject] {
         return [:]
     }
@@ -30,7 +46,7 @@ public class Playback: UIBaseObject {
         return 0
     }
     
-    public func type() -> PlaybackType {
+    public func playbackType() -> PlaybackType {
         return .Unknown
     }
     

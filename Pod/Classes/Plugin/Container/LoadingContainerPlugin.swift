@@ -2,11 +2,15 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     
     private var spinningWheel: UIActivityIndicatorView
     
-    public init() {
+    public required init() {
         spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        super.init(frame: CGRectZero)
+        super.init()
         addSubview(spinningWheel)
         userInteractionEnabled = false
+    }
+    
+    public override var pluginName: String {
+        return "spinner"
     }
     
     required public init?(coder aDecoder: NSCoder) {

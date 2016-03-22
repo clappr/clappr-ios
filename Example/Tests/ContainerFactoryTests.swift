@@ -37,15 +37,6 @@ class ContainerFactoryTests: QuickSpec {
                 expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                 expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
             }
-            
-            it("Should add valid plugins only") {
-                loader.containerPlugins = [InvalidContainerPlugin.self, FakeContainerPlugin.self]
-                factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
-                let container = factory.createContainer()!
-                
-                expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
-                expect(container.hasPlugin(InvalidContainerPlugin)).to(beFalse())
-            }
         }
     }
     
@@ -53,9 +44,21 @@ class ContainerFactoryTests: QuickSpec {
         override class func canPlay(options: Options) -> Bool {
             return options[kSourceUrl] as! String != "invalid"
         }
+        
+        override var pluginName: String {
+            return "stupPlayback"
+        }
     }
     
-    class FakeContainerPlugin: UIContainerPlugin {}
-    class AnotherFakeContainerPlugin: UIContainerPlugin {}
-    class InvalidContainerPlugin: NSObject {}
+    class FakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "FakeContainerPlugin"
+        }
+    }
+    
+    class AnotherFakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "AnotherFakeContainerPlugin"
+        }
+    }
 }

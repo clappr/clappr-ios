@@ -9,8 +9,12 @@ public class PosterPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init() {
-        super.init(frame: CGRectZero)
+    public override var pluginName: String {
+        return "poster"
+    }
+    
+    public required init() {
+        super.init()
         translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .ScaleAspectFit
     }

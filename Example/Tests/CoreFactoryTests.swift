@@ -16,8 +16,7 @@ class CoreFactoryTests: QuickSpec {
                 }
                 
                 it("Should be able to create container with plugins") {
-                    let loader = Loader()
-                    loader.corePlugins = [FakeUICorePlugin.self]
+                    let loader = Loader(externalPlugins: [FakeUICorePlugin.self])
 
                     let core = CoreFactory.create(loader)
                     
@@ -27,5 +26,9 @@ class CoreFactoryTests: QuickSpec {
         }
     }
     
-    class FakeUICorePlugin: UICorePlugin {}
+    class FakeUICorePlugin: UICorePlugin {
+        override var pluginName: String {
+            return "FakeCorePLugin"
+        }
+    }
 }

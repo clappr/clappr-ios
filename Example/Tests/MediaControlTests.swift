@@ -97,7 +97,7 @@ class MediaControlTests: QuickSpec {
                 context("Pause") {
                     beforeEach() {
                         mediaControl.playbackControlState = .Playing
-                        playback.playbackType = .VOD
+                        playback.type = .VOD
                     }
                     
                     it("Should call container pause when is playing") {
@@ -125,7 +125,7 @@ class MediaControlTests: QuickSpec {
                 context("Stop") {
                     beforeEach() {
                         mediaControl.playbackControlState = .Playing
-                        playback.playbackType = .Live
+                        playback.type = .Live
                         container.trigger(ContainerEvent.Ready.rawValue)
                     }
                     
@@ -154,7 +154,7 @@ class MediaControlTests: QuickSpec {
                 context("Live") {
                     it("Should hide labels when playback is live") {
                         mediaControl.playbackControlState = .Playing
-                        playback.playbackType = .Live
+                        playback.type = .Live
                         container.trigger(ContainerEvent.Ready.rawValue)
                         
                         expect(mediaControl.labelsWrapperView.hidden).to(beTrue())
@@ -200,7 +200,11 @@ class MediaControlTests: QuickSpec {
     
     class StubedPlayback: Playback {
         var playing = false
-        var playbackType = PlaybackType.VOD
+        var type = PlaybackType.VOD
+        
+        override var pluginName: String {
+            return "Playback"
+        }
         
         override func isPlaying() -> Bool {
             return playing
@@ -214,8 +218,8 @@ class MediaControlTests: QuickSpec {
             playing = false
         }
         
-        override func type() -> PlaybackType {
-            return playbackType
+        override func playbackType() -> PlaybackType {
+            return type
         }
         
         override func duration() -> Double {

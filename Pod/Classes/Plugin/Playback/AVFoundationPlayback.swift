@@ -14,6 +14,10 @@ public class AVFoundationPlayback: Playback {
     private var currentState = PlaybackState.Idle
     
     public var url: NSURL?
+    
+    public override var pluginName: String {
+        return "AVPlayback"
+    }
 
     public override class func canPlay(options: Options) -> Bool {
         guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
@@ -33,6 +37,10 @@ public class AVFoundationPlayback: Playback {
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    public required init() {
+        super.init()
     }
     
     public override func layoutSubviews() {
@@ -109,14 +117,14 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func duration() -> Double {
-        guard type() == .VOD, let item = player.currentItem else {
+        guard playbackType() == .VOD, let item = player.currentItem else {
             return 0
         }
 
         return CMTimeGetSeconds(item.asset.duration)
     }
     
-    public override func type() -> PlaybackType {
+    public override func playbackType() -> PlaybackType {
         guard player != nil, let duration = player.currentItem?.asset.duration else {
             return .Unknown
         }
