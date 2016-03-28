@@ -1,24 +1,13 @@
 PODS:
-  - Clappr (0.2.2):
+  - Clappr (0.3.0):
     - HanekeSwift (~> 0.10)
-  - FBSnapshotTestCase (2.0.7):
-    - FBSnapshotTestCase/SwiftSupport (= 2.0.7)
-  - FBSnapshotTestCase/Core (2.0.7)
-  - FBSnapshotTestCase/SwiftSupport (2.0.7):
-    - FBSnapshotTestCase/Core
   - HanekeSwift (0.10.1)
-  - Nimble (3.1.0)
-  - Nimble-Snapshots (3.0.0):
-    - FBSnapshotTestCase (~> 2.0.7)
-    - Nimble
-    - Quick
+  - Nimble (3.2.0)
   - Quick (0.9.1)
 
 DEPENDENCIES:
   - Clappr (from `../`)
-  - FBSnapshotTestCase
   - Nimble
-  - Nimble-Snapshots
   - Quick
 
 EXTERNAL SOURCES:
@@ -26,11 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Clappr: 043d1133167eb6a893b703f692c64b6a5415a4a0
-  FBSnapshotTestCase: 7e85180d0d141a0cf472352edda7e80d7eaeb547
+  Clappr: aaaabec06696cc7157bc7e6d7fbac12a3e69a734
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
-  Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
-  Nimble-Snapshots: ab41dd737dcd33a0b0cb005a30465fef70b7207a
+  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
 
 COCOAPODS: 0.39.0
