@@ -82,7 +82,7 @@ public class AVFoundationPlayback: Playback {
         player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
             options: .New, context: &kvoBufferingContext)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playbackDidEnd",
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
     }
     

@@ -25,7 +25,7 @@ public class BaseObject: NSObject, EventProtocol {
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
         
         events[listenId] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
-        notificationCenter().addObserver(eventHandler, selector: "handleEvent:", name: eventName, object: contextObject)
+        notificationCenter().addObserver(eventHandler, selector: #selector(EventHandler.handleEvent), name: eventName, object: contextObject)
 
         return listenId
     }

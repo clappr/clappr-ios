@@ -1,3 +1,4 @@
+
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
     public private(set) var container: Container?
@@ -44,7 +45,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func addTapRecognizer() {
-        let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: "toggleVisibility")
+        let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: #selector(MediaControl.toggleVisibility))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }

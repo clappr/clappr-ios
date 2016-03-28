@@ -87,7 +87,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func bindOrientationChangedListener() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MediaControl.didRotate),
             name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
@@ -264,7 +264,7 @@ public class MediaControl: UIBaseObject {
     
     private func scheduleTimerToHideControls() {
         hideControlsTimer = NSTimer.scheduledTimerWithTimeInterval(3.0,
-            target: self, selector: "hideAfterPlay", userInfo: nil, repeats: false)
+            target: self, selector: #selector(MediaControl.hideAfterPlay), userInfo: nil, repeats: false)
     }
     
     func hideAfterPlay() {
