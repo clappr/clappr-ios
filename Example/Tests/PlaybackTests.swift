@@ -14,22 +14,22 @@ class PlaybackTests: QuickSpec {
             }
             
             it("Should have a play method") {
-                let responds = playback.respondsToSelector("play")
+                let responds = playback.respondsToSelector(#selector(Playback.play))
                 expect(responds).to(beTrue())
             }
             
             it("Should have a pause method") {
-                let responds = playback.respondsToSelector("pause")
+                let responds = playback.respondsToSelector(#selector(NSProgress.pause))
                 expect(responds).to(beTrue())
             }
             
             it("Should have a stop method") {
-                let responds = playback.respondsToSelector("stop")
+                let responds = playback.respondsToSelector(#selector(NSNetService.stop))
                 expect(responds).to(beTrue())
             }
             
             it("Should have a seek method receiving a time") {
-                let responds = playback.respondsToSelector("seekTo:")
+                let responds = playback.respondsToSelector(#selector(Playback.seekTo(_:)))
                 expect(responds).to(beTrue())
             }
             

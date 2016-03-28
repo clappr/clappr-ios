@@ -36,15 +36,18 @@ class LoaderTests: QuickSpec {
             
             it("Should be able to set custom Media Control") {
                 let loader = Loader(externalPlugins: [], options: [kMediaControl : StubMediaControl.self])
-                expect(loader.mediaControl.loadNib()).to(raiseException(named: "StubMediaControl"))
+                expect(loader.mediaControl.loadNib().accessibilityHint).to(equal("StubMediaControl"))
             }
         }
     }
     
     class StubMediaControl: MediaControl {
+        
+        
         override class func loadNib() -> UINib {
-            NSException(name: "StubMediaControl", reason: "", userInfo: nil).raise()
-            return UINib()
+            let nib = UINib()
+            nib.accessibilityHint = "StubMediaControl"
+            return nib
         }
     }
     

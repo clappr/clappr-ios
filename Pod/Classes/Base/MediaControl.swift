@@ -87,7 +87,7 @@ public class MediaControl: UIBaseObject {
     }
     
     private func bindOrientationChangedListener() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRotate",
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MediaControl.didRotate),
             name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
@@ -112,14 +112,14 @@ public class MediaControl: UIBaseObject {
     
     private func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play       : { [weak self] _ in self?.triggerPlay() },
-            .Pause      : { [weak self] _ in self?.triggerPause() },
-            .Ready      : { [weak self] _ in self?.containerReady() },
-            .TimeUpdated: { [weak self] info in self?.timeUpdated(info) },
-            .Progress   : { [weak self] info in self?.progressUpdated(info) },
-            .Ended      : { [weak self] _ in self?.playbackControlState = .Stopped },
-            .MediaControlDisabled : { [weak self] _ in self?.disable() },
-            .MediaControlEnabled  : { [weak self] _ in self?.enable() },
+            .Play       : { [weak self] (info: EventUserInfo) in self?.triggerPlay() },
+            .Pause      : { [weak self] (info: EventUserInfo) in self?.triggerPause() },
+            .Ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
+            .TimeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
+            .Progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
+            .Ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .Stopped },
+            .MediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
+            .MediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
         ]
     }
     
@@ -264,7 +264,7 @@ public class MediaControl: UIBaseObject {
     
     private func scheduleTimerToHideControls() {
         hideControlsTimer = NSTimer.scheduledTimerWithTimeInterval(3.0,
-            target: self, selector: "hideAfterPlay", userInfo: nil, repeats: false)
+            target: self, selector: #selector(MediaControl.hideAfterPlay), userInfo: nil, repeats: false)
     }
     
     func hideAfterPlay() {

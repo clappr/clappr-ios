@@ -10,6 +10,4 @@ target 'Clappr_Tests', :exclusive => true do
 
   pod 'Quick'
   pod 'Nimble'
-  pod 'FBSnapshotTestCase'
-  pod 'Nimble-Snapshots'
 end
