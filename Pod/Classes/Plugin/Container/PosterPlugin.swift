@@ -1,9 +1,8 @@
-import Haneke
+import Kingfisher
 
 public class PosterPlugin: UIContainerPlugin {
     private var poster = UIImageView(frame: CGRectZero)
     private var playButton = UIButton(frame: CGRectZero)
-    private var url: NSURL!
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -19,11 +18,6 @@ public class PosterPlugin: UIContainerPlugin {
         poster.contentMode = .ScaleAspectFit
     }
     
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        poster.hnk_setImageFromURL(url)
-    }
-    
     public override func wasInstalled() {
         guard let urlString = container!.options[kPosterUrl] as? String else {
             removeFromSuperview()
@@ -31,7 +25,10 @@ public class PosterPlugin: UIContainerPlugin {
             return
         }
         
-        url = NSURL(string: urlString)!
+        if let url = NSURL(string: urlString) {
+            poster.kf_setImageWithURL(url)
+        }
+        
         configurePlayButton()
         configureViews()
         bindEvents()

@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Pod/Classes/**/*'
   s.resources = 'Pod/Resources/*.{xib,ttf,png,xcassets}'
 
-  s.dependency 'HanekeSwift', '~> 0.10'
+  s.dependency 'Kingfisher', '~> 2.2'
 end
