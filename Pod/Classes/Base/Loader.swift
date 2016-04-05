@@ -1,5 +1,5 @@
 public class Loader {
-    public var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
+    public var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
     public var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
     public var corePlugins = [Plugin.Type]()
     public var mediaControl: MediaControl.Type = MediaControl.self

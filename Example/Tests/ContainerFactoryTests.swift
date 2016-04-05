@@ -12,27 +12,27 @@ class ContainerFactoryTests: QuickSpec {
         
         beforeEach() {
             loader = Loader()
-            loader.playbackPlugins = [StubPlayback.self]
+            loader.addExternalPlugins([StubPlayback.self])
         }
     
         context("Container creation") {
-            it("Should create a container for a valid source") {
+            it("Should create a container with valid playback for a valid source") {
                 factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
                 
-                expect(factory.createContainer()).toNot(beNil())
+                expect(factory.createContainer().playback.pluginName) == "AVPlayback"
             }
             
-            it("Should not create container for url that cannot be played") {
+            it("Should create a container with invalid playback for url that cannot be played") {
                 factory = ContainerFactory(loader: loader, options: optionsWithInvalidSource)
                 
-                expect(factory.createContainer()).to(beNil())
+                expect(factory.createContainer().playback.pluginName) == "NoOp"
             }
             
             it("Should add container plugins from loader") {
-                loader.containerPlugins = [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self]
+                loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
                 
                 factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
-                let container = factory.createContainer()!
+                let container = factory.createContainer()
                 
                 expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                 expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
@@ -46,7 +46,7 @@ class ContainerFactoryTests: QuickSpec {
         }
         
         override var pluginName: String {
-            return "stupPlayback"
+            return "AVPlayback"
         }
     }
     
