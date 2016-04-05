@@ -7,13 +7,8 @@ public class ContainerFactory {
         self.options = options
     }
     
-    public func createContainer() -> Container? {
+    public func createContainer() -> Container {
         var availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
-        
-        if availablePlaybacks.count == 0 {
-            return nil
-        }
-        
         let playback = availablePlaybacks[0] as! Playback.Type
         let container = Container(playback: playback.init(options: options), options: options)
         return addPlugins(container)

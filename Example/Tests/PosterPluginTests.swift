@@ -36,6 +36,7 @@ class PosterPluginTests: QuickSpec {
                     
                     let posterPlugin = PosterPlugin()
                     container.addPlugin(posterPlugin)
+                    container.render()
                     
                     expect(posterPlugin.superview) == container
                 }
@@ -48,6 +49,7 @@ class PosterPluginTests: QuickSpec {
                     container = Container(playback: playback, options: options)
                     posterPlugin = PosterPlugin()
                     container.addPlugin(posterPlugin)
+                    container.render()
                 }
                 
                 it("Should be hidden after container Play event ") {

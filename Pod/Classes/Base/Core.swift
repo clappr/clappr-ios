@@ -1,7 +1,7 @@
 
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
-    public private(set) var container: Container?
+    public private(set) var container: Container!
     public private(set) var mediaControl: MediaControl!
     public private(set) var plugins: [UICorePlugin] = []
     
@@ -27,16 +27,11 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     private func createContainers() {
         let factory = ContainerFactory(loader: loader, options: options)
-        
-        if let container = factory.createContainer() {
-            self.container = container
-            addSubviewMatchingConstraints(container)
-        }
+        container = factory.createContainer()
     }
     
     private func createMediaControl() {
         mediaControl = loader.mediaControl.initFromNib()
-        addSubviewMatchingConstraints(mediaControl)
         addTapRecognizer()
         
         if let container = container {
@@ -50,16 +45,25 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addGestureRecognizer(tapRecognizer)
     }
     
+    public override func render() {
+        addSubviewMatchingConstraints(container)
+        container.render()
+        
+        addSubviewMatchingConstraints(mediaControl)
+        mediaControl.render()
+        
+        plugins.map(installPlugin)
+    }
+    
     public func addPlugin(plugin: UICorePlugin) {
         plugin.core = self
-        installPlugin(plugin)
-        plugin.wasInstalled()
+        plugins.append(plugin)
     }
     
     private func installPlugin(plugin: UICorePlugin) {
-        plugins.append(plugin)
         addSubview(plugin)
         bringSubviewToFront(mediaControl)
+        plugin.render()
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {

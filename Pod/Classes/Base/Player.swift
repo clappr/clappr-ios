@@ -8,6 +8,7 @@ public class Player {
     
     public func attachTo(view: UIView, controller: UIViewController) {
         view.addSubviewMatchingConstraints(core)
+        core.render()
         core.parentController = controller
     }
 }

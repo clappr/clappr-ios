@@ -18,7 +18,7 @@ public class PosterPlugin: UIContainerPlugin {
         poster.contentMode = .ScaleAspectFit
     }
     
-    public override func wasInstalled() {
+    public override func render() {
         guard let urlString = container!.options[kPosterUrl] as? String else {
             removeFromSuperview()
             container!.mediaControlEnabled = true

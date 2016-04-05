@@ -42,9 +42,10 @@ class CoreTests: QuickSpec {
                         expect(core.plugins.count) == 1
                     }
                     
-                    it("Should add plugin as subview") {
+                    it("Should add plugin as subview after rendered") {
                         let plugin = FakeCorePlugin()
                         core.addPlugin(plugin)
+                        core.render()
                         
                         expect(plugin.superview) == core
                     }
