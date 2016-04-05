@@ -1,8 +1,8 @@
 public class Loader {
-    public var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
-    public var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
-    public var corePlugins = [Plugin.Type]()
-    public var mediaControl: MediaControl.Type = MediaControl.self
+    public internal(set) var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
+    public internal(set) var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
+    public internal(set) var corePlugins = [Plugin.Type]()
+    public internal(set) var mediaControl: MediaControl.Type = MediaControl.self
     
     private var externalPlugins = [Plugin.Type]()
     
