@@ -39,7 +39,7 @@ public class Container: UIBaseObject {
     }
     
     public override func render() {
-        plugins.map(renderPlugin)
+        plugins.forEach(renderPlugin)
         
         addSubviewMatchingConstraints(playback)
         playback.render()
