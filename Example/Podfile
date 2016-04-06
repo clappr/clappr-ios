@@ -8,6 +8,6 @@ end
 target 'Clappr_Tests', :exclusive => true do
   pod "Clappr", :path => "../"
 
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', '~> 0.9.0'
+  pod 'Nimble', '~> 4.0.0'
 end
