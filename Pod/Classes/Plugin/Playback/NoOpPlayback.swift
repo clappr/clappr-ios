@@ -7,8 +7,7 @@ public class NoOpPlayback: Playback {
     
     public required init(options: Options) {
         super.init(options: options)
-        setupLabel("Could not play video")
-        self.trigger(.Ready)
+        setupLabel()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -28,11 +27,18 @@ public class NoOpPlayback: Playback {
         trigger(.Ready)
     }
     
-    private func setupLabel(text: String) {
+    private func setupLabel() {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.text = text
+        errorLabel.text = labelText()
         errorLabel.textAlignment = .Center
         errorLabel.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         errorLabel.textColor = UIColor.whiteColor()
+    }
+    
+    private func labelText() -> String {
+        if let text = options[kPlaybackNotSupportedMessage] as? String {
+            return text
+        }
+        return "Could not play video"
     }
 }
