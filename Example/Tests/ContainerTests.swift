@@ -341,12 +341,26 @@ class ContainerTests: QuickSpec {
                     expect(plugin.superview) == container
                 }
             }
+            
+            describe("Playback") {
+                it("Should be able to replace a playback") {
+                    let container = Container(playback: NoOpPlayback(options: [:]))
+                    
+                    expect(container.playback.pluginName) == "NoOp"
+                    
+                    container.replacePlayback(StubPlayback.self)
+                    
+                    expect(container.playback.pluginName) == "stubPlayback"
+                    expect(container.playback.superview) == container
+                }
+                
+            }
         }
     }
     
     class StubPlayback: Playback {
         override var pluginName: String {
-            return "stupPlayback"
+            return "stubPlayback"
         }
     }
 }
