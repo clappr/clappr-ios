@@ -9,7 +9,7 @@ public class ContainerFactory {
     
     public func createContainer() -> Container {
         let playbackFactory = PlaybackFactory(loader: loader, options: options)
-        let container = Container(playback: playbackFactory.createPlayback(), options: options)
+        let container = Container(playback: playbackFactory.createPlayback(), loader: loader, options: options)
         return addPlugins(container)
     }
     

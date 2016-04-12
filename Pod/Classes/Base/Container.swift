@@ -7,6 +7,8 @@ public class Container: UIBaseObject {
     public internal(set) var plugins: [UIContainerPlugin] = []
     public internal(set) var options: Options
     
+    private var loader: Loader
+    
     public var isPlaying: Bool {
         get {
             return playback.isPlaying()
@@ -27,9 +29,10 @@ public class Container: UIBaseObject {
         }
     }
 
-    public init(playback: Playback, options: Options = [:]) {
+    public init(playback: Playback, loader: Loader = Loader(), options: Options = [:]) {
         self.playback = playback
         self.options = options
+        self.loader = loader
         super.init(frame: CGRect.zero)
         bindEventListeners()
     }
@@ -38,13 +41,20 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
-    public func loadSource(source: NSURL) {
+    public func loadSource(source: String) {
+        let playbackFactory = PlaybackFactory(loader: loader, options: [kSourceUrl: source])
         
+        playback.removeFromSuperview()
+        playback = playbackFactory.createPlayback()
+        renderPlayback()
     }
     
     public override func render() {
         plugins.forEach(renderPlugin)
-        
+        renderPlayback()
+    }
+    
+    private func renderPlayback() {
         addSubviewMatchingConstraints(playback)
         playback.render()
     }
