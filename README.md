@@ -9,7 +9,7 @@
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod 'Clappr', '~> 0.2'
+pod 'Clappr', '~> 0.3'
 ```
 
 ### Using the Player
@@ -39,6 +39,8 @@ let player = Player(options: options)
 ##### Poster
 Define a poster by adding `kPosterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
 
+##### Playback not supported custom message
+Add `kPlaybackNotSupportedMessage : 'Your custom message'` to define a custom message to be displayed for not supported videos.
 
 ### License
 

@@ -18,7 +18,7 @@ public class PosterPlugin: UIContainerPlugin {
         poster.contentMode = .ScaleAspectFit
     }
     
-    public override func wasInstalled() {
+    public override func render() {
         guard let urlString = container!.options[kPosterUrl] as? String else {
             removeFromSuperview()
             container!.mediaControlEnabled = true
@@ -72,6 +72,7 @@ public class PosterPlugin: UIContainerPlugin {
         return [
             .Play  : { [weak self] _ in self?.playbackStarted() },
             .Ended : { [weak self] _ in self?.playbackEnded() },
+            .Ready : { [weak self] _ in self?.playbackReady() },
         ]
     }
     
@@ -84,5 +85,11 @@ public class PosterPlugin: UIContainerPlugin {
         container!.mediaControlEnabled = false
         playButton.hidden = false
         hidden = false
+    }
+    
+    private func playbackReady() {
+        if container!.playback.pluginName == "NoOp" {
+            hidden = true
+        }
     }
 }

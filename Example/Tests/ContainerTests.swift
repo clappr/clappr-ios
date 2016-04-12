@@ -16,7 +16,8 @@ class ContainerTests: QuickSpec {
             }
             
             describe("Initialization") {
-                it("Should have the playback as subview") {
+                it("Should have the playback as subview after rendered") {
+                    container.render()
                     expect(playback.superview) == container
                 }
                 
@@ -332,9 +333,11 @@ class ContainerTests: QuickSpec {
                     expect(plugin.container) == container
                 }
                 
-                it("Should add plugin as subview") {
+                it("Should add plugin as subview after rendered") {
                     let plugin = FakeUIContainerPlugin()
                     container.addPlugin(plugin)
+                    container.render()
+                    
                     expect(plugin.superview) == container
                 }
             }

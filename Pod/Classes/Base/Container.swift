@@ -32,11 +32,22 @@ public class Container: UIBaseObject {
         self.options = options
         super.init(frame: CGRect.zero)
         bindEventListeners()
-        addSubviewMatchingConstraints(playback)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Use init(playback: Playback) instead")
+    }
+    
+    public override func render() {
+        plugins.forEach(renderPlugin)
+        
+        addSubviewMatchingConstraints(playback)
+        playback.render()
+    }
+    
+    private func renderPlugin(plugin: UIContainerPlugin) {
+        addSubview(plugin)
+        plugin.render()
     }
     
     public func destroy() {
@@ -66,8 +77,6 @@ public class Container: UIBaseObject {
     public func addPlugin(plugin: UIContainerPlugin) {
         plugin.container = self
         plugins.append(plugin)
-        addSubview(plugin)
-        plugin.wasInstalled()
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {

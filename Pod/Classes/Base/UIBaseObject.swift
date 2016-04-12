@@ -38,4 +38,6 @@ public class UIBaseObject: UIView, EventProtocol {
     public func getEventContextObject() -> BaseObject {
         return baseObject
     }
+    
+    public func render() {}
 }

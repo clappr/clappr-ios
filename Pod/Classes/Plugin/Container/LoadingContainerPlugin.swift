@@ -17,8 +17,7 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func wasInstalled() {
-        super.wasInstalled()
+    override public func render() {
         addCenteringConstraints()
         bindEventListeners()
     }

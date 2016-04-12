@@ -36,8 +36,19 @@ class PosterPluginTests: QuickSpec {
                     
                     let posterPlugin = PosterPlugin()
                     container.addPlugin(posterPlugin)
+                    container.render()
                     
                     expect(posterPlugin.superview) == container
+                }
+                
+                it("Should be hidden if playback is a NoOp") {
+                    container = Container(playback: NoOpPlayback(), options: options)
+                    
+                    let posterPlugin = PosterPlugin()
+                    container.addPlugin(posterPlugin)
+                    container.render()
+                    
+                    expect(posterPlugin.hidden) == true
                 }
             }
             
@@ -48,6 +59,7 @@ class PosterPluginTests: QuickSpec {
                     container = Container(playback: playback, options: options)
                     posterPlugin = PosterPlugin()
                     container.addPlugin(posterPlugin)
+                    container.render()
                 }
                 
                 it("Should be hidden after container Play event ") {
