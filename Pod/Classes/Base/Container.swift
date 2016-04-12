@@ -38,6 +38,10 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
+    public func loadSource(source: NSURL) {
+        
+    }
+    
     public override func render() {
         plugins.forEach(renderPlugin)
         
