@@ -38,16 +38,25 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
+    public func replacePlayback(type: Playback.Type) {
+        playback.removeFromSuperview()
+        playback = type.init(options: options)
+        renderPlayback()
+    }
+    
     public override func render() {
         plugins.forEach(renderPlugin)
-        
-        addSubviewMatchingConstraints(playback)
-        playback.render()
+        renderPlayback()
     }
     
     private func renderPlugin(plugin: UIContainerPlugin) {
         addSubview(plugin)
         plugin.render()
+    }
+    
+    private func renderPlayback() {
+        addSubviewMatchingConstraints(playback)
+        playback.render()
     }
     
     public func destroy() {
