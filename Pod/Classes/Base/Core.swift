@@ -46,13 +46,13 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public override func render() {
-        addSubviewMatchingConstraints(container)
-        container.render()
+        plugins.forEach(installPlugin)
         
         addSubviewMatchingConstraints(mediaControl)
         mediaControl.render()
         
-        plugins.forEach(installPlugin)
+        addSubviewMatchingConstraints(container)
+        container.render()
     }
     
     public func addPlugin(plugin: UICorePlugin) {
