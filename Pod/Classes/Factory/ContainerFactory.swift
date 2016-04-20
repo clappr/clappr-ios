@@ -8,18 +8,9 @@ public class ContainerFactory {
     }
     
     public func createContainer() -> Container {
-        var availablePlaybacks = loader.playbackPlugins.filter({type in canPlay(type)})
-        let playback = availablePlaybacks[0] as! Playback.Type
-        let container = Container(playback: playback.init(options: options), options: options)
+        let playbackFactory = PlaybackFactory(loader: loader, options: options)
+        let container = Container(playback: playbackFactory.createPlayback(), loader: loader, options: options)
         return addPlugins(container)
-    }
-
-    private func canPlay(type: Plugin.Type) -> Bool {
-        guard let type = type as? Playback.Type else {
-            return false
-        }
-        
-        return type.canPlay(self.options)
     }
     
     private func addPlugins(container: Container) -> Container {
