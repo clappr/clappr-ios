@@ -48,22 +48,21 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public override func render() {
         plugins.forEach(installPlugin)
         
-        addSubviewMatchingConstraints(mediaControl)
-        mediaControl.render()
-        
         addSubviewMatchingConstraints(container)
+        addSubviewMatchingConstraints(mediaControl)
+        
+        mediaControl.render()
         container.render()
+    }
+    
+    private func installPlugin(plugin: UICorePlugin) {
+        addSubview(plugin)
+        plugin.render()
     }
     
     public func addPlugin(plugin: UICorePlugin) {
         plugin.core = self
         plugins.append(plugin)
-    }
-    
-    private func installPlugin(plugin: UICorePlugin) {
-        addSubview(plugin)
-        bringSubviewToFront(mediaControl)
-        plugin.render()
     }
     
     public func hasPlugin(pluginClass: AnyClass) -> Bool {

@@ -29,9 +29,14 @@ class CoreTests: QuickSpec {
             }
             
             context("Media Control") {
-                it("Should be created in top most container") {
+                it("Should have container reference") {
                     expect(core.mediaControl).toNot(beNil())
                     expect(core.mediaControl.container) == core.container
+                }
+                
+                it("Should be the top view on core") {
+                    core.render()
+                    expect(core.subviews.last) == core.mediaControl
                 }
             }
             
