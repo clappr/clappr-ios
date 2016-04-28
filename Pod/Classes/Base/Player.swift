@@ -11,4 +11,13 @@ public class Player {
         core.render()
         core.parentController = controller
     }
+    
+    public func on(event: PlayerEvent, callback: EventCallback) {
+        switch event {
+        case .Play:
+            core.container.on(ContainerEvent.Play.rawValue, callback: callback)
+        default:
+            break
+        }
+    }
 }
