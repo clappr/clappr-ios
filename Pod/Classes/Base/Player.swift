@@ -1,4 +1,4 @@
-public class Player {
+public class Player: BaseObject {
     public private(set) var core: Core
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
@@ -7,17 +7,25 @@ public class Player {
     }
     
     public func attachTo(view: UIView, controller: UIViewController) {
+        bindEvents()
         view.addSubviewMatchingConstraints(core)
         core.render()
         core.parentController = controller
     }
     
-    public func on(event: PlayerEvent, callback: EventCallback) {
-        switch event {
-        case .Play:
-            core.container.on(ContainerEvent.Play.rawValue, callback: callback)
-        default:
-            break
-        }
+    private func bindEvents() {
+        listenTo(core.container, eventName: ContainerEvent.Play.rawValue, callback: onPlay)
+    }
+    
+    private func onPlay(userInfo: EventUserInfo) {
+        trigger(PlayerEvent.Play.rawValue, userInfo: userInfo)
+    }
+    
+    public func on(event: PlayerEvent, callback: EventCallback) -> String {
+        return on(event.rawValue, callback: callback)
+    }
+    
+    deinit {
+        stopListening()
     }
 }
