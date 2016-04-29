@@ -44,7 +44,6 @@ public class PosterPlugin: UIContainerPlugin {
     
     func playTouched() {
         container!.play()
-        playButton.hidden = true
     }
     
     private func configureViews() {
@@ -70,10 +69,15 @@ public class PosterPlugin: UIContainerPlugin {
     
     private func eventsToBind() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] _ in self?.playbackStarted() },
-            .Ended : { [weak self] _ in self?.playbackEnded() },
-            .Ready : { [weak self] _ in self?.playbackReady() },
+            .Buffering  : { [weak self] _ in self?.playbackBuffering() },
+            .Play       : { [weak self] _ in self?.playbackStarted() },
+            .Ended      : { [weak self] _ in self?.playbackEnded() },
+            .Ready      : { [weak self] _ in self?.playbackReady() },
         ]
+    }
+    
+    private func playbackBuffering() {
+        playButton.hidden = true
     }
     
     private func playbackStarted() {
