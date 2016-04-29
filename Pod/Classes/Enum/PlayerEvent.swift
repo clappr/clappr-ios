@@ -1,8 +1,8 @@
 public enum PlayerEvent: String {
-    case Ready
-    case Ended
-    case Play = "clappr:player:play"
-    case Pause
-    case Error
-    case Stop
+    case Ready = "clappr:playback:ready"
+    case Ended = "clappr:playback:ended"
+    case Play = "clappr:playback:play"
+    case Pause = "clappr:playback:pause"
+    case Error = "clappr:playback:error"
+    case Stop = "clappr:playback:stop"
 }
