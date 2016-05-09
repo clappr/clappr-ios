@@ -25,7 +25,7 @@ public class Player: BaseObject {
         core.container.stop()
     }
     
-    public func on(event: PlayerEvent, callback: EventCallback) -> String {
+    public func on(event: ClapprEvent, callback: EventCallback) -> String {
         return on(event.rawValue, callback: callback)
     }
     
@@ -46,7 +46,7 @@ public class Player: BaseObject {
         ]
     }
     
-    private func forward(event: PlayerEvent, userInfo: EventUserInfo) {
+    private func forward(event: ClapprEvent, userInfo: EventUserInfo) {
         trigger(event.rawValue, userInfo: userInfo)
     }
     
