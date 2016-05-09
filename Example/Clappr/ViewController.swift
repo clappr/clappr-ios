@@ -17,27 +17,27 @@ class ViewController: UIViewController {
     }
     
     func listenToPlayerEvents() {
-        player.on(PlayerEvent.Play) { _ in
+        player.on(ClapprEvent.Play) { _ in
             print("on Play")
         }
         
-        player.on(PlayerEvent.Pause) { _ in
+        player.on(ClapprEvent.Pause) { _ in
             print("on Pause")
         }
         
-        player.on(PlayerEvent.Stop) { _ in
+        player.on(ClapprEvent.Stop) { _ in
             print("on Stop")
         }
         
-        player.on(PlayerEvent.Ended) { _ in
+        player.on(ClapprEvent.Ended) { _ in
             print("on Ended")
         }
         
-        player.on(PlayerEvent.Ready) { _ in
+        player.on(ClapprEvent.Ready) { _ in
             print("on Ready")
         }
         
-        player.on(PlayerEvent.Error) { userInfo in
+        player.on(ClapprEvent.Error) { userInfo in
             print("on Error: \(userInfo)")
         }
     }
