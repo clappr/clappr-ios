@@ -146,6 +146,38 @@ public class AVFoundationPlayback: Playback {
             }
     }
     
+    public override func setSubtitle(subtitleOption: AVMediaSelectionOption) {
+        setMediaSelectionOption(subtitleOption, characteristic: AVMediaCharacteristicLegible)
+    }
+    
+    public override func setAudioSource(audioOption: AVMediaSelectionOption) {
+        setMediaSelectionOption(audioOption, characteristic: AVMediaCharacteristicAudible)
+    }
+    
+    private func setMediaSelectionOption(option: AVMediaSelectionOption,  characteristic: String) {
+        if self.player != nil {
+            if let group = mediaSelectionGroup(characteristic) {
+                self.player.currentItem?.selectMediaOption(option, inMediaSelectionGroup: group)
+            }
+        }
+    }
+    
+    public override func subtitles() -> [AVMediaSelectionOption]? {
+        return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
+    }
+    
+    public override func audioSources() -> [AVMediaSelectionOption]? {
+        return mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+    }
+    
+    private func mediaSelectionGroup(characteristic: String) -> AVMediaSelectionGroup? {
+        guard self.player != nil else {
+            return nil
+        }
+        
+        return self.player.currentItem?.asset.mediaSelectionGroupForMediaCharacteristic(characteristic)
+    }
+    
     private func updateState(newState: PlaybackState) {
         guard currentState != newState else { return }
         
