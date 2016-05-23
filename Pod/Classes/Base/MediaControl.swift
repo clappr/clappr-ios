@@ -9,7 +9,6 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak var scrubberLabel: UILabel?
     @IBOutlet weak var scrubberView: UIView?
 
-
     @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer?
     @IBOutlet weak var bufferBarWidthConstraint: NSLayoutConstraint?
     @IBOutlet weak var progressBarWidthConstraint: NSLayoutConstraint?
@@ -143,6 +142,7 @@ public class MediaControl: UIBaseObject {
     private func enable() {
         enabled = true
         show()
+        scheduleTimerToHideControls()
     }
     
     private func timeUpdated(info: EventUserInfo) {
