@@ -1,4 +1,4 @@
-import Foundation
+import AVFoundation
 
 public class Playback: UIBaseObject, Plugin {
     public class var type: PluginType { return .Playback }
@@ -58,6 +58,14 @@ public class Playback: UIBaseObject, Plugin {
         return false
     }
     
+    public func audioSources() -> [AVMediaSelectionOption]? {
+        return nil
+    }
+    
+    public func subtitles() -> [AVMediaSelectionOption]? {
+        return nil
+    }
+    
     internal func trigger(event: PlaybackEvent) {
         trigger(event.rawValue)
     }
@@ -70,4 +78,6 @@ public class Playback: UIBaseObject, Plugin {
     public func pause() {}
     public func stop() {}
     public func seekTo(timeInterval: NSTimeInterval) {}
+    public func setAudioSource(audioOption: AVMediaSelectionOption) {}
+    public func setSubtitle(subtitleOption: AVMediaSelectionOption) {}
 }

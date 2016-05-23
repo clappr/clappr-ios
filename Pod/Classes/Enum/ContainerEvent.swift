@@ -22,4 +22,6 @@ public enum ContainerEvent: String {
     case HighDefinitionUpdated = "clappr:container:hd_updated"
     case MediaControlDisabled = "clappr:container:media_control_disabled"
     case MediaControlEnabled = "clappr:container:media_control_enabled"
+    case AudioSourcesUpdated = "clappr:container:audio_sources_updated"
+    case SubtitleSourcesUpdated = "clappr:container:subtitle_sources_updated"
 }

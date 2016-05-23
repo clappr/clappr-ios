@@ -120,6 +120,8 @@ public class Container: UIBaseObject {
             .Progress               : { [weak self] (info: EventUserInfo) in self?.forward(.Progress, userInfo:info)},
             .TimeUpdated            : { [weak self] (info: EventUserInfo) in self?.forward(.TimeUpdated, userInfo:info)},
             .LoadedMetadata         : { [weak self] (info: EventUserInfo) in self?.forward(.LoadedMetadata, userInfo:info)},
+            .SubtitleSourcesUpdated : { [weak self] (info: EventUserInfo) in self?.forward(.SubtitleSourcesUpdated, userInfo:info)},
+            .AudioSourcesUpdated    : { [weak self] (info: EventUserInfo) in self?.forward(.AudioSourcesUpdated, userInfo:info)},
             .BitRate                : { [weak self] (info: EventUserInfo) in self?.forward(.BitRate, userInfo:info)},
             .Error                  : { [weak self] (info: EventUserInfo) in self?.forward(.Error, userInfo:info)},
         ]
