@@ -4,6 +4,8 @@ public enum PlaybackEvent: String {
     case Ready = "clappr:playback:ready"
     case Buffering = "clappr:playback:buffering"
     case BufferFull = "clappr:playback:buffer_full"
+    case AudioSourcesUpdated = "clappr:playback:audio_sources_updated"
+    case SubtitleSourcesUpdated = "clappr:playback:subtitle_sources_updated"
     case SettingsUpdated = "clappr:playback:settings_updated"
     case LoadedMetadata = "clappr:playback:loaded_metadata"
     case HighDefinitionUpdated = "clappr:playback:hd_updated"

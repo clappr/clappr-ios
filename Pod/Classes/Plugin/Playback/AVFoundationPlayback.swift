@@ -174,7 +174,16 @@ public class AVFoundationPlayback: Playback {
     }
     
     private func readyToPlay() {
-        self.trigger(.Ready)
+        trigger(.Ready)
+        
+        if let subtitles = subtitles() {
+            trigger(.SubtitleSourcesUpdated, userInfo: ["subtitles" : subtitles])
+        }
+        
+        if let audioSources = audioSources() {
+            trigger(.AudioSourcesUpdated, userInfo: ["audios" : audioSources])
+        }
+        
         addTimeElapsedCallback()
     }
     
