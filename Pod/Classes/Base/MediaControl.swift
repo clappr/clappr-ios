@@ -34,6 +34,7 @@ public class MediaControl: UIBaseObject {
     
     public lazy var liveProgressBarColor = UIColor.redColor()
     public lazy var vodProgressBarColor = UIColor.blueColor()
+    public lazy var backgroundOverlayColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
     public lazy var playButtonImage: UIImage? = self.imageFromName("play")
     public lazy var pauseButtonImage: UIImage? = self.imageFromName("pause")
     public lazy var stopButtonImage: UIImage? = self.imageFromName("stop")
@@ -105,6 +106,7 @@ public class MediaControl: UIBaseObject {
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
         playbackControlState = container.isPlaying ? .Playing : .Stopped
+        backgroundOverlayView?.backgroundColor = backgroundOverlayColor
     }
     
     private func bindEventListeners() {
