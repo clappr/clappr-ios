@@ -16,7 +16,9 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var durationLabel: UILabel?
     @IBOutlet weak public var currentTimeLabel: UILabel?
 
-    @IBOutlet weak public var controlsOverlayView: GradientView?
+    @IBOutlet weak public var backgroundOverlayView: UIView?
+
+    @IBOutlet weak public var controlsOverlayView: UIView?
     @IBOutlet weak public var controlsWrapperView: UIView?
     @IBOutlet weak public var playbackControlButton: UIButton?
     

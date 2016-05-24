@@ -18,6 +18,10 @@
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLp-rr-wgw">
+                    <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-h5-7Kk" userLabel="Controls Overlay" customClass="GradientView" customModule="Clappr" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="152" width="467" height="100"/>
                     <constraints>
@@ -187,24 +191,29 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <accessibility key="accessibilityConfiguration" label="media control"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="0V7-z5-rdA" firstAttribute="height" secondItem="xP5-UL-qkk" secondAttribute="height" multiplier="0.2" priority="750" id="0aR-ao-Po9"/>
+                <constraint firstAttribute="trailing" secondItem="tLp-rr-wgw" secondAttribute="trailing" id="6s6-ua-GNX"/>
+                <constraint firstItem="tLp-rr-wgw" firstAttribute="top" secondItem="xP5-UL-qkk" secondAttribute="top" id="7Rj-Vy-YX3"/>
                 <constraint firstItem="0V7-z5-rdA" firstAttribute="centerX" secondItem="xP5-UL-qkk" secondAttribute="centerX" id="9od-UQ-mhi"/>
                 <constraint firstAttribute="trailing" secondItem="ps9-h5-7Kk" secondAttribute="trailing" id="KUI-eR-07B"/>
                 <constraint firstItem="ps9-h5-7Kk" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="Kf1-ot-PBW"/>
                 <constraint firstAttribute="trailing" secondItem="BHP-U1-oat" secondAttribute="trailing" id="RTX-fW-fkX"/>
                 <constraint firstItem="0V7-z5-rdA" firstAttribute="centerY" secondItem="xP5-UL-qkk" secondAttribute="centerY" id="ZsN-q1-gPb"/>
                 <constraint firstAttribute="bottom" secondItem="ps9-h5-7Kk" secondAttribute="bottom" id="eZj-G3-Y1v"/>
+                <constraint firstItem="tLp-rr-wgw" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="moY-Rw-gYZ"/>
                 <constraint firstItem="0V7-z5-rdA" firstAttribute="width" secondItem="xP5-UL-qkk" secondAttribute="width" multiplier="0.2" priority="750" id="nKC-cI-o1j"/>
+                <constraint firstAttribute="bottom" secondItem="tLp-rr-wgw" secondAttribute="bottom" id="pXW-tl-A4J"/>
                 <constraint firstAttribute="bottom" secondItem="BHP-U1-oat" secondAttribute="bottom" id="tSM-cp-zZH"/>
                 <constraint firstItem="BHP-U1-oat" firstAttribute="leading" secondItem="xP5-UL-qkk" secondAttribute="leading" id="uef-w8-0hH"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="backgroundOverlayView" destination="tLp-rr-wgw" id="8xD-T0-YMg"/>
                 <outlet property="bufferBarView" destination="82D-Bh-tQP" id="978-gx-QRB"/>
                 <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="L2J-zO-oJq"/>
                 <outlet property="controlsOverlayView" destination="ps9-h5-7Kk" id="Uw6-tg-Rxi"/>
