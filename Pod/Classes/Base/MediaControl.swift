@@ -3,21 +3,24 @@ import Foundation
 public class MediaControl: UIBaseObject {
     private let animationDuration = 0.3
     
-    @IBOutlet weak var seekBarView: UIView!
-    @IBOutlet weak var bufferBarView: UIView!
-    @IBOutlet weak var progressBarView: UIView!
-    @IBOutlet weak var scrubberView: ScrubberView!
-    @IBOutlet weak var scrubberLabel: UILabel!
-    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer!
-    @IBOutlet weak var bufferBarWidthContraint: NSLayoutConstraint!
-    @IBOutlet weak var scrubberLeftConstraint: NSLayoutConstraint!
+    @IBOutlet weak var seekBarView: UIView?
+    @IBOutlet weak var bufferBarView: UIView?
+    @IBOutlet weak var progressBarView: UIView?
+    @IBOutlet weak var scrubberLabel: UILabel?
+    @IBOutlet weak var scrubberView: UIView?
 
-    @IBOutlet weak public var labelsWrapperView: UIView!
-    @IBOutlet weak public var durationLabel: UILabel!
-    @IBOutlet weak public var currentTimeLabel: UILabel!
-    @IBOutlet weak public var controlsOverlayView: GradientView!
-    @IBOutlet weak public var controlsWrapperView: UIView!
-    @IBOutlet weak public var playbackControlButton: UIButton!
+    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer?
+    @IBOutlet weak var bufferBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet weak var progressBarWidthConstraint: NSLayoutConstraint?
+
+    @IBOutlet weak public var durationLabel: UILabel?
+    @IBOutlet weak public var currentTimeLabel: UILabel?
+
+    @IBOutlet weak public var backgroundOverlayView: UIView?
+
+    @IBOutlet weak public var controlsOverlayView: UIView?
+    @IBOutlet weak public var controlsWrapperView: UIView?
+    @IBOutlet weak public var playbackControlButton: UIButton?
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
@@ -31,6 +34,7 @@ public class MediaControl: UIBaseObject {
     
     public lazy var liveProgressBarColor = UIColor.redColor()
     public lazy var vodProgressBarColor = UIColor.blueColor()
+    public lazy var backgroundOverlayColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
     public lazy var playButtonImage: UIImage? = self.imageFromName("play")
     public lazy var pauseButtonImage: UIImage? = self.imageFromName("pause")
     public lazy var stopButtonImage: UIImage? = self.imageFromName("stop")
@@ -43,7 +47,7 @@ public class MediaControl: UIBaseObject {
     
     private var isSeeking = false {
         didSet {
-            scrubberLabel.hidden = !isSeeking
+            scrubberLabel?.hidden = !isSeeking
         }
     }
     
@@ -64,7 +68,7 @@ public class MediaControl: UIBaseObject {
     
     public class func initFromNib() -> MediaControl {
         let mediaControl = loadNib().instantiateWithOwner(self, options: nil).last as! MediaControl
-        mediaControl.scrubberInitialPosition = mediaControl.scrubberLeftConstraint.constant
+        mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         return mediaControl
@@ -83,7 +87,7 @@ public class MediaControl: UIBaseObject {
             image = playButtonImage
         }
         
-        playbackControlButton.setImage(image, forState: .Normal)
+        playbackControlButton?.setBackgroundImage(image, forState: .Normal)
     }
     
     private func bindOrientationChangedListener() {
@@ -102,6 +106,7 @@ public class MediaControl: UIBaseObject {
         bindEventListeners()
         container.mediaControlEnabled ? enable() : disable()
         playbackControlState = container.isPlaying ? .Playing : .Stopped
+        backgroundOverlayView?.backgroundColor = backgroundOverlayColor
     }
     
     private func bindEventListeners() {
@@ -141,6 +146,7 @@ public class MediaControl: UIBaseObject {
     private func enable() {
         enabled = true
         show()
+        scheduleTimerToHideControls()
     }
     
     private func timeUpdated(info: EventUserInfo) {
@@ -148,7 +154,7 @@ public class MediaControl: UIBaseObject {
             return
         }
         
-        currentTimeLabel.text = DateFormatter.formatSeconds(position)
+        currentTimeLabel?.text = DateFormatter.formatSeconds(position)
         seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
         updateScrubberPosition()
     }
@@ -163,17 +169,21 @@ public class MediaControl: UIBaseObject {
     }
     
     private func updateScrubberPosition() {
-        if !isSeeking {
+        if let scrubberView = self.scrubberView as? ScrubberView,
+            let seekBarView = self.seekBarView where !isSeeking {
             let delta = (CGRectGetWidth(seekBarView.frame) - scrubberView.innerCircle.frame.width) * seekPercentage
-            scrubberLeftConstraint.constant = delta + scrubberInitialPosition
+            progressBarWidthConstraint?.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
-            progressBarView.setNeedsLayout()
+            progressBarView?.setNeedsLayout()
         }
     }
     
     private func updateBars() {
-        bufferBarWidthContraint.constant = seekBarView.frame.size.width * bufferPercentage
-        bufferBarView.layoutIfNeeded()
+        if let seekBarView = self.seekBarView,
+            let bufferBarWidthConstraint = self.bufferBarWidthConstraint {
+            bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage
+            bufferBarView?.layoutIfNeeded()
+        }
     }
     
     private func containerReady() {
@@ -186,16 +196,14 @@ public class MediaControl: UIBaseObject {
     
     private func setupForLive() {
         seekPercentage = 1
-        progressBarView.backgroundColor = liveProgressBarColor
-        labelsWrapperView.hidden = true
-        scrubberDragger.enabled = false
+        progressBarView?.backgroundColor = liveProgressBarColor
+        scrubberDragger?.enabled = false
     }
     
     private func setupForVOD() {
-        progressBarView.backgroundColor = vodProgressBarColor
-        labelsWrapperView.hidden = false
-        durationLabel.text = DateFormatter.formatSeconds(container.playback.duration())
-        scrubberDragger.enabled = true
+        progressBarView?.backgroundColor = vodProgressBarColor
+        durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration())
+        scrubberDragger?.enabled = true
     }
     
     public func hide() {
@@ -282,9 +290,9 @@ public class MediaControl: UIBaseObject {
         case .Began:
             isSeeking = true
         case .Changed:
-            scrubberLeftConstraint.constant = touchPoint.x + scrubberInitialPosition
-            scrubberLabel.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
-            scrubberView.setNeedsLayout()
+            progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
+            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            scrubberView?.setNeedsLayout()
         case .Ended:
             container.seekTo(secondsRelativeToPoint(touchPoint))
             isSeeking = false
@@ -293,8 +301,11 @@ public class MediaControl: UIBaseObject {
     }
     
     private func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
-        let positionPercentage = touchPoint.x / seekBarView.frame.size.width
-        return Double(duration * positionPercentage)
+        if let seekBarView = self.seekBarView {
+            let positionPercentage = touchPoint.x / seekBarView.frame.size.width
+            return Double(duration * positionPercentage)
+        }
+        return 0
     }
 
     private func trigger(event: MediaControlEvent) {
