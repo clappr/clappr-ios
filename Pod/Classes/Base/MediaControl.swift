@@ -3,15 +3,16 @@ import Foundation
 public class MediaControl: UIBaseObject {
     private let animationDuration = 0.3
     
-    @IBOutlet weak var seekBarView: UIView?
-    @IBOutlet weak var bufferBarView: UIView?
-    @IBOutlet weak var progressBarView: UIView?
-    @IBOutlet weak var scrubberLabel: UILabel?
-    @IBOutlet weak var scrubberView: UIView?
+    @IBOutlet public weak var seekBarView: UIView?
+    @IBOutlet public weak var bufferBarView: UIView?
+    @IBOutlet public weak var progressBarView: UIView?
+    @IBOutlet public weak var scrubberTimeView: UIView?
+    @IBOutlet public weak var scrubberLabel: UILabel?
+    @IBOutlet public weak var scrubberView: UIView?
 
-    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer?
-    @IBOutlet weak var bufferBarWidthConstraint: NSLayoutConstraint?
-    @IBOutlet weak var progressBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var scrubberDragger: UIPanGestureRecognizer?
+    @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
 
     @IBOutlet weak public var durationLabel: UILabel?
     @IBOutlet weak public var currentTimeLabel: UILabel?
@@ -25,10 +26,10 @@ public class MediaControl: UIBaseObject {
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
     
-    private var bufferPercentage: CGFloat = 0.0
-    private var seekPercentage: CGFloat = 0.0
-    private var scrubberInitialPosition: CGFloat!
-    private var hideControlsTimer: NSTimer!
+    public var bufferPercentage: CGFloat = 0.0
+    public var seekPercentage: CGFloat = 0.0
+    public var scrubberInitialPosition: CGFloat = 0.0
+    private var hideControlsTimer: NSTimer?
     private var enabled = false
     private var livePlayback = false
     
@@ -45,37 +46,55 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private var isSeeking = false {
+    public var isSeeking = false {
         didSet {
-            scrubberLabel?.hidden = !isSeeking
+            scrubberTimeView?.hidden = !isSeeking
         }
     }
     
     private var duration: CGFloat {
-        get {
-            return CGFloat(container.playback.duration())
-        }
+        return CGFloat(container.playback.duration())
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.clearColor()
     }
-    
-    public class func loadNib() -> UINib {
-        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+
+    public init() {
+        super.init(frame: CGRectZero)
     }
     
-    public class func initFromNib() -> MediaControl {
-        let mediaControl = loadNib().instantiateWithOwner(self, options: nil).last as! MediaControl
+    public class func loadNib() -> UINib? {
+        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+    }
+
+    public class func initCustom() -> MediaControl {
+        return MediaControl()
+    }
+    
+    public class func create() -> MediaControl {
+        var mediaControl: MediaControl!
+        if let nib = loadNib() {
+            mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
+        } else {
+            mediaControl = initCustom()
+        }
+        mediaControl.setupAspectFitButtonResize(mediaControl.playbackControlButton)
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         return mediaControl
     }
 
+    public func setupAspectFitButtonResize(button: UIButton?) {
+        button?.contentHorizontalAlignment = .Fill
+        button?.contentVerticalAlignment = .Fill
+        button?.imageView?.contentMode = .ScaleAspectFit
+    }
+
     private func imageFromName(name: String) -> UIImage? {
-        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self), compatibleWithTraitCollection: nil)
+        return UIImage(named: name, inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)
     }
     
     private func updatePlaybackControlButtonIcon() {
@@ -87,7 +106,7 @@ public class MediaControl: UIBaseObject {
             image = playButtonImage
         }
         
-        playbackControlButton?.setBackgroundImage(image, forState: .Normal)
+        playbackControlButton?.setImage(image, forState: .Normal)
     }
     
     private func bindOrientationChangedListener() {
@@ -169,9 +188,9 @@ public class MediaControl: UIBaseObject {
     }
     
     private func updateScrubberPosition() {
-        if let scrubberView = self.scrubberView as? ScrubberView,
+        if let scrubberView = self.scrubberView,
             let seekBarView = self.seekBarView where !isSeeking {
-            let delta = (CGRectGetWidth(seekBarView.frame) - scrubberView.innerCircle.frame.width) * seekPercentage
+            let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
             progressBarWidthConstraint?.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
             progressBarView?.setNeedsLayout()
@@ -279,16 +298,17 @@ public class MediaControl: UIBaseObject {
         if container.isPlaying {
             hideAnimated()
         }
-        
-        hideControlsTimer.invalidate()
+        hideControlsTimer?.invalidate()
     }
     
-    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
+    @IBAction public func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
         let touchPoint = panGesture.locationInView(seekBarView)
         
         switch panGesture.state {
         case .Began:
             isSeeking = true
+            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            hideControlsTimer?.invalidate()
         case .Changed:
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
             scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
@@ -300,7 +320,7 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
+    public func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
         if let seekBarView = self.seekBarView {
             let positionPercentage = touchPoint.x / seekBarView.frame.size.width
             return Double(duration * positionPercentage)
