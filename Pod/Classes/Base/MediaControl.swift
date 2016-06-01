@@ -300,12 +300,14 @@ public class MediaControl: UIBaseObject {
         hideControlsTimer?.invalidate()
     }
     
-    @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
+    @IBAction public func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
         let touchPoint = panGesture.locationInView(seekBarView)
         
         switch panGesture.state {
         case .Began:
             isSeeking = true
+            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            hideControlsTimer?.invalidate()
         case .Changed:
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
             scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
@@ -317,7 +319,7 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
+    public func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
         if let seekBarView = self.seekBarView {
             let positionPercentage = touchPoint.x / seekBarView.frame.size.width
             return Double(duration * positionPercentage)
