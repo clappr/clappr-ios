@@ -59,13 +59,26 @@ public class MediaControl: UIBaseObject {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.clearColor()
     }
-    
-    public class func loadNib() -> UINib {
-        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+
+    public init() {
+        super.init(frame: CGRectZero)
     }
     
-    public class func initFromNib() -> MediaControl {
-        let mediaControl = loadNib().instantiateWithOwner(self, options: nil).last as! MediaControl
+    public class func loadNib() -> UINib? {
+        return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
+    }
+
+    public class func initCustom() -> MediaControl {
+        return MediaControl()
+    }
+    
+    public class func create() -> MediaControl {
+        var mediaControl: MediaControl!
+        if let nib = loadNib() {
+            mediaControl = nib.instantiateWithOwner(self, options: nil).last as! MediaControl
+        } else {
+            mediaControl = initCustom()
+        }
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()

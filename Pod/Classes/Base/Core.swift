@@ -31,7 +31,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func createMediaControl() {
-        mediaControl = loader.mediaControl.initFromNib()
+        mediaControl = loader.mediaControl.create()
         addTapRecognizer()
         
         if let container = container {
