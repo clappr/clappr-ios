@@ -93,7 +93,7 @@ public class MediaControl: UIBaseObject {
     }
 
     private func imageFromName(name: String) -> UIImage? {
-        return UIImage(named: name, inBundle: NSBundle(forClass: MediaControl.self), compatibleWithTraitCollection: nil)
+        return UIImage(named: name, inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)
     }
     
     private func updatePlaybackControlButtonIcon() {
