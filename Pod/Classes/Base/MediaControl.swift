@@ -79,10 +79,17 @@ public class MediaControl: UIBaseObject {
         } else {
             mediaControl = initCustom()
         }
+        mediaControl.setupAspectFitButtonResize(mediaControl.playbackControlButton)
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         return mediaControl
+    }
+
+    public func setupAspectFitButtonResize(button: UIButton?) {
+        button?.contentHorizontalAlignment = .Fill
+        button?.contentVerticalAlignment = .Fill
+        button?.imageView?.contentMode = .ScaleAspectFit
     }
 
     private func imageFromName(name: String) -> UIImage? {
@@ -98,7 +105,7 @@ public class MediaControl: UIBaseObject {
             image = playButtonImage
         }
         
-        playbackControlButton?.setBackgroundImage(image, forState: .Normal)
+        playbackControlButton?.setImage(image, forState: .Normal)
     }
     
     private func bindOrientationChangedListener() {
