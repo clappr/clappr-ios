@@ -3,15 +3,15 @@ import Foundation
 public class MediaControl: UIBaseObject {
     private let animationDuration = 0.3
     
-    @IBOutlet weak var seekBarView: UIView?
-    @IBOutlet weak var bufferBarView: UIView?
-    @IBOutlet weak var progressBarView: UIView?
-    @IBOutlet weak var scrubberLabel: UILabel?
-    @IBOutlet weak var scrubberView: UIView?
+    @IBOutlet public weak var seekBarView: UIView?
+    @IBOutlet public weak var bufferBarView: UIView?
+    @IBOutlet public weak var progressBarView: UIView?
+    @IBOutlet public weak var scrubberLabel: UILabel?
+    @IBOutlet public weak var scrubberView: UIView?
 
-    @IBOutlet weak var scrubberDragger: UIPanGestureRecognizer?
-    @IBOutlet weak var bufferBarWidthConstraint: NSLayoutConstraint?
-    @IBOutlet weak var progressBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var scrubberDragger: UIPanGestureRecognizer?
+    @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
 
     @IBOutlet weak public var durationLabel: UILabel?
     @IBOutlet weak public var currentTimeLabel: UILabel?
@@ -25,10 +25,10 @@ public class MediaControl: UIBaseObject {
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
     
-    private var bufferPercentage: CGFloat = 0.0
-    private var seekPercentage: CGFloat = 0.0
-    private var scrubberInitialPosition: CGFloat!
-    private var hideControlsTimer: NSTimer!
+    public var bufferPercentage: CGFloat = 0.0
+    public var seekPercentage: CGFloat = 0.0
+    public var scrubberInitialPosition: CGFloat = 0.0
+    private var hideControlsTimer: NSTimer?
     private var enabled = false
     private var livePlayback = false
     
@@ -45,16 +45,14 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private var isSeeking = false {
+    public var isSeeking = false {
         didSet {
             scrubberLabel?.hidden = !isSeeking
         }
     }
     
     private var duration: CGFloat {
-        get {
-            return CGFloat(container.playback.duration())
-        }
+        return CGFloat(container.playback.duration())
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -279,8 +277,7 @@ public class MediaControl: UIBaseObject {
         if container.isPlaying {
             hideAnimated()
         }
-        
-        hideControlsTimer.invalidate()
+        hideControlsTimer?.invalidate()
     }
     
     @IBAction func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
