@@ -34,14 +34,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bq6-bd-EM2" userLabel="Seek Bar Container">
                             <rect key="frame" x="0.0" y="0.0" width="467" height="10"/>
                             <subviews>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PX7-VD-Gf1" userLabel="Scrubber Label">
-                                    <rect key="frame" x="-10" y="-23" width="30" height="12"/>
-                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <accessibility key="accessibilityConfiguration" label="scrubber time"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KX-hC-K7v" userLabel="Seek Bar">
                                     <rect key="frame" x="0.0" y="4" width="467" height="1"/>
                                     <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,28 +59,44 @@
                                         <constraint firstAttribute="width" id="Bag-UP-UQb"/>
                                     </constraints>
                                 </view>
-                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber" customClass="ScrubberView" customModule="Clappr" customModuleProvider="target">
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wv-Cd-358" userLabel="Scrubber">
                                     <rect key="frame" x="-20" y="-21" width="50" height="50"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle">
+                                        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDb-7w-G5b" userLabel="Scrubber Outer Circle" customClass="BorderView" customModule="Clappr" customModuleProvider="target">
                                             <rect key="frame" x="10" y="10" width="30" height="30"/>
                                             <subviews>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIr-Lb-mYB" userLabel="Scrubber Inner Circle" customClass="BorderView" customModule="Clappr" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="10" width="10" height="10"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="10" id="53X-SI-Hq3"/>
                                                         <constraint firstAttribute="height" constant="10" id="EgG-uS-Yr4"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="sIr-Lb-mYB" secondAttribute="centerY" id="4a6-zG-GdP"/>
                                                 <constraint firstAttribute="height" constant="30" id="f0d-bF-rz9"/>
                                                 <constraint firstAttribute="centerX" secondItem="sIr-Lb-mYB" secondAttribute="centerX" id="vHN-8R-E2t"/>
                                                 <constraint firstAttribute="width" constant="30" id="zMc-sL-9j8"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" white="0.74895598824392229" alpha="1" colorSpace="calibratedWhite"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                     <accessibility key="accessibilityConfiguration" label="scrubber"/>
@@ -100,10 +108,27 @@
                                         <constraint firstAttribute="centerX" secondItem="uDb-7w-G5b" secondAttribute="centerX" id="ub9-f2-wkr"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="innerCircle" destination="sIr-Lb-mYB" id="xlc-Po-Ihw"/>
-                                        <outlet property="outerCircle" destination="uDb-7w-G5b" id="ISb-9p-9Vm"/>
                                         <outletCollection property="gestureRecognizers" destination="TNM-hZ-5T3" appends="YES" id="TKe-Sz-ySH"/>
                                     </connections>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUN-rN-PRr">
+                                    <rect key="frame" x="-18" y="-41" width="46" height="20"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PX7-VD-Gf1" userLabel="Scrubber Label">
+                                            <rect key="frame" x="8" y="4" width="30" height="12"/>
+                                            <accessibility key="accessibilityConfiguration" label="scrubber time"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.84765625" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="PX7-VD-Gf1" firstAttribute="leading" secondItem="UUN-rN-PRr" secondAttribute="leading" constant="8" id="JQU-Ry-3pO"/>
+                                        <constraint firstAttribute="trailing" secondItem="PX7-VD-Gf1" secondAttribute="trailing" constant="8" id="Liv-Hi-Oei"/>
+                                        <constraint firstItem="PX7-VD-Gf1" firstAttribute="top" secondItem="UUN-rN-PRr" secondAttribute="top" constant="4" id="Mht-er-J7m"/>
+                                        <constraint firstAttribute="bottom" secondItem="PX7-VD-Gf1" secondAttribute="bottom" constant="4" id="yeY-oj-fXh"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <gestureRecognizers/>
@@ -117,9 +142,9 @@
                                 <constraint firstAttribute="trailing" secondItem="7KX-hC-K7v" secondAttribute="trailing" id="cYV-IA-LDd"/>
                                 <constraint firstItem="7KX-hC-K7v" firstAttribute="leading" secondItem="Bq6-bd-EM2" secondAttribute="leading" id="mto-Vc-7ch"/>
                                 <constraint firstAttribute="centerY" secondItem="3Wv-Cd-358" secondAttribute="centerY" constant="1" id="sTi-WP-hcX"/>
+                                <constraint firstItem="UUN-rN-PRr" firstAttribute="centerX" secondItem="3Wv-Cd-358" secondAttribute="centerX" id="tfI-dg-3Dz"/>
                                 <constraint firstAttribute="centerY" secondItem="7KX-hC-K7v" secondAttribute="centerY" constant="1" id="urs-Mr-Exy"/>
-                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="centerX" secondItem="3Wv-Cd-358" secondAttribute="centerX" id="ydp-DB-oOq"/>
-                                <constraint firstItem="PX7-VD-Gf1" firstAttribute="bottom" secondItem="uDb-7w-G5b" secondAttribute="top" id="yjq-UB-7OQ"/>
+                                <constraint firstItem="3Wv-Cd-358" firstAttribute="top" secondItem="UUN-rN-PRr" secondAttribute="bottom" id="z57-J6-SgJ"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wR6-Co-ihn" userLabel="Labels View">
@@ -176,11 +201,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <accessibility key="accessibilityConfiguration" label="play/pause"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="0V7-z5-rdA" secondAttribute="height" multiplier="1:1" id="ARD-TZ-WK2"/>
+                        <constraint firstAttribute="width" secondItem="0V7-z5-rdA" secondAttribute="height" multiplier="1:1" id="2Ha-GG-mw6"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                    <state key="normal" backgroundImage="play">
+                    <state key="normal" image="play">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <state key="selected">
@@ -225,6 +250,7 @@
                 <outlet property="progressBarWidthConstraint" destination="Bag-UP-UQb" id="mvu-5u-Fes"/>
                 <outlet property="scrubberDragger" destination="TNM-hZ-5T3" id="7cR-lc-hi3"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
+                <outlet property="scrubberTimeView" destination="UUN-rN-PRr" id="PtJ-qr-NZl"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>
                 <outlet property="seekBarView" destination="7KX-hC-K7v" id="BmN-BO-nGf"/>
             </connections>

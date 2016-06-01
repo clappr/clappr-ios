@@ -6,6 +6,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet public weak var seekBarView: UIView?
     @IBOutlet public weak var bufferBarView: UIView?
     @IBOutlet public weak var progressBarView: UIView?
+    @IBOutlet public weak var scrubberTimeView: UIView?
     @IBOutlet public weak var scrubberLabel: UILabel?
     @IBOutlet public weak var scrubberView: UIView?
 
@@ -47,7 +48,7 @@ public class MediaControl: UIBaseObject {
     
     public var isSeeking = false {
         didSet {
-            scrubberLabel?.hidden = !isSeeking
+            scrubberTimeView?.hidden = !isSeeking
         }
     }
     
@@ -187,9 +188,9 @@ public class MediaControl: UIBaseObject {
     }
     
     private func updateScrubberPosition() {
-        if let scrubberView = self.scrubberView as? ScrubberView,
+        if let scrubberView = self.scrubberView,
             let seekBarView = self.seekBarView where !isSeeking {
-            let delta = (CGRectGetWidth(seekBarView.frame) - scrubberView.innerCircle.frame.width) * seekPercentage
+            let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
             progressBarWidthConstraint?.constant = delta + scrubberInitialPosition
             scrubberView.setNeedsLayout()
             progressBarView?.setNeedsLayout()
