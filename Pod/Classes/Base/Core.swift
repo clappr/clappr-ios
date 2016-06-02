@@ -6,7 +6,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var plugins: [UICorePlugin] = []
     
     public var parentController: UIViewController?
+    public var parentView: UIView?
     private var loader: Loader
+    private lazy var fullscreenController = UIViewController()
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
@@ -23,6 +25,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.blackColor()
         createContainers()
         createMediaControl()
+        bindEventListeners()
     }
     
     private func createContainers() {
@@ -45,7 +48,25 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addGestureRecognizer(tapRecognizer)
     }
     
+    private func bindEventListeners() {
+        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenEnter.rawValue, callback: enterFullscreen)
+        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenExit.rawValue, callback: exitFullscreen)
+    }
+    
+    private func enterFullscreen(_: EventUserInfo) {
+        removeFromSuperview()
+        fullscreenController.view.addSubviewMatchingConstraints(self)
+        self.parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
+    }
+    
+    private func exitFullscreen(_: EventUserInfo) {
+        removeFromSuperview()
+        fullscreenController.dismissViewControllerAnimated(false, completion: nil)
+        parentView?.addSubviewMatchingConstraints(self)
+    }
+    
     public override func render() {
+        parentView?.addSubviewMatchingConstraints(self)
         plugins.forEach(installPlugin)
         
         addSubviewMatchingConstraints(container)

@@ -53,6 +53,12 @@ public class MediaControl: UIBaseObject {
         }
     }
     
+    public var fullscreen = false {
+        didSet {
+            fullscreenButton?.selected = fullscreen
+        }
+    }
+    
     private var duration: CGFloat {
         return CGFloat(container.playback.duration())
     }
@@ -274,6 +280,12 @@ public class MediaControl: UIBaseObject {
             play()
             scheduleTimerToHideControls()
         }
+    }
+    
+    @IBAction func toggleFullscreen(sender: UIButton) {
+        fullscreen = !fullscreen
+        let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
+        trigger(event.rawValue)
     }
     
     private func pause() {

@@ -8,9 +8,9 @@ public class Player: BaseObject {
     
     public func attachTo(view: UIView, controller: UIViewController) {
         bindEvents()
-        view.addSubviewMatchingConstraints(core)
-        core.render()
         core.parentController = controller
+        core.parentView = view
+        core.render()
     }
     
     public func play() {
