@@ -22,6 +22,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var controlsOverlayView: UIView?
     @IBOutlet weak public var controlsWrapperView: UIView?
     @IBOutlet weak public var playbackControlButton: UIButton?
+    @IBOutlet weak public var fullscreenButton: UIButton?
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
