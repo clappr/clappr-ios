@@ -29,9 +29,9 @@ public class MediaControl: UIBaseObject {
     public var bufferPercentage: CGFloat = 0.0
     public var seekPercentage: CGFloat = 0.0
     public var scrubberInitialPosition: CGFloat = 0.0
-    private var hideControlsTimer: NSTimer?
-    private var enabled = false
-    private var livePlayback = false
+    public var hideControlsTimer: NSTimer?
+    public var enabled = false
+    public var livePlayback = false
     
     public lazy var liveProgressBarColor = UIColor.redColor()
     public lazy var vodProgressBarColor = UIColor.blueColor()
@@ -93,11 +93,11 @@ public class MediaControl: UIBaseObject {
         button?.imageView?.contentMode = .ScaleAspectFit
     }
 
-    private func imageFromName(name: String) -> UIImage? {
+    public func imageFromName(name: String) -> UIImage? {
         return UIImage(named: name, inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)
     }
     
-    private func updatePlaybackControlButtonIcon() {
+    public func updatePlaybackControlButtonIcon() {
         var image: UIImage?
         
         if playbackControlState == .Playing {
@@ -109,12 +109,12 @@ public class MediaControl: UIBaseObject {
         playbackControlButton?.setImage(image, forState: .Normal)
     }
     
-    private func bindOrientationChangedListener() {
+    public func bindOrientationChangedListener() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MediaControl.didRotate),
             name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
-    func didRotate() {
+    public func didRotate() {
         updateBars()
         updateScrubberPosition()
     }
@@ -128,13 +128,13 @@ public class MediaControl: UIBaseObject {
         backgroundOverlayView?.backgroundColor = backgroundOverlayColor
     }
     
-    private func bindEventListeners() {
+    public func bindEventListeners() {
         for (event, callback) in eventBindings() {
             listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
     
-    private func eventBindings() -> [ContainerEvent : EventCallback] {
+    public func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
             .Play       : { [weak self] (info: EventUserInfo) in self?.triggerPlay() },
             .Pause      : { [weak self] (info: EventUserInfo) in self?.triggerPause() },
@@ -147,28 +147,28 @@ public class MediaControl: UIBaseObject {
         ]
     }
     
-    private func triggerPlay() {
+    public func triggerPlay() {
         playbackControlState = .Playing
         trigger(.Playing)
     }
     
-    private func triggerPause() {
+    public func triggerPause() {
         playbackControlState = .Paused
         trigger(.NotPlaying)
     }
     
-    private func disable() {
+    public func disable() {
         enabled = false
         hide()
     }
     
-    private func enable() {
+    public func enable() {
         enabled = true
         show()
         scheduleTimerToHideControls()
     }
     
-    private func timeUpdated(info: EventUserInfo) {
+    public func timeUpdated(info: EventUserInfo) {
         guard let position = info!["position"] as? NSTimeInterval where !livePlayback else {
             return
         }
@@ -178,7 +178,7 @@ public class MediaControl: UIBaseObject {
         updateScrubberPosition()
     }
     
-    private func progressUpdated(info: EventUserInfo) {
+    public func progressUpdated(info: EventUserInfo) {
         guard let end = info!["end_position"] as? CGFloat where !livePlayback else {
             return
         }
@@ -187,7 +187,7 @@ public class MediaControl: UIBaseObject {
         updateBars()
     }
     
-    private func updateScrubberPosition() {
+    public func updateScrubberPosition() {
         if let scrubberView = self.scrubberView,
             let seekBarView = self.seekBarView where !isSeeking {
             let delta = CGRectGetWidth(seekBarView.frame) * seekPercentage
@@ -197,7 +197,7 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private func updateBars() {
+    public func updateBars() {
         if let seekBarView = self.seekBarView,
             let bufferBarWidthConstraint = self.bufferBarWidthConstraint {
             bufferBarWidthConstraint.constant = seekBarView.frame.size.width * bufferPercentage
@@ -205,7 +205,7 @@ public class MediaControl: UIBaseObject {
         }
     }
     
-    private func containerReady() {
+    public func containerReady() {
         livePlayback = container.playback.playbackType() == .Live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
@@ -213,13 +213,13 @@ public class MediaControl: UIBaseObject {
         updatePlaybackControlButtonIcon()
     }
     
-    private func setupForLive() {
+    public func setupForLive() {
         seekPercentage = 1
         progressBarView?.backgroundColor = liveProgressBarColor
         scrubberDragger?.enabled = false
     }
     
-    private func setupForVOD() {
+    public func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
         durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration())
         scrubberDragger?.enabled = true
@@ -289,7 +289,7 @@ public class MediaControl: UIBaseObject {
         trigger(MediaControlEvent.NotPlaying.rawValue)
     }
     
-    private func scheduleTimerToHideControls() {
+    public func scheduleTimerToHideControls() {
         hideControlsTimer = NSTimer.scheduledTimerWithTimeInterval(3.0,
             target: self, selector: #selector(MediaControl.hideAfterPlay), userInfo: nil, repeats: false)
     }
