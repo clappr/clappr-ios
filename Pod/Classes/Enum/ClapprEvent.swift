@@ -5,4 +5,6 @@ public enum ClapprEvent: String {
     case Pause = "clappr:playback:pause"
     case Error = "clappr:playback:error"
     case Stop = "clappr:playback:stop"
+    case MediaControlShow = "clappr:core:mediacontrol:show"
+    case MediaControlHide = "clappr:core:mediacontrol:hide"
 }

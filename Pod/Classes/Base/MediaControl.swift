@@ -226,18 +226,22 @@ public class MediaControl: UIBaseObject {
     }
     
     public func hide() {
+        trigger(ClapprEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true)
     }
     
     public func show() {
+        trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false)
     }
 
     public func showAnimated() {
+        trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
     }
     
     public func hideAnimated() {
+        trigger(ClapprEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
     
