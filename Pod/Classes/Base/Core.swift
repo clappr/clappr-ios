@@ -53,6 +53,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func enterFullscreen(_: EventUserInfo) {
+        mediaControl.fullscreen = true
         fullscreenController.view.backgroundColor = UIColor.blackColor()
         fullscreenController.modalPresentationStyle = .OverFullScreen
         parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
@@ -60,12 +61,18 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func exitFullscreen(_: EventUserInfo) {
-        parentView?.addSubviewMatchingConstraints(self)
+        renderInContainerView()
         fullscreenController.dismissViewControllerAnimated(false, completion: nil)
     }
     
-    public override func render() {
+    private func renderInContainerView() {
+        mediaControl.fullscreen = false
         parentView?.addSubviewMatchingConstraints(self)
+    }
+    
+    public override func render() {
+        addToContainer()
+        
         plugins.forEach(installPlugin)
         
         addSubviewMatchingConstraints(container)
@@ -73,6 +80,15 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         
         mediaControl.render()
         container.render()
+    }
+    
+    private func addToContainer() {
+        guard let fullscreen = options[kFullscreen] as? Bool where fullscreen == false else {
+            enterFullscreen([:])
+            return
+        }
+        
+        renderInContainerView()
     }
     
     private func installPlugin(plugin: UICorePlugin) {
@@ -91,5 +107,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         return touch.view!.isKindOfClass(Container) || touch.view == mediaControl
+    }
+    
+    public func setFullscreen(fullscreen: Bool) {
+        fullscreen ? enterFullscreen(nil) : exitFullscreen([:])
     }
 }

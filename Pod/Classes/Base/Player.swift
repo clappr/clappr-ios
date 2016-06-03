@@ -25,6 +25,10 @@ public class Player: BaseObject {
         core.container.stop()
     }
     
+    public func setFullscreen(fullscreen: Bool) {
+        core.setFullscreen(fullscreen)
+    }
+    
     public func on(event: ClapprEvent, callback: EventCallback) -> String {
         return on(event.rawValue, callback: callback)
     }
