@@ -1,4 +1,3 @@
-
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
     public private(set) var container: Container!
@@ -8,7 +7,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public var parentController: UIViewController?
     public var parentView: UIView?
     private var loader: Loader
-    private lazy var fullscreenController = UIViewController()
+    private lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
@@ -54,15 +53,15 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func enterFullscreen(_: EventUserInfo) {
-        removeFromSuperview()
+        fullscreenController.view.backgroundColor = UIColor.blackColor()
+        fullscreenController.modalPresentationStyle = .OverFullScreen
+        parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(self)
-        self.parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
     }
     
     private func exitFullscreen(_: EventUserInfo) {
-        removeFromSuperview()
-        fullscreenController.dismissViewControllerAnimated(false, completion: nil)
         parentView?.addSubviewMatchingConstraints(self)
+        fullscreenController.dismissViewControllerAnimated(false, completion: nil)
     }
     
     public override func render() {

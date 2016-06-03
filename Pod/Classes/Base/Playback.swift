@@ -15,6 +15,7 @@ public class Playback: UIBaseObject, Plugin {
     public required init() {
         options = [:]
         super.init(frame: CGRectZero)
+        self.backgroundColor = UIColor.clearColor()
     }
 
     public internal(set) var options: Options

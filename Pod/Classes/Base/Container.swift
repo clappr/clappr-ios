@@ -34,6 +34,7 @@ public class Container: UIBaseObject {
         self.options = options
         self.loader = loader
         super.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor.clearColor()
         bindEventListeners()
     }
     
