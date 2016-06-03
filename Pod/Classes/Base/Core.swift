@@ -83,12 +83,11 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func addToContainer() {
-        guard let fullscreen = options[kFullscreen] as? Bool where fullscreen == false else {
-            enterFullscreen([:])
-            return
+        if let fullscreen = options[kFullscreen] as? Bool {
+            fullscreen ? enterFullscreen([:]) : renderInContainerView()
+        } else {
+            renderInContainerView()
         }
-        
-        renderInContainerView()
     }
     
     private func installPlugin(plugin: UICorePlugin) {
