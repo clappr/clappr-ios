@@ -150,7 +150,7 @@ public class AVFoundationPlayback: Playback {
     
     private func updateState(newState: PlaybackState) {
         guard currentState != newState else { return }
-        
+        let previousState = currentState
         currentState = newState
         
         switch newState {
@@ -159,6 +159,9 @@ public class AVFoundationPlayback: Playback {
         case .Paused:
             trigger(.Pause)
         case .Playing:
+            if previousState == .Buffering {
+                trigger(.BufferFull)
+            }
             trigger(.Play)
         default:
             break
