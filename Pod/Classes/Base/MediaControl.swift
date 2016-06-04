@@ -338,8 +338,10 @@ public class MediaControl: UIBaseObject {
     }
     
     public func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
-        if let seekBarView = self.seekBarView {
-            let positionPercentage = touchPoint.x / seekBarView.frame.size.width
+        if let seekBarView = self.seekBarView,
+            let scrubberView = self.scrubberView {
+            let width = seekBarView.frame.width - scrubberView.frame.width
+            let positionPercentage = max(0, min(touchPoint.x / width, 100))
             return Double(duration * positionPercentage)
         }
         return 0
