@@ -179,7 +179,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-5a-yyE" userLabel="Fullscreen Button">
-                            <rect key="frame" x="429" y="25" width="30" height="30"/>
+                            <rect key="frame" x="413" y="25" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="N29-TE-NaM"/>
                                 <constraint firstAttribute="width" constant="30" id="Vhc-m7-oPG"/>
@@ -192,7 +192,7 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="IrY-5a-yyE" secondAttribute="trailing" constant="8" id="2iD-Si-6nB"/>
+                        <constraint firstAttribute="trailing" secondItem="IrY-5a-yyE" secondAttribute="trailing" constant="24" id="2iD-Si-6nB"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
                         <constraint firstItem="IrY-5a-yyE" firstAttribute="centerY" secondItem="wR6-Co-ihn" secondAttribute="centerY" id="XFl-CC-git"/>
                         <constraint firstItem="wR6-Co-ihn" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="30" id="aeF-L6-Edx"/>
