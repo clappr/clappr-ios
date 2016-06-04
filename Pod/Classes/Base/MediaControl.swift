@@ -262,11 +262,13 @@ public class MediaControl: UIBaseObject {
     public func show() {
         trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false)
+        scheduleTimerToHideControls()
     }
 
     public func showAnimated() {
         trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
+        scheduleTimerToHideControls()
     }
     
     public func hideAnimated() {
@@ -300,8 +302,8 @@ public class MediaControl: UIBaseObject {
             livePlayback ? stop() : pause()
         } else {
             play()
-            scheduleTimerToHideControls()
         }
+        scheduleTimerToHideControls()
     }
     
     @IBAction func toggleFullscreen(sender: UIButton) {
@@ -353,6 +355,7 @@ public class MediaControl: UIBaseObject {
             case .Ended:
                 container.seekTo(secondsRelativeToPoint(touchPoint))
                 isSeeking = false
+                scheduleTimerToHideControls()
             default: break
             }
         }
