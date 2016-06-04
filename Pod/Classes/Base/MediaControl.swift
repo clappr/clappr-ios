@@ -151,10 +151,20 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
             .TimeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
             .Progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
+            .Buffering  : { [weak self] _ in self?.playbackBuffering() },
+            .BufferFull : { [weak self] _ in self?.playbackBufferFull() },
             .Ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .Stopped },
             .MediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
             .MediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
         ]
+    }
+
+    public func playbackBuffering() {
+        playbackControlButton?.hidden = true
+    }
+
+    public func playbackBufferFull() {
+        playbackControlButton?.hidden = false
     }
     
     public func triggerPlay() {
