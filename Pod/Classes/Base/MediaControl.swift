@@ -22,6 +22,7 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var controlsOverlayView: UIView?
     @IBOutlet weak public var controlsWrapperView: UIView?
     @IBOutlet weak public var playbackControlButton: UIButton?
+    @IBOutlet weak public var fullscreenButton: UIButton?
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
@@ -49,6 +50,12 @@ public class MediaControl: UIBaseObject {
     public var isSeeking = false {
         didSet {
             scrubberTimeView?.hidden = !isSeeking
+        }
+    }
+    
+    public var fullscreen = false {
+        didSet {
+            fullscreenButton?.selected = fullscreen
         }
     }
     
@@ -273,6 +280,12 @@ public class MediaControl: UIBaseObject {
             play()
             scheduleTimerToHideControls()
         }
+    }
+    
+    @IBAction func toggleFullscreen(sender: UIButton) {
+        fullscreen = !fullscreen
+        let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
+        trigger(event.rawValue)
     }
     
     private func pause() {

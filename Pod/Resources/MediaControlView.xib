@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -186,10 +186,24 @@
                                 <constraint firstItem="DmN-Rl-de9" firstAttribute="centerY" secondItem="wR6-Co-ihn" secondAttribute="centerY" id="ysk-Be-g9v"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-5a-yyE" userLabel="Fullscreen Button">
+                            <rect key="frame" x="429" y="10" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="N29-TE-NaM"/>
+                                <constraint firstAttribute="width" constant="30" id="Vhc-m7-oPG"/>
+                            </constraints>
+                            <state key="normal" image="fullscreen"/>
+                            <state key="selected" image="fullscreen_exit"/>
+                            <connections>
+                                <action selector="toggleFullscreen:" destination="xP5-UL-qkk" eventType="touchUpInside" id="umU-27-bSn"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="IrY-5a-yyE" secondAttribute="trailing" constant="8" id="2iD-Si-6nB"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
                         <constraint firstItem="wR6-Co-ihn" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="8" id="aeF-L6-Edx"/>
+                        <constraint firstItem="IrY-5a-yyE" firstAttribute="centerY" secondItem="BHP-U1-oat" secondAttribute="centerY" id="d8P-Dx-Bsy"/>
                         <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" id="nni-j6-y8r"/>
                         <constraint firstItem="wR6-Co-ihn" firstAttribute="centerY" secondItem="BHP-U1-oat" secondAttribute="centerY" id="obZ-v0-Yqn"/>
@@ -245,6 +259,7 @@
                 <outlet property="controlsWrapperView" destination="BHP-U1-oat" id="Ow8-bS-zke"/>
                 <outlet property="currentTimeLabel" destination="HM3-hd-Lp9" id="znc-H8-Ghd"/>
                 <outlet property="durationLabel" destination="RMN-tb-gu1" id="kRE-7Y-pNv"/>
+                <outlet property="fullscreenButton" destination="IrY-5a-yyE" id="M0X-TH-k7c"/>
                 <outlet property="playbackControlButton" destination="0V7-z5-rdA" id="3dr-Z2-ZnT"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
                 <outlet property="progressBarWidthConstraint" destination="Bag-UP-UQb" id="mvu-5u-Fes"/>
@@ -258,6 +273,8 @@
         </view>
     </objects>
     <resources>
+        <image name="fullscreen" width="30" height="30"/>
+        <image name="fullscreen_exit" width="30" height="30"/>
         <image name="play" width="30" height="30"/>
     </resources>
 </document>

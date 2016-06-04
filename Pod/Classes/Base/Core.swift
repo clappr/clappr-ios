@@ -1,4 +1,3 @@
-
 public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var options: Options
     public private(set) var container: Container!
@@ -6,7 +5,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public private(set) var plugins: [UICorePlugin] = []
     
     public var parentController: UIViewController?
+    public var parentView: UIView?
     private var loader: Loader
+    private lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
@@ -23,6 +24,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.blackColor()
         createContainers()
         createMediaControl()
+        bindEventListeners()
     }
     
     private func createContainers() {
@@ -45,7 +47,32 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addGestureRecognizer(tapRecognizer)
     }
     
+    private func bindEventListeners() {
+        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenEnter.rawValue, callback: enterFullscreen)
+        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenExit.rawValue, callback: exitFullscreen)
+    }
+    
+    private func enterFullscreen(_: EventUserInfo) {
+        mediaControl.fullscreen = true
+        fullscreenController.view.backgroundColor = UIColor.blackColor()
+        fullscreenController.modalPresentationStyle = .OverFullScreen
+        parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
+        fullscreenController.view.addSubviewMatchingConstraints(self)
+    }
+    
+    private func exitFullscreen(_: EventUserInfo) {
+        renderInContainerView()
+        fullscreenController.dismissViewControllerAnimated(false, completion: nil)
+    }
+    
+    private func renderInContainerView() {
+        mediaControl.fullscreen = false
+        parentView?.addSubviewMatchingConstraints(self)
+    }
+    
     public override func render() {
+        addToContainer()
+        
         plugins.forEach(installPlugin)
         
         addSubviewMatchingConstraints(container)
@@ -53,6 +80,14 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         
         mediaControl.render()
         container.render()
+    }
+    
+    private func addToContainer() {
+        if let fullscreen = options[kFullscreen] as? Bool {
+            fullscreen ? enterFullscreen([:]) : renderInContainerView()
+        } else {
+            renderInContainerView()
+        }
     }
     
     private func installPlugin(plugin: UICorePlugin) {
@@ -71,5 +106,9 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         return touch.view!.isKindOfClass(Container) || touch.view == mediaControl
+    }
+    
+    public func setFullscreen(fullscreen: Bool) {
+        fullscreen ? enterFullscreen(nil) : exitFullscreen([:])
     }
 }

@@ -8,9 +8,9 @@ public class Player: BaseObject {
     
     public func attachTo(view: UIView, controller: UIViewController) {
         bindEvents()
-        view.addSubviewMatchingConstraints(core)
-        core.render()
         core.parentController = controller
+        core.parentView = view
+        core.render()
     }
     
     public func play() {
@@ -23,6 +23,10 @@ public class Player: BaseObject {
     
     public func stop() {
         core.container.stop()
+    }
+    
+    public func setFullscreen(fullscreen: Bool) {
+        core.setFullscreen(fullscreen)
     }
     
     public func on(event: ClapprEvent, callback: EventCallback) -> String {
