@@ -311,6 +311,7 @@ public class MediaControl: UIBaseObject {
         let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
         trigger(event.rawValue)
         scheduleTimerToHideControls()
+        updateScrubberPosition()
     }
     
     private func pause() {
