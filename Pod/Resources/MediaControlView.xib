@@ -9,11 +9,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CLPMediaControl"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <panGestureRecognizer delaysTouchesEnded="NO" minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="TNM-hZ-5T3" userLabel="Scrubber Dragger">
-            <connections>
-                <action selector="handleScrubberPan:" destination="xP5-UL-qkk" id="Q0A-fD-BIF"/>
-            </connections>
-        </panGestureRecognizer>
         <view clipsSubviews="YES" contentMode="scaleToFill" id="xP5-UL-qkk" userLabel="Media Control" customClass="MediaControl" customModule="Clappr" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="467" height="252"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -107,9 +102,6 @@
                                         <constraint firstAttribute="width" constant="50" id="meh-gR-tpI"/>
                                         <constraint firstAttribute="centerX" secondItem="uDb-7w-G5b" secondAttribute="centerX" id="ub9-f2-wkr"/>
                                     </constraints>
-                                    <connections>
-                                        <outletCollection property="gestureRecognizers" destination="TNM-hZ-5T3" appends="YES" id="TKe-Sz-ySH"/>
-                                    </connections>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUN-rN-PRr">
                                     <rect key="frame" x="-18" y="-41" width="46" height="20"/>
@@ -263,7 +255,6 @@
                 <outlet property="playbackControlButton" destination="0V7-z5-rdA" id="3dr-Z2-ZnT"/>
                 <outlet property="progressBarView" destination="6qg-xT-VwA" id="cZZ-0k-ocw"/>
                 <outlet property="progressBarWidthConstraint" destination="Bag-UP-UQb" id="mvu-5u-Fes"/>
-                <outlet property="scrubberDragger" destination="TNM-hZ-5T3" id="7cR-lc-hi3"/>
                 <outlet property="scrubberLabel" destination="PX7-VD-Gf1" id="DMj-xK-iKK"/>
                 <outlet property="scrubberTimeView" destination="UUN-rN-PRr" id="PtJ-qr-NZl"/>
                 <outlet property="scrubberView" destination="3Wv-Cd-358" id="4q4-4k-lAP"/>

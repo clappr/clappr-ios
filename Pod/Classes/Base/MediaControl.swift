@@ -10,7 +10,6 @@ public class MediaControl: UIBaseObject {
     @IBOutlet public weak var scrubberLabel: UILabel?
     @IBOutlet public weak var scrubberView: UIView?
 
-    @IBOutlet public weak var scrubberDragger: UIPanGestureRecognizer?
     @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
     @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
 
@@ -91,6 +90,10 @@ public class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
+        if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
+            seekBarView.target = mediaControl
+            seekBarView.selector = #selector(handleSeekbarViewTouch(_:))
+        }
         return mediaControl
     }
 
@@ -223,13 +226,11 @@ public class MediaControl: UIBaseObject {
     public func setupForLive() {
         seekPercentage = 1
         progressBarView?.backgroundColor = liveProgressBarColor
-        scrubberDragger?.enabled = false
     }
     
     public func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
         durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration())
-        scrubberDragger?.enabled = true
     }
     
     public func hide() {
@@ -317,23 +318,22 @@ public class MediaControl: UIBaseObject {
         }
         hideControlsTimer?.invalidate()
     }
-    
-    @IBAction public func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
-        let touchPoint = panGesture.locationInView(seekBarView)
-        
-        switch panGesture.state {
-        case .Began:
-            isSeeking = true
-            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
-            hideControlsTimer?.invalidate()
-        case .Changed:
+
+    public func handleSeekbarViewTouch(view: DragDetectorView) {
+        if let touch = view.currentTouch where !livePlayback {
+            let touchPoint = touch.locationInView(seekBarView)
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
             scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
             scrubberView?.setNeedsLayout()
-        case .Ended:
-            container.seekTo(secondsRelativeToPoint(touchPoint))
-            isSeeking = false
-        default: break
+            switch view.touchState {
+            case .Began:
+                isSeeking = true
+                hideControlsTimer?.invalidate()
+            case .Ended:
+                container.seekTo(secondsRelativeToPoint(touchPoint))
+                isSeeking = false
+            default: break
+            }
         }
     }
     
