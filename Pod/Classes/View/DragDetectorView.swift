@@ -23,7 +23,6 @@ public class DragDetectorView: UIView {
     public var selector: Selector!
 
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print(touches)
         if let touch = touches.first {
             touchState = .Began
             currentTouch = touch
