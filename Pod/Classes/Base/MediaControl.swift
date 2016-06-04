@@ -310,6 +310,7 @@ public class MediaControl: UIBaseObject {
         fullscreen = !fullscreen
         let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
         trigger(event.rawValue)
+        scheduleTimerToHideControls()
     }
     
     private func pause() {
