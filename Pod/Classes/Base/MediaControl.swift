@@ -9,7 +9,10 @@ public class MediaControl: UIBaseObject {
     @IBOutlet public weak var scrubberTimeView: UIView?
     @IBOutlet public weak var scrubberLabel: UILabel?
     @IBOutlet public weak var scrubberView: UIView?
+    @IBOutlet public weak var scrubberOuterCircle: UIView?
 
+    @IBOutlet public weak var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
     @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
     @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
 
@@ -29,6 +32,8 @@ public class MediaControl: UIBaseObject {
     public var bufferPercentage: CGFloat = 0.0
     public var seekPercentage: CGFloat = 0.0
     public var scrubberInitialPosition: CGFloat = 0.0
+    public var scrubberInitialWidth: CGFloat = 0.0
+    public var scrubberInitialHeight: CGFloat = 0.0
     public var hideControlsTimer: NSTimer?
     public var enabled = false
     public var livePlayback = false
@@ -49,6 +54,10 @@ public class MediaControl: UIBaseObject {
     public var isSeeking = false {
         didSet {
             scrubberTimeView?.hidden = !isSeeking
+            scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
+            scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
+            scrubberOuterCircle?.layer.cornerRadius = (isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth) / 2
+            scrubberOuterCircle?.layer.borderWidth = isSeeking ? 1.0 : 0
         }
     }
     
@@ -88,6 +97,8 @@ public class MediaControl: UIBaseObject {
         }
         mediaControl.setupAspectFitButtonResize(mediaControl.playbackControlButton)
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
+        mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
+        mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
