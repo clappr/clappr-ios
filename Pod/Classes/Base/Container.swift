@@ -58,6 +58,7 @@ public class Container: UIBaseObject {
     private func renderPlayback() {
         addSubviewMatchingConstraints(playback)
         playback.render()
+        sendSubviewToBack(playback)
     }
     
     private func renderPlugin(plugin: UIContainerPlugin) {
