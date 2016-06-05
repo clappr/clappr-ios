@@ -9,8 +9,10 @@ public class MediaControl: UIBaseObject {
     @IBOutlet public weak var scrubberTimeView: UIView?
     @IBOutlet public weak var scrubberLabel: UILabel?
     @IBOutlet public weak var scrubberView: UIView?
+    @IBOutlet public weak var scrubberOuterCircle: UIView?
 
-    @IBOutlet public weak var scrubberDragger: UIPanGestureRecognizer?
+    @IBOutlet public weak var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public weak var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
     @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
     @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
 
@@ -30,6 +32,8 @@ public class MediaControl: UIBaseObject {
     public var bufferPercentage: CGFloat = 0.0
     public var seekPercentage: CGFloat = 0.0
     public var scrubberInitialPosition: CGFloat = 0.0
+    public var scrubberInitialWidth: CGFloat = 0.0
+    public var scrubberInitialHeight: CGFloat = 0.0
     public var hideControlsTimer: NSTimer?
     public var enabled = false
     public var livePlayback = false
@@ -50,6 +54,10 @@ public class MediaControl: UIBaseObject {
     public var isSeeking = false {
         didSet {
             scrubberTimeView?.hidden = !isSeeking
+            scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
+            scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
+            scrubberOuterCircle?.layer.cornerRadius = (isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth) / 2
+            scrubberOuterCircle?.layer.borderWidth = isSeeking ? 1.0 : 0
         }
     }
     
@@ -89,8 +97,14 @@ public class MediaControl: UIBaseObject {
         }
         mediaControl.setupAspectFitButtonResize(mediaControl.playbackControlButton)
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
+        mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
+        mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
+        if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
+            seekBarView.target = mediaControl
+            seekBarView.selector = #selector(handleSeekbarViewTouch(_:))
+        }
         return mediaControl
     }
 
@@ -148,10 +162,20 @@ public class MediaControl: UIBaseObject {
             .Ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
             .TimeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
             .Progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
+            .Buffering  : { [weak self] _ in self?.playbackBuffering() },
+            .BufferFull : { [weak self] _ in self?.playbackBufferFull() },
             .Ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .Stopped },
             .MediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
             .MediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
         ]
+    }
+
+    public func playbackBuffering() {
+        playbackControlButton?.hidden = true
+    }
+
+    public func playbackBufferFull() {
+        playbackControlButton?.hidden = false
     }
     
     public func triggerPlay() {
@@ -223,13 +247,11 @@ public class MediaControl: UIBaseObject {
     public func setupForLive() {
         seekPercentage = 1
         progressBarView?.backgroundColor = liveProgressBarColor
-        scrubberDragger?.enabled = false
     }
     
     public func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
         durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration())
-        scrubberDragger?.enabled = true
     }
     
     public func hide() {
@@ -240,11 +262,13 @@ public class MediaControl: UIBaseObject {
     public func show() {
         trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false)
+        scheduleTimerToHideControls()
     }
 
     public func showAnimated() {
         trigger(ClapprEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
+        scheduleTimerToHideControls()
     }
     
     public func hideAnimated() {
@@ -278,14 +302,16 @@ public class MediaControl: UIBaseObject {
             livePlayback ? stop() : pause()
         } else {
             play()
-            scheduleTimerToHideControls()
         }
+        scheduleTimerToHideControls()
     }
     
     @IBAction func toggleFullscreen(sender: UIButton) {
         fullscreen = !fullscreen
         let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
         trigger(event.rawValue)
+        scheduleTimerToHideControls()
+        updateScrubberPosition()
     }
     
     private func pause() {
@@ -317,29 +343,31 @@ public class MediaControl: UIBaseObject {
         }
         hideControlsTimer?.invalidate()
     }
-    
-    @IBAction public func handleScrubberPan(panGesture: UIPanGestureRecognizer) {
-        let touchPoint = panGesture.locationInView(seekBarView)
-        
-        switch panGesture.state {
-        case .Began:
-            isSeeking = true
-            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
-            hideControlsTimer?.invalidate()
-        case .Changed:
+
+    public func handleSeekbarViewTouch(view: DragDetectorView) {
+        if let touch = view.currentTouch where !livePlayback {
+            let touchPoint = touch.locationInView(seekBarView)
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
             scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
             scrubberView?.setNeedsLayout()
-        case .Ended:
-            container.seekTo(secondsRelativeToPoint(touchPoint))
-            isSeeking = false
-        default: break
+            switch view.touchState {
+            case .Began:
+                isSeeking = true
+                hideControlsTimer?.invalidate()
+            case .Ended:
+                container.seekTo(secondsRelativeToPoint(touchPoint))
+                isSeeking = false
+                scheduleTimerToHideControls()
+            default: break
+            }
         }
     }
     
     public func secondsRelativeToPoint(touchPoint: CGPoint) -> Double {
-        if let seekBarView = self.seekBarView {
-            let positionPercentage = touchPoint.x / seekBarView.frame.size.width
+        if let seekBarView = self.seekBarView,
+            let scrubberView = self.scrubberView {
+            let width = seekBarView.frame.width - scrubberView.frame.width
+            let positionPercentage = max(0, min(touchPoint.x / width, 100))
             return Double(duration * positionPercentage)
         }
         return 0

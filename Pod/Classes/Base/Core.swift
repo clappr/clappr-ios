@@ -109,6 +109,8 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public func setFullscreen(fullscreen: Bool) {
+        let isFullscreen = self.fullscreenController.presentingViewController != nil
+        guard fullscreen != isFullscreen else {return}
         fullscreen ? enterFullscreen(nil) : exitFullscreen([:])
     }
 }
