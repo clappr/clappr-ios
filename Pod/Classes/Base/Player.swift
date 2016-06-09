@@ -13,6 +13,11 @@ public class Player: BaseObject {
         core.render()
     }
     
+    public func loadSource(source: String) {
+        core.container.loadSource(source)
+        play()
+    }
+    
     public func play() {
         core.container.play()
     }
