@@ -255,6 +255,7 @@ public class MediaControl: UIBaseObject {
     }
     
     public func hide() {
+        hideControlsTimer?.invalidate()
         trigger(ClapprEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true)
     }
@@ -272,6 +273,7 @@ public class MediaControl: UIBaseObject {
     }
     
     public func hideAnimated() {
+        hideControlsTimer?.invalidate()
         trigger(ClapprEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
