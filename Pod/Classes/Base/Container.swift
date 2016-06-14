@@ -48,6 +48,7 @@ public class Container: UIBaseObject {
         playback.removeFromSuperview()
         playback = playbackFactory.createPlayback()
         renderPlayback()
+        trigger(ContainerEvent.SourceChanged)
     }
     
     public override func render() {
