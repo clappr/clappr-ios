@@ -18,6 +18,14 @@ public class AVFoundationPlayback: Playback {
     public override var pluginName: String {
         return "AVPlayback"
     }
+
+    public var selectedSubtitle: AVMediaSelectionOption? {
+        return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+    }
+
+    public var selectedAudioSource: AVMediaSelectionOption? {
+        return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+    }
     
     public override class func canPlay(options: Options) -> Bool {
         guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
@@ -239,6 +247,13 @@ public class AVFoundationPlayback: Playback {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.selectMediaOption(option, inMediaSelectionGroup: group)
         }
+    }
+
+    private func getSelectedMediaOptionWithCharacteristic(characteristic: String) -> AVMediaSelectionOption? {
+        if let group = mediaSelectionGroup(characteristic) {
+            return player?.currentItem?.selectedMediaOptionInMediaSelectionGroup(group)
+        }
+        return nil
     }
     
     public override func subtitles() -> [AVMediaSelectionOption]? {
