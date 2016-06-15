@@ -19,12 +19,15 @@ public class AVFoundationPlayback: Playback {
         return "AVPlayback"
     }
 
-    public override var selectedSubtitle: AVMediaSelectionOption? {
+    public override var selectedSubtitle: Subtitle? {
         get {
-            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            return Subtitle.fromAVMediaSelectionOption(option)
         }
         set {
-            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicLegible)
+            if let newOption = newValue?.raw as? AVMediaSelectionOption {
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
+            }
         }
     }
 
@@ -34,14 +37,15 @@ public class AVFoundationPlayback: Playback {
             return AudioSource.fromAVMediaSelectionOption(option)
         }
         set {
-            if let newOption = selectedAudioSource?.raw as? AVMediaSelectionOption {
+            if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicAudible)
             }
         }
     }
     
-    public override var subtitles: [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
+    public override var subtitles: [Subtitle]? {
+        let options = mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
+        return Subtitle.fromAVMediaSelectionOptions(options)
     }
 
     public override var audioSources: [AudioSource]? {
