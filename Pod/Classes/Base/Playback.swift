@@ -12,39 +12,18 @@ public class Playback: UIBaseObject, Plugin {
         return ""
     }
 
-    public var selectedSubtitle: AVMediaSelectionOption? {
-        get {
-            return nil
-        }
-        set {
-            // no default implementation
-        }
-    }
-
-    public var selectedAudioSource: AVMediaSelectionOption? {
-        get {
-            return nil
-        }
-        set {
-            // no default implementation
-        }
-    }
-
-    public var subtitles: [AVMediaSelectionOption]? {
-        return nil
-    }
-
-    public var audioSources: [AVMediaSelectionOption]? {
-        return nil
-    }
+    public var selectedSubtitle: AVMediaSelectionOption?
+    public var selectedAudioSource: AudioSource?
+    public private(set) var subtitles: [AVMediaSelectionOption]?
+    public private(set) var audioSources: [AudioSource]?
+    
+    public internal(set) var options: Options
     
     public required init() {
         options = [:]
         super.init(frame: CGRectZero)
         self.backgroundColor = UIColor.clearColor()
     }
-
-    public internal(set) var options: Options
     
     public required init(options: Options) {
         self.options = options

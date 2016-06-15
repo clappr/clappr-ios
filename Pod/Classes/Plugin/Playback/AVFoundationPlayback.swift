@@ -28,21 +28,25 @@ public class AVFoundationPlayback: Playback {
         }
     }
 
-    public override var selectedAudioSource: AVMediaSelectionOption? {
+    public override var selectedAudioSource: AudioSource? {
         get {
-            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            return AudioSource.fromAVMediaSelectionOption(option)
         }
         set {
-            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicAudible)
+            if let newOption = selectedAudioSource?.raw as? AVMediaSelectionOption {
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicAudible)
+            }
         }
     }
-
+    
     public override var subtitles: [AVMediaSelectionOption]? {
         return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
     }
 
-    public override var audioSources: [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+    public override var audioSources: [AudioSource]? {
+        let options = mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+        return AudioSource.fromAVMediaSelectionOptions(options)
     }
     
     public override class func canPlay(options: Options) -> Bool {
