@@ -11,6 +11,32 @@ public class Playback: UIBaseObject, Plugin {
         NSException(name: "MissingPluginName", reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
+
+    public var selectedSubtitle: AVMediaSelectionOption? {
+        get {
+            return nil
+        }
+        set {
+            // no default implementation
+        }
+    }
+
+    public var selectedAudioSource: AVMediaSelectionOption? {
+        get {
+            return nil
+        }
+        set {
+            // no default implementation
+        }
+    }
+
+    public var subtitles: [AVMediaSelectionOption]? {
+        return nil
+    }
+
+    public var audioSources: [AVMediaSelectionOption]? {
+        return nil
+    }
     
     public required init() {
         options = [:]
@@ -57,14 +83,6 @@ public class Playback: UIBaseObject, Plugin {
     
     public func isHighDefinitionInUse() -> Bool {
         return false
-    }
-    
-    public func audioSources() -> [AVMediaSelectionOption]? {
-        return nil
-    }
-    
-    public func subtitles() -> [AVMediaSelectionOption]? {
-        return nil
     }
     
     internal func trigger(event: PlaybackEvent) {

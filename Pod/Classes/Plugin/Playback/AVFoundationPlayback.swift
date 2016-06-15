@@ -18,6 +18,32 @@ public class AVFoundationPlayback: Playback {
     public override var pluginName: String {
         return "AVPlayback"
     }
+
+    public override var selectedSubtitle: AVMediaSelectionOption? {
+        get {
+            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+        }
+        set {
+            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicLegible)
+        }
+    }
+
+    public override var selectedAudioSource: AVMediaSelectionOption? {
+        get {
+            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+        }
+        set {
+            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicAudible)
+        }
+    }
+
+    public override var subtitles: [AVMediaSelectionOption]? {
+        return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
+    }
+
+    public override var audioSources: [AVMediaSelectionOption]? {
+        return mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+    }
     
     public override class func canPlay(options: Options) -> Bool {
         guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
@@ -179,11 +205,11 @@ public class AVFoundationPlayback: Playback {
     private func readyToPlay() {
         trigger(.Ready)
         
-        if let subtitles = subtitles() {
+        if let subtitles = self.subtitles {
             trigger(.SubtitleSourcesUpdated, userInfo: ["subtitles" : subtitles])
         }
         
-        if let audioSources = audioSources() {
+        if let audioSources = self.audioSources {
             trigger(.AudioSourcesUpdated, userInfo: ["audios" : audioSources])
         }
         
@@ -227,26 +253,17 @@ public class AVFoundationPlayback: Playback {
         }
     }
     
-    public override func setSubtitle(subtitleOption: AVMediaSelectionOption) {
-        setMediaSelectionOption(subtitleOption, characteristic: AVMediaCharacteristicLegible)
-    }
-    
-    public override func setAudioSource(audioOption: AVMediaSelectionOption) {
-        setMediaSelectionOption(audioOption, characteristic: AVMediaCharacteristicAudible)
-    }
-    
-    private func setMediaSelectionOption(option: AVMediaSelectionOption,  characteristic: String) {
+    private func setMediaSelectionOption(option: AVMediaSelectionOption?, characteristic: String) {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.selectMediaOption(option, inMediaSelectionGroup: group)
         }
     }
-    
-    public override func subtitles() -> [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
-    }
-    
-    public override func audioSources() -> [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+
+    private func getSelectedMediaOptionWithCharacteristic(characteristic: String) -> AVMediaSelectionOption? {
+        if let group = mediaSelectionGroup(characteristic) {
+            return player?.currentItem?.selectedMediaOptionInMediaSelectionGroup(group)
+        }
+        return nil
     }
     
     private func mediaSelectionGroup(characteristic: String) -> AVMediaSelectionGroup? {

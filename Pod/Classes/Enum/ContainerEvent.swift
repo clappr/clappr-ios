@@ -23,4 +23,5 @@ public enum ContainerEvent: String {
     case MediaControlEnabled = "clappr:container:media_control_enabled"
     case AudioSourcesUpdated = "clappr:container:audio_sources_updated"
     case SubtitleSourcesUpdated = "clappr:container:subtitle_sources_updated"
+    case SourceChanged = "clappr:container:source_changed"
 }
