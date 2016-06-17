@@ -75,6 +75,18 @@ class PlaybackTests: QuickSpec {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
             }
+            
+            context("Playback source") {
+                it("Should have a source property with the url sent via options") {
+                    let playback = StubPlayback(options: [kSourceUrl: "someUrl"])
+                    expect(playback.source) == "someUrl"
+                }
+                
+                it("Should have a source property with nil if no source is set") {
+                    let playback = StubPlayback(options: [:])
+                    expect(playback.source).to(beNil())
+                }
+            }
         }
     }
     

@@ -38,6 +38,10 @@ public class Playback: UIBaseObject, Plugin {
         return nil
     }
     
+    public var source: String? {
+        return options[kSourceUrl] as? String
+    }
+    
     public required init() {
         options = [:]
         super.init(frame: CGRectZero)
