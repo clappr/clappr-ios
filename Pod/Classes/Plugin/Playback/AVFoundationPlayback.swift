@@ -57,11 +57,13 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override class func canPlay(options: Options) -> Bool {
-        guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
+        guard let urlString = options[kSourceUrl] as? String,
+            let url = NSURL(string: urlString),
+            let pathExtension = url.pathExtension else {
             return false
         }
         
-        return true
+        return AVURLAsset.isPlayableExtendedMIMEType("video/\(pathExtension)")
     }
     
     public required init(options: Options) {
