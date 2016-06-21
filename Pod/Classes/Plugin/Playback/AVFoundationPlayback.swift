@@ -137,7 +137,7 @@ public class AVFoundationPlayback: Playback {
         return player != nil && player?.rate > 0
     }
     
-    public override func seekTo(timeInterval: NSTimeInterval) {
+    public override func seek(timeInterval: NSTimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
         
         player?.currentItem?.seekToTime(time)
