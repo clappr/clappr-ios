@@ -90,13 +90,31 @@ class PlaybackTests: QuickSpec {
                     let playback = StubPlayback(options: [kAutoPlay : true])
                     expect(playback.autoPlay) == true
                 }
+                
+                it("Should call play on render if auto play is set") {
+                    let playback = StubPlayback(options: [kAutoPlay : true])
+                    playback.render()
+                    expect(playback.playWasCalled) == true
+                }
+                
+                it("Should not call play on render if auto play is set to false") {
+                    let playback = StubPlayback(options: [kAutoPlay : false])
+                    playback.render()
+                    expect(playback.playWasCalled) == false
+                }
             }
         }
     }
     
     class StubPlayback: Playback {
+        var playWasCalled = false
+        
         override var pluginName: String {
             return "stupPlayback"
+        }
+        
+        override func play() {
+            playWasCalled = true
         }
     }
 }

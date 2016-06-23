@@ -92,6 +92,12 @@ public class Playback: UIBaseObject, Plugin {
         return false
     }
     
+    public override func render() {
+        if autoPlay {
+            play()
+        }
+    }
+    
     internal func trigger(event: PlaybackEvent) {
         trigger(event.rawValue)
     }
