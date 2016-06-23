@@ -29,7 +29,7 @@ class PlaybackTests: QuickSpec {
             }
             
             it("Should have a seek method receiving a time") {
-                let responds = playback.respondsToSelector(#selector(Playback.seekTo(_:)))
+                let responds = playback.respondsToSelector(#selector(Playback.seek(_:)))
                 expect(responds).to(beTrue())
             }
             
@@ -74,6 +74,18 @@ class PlaybackTests: QuickSpec {
             it("Should have a class function to check if a source can be played with default value false") {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
+            }
+            
+            context("Playback source") {
+                it("Should have a source property with the url sent via options") {
+                    let playback = StubPlayback(options: [kSourceUrl: "someUrl"])
+                    expect(playback.source) == "someUrl"
+                }
+                
+                it("Should have a source property with nil if no source is set") {
+                    let playback = StubPlayback(options: [:])
+                    expect(playback.source).to(beNil())
+                }
             }
         }
     }

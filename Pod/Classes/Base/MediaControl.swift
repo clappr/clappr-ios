@@ -357,7 +357,7 @@ public class MediaControl: UIBaseObject {
                 isSeeking = true
                 hideControlsTimer?.invalidate()
             case .Ended:
-                container.seekTo(secondsRelativeToPoint(touchPoint))
+                container.seek(secondsRelativeToPoint(touchPoint))
                 isSeeking = false
                 scheduleTimerToHideControls()
             default: break
