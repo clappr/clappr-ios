@@ -206,7 +206,7 @@ class MediaControlTests: QuickSpec {
             return "Playback"
         }
         
-        override func isPlaying() -> Bool {
+        override var isPlaying: Bool {
             return playing
         }
         
@@ -218,11 +218,11 @@ class MediaControlTests: QuickSpec {
             playing = false
         }
         
-        override func playbackType() -> PlaybackType {
+        override var playbackType: PlaybackType {
             return type
         }
         
-        override func duration() -> Double {
+        override var duration: Double {
             return 30
         }
     }
