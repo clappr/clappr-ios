@@ -5,6 +5,9 @@ enum PlaybackState {
 }
 
 public class AVFoundationPlayback: Playback {
+    private static let mimeTypes = ["mp4" : "video/mp4",
+                                   "m3u8" : "application/x-mpegurl"]
+    
     private var kvoStatusDidChangeContext = 0
     private var kvoTimeRangesContext = 0
     private var kvoBufferingContext = 0
@@ -57,11 +60,20 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override class func canPlay(options: Options) -> Bool {
-        guard let urlString = options[kSourceUrl] as? String, let _ = NSURL(string: urlString) else {
-            return false
+        var mimeType = ""
+        
+        if let urlString = options[kSourceUrl] as? String,
+            let url = NSURL(string: urlString),
+            let pathExtension = url.pathExtension,
+            let mimeTypeFromPath = mimeTypes[pathExtension] {
+            mimeType = mimeTypeFromPath
         }
         
-        return true
+        if let mimeTypeFromParameter = options[kMimeType] as? String {
+            mimeType = mimeTypeFromParameter
+        }
+        
+        return AVURLAsset.isPlayableExtendedMIMEType(mimeType)
     }
     
     public required init(options: Options) {

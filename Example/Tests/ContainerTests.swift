@@ -348,8 +348,19 @@ class ContainerTests: QuickSpec {
 
                     expect(container.playback.pluginName) == "NoOp"
 
-                    container.loadSource("some.url")
+                    container.load("http://globo.com/video.mp4")
 
+                    expect(container.playback.pluginName) == "AVPlayback"
+                    expect(container.playback.superview) == container
+                }
+                
+                it("Should be able to load a source with mime type") {
+                    let container = Container(playback: NoOpPlayback(options: [:]))
+                    
+                    expect(container.playback.pluginName) == "NoOp"
+                    
+                    container.load("http://globo.com/video", mimeType: "video/mp4")
+                    
                     expect(container.playback.pluginName) == "AVPlayback"
                     expect(container.playback.superview) == container
                 }

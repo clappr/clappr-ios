@@ -42,8 +42,12 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
-    public func loadSource(source: String) {
-        let playbackFactory = PlaybackFactory(loader: loader, options: [kSourceUrl: source])
+    public func load(source: String, mimeType: String? = nil) {
+        var playbackOptions = options
+        playbackOptions[kSourceUrl] = source
+        playbackOptions[kMimeType] = mimeType == nil ? nil : mimeType!
+        
+        let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
         playback.removeFromSuperview()
         playback = playbackFactory.createPlayback()
