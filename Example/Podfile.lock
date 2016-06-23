@@ -2,8 +2,8 @@ PODS:
   - Clappr (0.3.8):
     - Kingfisher (~> 2.4)
   - Kingfisher (2.4.1)
-  - Nimble (4.0.0)
-  - Quick (0.9.1)
+  - Nimble (4.0.1)
+  - Quick (0.9.2)
 
 DEPENDENCIES:
   - Clappr (from `../`)
@@ -17,8 +17,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Clappr: ffeae504953443321b4a1a37bfd4d1752f2e72bb
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
-  Nimble: 72bcc3e2f02242e6bfaaf8d9412ca7bfe3d8b417
-  Quick: a5221fc21788b6aeda934805e68b061839bc3165
+  Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
+  Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
 
 PODFILE CHECKSUM: f8b2fe5444c7dfafffc4c5437c6e97983d16fc04
 

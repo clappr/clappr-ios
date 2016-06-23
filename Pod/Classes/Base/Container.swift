@@ -87,8 +87,8 @@ public class Container: UIBaseObject {
         trigger(ContainerEvent.Stop)
     }
     
-    public func seekTo(timeInterval: NSTimeInterval) {
-        playback.seekTo(timeInterval)
+    public func seek(timeInterval: NSTimeInterval) {
+        playback.seek(timeInterval)
     }
     
     public func addPlugin(plugin: UIContainerPlugin) {
