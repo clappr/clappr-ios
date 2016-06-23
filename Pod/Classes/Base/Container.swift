@@ -42,7 +42,7 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
-    public func loadSource(source: String) {
+    public func load(source: String) {
         let playbackFactory = PlaybackFactory(loader: loader, options: [kSourceUrl: source])
         
         playback.removeFromSuperview()
