@@ -103,6 +103,24 @@ class PlaybackTests: QuickSpec {
                     expect(playback.playWasCalled) == false
                 }
             }
+            
+            context("StartAt") {
+                it("Should set start at property from options") {
+                    let playback = StubPlayback(options: [kStartAt : 10])
+                    expect(playback.startAt) == 10
+                }
+                
+                it("Should have startAt with 0 if no time is set on options") {
+                    let playback = StubPlayback(options: [:])
+                    expect(playback.startAt) == 0
+                }
+                
+                it("Should seek video when rendering if startAt is set") {
+                    let playback = StubPlayback(options: [kStartAt : 15])
+                    playback.render()
+                    expect(playback.seekWasCalledWithValue) == 15
+                }
+            }
 
             context("Playback source") {
                 it("Should have a source property with the url sent via options") {
@@ -120,6 +138,7 @@ class PlaybackTests: QuickSpec {
 
     class StubPlayback: Playback {
         var playWasCalled = false
+        var seekWasCalledWithValue: NSTimeInterval = -1
 
         override var pluginName: String {
             return "stupPlayback"
@@ -127,6 +146,10 @@ class PlaybackTests: QuickSpec {
 
         override func play() {
             playWasCalled = true
+        }
+        
+        override func seek(timeInterval: NSTimeInterval) {
+            seekWasCalledWithValue = timeInterval
         }
     }
 }
