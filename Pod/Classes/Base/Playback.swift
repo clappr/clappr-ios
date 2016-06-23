@@ -76,6 +76,4 @@ public class Playback: UIBaseObject, Plugin {
     public func pause() {}
     public func stop() {}
     public func seekTo(timeInterval: NSTimeInterval) {}
-    public func setAudioSource(audioOption: AVMediaSelectionOption) {}
-    public func setSubtitle(subtitleOption: AVMediaSelectionOption) {}
 }
