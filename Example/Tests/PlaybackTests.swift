@@ -75,6 +75,22 @@ class PlaybackTests: QuickSpec {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
             }
+            
+            context("AutoPlay") {
+                it("Should have autoplay set to false if autoplay option is not set") {
+                    expect(playback.autoPlay) == false
+                }
+                
+                it("Should have autoplay set to false if autoplay option is false") {
+                    let playback = StubPlayback(options: [kAutoPlay : false])
+                    expect(playback.autoPlay) == false
+                }
+                
+                it("Should have autoplay set to true if autoplay option is true") {
+                    let playback = StubPlayback(options: [kAutoPlay : true])
+                    expect(playback.autoPlay) == true
+                }
+            }
         }
     }
     

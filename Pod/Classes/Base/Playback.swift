@@ -46,6 +46,13 @@ public class Playback: UIBaseObject, Plugin {
 
     public internal(set) var options: Options
     
+    public var autoPlay: Bool {
+        guard let autoPlay = options[kAutoPlay] as? Bool else {
+            return false
+        }
+        return autoPlay
+    }
+    
     public required init(options: Options) {
         self.options = options
         super.init(frame: CGRect.zero)
