@@ -29,6 +29,13 @@ public class Playback: UIBaseObject, Plugin {
         }
         return autoPlay
     }
+    
+    public var startAt: NSTimeInterval {
+        guard let startAt = options[kStartAt] as? NSTimeInterval else {
+            return 0
+        }
+        return startAt
+    }
 
     public required init() {
         options = [:]
@@ -76,6 +83,8 @@ public class Playback: UIBaseObject, Plugin {
     }
 
     public override func render() {
+        seek(startAt)
+        
         if autoPlay {
             play()
         }
