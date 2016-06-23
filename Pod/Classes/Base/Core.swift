@@ -8,6 +8,17 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public var parentView: UIView?
     private var loader: Loader
     private lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+
+    public var activeContainer: Container? {
+        guard let container = self.container else {
+            return nil
+        }
+        return container
+    }
+
+    public var activePlayback: Playback? {
+        return activeContainer?.playback
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
