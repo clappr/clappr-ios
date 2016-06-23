@@ -18,19 +18,18 @@ public class AVFoundationPlayback: Playback {
     public override var pluginName: String {
         return "AVPlayback"
     }
-
+    
     public override var selectedSubtitle: Subtitle? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
             return Subtitle.fromAVMediaSelectionOption(option)
         }
         set {
-            if let newOption = newValue?.raw as? AVMediaSelectionOption {
-                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
-            }
+            let newOption = newValue?.raw as? AVMediaSelectionOption
+            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
         }
     }
-
+    
     public override var selectedAudioSource: AudioSource? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
