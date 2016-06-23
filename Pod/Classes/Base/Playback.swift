@@ -34,10 +34,21 @@ public class Playback: UIBaseObject, Plugin {
         return false
     }
 
+    public var isPaused: Bool {
+        return false
+    }
+
+    public var isBuffering: Bool {
+        return false
+    }
+
     public var duration: Double {
         return 0
     }
 
+    public var position: Double {
+        return 0
+    }
 
     public var settings: [String : AnyObject] {
         return [:]
