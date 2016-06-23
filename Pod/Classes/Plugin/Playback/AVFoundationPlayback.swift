@@ -63,11 +63,26 @@ public class AVFoundationPlayback: Playback {
         return player != nil && player?.rate > 0
     }
 
+    public override var isPaused: Bool {
+        return currentState == .Paused
+    }
+
+    public override var isBuffering: Bool {
+        return currentState == .Buffering
+    }
+
     public override var duration: Double {
         guard playbackType == .VOD, let item = player?.currentItem else {
             return 0
         }
         return CMTimeGetSeconds(item.asset.duration)
+    }
+
+    public override var position: Double {
+        guard playbackType == .VOD, let player = self.player else {
+            return 0
+        }
+        return CMTimeGetSeconds(player.currentTime())
     }
 
     public override var playbackType: PlaybackType {
