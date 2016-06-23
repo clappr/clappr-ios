@@ -60,11 +60,17 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override class func canPlay(options: Options) -> Bool {
-        guard let urlString = options[kSourceUrl] as? String,
+        var mimeType = ""
+        
+        if let urlString = options[kSourceUrl] as? String,
             let url = NSURL(string: urlString),
             let pathExtension = url.pathExtension,
-            let mimeType = mimeTypes[pathExtension] else {
-            return false
+            let mimeTypeFromPath = mimeTypes[pathExtension] {
+            mimeType = mimeTypeFromPath
+        }
+        
+        if let mimeTypeFromParameter = options[kMimeType] as? String {
+            mimeType = mimeTypeFromParameter
         }
         
         return AVURLAsset.isPlayableExtendedMIMEType(mimeType)

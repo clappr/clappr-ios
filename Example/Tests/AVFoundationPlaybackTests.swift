@@ -20,6 +20,12 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(canPlay) == true
                 }
                 
+                it("Should return true for valid url without path extension with supported mimetype") {
+                    let options = [kSourceUrl: "http://clappr.io/highline", kMimeType: "video/avi"]
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay) == true
+                }
+                
                 it("Should return false for invalid url") {
                     let options = [kSourceUrl: "123123"]
                     let canPlay = AVFoundationPlayback.canPlay(options)
