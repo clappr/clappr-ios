@@ -65,11 +65,12 @@ public class AVFoundationPlayback: Playback {
     }
     
     public required init(options: Options) {
-        if let urlString = options[kSourceUrl] as? String {
-            self.url = NSURL(string: urlString)
-        }
-        
         super.init(options: options)
+        
+        if let urlString = options[kSourceUrl] as? String {
+            url = NSURL(string: urlString)
+            setupPlayer()
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -87,10 +88,6 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func play() {
-        if player == nil {
-            setupPlayer()
-        }
-        
         player?.play()
         
         if let currentItem = player?.currentItem {

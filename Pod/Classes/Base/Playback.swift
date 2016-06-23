@@ -23,6 +23,13 @@ public class Playback: UIBaseObject, Plugin {
         return options[kSourceUrl] as? String
     }
 
+    public var autoPlay: Bool {
+        guard let autoPlay = options[kAutoPlay] as? Bool else {
+            return false
+        }
+        return autoPlay
+    }
+
     public required init() {
         options = [:]
         super.init(frame: CGRectZero)
@@ -66,6 +73,12 @@ public class Playback: UIBaseObject, Plugin {
 
     public func isHighDefinitionInUse() -> Bool {
         return false
+    }
+
+    public override func render() {
+        if autoPlay {
+            play()
+        }
     }
 
     internal func trigger(event: PlaybackEvent) {
