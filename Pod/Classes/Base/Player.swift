@@ -13,8 +13,8 @@ public class Player: BaseObject {
         core.render()
     }
     
-    public func load(source: String) {
-        core.container.load(source)
+    public func load(source: String, mimeType: String? = nil) {
+        core.container.load(source, mimeType: mimeType)
         play()
     }
     
