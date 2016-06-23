@@ -76,10 +76,6 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func play() {
-        if player == nil {
-            setupPlayer()
-        }
-        
         player?.play()
         
         if let currentItem = player?.currentItem {
@@ -87,6 +83,10 @@ public class AVFoundationPlayback: Playback {
                 updateState(.Buffering)
             }
         }
+    }
+    
+    public override func render() {
+        setupPlayer()
     }
     
     private func setupPlayer() {
