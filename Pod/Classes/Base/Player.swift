@@ -1,5 +1,13 @@
 public class Player: BaseObject {
     public private(set) var core: Core
+
+    public var activeContainer: Container? {
+        return core.activeContainer
+    }
+
+    public var activePlayback: Playback? {
+        return core.activePlayback
+    }
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         let loader = Loader(externalPlugins: externalPlugins, options: options)
