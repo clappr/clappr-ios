@@ -19,6 +19,10 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     public var activePlayback: Playback? {
         return activeContainer?.playback
     }
+
+    public var isFullscreen: Bool {
+        return self.fullscreenController.presentingViewController != nil
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
