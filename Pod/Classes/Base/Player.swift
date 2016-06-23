@@ -8,6 +8,10 @@ public class Player: BaseObject {
     public var activePlayback: Playback? {
         return core.activePlayback
     }
+
+    public var isFullscreen: Bool {
+        return core.isFullscreen
+    }
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         let loader = Loader(externalPlugins: externalPlugins, options: options)
