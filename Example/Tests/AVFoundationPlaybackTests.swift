@@ -14,6 +14,12 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(canPlay) == true
                 }
                 
+                it("Should return true for valid url with m3u8 path extension") {
+                    let options = [kSourceUrl: "http://clappr.io/highline.m3u8"]
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay) == true
+                }
+                
                 it("Should return false for invalid url") {
                     let options = [kSourceUrl: "123123"]
                     let canPlay = AVFoundationPlayback.canPlay(options)
