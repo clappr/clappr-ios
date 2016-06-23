@@ -87,6 +87,10 @@ public class AVFoundationPlayback: Playback {
     
     public override func render() {
         setupPlayer()
+        
+        if autoPlay {
+            play()
+        }
     }
     
     private func setupPlayer() {
