@@ -8,8 +8,4 @@ extension AudioSource {
         
         return nil
     }
-    
-    class func fromAVMediaSelectionOptions(options: [AVMediaSelectionOption?]?) -> [AudioSource]? {
-        return options?.flatMap({fromAVMediaSelectionOption($0)})
-    }
 }

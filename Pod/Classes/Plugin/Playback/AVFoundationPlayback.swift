@@ -43,13 +43,17 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override var subtitles: [Subtitle]? {
-        let options = mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
-        return Subtitle.fromAVMediaSelectionOptions(options)
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
+            return []
+        }
+        return mediaGroup.options.flatMap({Subtitle.fromAVMediaSelectionOption($0)})
     }
-
+    
     public override var audioSources: [AudioSource]? {
-        let options = mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
-        return AudioSource.fromAVMediaSelectionOptions(options)
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
+            return []
+        }
+        return mediaGroup.options.flatMap({AudioSource.fromAVMediaSelectionOption($0)})
     }
     
     public override class func canPlay(options: Options) -> Bool {

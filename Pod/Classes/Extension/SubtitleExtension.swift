@@ -8,8 +8,4 @@ extension Subtitle {
         
         return nil
     }
-    
-    class func fromAVMediaSelectionOptions(options: [AVMediaSelectionOption?]?) -> [Subtitle]? {
-        return options?.flatMap({fromAVMediaSelectionOption($0)})
-    }
 }
