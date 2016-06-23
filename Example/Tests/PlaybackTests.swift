@@ -29,7 +29,7 @@ class PlaybackTests: QuickSpec {
             }
             
             it("Should have a seek method receiving a time") {
-                let responds = playback.respondsToSelector(#selector(Playback.seekTo(_:)))
+                let responds = playback.respondsToSelector(#selector(Playback.seek(_:)))
                 expect(responds).to(beTrue())
             }
             

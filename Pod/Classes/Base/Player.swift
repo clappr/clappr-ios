@@ -30,6 +30,10 @@ public class Player: BaseObject {
         core.container.stop()
     }
     
+    public func seek(timeInterval: NSTimeInterval) {
+        core.container.seek(timeInterval)
+    }
+    
     public func setFullscreen(fullscreen: Bool) {
         core.setFullscreen(fullscreen)
     }
