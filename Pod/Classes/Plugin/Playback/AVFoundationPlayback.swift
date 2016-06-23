@@ -18,31 +18,42 @@ public class AVFoundationPlayback: Playback {
     public override var pluginName: String {
         return "AVPlayback"
     }
-
-    public override var selectedSubtitle: AVMediaSelectionOption? {
+    
+    public override var selectedSubtitle: Subtitle? {
         get {
-            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            return Subtitle.fromAVMediaSelectionOption(option)
         }
         set {
-            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicLegible)
+            let newOption = newValue?.raw as? AVMediaSelectionOption
+            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
         }
     }
-
-    public override var selectedAudioSource: AVMediaSelectionOption? {
+    
+    public override var selectedAudioSource: AudioSource? {
         get {
-            return getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            return AudioSource.fromAVMediaSelectionOption(option)
         }
         set {
-            setMediaSelectionOption(newValue, characteristic: AVMediaCharacteristicAudible)
+            if let newOption = newValue?.raw as? AVMediaSelectionOption {
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicAudible)
+            }
         }
     }
-
-    public override var subtitles: [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicLegible)?.options
+    
+    public override var subtitles: [Subtitle]? {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
+            return []
+        }
+        return mediaGroup.options.flatMap({Subtitle.fromAVMediaSelectionOption($0)})
     }
-
-    public override var audioSources: [AVMediaSelectionOption]? {
-        return mediaSelectionGroup(AVMediaCharacteristicAudible)?.options
+    
+    public override var audioSources: [AudioSource]? {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
+            return []
+        }
+        return mediaGroup.options.flatMap({AudioSource.fromAVMediaSelectionOption($0)})
     }
     
     public override class func canPlay(options: Options) -> Bool {
