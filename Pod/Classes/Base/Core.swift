@@ -58,11 +58,13 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fullscreenController.modalPresentationStyle = .OverFullScreen
         parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(self)
+        trigger(CoreEvent.EnterFullscreen.rawValue)
     }
     
     private func exitFullscreen(_: EventUserInfo) {
         renderInContainerView()
         fullscreenController.dismissViewControllerAnimated(false, completion: nil)
+        trigger(CoreEvent.ExitFullscreen.rawValue)
     }
     
     private func renderInContainerView() {
