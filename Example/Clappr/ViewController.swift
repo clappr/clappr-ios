@@ -40,5 +40,13 @@ class ViewController: UIViewController {
         player.on(ClapprEvent.Error) { userInfo in
             print("on Error: \(userInfo)")
         }
+
+        player.on(ClapprEvent.EnterFullscreen) { _ in
+            print("on Enter Fullscreen")
+        }
+
+        player.on(ClapprEvent.ExitFullscreen) { _ in
+            print("on Exit Fullscreen")
+        }
     }
 }
