@@ -10,9 +10,6 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     public var activeContainer: Container? {
-        guard let container = self.container else {
-            return nil
-        }
         return container
     }
 
