@@ -247,11 +247,11 @@ class ContainerTests: QuickSpec {
                     class MockedSettingsPlayback: Playback {
                         var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
 
-                        override func settings() -> [String: AnyObject] {
+                        override var settings: [String: AnyObject] {
                             return ["foo": "bar"]
                         }
                         
-                        override func isPlaying() -> Bool {
+                        override var isPlaying: Bool {
                             return true
                         }
                         
@@ -303,7 +303,7 @@ class ContainerTests: QuickSpec {
                     }
                     
                     it("Should return playback 'isPlaying' status when respective property is accessed") {
-                        expect(container.isPlaying) == mockedPlayback.isPlaying()
+                        expect(container.isPlaying) == mockedPlayback.isPlaying
                     }
                 }
             }

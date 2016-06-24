@@ -37,6 +37,38 @@ public class Playback: UIBaseObject, Plugin {
         return startAt
     }
 
+    public var isPlaying: Bool {
+        return false
+    }
+
+    public var isPaused: Bool {
+        return false
+    }
+
+    public var isBuffering: Bool {
+        return false
+    }
+
+    public var duration: Double {
+        return 0
+    }
+
+    public var position: Double {
+        return 0
+    }
+
+    public var settings: [String : AnyObject] {
+        return [:]
+    }
+
+    public var playbackType: PlaybackType {
+        return .Unknown
+    }
+
+    public var isHighDefinitionInUse: Bool {
+        return false
+    }
+
     public required init() {
         options = [:]
         super.init(frame: CGRectZero)
@@ -60,26 +92,6 @@ public class Playback: UIBaseObject, Plugin {
     public func destroy() {
         self.removeFromSuperview()
         self.stopListening()
-    }
-
-    public func settings() -> [String : AnyObject] {
-        return [:]
-    }
-
-    public func duration() -> Double {
-        return 0
-    }
-
-    public func playbackType() -> PlaybackType {
-        return .Unknown
-    }
-
-    public func isPlaying() -> Bool {
-        return false
-    }
-
-    public func isHighDefinitionInUse() -> Bool {
-        return false
     }
 
     public override func render() {

@@ -1,5 +1,37 @@
 public class Player: BaseObject {
     public private(set) var core: Core
+
+    public var activeContainer: Container? {
+        return core.activeContainer
+    }
+
+    public var activePlayback: Playback? {
+        return core.activePlayback
+    }
+
+    public var isFullscreen: Bool {
+        return core.isFullscreen
+    }
+
+    public var isPlaying: Bool {
+        return activePlayback?.isPlaying ?? false
+    }
+
+    public var isPaused: Bool {
+        return activePlayback?.isPaused ?? false
+    }
+
+    public var isBuffering: Bool {
+        return activePlayback?.isBuffering ?? false
+    }
+
+    public var duration: Double {
+        return activePlayback?.duration ?? 0
+    }
+
+    public var position: Double {
+        return activePlayback?.position ?? 0
+    }
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         let loader = Loader(externalPlugins: externalPlugins, options: options)

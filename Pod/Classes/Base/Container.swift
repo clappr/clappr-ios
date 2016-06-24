@@ -10,9 +10,7 @@ public class Container: UIBaseObject {
     private var loader: Loader
     
     public var isPlaying: Bool {
-        get {
-            return playback.isPlaying()
-        }
+        return playback.isPlaying
     }
     
     public var mediaControlEnabled = false {
@@ -135,7 +133,7 @@ public class Container: UIBaseObject {
     }
     
     private func settingsUpdated() {
-        settings = playback.settings()
+        settings = playback.settings
         self.trigger(ContainerEvent.SettingsUpdated)
     }
     

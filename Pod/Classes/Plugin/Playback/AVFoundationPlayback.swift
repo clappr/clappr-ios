@@ -58,7 +58,41 @@ public class AVFoundationPlayback: Playback {
         }
         return mediaGroup.options.flatMap({AudioSource.fromAVMediaSelectionOption($0)})
     }
-    
+
+    public override var isPlaying: Bool {
+        return player != nil && player?.rate > 0
+    }
+
+    public override var isPaused: Bool {
+        return currentState == .Paused
+    }
+
+    public override var isBuffering: Bool {
+        return currentState == .Buffering
+    }
+
+    public override var duration: Double {
+        guard playbackType == .VOD, let item = player?.currentItem else {
+            return 0
+        }
+        return CMTimeGetSeconds(item.asset.duration)
+    }
+
+    public override var position: Double {
+        guard playbackType == .VOD, let player = self.player else {
+            return 0
+        }
+        return CMTimeGetSeconds(player.currentTime())
+    }
+
+    public override var playbackType: PlaybackType {
+        guard let player = player, let duration = player.currentItem?.asset.duration else {
+            return .Unknown
+        }
+
+        return duration == kCMTimeIndefinite ? .Live : .VOD
+    }
+
     public override class func canPlay(options: Options) -> Bool {
         var mimeType = ""
         
@@ -153,31 +187,11 @@ public class AVFoundationPlayback: Playback {
         player = nil
     }
     
-    public override func isPlaying() -> Bool {
-        return player != nil && player?.rate > 0
-    }
-    
     public override func seek(timeInterval: NSTimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
         
         player?.currentItem?.seekToTime(time)
         trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
-    }
-    
-    public override func duration() -> Double {
-        guard playbackType() == .VOD, let item = player?.currentItem else {
-            return 0
-        }
-        
-        return CMTimeGetSeconds(item.asset.duration)
-    }
-    
-    public override func playbackType() -> PlaybackType {
-        guard let player = player, let duration = player.currentItem?.asset.duration else {
-            return .Unknown
-        }
-        
-        return duration == kCMTimeIndefinite ? .Live : .VOD
     }
     
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?,
@@ -243,7 +257,7 @@ public class AVFoundationPlayback: Playback {
     }
     
     private func timeUpdated(time: CMTime) {
-        if isPlaying() {
+        if isPlaying {
             updateState(.Playing)
             trigger(.TimeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
         }
