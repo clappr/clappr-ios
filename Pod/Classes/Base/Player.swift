@@ -43,9 +43,19 @@ public class Player: BaseObject {
     }
     
     private func bindEvents() {
+        for (event, callback) in coreBindings() {
+            listenTo(core, eventName: event.rawValue, callback: callback)
+        }
         for (event, callback) in containerBindings() {
             listenTo(core.container, eventName: event.rawValue, callback: callback)
         }
+    }
+
+    private func coreBindings() -> [CoreEvent : EventCallback] {
+        return [
+            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.EnterFullscreen, userInfo: info)},
+            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.ExitFullscreen, userInfo: info)}
+        ]
     }
     
     private func containerBindings() -> [ContainerEvent : EventCallback] {

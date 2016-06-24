@@ -7,4 +7,6 @@ public enum ClapprEvent: String {
     case Stop = "clappr:playback:stop"
     case MediaControlShow = "clappr:core:mediacontrol:show"
     case MediaControlHide = "clappr:core:mediacontrol:hide"
+    case EnterFullscreen = "player:enterfullscreen"
+    case ExitFullscreen = "player:exitfullscreen"
 }
