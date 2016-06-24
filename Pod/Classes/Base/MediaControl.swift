@@ -256,25 +256,25 @@ public class MediaControl: UIBaseObject {
     
     public func hide() {
         hideControlsTimer?.invalidate()
-        trigger(ClapprEvent.MediaControlHide.rawValue)
+        trigger(PlayerEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true)
     }
     
     public func show() {
-        trigger(ClapprEvent.MediaControlShow.rawValue)
+        trigger(PlayerEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     public func showAnimated() {
-        trigger(ClapprEvent.MediaControlShow.rawValue)
+        trigger(PlayerEvent.MediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
     
     public func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(ClapprEvent.MediaControlHide.rawValue)
+        trigger(PlayerEvent.MediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
     
