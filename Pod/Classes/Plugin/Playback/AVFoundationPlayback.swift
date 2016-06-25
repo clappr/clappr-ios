@@ -115,7 +115,6 @@ public class AVFoundationPlayback: Playback {
         
         if let urlString = options[kSourceUrl] as? String {
             url = NSURL(string: urlString)
-            setupPlayer()
         }
     }
     
@@ -134,6 +133,10 @@ public class AVFoundationPlayback: Playback {
     }
     
     public override func play() {
+        if player == nil {
+            setupPlayer()
+        }
+
         player?.play()
         
         if let currentItem = player?.currentItem {
