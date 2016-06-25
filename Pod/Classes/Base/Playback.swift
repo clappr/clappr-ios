@@ -12,10 +12,10 @@ public class Playback: UIBaseObject, Plugin {
         return ""
     }
 
-    public var selectedSubtitle: Subtitle?
-    public var selectedAudioSource: AudioSource?
-    public private(set) var subtitles: [Subtitle]?
-    public private(set) var audioSources: [AudioSource]?
+    public var selectedSubtitle: MediaOption?
+    public var selectedAudioSource: MediaOption?
+    public private(set) var subtitles: [MediaOption]?
+    public private(set) var audioSources: [MediaOption]?
 
     public internal(set) var options: Options
 

@@ -22,10 +22,10 @@ public class AVFoundationPlayback: Playback {
         return "AVPlayback"
     }
     
-    public override var selectedSubtitle: Subtitle? {
+    public override var selectedSubtitle: MediaOption? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
-            return Subtitle.fromAVMediaSelectionOption(option)
+            return MediaOptionFactory.fromAVMediaOption(option, type: .Subtitle)
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
@@ -33,10 +33,10 @@ public class AVFoundationPlayback: Playback {
         }
     }
     
-    public override var selectedAudioSource: AudioSource? {
+    public override var selectedAudioSource: MediaOption? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
-            return AudioSource.fromAVMediaSelectionOption(option)
+            return MediaOptionFactory.fromAVMediaOption(option, type: .AudioSource)
         }
         set {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
@@ -45,18 +45,18 @@ public class AVFoundationPlayback: Playback {
         }
     }
     
-    public override var subtitles: [Subtitle]? {
+    public override var subtitles: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
             return []
         }
-        return mediaGroup.options.flatMap({Subtitle.fromAVMediaSelectionOption($0)})
+        return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .Subtitle)})
     }
     
-    public override var audioSources: [AudioSource]? {
+    public override var audioSources: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
             return []
         }
-        return mediaGroup.options.flatMap({AudioSource.fromAVMediaSelectionOption($0)})
+        return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .AudioSource)})
     }
 
     public override var isPlaying: Bool {
