@@ -8,4 +8,8 @@ class MediaOptionFactory {
         
         return nil
     }
+    
+    class func offSubtitle() -> MediaOption {
+        return MediaOption(name: "Off", type: .Subtitle, raw: nil)
+    }
 }

@@ -49,7 +49,8 @@ public class AVFoundationPlayback: Playback {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
             return []
         }
-        return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .Subtitle)})
+        var availableOptions = mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .Subtitle)})
+        return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
     
     public override var audioSources: [MediaOption]? {
