@@ -118,6 +118,7 @@ class PlaybackTests: QuickSpec {
                 it("Should seek video when rendering if startAt is set") {
                     let playback = StubPlayback(options: [kStartAt : 15])
                     playback.render()
+                    playback.play()
                     expect(playback.seekWasCalledWithValue) == 15
                 }
             }
@@ -145,6 +146,7 @@ class PlaybackTests: QuickSpec {
         }
 
         override func play() {
+            trigger(PlayerEvent.Ready.rawValue)
             playWasCalled = true
         }
         
