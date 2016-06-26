@@ -35,6 +35,7 @@ player.on(PlayerEvent.Play) { userInfo in
 ```
 
 You can find public events on `PlayerEvents` enum and listed bellow:
+
 * Ready
 * Play
 * Pause
@@ -61,13 +62,13 @@ Define a poster by adding `kPosterUrl: "http://url/img.png"` on your options. It
 Add `kPlaybackNotSupportedMessage : 'Your custom message'` to define a custom message to be displayed for not supported videos.
 
 ##### AutoPlay
-Add `kAutoPlay: true` if you want the video to automatically.
+Add `kAutoPlay: true` if you want the video to play automatically.
 
 ##### Start At
-Define a start position in seconds with `kStartAt : x`. Default is `0`
+Define a start position in seconds with `kStartAt : x`. Default is `0`.
 
 ##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscree: true`. Default is `false`
+Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
 
 ##### MimeType
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
