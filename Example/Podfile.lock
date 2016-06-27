@@ -1,5 +1,5 @@
 PODS:
-  - Clappr (0.3.8):
+  - Clappr (0.3.10):
     - Kingfisher (~> 2.4)
   - Kingfisher (2.4.1)
   - Nimble (4.0.1)
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Clappr: ffeae504953443321b4a1a37bfd4d1752f2e72bb
+  Clappr: 3f4daa1072b3eecc1924bd34c8af0d3829c88842
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226

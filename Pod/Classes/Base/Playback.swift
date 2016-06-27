@@ -95,8 +95,10 @@ public class Playback: UIBaseObject, Plugin {
     }
 
     public override func render() {
-        seek(startAt)
-        
+        once(PlaybackEvent.Ready.rawValue) {[unowned self] _ in
+            self.seek(self.startAt)
+        }
+
         if autoPlay {
             play()
         }
