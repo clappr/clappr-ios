@@ -33,6 +33,32 @@ public class Player: BaseObject {
         return activePlayback?.position ?? 0
     }
     
+    public var subtitles: [MediaOption]? {
+        return activePlayback?.subtitles
+    }
+    
+    public var audioSources: [MediaOption]? {
+        return activePlayback?.audioSources
+    }
+    
+    public var selectedSubtitle: MediaOption? {
+        get {
+            return activePlayback?.selectedSubtitle
+        }
+        set {
+            activePlayback?.selectedSubtitle = newValue
+        }
+    }
+    
+    public var selectedAudioSource: MediaOption? {
+        get {
+            return activePlayback?.selectedAudioSource
+        }
+        set {
+            activePlayback?.selectedAudioSource = newValue
+        }
+    }
+    
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         let loader = Loader(externalPlugins: externalPlugins, options: options)
         self.core = CoreFactory.create(loader , options: options)
