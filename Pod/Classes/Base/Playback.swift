@@ -97,10 +97,23 @@ public class Playback: UIBaseObject, Plugin {
     public override func render() {
         once(PlaybackEvent.Ready.rawValue) {[unowned self] _ in
             self.seek(self.startAt)
+            self.selectDefaultMediaOptions()
         }
 
         if autoPlay {
             play()
+        }
+    }
+
+    private func selectDefaultMediaOptions() {
+        if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
+            let defaultSubtitle = subtitles?.filter({$0.language == defaultSubtitleLanguage}).first {
+            selectedSubtitle = defaultSubtitle
+        }
+
+        if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
+            let defaultAudioSource = audioSources?.filter({$0.language == defaultAudioLanguage}).first {
+            selectedAudioSource = defaultAudioSource
         }
     }
 
