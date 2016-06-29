@@ -90,7 +90,10 @@ public class Playback: UIBaseObject, Plugin {
 
     public override func render() {
         once(PlaybackEvent.Ready.rawValue) {[unowned self] _ in
-            self.seek(self.startAt)
+            if self.startAt != 0 {
+                self.seek(self.startAt)
+            }
+
             self.selectDefaultMediaOptions()
         }
 
