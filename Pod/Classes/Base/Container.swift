@@ -43,7 +43,7 @@ public class Container: UIBaseObject {
     public func load(source: String, mimeType: String? = nil) {
         var playbackOptions = options
         playbackOptions[kSourceUrl] = source
-        playbackOptions[kMimeType] = mimeType == nil ? nil : mimeType!
+        playbackOptions[kMimeType] = mimeType ?? nil
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
