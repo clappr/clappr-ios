@@ -115,7 +115,7 @@ public class Container: UIBaseObject {
             .HighDefinitionUpdated  : { [weak self] (info: EventUserInfo) in self?.trigger(.HighDefinitionUpdated)},
             .StateChanged           : { [weak self] (info: EventUserInfo) in self?.trigger(.PlaybackStateChanged)},
             .Ended                  : { [weak self] (info: EventUserInfo) in self?.trigger(.Ended)},
-            .Play                   : { [weak self] (info: EventUserInfo) in self?.trigger(.Play)},
+            .Play                   : { [weak self] (info: EventUserInfo) in self?.onPlay()},
             .Pause                  : { [weak self] (info: EventUserInfo) in self?.trigger(.Pause)},
             .MediaControlDisabled   : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false },
             .MediaControlEnabled    : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true },
@@ -130,6 +130,11 @@ public class Container: UIBaseObject {
             .BitRate                : { [weak self] (info: EventUserInfo) in self?.forward(.BitRate, userInfo:info)},
             .Error                  : { [weak self] (info: EventUserInfo) in self?.forward(.Error, userInfo:info)},
         ]
+    }
+
+    private func onPlay() {
+        options[kStartAt] = 0
+        trigger(.Play)
     }
     
     private func settingsUpdated() {
