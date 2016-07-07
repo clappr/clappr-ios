@@ -81,6 +81,9 @@ public class MediaControl: UIBaseObject {
     }
     
     public class func loadNib() -> UINib? {
+        #if os(tvOS)
+            return nil
+        #endif
         return UINib(nibName: "MediaControlView", bundle: NSBundle(forClass: MediaControl.self))
     }
 
@@ -131,8 +134,10 @@ public class MediaControl: UIBaseObject {
     }
     
     public func bindOrientationChangedListener() {
+        #if !os(tvOS)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MediaControl.didRotate),
             name: UIDeviceOrientationDidChangeNotification, object: nil)
+        #endif
     }
     
     public func didRotate() {
