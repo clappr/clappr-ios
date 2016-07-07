@@ -1,14 +1,9 @@
+platform :ios, '8.4'
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'Clappr_Example' do
-  platform :ios, '8.4'
   pod "Clappr", :path => "../"
-end
-
-target 'Clappr-tvOS-Example' do
-    platform :tvos, '9.0'
-    pod "Clappr", :path => "../"
 end
 
 target 'Clappr_Tests' do

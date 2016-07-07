@@ -39,15 +39,7 @@ public class PosterPlugin: UIContainerPlugin {
             compatibleWithTraitCollection: nil)
         playButton.setBackgroundImage(image, forState: .Normal)
         playButton.translatesAutoresizingMaskIntoConstraints = false
-
-        playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), forControlEvents: clickEventType())
-    }
-
-    private func clickEventType() -> UIControlEvents {
-        #if os(tvOS)
-        return .PrimaryActionTriggered
-        #endif
-        return .TouchUpInside
+        playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), forControlEvents: .TouchUpInside)
     }
     
     func playTouched() {

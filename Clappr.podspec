@@ -13,13 +13,12 @@ Pod::Spec.new do |s|
   }
 
   s.source           = { :git => "https://github.com/clappr/clappr-ios.git", :tag => s.version.to_s }
+
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
+
   s.source_files = 'Pod/Classes/**/*'
+  s.resources = 'Pod/Resources/*.{xib,ttf,png,xcassets}'
+
   s.dependency 'Kingfisher', '~> 2.4'
-
-  s.ios.deployment_target = "8.0"
-  s.tvos.deployment_target = '9.0'
-
-  s.ios.resources = 'Pod/Resources/*.{xib,ttf,png,xcassets}'
-  s.tvos.resources = 'Pod/Resources/*.{ttf,png,xcassets}'
 end

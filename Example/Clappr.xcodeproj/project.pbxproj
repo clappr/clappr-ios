@@ -30,11 +30,6 @@
 		96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
 		96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9CE371C97387000C21E80 /* LoaderTests.swift */; };
 		96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B465691BF6027F0025975A /* UIPluginTests.swift */; };
-		96C783311D2EC203001D67E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C783301D2EC203001D67E7 /* AppDelegate.swift */; };
-		96C783331D2EC203001D67E7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C783321D2EC203001D67E7 /* ViewController.swift */; };
-		96C783361D2EC203001D67E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96C783341D2EC203001D67E7 /* Main.storyboard */; };
-		96C783381D2EC203001D67E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C783371D2EC203001D67E7 /* Assets.xcassets */; };
-		DE22E25051F469B2BC8CD56C /* Pods_Clappr_tvOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1A0633580763832542E395 /* Pods_Clappr_tvOS_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +57,6 @@
 		607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		9424A2BA32BA9FDD3B701F60 /* Pods-Clappr-tvOS-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-tvOS-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr-tvOS-Example/Pods-Clappr-tvOS-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A0671C04D68700B55D8F /* CoreFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
@@ -79,15 +73,7 @@
 		96A979861BFF964C00E5EA01 /* CoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		96A9CE371C97387000C21E80 /* LoaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderTests.swift; sourceTree = "<group>"; };
 		96B465691BF6027F0025975A /* UIPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPluginTests.swift; sourceTree = "<group>"; };
-		96C7832E1D2EC203001D67E7 /* Clappr-tvOS-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clappr-tvOS-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		96C783301D2EC203001D67E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		96C783321D2EC203001D67E7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		96C783351D2EC203001D67E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		96C783371D2EC203001D67E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		96C783391D2EC203001D67E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4A603DB0D77D113ED74A258 /* Pods_Clappr_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD1A0633580763832542E395 /* Pods_Clappr_tvOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_tvOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C814D1121AC34FA9CDDD359A /* Pods-Clappr-tvOS-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-tvOS-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr-tvOS-Example/Pods-Clappr-tvOS-Example.release.xcconfig"; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Clappr.podspec; path = ../Clappr.podspec; sourceTree = "<group>"; };
 		EA8C6691C6B3BF65ACC41CA6 /* Pods-Clappr_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,14 +96,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96C7832B1D2EC203001D67E7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DE22E25051F469B2BC8CD56C /* Pods_Clappr_tvOS_Example.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,8 +106,6 @@
 				4036FD6C9F8B7418DC952D1C /* Pods-Clappr_Example.release.xcconfig */,
 				50D6118069FF458902587655 /* Pods-Clappr_Tests.debug.xcconfig */,
 				57201F862E8A8DC96D2C0796 /* Pods-Clappr_Tests.release.xcconfig */,
-				9424A2BA32BA9FDD3B701F60 /* Pods-Clappr-tvOS-Example.debug.xcconfig */,
-				C814D1121AC34FA9CDDD359A /* Pods-Clappr-tvOS-Example.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -140,7 +116,6 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Clappr */,
 				607FACE81AFB9204008FA782 /* Tests */,
-				96C7832F1D2EC203001D67E7 /* Clappr-tvOS-Example */,
 				607FACD11AFB9204008FA782 /* Products */,
 				0174B7F0F9C96F9B2307A19D /* Pods */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
@@ -152,7 +127,6 @@
 			children = (
 				607FACD01AFB9204008FA782 /* Clappr_Example.app */,
 				607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */,
-				96C7832E1D2EC203001D67E7 /* Clappr-tvOS-Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,24 +195,11 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		96C7832F1D2EC203001D67E7 /* Clappr-tvOS-Example */ = {
-			isa = PBXGroup;
-			children = (
-				96C783301D2EC203001D67E7 /* AppDelegate.swift */,
-				96C783321D2EC203001D67E7 /* ViewController.swift */,
-				96C783341D2EC203001D67E7 /* Main.storyboard */,
-				96C783371D2EC203001D67E7 /* Assets.xcassets */,
-				96C783391D2EC203001D67E7 /* Info.plist */,
-			);
-			path = "Clappr-tvOS-Example";
-			sourceTree = "<group>";
-		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				1D311CE71C4188B9831047C1 /* Pods_Clappr_Example.framework */,
 				B4A603DB0D77D113ED74A258 /* Pods_Clappr_Tests.framework */,
-				BD1A0633580763832542E395 /* Pods_Clappr_tvOS_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -287,33 +248,13 @@
 			productReference = 607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		96C7832D1D2EC203001D67E7 /* Clappr-tvOS-Example */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 96C7833C1D2EC203001D67E7 /* Build configuration list for PBXNativeTarget "Clappr-tvOS-Example" */;
-			buildPhases = (
-				762B5A3DF3F9EBB6063DA8A1 /* [CP] Check Pods Manifest.lock */,
-				96C7832A1D2EC203001D67E7 /* Sources */,
-				96C7832B1D2EC203001D67E7 /* Frameworks */,
-				96C7832C1D2EC203001D67E7 /* Resources */,
-				2CC27FB3302AC33EF5EFCFE5 /* [CP] Embed Pods Frameworks */,
-				0C63FD306D388602609FAEA5 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Clappr-tvOS-Example";
-			productName = "Clappr-tvOS-Example";
-			productReference = 96C7832E1D2EC203001D67E7 /* Clappr-tvOS-Example.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -323,9 +264,6 @@
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						TestTargetID = 607FACCF1AFB9204008FA782;
-					};
-					96C7832D1D2EC203001D67E7 = {
-						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
 			};
@@ -344,7 +282,6 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* Clappr_Example */,
 				607FACE41AFB9204008FA782 /* Clappr_Tests */,
-				96C7832D1D2EC203001D67E7 /* Clappr-tvOS-Example */,
 			);
 		};
 /* End PBXProject section */
@@ -367,15 +304,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96C7832C1D2EC203001D67E7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				96C783381D2EC203001D67E7 /* Assets.xcassets in Resources */,
-				96C783361D2EC203001D67E7 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -394,21 +322,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		0C63FD306D388602609FAEA5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr-tvOS-Example/Pods-Clappr-tvOS-Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		10D3A8270A19044B3C322BBC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -424,21 +337,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		2CC27FB3302AC33EF5EFCFE5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr-tvOS-Example/Pods-Clappr-tvOS-Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		35EE015AD1860E9D08BA86D4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -452,21 +350,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		762B5A3DF3F9EBB6063DA8A1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7885807E0A8CD9E302D1060F /* [CP] Embed Pods Frameworks */ = {
@@ -549,15 +432,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96C7832A1D2EC203001D67E7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				96C783331D2EC203001D67E7 /* ViewController.swift in Sources */,
-				96C783311D2EC203001D67E7 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -583,14 +457,6 @@
 				607FACDF1AFB9204008FA782 /* Base */,
 			);
 			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		96C783341D2EC203001D67E7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				96C783351D2EC203001D67E7 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -740,42 +606,6 @@
 			};
 			name = Release;
 		};
-		96C7833A1D2EC203001D67E7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9424A2BA32BA9FDD3B701F60 /* Pods-Clappr-tvOS-Example.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = "Clappr-tvOS-Example/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marcon.Clappr-tvOS-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		96C7833B1D2EC203001D67E7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C814D1121AC34FA9CDDD359A /* Pods-Clappr-tvOS-Example.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				INFOPLIST_FILE = "Clappr-tvOS-Example/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.marcon.Clappr-tvOS-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -802,15 +632,6 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		96C7833C1D2EC203001D67E7 /* Build configuration list for PBXNativeTarget "Clappr-tvOS-Example" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				96C7833A1D2EC203001D67E7 /* Debug */,
-				96C7833B1D2EC203001D67E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
