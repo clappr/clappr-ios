@@ -24,17 +24,11 @@ public class Playback: UIBaseObject, Plugin {
     }
 
     public var autoPlay: Bool {
-        guard let autoPlay = options[kAutoPlay] as? Bool else {
-            return false
-        }
-        return autoPlay
+        return options[kAutoPlay] as? Bool ?? false
     }
     
     public var startAt: NSTimeInterval {
-        guard let startAt = options[kStartAt] as? NSTimeInterval else {
-            return 0
-        }
-        return startAt
+        return options[kStartAt] as? NSTimeInterval ?? 0
     }
 
     public var isPlaying: Bool {
@@ -96,7 +90,10 @@ public class Playback: UIBaseObject, Plugin {
 
     public override func render() {
         once(PlaybackEvent.Ready.rawValue) {[unowned self] _ in
-            self.seek(self.startAt)
+            if self.startAt != 0 {
+                self.seek(self.startAt)
+            }
+
             self.selectDefaultMediaOptions()
         }
 

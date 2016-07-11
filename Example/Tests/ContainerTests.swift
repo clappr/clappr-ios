@@ -8,7 +8,7 @@ class ContainerTests: QuickSpec {
         describe("Container") {
             var container: Container!
             var playback: StubPlayback!
-            let options = [kSourceUrl : "http://globo.com/video.mp4"]
+            let options = [kSourceUrl : "http://clappr.com/video.mp4"]
             
             beforeEach() {
                 playback = StubPlayback(options: options)
@@ -348,7 +348,7 @@ class ContainerTests: QuickSpec {
 
                     expect(container.playback.pluginName) == "NoOp"
 
-                    container.load("http://globo.com/video.mp4")
+                    container.load("http://clappr.com/video.mp4")
 
                     expect(container.playback.pluginName) == "AVPlayback"
                     expect(container.playback.superview) == container
@@ -359,10 +359,26 @@ class ContainerTests: QuickSpec {
                     
                     expect(container.playback.pluginName) == "NoOp"
                     
-                    container.load("http://globo.com/video", mimeType: "video/mp4")
+                    container.load("http://clappr.com/video", mimeType: "video/mp4")
                     
                     expect(container.playback.pluginName) == "AVPlayback"
                     expect(container.playback.superview) == container
+                }
+            }
+
+            describe("Options") {
+                it("Should reset startAt after first play event") {
+                    let options = [kStartAt : 15]
+                    let container = Container(playback: StubPlayback(options: options), options: options)
+
+                    expect(container.options[kStartAt] as? Int) == 15
+                    expect(container.playback.startAt) == 15
+
+                    container.playback.play()
+                    container.load("http://clappr.com/video.mp4")
+
+                    expect(container.options[kStartAt] as? Int) == 0
+                    expect(container.playback.startAt) == 0
                 }
             }
         }
@@ -371,6 +387,10 @@ class ContainerTests: QuickSpec {
     class StubPlayback: Playback {
         override var pluginName: String {
             return "stubPlayback"
+        }
+
+        override func play() {
+            trigger(PlayerEvent.Play.rawValue)
         }
     }
 }
