@@ -194,6 +194,20 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.playbackControlState) == PlaybackControlState.Stopped
                     }
                 }
+
+                context("Fullscreen") {
+                    it("Should hide fullscreen button if disabled via options") {
+                        let options = [kFullscreenDisabled: true]
+                        container = Container(playback: playback, options: options)
+                        mediaControl.setup(container)
+
+                        expect(mediaControl.fullscreenButton?.hidden) == true
+                    }
+
+                    it("Should show fullscreen button if no option is set") {
+                        expect(mediaControl.fullscreenButton?.hidden) == false
+                    }
+                }
             }
         }
     }

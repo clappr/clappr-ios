@@ -69,6 +69,9 @@ Define a start position in seconds with `kStartAt : x`. Default is `0`.
 
 ##### Fullscreen
 Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
+ 
+##### FullscreenDisabled
+Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
 ##### MimeType
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
