@@ -188,6 +188,7 @@ public class AVFoundationPlayback: Playback {
         playbackDidEnd()
         removeObservers()
         playerLayer?.removeFromSuperlayer()
+        playerLayer = nil
         player = nil
     }
     
