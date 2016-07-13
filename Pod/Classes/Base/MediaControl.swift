@@ -66,7 +66,11 @@ public class MediaControl: UIBaseObject {
             fullscreenButton?.selected = fullscreen
         }
     }
-    
+
+    public var fullscreenDisabled: Bool {
+        return container.options[kFullscreenDisabled] as? Bool ?? false
+    }
+
     private var duration: CGFloat {
         return CGFloat(container.playback.duration)
     }
@@ -147,6 +151,7 @@ public class MediaControl: UIBaseObject {
         container.mediaControlEnabled ? enable() : disable()
         playbackControlState = container.isPlaying ? .Playing : .Stopped
         backgroundOverlayView?.backgroundColor = backgroundOverlayColor
+        fullscreenButton?.hidden = fullscreenDisabled
     }
     
     public func bindEventListeners() {
