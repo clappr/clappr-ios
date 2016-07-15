@@ -330,6 +330,7 @@ public class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
+            player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
         }
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
