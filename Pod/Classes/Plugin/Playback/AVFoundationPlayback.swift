@@ -11,6 +11,7 @@ public class AVFoundationPlayback: Playback {
     private var kvoStatusDidChangeContext = 0
     private var kvoTimeRangesContext = 0
     private var kvoBufferingContext = 0
+    private var kvoExternalPlaybackActiveContext = 0
     
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
@@ -169,6 +170,8 @@ public class AVFoundationPlayback: Playback {
                             options: .New, context: &kvoBufferingContext)
         player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
                             options: .New, context: &kvoBufferingContext)
+        player?.addObserver(self, forKeyPath: "externalPlaybackActive",
+                            options: .New, context: &kvoExternalPlaybackActiveContext)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVFoundationPlayback.playbackDidEnd),
                                                          name: AVPlayerItemDidPlayToEndTimeNotification, object: player?.currentItem)
@@ -210,6 +213,8 @@ public class AVFoundationPlayback: Playback {
             handleTimeRangesEvent()
         case &kvoBufferingContext:
             handleBufferingEvent(keyPath!)
+        case &kvoExternalPlaybackActiveContext:
+            handleExternalPlaybackActiveEvent()
         default:
             break
         }
@@ -233,6 +238,10 @@ public class AVFoundationPlayback: Playback {
         default:
             break
         }
+    }
+
+    private func handleExternalPlaybackActiveEvent() {
+        self.trigger(.ExternalPlaybackActiveUpdated, userInfo: ["externalPlaybackActive": player!.externalPlaybackActive])
     }
     
     private func handleStatusChangedEvent() {

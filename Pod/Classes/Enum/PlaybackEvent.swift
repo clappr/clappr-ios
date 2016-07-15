@@ -18,4 +18,5 @@ public enum PlaybackEvent: String {
     case Play = "clappr:playback:play"
     case Pause = "clappr:playback:pause"
     case Error = "clappr:playback:error"
+    case ExternalPlaybackActiveUpdated = "clappr:playback:eexternal_playback_active_updated"
 }
