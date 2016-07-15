@@ -1,5 +1,7 @@
 import Foundation
 
+import MediaPlayer
+
 public class MediaControl: UIBaseObject {
     private let animationDuration = 0.3
     
@@ -25,6 +27,8 @@ public class MediaControl: UIBaseObject {
     @IBOutlet weak public var controlsWrapperView: UIView?
     @IBOutlet weak public var playbackControlButton: UIButton?
     @IBOutlet weak public var fullscreenButton: UIButton?
+
+    @IBOutlet public weak var airPlayVolumeView: MPVolumeView?
     
     public internal(set) var container: Container!
     public internal(set) var controlsHidden = false
@@ -103,6 +107,9 @@ public class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
         mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
+        mediaControl.airPlayVolumeView?.showsVolumeSlider = false
+        mediaControl.airPlayVolumeView?.showsRouteButton = true
+        mediaControl.airPlayVolumeView?.backgroundColor = UIColor.clearColor()
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
