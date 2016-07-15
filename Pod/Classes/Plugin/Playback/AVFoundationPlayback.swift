@@ -150,6 +150,8 @@ public class AVFoundationPlayback: Playback {
     private func setupPlayer() {
         if let url = self.url {
             player = AVPlayer(URL: url)
+            player?.allowsExternalPlayback = true
+            player?.externalPlaybackActive
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
             addObservers()
