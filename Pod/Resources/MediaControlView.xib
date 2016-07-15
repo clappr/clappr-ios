@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -190,14 +190,24 @@
                                 <action selector="toggleFullscreen:" destination="xP5-UL-qkk" eventType="touchUpInside" id="umU-27-bSn"/>
                             </connections>
                         </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdo-CK-Ga6" customClass="MPVolumeView">
+                            <rect key="frame" x="367" y="25" width="30" height="30"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="KAJ-uh-mje"/>
+                                <constraint firstAttribute="height" constant="30" id="M2Y-qD-qcp"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="IrY-5a-yyE" secondAttribute="trailing" constant="24" id="2iD-Si-6nB"/>
+                        <constraint firstItem="rdo-CK-Ga6" firstAttribute="centerY" secondItem="IrY-5a-yyE" secondAttribute="centerY" id="2sd-Mm-2G9"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" id="T8w-vK-Lv7"/>
                         <constraint firstItem="IrY-5a-yyE" firstAttribute="centerY" secondItem="wR6-Co-ihn" secondAttribute="centerY" id="XFl-CC-git"/>
                         <constraint firstItem="wR6-Co-ihn" firstAttribute="leading" secondItem="BHP-U1-oat" secondAttribute="leading" constant="30" id="aeF-L6-Edx"/>
                         <constraint firstItem="Bq6-bd-EM2" firstAttribute="top" secondItem="BHP-U1-oat" secondAttribute="top" constant="-9" id="dIT-BX-OmN"/>
                         <constraint firstAttribute="trailing" secondItem="Bq6-bd-EM2" secondAttribute="trailing" id="gQI-Lr-gXI"/>
+                        <constraint firstItem="IrY-5a-yyE" firstAttribute="leading" secondItem="rdo-CK-Ga6" secondAttribute="trailing" constant="16" id="k5F-tX-UWO"/>
                         <constraint firstAttribute="bottom" secondItem="wR6-Co-ihn" secondAttribute="bottom" constant="23" id="mUl-EO-gaI"/>
                         <constraint firstAttribute="bottom" secondItem="Bq6-bd-EM2" secondAttribute="bottom" constant="42" id="wtM-nU-dmG"/>
                     </constraints>
@@ -244,6 +254,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="airPlayVolumeView" destination="rdo-CK-Ga6" id="rMk-T2-oSr"/>
                 <outlet property="backgroundOverlayView" destination="tLp-rr-wgw" id="8xD-T0-YMg"/>
                 <outlet property="bufferBarView" destination="82D-Bh-tQP" id="978-gx-QRB"/>
                 <outlet property="bufferBarWidthConstraint" destination="Rf3-6a-9h6" id="L2J-zO-oJq"/>
