@@ -16,6 +16,15 @@ public class UICorePlugin: UIPlugin, Plugin {
         super.init(frame: CGRectZero)
     }
 
+    public required init(context: UIBaseObject) {
+        super.init(frame: CGRectZero)
+        if let tempCore = context as? Core {
+            self.core = tempCore
+        } else {
+            NSException(name: "WrongContextType", reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
+        }
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

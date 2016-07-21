@@ -110,7 +110,6 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public func addPlugin(plugin: UICorePlugin) {
-        plugin.core = self
         plugins.append(plugin)
     }
     
