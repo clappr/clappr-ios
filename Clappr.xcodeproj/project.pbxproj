@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		34F26883D53FF27094D62029 /* Pods_Clappr_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A603DB0D77D113ED74A258 /* Pods_Clappr_Tests.framework */; };
-		52BCAB3D54A0B2A43A6EAA9D /* Pods_Clappr_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D311CE71C4188B9831047C1 /* Pods_Clappr_Example.framework */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A0681C04D68700B55D8F /* CoreFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A0671C04D68700B55D8F /* CoreFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
@@ -33,6 +32,51 @@
 		96D362101D41156A00CCB866 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D3620A1D41156A00CCB866 /* Images.xcassets */; };
 		96D362111D41156A00CCB866 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96D3620B1D41156A00CCB866 /* Info.plist */; };
 		96D362121D41156A00CCB866 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3620C1D41156A00CCB866 /* ViewController.swift */; };
+		96D362831D41337600CCB866 /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D3627C1D41337600CCB866 /* Clappr.framework */; };
+		96D362841D41337600CCB866 /* Clappr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D3627C1D41337600CCB866 /* Clappr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96D362C21D41339400CCB866 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		96D362C41D41339400CCB866 /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628C1D41339400CCB866 /* BaseObject.swift */; };
+		96D362C51D41339400CCB866 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628D1D41339400CCB866 /* Container.swift */; };
+		96D362C61D41339400CCB866 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
+		96D362C71D41339400CCB866 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628F1D41339400CCB866 /* EventHandler.swift */; };
+		96D362C81D41339400CCB866 /* FullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362901D41339400CCB866 /* FullscreenController.swift */; };
+		96D362C91D41339400CCB866 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362911D41339400CCB866 /* Loader.swift */; };
+		96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362921D41339400CCB866 /* MediaControl.swift */; };
+		96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
+		96D362CC1D41339400CCB866 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
+		96D362CD1D41339400CCB866 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362951D41339400CCB866 /* Playback.swift */; };
+		96D362CE1D41339400CCB866 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362961D41339400CCB866 /* Player.swift */; };
+		96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362971D41339400CCB866 /* UIBaseObject.swift */; };
+		96D362D01D41339400CCB866 /* ContainerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362991D41339400CCB866 /* ContainerEvent.swift */; };
+		96D362D11D41339400CCB866 /* CoreEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629A1D41339400CCB866 /* CoreEvent.swift */; };
+		96D362D21D41339400CCB866 /* MediaControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629B1D41339400CCB866 /* MediaControlEvent.swift */; };
+		96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629C1D41339400CCB866 /* MediaControlState.swift */; };
+		96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629D1D41339400CCB866 /* MediaOptionType.swift */; };
+		96D362D51D41339400CCB866 /* PlaybackEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629E1D41339400CCB866 /* PlaybackEvent.swift */; };
+		96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629F1D41339400CCB866 /* PlaybackType.swift */; };
+		96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A01D41339400CCB866 /* PlayerEvent.swift */; };
+		96D362D81D41339400CCB866 /* PluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A11D41339400CCB866 /* PluginType.swift */; };
+		96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
+		96D362DA1D41339400CCB866 /* ContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A51D41339400CCB866 /* ContainerFactory.swift */; };
+		96D362DB1D41339400CCB866 /* CoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A61D41339400CCB866 /* CoreFactory.swift */; };
+		96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
+		96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
+		96D362DE1D41339400CCB866 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AA1D41339400CCB866 /* DateFormatter.swift */; };
+		96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */; };
+		96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AE1D41339400CCB866 /* PosterPlugin.swift */; };
+		96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
+		96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B11D41339400CCB866 /* UICorePlugin.swift */; };
+		96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
+		96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B41D41339400CCB866 /* NoOpPlayback.swift */; };
+		96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B51D41339400CCB866 /* UIPlugin.swift */; };
+		96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B71D41339400CCB866 /* EventProtocol.swift */; };
+		96D362E71D41339400CCB866 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B81D41339400CCB866 /* Plugin.swift */; };
+		96D362E81D41339400CCB866 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BA1D41339400CCB866 /* BorderView.swift */; };
+		96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BB1D41339400CCB866 /* DragDetectorView.swift */; };
+		96D362EA1D41339400CCB866 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BC1D41339400CCB866 /* GradientView.swift */; };
+		96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C01D41339400CCB866 /* Assets.xcassets */; };
+		96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C11D41339400CCB866 /* MediaControlView.xib */; };
+		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,11 +87,31 @@
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = Clappr;
 		};
+		96D362811D41337600CCB866 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 96D3627B1D41337600CCB866;
+			remoteInfo = Clappr;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		96D362731D41330E00CCB866 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				96D362841D41337600CCB866 /* Clappr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D311CE71C4188B9831047C1 /* Pods_Clappr_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4036FD6C9F8B7418DC952D1C /* Pods-Clappr_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.release.xcconfig"; sourceTree = "<group>"; };
 		50D6118069FF458902587655 /* Pods-Clappr_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Tests/Pods-Clappr_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		57201F862E8A8DC96D2C0796 /* Pods-Clappr_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Tests/Pods-Clappr_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Clappr_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +140,51 @@
 		96D3620A1D41156A00CCB866 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96D3620B1D41156A00CCB866 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D3620C1D41156A00CCB866 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		96D3627C1D41337600CCB866 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96D362881D41339400CCB866 /* Clappr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clappr.h; sourceTree = "<group>"; };
+		96D3628C1D41339400CCB866 /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
+		96D3628D1D41339400CCB866 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		96D3628E1D41339400CCB866 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		96D3628F1D41339400CCB866 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		96D362901D41339400CCB866 /* FullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenController.swift; sourceTree = "<group>"; };
+		96D362911D41339400CCB866 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		96D362921D41339400CCB866 /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
+		96D362931D41339400CCB866 /* MediaOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOption.swift; sourceTree = "<group>"; };
+		96D362941D41339400CCB866 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		96D362951D41339400CCB866 /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
+		96D362961D41339400CCB866 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		96D362971D41339400CCB866 /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
+		96D362991D41339400CCB866 /* ContainerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerEvent.swift; sourceTree = "<group>"; };
+		96D3629A1D41339400CCB866 /* CoreEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreEvent.swift; sourceTree = "<group>"; };
+		96D3629B1D41339400CCB866 /* MediaControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlEvent.swift; sourceTree = "<group>"; };
+		96D3629C1D41339400CCB866 /* MediaControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlState.swift; sourceTree = "<group>"; };
+		96D3629D1D41339400CCB866 /* MediaOptionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionType.swift; sourceTree = "<group>"; };
+		96D3629E1D41339400CCB866 /* PlaybackEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEvent.swift; sourceTree = "<group>"; };
+		96D3629F1D41339400CCB866 /* PlaybackType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackType.swift; sourceTree = "<group>"; };
+		96D362A01D41339400CCB866 /* PlayerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
+		96D362A11D41339400CCB866 /* PluginType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginType.swift; sourceTree = "<group>"; };
+		96D362A31D41339400CCB866 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		96D362A51D41339400CCB866 /* ContainerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerFactory.swift; sourceTree = "<group>"; };
+		96D362A61D41339400CCB866 /* CoreFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreFactory.swift; sourceTree = "<group>"; };
+		96D362A71D41339400CCB866 /* MediaOptionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionFactory.swift; sourceTree = "<group>"; };
+		96D362A81D41339400CCB866 /* PlaybackFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactory.swift; sourceTree = "<group>"; };
+		96D362AA1D41339400CCB866 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingContainerPlugin.swift; sourceTree = "<group>"; };
+		96D362AE1D41339400CCB866 /* PosterPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterPlugin.swift; sourceTree = "<group>"; };
+		96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPlugin.swift; sourceTree = "<group>"; };
+		96D362B11D41339400CCB866 /* UICorePlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePlugin.swift; sourceTree = "<group>"; };
+		96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlayback.swift; sourceTree = "<group>"; };
+		96D362B41D41339400CCB866 /* NoOpPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoOpPlayback.swift; sourceTree = "<group>"; };
+		96D362B51D41339400CCB866 /* UIPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPlugin.swift; sourceTree = "<group>"; };
+		96D362B71D41339400CCB866 /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
+		96D362B81D41339400CCB866 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
+		96D362BA1D41339400CCB866 /* BorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
+		96D362BB1D41339400CCB866 /* DragDetectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDetectorView.swift; sourceTree = "<group>"; };
+		96D362BC1D41339400CCB866 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		96D362BD1D41339400CCB866 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96D362C01D41339400CCB866 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		96D362C11D41339400CCB866 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
+		96D362F01D41345E00CCB866 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		B4A603DB0D77D113ED74A258 /* Pods_Clappr_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
@@ -89,7 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52BCAB3D54A0B2A43A6EAA9D /* Pods_Clappr_Example.framework in Frameworks */,
+				96D362831D41337600CCB866 /* Clappr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,14 +210,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96D362781D41337600CCB866 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0174B7F0F9C96F9B2307A19D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EA8C6691C6B3BF65ACC41CA6 /* Pods-Clappr_Example.debug.xcconfig */,
-				4036FD6C9F8B7418DC952D1C /* Pods-Clappr_Example.release.xcconfig */,
 				50D6118069FF458902587655 /* Pods-Clappr_Tests.debug.xcconfig */,
 				57201F862E8A8DC96D2C0796 /* Pods-Clappr_Tests.release.xcconfig */,
 			);
@@ -121,6 +236,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				96D362041D41156A00CCB866 /* Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				96D3627D1D41337600CCB866 /* Clappr */,
 				607FACD11AFB9204008FA782 /* Products */,
 				0174B7F0F9C96F9B2307A19D /* Pods */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
@@ -132,6 +248,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* Clappr_Example.app */,
 				607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */,
+				96D3627C1D41337600CCB866 /* Clappr.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,9 +310,172 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		96D3627D1D41337600CCB866 /* Clappr */ = {
+			isa = PBXGroup;
+			children = (
+				96D362EF1D4133AD00CCB866 /* Header */,
+				96D362891D41339400CCB866 /* Classes */,
+				96D362BE1D41339400CCB866 /* Resources */,
+			);
+			path = Clappr;
+			sourceTree = "<group>";
+		};
+		96D362891D41339400CCB866 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				96D3628B1D41339400CCB866 /* Base */,
+				96D362981D41339400CCB866 /* Enum */,
+				96D362A21D41339400CCB866 /* Extension */,
+				96D362A41D41339400CCB866 /* Factory */,
+				96D362A91D41339400CCB866 /* Formatter */,
+				96D362AB1D41339400CCB866 /* Plugin */,
+				96D362B61D41339400CCB866 /* Protocol */,
+				96D362B91D41339400CCB866 /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		96D3628B1D41339400CCB866 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				96D3628C1D41339400CCB866 /* BaseObject.swift */,
+				96D3628D1D41339400CCB866 /* Container.swift */,
+				96D3628E1D41339400CCB866 /* Core.swift */,
+				96D3628F1D41339400CCB866 /* EventHandler.swift */,
+				96D362901D41339400CCB866 /* FullscreenController.swift */,
+				96D362911D41339400CCB866 /* Loader.swift */,
+				96D362921D41339400CCB866 /* MediaControl.swift */,
+				96D362931D41339400CCB866 /* MediaOption.swift */,
+				96D362941D41339400CCB866 /* Options.swift */,
+				96D362951D41339400CCB866 /* Playback.swift */,
+				96D362961D41339400CCB866 /* Player.swift */,
+				96D362971D41339400CCB866 /* UIBaseObject.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		96D362981D41339400CCB866 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				96D362991D41339400CCB866 /* ContainerEvent.swift */,
+				96D3629A1D41339400CCB866 /* CoreEvent.swift */,
+				96D3629B1D41339400CCB866 /* MediaControlEvent.swift */,
+				96D3629C1D41339400CCB866 /* MediaControlState.swift */,
+				96D3629D1D41339400CCB866 /* MediaOptionType.swift */,
+				96D3629E1D41339400CCB866 /* PlaybackEvent.swift */,
+				96D3629F1D41339400CCB866 /* PlaybackType.swift */,
+				96D362A01D41339400CCB866 /* PlayerEvent.swift */,
+				96D362A11D41339400CCB866 /* PluginType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		96D362A21D41339400CCB866 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				96D362A31D41339400CCB866 /* UIViewExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		96D362A41D41339400CCB866 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				96D362A51D41339400CCB866 /* ContainerFactory.swift */,
+				96D362A61D41339400CCB866 /* CoreFactory.swift */,
+				96D362A71D41339400CCB866 /* MediaOptionFactory.swift */,
+				96D362A81D41339400CCB866 /* PlaybackFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		96D362A91D41339400CCB866 /* Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				96D362AA1D41339400CCB866 /* DateFormatter.swift */,
+			);
+			path = Formatter;
+			sourceTree = "<group>";
+		};
+		96D362AB1D41339400CCB866 /* Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				96D362AC1D41339400CCB866 /* Container */,
+				96D362B01D41339400CCB866 /* Core */,
+				96D362B21D41339400CCB866 /* Playback */,
+				96D362B51D41339400CCB866 /* UIPlugin.swift */,
+			);
+			path = Plugin;
+			sourceTree = "<group>";
+		};
+		96D362AC1D41339400CCB866 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */,
+				96D362AE1D41339400CCB866 /* PosterPlugin.swift */,
+				96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		96D362B01D41339400CCB866 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		96D362B21D41339400CCB866 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */,
+				96D362B41D41339400CCB866 /* NoOpPlayback.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
+		96D362B61D41339400CCB866 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				96D362B71D41339400CCB866 /* EventProtocol.swift */,
+				96D362B81D41339400CCB866 /* Plugin.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		96D362B91D41339400CCB866 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				96D362BA1D41339400CCB866 /* BorderView.swift */,
+				96D362BB1D41339400CCB866 /* DragDetectorView.swift */,
+				96D362BC1D41339400CCB866 /* GradientView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		96D362BE1D41339400CCB866 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				96D362C01D41339400CCB866 /* Assets.xcassets */,
+				96D362C11D41339400CCB866 /* MediaControlView.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		96D362EF1D4133AD00CCB866 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				96D362881D41339400CCB866 /* Clappr.h */,
+				96D362BD1D41339400CCB866 /* Info.plist */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96D362F01D41345E00CCB866 /* Kingfisher.framework */,
 				1D311CE71C4188B9831047C1 /* Pods_Clappr_Example.framework */,
 				B4A603DB0D77D113ED74A258 /* Pods_Clappr_Tests.framework */,
 			);
@@ -204,21 +484,31 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		96D362791D41337600CCB866 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96D362C21D41339400CCB866 /* Clappr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		607FACCF1AFB9204008FA782 /* Clappr_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Clappr_Example" */;
 			buildPhases = (
-				10D3A8270A19044B3C322BBC /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				35EE015AD1860E9D08BA86D4 /* [CP] Embed Pods Frameworks */,
-				D2305C4697BB0123528849CB /* [CP] Copy Pods Resources */,
+				96D362731D41330E00CCB866 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				96D362821D41337600CCB866 /* PBXTargetDependency */,
 			);
 			name = Clappr_Example;
 			productName = Clappr;
@@ -246,13 +536,32 @@
 			productReference = 607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		96D3627B1D41337600CCB866 /* Clappr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr" */;
+			buildPhases = (
+				96D362771D41337600CCB866 /* Sources */,
+				96D362781D41337600CCB866 /* Frameworks */,
+				96D362791D41337600CCB866 /* Headers */,
+				96D3627A1D41337600CCB866 /* Resources */,
+				96D362F21D41346300CCB866 /* Carthage Copy Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Clappr;
+			productName = Clappr;
+			productReference = 96D3627C1D41337600CCB866 /* Clappr.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -262,6 +571,9 @@
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					96D3627B1D41337600CCB866 = {
+						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
 			};
@@ -280,6 +592,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* Clappr_Example */,
 				607FACE41AFB9204008FA782 /* Clappr_Tests */,
+				96D3627B1D41337600CCB866 /* Clappr */,
 			);
 		};
 /* End PBXProject section */
@@ -303,6 +616,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96D3627A1D41337600CCB866 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */,
+				96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -321,36 +643,6 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		10D3A8270A19044B3C322BBC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		35EE015AD1860E9D08BA86D4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7885807E0A8CD9E302D1060F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,6 +658,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr_Tests/Pods-Clappr_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		96D362F21D41346300CCB866 /* Carthage Copy Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+			);
+			name = "Carthage Copy Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		AE90AEE93ED0B900DF3EA69F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,21 +686,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr_Tests/Pods-Clappr_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D2305C4697BB0123528849CB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -433,6 +725,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96D362771D41337600CCB866 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96D362DE1D41339400CCB866 /* DateFormatter.swift in Sources */,
+				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
+				96D362DA1D41339400CCB866 /* ContainerFactory.swift in Sources */,
+				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
+				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
+				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
+				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
+				96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */,
+				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
+				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
+				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
+				96D362D01D41339400CCB866 /* ContainerEvent.swift in Sources */,
+				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
+				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
+				96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */,
+				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
+				96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */,
+				96D362C61D41339400CCB866 /* Core.swift in Sources */,
+				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
+				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
+				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
+				96D362C91D41339400CCB866 /* Loader.swift in Sources */,
+				96D362D21D41339400CCB866 /* MediaControlEvent.swift in Sources */,
+				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
+				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
+				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
+				96D362DB1D41339400CCB866 /* CoreFactory.swift in Sources */,
+				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
+				96D362D51D41339400CCB866 /* PlaybackEvent.swift in Sources */,
+				96D362D11D41339400CCB866 /* CoreEvent.swift in Sources */,
+				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
+				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
+				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
+				96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */,
+				96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */,
+				96D362C81D41339400CCB866 /* FullscreenController.swift in Sources */,
+				96D362C51D41339400CCB866 /* Container.swift in Sources */,
+				96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */,
+				96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -440,6 +778,11 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* Clappr_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+		96D362821D41337600CCB866 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 96D3627B1D41337600CCB866 /* Clappr */;
+			targetProxy = 96D362811D41337600CCB866 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -546,9 +889,13 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA8C6691C6B3BF65ACC41CA6 /* Pods-Clappr_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -558,9 +905,13 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4036FD6C9F8B7418DC952D1C /* Pods-Clappr_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -607,6 +958,60 @@
 			};
 			name = Release;
 		};
+		96D362861D41337600CCB866 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Clappr/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		96D362871D41337600CCB866 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Clappr/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -636,6 +1041,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96D362861D41337600CCB866 /* Debug */,
+				96D362871D41337600CCB866 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

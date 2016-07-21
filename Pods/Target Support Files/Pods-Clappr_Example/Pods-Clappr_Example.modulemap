@@ -1,6 +1,0 @@
-framework module Pods_Clappr_Example {
-  umbrella header "Pods-Clappr_Example-umbrella.h"
-
-  export *
-  module * { export * }
-}
