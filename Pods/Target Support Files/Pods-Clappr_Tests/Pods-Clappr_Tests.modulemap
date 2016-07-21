@@ -1,0 +1,6 @@
+framework module Pods_Clappr_Tests {
+  umbrella header "Pods-Clappr_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
