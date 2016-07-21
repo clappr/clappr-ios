@@ -14,6 +14,10 @@ public class PosterPlugin: UIContainerPlugin {
     
     public required init() {
         super.init()
+    }
+
+    public required init(context: UIBaseObject) {
+        super.init(context: context)
         translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .ScaleAspectFit
     }

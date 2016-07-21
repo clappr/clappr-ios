@@ -18,6 +18,10 @@ public class NoOpPlayback: Playback {
         super.init()
     }
     
+    public required init(context: UIBaseObject) {
+        fatalError("init(context:) has not been implemented")
+    }
+
     public override class func canPlay(options: Options) -> Bool {
         return true
     }

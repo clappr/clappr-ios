@@ -128,6 +128,10 @@ public class AVFoundationPlayback: Playback {
         super.init()
     }
     
+    public required init(context: UIBaseObject) {
+        fatalError("init(context:) has not been implemented")
+    }
+
     public override func layoutSubviews() {
         if let playerLayer = playerLayer {
             playerLayer.frame = self.bounds
