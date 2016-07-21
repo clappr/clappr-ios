@@ -19,8 +19,8 @@
     "ios": "8.0"
   },
   "requires_arc": true,
-  "source_files": "Pod/Classes/**/*",
-  "resources": "Pod/Resources/*.{xib,ttf,png,xcassets}",
+  "source_files": "Clappr/Classes/**/*",
+  "resources": "Clappr/Resources/*.{xib,ttf,png,xcassets}",
   "dependencies": {
     "Kingfisher": [
       "~> 2.4"

@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: Clappr.podspec
 
 SPEC CHECKSUMS:
-  Clappr: 9048f279ffb6d3b6fdbd067386f4834448af0b70
+  Clappr: 49c7e47b2855e614576697ca322bcfddfffe6374
   Kingfisher: 05bf8d04408aaa70fcd2c8c81b9f1d0f1ad313dd
   Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
