@@ -18,8 +18,8 @@ public class UICorePlugin: UIPlugin, Plugin {
 
     public required init(context: UIBaseObject) {
         super.init(frame: CGRectZero)
-        if let tempCore = context as? Core {
-            self.core = tempCore
+        if let core = context as? Core {
+            self.core = core
         } else {
             NSException(name: "WrongContextType", reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
         }

@@ -30,11 +30,11 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         translatesAutoresizingMaskIntoConstraints = false
         
         let widthConstraint = NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1,constant: spinningWheel.frame.width)
+            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.width)
         addConstraint(widthConstraint)
         
         let heightConstraint = NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1,constant: spinningWheel.frame.height)
+            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.height)
         addConstraint(heightConstraint)
         
         let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterX,

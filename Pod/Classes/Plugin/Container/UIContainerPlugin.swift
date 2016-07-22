@@ -18,8 +18,8 @@ public class UIContainerPlugin: UIPlugin, Plugin {
     
     public required init(context: UIBaseObject) {
         super.init(frame: CGRectZero)
-        if let tempContainer = context as? Container {
-            self.container = tempContainer;
+        if let container = context as? Container {
+            self.container = container
         } else {
            NSException(name: "WrongContextType", reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
         }
