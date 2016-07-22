@@ -1,5 +1,5 @@
 public class UICorePlugin: UIPlugin, Plugin {
-    public weak var core: Core?
+    public weak var core: Core!
     
     public class var type: PluginType { return .Core }
     

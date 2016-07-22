@@ -1,5 +1,5 @@
 public class UIContainerPlugin: UIPlugin, Plugin {
-    public weak var container: Container?
+    public weak var container: Container!
     
     public class var type: PluginType { return .Container }
     
