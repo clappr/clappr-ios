@@ -3,4 +3,5 @@ public protocol Plugin {
     static var name: String { get }
     var pluginName: String { get }
     init()
+    init(context: UIBaseObject)
 }

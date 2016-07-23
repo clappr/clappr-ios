@@ -79,6 +79,10 @@ public class Playback: UIBaseObject, Plugin {
         fatalError("Use init(url: NSURL) instead")
     }
 
+    public required init(context: UIBaseObject) {
+        fatalError("Use init(url: NSURL) instead")
+    }
+
     public class func canPlay(options: Options) -> Bool {
         return false
     }

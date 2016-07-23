@@ -14,14 +14,18 @@ public class PosterPlugin: UIContainerPlugin {
     
     public required init() {
         super.init()
+    }
+
+    public required init(context: UIBaseObject) {
+        super.init(context: context)
         translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .ScaleAspectFit
     }
     
     public override func render() {
-        guard let urlString = container!.options[kPosterUrl] as? String else {
+        guard let urlString = container.options[kPosterUrl] as? String else {
             removeFromSuperview()
-            container!.mediaControlEnabled = true
+            container.mediaControlEnabled = true
             return
         }
         
@@ -43,11 +47,11 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
-        container!.play()
+        container.play()
     }
     
     private func configureViews() {
-        container!.addMatchingConstraints(self)
+        container.addMatchingConstraints(self)
         addSubviewMatchingConstraints(poster)
         
         addSubview(playButton)
@@ -63,7 +67,7 @@ public class PosterPlugin: UIContainerPlugin {
     
     private func bindEvents() {
         for (event, callback) in eventsToBind() {
-            listenTo(container!, eventName: event.rawValue, callback: callback)
+            listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
     
@@ -82,17 +86,17 @@ public class PosterPlugin: UIContainerPlugin {
     
     private func playbackStarted() {
         hidden = true
-        container!.mediaControlEnabled = true
+        container.mediaControlEnabled = true
     }
     
     private func playbackEnded() {
-        container!.mediaControlEnabled = false
+        container.mediaControlEnabled = false
         playButton.hidden = false
         hidden = false
     }
     
     private func playbackReady() {
-        if container!.playback.pluginName == "NoOp" {
+        if container.playback.pluginName == "NoOp" {
             hidden = true
         }
     }

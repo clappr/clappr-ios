@@ -1,5 +1,5 @@
 public class UIContainerPlugin: UIPlugin, Plugin {
-    public weak var container: Container?
+    public weak var container: Container!
     
     public class var type: PluginType { return .Container }
     
@@ -16,6 +16,15 @@ public class UIContainerPlugin: UIPlugin, Plugin {
         super.init(frame: CGRectZero)
     }
     
+    public required init(context: UIBaseObject) {
+        super.init(frame: CGRectZero)
+        if let container = context as? Container {
+            self.container = container
+        } else {
+           NSException(name: "WrongContextType", reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
+        }
+    }
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

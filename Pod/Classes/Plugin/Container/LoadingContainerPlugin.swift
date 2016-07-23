@@ -1,12 +1,9 @@
 public class LoadingContainerPlugin: UIContainerPlugin {
     
-    private var spinningWheel: UIActivityIndicatorView
+    private var spinningWheel: UIActivityIndicatorView!
     
     public required init() {
-        spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
         super.init()
-        addSubview(spinningWheel)
-        userInteractionEnabled = false
     }
     
     public override var pluginName: String {
@@ -17,6 +14,13 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public required init(context: UIBaseObject) {
+        super.init(context: context)
+        self.spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        addSubview(spinningWheel)
+        userInteractionEnabled = false
+    }
+
     override public func render() {
         addCenteringConstraints()
         bindEventListeners()
@@ -34,21 +38,21 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         addConstraint(heightConstraint)
         
         let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterX,
-            relatedBy: .Equal, toItem: container!, attribute: .CenterX, multiplier: 1, constant: 0)
-        container!.addConstraint(xCenterConstraint)
+            relatedBy: .Equal, toItem: container, attribute: .CenterX, multiplier: 1, constant: 0)
+        container.addConstraint(xCenterConstraint)
         
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterY,
-            relatedBy: .Equal, toItem: container!, attribute: .CenterY, multiplier: 1, constant: 0)
-        container!.addConstraint(yCenterConstraint)
+            relatedBy: .Equal, toItem: container, attribute: .CenterY, multiplier: 1, constant: 0)
+        container.addConstraint(yCenterConstraint)
     }
     
     private func bindEventListeners() {
-        listenTo(container!, eventName: ContainerEvent.Buffering.rawValue) {[weak self] _ in
+        listenTo(container, eventName: ContainerEvent.Buffering.rawValue) {[weak self] _ in
             self?.spinningWheel.startAnimating()
         }
         
-        listenTo(container!, eventName: ContainerEvent.Play.rawValue, callback: stopAnimating)
-        listenTo(container!, eventName: ContainerEvent.Ended.rawValue, callback: stopAnimating)
+        listenTo(container, eventName: ContainerEvent.Play.rawValue, callback: stopAnimating)
+        listenTo(container, eventName: ContainerEvent.Ended.rawValue, callback: stopAnimating)
     }
     
     private func stopAnimating(userInfo: EventUserInfo) {

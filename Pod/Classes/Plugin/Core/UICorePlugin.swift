@@ -1,5 +1,5 @@
 public class UICorePlugin: UIPlugin, Plugin {
-    public weak var core: Core?
+    public weak var core: Core!
     
     public class var type: PluginType { return .Core }
     
@@ -14,6 +14,15 @@ public class UICorePlugin: UIPlugin, Plugin {
     
     public required init() {
         super.init(frame: CGRectZero)
+    }
+
+    public required init(context: UIBaseObject) {
+        super.init(frame: CGRectZero)
+        if let core = context as? Core {
+            self.core = core
+        } else {
+            NSException(name: "WrongContextType", reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
