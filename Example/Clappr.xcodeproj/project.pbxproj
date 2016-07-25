@@ -30,6 +30,8 @@
 		96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
 		96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9CE371C97387000C21E80 /* LoaderTests.swift */; };
 		96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B465691BF6027F0025975A /* UIPluginTests.swift */; };
+		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
+		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Clappr.podspec; path = ../Clappr.podspec; sourceTree = "<group>"; };
 		EA8C6691C6B3BF65ACC41CA6 /* Pods-Clappr_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
+		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,8 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				96664E551BF0CBD100095E6E /* UIBaseObjectTests.swift */,
 				96B465691BF6027F0025975A /* UIPluginTests.swift */,
+				EDF652211D467CCA00627C48 /* UICorePluginTests.swift */,
+				EDF652231D46829100627C48 /* UIContainerPluginTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -417,12 +423,14 @@
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
+				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96A979851BFF368C00E5EA01 /* ContainerFactoryTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
 				9603A0681C04D68700B55D8F /* CoreFactoryTests.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
+				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
 				969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */,

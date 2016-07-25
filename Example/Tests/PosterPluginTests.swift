@@ -13,25 +13,27 @@ class PosterPluginTests: QuickSpec {
             
 
             context("Initialization") {
-                it("Should not be added if container has no options") {
+                it("Should not be rendered if container has no options") {
                     container = Container(playback: playback)
                     
-                    let posterPlugin = PosterPlugin()
+                    let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
+                    container.render()
                     
                     expect(posterPlugin.superview).to(beNil())
                 }
                 
-                it("Should not be added if container doesn't have posterUrl Option") {
+                it("Should not be rendered if container doesn't have posterUrl Option") {
                     container = Container(playback: playback, options: ["anotherOption" : true])
                     
-                    let posterPlugin = PosterPlugin()
+                    let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
+                    container.render()
                     
                     expect(posterPlugin.superview).to(beNil())
                 }
                 
-                it("Should be added if container have posterUrl Option") {
+                it("Should be rendered if container have posterUrl Option") {
                     container = Container(playback: playback, options: options)
                     
                     let posterPlugin = PosterPlugin(context: container)
