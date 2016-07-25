@@ -34,7 +34,7 @@ class PosterPluginTests: QuickSpec {
                 it("Should be added if container have posterUrl Option") {
                     container = Container(playback: playback, options: options)
                     
-                    let posterPlugin = PosterPlugin()
+                    let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()
                     
@@ -44,7 +44,7 @@ class PosterPluginTests: QuickSpec {
                 it("Should be hidden if playback is a NoOp") {
                     container = Container(playback: NoOpPlayback(), options: options)
                     
-                    let posterPlugin = PosterPlugin()
+                    let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()
                     
@@ -57,7 +57,7 @@ class PosterPluginTests: QuickSpec {
                 
                 beforeEach() {
                     container = Container(playback: playback, options: options)
-                    posterPlugin = PosterPlugin()
+                    posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()
                 }
