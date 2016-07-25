@@ -22,6 +22,16 @@ class CoreFactoryTests: QuickSpec {
                     
                     expect(core.hasPlugin(FakeUICorePlugin)).to(beTrue())
                 }
+
+                it("Should add a core context to all plugins") {
+                    let loader = Loader(externalPlugins: [FakeUICorePlugin.self])
+                    let core = CoreFactory.create(loader)
+
+                    expect(core.plugins).toNot(beEmpty())
+                    for plugin in core.plugins {
+                        expect(plugin.core) == core
+                    }
+                }
             }
         }
     }

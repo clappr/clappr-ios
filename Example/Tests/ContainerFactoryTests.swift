@@ -37,6 +37,16 @@ class ContainerFactoryTests: QuickSpec {
                 expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                 expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
             }
+
+            it("Should add a container context to all plugins") {
+                factory = ContainerFactory(loader: loader, options: optionsWithValidSource)
+                let container = factory.createContainer()
+
+                expect(container.plugins).toNot(beEmpty())
+                for plugin in container.plugins {
+                    expect(plugin.container) == container
+                }
+            }
         }
     }
     

@@ -94,7 +94,6 @@ public class Container: UIBaseObject {
     }
     
     public func addPlugin(plugin: UIContainerPlugin) {
-        plugin.container = self
         plugins.append(plugin)
     }
     

@@ -327,12 +327,18 @@ class ContainerTests: QuickSpec {
                     expect(container.hasPlugin(AnotherUIContainerPlugin)).to(beFalse())
                 }
                 
-                it("Should add self reference on the plugin") {
+                it("Should not add self reference on the plugin") {
                     let plugin = FakeUIContainerPlugin()
+                    container.addPlugin(plugin)
+                    expect(plugin.container).to(beNil())
+                }
+                
+                it("Should instantiate plugin with self reference") {
+                    let plugin = FakeUIContainerPlugin(context: container)
                     container.addPlugin(plugin)
                     expect(plugin.container) == container
                 }
-                
+
                 it("Should add plugin as subview after rendered") {
                     let plugin = FakeUIContainerPlugin()
                     container.addPlugin(plugin)
