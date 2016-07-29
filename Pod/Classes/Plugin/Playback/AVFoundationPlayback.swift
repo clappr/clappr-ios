@@ -216,7 +216,7 @@ public class AVFoundationPlayback: Playback {
         case &kvoTimeRangesContext:
             handleTimeRangesEvent()
         case &kvoBufferingContext:
-            handleBufferingEvent(keyPath!)
+            handleBufferingEvent(keyPath)
         case &kvoExternalPlaybackActiveContext:
             handleExternalPlaybackActiveEvent()
         default:
@@ -295,7 +295,11 @@ public class AVFoundationPlayback: Playback {
         trigger(.Progress, userInfo: info)
     }
     
-    private func handleBufferingEvent(keyPath: String) {
+    private func handleBufferingEvent(keyPath: String?) {
+        guard let keyPath = keyPath else {
+            return
+        }
+
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
             if player?.currentItem!.playbackLikelyToKeepUp == false {
                 updateState(.Buffering)
