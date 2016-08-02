@@ -22,4 +22,8 @@ DerivedData
 # Bundler
 .bundle
 
-Example/Pods/
+#CocoaPods
+Pods/
+
+# Carthage
+Carthage/

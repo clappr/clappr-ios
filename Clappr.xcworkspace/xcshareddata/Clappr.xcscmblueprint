@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "95D7F4DEA3F3756FA606C4C14F5A704750E88968",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "EE8C7616C079C29C54E5E755AEA0C66027F55813" : 0,
+    "95D7F4DEA3F3756FA606C4C14F5A704750E88968" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "54705734-6CBB-4C58-95DC-C3443459303A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "EE8C7616C079C29C54E5E755AEA0C66027F55813" : "..",
+    "95D7F4DEA3F3756FA606C4C14F5A704750E88968" : "Clappr\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Clappr",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Clappr.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:clappr\/clappr-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "95D7F4DEA3F3756FA606C4C14F5A704750E88968"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/globoi\/steve.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EE8C7616C079C29C54E5E755AEA0C66027F55813"
+    }
+  ]
+}

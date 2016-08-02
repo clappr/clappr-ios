@@ -301,10 +301,10 @@ public class AVFoundationPlayback: Playback {
         }
 
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if player?.currentItem!.playbackLikelyToKeepUp == false {
-                updateState(.Buffering)
-            } else if currentState == .Buffering {
+            if player?.currentItem?.playbackLikelyToKeepUp == true && currentState == .Buffering  {
                 play()
+            } else {
+                updateState(.Buffering)
             }
         } else if keyPath == "currentItem.playbackBufferEmpty" {
             updateState(.Buffering)
