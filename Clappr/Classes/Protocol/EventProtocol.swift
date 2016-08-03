@@ -7,6 +7,7 @@ public protocol EventProtocol {
     func trigger(eventName:String, userInfo: [NSObject : AnyObject]?)
     
     func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String
+    func listenToOnce<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String
     func stopListening()
     func stopListening(listenId: String)
     

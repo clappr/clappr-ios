@@ -26,6 +26,10 @@ public class UIBaseObject: UIView, EventProtocol {
     public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
+
+    public func listenToOnce<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+        return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
+    }
     
     public func stopListening() {
         baseObject.stopListening()
