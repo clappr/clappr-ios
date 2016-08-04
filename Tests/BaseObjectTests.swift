@@ -109,6 +109,22 @@ class BaseObjectTests: QuickSpec {
                     expect(callbackWasCalled) == true
                 }
             }
+
+            describe("listenToOnce") {
+                it("Should fire callback just one time for an event on a given context object") {
+                    let contextObject = BaseObject()
+
+                    baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
+                    contextObject.trigger(eventName)
+
+                    expect(callbackWasCalled) == true
+
+                    callbackWasCalled = false
+                    contextObject.trigger(eventName)
+
+                    expect(callbackWasCalled) == false
+                }
+            }
             
             describe("off") {
                 it("Callback should not be called if removed") {

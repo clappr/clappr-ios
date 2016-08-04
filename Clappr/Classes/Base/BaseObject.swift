@@ -45,7 +45,11 @@ public class BaseObject: NSObject, EventProtocol {
     }
     
     public func once(eventName: String, callback: EventCallback) -> String {
-        let listenId = on(eventName, callback: callback)
+        return once(eventName, callback: callback, contextObject: self)
+    }
+
+    private func once(eventName: String, callback: EventCallback, contextObject: BaseObject) -> String {
+        let listenId = on(eventName, callback: callback, contextObject: contextObject)
         onceEventsHashes.append(listenId)
         return listenId
     }
@@ -70,6 +74,10 @@ public class BaseObject: NSObject, EventProtocol {
     
     public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
+    }
+
+    public func listenToOnce<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+        return once(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
     
     public func stopListening() {
