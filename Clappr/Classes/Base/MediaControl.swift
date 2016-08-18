@@ -311,7 +311,7 @@ public class MediaControl: UIBaseObject {
         controlsHidden ? showAnimated() : hideAnimated()
     }
 
-    @IBAction func togglePlay(sender: UIButton) {
+    @IBAction public func togglePlay(sender: UIButton) {
         if playbackControlState == .Playing {
             livePlayback ? stop() : pause()
         } else {
@@ -320,7 +320,7 @@ public class MediaControl: UIBaseObject {
         scheduleTimerToHideControls()
     }
     
-    @IBAction func toggleFullscreen(sender: UIButton) {
+    @IBAction public func toggleFullscreen(sender: UIButton) {
         fullscreen = !fullscreen
         let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
         trigger(event.rawValue)
