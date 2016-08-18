@@ -347,15 +347,18 @@ public class MediaControl: UIBaseObject {
     }
     
     public func scheduleTimerToHideControls() {
+        hideControlsTimer?.invalidate()
         hideControlsTimer = NSTimer.scheduledTimerWithTimeInterval(3.0,
             target: self, selector: #selector(MediaControl.hideAfterPlay), userInfo: nil, repeats: false)
     }
     
     func hideAfterPlay() {
+        hideControlsTimer?.invalidate()
         if container.isPlaying {
             hideAnimated()
+        } else {
+            listenToOnce(container, eventName: ContainerEvent.Play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
         }
-        hideControlsTimer?.invalidate()
     }
 
     public func handleSeekbarViewTouch(view: DragDetectorView) {
