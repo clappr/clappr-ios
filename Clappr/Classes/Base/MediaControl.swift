@@ -5,28 +5,28 @@ import MediaPlayer
 public class MediaControl: UIBaseObject {
     private let animationDuration = 0.3
     
-    @IBOutlet public weak var seekBarView: UIView?
-    @IBOutlet public weak var bufferBarView: UIView?
-    @IBOutlet public weak var progressBarView: UIView?
-    @IBOutlet public weak var scrubberTimeView: UIView?
-    @IBOutlet public weak var scrubberLabel: UILabel?
-    @IBOutlet public weak var scrubberView: UIView?
-    @IBOutlet public weak var scrubberOuterCircle: UIView?
+    @IBOutlet public var seekBarView: UIView?
+    @IBOutlet public var bufferBarView: UIView?
+    @IBOutlet public var progressBarView: UIView?
+    @IBOutlet public var scrubberTimeView: UIView?
+    @IBOutlet public var scrubberLabel: UILabel?
+    @IBOutlet public var scrubberView: UIView?
+    @IBOutlet public var scrubberOuterCircle: UIView?
 
-    @IBOutlet public weak var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
-    @IBOutlet public weak var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
-    @IBOutlet public weak var bufferBarWidthConstraint: NSLayoutConstraint?
-    @IBOutlet public weak var progressBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
+    @IBOutlet public var bufferBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet public var progressBarWidthConstraint: NSLayoutConstraint?
 
-    @IBOutlet weak public var durationLabel: UILabel?
-    @IBOutlet weak public var currentTimeLabel: UILabel?
+    @IBOutlet public var durationLabel: UILabel?
+    @IBOutlet public var currentTimeLabel: UILabel?
 
-    @IBOutlet weak public var backgroundOverlayView: UIView?
+    @IBOutlet public var backgroundOverlayView: UIView?
 
-    @IBOutlet weak public var controlsOverlayView: UIView?
-    @IBOutlet weak public var controlsWrapperView: UIView?
-    @IBOutlet weak public var playbackControlButton: UIButton?
-    @IBOutlet weak public var fullscreenButton: UIButton?
+    @IBOutlet public var controlsOverlayView: UIView?
+    @IBOutlet public var controlsWrapperView: UIView?
+    @IBOutlet public var playbackControlButton: UIButton?
+    @IBOutlet public var fullscreenButton: UIButton?
 
     @IBOutlet public weak var airPlayVolumeView: MPVolumeView?
     
