@@ -9,7 +9,7 @@ public class Logger {
 
     private class func log(level: LogLevel, message: String) {
         if level.rawValue <= logLevel.rawValue {
-            print(message)
+            print("\(level.description()) \(message)")
         }
     }
 
