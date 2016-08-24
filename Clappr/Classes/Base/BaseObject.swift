@@ -70,6 +70,10 @@ public class BaseObject: NSObject, EventProtocol {
     
     public func trigger(eventName: String, userInfo: [NSObject : AnyObject]?) {
         notificationCenter().postNotificationName(eventName, object: self, userInfo: userInfo)
+        
+        if self.dynamicType != BaseObject.self {
+            Logger.logDebug("[\(eventName)] Triggered with \(userInfo)", scope: "\(self.dynamicType)")
+        }
     }
     
     public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
