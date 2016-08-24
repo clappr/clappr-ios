@@ -18,6 +18,8 @@ public class Loader {
         if !externalPlugins.isEmpty {
             addExternalPlugins(externalPlugins)
         }
+
+        Logger.logInfo("Plugins:\n - Playback: \(playbackPlugins)\n - Container: \(containerPlugins)\n - Core: \(corePlugins)\n - MediaControl: \(mediaControl)", scope: "\(self.dynamicType)")
     }
     
     private func loadExternalMediaControl(options: Options) {
