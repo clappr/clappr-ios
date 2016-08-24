@@ -49,6 +49,7 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     private func bindEventListeners() {
         listenTo(container, eventName: ContainerEvent.Buffering.rawValue) {[weak self] _ in
             self?.spinningWheel.startAnimating()
+            Logger.logDebug("Started animating spinning wheel", scope: "\(self?.dynamicType)")
         }
         
         listenTo(container, eventName: ContainerEvent.Play.rawValue, callback: stopAnimating)
@@ -57,5 +58,6 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     
     private func stopAnimating(userInfo: EventUserInfo) {
         spinningWheel.stopAnimating()
+        Logger.logDebug("Stoped animating spinning wheel", scope: "\(self.dynamicType)")
     }
 }
