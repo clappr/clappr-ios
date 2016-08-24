@@ -1,7 +1,7 @@
 import Foundation
 
 public class Logger {
-    private static var logLevel = LogLevel.Warning
+    private static var logLevel = LogLevel.Info
 
     public class func setLevel(level: LogLevel) {
         logLevel = level
