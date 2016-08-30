@@ -19,7 +19,7 @@ public class Loader {
             addExternalPlugins(externalPlugins)
         }
 
-        Logger.logInfo("Plugins:\n - Playback: \(playbackPlugins)\n - Container: \(containerPlugins)\n - Core: \(corePlugins)\n - MediaControl: \(mediaControl)", scope: "\(self.dynamicType)")
+        Logger.logInfo("plugins:\n - playback: \(playbackPlugins)\n - container: \(containerPlugins)\n - core: \(corePlugins)\n - mediaControl: \(mediaControl)", scope: "\(self.dynamicType)")
     }
     
     private func loadExternalMediaControl(options: Options) {

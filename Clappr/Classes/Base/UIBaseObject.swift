@@ -17,12 +17,12 @@ public class UIBaseObject: UIView, EventProtocol {
     
     public func trigger(eventName:String) {
         baseObject.trigger(eventName)
-        Logger.logDebug("[\(eventName)] Triggered", scope: "\(self.dynamicType)")
+        Logger.logDebug("[\(eventName)] triggered", scope: "\(self.dynamicType)")
     }
     
     public func trigger(eventName:String, userInfo: [NSObject : AnyObject]?) {
         baseObject.trigger(eventName, userInfo: userInfo)
-        Logger.logDebug("[\(eventName)] Triggered with \(userInfo)", scope: "\(self.dynamicType)")
+        Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: "\(self.dynamicType)")
     }
     
     public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {

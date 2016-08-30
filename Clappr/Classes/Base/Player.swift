@@ -60,7 +60,7 @@ public class Player: BaseObject {
     }
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
-        Logger.logInfo("Loading with \(options)", scope: "Clappr")
+        Logger.logInfo("loading with \(options)", scope: "Clappr")
         let loader = Loader(externalPlugins: externalPlugins, options: options)
         self.core = CoreFactory.create(loader , options: options)
     }

@@ -26,7 +26,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public required init(loader: Loader = Loader(), options: Options = [:]) {
-        Logger.logDebug("Loading with \(options)", scope: "\(self.dynamicType)")
+        Logger.logDebug("loading with \(options)", scope: "\(self.dynamicType)")
         self.loader = loader
         self.options = options
         super.init(frame: CGRectZero)

@@ -28,7 +28,7 @@ public class Container: UIBaseObject {
     }
 
     public init(playback: Playback, loader: Loader = Loader(), options: Options = [:]) {
-        Logger.logDebug("Loading with \(options)", scope: "\(self.dynamicType)")
+        Logger.logDebug("loading with \(options)", scope: "\(self.dynamicType)")
         self.playback = playback
         self.options = options
         self.loader = loader
