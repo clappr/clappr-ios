@@ -162,7 +162,7 @@ public class AVFoundationPlayback: Playback {
             addObservers()
         } else {
             trigger(.Error)
-            Logger.logError("could not setup player", scope: "\(self.dynamicType)")
+            Logger.logError("could not setup player", scope: pluginName)
         }
     }
     
@@ -255,7 +255,7 @@ public class AVFoundationPlayback: Playback {
         } else if player?.status == .Failed {
             let error = player!.currentItem!.error!
             self.trigger(.Error, userInfo: ["error": error])
-            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: "\(self.dynamicType)")
+            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
     

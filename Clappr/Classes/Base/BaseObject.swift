@@ -56,7 +56,7 @@ public class BaseObject: NSObject, EventProtocol {
     
     public func off(listenId: String) {
         guard let event = events[listenId] else {
-            Logger.logError("could not find any event with given event listenId", scope: "\(self.dynamicType)")
+            Logger.logError("could not find any event with given event listenId", scope: logIdentifier())
             return
         }
         
@@ -72,7 +72,7 @@ public class BaseObject: NSObject, EventProtocol {
         notificationCenter().postNotificationName(eventName, object: self, userInfo: userInfo)
         
         if self.dynamicType != BaseObject.self {
-            Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: "\(self.dynamicType)")
+            Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
         }
     }
     
@@ -107,6 +107,13 @@ public class BaseObject: NSObject, EventProtocol {
     
     private func notificationCenter() -> NSNotificationCenter {
         return NSNotificationCenter.defaultCenter()
+    }
+
+    private func logIdentifier() -> String {
+        if let plugin = self as? Plugin {
+            return plugin.pluginName
+        }
+        return "\(self.dynamicType)"
     }
     
     deinit {

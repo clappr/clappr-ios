@@ -32,7 +32,7 @@ public class PosterPlugin: UIContainerPlugin {
         if let url = NSURL(string: urlString) {
             poster.kf_setImageWithURL(url)
         } else {
-            Logger.logWarn("invalid URL.", scope: "\(self.dynamicType)")
+            Logger.logWarn("invalid URL.", scope: pluginName)
         }
         
         configurePlayButton()
