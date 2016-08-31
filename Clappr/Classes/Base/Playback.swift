@@ -70,6 +70,7 @@ public class Playback: UIBaseObject, Plugin {
     }
 
     public required init(options: Options) {
+        Logger.logDebug("loading with \(options)", scope: "\(self.dynamicType)")
         self.options = options
         super.init(frame: CGRect.zero)
         userInteractionEnabled = false

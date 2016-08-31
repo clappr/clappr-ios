@@ -17,10 +17,12 @@ public class UIBaseObject: UIView, EventProtocol {
     
     public func trigger(eventName:String) {
         baseObject.trigger(eventName)
+        Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
     
     public func trigger(eventName:String, userInfo: [NSObject : AnyObject]?) {
         baseObject.trigger(eventName, userInfo: userInfo)
+        Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
     }
     
     public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
@@ -41,6 +43,13 @@ public class UIBaseObject: UIView, EventProtocol {
     
     public func getEventContextObject() -> BaseObject {
         return baseObject
+    }
+
+    private func logIdentifier() -> String {
+        if let plugin = self as? Plugin {
+            return plugin.pluginName
+        }
+        return "\(self.dynamicType)"
     }
     
     public func render() {}
