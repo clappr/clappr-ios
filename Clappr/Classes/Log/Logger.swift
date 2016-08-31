@@ -1,6 +1,6 @@
 import Foundation
 
-public class Logger {
+public class Logger: NSObject {
     private static var logLevel = LogLevel.Info
 
     public class func setLevel(level: LogLevel) {
