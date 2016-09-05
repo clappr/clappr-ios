@@ -26,7 +26,7 @@ public class AVFoundationPlayback: Playback {
     public override var selectedSubtitle: MediaOption? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
-            return MediaOptionFactory.fromAVMediaOption(option, type: .Subtitle)
+            return MediaOptionFactory.fromAVMediaOption(option, type: .Subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption

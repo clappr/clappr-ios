@@ -1,6 +1,6 @@
 import Foundation
 
-public class MediaOption {
+public class MediaOption: Equatable {
     public var name: String
     public var type: MediaOptionType
     public var raw: AnyObject?
@@ -13,3 +13,8 @@ public class MediaOption {
         self.raw = raw
     }
 }
+
+public func ==(lhs: MediaOption, rhs: MediaOption) -> Bool {
+    return lhs.name == rhs.name && lhs.type == rhs.type && lhs.language == rhs.language
+}
+
