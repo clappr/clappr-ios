@@ -245,6 +245,10 @@ class ContainerTests: QuickSpec {
                 
                 context("Bindings with mocked playback") {
                     class MockedSettingsPlayback: Playback {
+                        override var pluginName: String {
+                            return "mockedPlayback"
+                        }
+                        
                         var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
 
                         override var settings: [String: AnyObject] {

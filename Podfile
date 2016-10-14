@@ -5,6 +5,6 @@ use_frameworks!
 project 'Clappr.xcodeproj'
 
 target 'Clappr_Tests' do
-  pod 'Quick', '~> 0.9.0'
-  pod 'Nimble', '~> 4.0.0'
+  pod 'Quick', '~> 0.9.3'
+  pod 'Nimble', '~> 4.1.0'
 end

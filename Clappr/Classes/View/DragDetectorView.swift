@@ -1,11 +1,3 @@
-//
-//  ScrubberView.swift
-//  Pods
-//
-//  Created by Bruno Torres on 6/3/16.
-//
-//
-
 import UIKit
 
 public class DragDetectorView: UIView {
@@ -46,8 +38,8 @@ public class DragDetectorView: UIView {
         }
     }
 
-    override public func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touch = touches?.first {
+    override public func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first {
             touchState = .Canceled
             currentTouch = touch
             target?.performSelector(selector, withObject: self)
