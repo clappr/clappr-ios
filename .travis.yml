@@ -10,6 +10,7 @@ before_install:
   - brew outdated carthage || brew upgrade carthage
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
+  - pod repo update
 
 script:
   - xcodebuild test -project Clappr.xcodeproj -scheme Clappr-Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 6s Plus,OS=10.0'| xcpretty
