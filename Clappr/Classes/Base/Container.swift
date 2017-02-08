@@ -127,7 +127,6 @@ open class Container: UIBaseObject {
         return [
             .buffering                : { [weak self] (info: EventUserInfo) in self?.trigger(.buffering) } as EventCallback,
             .bufferFull               : { [weak self] (info: EventUserInfo) in self?.trigger(.bufferFull) } as EventCallback,
-            .highDefinitionUpdated    : { [weak self] (info: EventUserInfo) in self?.trigger(.highDefinitionUpdated) } as EventCallback,
             .stateChanged             : { [weak self] (info: EventUserInfo) in self?.trigger(.playbackStateChanged) } as EventCallback,
             .ended                    : { [weak self] (info: EventUserInfo) in self?.trigger(.ended) } as EventCallback,
             .play                     : { [weak self] (info: EventUserInfo) in self?.onPlay() } as EventCallback,

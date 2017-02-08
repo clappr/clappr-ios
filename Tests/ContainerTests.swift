@@ -197,12 +197,6 @@ class ContainerTests: QuickSpec {
                     expect(eventWasTriggered) == true
                 }
 
-                it("Should trigger HD updated event after playback respective event is triggered") {
-                    container.on(ContainerEvent.highDefinitionUpdated.rawValue, callback: eventCallback)
-                    playback.trigger(PlaybackEvent.highDefinitionUpdated.rawValue)
-                    expect(eventWasTriggered) == true
-                }
-                
                 it("Should trigger State Changed event after playback respective event is triggered") {
                     container.on(ContainerEvent.playbackStateChanged.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.stateChanged.rawValue)

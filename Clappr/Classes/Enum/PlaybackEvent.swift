@@ -8,7 +8,6 @@ public enum PlaybackEvent: String {
     case subtitleSourcesUpdated = "clappr:playback:subtitle_sources_updated"
     case settingsUpdated = "clappr:playback:settings_updated"
     case loadedMetadata = "clappr:playback:loaded_metadata"
-    case highDefinitionUpdated = "clappr:playback:hd_updated"
     case bitRate = "clappr:playback:bitrate"
     case stateChanged = "clappr:playback:state_changed"
     case dvrStateChanged = "clappr:playback:dvr_state_changed"
