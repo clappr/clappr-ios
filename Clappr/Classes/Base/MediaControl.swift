@@ -192,7 +192,7 @@ open class MediaControl: UIBaseObject {
     
     open func triggerPlay() {
         playbackControlState = .playing
-        trigger(.playing)
+        trigger(MediaControlEvent.playing)
     }
     
     open func triggerPause() {

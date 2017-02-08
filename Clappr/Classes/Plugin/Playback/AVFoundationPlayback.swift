@@ -150,6 +150,7 @@ open class AVFoundationPlayback: Playback {
             setupPlayer()
         }
 
+        trigger(.willPlay)
         player?.play()
       
         if let currentItem = player?.currentItem {
@@ -205,29 +206,32 @@ open class AVFoundationPlayback: Playback {
     }
     
     func playbackDidEnd() {
-        trigger(.ended)
+        trigger(.didComplete)
         updateState(.idle)
     }
   
     open override func pause() {
+        trigger(.willPause)
         player?.pause()
         updateState(.paused)
     }
   
     open override func stop() {
+        trigger(.willStop)
         player?.pause()
-        playbackDidEnd()
+        updateState(.idle)
         removeObservers()
         playerLayer?.removeFromSuperlayer()
         playerLayer = nil
         player = nil
+        trigger(.didStop)
     }
   
     open override func seek(_ timeInterval: TimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
     
         player?.currentItem?.seek(to: time)
-        trigger(.timeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
+        trigger(.positionUpdate, userInfo: ["position" : CMTimeGetSeconds(time)])
     }
   
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?,
@@ -253,19 +257,15 @@ open class AVFoundationPlayback: Playback {
   
     fileprivate func updateState(_ newState: PlaybackState) {
         guard currentState != newState else { return }
-        let previousState = currentState
         currentState = newState
     
         switch newState {
         case .buffering:
-            trigger(.buffering)
+            trigger(.stalled)
         case .paused:
-            trigger(.pause)
+            trigger(.didPause)
         case .playing:
-            if previousState == .buffering {
-                trigger(.bufferFull)
-            }
-            trigger(.play)
+            trigger(.playing)
         default:
             break
         }
@@ -282,7 +282,7 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession();
         }
 
-        self.trigger(.externalPlaybackActiveUpdated, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {
@@ -320,13 +320,13 @@ open class AVFoundationPlayback: Playback {
   
     fileprivate func readyToPlay() {
         trigger(.ready)
-
+        
         if let subtitles = self.subtitles {
-            trigger(.subtitleSourcesUpdated, userInfo: ["subtitles" : subtitles])
+            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles" : subtitles])
         }
     
         if let audioSources = self.audioSources {
-            trigger(.audioSourcesUpdated, userInfo: ["audios" : audioSources])
+            trigger(.didUpdateAudioSource, userInfo: ["audios" : audioSources])
         }
     
         addTimeElapsedCallback()
@@ -341,7 +341,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate func timeUpdated(_ time: CMTime) {
         if isPlaying {
             updateState(.playing)
-            trigger(.timeUpdated, userInfo: ["position" : CMTimeGetSeconds(time)])
+            trigger(.positionUpdate, userInfo: ["position" : CMTimeGetSeconds(time)])
         }
     }
   
@@ -349,16 +349,14 @@ open class AVFoundationPlayback: Playback {
         guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else {
             return
         }
-    
-        let info = [
-            "start_position" : CMTimeGetSeconds(timeRange.start),
-            "end_position" : CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-            "duration" : CMTimeGetSeconds(timeRange.start)
-        ]
-    
-        trigger(.progress, userInfo: info)
+        
+        let info = ["start_position" : CMTimeGetSeconds(timeRange.start),
+                      "end_position" : CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
+                          "duration" : CMTimeGetSeconds(timeRange.start)]
+
+        trigger(.bufferUpdate, userInfo: info)
     }
-  
+    
     fileprivate func handleBufferingEvent(_ keyPath: String?) {
         guard let keyPath = keyPath, currentState != .paused else {
             return

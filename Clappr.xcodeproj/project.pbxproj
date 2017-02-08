@@ -10,6 +10,7 @@
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A0681C04D68700B55D8F /* CoreFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A0671C04D68700B55D8F /* CoreFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
+		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
 		96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E551BF0CBD100095E6E /* UIBaseObjectTests.swift */; };
 		96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E581BF0D58400095E6E /* PlaybackTests.swift */; };
 		96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E6B1BF209CB00095E6E /* ContainerTests.swift */; };
@@ -49,7 +50,6 @@
 		96D362D21D41339400CCB866 /* MediaControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629B1D41339400CCB866 /* MediaControlEvent.swift */; };
 		96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629C1D41339400CCB866 /* MediaControlState.swift */; };
 		96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629D1D41339400CCB866 /* MediaOptionType.swift */; };
-		96D362D51D41339400CCB866 /* PlaybackEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629E1D41339400CCB866 /* PlaybackEvent.swift */; };
 		96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629F1D41339400CCB866 /* PlaybackType.swift */; };
 		96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A01D41339400CCB866 /* PlayerEvent.swift */; };
 		96D362D81D41339400CCB866 /* PluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A11D41339400CCB866 /* PluginType.swift */; };
@@ -121,6 +121,7 @@
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A0671C04D68700B55D8F /* CoreFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
+		963B19971E4B827700A0A6BA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		96664E551BF0CBD100095E6E /* UIBaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObjectTests.swift; sourceTree = "<group>"; };
 		96664E581BF0D58400095E6E /* PlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
 		96664E6B1BF209CB00095E6E /* ContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTests.swift; sourceTree = "<group>"; };
@@ -160,7 +161,6 @@
 		96D3629B1D41339400CCB866 /* MediaControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlEvent.swift; sourceTree = "<group>"; };
 		96D3629C1D41339400CCB866 /* MediaControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlState.swift; sourceTree = "<group>"; };
 		96D3629D1D41339400CCB866 /* MediaOptionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionType.swift; sourceTree = "<group>"; };
-		96D3629E1D41339400CCB866 /* PlaybackEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEvent.swift; sourceTree = "<group>"; };
 		96D3629F1D41339400CCB866 /* PlaybackType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackType.swift; sourceTree = "<group>"; };
 		96D362A01D41339400CCB866 /* PlayerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
 		96D362A11D41339400CCB866 /* PluginType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginType.swift; sourceTree = "<group>"; };
@@ -363,10 +363,10 @@
 				96D3629B1D41339400CCB866 /* MediaControlEvent.swift */,
 				96D3629C1D41339400CCB866 /* MediaControlState.swift */,
 				96D3629D1D41339400CCB866 /* MediaOptionType.swift */,
-				96D3629E1D41339400CCB866 /* PlaybackEvent.swift */,
 				96D3629F1D41339400CCB866 /* PlaybackType.swift */,
 				96D362A01D41339400CCB866 /* PlayerEvent.swift */,
 				96D362A11D41339400CCB866 /* PluginType.swift */,
+				963B19971E4B827700A0A6BA /* Event.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -732,7 +732,6 @@
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362DB1D41339400CCB866 /* CoreFactory.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
-				96D362D51D41339400CCB866 /* PlaybackEvent.swift in Sources */,
 				96D362D11D41339400CCB866 /* CoreEvent.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
@@ -742,6 +741,7 @@
 				96D362C81D41339400CCB866 /* FullscreenController.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */,
+				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

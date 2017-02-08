@@ -5,7 +5,9 @@ open class Container: UIBaseObject {
     open internal(set) var plugins: [UIContainerPlugin] = []
     open internal(set) var options: Options
 
+    fileprivate var buffering = false
     fileprivate var loader: Loader
+
     
     open var isPlaying: Bool {
         return playback?.isPlaying ?? false
@@ -122,28 +124,37 @@ open class Container: UIBaseObject {
             listenTo(playback, eventName: event.rawValue, callback: callback)
         }
     }
-    
-    fileprivate func eventBindings() -> [PlaybackEvent : EventCallback] {
+
+    fileprivate func eventBindings() -> [Event : EventCallback] {
         return [
-            .buffering                : { [weak self] (info: EventUserInfo) in self?.trigger(.buffering) } as EventCallback,
-            .bufferFull               : { [weak self] (info: EventUserInfo) in self?.trigger(.bufferFull) } as EventCallback,
-            .ended                    : { [weak self] (info: EventUserInfo) in self?.trigger(.ended) } as EventCallback,
-            .play                     : { [weak self] (info: EventUserInfo) in self?.onPlay() } as EventCallback,
-            .pause                    : { [weak self] (info: EventUserInfo) in self?.trigger(.pause) } as EventCallback,
-            .mediaControlDisabled     : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false } as EventCallback,
-            .mediaControlEnabled      : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true } as EventCallback,
-            .ready                    : { [weak self] (info: EventUserInfo) in self?.setReady() } as EventCallback,
-            .progress                 : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info) } as EventCallback,
-            .timeUpdated              : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info) } as EventCallback,
-            .subtitleSourcesUpdated   : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info) } as EventCallback,
-            .audioSourcesUpdated      : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info) } as EventCallback,
-            .error                    : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info) } as EventCallback,
+            .stalled              : { [weak self] (info: EventUserInfo) in self?.onStall()} as EventCallback,
+            .didComplete          : { [weak self] (info: EventUserInfo) in self?.trigger(.ended)} as EventCallback,
+            .playing              : { [weak self] (info: EventUserInfo) in self?.onPlay()} as EventCallback,
+            .didPause             : { [weak self] (info: EventUserInfo) in self?.trigger(.pause)} as EventCallback,
+            .disableMediaControl  : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false } as EventCallback,
+            .enableMediaControl   : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true } as EventCallback,
+            .ready                : { [weak self] (info: EventUserInfo) in self?.setReady() } as EventCallback,
+            .bufferUpdate         : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info)} as EventCallback,
+            .positionUpdate       : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info)} as EventCallback,
+            .didUpdateSubtitleSource : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info)} as EventCallback,
+            .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback,
+            .error                : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info)} as EventCallback,
         ]
     }
 
+    fileprivate func onStall() {
+        trigger(.buffering)
+        buffering = true
+    }
+
     fileprivate func onPlay() {
-        options[kStartAt] = 0.0 as AnyObject?
-        trigger(ContainerEvent.play)
+        if buffering {
+            buffering = false
+            trigger(.bufferFull)
+        }
+
+        options[kStartAt] = 0.0
+        trigger(.play)
     }
 
     fileprivate func setReady() {
