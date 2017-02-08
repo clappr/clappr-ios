@@ -137,21 +137,7 @@ class ContainerTests: QuickSpec {
                     expect(position) == expectedPosition
                     expect(duration) == expectedDuration
                 }
-                
-                it("Should trigger container loaded metadata event when playback respective event happens") {
-                    let expectedDuration: TimeInterval = 20.0
-                    var duration: TimeInterval!
-                    
-                    container.once(ContainerEvent.loadedMetadata.rawValue) { userInfo in
-                        duration = userInfo?["duration"] as! TimeInterval
-                    }
-                    
-                    let userInfo: EventUserInfo = ["duration": expectedDuration]
-                    playback.trigger(PlaybackEvent.loadedMetadata.rawValue, userInfo: userInfo)
-                    
-                    expect(duration) == expectedDuration
-                }
-                
+
                 it("Should trigger container bit rate event when playback respective event happens") {
                     let expectedBitRate: TimeInterval = 11.0
                     var bitRate: TimeInterval!
