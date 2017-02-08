@@ -165,20 +165,7 @@ class ContainerTests: QuickSpec {
                     
                     expect(bitRate) == expectedBitRate
                 }
-                
-                it("Should trigger container DVR state event when playback respective event happens with params") {
-                    var dvrInUse = false
-                    
-                    container.once(ContainerEvent.playbackDVRStateChanged.rawValue) { userInfo in
-                        dvrInUse = userInfo?["dvr_in_use"] as! Bool
-                    }
-                    
-                    let userInfo: EventUserInfo = ["dvr_in_use": true]
-                    playback.trigger(PlaybackEvent.dvrStateChanged.rawValue, userInfo: userInfo)
-                    
-                    expect(dvrInUse).to(beTrue())
-                }
-                
+
                 it("Should trigger container Error event when playback respective event happens with params") {
                     var error = ""
                     
@@ -191,15 +178,7 @@ class ContainerTests: QuickSpec {
                     
                     expect(error) == "Error"
                 }
-                
-                it("Should update container dvrInUse property on playback DVRSTateChanged event") {
-                    let userInfo: EventUserInfo = ["dvr_in_use": true]
-                    
-                    expect(container.dvrInUse).to(beFalse())
-                    playback.trigger(PlaybackEvent.dvrStateChanged.rawValue, userInfo: userInfo)
-                    expect(container.dvrInUse).to(beTrue())
-                }
-                
+
                 it("Should be ready after playback ready event is triggered") {
                     expect(container.ready) == false
                     playback.trigger(PlaybackEvent.ready.rawValue)
@@ -326,13 +305,7 @@ class ContainerTests: QuickSpec {
                         let fooSetting = container.settings["foo"] as? String
                         expect(fooSetting) == "bar"
                     }
-                    
-                    it("Should update it's settings after playback's DVR State changed event") {
-                        mockedPlayback.trigger(PlaybackEvent.dvrStateChanged.rawValue)
-                        let fooSetting = container.settings["foo"] as? String
-                        expect(fooSetting) == "bar"
-                    }
-                    
+
                     it("Should call playback's stop method after calling respective method on container") {
                         container.stop()
                         expect(mockedPlayback.stopWasCalled).to(beTrue())
