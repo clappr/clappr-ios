@@ -146,7 +146,7 @@ class PlaybackTests: QuickSpec {
         }
 
         override func play() {
-            trigger(PlayerEvent.ready.rawValue)
+            trigger(.ready)
             playWasCalled = true
         }
         

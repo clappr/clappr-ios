@@ -55,6 +55,16 @@ open class UIBaseObject: UIView, EventProtocol {
         }
         return "\(type(of: self))"
     }
-    
+
     open func render() {}
+}
+
+public extension UIBaseObject {
+    public func trigger(_ event: Event) {
+        trigger(event.rawValue)
+    }
+
+    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
+    }
 }
