@@ -4,7 +4,7 @@ open class Container: UIBaseObject {
     open internal(set) var ready = false
     open internal(set) var plugins: [UIContainerPlugin] = []
     open internal(set) var options: Options
-    
+
     fileprivate var loader: Loader
     
     open var isPlaying: Bool {
@@ -134,7 +134,6 @@ open class Container: UIBaseObject {
             .pause                    : { [weak self] (info: EventUserInfo) in self?.trigger(.pause) } as EventCallback,
             .mediaControlDisabled     : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false } as EventCallback,
             .mediaControlEnabled      : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true } as EventCallback,
-            .settingsUpdated          : { [weak self] (info: EventUserInfo) in self?.settingsUpdated() } as EventCallback,
             .ready                    : { [weak self] (info: EventUserInfo) in self?.setReady() } as EventCallback,
             .progress                 : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info) } as EventCallback,
             .timeUpdated              : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info) } as EventCallback,
@@ -151,11 +150,6 @@ open class Container: UIBaseObject {
         trigger(ContainerEvent.play)
     }
 
-    fileprivate func settingsUpdated() {
-        settings = playback?.settings ?? [:]
-        self.trigger(ContainerEvent.settingsUpdated)
-    }
-    
     fileprivate func setReady() {
         ready = true
         trigger(ContainerEvent.ready)
