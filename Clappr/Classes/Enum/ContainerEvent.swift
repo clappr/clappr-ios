@@ -5,7 +5,6 @@ public enum ContainerEvent: String {
     case destroyed = "clappr:container:destroyed"
     case ready = "clappr:container:ready"
     case error = "clappr:container:error"
-    case loadedMetadata = "clappr:container:loaded_metadata"
     case timeUpdated = "clappr:container:time_update"
     case progress = "clappr:container:progress"
     case play = "clappr:container:play"
