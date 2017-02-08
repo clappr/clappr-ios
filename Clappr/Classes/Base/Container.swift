@@ -2,13 +2,11 @@ import Foundation
 
 open class Container: UIBaseObject {
     open internal(set) var ready = false
-    open internal(set) var dvrInUse = false
-    open internal(set) var settings: [String : Any] = [:]
     open internal(set) var plugins: [UIContainerPlugin] = []
     open internal(set) var options: Options
     
     fileprivate var loader: Loader
-
+    
     open var isPlaying: Bool {
         return playback?.isPlaying ?? false
     }
@@ -46,8 +44,8 @@ open class Container: UIBaseObject {
     
     open func load(_ source: String, mimeType: String? = nil) {
         var playbackOptions = options
-        playbackOptions[kSourceUrl] = source
-        playbackOptions[kMimeType] = mimeType ?? nil
+        playbackOptions[kSourceUrl] = source as AnyObject?
+        playbackOptions[kMimeType] = mimeType as AnyObject?? ?? nil
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
@@ -138,7 +136,6 @@ open class Container: UIBaseObject {
             .mediaControlEnabled      : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true } as EventCallback,
             .settingsUpdated          : { [weak self] (info: EventUserInfo) in self?.settingsUpdated() } as EventCallback,
             .ready                    : { [weak self] (info: EventUserInfo) in self?.setReady() } as EventCallback,
-            .dvrStateChanged          : { [weak self] (info: EventUserInfo) in self?.setDvrInUse(info) } as EventCallback,
             .progress                 : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info) } as EventCallback,
             .timeUpdated              : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info) } as EventCallback,
             .loadedMetadata           : { [weak self] (info: EventUserInfo) in self?.forward(.loadedMetadata, userInfo:info) } as EventCallback,
@@ -150,7 +147,7 @@ open class Container: UIBaseObject {
     }
 
     fileprivate func onPlay() {
-        options[kStartAt] = 0.0
+        options[kStartAt] = 0.0 as AnyObject?
         trigger(ContainerEvent.play)
     }
 
@@ -163,17 +160,7 @@ open class Container: UIBaseObject {
         ready = true
         trigger(ContainerEvent.ready)
     }
-    
-    fileprivate func setDvrInUse(_ userInfo: EventUserInfo) {
-        settingsUpdated()
-        
-        if let playbackDvrInUse = userInfo!["dvr_in_use"] as? Bool {
-            dvrInUse = playbackDvrInUse
-        }
-        
-        forward(ContainerEvent.playbackDVRStateChanged, userInfo: userInfo)
-    }
-    
+
     fileprivate func trigger(_ event: ContainerEvent) {
         trigger(event.rawValue)
     }
