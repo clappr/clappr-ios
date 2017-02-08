@@ -1,6 +1,4 @@
 public enum ContainerEvent: String {
-    case playbackStateChanged = "clappr:container:playback_state_changed"
-    case playbackDVRStateChanged = "clappr:container:playback_dvr_state_changed"
     case destroyed = "clappr:container:destroyed"
     case ready = "clappr:container:ready"
     case error = "clappr:container:error"
