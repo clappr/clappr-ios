@@ -1,19 +1,13 @@
 import Foundation
 
-private struct Event {
+private struct EventHolder {
     var eventHandler: EventHandler
     var contextObject: BaseObject
     var name: String
-    
-    init(name: String, handler: EventHandler, contextObject: BaseObject) {
-        self.name = name
-        self.eventHandler = handler
-        self.contextObject = contextObject
-    }
 }
 
 open class BaseObject: NSObject, EventProtocol {
-    fileprivate var events = [String: Event]()
+    fileprivate var events = [String: EventHolder]()
     fileprivate var onceEventsHashes = [String]()
 
     @discardableResult
@@ -25,8 +19,8 @@ open class BaseObject: NSObject, EventProtocol {
     fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = createListenId(eventName, contextObject: contextObject)
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
-        
-        events[listenId] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
+
+        events[listenId] = EventHolder(eventHandler: eventHandler, contextObject: contextObject, name: eventName)
         notificationCenter().addObserver(eventHandler, selector: #selector(EventHandler.handleEvent), name: NSNotification.Name(rawValue: eventName), object: contextObject)
 
         return listenId
@@ -38,7 +32,7 @@ open class BaseObject: NSObject, EventProtocol {
             self.removeListenerIfOnce(listenId, callback: callback)
         }
     }
-    
+
     fileprivate func removeListenerIfOnce(_ listenId: String, callback: EventCallback) {
         if let index = self.onceEventsHashes.index(of: listenId) {
             onceEventsHashes.remove(at: index)
