@@ -138,20 +138,6 @@ class ContainerTests: QuickSpec {
                     expect(duration) == expectedDuration
                 }
 
-                it("Should trigger container bit rate event when playback respective event happens") {
-                    let expectedBitRate: TimeInterval = 11.0
-                    var bitRate: TimeInterval!
-                    
-                    container.once(ContainerEvent.bitRate.rawValue) { userInfo in
-                        bitRate = userInfo?["bit_rate"] as! TimeInterval
-                    }
-                    
-                    let userInfo: EventUserInfo = ["bit_rate": expectedBitRate]
-                    playback.trigger(PlaybackEvent.bitRate.rawValue, userInfo: userInfo)
-                    
-                    expect(bitRate) == expectedBitRate
-                }
-
                 it("Should trigger container Error event when playback respective event happens with params") {
                     var error = ""
                     

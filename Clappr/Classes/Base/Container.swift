@@ -138,7 +138,6 @@ open class Container: UIBaseObject {
             .timeUpdated              : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info) } as EventCallback,
             .subtitleSourcesUpdated   : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info) } as EventCallback,
             .audioSourcesUpdated      : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info) } as EventCallback,
-            .bitRate                  : { [weak self] (info: EventUserInfo) in self?.forward(.bitRate, userInfo:info) } as EventCallback,
             .error                    : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info) } as EventCallback,
         ]
     }
