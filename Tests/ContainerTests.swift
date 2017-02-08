@@ -196,13 +196,7 @@ class ContainerTests: QuickSpec {
                     playback.trigger(PlaybackEvent.bufferFull.rawValue)
                     expect(eventWasTriggered) == true
                 }
-                
-                it("Should trigger settings event after playback respective event is triggered") {
-                    container.on(ContainerEvent.settingsUpdated.rawValue, callback: eventCallback)
-                    playback.trigger(PlaybackEvent.settingsUpdated.rawValue)
-                    expect(eventWasTriggered) == true
-                }
-                
+
                 it("Should trigger HD updated event after playback respective event is triggered") {
                     container.on(ContainerEvent.highDefinitionUpdated.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.highDefinitionUpdated.rawValue)
@@ -298,12 +292,6 @@ class ContainerTests: QuickSpec {
                         loader.addExternalPlugins([MockedSettingsPlayback.self])
                         container = Container(loader: loader, options: options)
                         mockedPlayback = container.playback as! MockedSettingsPlayback
-                    }
-                    
-                    it("Should update it's settings after playback's settings update event") {
-                        mockedPlayback.trigger(PlaybackEvent.settingsUpdated.rawValue)
-                        let fooSetting = container.settings["foo"] as? String
-                        expect(fooSetting) == "bar"
                     }
 
                     it("Should call playback's stop method after calling respective method on container") {
