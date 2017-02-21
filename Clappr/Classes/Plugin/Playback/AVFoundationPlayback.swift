@@ -299,7 +299,7 @@ public class AVFoundationPlayback: Playback {
     }
     
     private func handleBufferingEvent(keyPath: String?) {
-        guard let keyPath = keyPath else {
+        guard let keyPath = keyPath where currentState != .Paused else {
             return
         }
 
