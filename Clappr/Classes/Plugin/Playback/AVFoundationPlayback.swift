@@ -185,6 +185,7 @@ public class AVFoundationPlayback: Playback {
     func playbackDidEnd() {
         trigger(.Ended)
         updateState(.Idle)
+        player?.seekToTime(kCMTimeZero)
     }
     
     public override func pause() {
@@ -298,7 +299,7 @@ public class AVFoundationPlayback: Playback {
     }
     
     private func handleBufferingEvent(keyPath: String?) {
-        guard let keyPath = keyPath where currentState != .Paused else {
+        guard let keyPath = keyPath else {
             return
         }
 
