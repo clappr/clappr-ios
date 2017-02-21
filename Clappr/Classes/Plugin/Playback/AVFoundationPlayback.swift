@@ -185,7 +185,6 @@ public class AVFoundationPlayback: Playback {
     func playbackDidEnd() {
         trigger(.Ended)
         updateState(.Idle)
-        player?.seekToTime(kCMTimeZero)
     }
     
     public override func pause() {
