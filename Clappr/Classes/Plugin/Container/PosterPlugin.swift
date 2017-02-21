@@ -49,6 +49,7 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
+        container.seek(0)
         container.play()
     }
     
