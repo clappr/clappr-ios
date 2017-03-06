@@ -249,7 +249,7 @@ public class AVFoundationPlayback: Playback {
     }
     
     private func handleStatusChangedEvent() {
-        if player?.status == .ReadyToPlay {
+        if player?.status == .ReadyToPlay && currentState != .Paused {
             readyToPlay()
         } else if player?.status == .Failed {
             let error = player!.currentItem!.error!
@@ -260,7 +260,7 @@ public class AVFoundationPlayback: Playback {
     
     private func readyToPlay() {
         trigger(.Ready)
-        
+
         if let subtitles = self.subtitles {
             trigger(.SubtitleSourcesUpdated, userInfo: ["subtitles" : subtitles])
         }
