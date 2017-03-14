@@ -150,15 +150,23 @@ open class MediaControl: UIBaseObject {
         updateBars()
         updateScrubberPosition()
     }
-    
+
     open func setup(_ container: Container) {
-        stopListening()
         self.container = container
-        bindEventListeners()
+        setupBindings()
         container.mediaControlEnabled ? enable() : disable()
         playbackControlState = container.isPlaying ? .playing : .stopped
         backgroundOverlayView?.backgroundColor = backgroundOverlayColor
         fullscreenButton?.isHidden = fullscreenDisabled
+    }
+
+    private func setupBindings() {
+        bindEventListeners()
+
+        container.on(InternalEvent.didChangePlayback.rawValue) { [weak self] (userInfo) in
+            self?.stopListening()
+            self?.bindEventListeners()
+        }
     }
     
     open func bindEventListeners() {
