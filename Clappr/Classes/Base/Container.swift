@@ -131,7 +131,6 @@ open class Container: UIBaseObject {
 
     fileprivate func eventBindings() -> [Event : EventCallback] {
         return [
-            .stalled              : { [weak self] (info: EventUserInfo) in self?.onStall()} as EventCallback,
             .didComplete          : { [weak self] (info: EventUserInfo) in self?.trigger(.ended)} as EventCallback,
             .playing              : { [weak self] (info: EventUserInfo) in self?.onPlay()} as EventCallback,
             .didPause             : { [weak self] (info: EventUserInfo) in self?.trigger(.pause)} as EventCallback,
@@ -144,11 +143,6 @@ open class Container: UIBaseObject {
             .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback,
             .error                : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info)} as EventCallback,
         ]
-    }
-
-    fileprivate func onStall() {
-        trigger(.buffering)
-        buffering = true
     }
 
     fileprivate func onPlay() {

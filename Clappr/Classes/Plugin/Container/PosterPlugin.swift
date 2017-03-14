@@ -72,18 +72,21 @@ open class PosterPlugin: UIContainerPlugin {
         for (event, callback) in eventsToBind() {
             listenTo(container, eventName: event.rawValue, callback: callback)
         }
+
+        if let playback = container.playback {
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+        }
     }
     
     fileprivate func eventsToBind() -> [ContainerEvent : EventCallback] {
         return [
-            .buffering  : { [weak self] _ in self?.playbackBuffering() },
             .play       : { [weak self] _ in self?.playbackStarted() },
             .ended      : { [weak self] _ in self?.playbackEnded() },
             .ready      : { [weak self] _ in self?.playbackReady() },
         ]
     }
     
-    fileprivate func playbackBuffering() {
+    fileprivate func playbackStalled() {
         playButton.isHidden = true
     }
     

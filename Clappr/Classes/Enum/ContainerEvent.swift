@@ -11,7 +11,6 @@ public enum ContainerEvent: String {
     case tap = "clappr:container:tap"
     case seek = "clappr:container:seek"
     case volume = "clappr:container:volume"
-    case buffering = "clappr:container:buffering"
     case bufferFull = "clappr:container:buffer_full"
     case mediaControlDisabled = "clappr:container:media_control_disabled"
     case mediaControlEnabled = "clappr:container:media_control_enabled"

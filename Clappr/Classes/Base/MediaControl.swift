@@ -165,6 +165,10 @@ open class MediaControl: UIBaseObject {
         for (event, callback) in eventBindings() {
             listenTo(container, eventName: event.rawValue, callback: callback)
         }
+
+        if let playback = container.playback {
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+        }
     }
     
     open func eventBindings() -> [ContainerEvent : EventCallback] {
@@ -174,24 +178,19 @@ open class MediaControl: UIBaseObject {
             .ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
             .timeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
             .progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
-            .buffering  : { [weak self] _ in self?.playbackBuffering() },
-            .bufferFull : { [weak self] _ in self?.playbackBufferFull() },
             .ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
             .mediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
             .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
         ]
     }
 
-    open func playbackBuffering() {
+    func playbackStalled() {
         playbackControlButton?.isHidden = true
     }
 
-    open func playbackBufferFull() {
-        playbackControlButton?.isHidden = false
-    }
-    
     open func triggerPlay() {
         playbackControlState = .playing
+        playbackControlButton?.isHidden = false
         trigger(MediaControlEvent.playing)
     }
     
