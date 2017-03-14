@@ -45,17 +45,18 @@ open class LoadingContainerPlugin: UIContainerPlugin {
             relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0)
         container.addConstraint(yCenterConstraint)
     }
-    
+
     fileprivate func bindEventListeners() {
-        listenTo(container, eventName: ContainerEvent.buffering.rawValue) {[weak self] _ in
-            self?.spinningWheel.startAnimating()
-            Logger.logDebug("started animating spinning wheel", scope: self?.pluginName)
-        }
-        
+        listenTo(container, eventName: ContainerEvent.buffering.rawValue, callback: startAnimating)
         listenTo(container, eventName: ContainerEvent.play.rawValue, callback: stopAnimating)
         listenTo(container, eventName: ContainerEvent.ended.rawValue, callback: stopAnimating)
     }
-    
+
+    fileprivate func startAnimating(_ userInfo: EventUserInfo) {
+        spinningWheel.startAnimating()
+        Logger.logDebug("started animating spinning wheel", scope: self.pluginName)
+    }
+
     fileprivate func stopAnimating(_ userInfo: EventUserInfo) {
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: self.pluginName)
