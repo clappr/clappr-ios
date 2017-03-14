@@ -101,6 +101,24 @@ class ContainerTests: QuickSpec {
                     eventWasTriggered = false
                 }
 
+                it("Should trigger change playback events when new playback is set") {
+                    var didChangeWasCalled = false
+                    var willChangeWasCalled = false
+
+                    container.on(InternalEvent.willChangePlayback.rawValue) { _ in
+                        willChangeWasCalled = true
+                    }
+
+                    container.on(InternalEvent.didChangePlayback.rawValue) { _ in
+                        didChangeWasCalled = true
+                    }
+
+                    container.load("null")
+
+                    expect(willChangeWasCalled).to(beTrue())
+                    expect(didChangeWasCalled).to(beTrue())
+                }
+
                 it("Should trigger container buffer update event when playback progress event happens") {
                     let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: TimeInterval = 10
                     var start: Float!, end: Float!, duration: TimeInterval!

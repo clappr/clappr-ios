@@ -21,7 +21,11 @@ open class Container: UIBaseObject {
     }
 
     open internal(set) var playback: Playback? {
+        willSet {
+            trigger(InternalEvent.willChangePlayback.rawValue)
+        }
         didSet {
+            trigger(InternalEvent.didChangePlayback.rawValue)
             stopListening()
             bindEventListeners()
         }
