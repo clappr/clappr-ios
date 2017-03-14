@@ -1,21 +1,21 @@
 public enum Event: String {
-    case bufferUpdate = "bufferUpdate"
-    case positionUpdate = "positionUpdate"
-    case ready = "ready"
-    case stalled = "stalled"
-    case willUpdateAudioSource = "willUpdateAudioSource"
-    case didUpdateAudioSource = "didUpdateAudioSource"
-    case willUpdateSubtitleSource = "willUpdateSubtitleSource"
-    case didUpdateSubtitleSource = "didUpdateSubtitleSource"
-    case disableMediaControl = "disableMediaControl"
-    case enableMediaControl = "enableMediaControl"
-    case didComplete = "didComplete"
-    case willPlay = "willPlay"
-    case playing = "playing"
-    case willPause = "willPause"
-    case didPause = "didPause"
-    case willStop = "willStop"
-    case didStop = "didStop"
-    case error = "error"
-    case airPlayStatusUpdate = "airPlayStatusUpdate"
+    case bufferUpdate
+    case positionUpdate
+    case ready
+    case stalled
+    case willUpdateAudioSource
+    case didUpdateAudioSource
+    case willUpdateSubtitleSource
+    case didUpdateSubtitleSource
+    case disableMediaControl
+    case enableMediaControl
+    case didComplete
+    case willPlay
+    case playing
+    case willPause
+    case didPause
+    case willStop
+    case didStop
+    case error
+    case airPlayStatusUpdate
 }
