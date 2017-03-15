@@ -30,7 +30,7 @@ class PlaybackFactoryTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(options: Options) -> Bool {
+        override class func canPlay(_ options: Options) -> Bool {
             return options[kSourceUrl] as! String != "invalid"
         }
         

@@ -1,56 +1,56 @@
 import Foundation
 
-public class UIBaseObject: UIView, EventProtocol {
-    private let baseObject = BaseObject()
+open class UIBaseObject: UIView, EventProtocol {
+    fileprivate let baseObject = BaseObject()
     
-    public func on(eventName:String, callback: EventCallback) -> String {
+    open func on(_ eventName:String, callback: EventCallback) -> String {
         return baseObject.on(eventName, callback: callback)
     }
     
-    public func once(eventName:String, callback: EventCallback) -> String {
+    open func once(_ eventName:String, callback: EventCallback) -> String {
         return baseObject.once(eventName, callback: callback)
     }
     
-    public func off(listenId: String) {
+    open func off(_ listenId: String) {
         baseObject.off(listenId)
     }
     
-    public func trigger(eventName:String) {
+    open func trigger(_ eventName:String) {
         baseObject.trigger(eventName)
         Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
     
-    public func trigger(eventName:String, userInfo: [NSObject : AnyObject]?) {
+    open func trigger(_ eventName:String, userInfo: [AnyHashable: Any]?) {
         baseObject.trigger(eventName, userInfo: userInfo)
         Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
     }
     
-    public func listenTo<T: EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+    open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
-    public func listenToOnce<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+    open func listenToOnce<T : EventProtocol>(_ contextObject: T, eventName: String, callback: EventCallback) -> String {
         return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
     }
     
-    public func stopListening() {
+    open func stopListening() {
         baseObject.stopListening()
     }
     
-    public func stopListening(listenId: String) {
+    open func stopListening(_ listenId: String) {
         baseObject.stopListening(listenId)
     }
     
-    public func getEventContextObject() -> BaseObject {
+    open func getEventContextObject() -> BaseObject {
         return baseObject
     }
 
-    private func logIdentifier() -> String {
+    fileprivate func logIdentifier() -> String {
         if let plugin = self as? Plugin {
             return plugin.pluginName
         }
-        return "\(self.dynamicType)"
+        return "\(type(of: self))"
     }
     
-    public func render() {}
+    open func render() {}
 }

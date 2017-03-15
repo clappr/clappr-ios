@@ -19,12 +19,12 @@ class PlaybackTests: QuickSpec {
             }
 
             it("Should have a pause method") {
-                let responds = playback.respondsToSelector(#selector(NSProgress.pause))
+                let responds = playback.respondsToSelector(#selector(Progress.pause))
                 expect(responds).to(beTrue())
             }
 
             it("Should have a stop method") {
-                let responds = playback.respondsToSelector(#selector(NSNetService.stop))
+                let responds = playback.respondsToSelector(#selector(NetService.stop))
                 expect(responds).to(beTrue())
             }
 
@@ -139,7 +139,7 @@ class PlaybackTests: QuickSpec {
 
     class StubPlayback: Playback {
         var playWasCalled = false
-        var seekWasCalledWithValue: NSTimeInterval = -1
+        var seekWasCalledWithValue: TimeInterval = -1
 
         override var pluginName: String {
             return "stupPlayback"
@@ -150,7 +150,7 @@ class PlaybackTests: QuickSpec {
             playWasCalled = true
         }
         
-        override func seek(timeInterval: NSTimeInterval) {
+        override func seek(_ timeInterval: TimeInterval) {
             seekWasCalledWithValue = timeInterval
         }
     }

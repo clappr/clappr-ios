@@ -1,48 +1,48 @@
 import UIKit
 
-public class DragDetectorView: UIView {
+open class DragDetectorView: UIView {
 
     public enum State {
-        case Began, Moved, Ended, Canceled, Idle
+        case began, moved, ended, canceled, idle
     }
 
-    public private(set) var touchState: State = .Idle
+    open fileprivate(set) var touchState: State = .idle
 
-    public private(set) var currentTouch: UITouch?
+    open fileprivate(set) var currentTouch: UITouch?
 
-    public var target: AnyObject?
+    open var target: AnyObject?
 
-    public var selector: Selector!
+    open var selector: Selector!
 
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            touchState = .Began
+            touchState = .began
             currentTouch = touch
-            target?.performSelector(selector, withObject: self)
+            target?.perform(selector, with: self)
         }
     }
 
-    override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            touchState = .Moved
+            touchState = .moved
             currentTouch = touch
-            target?.performSelector(selector, withObject: self)
+            target?.perform(selector, with: self)
         }
     }
 
-    override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            touchState = .Ended
+            touchState = .ended
             currentTouch = touch
-            target?.performSelector(selector, withObject: self)
+            target?.perform(selector, with: self)
         }
     }
 
-    override public func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            touchState = .Canceled
+            touchState = .canceled
             currentTouch = touch
-            target?.performSelector(selector, withObject: self)
+            target?.perform(selector, with: self)
         }
     }
 }

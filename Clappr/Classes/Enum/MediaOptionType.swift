@@ -1,3 +1,3 @@
 public enum MediaOptionType {
-    case Subtitle, AudioSource
+    case subtitle, audioSource
 }

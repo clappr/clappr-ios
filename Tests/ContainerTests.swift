@@ -67,8 +67,8 @@ class ContainerTests: QuickSpec {
                 
                 
                 it("Should trigger container progress event when playback progress event happens") {
-                    let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: NSTimeInterval = 10
-                    var start: Float!, end: Float!, duration: NSTimeInterval!
+                    let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: TimeInterval = 10
+                    var start: Float!, end: Float!, duration: TimeInterval!
                     
                     container.once(ContainerEvent.Progress.rawValue) { userInfo in
                         start = userInfo?["start_position"] as! Float
@@ -87,8 +87,8 @@ class ContainerTests: QuickSpec {
                 }
                 
                 it("Should trigger container time updated event when playback respective event happens") {
-                    let expectedPosition: Float = 10.3, expectedDuration: NSTimeInterval = 12.7
-                    var position: Float!, duration: NSTimeInterval!
+                    let expectedPosition: Float = 10.3, expectedDuration: TimeInterval = 12.7
+                    var position: Float!, duration: TimeInterval!
                     
                     container.once(ContainerEvent.TimeUpdated.rawValue) { userInfo in
                         position = userInfo?["position"] as! Float
@@ -103,8 +103,8 @@ class ContainerTests: QuickSpec {
                 }
                 
                 it("Should trigger container loaded metadata event when playback respective event happens") {
-                    let expectedDuration: NSTimeInterval = 20.0
-                    var duration: NSTimeInterval!
+                    let expectedDuration: TimeInterval = 20.0
+                    var duration: TimeInterval!
                     
                     container.once(ContainerEvent.LoadedMetadata.rawValue) { userInfo in
                         duration = userInfo?["duration"] as! NSTimeInterval
@@ -117,8 +117,8 @@ class ContainerTests: QuickSpec {
                 }
                 
                 it("Should trigger container bit rate event when playback respective event happens") {
-                    let expectedBitRate: NSTimeInterval = 11.0
-                    var bitRate: NSTimeInterval!
+                    let expectedBitRate: TimeInterval = 11.0
+                    var bitRate: TimeInterval!
                     
                     container.once(ContainerEvent.BitRate.rawValue) { userInfo in
                         bitRate = userInfo?["bit_rate"] as! NSTimeInterval

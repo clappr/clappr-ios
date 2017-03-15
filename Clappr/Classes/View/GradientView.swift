@@ -1,19 +1,19 @@
 import UIKit
 
-public class GradientView: UIView {
+open class GradientView: UIView {
     
-    private var gradientLayer: CAGradientLayer!
+    fileprivate var gradientLayer: CAGradientLayer!
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         
         gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
-        gradientLayer.colors = [UIColor.clearColor().CGColor, UIColor.blackColor().CGColor]
-        self.layer.insertSublayer(gradientLayer, atIndex: 0)
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = self.bounds
     }

@@ -1,23 +1,23 @@
-public class Core: UIBaseObject, UIGestureRecognizerDelegate {
-    public private(set) var options: Options
-    public private(set) var container: Container!
-    public private(set) var mediaControl: MediaControl!
-    public private(set) var plugins: [UICorePlugin] = []
+open class Core: UIBaseObject, UIGestureRecognizerDelegate {
+    open fileprivate(set) var options: Options
+    open fileprivate(set) var container: Container!
+    open fileprivate(set) var mediaControl: MediaControl!
+    open fileprivate(set) var plugins: [UICorePlugin] = []
     
-    public var parentController: UIViewController?
-    public var parentView: UIView?
-    private var loader: Loader
-    private lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+    open var parentController: UIViewController?
+    open var parentView: UIView?
+    fileprivate var loader: Loader
+    fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
-    public var activeContainer: Container? {
+    open var activeContainer: Container? {
         return container
     }
 
-    public var activePlayback: Playback? {
+    open var activePlayback: Playback? {
         return activeContainer?.playback
     }
 
-    public var isFullscreen: Bool {
+    open var isFullscreen: Bool {
         return self.fullscreenController.presentingViewController != nil
     }
     
@@ -26,26 +26,26 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     public required init(loader: Loader = Loader(), options: Options = [:]) {
-        Logger.logDebug("loading with \(options)", scope: "\(self.dynamicType)")
+        Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.loader = loader
         self.options = options
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         setup()
     }
     
-    private func setup() {
-        backgroundColor = UIColor.blackColor()
+    fileprivate func setup() {
+        backgroundColor = UIColor.black
         createContainers()
         createMediaControl()
         bindEventListeners()
     }
     
-    private func createContainers() {
+    fileprivate func createContainers() {
         let factory = ContainerFactory(loader: loader, options: options)
         container = factory.createContainer()
     }
     
-    private func createMediaControl() {
+    fileprivate func createMediaControl() {
         mediaControl = loader.mediaControl.create()
         addTapRecognizer()
         
@@ -54,38 +54,38 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
     
-    private func addTapRecognizer() {
+    fileprivate func addTapRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: #selector(MediaControl.toggleVisibility))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
     
-    private func bindEventListeners() {
+    fileprivate func bindEventListeners() {
         listenTo(mediaControl, eventName: MediaControlEvent.FullscreenEnter.rawValue, callback: enterFullscreen)
         listenTo(mediaControl, eventName: MediaControlEvent.FullscreenExit.rawValue, callback: exitFullscreen)
     }
     
-    private func enterFullscreen(_: EventUserInfo) {
+    fileprivate func enterFullscreen(_: EventUserInfo) {
         mediaControl.fullscreen = true
-        fullscreenController.view.backgroundColor = UIColor.blackColor()
-        fullscreenController.modalPresentationStyle = .OverFullScreen
-        parentController?.presentViewController(fullscreenController, animated: false, completion: nil)
+        fullscreenController.view.backgroundColor = UIColor.black
+        fullscreenController.modalPresentationStyle = .overFullScreen
+        parentController?.present(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(self)
         trigger(CoreEvent.EnterFullscreen.rawValue)
     }
     
-    private func exitFullscreen(_: EventUserInfo) {
+    fileprivate func exitFullscreen(_: EventUserInfo) {
         renderInContainerView()
-        fullscreenController.dismissViewControllerAnimated(false, completion: nil)
+        fullscreenController.dismiss(animated: false, completion: nil)
         trigger(CoreEvent.ExitFullscreen.rawValue)
     }
     
-    private func renderInContainerView() {
+    fileprivate func renderInContainerView() {
         mediaControl.fullscreen = false
         parentView?.addSubviewMatchingConstraints(self)
     }
     
-    public override func render() {
+    open override func render() {
         addToContainer()
         
         plugins.forEach(installPlugin)
@@ -97,7 +97,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         container.render()
     }
     
-    private func addToContainer() {
+    fileprivate func addToContainer() {
         if let fullscreen = options[kFullscreen] as? Bool {
             fullscreen ? enterFullscreen([:]) : renderInContainerView()
         } else {
@@ -105,24 +105,24 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
     
-    private func installPlugin(plugin: UICorePlugin) {
+    fileprivate func installPlugin(_ plugin: UICorePlugin) {
         addSubview(plugin)
         plugin.render()
     }
     
-    public func addPlugin(plugin: UICorePlugin) {
+    open func addPlugin(_ plugin: UICorePlugin) {
         plugins.append(plugin)
     }
     
-    public func hasPlugin(pluginClass: AnyClass) -> Bool {
-        return plugins.filter({$0.isKindOfClass(pluginClass)}).count > 0
+    open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
+        return plugins.filter({$0.isKind(of: pluginClass)}).count > 0
     }
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        return touch.view!.isKindOfClass(Container) || touch.view == mediaControl
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
     }
     
-    public func setFullscreen(fullscreen: Bool) {
+    open func setFullscreen(_ fullscreen: Bool) {
         let isFullscreen = self.fullscreenController.presentingViewController != nil
         guard fullscreen != isFullscreen else {return}
         fullscreen ? enterFullscreen(nil) : exitFullscreen([:])

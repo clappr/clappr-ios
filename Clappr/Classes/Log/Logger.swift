@@ -1,19 +1,19 @@
 import Foundation
 
-public class Logger: NSObject {
-    private static var logLevel = LogLevel.Info
+open class Logger: NSObject {
+    fileprivate static var logLevel = LogLevel.info
 
-    public class func setLevel(level: LogLevel) {
+    open class func setLevel(_ level: LogLevel) {
         logLevel = level
     }
 
-    private class func log(level: LogLevel, message: String) {
+    fileprivate class func log(_ level: LogLevel, message: String) {
         if level.rawValue <= logLevel.rawValue {
             print("\(level.description()) \(message)")
         }
     }
 
-    private class func log(level: LogLevel, scope: String?, message: String) {
+    fileprivate class func log(_ level: LogLevel, scope: String?, message: String) {
         if let scope = scope {
             log(level, message: "[\(scope)] \(message)")
         } else {
@@ -21,19 +21,19 @@ public class Logger: NSObject {
         }
     }
 
-    public class func logError(message: String, scope: String? = nil) {
-        log(.Error, scope: scope, message: message)
+    open class func logError(_ message: String, scope: String? = nil) {
+        log(.error, scope: scope, message: message)
     }
 
-    public class func logWarn(message: String, scope: String? = nil) {
-        log(.Warning, scope: scope, message: message)
+    open class func logWarn(_ message: String, scope: String? = nil) {
+        log(.warning, scope: scope, message: message)
     }
 
-    public class func logInfo(message: String, scope: String? = nil) {
-        log(.Info, scope: scope, message: message)
+    open class func logInfo(_ message: String, scope: String? = nil) {
+        log(.info, scope: scope, message: message)
     }
 
-    public class func logDebug(message: String, scope: String? = nil) {
-        log(.Debug, scope: scope, message: message)
+    open class func logDebug(_ message: String, scope: String? = nil) {
+        log(.debug, scope: scope, message: message)
     }
 }

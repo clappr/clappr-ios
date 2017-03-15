@@ -1,10 +1,10 @@
 import Foundation
 
-public class MediaOption: Equatable {
-    public var name: String
-    public var type: MediaOptionType
-    public var raw: AnyObject?
-    public var language: String
+open class MediaOption: Equatable {
+    open var name: String
+    open var type: MediaOptionType
+    open var raw: AnyObject?
+    open var language: String
     
     init(name: String, type: MediaOptionType, language: String, raw: AnyObject? = nil) {
         self.name = name

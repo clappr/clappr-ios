@@ -2,15 +2,15 @@ import UIKit
 
 class FullscreenController: UIViewController {
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.Landscape
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.landscape
     }
     
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return UIInterfaceOrientation.LandscapeRight
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return UIInterfaceOrientation.landscapeRight
     }
 }

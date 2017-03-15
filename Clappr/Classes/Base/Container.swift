@@ -1,26 +1,26 @@
 import Foundation
 
-public class Container: UIBaseObject {
-    public internal(set) var ready = false
-    public internal(set) var dvrInUse = false
-    public internal(set) var settings: [String : AnyObject] = [:]
-    public internal(set) var plugins: [UIContainerPlugin] = []
-    public internal(set) var options: Options
+open class Container: UIBaseObject {
+    open internal(set) var ready = false
+    open internal(set) var dvrInUse = false
+    open internal(set) var settings: [String : AnyObject] = [:]
+    open internal(set) var plugins: [UIContainerPlugin] = []
+    open internal(set) var options: Options
     
-    private var loader: Loader
+    fileprivate var loader: Loader
     
-    public var isPlaying: Bool {
+    open var isPlaying: Bool {
         return playback.isPlaying
     }
     
-    public var mediaControlEnabled = false {
+    open var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: ContainerEvent = mediaControlEnabled ? .MediaControlEnabled : .MediaControlDisabled
             trigger(eventToTrigger)
         }
     }
     
-    public internal(set) var playback: Playback {
+    open internal(set) var playback: Playback {
         didSet {
             stopListening()
             bindEventListeners()
@@ -28,12 +28,12 @@ public class Container: UIBaseObject {
     }
 
     public init(playback: Playback, loader: Loader = Loader(), options: Options = [:]) {
-        Logger.logDebug("loading with \(options)", scope: "\(self.dynamicType)")
+        Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.playback = playback
         self.options = options
         self.loader = loader
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         bindEventListeners()
     }
     
@@ -41,10 +41,10 @@ public class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
     
-    public func load(source: String, mimeType: String? = nil) {
+    open func load(_ source: String, mimeType: String? = nil) {
         var playbackOptions = options
-        playbackOptions[kSourceUrl] = source
-        playbackOptions[kMimeType] = mimeType ?? nil
+        playbackOptions[kSourceUrl] = source as AnyObject?
+        playbackOptions[kMimeType] = mimeType as AnyObject?? ?? nil
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
@@ -54,61 +54,61 @@ public class Container: UIBaseObject {
         trigger(ContainerEvent.SourceChanged)
     }
     
-    public override func render() {
+    open override func render() {
         plugins.forEach(renderPlugin)
         renderPlayback()
     }
     
-    private func renderPlayback() {
+    fileprivate func renderPlayback() {
         addSubviewMatchingConstraints(playback)
         playback.render()
-        sendSubviewToBack(playback)
+        sendSubview(toBack: playback)
     }
     
-    private func renderPlugin(plugin: UIContainerPlugin) {
+    fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {
         addSubview(plugin)
         plugin.render()
     }
     
-    public func destroy() {
+    open func destroy() {
         stopListening()
         playback.destroy()
         
         removeFromSuperview()
     }
     
-    public func play() {
+    open func play() {
         playback.play()
     }
     
-    public func pause() {
+    open func pause() {
         playback.pause()
     }
     
-    public func stop() {
+    open func stop() {
         playback.stop()
         trigger(ContainerEvent.Stop)
     }
     
-    public func seek(timeInterval: NSTimeInterval) {
+    open func seek(_ timeInterval: TimeInterval) {
         playback.seek(timeInterval)
     }
     
-    public func addPlugin(plugin: UIContainerPlugin) {
+    open func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
     
-    public func hasPlugin(pluginClass: AnyClass) -> Bool {
-        return plugins.filter({$0.isKindOfClass(pluginClass)}).count > 0
+    open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
+        return plugins.filter({$0.isKind(of: pluginClass)}).count > 0
     }
     
-    private func bindEventListeners() {
+    fileprivate func bindEventListeners() {
         for (event, callback) in eventBindings() {
             listenTo(playback, eventName: event.rawValue, callback: callback)
         }
     }
     
-    private func eventBindings() -> [PlaybackEvent : EventCallback] {
+    fileprivate func eventBindings() -> [PlaybackEvent : EventCallback] {
         return [
             .Buffering              : { [weak self] (info: EventUserInfo) in self?.trigger(.Buffering)},
             .BufferFull             : { [weak self] (info: EventUserInfo) in self?.trigger(.BufferFull)},
@@ -132,22 +132,22 @@ public class Container: UIBaseObject {
         ]
     }
 
-    private func onPlay() {
-        options[kStartAt] = 0
+    fileprivate func onPlay() {
+        options[kStartAt] = 0 as AnyObject?
         trigger(.Play)
     }
     
-    private func settingsUpdated() {
+    fileprivate func settingsUpdated() {
         settings = playback.settings
         self.trigger(ContainerEvent.SettingsUpdated)
     }
     
-    private func setReady() {
+    fileprivate func setReady() {
         ready = true
         trigger(ContainerEvent.Ready)
     }
     
-    private func setDvrInUse(userInfo: EventUserInfo) {
+    fileprivate func setDvrInUse(_ userInfo: EventUserInfo) {
         settingsUpdated()
         
         if let playbackDvrInUse = userInfo!["dvr_in_use"] as? Bool {
@@ -157,11 +157,11 @@ public class Container: UIBaseObject {
         forward(ContainerEvent.PlaybackDVRStateChanged, userInfo: userInfo)
     }
     
-    private func trigger(event: ContainerEvent) {
-        trigger(event.rawValue)
+    fileprivate func trigger(_ event: ContainerEvent) {
+        trigger(ContainerEvent(rawValue: event.rawValue)!)
     }
     
-    private func forward(event: ContainerEvent, userInfo: EventUserInfo) {
+    fileprivate func forward(_ event: ContainerEvent, userInfo: EventUserInfo) {
         trigger(event.rawValue, userInfo: userInfo)
     }
 }

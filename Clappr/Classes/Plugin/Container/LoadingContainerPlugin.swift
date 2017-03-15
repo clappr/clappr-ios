@@ -1,12 +1,12 @@
-public class LoadingContainerPlugin: UIContainerPlugin {
+open class LoadingContainerPlugin: UIContainerPlugin {
     
-    private var spinningWheel: UIActivityIndicatorView!
+    fileprivate var spinningWheel: UIActivityIndicatorView!
     
     public required init() {
         super.init()
     }
     
-    public override var pluginName: String {
+    open override var pluginName: String {
         return "spinner"
     }
     
@@ -16,37 +16,37 @@ public class LoadingContainerPlugin: UIContainerPlugin {
     
     public required init(context: UIBaseObject) {
         super.init(context: context)
-        self.spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        self.spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         addSubview(spinningWheel)
-        userInteractionEnabled = false
+        isUserInteractionEnabled = false
     }
 
-    override public func render() {
+    override open func render() {
         addCenteringConstraints()
         bindEventListeners()
     }
     
-    private func addCenteringConstraints() {
+    fileprivate func addCenteringConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         
-        let widthConstraint = NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.width)
+        let widthConstraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal,
+            toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: spinningWheel.frame.width)
         addConstraint(widthConstraint)
         
-        let heightConstraint = NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal,
-            toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: spinningWheel.frame.height)
+        let heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal,
+            toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: spinningWheel.frame.height)
         addConstraint(heightConstraint)
         
-        let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterX,
-            relatedBy: .Equal, toItem: container, attribute: .CenterX, multiplier: 1, constant: 0)
+        let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerX,
+            relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0)
         container.addConstraint(xCenterConstraint)
         
-        let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .CenterY,
-            relatedBy: .Equal, toItem: container, attribute: .CenterY, multiplier: 1, constant: 0)
+        let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY,
+            relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0)
         container.addConstraint(yCenterConstraint)
     }
     
-    private func bindEventListeners() {
+    fileprivate func bindEventListeners() {
         listenTo(container, eventName: ContainerEvent.Buffering.rawValue) {[weak self] _ in
             self?.spinningWheel.startAnimating()
             Logger.logDebug("started animating spinning wheel", scope: self?.pluginName)
@@ -56,7 +56,7 @@ public class LoadingContainerPlugin: UIContainerPlugin {
         listenTo(container, eventName: ContainerEvent.Ended.rawValue, callback: stopAnimating)
     }
     
-    private func stopAnimating(userInfo: EventUserInfo) {
+    fileprivate func stopAnimating(_ userInfo: EventUserInfo) {
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: self.pluginName)
     }
