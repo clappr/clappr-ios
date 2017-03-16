@@ -9,9 +9,7 @@ class PosterPluginTests: QuickSpec {
             var container: Container!
             let options = [kSourceUrl : "http://globo.com/video.mp4",
                            kPosterUrl : "http://clappr.io/poster.png"]
-            let playback = StubPlayback(options: options)
             
-
             context("Initialization") {
                 it("Should not be rendered if container has no options") {
                     container = Container()
