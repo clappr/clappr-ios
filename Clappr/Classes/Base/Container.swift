@@ -110,25 +110,25 @@ open class Container: UIBaseObject {
     
     fileprivate func eventBindings() -> [PlaybackEvent : EventCallback] {
         return [
-            .buffering              : { [weak self] (info: EventUserInfo) in self?.trigger(.buffering)},
-            .bufferFull             : { [weak self] (info: EventUserInfo) in self?.trigger(.bufferFull)},
-            .highDefinitionUpdated  : { [weak self] (info: EventUserInfo) in self?.trigger(.highDefinitionUpdated)},
-            .stateChanged           : { [weak self] (info: EventUserInfo) in self?.trigger(.playbackStateChanged)},
-            .ended                  : { [weak self] (info: EventUserInfo) in self?.trigger(.ended)},
-            .play                   : { [weak self] (info: EventUserInfo) in self?.onPlay()},
-            .pause                  : { [weak self] (info: EventUserInfo) in self?.trigger(.pause)},
-            .mediaControlDisabled   : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false },
-            .mediaControlEnabled    : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true },
-            .settingsUpdated        : { [weak self] (info: EventUserInfo) in self?.settingsUpdated()},
-            .ready                  : { [weak self] (info: EventUserInfo) in self?.setReady() },
-            .dvrStateChanged        : { [weak self] (info: EventUserInfo) in self?.setDvrInUse(info) },
-            .progress               : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info)},
-            .timeUpdated            : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info)},
-            .loadedMetadata         : { [weak self] (info: EventUserInfo) in self?.forward(.loadedMetadata, userInfo:info)},
-            .subtitleSourcesUpdated : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info)},
-            .audioSourcesUpdated    : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)},
-            .bitRate                : { [weak self] (info: EventUserInfo) in self?.forward(.bitRate, userInfo:info)},
-            .error                  : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info)},
+            .buffering                : { [weak self] (info: EventUserInfo) in self?.trigger(.buffering) } as EventCallback,
+            .bufferFull               : { [weak self] (info: EventUserInfo) in self?.trigger(.bufferFull) } as EventCallback,
+            .highDefinitionUpdated    : { [weak self] (info: EventUserInfo) in self?.trigger(.highDefinitionUpdated) } as EventCallback,
+            .stateChanged             : { [weak self] (info: EventUserInfo) in self?.trigger(.playbackStateChanged) } as EventCallback,
+            .ended                    : { [weak self] (info: EventUserInfo) in self?.trigger(.ended) } as EventCallback,
+            .play                     : { [weak self] (info: EventUserInfo) in self?.onPlay() } as EventCallback,
+            .pause                    : { [weak self] (info: EventUserInfo) in self?.trigger(.pause) } as EventCallback,
+            .mediaControlDisabled     : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false } as EventCallback,
+            .mediaControlEnabled      : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true } as EventCallback,
+            .settingsUpdated          : { [weak self] (info: EventUserInfo) in self?.settingsUpdated() } as EventCallback,
+            .ready                    : { [weak self] (info: EventUserInfo) in self?.setReady() } as EventCallback,
+            .dvrStateChanged          : { [weak self] (info: EventUserInfo) in self?.setDvrInUse(info) } as EventCallback,
+            .progress                 : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info) } as EventCallback,
+            .timeUpdated              : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info) } as EventCallback,
+            .loadedMetadata           : { [weak self] (info: EventUserInfo) in self?.forward(.loadedMetadata, userInfo:info) } as EventCallback,
+            .subtitleSourcesUpdated   : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info) } as EventCallback,
+            .audioSourcesUpdated      : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info) } as EventCallback,
+            .bitRate                  : { [weak self] (info: EventUserInfo) in self?.forward(.bitRate, userInfo:info) } as EventCallback,
+            .error                    : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info) } as EventCallback,
         ]
     }
 
@@ -158,7 +158,7 @@ open class Container: UIBaseObject {
     }
     
     fileprivate func trigger(_ event: ContainerEvent) {
-        trigger(ContainerEvent(rawValue: event.rawValue)!)
+        trigger(event.rawValue)
     }
     
     fileprivate func forward(_ event: ContainerEvent, userInfo: EventUserInfo) {

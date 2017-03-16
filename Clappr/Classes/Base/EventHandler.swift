@@ -1,7 +1,8 @@
 import Foundation
 
 public typealias EventUserInfo = [AnyHashable: Any]?
-public typealias EventCallback = ((_ userInfo: EventUserInfo) -> ())
+
+public typealias EventCallback = (_ userInfo: EventUserInfo) -> ()
 
 open class EventHandler: NSObject {
     
