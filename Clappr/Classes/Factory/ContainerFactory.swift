@@ -13,7 +13,7 @@ public class ContainerFactory {
         return addPlugins(container)
     }
     
-    private func addPlugins(container: Container) -> Container {
+    private func addPlugins(_ container: Container) -> Container {
         for type in loader.containerPlugins {
             container.addPlugin(type.init(context: container) as! UIContainerPlugin)
         }

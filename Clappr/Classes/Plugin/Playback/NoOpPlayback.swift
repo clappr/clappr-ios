@@ -28,7 +28,7 @@ open class NoOpPlayback: Playback {
     
     open override func render() {
         addSubviewMatchingConstraints(errorLabel)
-        trigger(.Ready)
+        trigger(.ready)
     }
     
     fileprivate func setupLabel() {

@@ -30,7 +30,7 @@ open class PosterPlugin: UIContainerPlugin {
         }
         
         if let url = URL(string: urlString) {
-            poster.kf_setImageWithURL(url)
+            poster.kf.setImage(with: url)
         } else {
             Logger.logWarn("invalid URL.", scope: pluginName)
         }
@@ -76,10 +76,10 @@ open class PosterPlugin: UIContainerPlugin {
     
     fileprivate func eventsToBind() -> [ContainerEvent : EventCallback] {
         return [
-            .Buffering  : { [weak self] _ in self?.playbackBuffering() },
-            .Play       : { [weak self] _ in self?.playbackStarted() },
-            .Ended      : { [weak self] _ in self?.playbackEnded() },
-            .Ready      : { [weak self] _ in self?.playbackReady() },
+            .buffering  : { [weak self] _ in self?.playbackBuffering() },
+            .play       : { [weak self] _ in self?.playbackStarted() },
+            .ended      : { [weak self] _ in self?.playbackEnded() },
+            .ready      : { [weak self] _ in self?.playbackReady() },
         ]
     }
     

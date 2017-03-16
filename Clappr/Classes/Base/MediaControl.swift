@@ -169,16 +169,16 @@ open class MediaControl: UIBaseObject {
     
     open func eventBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play       : { [weak self] (info: EventUserInfo) in self?.triggerPlay() },
-            .Pause      : { [weak self] (info: EventUserInfo) in self?.triggerPause() },
-            .Ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
-            .TimeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
-            .Progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
-            .Buffering  : { [weak self] _ in self?.playbackBuffering() },
-            .BufferFull : { [weak self] _ in self?.playbackBufferFull() },
-            .Ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
-            .MediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
-            .MediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
+            .play       : { [weak self] (info: EventUserInfo) in self?.triggerPlay() },
+            .pause      : { [weak self] (info: EventUserInfo) in self?.triggerPause() },
+            .ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
+            .timeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
+            .progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
+            .buffering  : { [weak self] _ in self?.playbackBuffering() },
+            .bufferFull : { [weak self] _ in self?.playbackBufferFull() },
+            .ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
+            .mediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
+            .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
         ]
     }
 
@@ -268,25 +268,25 @@ open class MediaControl: UIBaseObject {
     
     open func hide() {
         hideControlsTimer?.invalidate()
-        trigger(MediaControlEvent(rawValue: PlayerEvent.MediaControlHide.rawValue)!)
+        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlHide.rawValue)!)
         setSubviewsVisibility(hidden: true)
     }
     
     open func show() {
-        trigger(MediaControlEvent(rawValue: PlayerEvent.MediaControlShow.rawValue)!)
+        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlShow.rawValue)!)
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     open func showAnimated() {
-        trigger(MediaControlEvent(rawValue: PlayerEvent.MediaControlShow.rawValue)!)
+        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlShow.rawValue)!)
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
     
     open func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(MediaControlEvent(rawValue: PlayerEvent.MediaControlHide.rawValue)!)
+        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlHide.rawValue)!)
         setSubviewsVisibility(hidden: true, animated: true)
     }
     
@@ -357,7 +357,7 @@ open class MediaControl: UIBaseObject {
         if container.isPlaying {
             hideAnimated()
         } else {
-            listenToOnce(container, eventName: ContainerEvent.Play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
+            listenToOnce(container, eventName: ContainerEvent.play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
         }
     }
 

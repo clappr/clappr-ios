@@ -47,13 +47,13 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     }
     
     fileprivate func bindEventListeners() {
-        listenTo(container, eventName: ContainerEvent.Buffering.rawValue) {[weak self] _ in
+        listenTo(container, eventName: ContainerEvent.buffering.rawValue) {[weak self] _ in
             self?.spinningWheel.startAnimating()
             Logger.logDebug("started animating spinning wheel", scope: self?.pluginName)
         }
         
-        listenTo(container, eventName: ContainerEvent.Play.rawValue, callback: stopAnimating)
-        listenTo(container, eventName: ContainerEvent.Ended.rawValue, callback: stopAnimating)
+        listenTo(container, eventName: ContainerEvent.play.rawValue, callback: stopAnimating)
+        listenTo(container, eventName: ContainerEvent.ended.rawValue, callback: stopAnimating)
     }
     
     fileprivate func stopAnimating(_ userInfo: EventUserInfo) {

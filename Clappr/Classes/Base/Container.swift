@@ -15,7 +15,7 @@ open class Container: UIBaseObject {
     
     open var mediaControlEnabled = false {
         didSet {
-            let eventToTrigger: ContainerEvent = mediaControlEnabled ? .MediaControlEnabled : .MediaControlDisabled
+            let eventToTrigger: ContainerEvent = mediaControlEnabled ? .mediaControlEnabled : .mediaControlDisabled
             trigger(eventToTrigger)
         }
     }
@@ -51,7 +51,7 @@ open class Container: UIBaseObject {
         playback.removeFromSuperview()
         playback = playbackFactory.createPlayback()
         renderPlayback()
-        trigger(ContainerEvent.SourceChanged)
+        trigger(ContainerEvent.sourceChanged)
     }
     
     open override func render() {
@@ -87,7 +87,7 @@ open class Container: UIBaseObject {
     
     open func stop() {
         playback.stop()
-        trigger(ContainerEvent.Stop)
+        trigger(ContainerEvent.stop)
     }
     
     open func seek(_ timeInterval: TimeInterval) {
@@ -110,41 +110,41 @@ open class Container: UIBaseObject {
     
     fileprivate func eventBindings() -> [PlaybackEvent : EventCallback] {
         return [
-            .Buffering              : { [weak self] (info: EventUserInfo) in self?.trigger(.Buffering)},
-            .BufferFull             : { [weak self] (info: EventUserInfo) in self?.trigger(.BufferFull)},
-            .HighDefinitionUpdated  : { [weak self] (info: EventUserInfo) in self?.trigger(.HighDefinitionUpdated)},
-            .StateChanged           : { [weak self] (info: EventUserInfo) in self?.trigger(.PlaybackStateChanged)},
-            .Ended                  : { [weak self] (info: EventUserInfo) in self?.trigger(.Ended)},
-            .Play                   : { [weak self] (info: EventUserInfo) in self?.onPlay()},
-            .Pause                  : { [weak self] (info: EventUserInfo) in self?.trigger(.Pause)},
-            .MediaControlDisabled   : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false },
-            .MediaControlEnabled    : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true },
-            .SettingsUpdated        : { [weak self] (info: EventUserInfo) in self?.settingsUpdated()},
-            .Ready                  : { [weak self] (info: EventUserInfo) in self?.setReady() },
-            .DVRStateChanged        : { [weak self] (info: EventUserInfo) in self?.setDvrInUse(info) },
-            .Progress               : { [weak self] (info: EventUserInfo) in self?.forward(.Progress, userInfo:info)},
-            .TimeUpdated            : { [weak self] (info: EventUserInfo) in self?.forward(.TimeUpdated, userInfo:info)},
-            .LoadedMetadata         : { [weak self] (info: EventUserInfo) in self?.forward(.LoadedMetadata, userInfo:info)},
-            .SubtitleSourcesUpdated : { [weak self] (info: EventUserInfo) in self?.forward(.SubtitleSourcesUpdated, userInfo:info)},
-            .AudioSourcesUpdated    : { [weak self] (info: EventUserInfo) in self?.forward(.AudioSourcesUpdated, userInfo:info)},
-            .BitRate                : { [weak self] (info: EventUserInfo) in self?.forward(.BitRate, userInfo:info)},
-            .Error                  : { [weak self] (info: EventUserInfo) in self?.forward(.Error, userInfo:info)},
+            .buffering              : { [weak self] (info: EventUserInfo) in self?.trigger(.buffering)},
+            .bufferFull             : { [weak self] (info: EventUserInfo) in self?.trigger(.bufferFull)},
+            .highDefinitionUpdated  : { [weak self] (info: EventUserInfo) in self?.trigger(.highDefinitionUpdated)},
+            .stateChanged           : { [weak self] (info: EventUserInfo) in self?.trigger(.playbackStateChanged)},
+            .ended                  : { [weak self] (info: EventUserInfo) in self?.trigger(.ended)},
+            .play                   : { [weak self] (info: EventUserInfo) in self?.onPlay()},
+            .pause                  : { [weak self] (info: EventUserInfo) in self?.trigger(.pause)},
+            .mediaControlDisabled   : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = false },
+            .mediaControlEnabled    : { [weak self] (info: EventUserInfo) in self?.mediaControlEnabled = true },
+            .settingsUpdated        : { [weak self] (info: EventUserInfo) in self?.settingsUpdated()},
+            .ready                  : { [weak self] (info: EventUserInfo) in self?.setReady() },
+            .dvrStateChanged        : { [weak self] (info: EventUserInfo) in self?.setDvrInUse(info) },
+            .progress               : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info)},
+            .timeUpdated            : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info)},
+            .loadedMetadata         : { [weak self] (info: EventUserInfo) in self?.forward(.loadedMetadata, userInfo:info)},
+            .subtitleSourcesUpdated : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info)},
+            .audioSourcesUpdated    : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)},
+            .bitRate                : { [weak self] (info: EventUserInfo) in self?.forward(.bitRate, userInfo:info)},
+            .error                  : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info)},
         ]
     }
 
     fileprivate func onPlay() {
         options[kStartAt] = 0 as AnyObject?
-        trigger(.Play)
+        trigger(ContainerEvent.play)
     }
     
     fileprivate func settingsUpdated() {
         settings = playback.settings
-        self.trigger(ContainerEvent.SettingsUpdated)
+        self.trigger(ContainerEvent.settingsUpdated)
     }
     
     fileprivate func setReady() {
         ready = true
-        trigger(ContainerEvent.Ready)
+        trigger(ContainerEvent.ready)
     }
     
     fileprivate func setDvrInUse(_ userInfo: EventUserInfo) {
@@ -154,7 +154,7 @@ open class Container: UIBaseObject {
             dvrInUse = playbackDvrInUse
         }
         
-        forward(ContainerEvent.PlaybackDVRStateChanged, userInfo: userInfo)
+        forward(ContainerEvent.playbackDVRStateChanged, userInfo: userInfo)
     }
     
     fileprivate func trigger(_ event: ContainerEvent) {

@@ -112,19 +112,19 @@ open class Player: BaseObject {
 
     fileprivate func coreBindings() -> [CoreEvent : EventCallback] {
         return [
-            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.EnterFullscreen, userInfo: info)},
-            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.ExitFullscreen, userInfo: info)}
+            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.enterFullscreen, userInfo: info)},
+            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info)}
         ]
     }
     
     fileprivate func containerBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] (info: EventUserInfo) in self?.forward(.Play, userInfo: info)},
-            .Ready : { [weak self] (info: EventUserInfo) in self?.forward(.Ready, userInfo: info)},
-            .Ended : { [weak self] (info: EventUserInfo) in self?.forward(.Ended, userInfo: info)},
-            .Error : { [weak self] (info: EventUserInfo) in self?.forward(.Error, userInfo: info)},
-            .Stop  : { [weak self] (info: EventUserInfo) in self?.forward(.Stop, userInfo: info)},
-            .Pause : { [weak self] (info: EventUserInfo) in self?.forward(.Pause, userInfo: info)}
+            .play  : { [weak self] (info: EventUserInfo) in self?.forward(.play, userInfo: info)},
+            .ready : { [weak self] (info: EventUserInfo) in self?.forward(.ready, userInfo: info)},
+            .ended : { [weak self] (info: EventUserInfo) in self?.forward(.ended, userInfo: info)},
+            .error : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo: info)},
+            .stop  : { [weak self] (info: EventUserInfo) in self?.forward(.stop, userInfo: info)},
+            .pause : { [weak self] (info: EventUserInfo) in self?.forward(.pause, userInfo: info)}
         ]
     }
     
