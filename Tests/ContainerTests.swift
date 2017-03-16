@@ -6,11 +6,16 @@ class ContainerTests: QuickSpec {
     
     override func spec() {
         describe("Container") {
+            let options = [kSourceUrl : "http://clappr.com/video.mp4"]
+            let optionsWithInvalidSource = [kSourceUrl : "invalid"]
+
             var container: Container!
             var playback: StubPlayback!
-            let options = [kSourceUrl : "http://clappr.com/video.mp4"]
-            
+            var loader: Loader!
+
             beforeEach() {
+                loader = Loader()
+                loader.addExternalPlugins([StubPlayback.self])
                 playback = StubPlayback(options: options)
                 container = Container(playback: playback)
             }
@@ -28,6 +33,25 @@ class ContainerTests: QuickSpec {
                     let option = container.options["aOption"] as! String
                     
                     expect(option) == "option"
+                }
+
+                it("Should add container plugins from loader") {
+                    loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+
+                    let container = Container(playback: playback, loader: loader, options: options)
+
+                    expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
+                    expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
+                }
+
+                it("Should add a container context to all plugins") {
+                    let container = Container(playback: playback, loader: loader, options: optionsWithInvalidSource)
+
+                    expect(container.plugins).toNot(beEmpty())
+
+                    for plugin in container.plugins {
+                        expect(plugin.container) == container
+                    }
                 }
             }
             
@@ -401,6 +425,18 @@ class ContainerTests: QuickSpec {
 
         override func play() {
             trigger(PlayerEvent.Play.rawValue)
+        }
+    }
+
+    class FakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "FakeContainerPlugin"
+        }
+    }
+
+    class AnotherFakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "AnotherFakeContainerPlugin"
         }
     }
 }
