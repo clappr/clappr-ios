@@ -10,13 +10,6 @@ public class ContainerFactory {
     public func createContainer() -> Container {
         let playbackFactory = PlaybackFactory(loader: loader, options: options)
         let container = Container(playback: playbackFactory.createPlayback(), loader: loader, options: options)
-        return addPlugins(container)
-    }
-    
-    private func addPlugins(_ container: Container) -> Container {
-        for type in loader.containerPlugins {
-            container.addPlugin(type.init(context: container) as! UIContainerPlugin)
-        }
         return container
     }
 }

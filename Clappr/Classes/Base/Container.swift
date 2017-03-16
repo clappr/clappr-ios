@@ -34,6 +34,7 @@ open class Container: UIBaseObject {
         self.loader = loader
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.clear
+        loadPlugins()
         bindEventListeners()
     }
     
@@ -92,6 +93,12 @@ open class Container: UIBaseObject {
     
     open func seek(_ timeInterval: TimeInterval) {
         playback.seek(timeInterval)
+    }
+
+    private func loadPlugins() {
+        for type in loader.containerPlugins {
+            addPlugin(type.init(context: self) as! UIContainerPlugin)
+        }
     }
     
     open func addPlugin(_ plugin: UIContainerPlugin) {
