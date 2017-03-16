@@ -323,7 +323,7 @@ open class MediaControl: UIBaseObject {
     @IBAction open func toggleFullscreen(_ sender: UIButton) {
         fullscreen = !fullscreen
         let event = fullscreen ? MediaControlEvent.fullscreenEnter : MediaControlEvent.fullscreenExit
-        trigger(MediaControlEvent(rawValue: event.rawValue)!)
+        trigger(event.rawValue)
         scheduleTimerToHideControls()
         updateScrubberPosition()
     }
