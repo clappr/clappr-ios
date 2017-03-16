@@ -14,7 +14,7 @@ class PosterPluginTests: QuickSpec {
 
             context("Initialization") {
                 it("Should not be rendered if container has no options") {
-                    container = Container(playback: playback)
+                    container = Container()
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -24,7 +24,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should not be rendered if container doesn't have posterUrl Option") {
-                    container = Container(playback: playback, options: ["anotherOption" : true])
+                    container = Container(options: ["anotherOption" : true])
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -34,7 +34,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should be rendered if container have posterUrl Option") {
-                    container = Container(playback: playback, options: options)
+                    container = Container(options: options)
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -44,7 +44,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should be hidden if playback is a NoOp") {
-                    container = Container(playback: NoOpPlayback(), options: options)
+                    container = Container(options: [kSourceUrl : "none", kPosterUrl: "http://clappr.io/poster.png"])
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -58,7 +58,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
                 
                 beforeEach() {
-                    container = Container(playback: playback, options: options)
+                    container = Container(options: options)
                     posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()

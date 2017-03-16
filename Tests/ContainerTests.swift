@@ -16,11 +16,23 @@ class ContainerTests: QuickSpec {
             beforeEach() {
                 loader = Loader()
                 loader.addExternalPlugins([StubPlayback.self])
-                playback = StubPlayback(options: options)
-                container = Container(playback: playback)
+                container = Container(loader: loader, options: options)
+                playback = container.playback as! StubPlayback
             }
             
             describe("Initialization") {
+                it("Should create a container with valid playback for a valid source") {
+                    let container = Container(options: options)
+
+                    expect(container.playback?.pluginName) == "AVPlayback"
+                }
+
+                it("Should create a container with invalid playback for url that cannot be played") {
+                    let container = Container(options: optionsWithInvalidSource)
+
+                    expect(container.playback?.pluginName) == "NoOp"
+                }
+
                 it("Should have the playback as subview after rendered") {
                     container.render()
                     expect(playback.superview) == container
@@ -28,7 +40,7 @@ class ContainerTests: QuickSpec {
                 
                 it("Should have a constructor that receive options") {
                     let options = ["aOption" : "option"]
-                    let container = Container(playback: playback, options: options)
+                    let container = Container(options: options)
                     
                     let option = container.options["aOption"] as! String
                     
@@ -38,14 +50,14 @@ class ContainerTests: QuickSpec {
                 it("Should add container plugins from loader") {
                     loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
 
-                    let container = Container(playback: playback, loader: loader, options: options)
+                    let container = Container(loader: loader, options: options)
 
                     expect(container.hasPlugin(FakeContainerPlugin)).to(beTrue())
                     expect(container.hasPlugin(AnotherFakeContainerPlugin)).to(beTrue())
                 }
 
                 it("Should add a container context to all plugins") {
-                    let container = Container(playback: playback, loader: loader, options: optionsWithInvalidSource)
+                    let container = Container(loader: loader, options: optionsWithInvalidSource)
 
                     expect(container.plugins).toNot(beEmpty())
 
@@ -272,6 +284,10 @@ class ContainerTests: QuickSpec {
                         override var pluginName: String {
                             return "mockedPlayback"
                         }
+
+                        override class func canPlay(options: Options) -> Bool {
+                            return true
+                        }
                         
                         var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
 
@@ -295,12 +311,14 @@ class ContainerTests: QuickSpec {
                             playWasCalled = true
                         }
                     }
-                    
+
                     var mockedPlayback: MockedSettingsPlayback!
-                    
+
                     beforeEach() {
-                        mockedPlayback = MockedSettingsPlayback(options: options)
-                        container = Container(playback: mockedPlayback)
+                        let loader = Loader()
+                        loader.addExternalPlugins([MockedSettingsPlayback.self])
+                        container = Container(loader: loader, options: options)
+                        mockedPlayback = container.playback as! MockedSettingsPlayback
                     }
                     
                     it("Should update it's settings after playback's settings update event") {
@@ -378,41 +396,37 @@ class ContainerTests: QuickSpec {
             
             describe("Source") {
                 it("Should be able to load a source") {
-                    let container = Container(playback: NoOpPlayback(options: [:]))
-
-                    expect(container.playback.pluginName) == "NoOp"
+                    let container = Container()
 
                     container.load("http://clappr.com/video.mp4")
 
-                    expect(container.playback.pluginName) == "AVPlayback"
-                    expect(container.playback.superview) == container
+                    expect(container.playback?.pluginName) == "AVPlayback"
+                    expect(container.playback?.superview) == container
                 }
                 
                 it("Should be able to load a source with mime type") {
-                    let container = Container(playback: NoOpPlayback(options: [:]))
-                    
-                    expect(container.playback.pluginName) == "NoOp"
+                    let container = Container()
                     
                     container.load("http://clappr.com/video", mimeType: "video/mp4")
                     
-                    expect(container.playback.pluginName) == "AVPlayback"
-                    expect(container.playback.superview) == container
+                    expect(container.playback?.pluginName) == "AVPlayback"
+                    expect(container.playback?.superview) == container
                 }
             }
 
             describe("Options") {
                 it("Should reset startAt after first play event") {
-                    let options = [kStartAt : 15]
-                    let container = Container(playback: StubPlayback(options: options), options: options)
+                    let options = [kSourceUrl: "someUrl", kStartAt : 15]
+                    let container = Container(loader: loader, options: options)
 
                     expect(container.options[kStartAt] as? Int) == 15
-                    expect(container.playback.startAt) == 15
+                    expect(container.playback?.startAt) == 15
 
-                    container.playback.play()
+                    container.playback?.play()
                     container.load("http://clappr.com/video.mp4")
 
                     expect(container.options[kStartAt] as? Int) == 0
-                    expect(container.playback.startAt) == 0
+                    expect(container.playback?.startAt) == 0
                 }
             }
         }
@@ -420,7 +434,11 @@ class ContainerTests: QuickSpec {
     
     class StubPlayback: Playback {
         override var pluginName: String {
-            return "stubPlayback"
+            return "AVPlayback"
+        }
+
+        override class func canPlay(options: Options) -> Bool {
+            return true
         }
 
         override func play() {
