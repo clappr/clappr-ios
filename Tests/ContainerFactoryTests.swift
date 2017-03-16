@@ -27,26 +27,6 @@ class ContainerFactoryTests: QuickSpec {
                 
                 expect(factory.createContainer().playback.pluginName) == "NoOp"
             }
-            
-            it("Should add container plugins from loader") {
-                loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                
-                factory = ContainerFactory(loader: loader, options: optionsWithValidSource as Options)
-                let container = factory.createContainer()
-                
-                expect(container.hasPlugin(FakeContainerPlugin.self)).to(beTrue())
-                expect(container.hasPlugin(AnotherFakeContainerPlugin.self)).to(beTrue())
-            }
-
-            it("Should add a container context to all plugins") {
-                factory = ContainerFactory(loader: loader, options: optionsWithValidSource as Options)
-                let container = factory.createContainer()
-
-                expect(container.plugins).toNot(beEmpty())
-                for plugin in container.plugins {
-                    expect(plugin.container) == container
-                }
-            }
         }
     }
     
@@ -57,18 +37,6 @@ class ContainerFactoryTests: QuickSpec {
         
         override var pluginName: String {
             return "AVPlayback"
-        }
-    }
-    
-    class FakeContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
-            return "FakeContainerPlugin"
-        }
-    }
-    
-    class AnotherFakeContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
-            return "AnotherFakeContainerPlugin"
         }
     }
 }
