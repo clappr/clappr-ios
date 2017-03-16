@@ -192,12 +192,12 @@ open class MediaControl: UIBaseObject {
     
     open func triggerPlay() {
         playbackControlState = .playing
-        trigger(.Playing)
+        trigger(.playing)
     }
     
     open func triggerPause() {
         playbackControlState = .paused
-        trigger(.NotPlaying)
+        trigger(.notPlaying)
     }
     
     open func disable() {
@@ -212,13 +212,13 @@ open class MediaControl: UIBaseObject {
     }
     
     open func timeUpdated(_ info: EventUserInfo) {
-        guard let position = info!["position"] as? TimeInterval, !livePlayback else {
-            return
-        }
-        
-        currentTimeLabel?.text = DateFormatter.formatSeconds(position)
-        seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
-        updateScrubberPosition()
+      guard let position = info!["position"] as? TimeInterval, !livePlayback else {
+          return
+      }
+      
+      currentTimeLabel?.text = DateFormatter.formatSeconds(position)
+      seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
+      updateScrubberPosition()
     }
     
     open func progressUpdated(_ info: EventUserInfo) {
@@ -268,25 +268,25 @@ open class MediaControl: UIBaseObject {
     
     open func hide() {
         hideControlsTimer?.invalidate()
-        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlHide.rawValue)!)
+        trigger(PlayerEvent.mediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true)
     }
     
     open func show() {
-        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlShow.rawValue)!)
+        trigger(PlayerEvent.mediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     open func showAnimated() {
-        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlShow.rawValue)!)
+        trigger(PlayerEvent.mediaControlShow.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
     
     open func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(MediaControlEvent(rawValue: PlayerEvent.mediaControlHide.rawValue)!)
+        trigger(PlayerEvent.mediaControlHide.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
     
@@ -322,7 +322,7 @@ open class MediaControl: UIBaseObject {
     
     @IBAction open func toggleFullscreen(_ sender: UIButton) {
         fullscreen = !fullscreen
-        let event = fullscreen ? MediaControlEvent.FullscreenEnter : MediaControlEvent.FullscreenExit
+        let event = fullscreen ? MediaControlEvent.fullscreenEnter : MediaControlEvent.fullscreenExit
         trigger(MediaControlEvent(rawValue: event.rawValue)!)
         scheduleTimerToHideControls()
         updateScrubberPosition()
@@ -331,19 +331,19 @@ open class MediaControl: UIBaseObject {
     fileprivate func pause() {
         playbackControlState = .paused
         container.pause()
-        trigger(MediaControlEvent(rawValue: MediaControlEvent.NotPlaying.rawValue)!)
+        trigger(MediaControlEvent.notPlaying.rawValue)
     }
     
     fileprivate func play() {
         playbackControlState = .playing
         container.play()
-        trigger(MediaControlEvent(rawValue: MediaControlEvent.Playing.rawValue)!)
+        trigger(MediaControlEvent.playing.rawValue)
     }
     
     fileprivate func stop() {
         playbackControlState = .stopped
         container.stop()
-        trigger(MediaControlEvent(rawValue: MediaControlEvent.NotPlaying.rawValue)!)
+        trigger(MediaControlEvent.notPlaying.rawValue)
     }
     
     open func scheduleTimerToHideControls() {
@@ -391,7 +391,7 @@ open class MediaControl: UIBaseObject {
     }
 
     fileprivate func trigger(_ event: MediaControlEvent) {
-        trigger(MediaControlEvent(rawValue: event.rawValue)!)
+        trigger(event.rawValue)
     }
     
     deinit {

@@ -16,13 +16,13 @@ class PlaybackFactoryTests: QuickSpec {
         
         context("Playback creation") {
             it("Should create a valid playback for a valid source") {
-                let factory = PlaybackFactory(loader: loader, options: optionsWithValidSource)
+                let factory = PlaybackFactory(loader: loader, options: optionsWithValidSource as Options)
                 
                 expect(factory.createPlayback().pluginName) == "AVPlayback"
             }
             
             it("Should create an invalid playback for url that cannot be played") {
-                let factory = PlaybackFactory(loader: loader, options: optionsWithInvalidSource)
+                let factory = PlaybackFactory(loader: loader, options: optionsWithInvalidSource as Options)
                 
                 expect(factory.createPlayback().pluginName) == "NoOp"
             }

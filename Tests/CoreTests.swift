@@ -9,14 +9,14 @@ class CoreTests: QuickSpec {
         let loader = Loader(externalPlugins: [StubPlayback.self])
         
         beforeEach() {
-            core = Core(loader: loader, options: options)
+            core = Core(loader: loader, options: options as Options)
         }
         
         describe("Core") {
             context("Options") {
                 it("Should have a constructor with options") {
                     let options = ["SomeOption" : true]
-                    let core = Core(loader: loader, options: options)
+                    let core = Core(loader: loader, options: options as Options)
                     
                     expect(core.options["SomeOption"] as? Bool) == true
                 }

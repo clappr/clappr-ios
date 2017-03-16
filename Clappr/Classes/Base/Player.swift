@@ -97,8 +97,8 @@ open class Player: BaseObject {
         core.setFullscreen(fullscreen)
     }
     
-    open func on(_ event: PlayerEvent, callback: EventCallback) -> String {
-        return on(PlayerEvent(rawValue: event.rawValue)!, callback: callback)
+    open func on(_ event: PlayerEvent, callback: @escaping EventCallback) -> String {
+        return on(event.rawValue, callback: callback)
     }
     
     fileprivate func bindEvents() {

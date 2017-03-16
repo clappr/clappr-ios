@@ -133,7 +133,7 @@ open class Container: UIBaseObject {
     }
 
     fileprivate func onPlay() {
-        options[kStartAt] = 0 as AnyObject?
+        options[kStartAt] = 0.0 as AnyObject?
         trigger(ContainerEvent.play)
     }
     

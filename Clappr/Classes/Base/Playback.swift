@@ -28,7 +28,7 @@ open class Playback: UIBaseObject, Plugin {
     }
     
     open var startAt: TimeInterval {
-        return options[kStartAt] as? TimeInterval ?? 0
+        return options[kStartAt] as? TimeInterval ?? 0.0
     }
 
     open var isPlaying: Bool {
@@ -44,11 +44,11 @@ open class Playback: UIBaseObject, Plugin {
     }
 
     open var duration: Double {
-        return 0
+        return 0.0
     }
 
     open var position: Double {
-        return 0
+        return 0.0
     }
 
     open var settings: [String : AnyObject] {
@@ -95,7 +95,7 @@ open class Playback: UIBaseObject, Plugin {
 
     open override func render() {
         once(PlaybackEvent.ready.rawValue) {[unowned self] _ in
-            if self.startAt != 0 {
+            if self.startAt != 0.0 {
                 self.seek(self.startAt)
             }
 
@@ -120,11 +120,11 @@ open class Playback: UIBaseObject, Plugin {
     }
 
     internal func trigger(_ event: PlaybackEvent) {
-        trigger(PlaybackEvent(rawValue: event.rawValue)!)
+        trigger(event.rawValue)
     }
 
     internal func trigger(_ event: PlaybackEvent, userInfo: EventUserInfo) {
-        trigger(PlaybackEvent(rawValue: event.rawValue)!, userInfo: userInfo)
+        trigger(event.rawValue, userInfo: userInfo)
     }
 
     open func play() {}

@@ -61,8 +61,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     fileprivate func bindEventListeners() {
-        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenEnter.rawValue, callback: enterFullscreen)
-        listenTo(mediaControl, eventName: MediaControlEvent.FullscreenExit.rawValue, callback: exitFullscreen)
+        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenEnter.rawValue, callback: enterFullscreen)
+        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenExit.rawValue, callback: exitFullscreen)
     }
     
     fileprivate func enterFullscreen(_: EventUserInfo) {

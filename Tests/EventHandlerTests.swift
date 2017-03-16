@@ -15,7 +15,7 @@ class EventHandlerSpec: QuickSpec {
                     control = userInfo["testCase"]
                 })
                 
-                eventHandler.handleEvent(Notification(name: "", object: self, userInfo: ["testCase": info]))
+                eventHandler.handleEvent(Notification(name: Notification.Name(rawValue: ""), object: self, userInfo: ["testCase": info]))
                 
                 expect(control) == info
             }

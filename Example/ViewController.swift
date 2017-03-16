@@ -49,4 +49,12 @@ class ViewController: UIViewController {
             print("on Exit Fullscreen")
         }
     }
+
+  override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.portrait
+  }
+
+  override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+    return UIInterfaceOrientation.portrait
+  }
 }
