@@ -90,7 +90,7 @@ open class Player: BaseObject {
     }
     
     open func seek(_ timeInterval: TimeInterval) {
-        core.container.seek(timeInterval)
+        core.container.seek(timeInterval: timeInterval)
     }
     
     open func setFullscreen(_ fullscreen: Bool) {

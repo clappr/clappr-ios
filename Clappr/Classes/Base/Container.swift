@@ -8,9 +8,9 @@ open class Container: UIBaseObject {
     open internal(set) var options: Options
     
     fileprivate var loader: Loader
-    
+
     open var isPlaying: Bool {
-        return playback.isPlaying
+        return playback?.isPlaying ?? false
     }
     
     open var mediaControlEnabled = false {
@@ -19,23 +19,25 @@ open class Container: UIBaseObject {
             trigger(eventToTrigger)
         }
     }
-    
-    open internal(set) var playback: Playback {
+
+    open internal(set) var playback: Playback? {
         didSet {
             stopListening()
             bindEventListeners()
         }
     }
 
-    public init(playback: Playback, loader: Loader = Loader(), options: Options = [:]) {
+    public init(loader: Loader = Loader(), options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
-        self.playback = playback
         self.options = options
         self.loader = loader
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.clear
         loadPlugins()
-        bindEventListeners()
+
+        if let source = options[kSourceUrl] as? String {
+            load(source, mimeType: options[kMimeType] as? String)
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -49,7 +51,7 @@ open class Container: UIBaseObject {
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
-        playback.removeFromSuperview()
+        playback?.removeFromSuperview()
         playback = playbackFactory.createPlayback()
         renderPlayback()
         trigger(ContainerEvent.sourceChanged)
@@ -59,8 +61,12 @@ open class Container: UIBaseObject {
         plugins.forEach(renderPlugin)
         renderPlayback()
     }
-    
+
     fileprivate func renderPlayback() {
+        guard let playback = playback else {
+            return
+        }
+
         addSubviewMatchingConstraints(playback)
         playback.render()
         sendSubview(toBack: playback)
@@ -73,26 +79,26 @@ open class Container: UIBaseObject {
     
     open func destroy() {
         stopListening()
-        playback.destroy()
+        playback?.destroy()
         
         removeFromSuperview()
     }
-    
+
     open func play() {
-        playback.play()
+        playback?.play()
     }
     
     open func pause() {
-        playback.pause()
+        playback?.pause()
     }
     
     open func stop() {
-        playback.stop()
+        playback?.stop()
         trigger(ContainerEvent.stop)
     }
     
-    open func seek(_ timeInterval: TimeInterval) {
-        playback.seek(timeInterval)
+    open func seek(timeInterval: TimeInterval) {
+        playback?.seek(timeInterval)
     }
 
     private func loadPlugins() {
@@ -108,8 +114,12 @@ open class Container: UIBaseObject {
     open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({$0.isKind(of: pluginClass)}).count > 0
     }
-    
+
     fileprivate func bindEventListeners() {
+        guard let playback = playback else {
+            return
+        }
+
         for (event, callback) in eventBindings() {
             listenTo(playback, eventName: event.rawValue, callback: callback)
         }
@@ -143,9 +153,9 @@ open class Container: UIBaseObject {
         options[kStartAt] = 0.0
         trigger(ContainerEvent.play)
     }
-    
+
     fileprivate func settingsUpdated() {
-        settings = playback.settings
+        settings = playback?.settings ?? [:]
         self.trigger(ContainerEvent.settingsUpdated)
     }
     

@@ -39,10 +39,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         createMediaControl()
         bindEventListeners()
     }
-    
+
     fileprivate func createContainers() {
-        let factory = ContainerFactory(loader: loader, options: options)
-        container = factory.createContainer()
+        container = Container(loader: loader, options: options)
     }
     
     fileprivate func createMediaControl() {
