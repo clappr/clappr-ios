@@ -12,7 +12,7 @@ class UIContainerPluginTests: QuickSpec {
 
         describe("Instantiation") {
             it("Should be initializaed with a Container") {
-                let container = Container(playback: Playback())
+                let container = Container()
                 let plugin = StubContainerPlugin(context: container)
 
                 expect(plugin.container) == container

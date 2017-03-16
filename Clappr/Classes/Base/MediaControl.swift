@@ -76,7 +76,7 @@ open class MediaControl: UIBaseObject {
     }
 
     fileprivate var duration: CGFloat {
-        return CGFloat(container.playback.duration)
+        return CGFloat(container.playback?.duration ?? 0.0)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -247,9 +247,9 @@ open class MediaControl: UIBaseObject {
             bufferBarView?.layoutIfNeeded()
         }
     }
-    
+
     open func containerReady() {
-        livePlayback = container.playback.playbackType == .live
+        livePlayback = container.playback?.playbackType == .live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
         updateScrubberPosition()
@@ -263,7 +263,7 @@ open class MediaControl: UIBaseObject {
     
     open func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
-        durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration)
+        durationLabel?.text = DateFormatter.formatSeconds(container.playback?.duration ?? 0.0)
     }
     
     open func hide() {
@@ -372,7 +372,7 @@ open class MediaControl: UIBaseObject {
                 isSeeking = true
                 hideControlsTimer?.invalidate()
             case .ended:
-                container.seek(secondsRelativeToPoint(touchPoint))
+                container.seek(timeInterval: secondsRelativeToPoint(touchPoint))
                 isSeeking = false
                 scheduleTimerToHideControls()
             default: break

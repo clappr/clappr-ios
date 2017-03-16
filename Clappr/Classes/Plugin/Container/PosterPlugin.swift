@@ -49,7 +49,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
-        container.seek(0)
+        container.seek(timeInterval: 0)
         container.play()
     }
     
@@ -97,9 +97,9 @@ open class PosterPlugin: UIContainerPlugin {
         playButton.isHidden = false
         isHidden = false
     }
-    
+
     fileprivate func playbackReady() {
-        if container.playback.pluginName == "NoOp" {
+        if container.playback?.pluginName == "NoOp" {
             isHidden = true
         }
     }
