@@ -11,8 +11,10 @@ class MediaControlTests: QuickSpec {
             var playback: StubedPlayback!
             
             beforeEach() {
-                playback = StubedPlayback(options: options)
-                container = Container(playback: playback)
+                let loader = Loader()
+                loader.addExternalPlugins([StubedPlayback.self])
+                container = Container(loader: loader, options: options)
+                playback = container.playback as! StubedPlayback
             }
             
             context("Initialization") {
@@ -198,7 +200,7 @@ class MediaControlTests: QuickSpec {
                 context("Fullscreen") {
                     it("Should hide fullscreen button if disabled via options") {
                         let options = [kFullscreenDisabled: true]
-                        container = Container(playback: playback, options: options)
+                        container = Container(options: options)
                         mediaControl.setup(container)
 
                         expect(mediaControl.fullscreenButton?.hidden) == true
@@ -222,6 +224,10 @@ class MediaControlTests: QuickSpec {
         
         override var isPlaying: Bool {
             return playing
+        }
+
+        override class func canPlay(options: Options) -> Bool {
+            return true
         }
         
         override func play() {

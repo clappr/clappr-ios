@@ -76,7 +76,7 @@ public class MediaControl: UIBaseObject {
     }
 
     private var duration: CGFloat {
-        return CGFloat(container.playback.duration)
+        return CGFloat(container.playback?.duration ?? 0.0)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -249,7 +249,7 @@ public class MediaControl: UIBaseObject {
     }
     
     public func containerReady() {
-        livePlayback = container.playback.playbackType == .Live
+        livePlayback = container.playback?.playbackType == .Live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
         updateScrubberPosition()
@@ -263,7 +263,7 @@ public class MediaControl: UIBaseObject {
     
     public func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
-        durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration)
+        durationLabel?.text = DateFormatter.formatSeconds(container.playback?.duration ?? 0.0)
     }
     
     public func hide() {

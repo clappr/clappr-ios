@@ -41,8 +41,7 @@ public class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     private func createContainers() {
-        let factory = ContainerFactory(loader: loader, options: options)
-        container = factory.createContainer()
+        container = Container(loader: loader, options: options)
     }
     
     private func createMediaControl() {

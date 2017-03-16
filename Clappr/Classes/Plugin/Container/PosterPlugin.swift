@@ -99,7 +99,7 @@ public class PosterPlugin: UIContainerPlugin {
     }
     
     private func playbackReady() {
-        if container.playback.pluginName == "NoOp" {
+        if container.playback?.pluginName == "NoOp" {
             hidden = true
         }
     }
