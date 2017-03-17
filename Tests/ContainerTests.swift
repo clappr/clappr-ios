@@ -44,7 +44,7 @@ class ContainerTests: QuickSpec {
                 
                 it("Should stop listening to events after destroy is called") {
                     var callbackWasCalled = false
-                    container.on("some-event") { _ in
+                    _ = container.on("some-event") { _ in
                         callbackWasCalled = true
                     }
                     
@@ -70,7 +70,7 @@ class ContainerTests: QuickSpec {
                     let expectedStart: Float = 0.7, expectedEnd: Float = 15.4, expectedDuration: TimeInterval = 10
                     var start: Float!, end: Float!, duration: TimeInterval!
                     
-                    container.once(ContainerEvent.progress.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.progress.rawValue) { userInfo in
                         start = userInfo?["start_position"] as! Float
                         end = userInfo?["end_position"] as! Float
                         duration = userInfo?["duration"] as! TimeInterval
@@ -90,7 +90,7 @@ class ContainerTests: QuickSpec {
                     let expectedPosition: Float = 10.3, expectedDuration: TimeInterval = 12.7
                     var position: Float!, duration: TimeInterval!
                     
-                    container.once(ContainerEvent.timeUpdated.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.timeUpdated.rawValue) { userInfo in
                         position = userInfo?["position"] as! Float
                         duration = userInfo?["duration"] as! TimeInterval
                     }
@@ -106,7 +106,7 @@ class ContainerTests: QuickSpec {
                     let expectedDuration: TimeInterval = 20.0
                     var duration: TimeInterval!
                     
-                    container.once(ContainerEvent.loadedMetadata.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.loadedMetadata.rawValue) { userInfo in
                         duration = userInfo?["duration"] as! TimeInterval
                     }
                     
@@ -120,7 +120,7 @@ class ContainerTests: QuickSpec {
                     let expectedBitRate: TimeInterval = 11.0
                     var bitRate: TimeInterval!
                     
-                    container.once(ContainerEvent.bitRate.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.bitRate.rawValue) { userInfo in
                         bitRate = userInfo?["bit_rate"] as! TimeInterval
                     }
                     
@@ -133,7 +133,7 @@ class ContainerTests: QuickSpec {
                 it("Should trigger container DVR state event when playback respective event happens with params") {
                     var dvrInUse = false
                     
-                    container.once(ContainerEvent.playbackDVRStateChanged.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.playbackDVRStateChanged.rawValue) { userInfo in
                         dvrInUse = userInfo?["dvr_in_use"] as! Bool
                     }
                     
@@ -146,7 +146,7 @@ class ContainerTests: QuickSpec {
                 it("Should trigger container Error event when playback respective event happens with params") {
                     var error = ""
                     
-                    container.once(ContainerEvent.error.rawValue) { userInfo in
+                    _ = container.once(ContainerEvent.error.rawValue) { userInfo in
                         error = userInfo?["error"] as! String
                     }
                     
@@ -171,43 +171,43 @@ class ContainerTests: QuickSpec {
                 }
                 
                 it("Should trigger buffering event after playback respective event is triggered") {
-                    container.on(ContainerEvent.buffering.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.buffering.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.buffering.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger buffer full event after playback respective event is triggered") {
-                    container.on(ContainerEvent.bufferFull.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.bufferFull.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.bufferFull.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger settings event after playback respective event is triggered") {
-                    container.on(ContainerEvent.settingsUpdated.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.settingsUpdated.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.settingsUpdated.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger HD updated event after playback respective event is triggered") {
-                    container.on(ContainerEvent.highDefinitionUpdated.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.highDefinitionUpdated.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.highDefinitionUpdated.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger State Changed event after playback respective event is triggered") {
-                    container.on(ContainerEvent.playbackStateChanged.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.playbackStateChanged.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.stateChanged.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger Media Control Disabled event after playback respective event is triggered") {
-                    container.on(ContainerEvent.mediaControlDisabled.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.mediaControlDisabled.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.mediaControlDisabled.rawValue)
                     expect(eventWasTriggered) == true
                 }
 
                 it("Should trigger Media Control Enabled event after playback respective event is triggered") {
-                    container.on(ContainerEvent.mediaControlEnabled.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.mediaControlEnabled.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.mediaControlEnabled.rawValue)
                     expect(eventWasTriggered) == true
                 }
@@ -220,25 +220,25 @@ class ContainerTests: QuickSpec {
                 }
                 
                 it("Should trigger Ended event after playback respective event is triggered") {
-                    container.on(ContainerEvent.ended.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.ended.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.ended.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger Play event after playback respective event is triggered") {
-                    container.on(ContainerEvent.play.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.play.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.play.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger Pause event after playback respective event is triggered") {
-                    container.on(ContainerEvent.pause.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.pause.rawValue, callback: eventCallback)
                     playback.trigger(PlaybackEvent.pause.rawValue)
                     expect(eventWasTriggered) == true
                 }
                 
                 it("Should trigger it's Stop event after stop is called") {
-                    container.on(ContainerEvent.stop.rawValue, callback: eventCallback)
+                    _ = container.on(ContainerEvent.stop.rawValue, callback: eventCallback)
                     container.stop()
                     expect(eventWasTriggered) == true
                 }
@@ -323,12 +323,12 @@ class ContainerTests: QuickSpec {
                 
                 it("Should be able to check if has a plugin with given class") {
                     container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(FakeUIContainerPlugin)).to(beTrue())
+                    expect(container.hasPlugin(FakeUIContainerPlugin.self)).to(beTrue())
                 }
                 
                 it("Should return false if plugin isn't on container") {
                     container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(AnotherUIContainerPlugin)).to(beFalse())
+                    expect(container.hasPlugin(AnotherUIContainerPlugin.self)).to(beFalse())
                 }
                 
                 it("Should not add self reference on the plugin") {

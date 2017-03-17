@@ -84,7 +84,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should trigger playing event ") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.playing.rawValue) { _ in
+                        _ = mediaControl.once(MediaControlEvent.playing.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         
@@ -112,7 +112,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should trigger not playing event when selecting button") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
+                        _ = mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         
@@ -141,7 +141,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should trigger not playing event when selecting button") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
+                        _ = mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         

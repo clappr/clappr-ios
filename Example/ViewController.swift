@@ -17,35 +17,35 @@ class ViewController: UIViewController {
     }
     
     func listenToPlayerEvents() {
-        player.on(PlayerEvent.play) { _ in
+        _ = player.on(PlayerEvent.play) { _ in
             print("on Play")
         }
         
-        player.on(PlayerEvent.pause) { _ in
+        _ = player.on(PlayerEvent.pause) { _ in
             print("on Pause")
         }
         
-        player.on(PlayerEvent.stop) { _ in
+        _ = player.on(PlayerEvent.stop) { _ in
             print("on Stop")
         }
         
-        player.on(PlayerEvent.ended) { _ in
+        _ = player.on(PlayerEvent.ended) { _ in
             print("on Ended")
         }
         
-        player.on(PlayerEvent.ready) { _ in
+        _ = player.on(PlayerEvent.ready) { _ in
             print("on Ready")
         }
         
-        player.on(PlayerEvent.error) { userInfo in
+        _ = player.on(PlayerEvent.error) { userInfo in
             print("on Error: \(userInfo)")
         }
 
-        player.on(PlayerEvent.enterFullscreen) { _ in
+        _ = player.on(PlayerEvent.enterFullscreen) { _ in
             print("on Enter Fullscreen")
         }
 
-        player.on(PlayerEvent.exitFullscreen) { _ in
+        _ = player.on(PlayerEvent.exitFullscreen) { _ in
             print("on Exit Fullscreen")
         }
     }

@@ -103,10 +103,10 @@ open class Player: BaseObject {
     
     fileprivate func bindEvents() {
         for (event, callback) in coreBindings() {
-            listenTo(core, eventName: event.rawValue, callback: callback)
+            _ = listenTo(core, eventName: event.rawValue, callback: callback)
         }
         for (event, callback) in containerBindings() {
-            listenTo(core.container, eventName: event.rawValue, callback: callback)
+            _ = listenTo(core.container, eventName: event.rawValue, callback: callback)
         }
     }
 
