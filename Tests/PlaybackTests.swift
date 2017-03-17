@@ -61,7 +61,7 @@ class PlaybackTests: QuickSpec {
             it("Should stop listening events after destroy has been called") {
                 var callbackWasCalled = false
 
-                _ = playback.on("some-event") { userInfo in
+                playback.on("some-event") { userInfo in
                     callbackWasCalled = true
                 }
 

@@ -59,13 +59,13 @@ class CoreTests: QuickSpec {
                 context("Verification") {
                     it("Should return true if a plugin is installed") {
                         core.addPlugin(FakeCorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
+                        let containsPlugin = core.hasPlugin(FakeCorePlugin)
                         expect(containsPlugin).to(beTrue())
                     }
                     
                     it("Should return false if a plugin isn't installed") {
                         core.addPlugin(UICorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
+                        let containsPlugin = core.hasPlugin(FakeCorePlugin)
                         expect(containsPlugin).to(beFalse())
                     }
                 }

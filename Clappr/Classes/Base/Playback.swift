@@ -94,7 +94,7 @@ open class Playback: UIBaseObject, Plugin {
     }
 
     open override func render() {
-        _ = once(PlaybackEvent.ready.rawValue) {[unowned self] _ in
+        once(PlaybackEvent.ready.rawValue) {[unowned self] _ in
             if self.startAt != 0.0 {
                 self.seek(self.startAt)
             }

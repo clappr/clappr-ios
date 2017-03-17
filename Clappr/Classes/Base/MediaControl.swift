@@ -163,7 +163,7 @@ open class MediaControl: UIBaseObject {
     
     open func bindEventListeners() {
         for (event, callback) in eventBindings() {
-            _ = listenTo(container, eventName: event.rawValue, callback: callback)
+            listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
     
@@ -357,7 +357,7 @@ open class MediaControl: UIBaseObject {
         if container.isPlaying {
             hideAnimated()
         } else {
-            _ = listenToOnce(container, eventName: ContainerEvent.play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
+            listenToOnce(container, eventName: ContainerEvent.play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
         }
     }
 

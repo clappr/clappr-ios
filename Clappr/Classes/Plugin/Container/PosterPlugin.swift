@@ -70,7 +70,7 @@ open class PosterPlugin: UIContainerPlugin {
     
     fileprivate func bindEvents() {
         for (event, callback) in eventsToBind() {
-            _ = listenTo(container, eventName: event.rawValue, callback: callback)
+            listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
     

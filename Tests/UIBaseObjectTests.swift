@@ -10,7 +10,7 @@ class UIBaseObjectTests: QuickSpec {
                 let uiObject = UIBaseObject()
                 var callbackWasCalled = false
                 
-                _ = uiObject.on("some-event") { userInfo in
+                uiObject.on("some-event") { userInfo in
                     callbackWasCalled = true
                 }
                 uiObject.trigger("some-event")

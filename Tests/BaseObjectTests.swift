@@ -22,7 +22,7 @@ class BaseObjectTests: QuickSpec {
             
             describe("on") {
                 it("Callback should be called on event trigger") {
-                    _ = baseObject.on(eventName, callback: callback)
+                    baseObject.on(eventName, callback: callback)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == true
@@ -30,7 +30,7 @@ class BaseObjectTests: QuickSpec {
                 
                 it("Callback should receive userInfo on trigger with params") {
                     var value = "Not Expected"
-                    _ = baseObject.on(eventName) { userInfo in
+                    baseObject.on(eventName) { userInfo in
                         value = userInfo?["new_value"] as! String
                     }
                     
@@ -40,10 +40,10 @@ class BaseObjectTests: QuickSpec {
                 }
                 
                 it("Callback should be called for every callback registered") {
-                    _ = baseObject.on(eventName, callback: callback)
+                    baseObject.on(eventName, callback: callback)
                     
                     var secondCallbackWasCalled = false
-                    _ = baseObject.on(eventName) { userInfo in
+                    baseObject.on(eventName) { userInfo in
                         secondCallbackWasCalled = true
                     }
                     
@@ -54,7 +54,7 @@ class BaseObjectTests: QuickSpec {
                 }
                 
                 it("Callback should not be called for another event trigger") {
-                    _ = baseObject.on(eventName, callback: callback)
+                    baseObject.on(eventName, callback: callback)
                     
                     baseObject.trigger("another-event")
                     
@@ -64,7 +64,7 @@ class BaseObjectTests: QuickSpec {
                 it("Callback should not be called for another context object") {
                     let anotherObject = BaseObject()
                     
-                    _ = baseObject.on(eventName, callback: callback)
+                    baseObject.on(eventName, callback: callback)
                     
                     anotherObject.trigger(eventName);
                     
@@ -74,14 +74,14 @@ class BaseObjectTests: QuickSpec {
             
             describe("once") {
                 it("Callback should be called on event trigger") {
-                    _ = baseObject.once(eventName, callback: callback)
+                    baseObject.once(eventName, callback: callback)
                     baseObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == true
                 }
                 
                 it("Callback should not be called twice") {
-                    _ = baseObject.once(eventName, callback: callback)
+                    baseObject.once(eventName, callback: callback)
                     
                     baseObject.trigger(eventName)
                     callbackWasCalled = false
@@ -103,7 +103,7 @@ class BaseObjectTests: QuickSpec {
                 it("Should fire callback for an event on a given context object") {
                     let contextObject = BaseObject()
                     
-                    _ = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+                    baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
                     contextObject.trigger(eventName)
                     
                     expect(callbackWasCalled) == true
@@ -114,7 +114,7 @@ class BaseObjectTests: QuickSpec {
                 it("Should fire callback just one time for an event on a given context object") {
                     let contextObject = BaseObject()
 
-                    _ = baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
+                    baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
                     contextObject.trigger(eventName)
 
                     expect(callbackWasCalled) == true
@@ -142,7 +142,7 @@ class BaseObjectTests: QuickSpec {
                     }
                     
                     let listenId = baseObject.on(eventName, callback: callback)
-                    _ = baseObject.on(eventName, callback: anotherCallback)
+                    baseObject.on(eventName, callback: anotherCallback)
                     
                     baseObject.off(listenId)
                     baseObject.trigger(eventName)
@@ -154,8 +154,8 @@ class BaseObjectTests: QuickSpec {
             
             describe("stopListening") {
                 it("Should cancel all event handlers") {
-                    _ = baseObject.on(eventName, callback: callback)
-                    _ = baseObject.on("another-event", callback: callback)
+                    baseObject.on(eventName, callback: callback)
+                    baseObject.on("another-event", callback: callback)
                     
                     baseObject.stopListening()
                     
@@ -169,11 +169,11 @@ class BaseObjectTests: QuickSpec {
                 it("Should cancel event handlers only on context object") {
                     let anotherObject = BaseObject()
                     var anotherCallbackWasCalled = false
-                    _ = anotherObject.on(eventName) { userInfo in
+                    anotherObject.on(eventName) { userInfo in
                         anotherCallbackWasCalled = true
                     }
                     
-                    _ = baseObject.on(eventName, callback: callback)
+                    baseObject.on(eventName, callback: callback)
                     
                     baseObject.stopListening()
                     

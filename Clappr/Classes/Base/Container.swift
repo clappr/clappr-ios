@@ -104,7 +104,7 @@ open class Container: UIBaseObject {
     
     fileprivate func bindEventListeners() {
         for (event, callback) in eventBindings() {
-            _ = listenTo(playback, eventName: event.rawValue, callback: callback)
+            listenTo(playback, eventName: event.rawValue, callback: callback)
         }
     }
     

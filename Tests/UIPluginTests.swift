@@ -36,7 +36,7 @@ class UIPluginTests: QuickSpec {
                 
                 it("Should stop listening to events") {
                     var eventWasCalled = false
-                    _ = plugin.on("event") { _ in
+                    plugin.on("event") { _ in
                         eventWasCalled = true
                     }
                     
