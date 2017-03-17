@@ -18,7 +18,7 @@ open class DragDetectorView: UIView {
         if let touch = touches.first {
             touchState = .began
             currentTouch = touch
-            target?.perform(selector, with: self)
+            _ = target?.perform(selector, with: self)
         }
     }
 
@@ -26,7 +26,7 @@ open class DragDetectorView: UIView {
         if let touch = touches.first {
             touchState = .moved
             currentTouch = touch
-            target?.perform(selector, with: self)
+            _ = target?.perform(selector, with: self)
         }
     }
 
@@ -34,7 +34,7 @@ open class DragDetectorView: UIView {
         if let touch = touches.first {
             touchState = .ended
             currentTouch = touch
-            target?.perform(selector, with: self)
+            _ = target?.perform(selector, with: self)
         }
     }
 
@@ -42,7 +42,7 @@ open class DragDetectorView: UIView {
         if let touch = touches.first {
             touchState = .canceled
             currentTouch = touch
-            target?.perform(selector, with: self)
+            _ = target?.perform(selector, with: self)
         }
     }
 }

@@ -15,11 +15,13 @@ private struct Event {
 open class BaseObject: NSObject, EventProtocol {
     fileprivate var events = [String: Event]()
     fileprivate var onceEventsHashes = [String]()
-    
+
+    @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: self)
     }
-    
+
+    @discardableResult
     fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = createListenId(eventName, contextObject: contextObject)
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
@@ -43,11 +45,13 @@ open class BaseObject: NSObject, EventProtocol {
             off(listenId)
         }
     }
-    
+
+    @discardableResult
     open func once(_ eventName: String, callback: @escaping EventCallback) -> String {
         return once(eventName, callback: callback, contextObject: self)
     }
 
+    @discardableResult
     fileprivate func once(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = on(eventName, callback: callback, contextObject: contextObject)
         onceEventsHashes.append(listenId)
@@ -75,11 +79,13 @@ open class BaseObject: NSObject, EventProtocol {
             Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
         }
     }
-    
+
+    @discardableResult
     open func listenTo<T : EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
 
+    @discardableResult
     open func listenToOnce<T : EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return once(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }

@@ -323,12 +323,12 @@ class ContainerTests: QuickSpec {
                 
                 it("Should be able to check if has a plugin with given class") {
                     container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(FakeUIContainerPlugin)).to(beTrue())
+                    expect(container.hasPlugin(FakeUIContainerPlugin.self)).to(beTrue())
                 }
                 
                 it("Should return false if plugin isn't on container") {
                     container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(AnotherUIContainerPlugin)).to(beFalse())
+                    expect(container.hasPlugin(AnotherUIContainerPlugin.self)).to(beFalse())
                 }
                 
                 it("Should not add self reference on the plugin") {

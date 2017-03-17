@@ -96,7 +96,8 @@ open class Player: BaseObject {
     open func setFullscreen(_ fullscreen: Bool) {
         core.setFullscreen(fullscreen)
     }
-    
+
+    @discardableResult
     open func on(_ event: PlayerEvent, callback: @escaping EventCallback) -> String {
         return on(event.rawValue, callback: callback)
     }
