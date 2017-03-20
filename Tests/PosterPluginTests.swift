@@ -9,7 +9,7 @@ class PosterPluginTests: QuickSpec {
             var container: Container!
             let options = [kSourceUrl : "http://globo.com/video.mp4",
                            kPosterUrl : "http://clappr.io/poster.png"]
-            let playback = StubPlayback(options: options)
+            let playback = StubPlayback(options: options as Options)
             
 
             context("Initialization") {
@@ -24,7 +24,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should not be rendered if container doesn't have posterUrl Option") {
-                    container = Container(playback: playback, options: ["anotherOption" : true])
+                    container = Container(playback: playback, options: ["anotherOption" : true as AnyObject])
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -34,7 +34,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should be rendered if container have posterUrl Option") {
-                    container = Container(playback: playback, options: options)
+                    container = Container(playback: playback, options: options as Options)
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
@@ -44,13 +44,13 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should be hidden if playback is a NoOp") {
-                    container = Container(playback: NoOpPlayback(), options: options)
+                    container = Container(playback: NoOpPlayback(), options: options as Options)
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()
                     
-                    expect(posterPlugin.hidden) == true
+                    expect(posterPlugin.isHidden) == true
                 }
             }
             
@@ -58,23 +58,23 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
                 
                 beforeEach() {
-                    container = Container(playback: playback, options: options)
+                    container = Container(playback: playback, options: options as Options)
                     posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)
                     container.render()
                 }
                 
                 it("Should be hidden after container Play event ") {
-                    expect(posterPlugin.hidden).to(beFalse())
-                    container.trigger(ContainerEvent.Play.rawValue)
-                    expect(posterPlugin.hidden).to(beTrue())
+                    expect(posterPlugin.isHidden).to(beFalse())
+                    container.trigger(ContainerEvent.play.rawValue)
+                    expect(posterPlugin.isHidden).to(beTrue())
                 }
                 
                 it("Should be not hidden after container Ended event") {
-                    container.trigger(ContainerEvent.Play.rawValue)
-                    container.trigger(ContainerEvent.Ended.rawValue)
+                    container.trigger(ContainerEvent.play.rawValue)
+                    container.trigger(ContainerEvent.ended.rawValue)
                     
-                    expect(posterPlugin.hidden).to(beFalse())
+                    expect(posterPlugin.isHidden).to(beFalse())
                 }
                 
             }

@@ -1,3 +1,3 @@
 public enum PluginType {
-    case Core, Container, Playback
+    case core, container, playback
 }

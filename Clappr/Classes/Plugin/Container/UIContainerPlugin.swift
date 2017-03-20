@@ -1,27 +1,27 @@
-public class UIContainerPlugin: UIPlugin, Plugin {
-    public weak var container: Container!
+open class UIContainerPlugin: UIPlugin, Plugin {
+    open weak var container: Container!
     
-    public class var type: PluginType { return .Container }
+    open class var type: PluginType { return .container }
     
-    public class var name: String {
+    open class var name: String {
         return self.init().pluginName
     }
     
-    public var pluginName: String {
-        NSException(name: "MissingPluginName", reason: "Container Plugins should always declare a name", userInfo: nil).raise()
+    open var pluginName: String {
+        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Container Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
     
     public required init() {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
     }
     
     public required init(context: UIBaseObject) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         if let container = context as? Container {
             self.container = container
         } else {
-           NSException(name: "WrongContextType", reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
+           NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
         }
     }
 

@@ -12,79 +12,85 @@ private struct Event {
     }
 }
 
-public class BaseObject: NSObject, EventProtocol {
-    private var events = [String: Event]()
-    private var onceEventsHashes = [String]()
-    
-    public func on(eventName: String, callback: EventCallback) -> String {
+open class BaseObject: NSObject, EventProtocol {
+    fileprivate var events = [String: Event]()
+    fileprivate var onceEventsHashes = [String]()
+
+    @discardableResult
+    open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: self)
     }
-    
-    private func on(eventName: String, callback: EventCallback, contextObject: BaseObject) -> String {
+
+    @discardableResult
+    fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = createListenId(eventName, contextObject: contextObject)
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
         
         events[listenId] = Event(name: eventName, handler: eventHandler, contextObject: contextObject)
-        notificationCenter().addObserver(eventHandler, selector: #selector(EventHandler.handleEvent), name: eventName, object: contextObject)
+        notificationCenter().addObserver(eventHandler, selector: #selector(EventHandler.handleEvent), name: NSNotification.Name(rawValue: eventName), object: contextObject)
 
         return listenId
     }
     
-    private func wrapEventCallback(listenId: String, callback: EventCallback) -> EventCallback {
+    fileprivate func wrapEventCallback(_ listenId: String, callback: @escaping EventCallback) -> EventCallback {
         return { userInfo in
-            callback(userInfo: userInfo)
+            callback(userInfo)
             self.removeListenerIfOnce(listenId, callback: callback)
         }
     }
     
-    private func removeListenerIfOnce(listenId: String, callback: EventCallback) {
-        if let index = self.onceEventsHashes.indexOf(listenId) {
-            onceEventsHashes.removeAtIndex(index)
+    fileprivate func removeListenerIfOnce(_ listenId: String, callback: EventCallback) {
+        if let index = self.onceEventsHashes.index(of: listenId) {
+            onceEventsHashes.remove(at: index)
             off(listenId)
         }
     }
-    
-    public func once(eventName: String, callback: EventCallback) -> String {
+
+    @discardableResult
+    open func once(_ eventName: String, callback: @escaping EventCallback) -> String {
         return once(eventName, callback: callback, contextObject: self)
     }
 
-    private func once(eventName: String, callback: EventCallback, contextObject: BaseObject) -> String {
+    @discardableResult
+    fileprivate func once(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = on(eventName, callback: callback, contextObject: contextObject)
         onceEventsHashes.append(listenId)
         return listenId
     }
     
-    public func off(listenId: String) {
+    open func off(_ listenId: String) {
         guard let event = events[listenId] else {
             Logger.logError("could not find any event with given event listenId", scope: logIdentifier())
             return
         }
         
-        notificationCenter().removeObserver(event.eventHandler, name: event.name, object: event.contextObject)
-        events.removeValueForKey(listenId)
+        notificationCenter().removeObserver(event.eventHandler, name: NSNotification.Name(rawValue: event.name), object: event.contextObject)
+        events.removeValue(forKey: listenId)
     }
     
-    public func trigger(eventName: String) {
+    open func trigger(_ eventName: String) {
         trigger(eventName, userInfo: [:])
     }
     
-    public func trigger(eventName: String, userInfo: [NSObject : AnyObject]?) {
-        notificationCenter().postNotificationName(eventName, object: self, userInfo: userInfo)
+    open func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
+        notificationCenter().post(name: Notification.Name(rawValue: eventName), object: self, userInfo: userInfo)
         
-        if self.dynamicType != BaseObject.self {
+        if type(of: self) != BaseObject.self {
             Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
         }
     }
-    
-    public func listenTo<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+
+    @discardableResult
+    open func listenTo<T : EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
 
-    public func listenToOnce<T : EventProtocol>(contextObject: T, eventName: String, callback: EventCallback) -> String {
+    @discardableResult
+    open func listenToOnce<T : EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return once(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
     
-    public func stopListening() {
+    open func stopListening() {
         for (_, event) in events {
             notificationCenter().removeObserver(event.eventHandler)
         }
@@ -92,28 +98,28 @@ public class BaseObject: NSObject, EventProtocol {
         events.removeAll()
     }
     
-    public func stopListening(listenId: String) {
+    open func stopListening(_ listenId: String) {
         off(listenId)
     }
     
-    public func getEventContextObject() -> BaseObject {
+    open func getEventContextObject() -> BaseObject {
         return self
     }
     
-    private func createListenId(eventName: String, contextObject: BaseObject) -> String {
+    fileprivate func createListenId(_ eventName: String, contextObject: BaseObject) -> String {
         let contextObjectHash = ObjectIdentifier(contextObject).hashValue
-        return eventName + String(contextObjectHash) + String(NSDate().timeIntervalSince1970)
+        return eventName + String(contextObjectHash) + String(Date().timeIntervalSince1970)
     }
     
-    private func notificationCenter() -> NSNotificationCenter {
-        return NSNotificationCenter.defaultCenter()
+    fileprivate func notificationCenter() -> NotificationCenter {
+        return NotificationCenter.default
     }
 
-    private func logIdentifier() -> String {
+    fileprivate func logIdentifier() -> String {
         if let plugin = self as? Plugin {
             return plugin.pluginName
         }
-        return "\(self.dynamicType)"
+        return "\(type(of: self))"
     }
     
     deinit {

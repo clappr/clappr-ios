@@ -1,15 +1,15 @@
 public enum LogLevel: Int {
-    case Off = 0, Error, Warning, Info, Debug
+    case off = 0, error, warning, info, debug
     
     func description() -> String {
         switch self {
-        case .Debug:
+        case .debug:
             return "DEBUG"
-        case .Info:
+        case .info:
             return "INFO"
-        case .Warning:
+        case .warning:
             return "WARNING"
-        case .Error:
+        case .error:
             return "ERROR"
         default:
             return ""

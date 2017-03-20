@@ -9,7 +9,7 @@ class PlayerTests: QuickSpec {
             let options = [kSourceUrl : "http://someUrl.com"]
             
             it("Should load source on core when initializing") {
-                let player = Player(options: options)
+                let player = Player(options: options as Options)
                 
                 expect(player.core.container).toNot(beNil())
             }

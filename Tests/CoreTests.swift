@@ -9,14 +9,14 @@ class CoreTests: QuickSpec {
         let loader = Loader(externalPlugins: [StubPlayback.self])
         
         beforeEach() {
-            core = Core(loader: loader, options: options)
+            core = Core(loader: loader, options: options as Options)
         }
         
         describe("Core") {
             context("Options") {
                 it("Should have a constructor with options") {
                     let options = ["SomeOption" : true]
-                    let core = Core(loader: loader, options: options)
+                    let core = Core(loader: loader, options: options as Options)
                     
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
@@ -59,13 +59,13 @@ class CoreTests: QuickSpec {
                 context("Verification") {
                     it("Should return true if a plugin is installed") {
                         core.addPlugin(FakeCorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin)
+                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
                         expect(containsPlugin).to(beTrue())
                     }
                     
                     it("Should return false if a plugin isn't installed") {
                         core.addPlugin(UICorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin)
+                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
                         expect(containsPlugin).to(beFalse())
                     }
                 }

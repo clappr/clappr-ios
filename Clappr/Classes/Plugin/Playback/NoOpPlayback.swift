@@ -1,7 +1,7 @@
-public class NoOpPlayback: Playback {
-    private var errorLabel = UILabel(frame: CGRectZero)
+open class NoOpPlayback: Playback {
+    fileprivate var errorLabel = UILabel(frame: CGRect.zero)
     
-    public override var pluginName: String {
+    open override var pluginName: String {
         return "NoOp"
     }
     
@@ -22,24 +22,24 @@ public class NoOpPlayback: Playback {
         fatalError("init(context:) has not been implemented")
     }
 
-    public override class func canPlay(options: Options) -> Bool {
+    open override class func canPlay(_ options: Options) -> Bool {
         return true
     }
     
-    public override func render() {
+    open override func render() {
         addSubviewMatchingConstraints(errorLabel)
-        trigger(.Ready)
+        trigger(.ready)
     }
     
-    private func setupLabel() {
+    fileprivate func setupLabel() {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.text = labelText()
-        errorLabel.textAlignment = .Center
+        errorLabel.textAlignment = .center
         errorLabel.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-        errorLabel.textColor = UIColor.whiteColor()
+        errorLabel.textColor = UIColor.white
     }
     
-    private func labelText() -> String {
+    fileprivate func labelText() -> String {
         if let text = options[kPlaybackNotSupportedMessage] as? String {
             return text
         }

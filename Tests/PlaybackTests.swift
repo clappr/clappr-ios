@@ -10,27 +10,27 @@ class PlaybackTests: QuickSpec {
             let options = [kSourceUrl : "http://globo.com/video.mp4"]
 
             beforeEach() {
-                playback = StubPlayback(options: options)
+                playback = StubPlayback(options: options as Options)
             }
 
             it("Should have a play method") {
-                let responds = playback.respondsToSelector(#selector(Playback.play))
-                expect(responds).to(beTrue())
+              let responds = playback.responds(to: #selector(Playback.play))
+              expect(responds).to(beTrue())
             }
 
             it("Should have a pause method") {
-                let responds = playback.respondsToSelector(#selector(NSProgress.pause))
-                expect(responds).to(beTrue())
+              let responds = playback.responds(to: #selector(Progress.pause))
+              expect(responds).to(beTrue())
             }
 
             it("Should have a stop method") {
-                let responds = playback.respondsToSelector(#selector(NSNetService.stop))
-                expect(responds).to(beTrue())
+              let responds = playback.responds(to: #selector(NetService.stop))
+              expect(responds).to(beTrue())
             }
 
             it("Should have a seek method receiving a time") {
-                let responds = playback.respondsToSelector(#selector(Playback.seek(_:)))
-                expect(responds).to(beTrue())
+              let responds = playback.responds(to: #selector(Playback.seek(_:)))
+              expect(responds).to(beTrue())
             }
 
             it("Should have a duration var with a default value 0") {
@@ -42,7 +42,7 @@ class PlaybackTests: QuickSpec {
             }
 
             it("Should have a type var with a default value Unknown") {
-                expect(playback.playbackType).to(equal(PlaybackType.Unknown))
+                expect(playback.playbackType).to(equal(PlaybackType.unknown))
             }
 
             it("Should have a isHighDefinitionInUse var with a default value false") {
@@ -82,23 +82,23 @@ class PlaybackTests: QuickSpec {
                 }
 
                 it("Should have autoplay set to false if autoplay option is false") {
-                    let playback = StubPlayback(options: [kAutoPlay : false])
+                    let playback = StubPlayback(options: [kAutoPlay : false as AnyObject])
                     expect(playback.autoPlay) == false
                 }
 
                 it("Should have autoplay set to true if autoplay option is true") {
-                    let playback = StubPlayback(options: [kAutoPlay : true])
+                    let playback = StubPlayback(options: [kAutoPlay : true as AnyObject])
                     expect(playback.autoPlay) == true
                 }
 
                 it("Should call play on render if auto play is set") {
-                    let playback = StubPlayback(options: [kAutoPlay : true])
+                    let playback = StubPlayback(options: [kAutoPlay : true as AnyObject])
                     playback.render()
                     expect(playback.playWasCalled) == true
                 }
 
                 it("Should not call play on render if auto play is set to false") {
-                    let playback = StubPlayback(options: [kAutoPlay : false])
+                    let playback = StubPlayback(options: [kAutoPlay : false as AnyObject])
                     playback.render()
                     expect(playback.playWasCalled) == false
                 }
@@ -106,26 +106,26 @@ class PlaybackTests: QuickSpec {
             
             context("StartAt") {
                 it("Should set start at property from options") {
-                    let playback = StubPlayback(options: [kStartAt : 10])
-                    expect(playback.startAt) == 10
+                    let playback = StubPlayback(options: [kStartAt : 10.0 as AnyObject])
+                    expect(playback.startAt) == 10.0
                 }
                 
                 it("Should have startAt with 0 if no time is set on options") {
                     let playback = StubPlayback(options: [:])
-                    expect(playback.startAt) == 0
+                    expect(playback.startAt) == 0.0
                 }
                 
                 it("Should seek video when rendering if startAt is set") {
-                    let playback = StubPlayback(options: [kStartAt : 15])
+                    let playback = StubPlayback(options: [kStartAt : 15.0 as AnyObject])
                     playback.render()
                     playback.play()
-                    expect(playback.seekWasCalledWithValue) == 15
+                    expect(playback.seekWasCalledWithValue) == 15.0
                 }
             }
 
             context("Playback source") {
                 it("Should have a source property with the url sent via options") {
-                    let playback = StubPlayback(options: [kSourceUrl: "someUrl"])
+                    let playback = StubPlayback(options: [kSourceUrl: "someUrl" as AnyObject])
                     expect(playback.source) == "someUrl"
                 }
 
@@ -139,18 +139,18 @@ class PlaybackTests: QuickSpec {
 
     class StubPlayback: Playback {
         var playWasCalled = false
-        var seekWasCalledWithValue: NSTimeInterval = -1
+        var seekWasCalledWithValue: TimeInterval = -1
 
         override var pluginName: String {
             return "stupPlayback"
         }
 
         override func play() {
-            trigger(PlayerEvent.Ready.rawValue)
+            trigger(PlayerEvent.ready.rawValue)
             playWasCalled = true
         }
         
-        override func seek(timeInterval: NSTimeInterval) {
+        override func seek(_ timeInterval: TimeInterval) {
             seekWasCalledWithValue = timeInterval
         }
     }

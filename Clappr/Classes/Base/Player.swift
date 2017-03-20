@@ -1,47 +1,47 @@
-public class Player: BaseObject {
-    public private(set) var core: Core
+open class Player: BaseObject {
+    open fileprivate(set) var core: Core
 
-    public var activeContainer: Container? {
+    open var activeContainer: Container? {
         return core.activeContainer
     }
 
-    public var activePlayback: Playback? {
+    open var activePlayback: Playback? {
         return core.activePlayback
     }
 
-    public var isFullscreen: Bool {
+    open var isFullscreen: Bool {
         return core.isFullscreen
     }
 
-    public var isPlaying: Bool {
+    open var isPlaying: Bool {
         return activePlayback?.isPlaying ?? false
     }
 
-    public var isPaused: Bool {
+    open var isPaused: Bool {
         return activePlayback?.isPaused ?? false
     }
 
-    public var isBuffering: Bool {
+    open var isBuffering: Bool {
         return activePlayback?.isBuffering ?? false
     }
 
-    public var duration: Double {
+    open var duration: Double {
         return activePlayback?.duration ?? 0
     }
 
-    public var position: Double {
+    open var position: Double {
         return activePlayback?.position ?? 0
     }
     
-    public var subtitles: [MediaOption]? {
+    open var subtitles: [MediaOption]? {
         return activePlayback?.subtitles
     }
     
-    public var audioSources: [MediaOption]? {
+    open var audioSources: [MediaOption]? {
         return activePlayback?.audioSources
     }
     
-    public var selectedSubtitle: MediaOption? {
+    open var selectedSubtitle: MediaOption? {
         get {
             return activePlayback?.selectedSubtitle
         }
@@ -50,7 +50,7 @@ public class Player: BaseObject {
         }
     }
     
-    public var selectedAudioSource: MediaOption? {
+    open var selectedAudioSource: MediaOption? {
         get {
             return activePlayback?.selectedAudioSource
         }
@@ -65,43 +65,44 @@ public class Player: BaseObject {
         self.core = CoreFactory.create(loader , options: options)
     }
     
-    public func attachTo(view: UIView, controller: UIViewController) {
+    open func attachTo(_ view: UIView, controller: UIViewController) {
         bindEvents()
         core.parentController = controller
         core.parentView = view
         core.render()
     }
     
-    public func load(source: String, mimeType: String? = nil) {
+    open func load(_ source: String, mimeType: String? = nil) {
         core.container.load(source, mimeType: mimeType)
         play()
     }
     
-    public func play() {
+    open func play() {
         core.container.play()
     }
     
-    public func pause() {
+    open func pause() {
         core.container.pause()
     }
     
-    public func stop() {
+    open func stop() {
         core.container.stop()
     }
     
-    public func seek(timeInterval: NSTimeInterval) {
+    open func seek(_ timeInterval: TimeInterval) {
         core.container.seek(timeInterval)
     }
     
-    public func setFullscreen(fullscreen: Bool) {
+    open func setFullscreen(_ fullscreen: Bool) {
         core.setFullscreen(fullscreen)
     }
-    
-    public func on(event: PlayerEvent, callback: EventCallback) -> String {
+
+    @discardableResult
+    open func on(_ event: PlayerEvent, callback: @escaping EventCallback) -> String {
         return on(event.rawValue, callback: callback)
     }
     
-    private func bindEvents() {
+    fileprivate func bindEvents() {
         for (event, callback) in coreBindings() {
             listenTo(core, eventName: event.rawValue, callback: callback)
         }
@@ -110,25 +111,25 @@ public class Player: BaseObject {
         }
     }
 
-    private func coreBindings() -> [CoreEvent : EventCallback] {
+    fileprivate func coreBindings() -> [CoreEvent : EventCallback] {
         return [
-            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.EnterFullscreen, userInfo: info)},
-            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.ExitFullscreen, userInfo: info)}
+            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.enterFullscreen, userInfo: info)},
+            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info)}
         ]
     }
     
-    private func containerBindings() -> [ContainerEvent : EventCallback] {
+    fileprivate func containerBindings() -> [ContainerEvent : EventCallback] {
         return [
-            .Play  : { [weak self] (info: EventUserInfo) in self?.forward(.Play, userInfo: info)},
-            .Ready : { [weak self] (info: EventUserInfo) in self?.forward(.Ready, userInfo: info)},
-            .Ended : { [weak self] (info: EventUserInfo) in self?.forward(.Ended, userInfo: info)},
-            .Error : { [weak self] (info: EventUserInfo) in self?.forward(.Error, userInfo: info)},
-            .Stop  : { [weak self] (info: EventUserInfo) in self?.forward(.Stop, userInfo: info)},
-            .Pause : { [weak self] (info: EventUserInfo) in self?.forward(.Pause, userInfo: info)}
+            .play  : { [weak self] (info: EventUserInfo) in self?.forward(.play, userInfo: info)},
+            .ready : { [weak self] (info: EventUserInfo) in self?.forward(.ready, userInfo: info)},
+            .ended : { [weak self] (info: EventUserInfo) in self?.forward(.ended, userInfo: info)},
+            .error : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo: info)},
+            .stop  : { [weak self] (info: EventUserInfo) in self?.forward(.stop, userInfo: info)},
+            .pause : { [weak self] (info: EventUserInfo) in self?.forward(.pause, userInfo: info)}
         ]
     }
     
-    private func forward(event: PlayerEvent, userInfo: EventUserInfo) {
+    fileprivate func forward(_ event: PlayerEvent, userInfo: EventUserInfo) {
         trigger(event.rawValue, userInfo: userInfo)
     }
     
