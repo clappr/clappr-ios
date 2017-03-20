@@ -17,6 +17,7 @@ open class AVFoundationPlayback: Playback {
 
     fileprivate var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
+    fileprivate var playerStatus: AVPlayerStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
     private var backgroundSessionBackup: String?
 
@@ -289,10 +290,13 @@ open class AVFoundationPlayback: Playback {
     }
   
     fileprivate func handleStatusChangedEvent() {
-        if player?.status == .readyToPlay && currentState != .paused {
+        guard let player = player, playerStatus != player.status else { return }
+        playerStatus = player.status
+
+        if playerStatus == .readyToPlay && currentState != .paused {
             readyToPlay()
-        } else if player?.status == .failed {
-            let error = player!.currentItem!.error!
+        } else if playerStatus == .failed {
+            let error = player.currentItem!.error!
             self.trigger(.error, userInfo: ["error": error])
             Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
