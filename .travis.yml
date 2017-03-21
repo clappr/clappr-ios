@@ -13,5 +13,4 @@ before_install:
   - pod repo update
 
 script:
-  - xcodebuild clean test -project Clappr.xcodeproj -scheme Clappr-Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 6s Plus,OS=10.0'| xcpretty
-  - pod lib lint
+  - bash run_tests.sh
