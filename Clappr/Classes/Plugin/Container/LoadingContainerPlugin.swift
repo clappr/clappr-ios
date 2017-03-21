@@ -49,6 +49,7 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     fileprivate func bindEventListeners() {
         if let playback = container.playback {
             listenTo(playback, eventName: Event.stalled.rawValue, callback: startAnimating)
+            listenTo(playback, eventName: Event.error.rawValue, callback: stopAnimating)
         }
 
         listenTo(container, eventName: ContainerEvent.play.rawValue, callback: stopAnimating)
