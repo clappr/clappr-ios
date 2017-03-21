@@ -140,8 +140,7 @@ open class Container: UIBaseObject {
             .bufferUpdate         : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info)} as EventCallback,
             .positionUpdate       : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info)} as EventCallback,
             .didUpdateSubtitleSource : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info)} as EventCallback,
-            .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback,
-            .error                : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo:info)} as EventCallback,
+            .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback            
         ]
     }
 
