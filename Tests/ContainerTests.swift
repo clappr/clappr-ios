@@ -156,19 +156,6 @@ class ContainerTests: QuickSpec {
                     expect(duration) == expectedDuration
                 }
 
-                it("Should trigger container Error event when playback respective event happens with params") {
-                    var error = ""
-                    
-                    container.once(ContainerEvent.error.rawValue) { userInfo in
-                        error = userInfo?["error"] as! String
-                    }
-                    
-                    let userInfo: EventUserInfo = ["error": "Error"]
-                    playback.trigger(.error, userInfo: userInfo)
-                    
-                    expect(error) == "Error"
-                }
-
                 it("Should be ready after playback ready event is triggered") {
                     expect(container.ready) == false
                     playback.trigger(.ready)

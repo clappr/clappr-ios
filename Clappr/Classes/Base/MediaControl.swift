@@ -188,7 +188,7 @@ open class MediaControl: UIBaseObject {
             .progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
             .ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
             .mediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
-            .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
+            .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() }
         ]
     }
 

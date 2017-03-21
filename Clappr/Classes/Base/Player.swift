@@ -123,7 +123,6 @@ open class Player: BaseObject {
             .play  : { [weak self] (info: EventUserInfo) in self?.forward(.play, userInfo: info)},
             .ready : { [weak self] (info: EventUserInfo) in self?.forward(.ready, userInfo: info)},
             .ended : { [weak self] (info: EventUserInfo) in self?.forward(.ended, userInfo: info)},
-            .error : { [weak self] (info: EventUserInfo) in self?.forward(.error, userInfo: info)},
             .stop  : { [weak self] (info: EventUserInfo) in self?.forward(.stop, userInfo: info)},
             .pause : { [weak self] (info: EventUserInfo) in self?.forward(.pause, userInfo: info)}
         ]
