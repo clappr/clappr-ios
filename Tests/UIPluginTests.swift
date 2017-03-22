@@ -24,14 +24,14 @@ class UIPluginTests: QuickSpec {
                 it("Should not be hidden") {
                     plugin.enabled = false
                     plugin.enabled = true
-                    expect(plugin.hidden).to(beFalse())
+                    expect(plugin.isHidden).to(beFalse())
                 }
             }
             
             context("Disabling") {
                 it("Should be hidden") {
                     plugin.enabled = false
-                    expect(plugin.hidden).to(beTrue())
+                    expect(plugin.isHidden).to(beTrue())
                 }
                 
                 it("Should stop listening to events") {

@@ -1,10 +1,10 @@
-public class Loader {
-    public internal(set) var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
-    public internal(set) var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
-    public internal(set) var corePlugins = [Plugin.Type]()
-    public internal(set) var mediaControl: MediaControl.Type = MediaControl.self
+open class Loader {
+    open internal(set) var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
+    open internal(set) var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
+    open internal(set) var corePlugins = [Plugin.Type]()
+    open internal(set) var mediaControl: MediaControl.Type = MediaControl.self
     
-    private var externalPlugins = [Plugin.Type]()
+    fileprivate var externalPlugins = [Plugin.Type]()
     
     public convenience init() {
         self.init(externalPlugins: [])
@@ -23,32 +23,32 @@ public class Loader {
             "\n - playback: \(playbackPlugins.map({$0.name}))" +
             "\n - container: \(containerPlugins.map({$0.name}))" +
             "\n - core: \(corePlugins.map({$0.name}))" +
-            "\n - mediaControl: \(mediaControl)", scope: "\(self.dynamicType)")
+            "\n - mediaControl: \(mediaControl)", scope: "\(type(of: self))")
     }
     
-    private func loadExternalMediaControl(options: Options) {
+    fileprivate func loadExternalMediaControl(_ options: Options) {
         if let externalMediaControl = options[kMediaControl] as? MediaControl.Type {
             mediaControl = externalMediaControl
         }
     }
     
-    public func addExternalPlugins(externalPlugins: [Plugin.Type]) {
+    open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
         self.externalPlugins = externalPlugins
-        playbackPlugins = getPlugins(.Playback, defaultPlugins: playbackPlugins)
-        containerPlugins = getPlugins(.Container, defaultPlugins: containerPlugins)
-        corePlugins = getPlugins(.Core, defaultPlugins: corePlugins)
+        playbackPlugins = getPlugins(.playback, defaultPlugins: playbackPlugins)
+        containerPlugins = getPlugins(.container, defaultPlugins: containerPlugins)
+        corePlugins = getPlugins(.core, defaultPlugins: corePlugins)
     }
     
-    private func getPlugins(type: PluginType, defaultPlugins: [Plugin.Type]) -> [Plugin.Type] {
+    fileprivate func getPlugins(_ type: PluginType, defaultPlugins: [Plugin.Type]) -> [Plugin.Type] {
         let filteredPlugins = externalPlugins.filter({$0.type == type})
         return removeDuplicate(filteredPlugins + defaultPlugins)
     }
     
-    private func removeDuplicate(plugins: [Plugin.Type]) -> [Plugin.Type] {
+    fileprivate func removeDuplicate(_ plugins: [Plugin.Type]) -> [Plugin.Type] {
         var result = [Plugin.Type]()
         
         for plugin in plugins {
-            if !result.contains({$0.name == plugin.name}) {
+            if !result.contains(where: {$0.name == plugin.name}) {
                 result.append(plugin)
             }
         }

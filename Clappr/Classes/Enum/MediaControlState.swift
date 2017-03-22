@@ -1,3 +1,3 @@
 public enum PlaybackControlState {
-    case Playing, Paused, Stopped
+    case playing, paused, stopped
 }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Clappr"
-  s.version          = "0.4.2"
+  s.version          = "0.5.0"
   s.summary          = "An extensible media player for iOS"
   s.homepage         = "http://clappr.io"
   s.license          = 'MIT'
@@ -22,5 +22,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Clappr/Classes/**/*'
   s.resources = 'Clappr/Resources/*.{xib,ttf,png,xcassets}'
 
-  s.dependency 'Kingfisher', '~> 2.6.1'
+  s.dependency 'Kingfisher', '~> 3.0'
 end

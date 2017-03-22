@@ -1,27 +1,27 @@
-public class UICorePlugin: UIPlugin, Plugin {
-    public weak var core: Core!
+open class UICorePlugin: UIPlugin, Plugin {
+    open weak var core: Core!
     
-    public class var type: PluginType { return .Core }
+    open class var type: PluginType { return .core }
     
-    public class var name: String {
+    open class var name: String {
         return self.init().pluginName
     }
     
-    public var pluginName: String {
-        NSException(name: "MissingPluginName", reason: "Core Plugins should always declare a name", userInfo: nil).raise()
+    open var pluginName: String {
+        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Core Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
     
     public required init() {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
     }
 
     public required init(context: UIBaseObject) {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         if let core = context as? Core {
             self.core = core
         } else {
-            NSException(name: "WrongContextType", reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
+            NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
         }
     }
 

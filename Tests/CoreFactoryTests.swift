@@ -9,7 +9,7 @@ class CoreFactoryTests: QuickSpec {
             context("Creation") {
                 it("Should be able to create a core") {
                     let options = [kSourceUrl : "testUrl"]
-                    let core = CoreFactory.create(options: options)
+                    let core = CoreFactory.create(options: options as Options)
                     
                     expect(core).toNot(beNil())
                     expect(core.container).toNot(beNil())
@@ -20,7 +20,7 @@ class CoreFactoryTests: QuickSpec {
 
                     let core = CoreFactory.create(loader)
                     
-                    expect(core.hasPlugin(FakeUICorePlugin)).to(beTrue())
+                    expect(core.hasPlugin(FakeUICorePlugin.self)).to(beTrue())
                 }
 
                 it("Should add a core context to all plugins") {

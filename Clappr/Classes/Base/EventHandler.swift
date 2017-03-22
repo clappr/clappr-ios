@@ -1,17 +1,18 @@
 import Foundation
 
-public typealias EventUserInfo = [NSObject : AnyObject]?
-public typealias EventCallback = ((userInfo: EventUserInfo) -> ())
+public typealias EventUserInfo = [AnyHashable: Any]?
 
-public class EventHandler: NSObject {
+public typealias EventCallback = (_ userInfo: EventUserInfo) -> ()
+
+open class EventHandler: NSObject {
     
-    private var callback: EventCallback?
+    fileprivate var callback: EventCallback?
     
-    public init(callback: EventCallback) {
+    public init(callback: @escaping EventCallback) {
         self.callback = callback
     }
     
-    public func handleEvent(notification: NSNotification) {
-        callback?(userInfo: notification.userInfo)
+    open func handleEvent(_ notification: Notification) {
+        callback?(notification.userInfo)
     }
 }

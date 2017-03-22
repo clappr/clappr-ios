@@ -1,8 +1,8 @@
-public class UIPlugin: UIBaseObject {
+open class UIPlugin: UIBaseObject {
     
-    public var enabled = true {
+    open var enabled = true {
         didSet {
-            hidden = !enabled
+            isHidden = !enabled
             if !enabled {
                 stopListening()
             }

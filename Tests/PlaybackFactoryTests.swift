@@ -16,13 +16,13 @@ class PlaybackFactoryTests: QuickSpec {
         
         context("Playback creation") {
             it("Should create a valid playback for a valid source") {
-                let factory = PlaybackFactory(loader: loader, options: optionsWithValidSource)
+                let factory = PlaybackFactory(loader: loader, options: optionsWithValidSource as Options)
                 
                 expect(factory.createPlayback().pluginName) == "AVPlayback"
             }
             
             it("Should create an invalid playback for url that cannot be played") {
-                let factory = PlaybackFactory(loader: loader, options: optionsWithInvalidSource)
+                let factory = PlaybackFactory(loader: loader, options: optionsWithInvalidSource as Options)
                 
                 expect(factory.createPlayback().pluginName) == "NoOp"
             }
@@ -30,7 +30,7 @@ class PlaybackFactoryTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override class func canPlay(options: Options) -> Bool {
+        override class func canPlay(_ options: Options) -> Bool {
             return options[kSourceUrl] as! String != "invalid"
         }
         

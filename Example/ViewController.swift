@@ -9,7 +9,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let options = [kSourceUrl : "http://clappr.io/highline.mp4", kPosterUrl : "http://clappr.io/poster.png"]
-        player = Player(options: options)
+        player = Player(options: options as Options)
         
         listenToPlayerEvents()
         
@@ -17,36 +17,44 @@ class ViewController: UIViewController {
     }
     
     func listenToPlayerEvents() {
-        player.on(PlayerEvent.Play) { _ in
+        player.on(PlayerEvent.play) { _ in
             print("on Play")
         }
         
-        player.on(PlayerEvent.Pause) { _ in
+        player.on(PlayerEvent.pause) { _ in
             print("on Pause")
         }
         
-        player.on(PlayerEvent.Stop) { _ in
+        player.on(PlayerEvent.stop) { _ in
             print("on Stop")
         }
         
-        player.on(PlayerEvent.Ended) { _ in
+        player.on(PlayerEvent.ended) { _ in
             print("on Ended")
         }
         
-        player.on(PlayerEvent.Ready) { _ in
+        player.on(PlayerEvent.ready) { _ in
             print("on Ready")
         }
         
-        player.on(PlayerEvent.Error) { userInfo in
+        player.on(PlayerEvent.error) { userInfo in
             print("on Error: \(userInfo)")
         }
 
-        player.on(PlayerEvent.EnterFullscreen) { _ in
+        player.on(PlayerEvent.enterFullscreen) { _ in
             print("on Enter Fullscreen")
         }
 
-        player.on(PlayerEvent.ExitFullscreen) { _ in
+        player.on(PlayerEvent.exitFullscreen) { _ in
             print("on Exit Fullscreen")
         }
     }
+
+  override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.portrait
+  }
+
+  override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+    return UIInterfaceOrientation.portrait
+  }
 }

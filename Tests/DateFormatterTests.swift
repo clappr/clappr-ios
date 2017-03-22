@@ -20,7 +20,7 @@ class DateFormatterTests: QuickSpec {
             
             it("Should format time greater than 1 hour") {
                 let expected = "01:54:32"
-                let result = DateFormatter.formatSeconds((1 * 60 * 60) + (54 * 60) + 32)
+                let result = DateFormatter.formatSeconds(3600 + (54 * 60) + 32)
                 expect(result) == expected
             }
         }
