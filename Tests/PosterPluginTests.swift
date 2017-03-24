@@ -24,7 +24,7 @@ class PosterPluginTests: QuickSpec {
                 }
                 
                 it("Should not be rendered if container doesn't have posterUrl Option") {
-                    container = Container(playback: playback, options: ["anotherOption" : true as AnyObject])
+                    container = Container(playback: playback, options: ["anotherOption" : true])
                     
                     let posterPlugin = PosterPlugin(context: container)
                     container.addPlugin(posterPlugin)

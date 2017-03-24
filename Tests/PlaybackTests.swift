@@ -82,23 +82,23 @@ class PlaybackTests: QuickSpec {
                 }
 
                 it("Should have autoplay set to false if autoplay option is false") {
-                    let playback = StubPlayback(options: [kAutoPlay : false as AnyObject])
+                    let playback = StubPlayback(options: [kAutoPlay : false])
                     expect(playback.autoPlay) == false
                 }
 
                 it("Should have autoplay set to true if autoplay option is true") {
-                    let playback = StubPlayback(options: [kAutoPlay : true as AnyObject])
+                    let playback = StubPlayback(options: [kAutoPlay : true])
                     expect(playback.autoPlay) == true
                 }
 
                 it("Should call play on render if auto play is set") {
-                    let playback = StubPlayback(options: [kAutoPlay : true as AnyObject])
+                    let playback = StubPlayback(options: [kAutoPlay : true])
                     playback.render()
                     expect(playback.playWasCalled) == true
                 }
 
                 it("Should not call play on render if auto play is set to false") {
-                    let playback = StubPlayback(options: [kAutoPlay : false as AnyObject])
+                    let playback = StubPlayback(options: [kAutoPlay : false])
                     playback.render()
                     expect(playback.playWasCalled) == false
                 }
@@ -106,7 +106,7 @@ class PlaybackTests: QuickSpec {
             
             context("StartAt") {
                 it("Should set start at property from options") {
-                    let playback = StubPlayback(options: [kStartAt : 10.0 as AnyObject])
+                    let playback = StubPlayback(options: [kStartAt : 10.0])
                     expect(playback.startAt) == 10.0
                 }
                 
@@ -116,7 +116,7 @@ class PlaybackTests: QuickSpec {
                 }
                 
                 it("Should seek video when rendering if startAt is set") {
-                    let playback = StubPlayback(options: [kStartAt : 15.0 as AnyObject])
+                    let playback = StubPlayback(options: [kStartAt : 15.0])
                     playback.render()
                     playback.play()
                     expect(playback.seekWasCalledWithValue) == 15.0
@@ -125,7 +125,7 @@ class PlaybackTests: QuickSpec {
 
             context("Playback source") {
                 it("Should have a source property with the url sent via options") {
-                    let playback = StubPlayback(options: [kSourceUrl: "someUrl" as AnyObject])
+                    let playback = StubPlayback(options: [kSourceUrl: "someUrl"])
                     expect(playback.source) == "someUrl"
                 }
 

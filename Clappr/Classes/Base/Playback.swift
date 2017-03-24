@@ -51,7 +51,7 @@ open class Playback: UIBaseObject, Plugin {
         return 0.0
     }
 
-    open var settings: [String : AnyObject] {
+    open var settings: [String : Any] {
         return [:]
     }
 
