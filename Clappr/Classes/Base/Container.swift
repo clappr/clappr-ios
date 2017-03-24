@@ -3,7 +3,7 @@ import Foundation
 open class Container: UIBaseObject {
     open internal(set) var ready = false
     open internal(set) var dvrInUse = false
-    open internal(set) var settings: [String : AnyObject] = [:]
+    open internal(set) var settings: [String : Any] = [:]
     open internal(set) var plugins: [UIContainerPlugin] = []
     open internal(set) var options: Options
     
@@ -43,8 +43,8 @@ open class Container: UIBaseObject {
     
     open func load(_ source: String, mimeType: String? = nil) {
         var playbackOptions = options
-        playbackOptions[kSourceUrl] = source as AnyObject?
-        playbackOptions[kMimeType] = mimeType as AnyObject?? ?? nil
+        playbackOptions[kSourceUrl] = source
+        playbackOptions[kMimeType] = mimeType ?? nil
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
@@ -133,7 +133,7 @@ open class Container: UIBaseObject {
     }
 
     fileprivate func onPlay() {
-        options[kStartAt] = 0.0 as AnyObject?
+        options[kStartAt] = 0.0
         trigger(ContainerEvent.play)
     }
     

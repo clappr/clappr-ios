@@ -251,8 +251,8 @@ class ContainerTests: QuickSpec {
                         
                         var stopWasCalled = false , playWasCalled = false, pauseWasCalled = false
 
-                        override var settings: [String: AnyObject] {
-                            return ["foo": "bar" as AnyObject]
+                        override var settings: [String: Any] {
+                            return ["foo": "bar"]
                         }
                         
                         override var isPlaying: Bool {
