@@ -4,10 +4,9 @@ open class Container: UIBaseObject {
     open internal(set) var ready = false
     open internal(set) var plugins: [UIContainerPlugin] = []
     open internal(set) var options: Options
-
+    
     fileprivate var buffering = false
     fileprivate var loader: Loader
-
     
     open var isPlaying: Bool {
         return playback?.isPlaying ?? false
@@ -19,18 +18,9 @@ open class Container: UIBaseObject {
             trigger(eventToTrigger)
         }
     }
-
-    open internal(set) var playback: Playback? {
-        willSet {
-            trigger(InternalEvent.willChangePlayback.rawValue)
-        }
-        didSet {
-            trigger(InternalEvent.didChangePlayback.rawValue)
-            stopListening()
-            bindEventListeners()
-        }
-    }
-
+    
+    open internal(set) var playback: Playback?
+    
     public init(loader: Loader = Loader(), options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
@@ -38,7 +28,7 @@ open class Container: UIBaseObject {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.clear
         loadPlugins()
-
+        
         if let source = options[kSourceUrl] as? String {
             load(source, mimeType: options[kMimeType] as? String)
         }
@@ -55,22 +45,35 @@ open class Container: UIBaseObject {
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
-        playback?.removeFromSuperview()
-        playback = playbackFactory.createPlayback()
+        setPlayback(playbackFactory.createPlayback())
+        
         renderPlayback()
         trigger(ContainerEvent.sourceChanged)
+    }
+    
+    fileprivate func setPlayback(_ playback: Playback) {
+        if self.playback != playback {
+            trigger(InternalEvent.willChangePlayback.rawValue)
+            
+            self.playback?.removeFromSuperview()
+            self.playback = playback
+            
+            trigger(InternalEvent.didChangePlayback.rawValue)
+            stopListening()
+            bindEventListeners()
+        }
     }
     
     open override func render() {
         plugins.forEach(renderPlugin)
         renderPlayback()
     }
-
+    
     fileprivate func renderPlayback() {
         guard let playback = playback else {
             return
         }
-
+        
         addSubviewMatchingConstraints(playback)
         playback.render()
         sendSubview(toBack: playback)
@@ -87,7 +90,7 @@ open class Container: UIBaseObject {
         
         removeFromSuperview()
     }
-
+    
     open func play() {
         playback?.play()
     }
@@ -104,8 +107,8 @@ open class Container: UIBaseObject {
     open func seek(timeInterval: TimeInterval) {
         playback?.seek(timeInterval)
     }
-
-    private func loadPlugins() {
+    
+    fileprivate func loadPlugins() {
         for type in loader.containerPlugins {
             addPlugin(type.init(context: self) as! UIContainerPlugin)
         }
@@ -118,17 +121,17 @@ open class Container: UIBaseObject {
     open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({$0.isKind(of: pluginClass)}).count > 0
     }
-
+    
     fileprivate func bindEventListeners() {
         guard let playback = playback else {
             return
         }
-
+        
         for (event, callback) in eventBindings() {
             listenTo(playback, eventName: event.rawValue, callback: callback)
         }
     }
-
+    
     fileprivate func eventBindings() -> [Event : EventCallback] {
         return [
             .didComplete          : { [weak self] (info: EventUserInfo) in self?.trigger(.ended)} as EventCallback,
@@ -140,25 +143,25 @@ open class Container: UIBaseObject {
             .bufferUpdate         : { [weak self] (info: EventUserInfo) in self?.forward(.progress, userInfo:info)} as EventCallback,
             .positionUpdate       : { [weak self] (info: EventUserInfo) in self?.forward(.timeUpdated, userInfo:info)} as EventCallback,
             .didUpdateSubtitleSource : { [weak self] (info: EventUserInfo) in self?.forward(.subtitleSourcesUpdated, userInfo:info)} as EventCallback,
-            .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback            
+            .didUpdateAudioSource : { [weak self] (info: EventUserInfo) in self?.forward(.audioSourcesUpdated, userInfo:info)} as EventCallback
         ]
     }
-
+    
     fileprivate func onPlay() {
         if buffering {
             buffering = false
             trigger(.bufferFull)
         }
-
+        
         options[kStartAt] = 0.0
         trigger(.play)
     }
-
+    
     fileprivate func setReady() {
         ready = true
         trigger(ContainerEvent.ready)
     }
-
+    
     fileprivate func trigger(_ event: ContainerEvent) {
         trigger(event.rawValue)
     }
