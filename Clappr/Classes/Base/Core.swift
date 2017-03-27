@@ -1,6 +1,6 @@
 open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     open fileprivate(set) var options: Options
-    open fileprivate(set) var container: Container!
+    open fileprivate(set) var containers: [Container] = []
     open fileprivate(set) var mediaControl: MediaControl!
     open fileprivate(set) var plugins: [UICorePlugin] = []
     
@@ -9,10 +9,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate var loader: Loader
     fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
-    open var activeContainer: Container? {
-        return container
-    }
-
+    open var activeContainer: Container?
+    
     open var activePlayback: Playback? {
         return activeContainer?.playback
     }
@@ -29,6 +27,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.loader = loader
         self.options = options
+        self.containers.append(Container(loader: loader, options: options))
+        self.activeContainer = containers[0]
+        
         super.init(frame: CGRect.zero)
         
         setup()
@@ -43,20 +44,15 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func setup() {
         loadPlugins()
         backgroundColor = UIColor.black
-        createContainers()
         createMediaControl()
         bindEventListeners()
     }
 
-    fileprivate func createContainers() {
-        container = Container(loader: loader, options: options)
-    }
-    
     fileprivate func createMediaControl() {
         mediaControl = loader.mediaControl.create()
         addTapRecognizer()
         
-        if let container = container {
+        if let container = self.activeContainer {
             mediaControl.setup(container)
         }
     }
@@ -96,12 +92,10 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addToContainer()
         
         plugins.forEach(installPlugin)
+        containers.forEach(renderContainer)
         
-        addSubviewMatchingConstraints(container)
         addSubviewMatchingConstraints(mediaControl)
-        
         mediaControl.render()
-        container.render()
     }
     
     fileprivate func addToContainer() {
@@ -115,6 +109,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func installPlugin(_ plugin: UICorePlugin) {
         addSubview(plugin)
         plugin.render()
+    }
+    
+    fileprivate func renderContainer(_ container: Container) {
+        addSubviewMatchingConstraints(container)
+        container.render()
     }
     
     open func addPlugin(_ plugin: UICorePlugin) {
