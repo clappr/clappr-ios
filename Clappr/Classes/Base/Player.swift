@@ -73,24 +73,24 @@ open class Player: BaseObject {
     }
     
     open func load(_ source: String, mimeType: String? = nil) {
-        core.container.load(source, mimeType: mimeType)
+        core.activeContainer?.load(source, mimeType: mimeType)
         play()
     }
     
     open func play() {
-        core.container.play()
+        core.activeContainer?.play()
     }
     
     open func pause() {
-        core.container.pause()
+        core.activeContainer?.pause()
     }
     
     open func stop() {
-        core.container.stop()
+        core.activeContainer?.stop()
     }
     
     open func seek(_ timeInterval: TimeInterval) {
-        core.container.seek(timeInterval: timeInterval)
+        core.activeContainer?.seek(timeInterval: timeInterval)
     }
     
     open func setFullscreen(_ fullscreen: Bool) {
@@ -106,8 +106,13 @@ open class Player: BaseObject {
         for (event, callback) in coreBindings() {
             listenTo(core, eventName: event.rawValue, callback: callback)
         }
+        
+        guard let container = core.activeContainer else {
+            return
+        }
+        
         for (event, callback) in containerBindings() {
-            listenTo(core.container, eventName: event.rawValue, callback: callback)
+            listenTo(container, eventName: event.rawValue, callback: callback)
         }
     }
 
