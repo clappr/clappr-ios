@@ -30,10 +30,18 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         self.loader = loader
         self.options = options
         super.init(frame: CGRect.zero)
+        
         setup()
     }
     
+    fileprivate func loadPlugins() {
+        for plugin in loader.corePlugins {
+            addPlugin(plugin.init(context: self) as! UICorePlugin)
+        }
+    }
+    
     fileprivate func setup() {
+        loadPlugins()
         backgroundColor = UIColor.black
         createContainers()
         createMediaControl()
