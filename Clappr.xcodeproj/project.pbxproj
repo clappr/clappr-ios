@@ -77,6 +77,8 @@
 		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
+		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
+		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 /* End PBXBuildFile section */
@@ -105,6 +107,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */,
 				96D362841D41337600CCB866 /* Clappr.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -199,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */,
 				96D362831D41337600CCB866 /* Clappr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +572,11 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -872,6 +881,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -890,6 +900,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -909,6 +920,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -930,6 +942,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

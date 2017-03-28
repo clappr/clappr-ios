@@ -18,6 +18,7 @@ open class AVFoundationPlayback: Playback {
   fileprivate var player: AVPlayer?
   fileprivate var playerLayer: AVPlayerLayer?
   fileprivate var currentState = PlaybackState.idle
+  private var backgroundSessionBackup: String?
     
   open var url: URL?
     
@@ -259,7 +260,40 @@ open class AVFoundationPlayback: Playback {
   }
 
   fileprivate func handleExternalPlaybackActiveEvent() {
+    guard let concretePlayer = player else {
+      return
+    }
+
+    if concretePlayer.isExternalPlaybackActive {
+      enableBackgroundSession();
+    } else {
+      restoreBackgroundSession();
+    }
+
     self.trigger(.externalPlaybackActiveUpdated, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+  }
+
+  private func enableBackgroundSession() {
+    backgroundSessionBackup = AVAudioSession.sharedInstance().category
+    changeBackgroundSession(to: AVAudioSessionCategoryPlayback)
+  }
+
+  private func restoreBackgroundSession() {
+    if let concreteBackgroundSession = backgroundSessionBackup {
+      changeBackgroundSession(to: concreteBackgroundSession)
+    }
+  }
+
+  private func changeBackgroundSession(to category: String) {
+    do {
+      if #available(iOS 10.0, *) {
+        try AVAudioSession.sharedInstance().setCategory(category, with: .allowAirPlay)
+      } else {
+        try AVAudioSession.sharedInstance().setCategory(category)
+      }
+    } catch {
+      print("It was not possible to set the audio session category")
+    }
   }
   
   fileprivate func handleStatusChangedEvent() {
