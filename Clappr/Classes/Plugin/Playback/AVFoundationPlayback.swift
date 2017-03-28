@@ -57,12 +57,11 @@ open class AVFoundationPlayback: Playback {
         let availableOptions = mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .subtitle)})
         return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
+  }
     
-    open override var audioSources: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
-            return []
-        }
-        return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .audioSource)})
+  open override var subtitles: [MediaOption]? {
+    guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
+      return []
     }
 
     open override var isPlaying: Bool {
@@ -72,36 +71,31 @@ open class AVFoundationPlayback: Playback {
 
         return false;
     }
+    return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .audioSource)})
+  }
 
-    open override var isPaused: Bool {
-        return currentState == .paused
+  open override var isPlaying: Bool {
+    if let concretePlayer = player {
+      return concretePlayer.rate > 0;
     }
 
-    open override var isBuffering: Bool {
-        return currentState == .buffering
-    }
+    return false;
+  }
 
-    open override var duration: Double {
-        guard playbackType == .vod, let item = player?.currentItem else {
-            return 0
-        }
-        return CMTimeGetSeconds(item.asset.duration)
-    }
+  open override var isPaused: Bool {
+    return currentState == .paused
+  }
 
-    open override var position: Double {
-        guard playbackType == .vod, let player = self.player else {
-            return 0
-        }
-        return CMTimeGetSeconds(player.currentTime())
-    }
+  open override var isBuffering: Bool {
+    return currentState == .buffering
+  }
 
-    open override var playbackType: PlaybackType {
-        guard let player = player, let duration = player.currentItem?.asset.duration else {
-            return .unknown
-        }
-
-        return duration == kCMTimeIndefinite ? .live : .vod
+  open override var duration: Double {
+    guard playbackType == .vod, let item = player?.currentItem else {
+      return 0
     }
+    return CMTimeGetSeconds(item.asset.duration)
+  }
 
     open override class func canPlay(_ options: Options) -> Bool {
         var mimeType = ""
@@ -138,17 +132,13 @@ open class AVFoundationPlayback: Playback {
     public required init(context: UIBaseObject) {
         fatalError("init(context:) has not been implemented")
     }
+    return CMTimeGetSeconds(player.currentTime())
+  }
 
-    open override func layoutSubviews() {
-        if let playerLayer = playerLayer {
-            playerLayer.frame = self.bounds
-        }
+  open override var playbackType: PlaybackType {
+    guard let player = player, let duration = player.currentItem?.asset.duration else {
+      return .unknown
     }
-    
-    open override func play() {
-        if player == nil {
-            setupPlayer()
-        }
 
         player?.play()
       
@@ -203,6 +193,7 @@ open class AVFoundationPlayback: Playback {
             pause()
         }
     }
+  }
     
     func playbackDidEnd() {
         trigger(.ended)
@@ -336,6 +327,9 @@ open class AVFoundationPlayback: Playback {
         player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
             self?.timeUpdated(time)
         }
+        trigger(.play)
+    default:
+        break
     }
   
     fileprivate func timeUpdated(_ time: CMTime) {
@@ -406,4 +400,31 @@ open class AVFoundationPlayback: Playback {
         }
         NotificationCenter.default.removeObserver(self)
     }
+  }
+
+  fileprivate func getSelectedMediaOptionWithCharacteristic(_ characteristic: String) -> AVMediaSelectionOption? {
+    if let group = mediaSelectionGroup(characteristic) {
+      return player?.currentItem?.selectedMediaOption(in: group)
+    }
+    return nil
+  }
+  
+  fileprivate func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
+    return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
+  }
+  
+  deinit {
+    removeObservers()
+  }
+  
+  fileprivate func removeObservers() {
+    if player != nil {
+      player?.removeObserver(self, forKeyPath: "currentItem.status")
+      player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+      player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
+      player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
+      player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
+    }
+    NotificationCenter.default.removeObserver(self)
+  }
 }
