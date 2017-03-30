@@ -217,14 +217,14 @@ open class AVFoundationPlayback: Playback {
         return;
       }
 
-      switch concreteContext.load(as: Int.self) {
-        case kvoStatusDidChangeContext:
+      switch concreteContext {
+        case &kvoStatusDidChangeContext:
             handleStatusChangedEvent()
-        case kvoTimeRangesContext:
+        case &kvoTimeRangesContext:
             handleTimeRangesEvent()
-        case kvoBufferingContext:
+        case &kvoBufferingContext:
             handleBufferingEvent(keyPath)
-        case kvoExternalPlaybackActiveContext:
+        case &kvoExternalPlaybackActiveContext:
             handleExternalPlaybackActiveEvent()
         default:
             break
