@@ -185,13 +185,25 @@ open class AVFoundationPlayback: Playback {
                         options: .new, context: &kvoExternalPlaybackActiveContext)
     
     NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(AVFoundationPlayback.playbackDidEnd),
-      name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-      object: player?.currentItem
-    )
+        self,
+        selector: #selector(AVFoundationPlayback.playbackDidEnd),
+        name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+        object: player?.currentItem)
+    
+    NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(appMovedToBackground),
+        name: Notification.Name.UIApplicationDidEnterBackground,
+        object: nil)
   }
   
+    func appMovedToBackground() {
+        let externalPlaybackActive = player?.isExternalPlaybackActive ?? false
+        if !externalPlaybackActive {
+            pause()
+        }
+    }
+    
   func playbackDidEnd() {
     trigger(.ended)
     updateState(.idle)
