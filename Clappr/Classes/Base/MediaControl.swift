@@ -176,6 +176,7 @@ open class MediaControl: UIBaseObject {
 
         if let playback = container.playback {
             listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackControlState = .stopped }
         }
     }
     
@@ -186,7 +187,6 @@ open class MediaControl: UIBaseObject {
             .ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
             .timeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
             .progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
-            .ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
             .mediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
             .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() }
         ]
