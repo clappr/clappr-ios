@@ -19,11 +19,21 @@ open class LoadingContainerPlugin: UIContainerPlugin {
         self.spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         addSubview(spinningWheel)
         isUserInteractionEnabled = false
+        bindDidChangePlayback()
     }
-
+    
+    private func bindDidChangePlayback() {
+        listenTo(container, eventName: InternalEvent.didChangeActivePlayback.rawValue, callback: didChangePlayback)
+    }
+    
+    private func didChangePlayback(_ userInfo: EventUserInfo) {
+        stopListening()
+        bindPlaybackEvents()
+        bindDidChangePlayback()
+    }
+    
     override open func render() {
         addCenteringConstraints()
-        bindEventListeners()
     }
     
     fileprivate func addCenteringConstraints() {
@@ -46,14 +56,13 @@ open class LoadingContainerPlugin: UIContainerPlugin {
         container.addConstraint(yCenterConstraint)
     }
 
-    fileprivate func bindEventListeners() {
+    private func bindPlaybackEvents() {
         if let playback = container.playback {
-            listenTo(playback, eventName: Event.stalled.rawValue, callback: startAnimating)
-            listenTo(playback, eventName: Event.error.rawValue, callback: stopAnimating)
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+            listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
         }
-
-        listenTo(container, eventName: ContainerEvent.play.rawValue, callback: stopAnimating)
-        listenTo(container, eventName: ContainerEvent.ended.rawValue, callback: stopAnimating)
     }
 
     fileprivate func startAnimating(_ userInfo: EventUserInfo) {
