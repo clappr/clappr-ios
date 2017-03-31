@@ -221,22 +221,22 @@ open class AVFoundationPlayback: Playback {
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?,
                                               change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 
-    guard let concreteContext = context else {
-      return;
-    }
+      guard let concreteContext = context else {
+        return;
+      }
 
-    switch concreteContext {
-      case &kvoStatusDidChangeContext:
-          handleStatusChangedEvent()
-      case &kvoTimeRangesContext:
-          handleTimeRangesEvent()
-      case &kvoBufferingContext:
-          handleBufferingEvent(keyPath)
-      case &kvoExternalPlaybackActiveContext:
-          handleExternalPlaybackActiveEvent()
-      default:
-          break
-    }
+      switch concreteContext {
+        case &kvoStatusDidChangeContext:
+            handleStatusChangedEvent()
+        case &kvoTimeRangesContext:
+            handleTimeRangesEvent()
+        case &kvoBufferingContext:
+            handleBufferingEvent(keyPath)
+        case &kvoExternalPlaybackActiveContext:
+            handleExternalPlaybackActiveEvent()
+        default:
+            break
+      }
   }
   
   fileprivate func updateState(_ newState: PlaybackState) {
