@@ -1,15 +1,22 @@
 open class Player: BaseObject {
-    open fileprivate(set) var core: Core
+    open fileprivate(set) var core: Core?
+    
+    fileprivate var playbackEventsToListen: [Event]
+    fileprivate var playbackEventsListenIds: [String] = []
 
     open var activeContainer: Container? {
-        return core.activeContainer
+        return core?.activeContainer
     }
 
     open var activePlayback: Playback? {
-        return core.activePlayback
+        return core?.activePlayback
     }
 
     open var isFullscreen: Bool {
+        guard let core = self.core else {
+            return false
+        }
+        
         return core.isFullscreen
     }
 
@@ -61,40 +68,64 @@ open class Player: BaseObject {
     
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
+        self.playbackEventsToListen = [
+            .ready, .error,
+            .playing, .didComplete,
+            .didPause, .stalled,
+            .didStop, .bufferUpdate,
+            .positionUpdate, .willPlay,
+            .willPause, .willStop,
+            .airPlayStatusUpdate]
+        
+        super.init()
+        
         let loader = Loader(externalPlugins: externalPlugins, options: options)
-        self.core = Core(loader: loader , options: options)
+        let core = Core(loader: loader , options: options)
+        
+        setCore(core)
+    }
+    
+    fileprivate func setCore(_ core: Core) {
+        self.core?.stopListening()
+        
+        self.core = core
+        
+        self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        
+        bindPlaybackEvents()
     }
     
     open func attachTo(_ view: UIView, controller: UIViewController) {
         bindEvents()
-        core.parentController = controller
-        core.parentView = view
-        core.render()
+        core?.parentController = controller
+        core?.parentView = view
+        core?.render()
     }
     
     open func load(_ source: String, mimeType: String? = nil) {
-        core.activeContainer?.load(source, mimeType: mimeType)
+        core?.activeContainer?.load(source, mimeType: mimeType)
         play()
     }
     
     open func play() {
-        core.activeContainer?.play()
+        core?.activeContainer?.play()
     }
     
     open func pause() {
-        core.activeContainer?.pause()
+        core?.activeContainer?.pause()
     }
     
     open func stop() {
-        core.activeContainer?.stop()
+        core?.activeContainer?.stop()
     }
     
     open func seek(_ timeInterval: TimeInterval) {
-        core.activeContainer?.seek(timeInterval: timeInterval)
+        core?.activeContainer?.seek(timeInterval: timeInterval)
     }
     
     open func setFullscreen(_ fullscreen: Bool) {
-        core.setFullscreen(fullscreen)
+        core?.setFullscreen(fullscreen)
     }
 
     @discardableResult
@@ -103,12 +134,12 @@ open class Player: BaseObject {
     }
     
     fileprivate func bindEvents() {
-        for (event, callback) in coreBindings() {
-            listenTo(core, eventName: event.rawValue, callback: callback)
+        guard let core = self.core, let container = core.activeContainer else {
+            return
         }
         
-        guard let container = core.activeContainer else {
-            return
+        for (event, callback) in coreBindings() {
+            listenTo(core, eventName: event.rawValue, callback: callback)
         }
         
         for (event, callback) in containerBindings() {
@@ -131,6 +162,27 @@ open class Player: BaseObject {
             .stop  : { [weak self] (info: EventUserInfo) in self?.forward(.stop, userInfo: info)},
             .pause : { [weak self] (info: EventUserInfo) in self?.forward(.pause, userInfo: info)}
         ]
+    }
+    
+    fileprivate func bindPlaybackEvents() {
+        if let playback = core?.activePlayback {
+            for event in playbackEventsToListen {
+                let listenId = listenTo(playback, eventName: event.rawValue,
+                                        callback: { [weak self] (info: EventUserInfo) in
+                                            self?.trigger(event.rawValue, userInfo: info)
+                                        })
+                
+                playbackEventsListenIds.append(listenId)
+            }
+        }
+    }
+    
+    fileprivate func unbindPlaybackEvents() {
+        for id in playbackEventsListenIds {
+            stopListening(id)
+        }
+        
+        playbackEventsListenIds.removeAll()
     }
     
     fileprivate func forward(_ event: PlayerEvent, userInfo: EventUserInfo) {
