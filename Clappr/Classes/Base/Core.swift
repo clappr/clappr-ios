@@ -28,11 +28,36 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         self.loader = loader
         self.options = options
         self.containers.append(Container(loader: loader, options: options))
-        self.activeContainer = containers[0]
         
         super.init(frame: CGRect.zero)
         
+        if let container = self.containers.first {
+            setActiveContainer(container)
+        }
+        
         setup()
+    }
+    
+    fileprivate func setActiveContainer(_ container: Container) {
+        if activeContainer != container  {
+            activeContainer?.stopListening()
+            
+            trigger(InternalEvent.willChangeActiveContainer.rawValue)
+            
+            activeContainer = container
+            
+            activeContainer?.on(
+                InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                    self?.trigger(InternalEvent.willChangePlayback.rawValue, userInfo: info)
+            }
+            
+            activeContainer?.on(
+                InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                    self?.trigger(InternalEvent.didChangePlayback.rawValue, userInfo: info)
+            }
+            
+            trigger(InternalEvent.didChangeActiveContainer.rawValue)
+        }
     }
     
     fileprivate func loadPlugins() {
