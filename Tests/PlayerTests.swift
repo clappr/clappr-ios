@@ -11,7 +11,11 @@ class PlayerTests: QuickSpec {
             it("Should load source on core when initializing") {
                 let player = Player(options: options as Options)
                 
-                expect(player.core.activeContainer).toNot(beNil())
+                if let core = player.core {
+                    expect(core.activeContainer).toNot(beNil())
+                } else {
+                    fail("player.core is nil")
+                }
             }
         }
     }
