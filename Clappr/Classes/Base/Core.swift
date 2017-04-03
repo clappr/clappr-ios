@@ -48,12 +48,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             
             activeContainer?.on(
                 InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                    self?.trigger(InternalEvent.willChangePlayback.rawValue, userInfo: info)
+                    self?.trigger(InternalEvent.willChangeActiveContainer.rawValue, userInfo: info)
             }
             
             activeContainer?.on(
                 InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                    self?.trigger(InternalEvent.didChangePlayback.rawValue, userInfo: info)
+                    self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
             }
             
             trigger(InternalEvent.didChangeActiveContainer.rawValue)
