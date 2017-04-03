@@ -24,7 +24,7 @@ open class UIBaseObject: UIView, EventProtocol {
     
     open func trigger(_ eventName:String, userInfo: [AnyHashable: Any]?) {
         baseObject.trigger(eventName, userInfo: userInfo)
-        Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
+        Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
 
     @discardableResult
