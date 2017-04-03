@@ -20,37 +20,21 @@ class ViewController: UIViewController {
     }
     
     func listenToPlayerEvents() {
-        player.on(PlayerEvent.play) { _ in
-            print("on Play")
-        }
+        player.on(Event.playing) { _ in print("on Play") }
         
-        player.on(PlayerEvent.pause) { _ in
-            print("on Pause")
-        }
+        player.on(Event.didPause) { _ in print("on Pause") }
         
-        player.on(PlayerEvent.stop) { _ in
-            print("on Stop")
-        }
+        player.on(Event.didStop) { _ in print("on Stop") }
         
-        player.on(PlayerEvent.ended) { _ in
-            print("on Ended")
-        }
+        player.on(Event.didComplete) { _ in print("on Ended") }
         
-        player.on(PlayerEvent.ready) { _ in
-            print("on Ready")
-        }
+        player.on(Event.ready) { _ in print("on Ready") }
         
-        player.on(PlayerEvent.error) { userInfo in
-            print("on Error: \(userInfo)")
-        }
+        player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
-        player.on(PlayerEvent.enterFullscreen) { _ in
-            print("on Enter Fullscreen")
-        }
+        player.on(Event.requestFullscreen) { _ in print("on Enter Fullscreen") }
 
-        player.on(PlayerEvent.exitFullscreen) { _ in
-            print("on Exit Fullscreen")
-        }
+        player.on(Event.exitFullscreen) { _ in print("on Exit Fullscreen") }
     }
 
   override var supportedInterfaceOrientations : UIInterfaceOrientationMask {

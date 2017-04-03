@@ -44,13 +44,9 @@
 		96D362CD1D41339400CCB866 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362951D41339400CCB866 /* Playback.swift */; };
 		96D362CE1D41339400CCB866 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362961D41339400CCB866 /* Player.swift */; };
 		96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362971D41339400CCB866 /* UIBaseObject.swift */; };
-		96D362D01D41339400CCB866 /* ContainerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362991D41339400CCB866 /* ContainerEvent.swift */; };
-		96D362D11D41339400CCB866 /* CoreEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629A1D41339400CCB866 /* CoreEvent.swift */; };
-		96D362D21D41339400CCB866 /* MediaControlEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629B1D41339400CCB866 /* MediaControlEvent.swift */; };
 		96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629C1D41339400CCB866 /* MediaControlState.swift */; };
 		96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629D1D41339400CCB866 /* MediaOptionType.swift */; };
 		96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629F1D41339400CCB866 /* PlaybackType.swift */; };
-		96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A01D41339400CCB866 /* PlayerEvent.swift */; };
 		96D362D81D41339400CCB866 /* PluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A11D41339400CCB866 /* PluginType.swift */; };
 		96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
 		96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
@@ -154,13 +150,9 @@
 		96D362951D41339400CCB866 /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
 		96D362961D41339400CCB866 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		96D362971D41339400CCB866 /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
-		96D362991D41339400CCB866 /* ContainerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerEvent.swift; sourceTree = "<group>"; };
-		96D3629A1D41339400CCB866 /* CoreEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreEvent.swift; sourceTree = "<group>"; };
-		96D3629B1D41339400CCB866 /* MediaControlEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlEvent.swift; sourceTree = "<group>"; };
 		96D3629C1D41339400CCB866 /* MediaControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlState.swift; sourceTree = "<group>"; };
 		96D3629D1D41339400CCB866 /* MediaOptionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionType.swift; sourceTree = "<group>"; };
 		96D3629F1D41339400CCB866 /* PlaybackType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackType.swift; sourceTree = "<group>"; };
-		96D362A01D41339400CCB866 /* PlayerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
 		96D362A11D41339400CCB866 /* PluginType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginType.swift; sourceTree = "<group>"; };
 		96D362A31D41339400CCB866 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		96D362A71D41339400CCB866 /* MediaOptionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionFactory.swift; sourceTree = "<group>"; };
@@ -355,13 +347,9 @@
 		96D362981D41339400CCB866 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				96D362991D41339400CCB866 /* ContainerEvent.swift */,
-				96D3629A1D41339400CCB866 /* CoreEvent.swift */,
-				96D3629B1D41339400CCB866 /* MediaControlEvent.swift */,
 				96D3629C1D41339400CCB866 /* MediaControlState.swift */,
 				96D3629D1D41339400CCB866 /* MediaOptionType.swift */,
 				96D3629F1D41339400CCB866 /* PlaybackType.swift */,
-				96D362A01D41339400CCB866 /* PlayerEvent.swift */,
 				96D362A11D41339400CCB866 /* PluginType.swift */,
 				963B19971E4B827700A0A6BA /* Event.swift */,
 				96E7D2731E786FEE0056F358 /* InternalEvent.swift */,
@@ -709,7 +697,6 @@
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
-				96D362D01D41339400CCB866 /* ContainerEvent.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
 				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
 				96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */,
@@ -722,12 +709,10 @@
 				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
 				96D362C91D41339400CCB866 /* Loader.swift in Sources */,
 				968E5BD91D6CBFA50092F372 /* Logger.swift in Sources */,
-				96D362D21D41339400CCB866 /* MediaControlEvent.swift in Sources */,
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
-				96D362D11D41339400CCB866 /* CoreEvent.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
 				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
@@ -736,7 +721,6 @@
 				96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */,
 				96D362C81D41339400CCB866 /* FullscreenController.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
-				96D362D71D41339400CCB866 /* PlayerEvent.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */,
 			);

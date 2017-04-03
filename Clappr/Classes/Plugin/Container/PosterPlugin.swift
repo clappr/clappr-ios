@@ -49,8 +49,8 @@ open class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
-        container.seek(timeInterval: 0)
-        container.play()
+        container.playback?.seek(0)
+        container.playback?.play()
     }
     
     fileprivate func configureViews() {
@@ -84,7 +84,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
     
     private func bindDidChangePlayback() {
-        listenTo(container, eventName: InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
     }
     
     fileprivate func playbackStalled() {
