@@ -3,10 +3,20 @@ import Nimble
 import Clappr
 
 class PlayerTests: QuickSpec {
+    static let specialSource = "specialSource"
+    
     override func spec() {
         describe("Player") {
+                       
+            let options = [kSourceUrl : "http://clappr.com/video.mp4"]
+           
+            var player: Player!
+            var playback: StubPlayback!
             
-            let options = [kSourceUrl : "http://someUrl.com"]
+            beforeEach() {
+                player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                playback = player.activePlayback as! StubPlayback
+            }
             
             it("Should load source on core when initializing") {
                 let player = Player(options: options as Options)
@@ -18,11 +28,51 @@ class PlayerTests: QuickSpec {
                 }
             }
             
+            it("Should listen to playing event") {
+                var callbacklWasCalled = false
+                
+                player.on(.playing) { _ in
+                    callbacklWasCalled = true
+                }
+                
+                playback.trigger(.playing)
+                expect(callbacklWasCalled).to(beTrue())
+            }
             
-            
-            
+            it("Should route events after new playback is created") {
+                var callbacklWasCalled = false
+                
+                player.on(.playing) { _ in
+                    callbacklWasCalled = true
+                }
+                
+                expect(player.activePlayback is StubPlayback).to(beTrue())
+                player.load(PlayerTests.specialSource)
+                expect(player.activePlayback is SpecialStubPlayback).to(beTrue())
+                
+                player.activePlayback?.trigger(.playing)
+                expect(callbacklWasCalled).to(beTrue())
+            }
+        }
+    }
+   
+    class StubPlayback: Playback {
+        override var pluginName: String {
+            return "StubPlayback"
+        }
         
-            
+        override class func canPlay(_ options: Options) -> Bool {
+            return true
+        }
+    }
+    
+    class SpecialStubPlayback: Playback {
+        override var pluginName: String {
+            return "SpecialStubPlayback"
+        }
+        
+        override class func canPlay(_ options: Options) -> Bool {
+            return options[kSourceUrl] as! String == PlayerTests.specialSource
         }
     }
 }
