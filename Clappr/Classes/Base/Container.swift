@@ -37,7 +37,7 @@ open class Container: UIBaseObject {
         
         var playbackOptions = options
         playbackOptions[kSourceUrl] = source as AnyObject?
-        playbackOptions[kMimeType] = mimeType as AnyObject?? ?? nil
+        playbackOptions[kMimeType] = mimeType as AnyObject?
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         

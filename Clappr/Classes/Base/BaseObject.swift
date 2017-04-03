@@ -70,7 +70,7 @@ open class BaseObject: NSObject, EventProtocol {
         notificationCenter().post(name: Notification.Name(rawValue: eventName), object: self, userInfo: userInfo)
         
         if type(of: self) != BaseObject.self {
-            Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
+            Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
         }
     }
 
