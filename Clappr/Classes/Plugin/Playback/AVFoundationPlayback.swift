@@ -57,11 +57,12 @@ open class AVFoundationPlayback: Playback {
         let availableOptions = mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .subtitle)})
         return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
-  }
     
-  open override var subtitles: [MediaOption]? {
-    guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
-      return []
+    open override var audioSources: [MediaOption]? {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
+            return []
+        }
+        return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .audioSource)})
     }
 
     open override var isPlaying: Bool {
@@ -74,28 +75,16 @@ open class AVFoundationPlayback: Playback {
     return mediaGroup.options.flatMap({MediaOptionFactory.fromAVMediaOption($0, type: .audioSource)})
   }
 
-  open override var isPlaying: Bool {
-    if let concretePlayer = player {
-      return concretePlayer.rate > 0;
+        return false;
     }
 
-    return false;
-  }
-
-  open override var isPaused: Bool {
-    return currentState == .paused
-  }
-
-  open override var isBuffering: Bool {
-    return currentState == .buffering
-  }
-
-  open override var duration: Double {
-    guard playbackType == .vod, let item = player?.currentItem else {
-      return 0
+    open override var isPaused: Bool {
+        return currentState == .paused
     }
-    return CMTimeGetSeconds(item.asset.duration)
-  }
+
+    open override var isBuffering: Bool {
+        return currentState == .buffering
+    }
 
     open override class func canPlay(_ options: Options) -> Bool {
         var mimeType = ""
@@ -374,6 +363,11 @@ open class AVFoundationPlayback: Playback {
             player?.currentItem?.select(option, in: group)
         }
     }
+  
+    fileprivate func handleBufferingEvent(_ keyPath: String?) {
+        guard let keyPath = keyPath, currentState != .paused else {
+            return
+        }
 
     fileprivate func getSelectedMediaOptionWithCharacteristic(_ characteristic: String) -> AVMediaSelectionOption? {
         if let group = mediaSelectionGroup(characteristic) {
@@ -400,31 +394,30 @@ open class AVFoundationPlayback: Playback {
         }
         NotificationCenter.default.removeObserver(self)
     }
-  }
 
-  fileprivate func getSelectedMediaOptionWithCharacteristic(_ characteristic: String) -> AVMediaSelectionOption? {
-    if let group = mediaSelectionGroup(characteristic) {
-      return player?.currentItem?.selectedMediaOption(in: group)
+    fileprivate func getSelectedMediaOptionWithCharacteristic(_ characteristic: String) -> AVMediaSelectionOption? {
+        if let group = mediaSelectionGroup(characteristic) {
+            return player?.currentItem?.selectedMediaOption(in: group)
+        }
+        return nil
     }
-    return nil
-  }
   
-  fileprivate func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
-    return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
-  }
-  
-  deinit {
-    removeObservers()
-  }
-  
-  fileprivate func removeObservers() {
-    if player != nil {
-      player?.removeObserver(self, forKeyPath: "currentItem.status")
-      player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
-      player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
-      player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
-      player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
+    fileprivate func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
+        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
     }
-    NotificationCenter.default.removeObserver(self)
-  }
+  
+    deinit {
+        removeObservers()
+    }
+  
+    fileprivate func removeObservers() {
+        if player != nil {
+            player?.removeObserver(self, forKeyPath: "currentItem.status")
+            player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+            player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
+            player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
+            player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
+        }
+        NotificationCenter.default.removeObserver(self)
+    }
 }
