@@ -75,18 +75,18 @@ class MediaControlTests: QuickSpec {
                     it("Should call container play when is paused") {
                         mediaControl.playbackControlState = .paused
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-                        expect(container.isPlaying).to(beTrue())
+                        expect(container.playback?.isPlaying).to(beTrue())
                     }
                     
                     it("Should call container play when is stopped") {
                         mediaControl.playbackControlState = .stopped
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-                        expect(container.isPlaying).to(beTrue())
+                        expect(container.playback?.isPlaying).to(beTrue())
                     }
                     
                     it("Should trigger playing event ") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.playing.rawValue) { _ in
+                        mediaControl.once(Event.playing.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         
@@ -104,7 +104,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should call container pause when is playing") {
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-                        expect(container.isPlaying).to(beFalse())
+                        expect(container.playback?.isPlaying).to(beFalse())
                     }
                     
                     it("Should change playback control state to paused") {
@@ -114,7 +114,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should trigger not playing event when selecting button") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
+                        mediaControl.once(Event.didPause.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         
@@ -128,12 +128,12 @@ class MediaControlTests: QuickSpec {
                     beforeEach() {
                         mediaControl.playbackControlState = .playing
                         playback.type = .live
-                        container.trigger(ContainerEvent.ready.rawValue)
+                        playback.trigger(Event.ready.rawValue)
                     }
                     
                     it("Should call container pause when is live video is playing") {
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-                        expect(container.isPlaying).to(beFalse())
+                        expect(container.playback?.isPlaying).to(beFalse())
                     }
                     
                     it("Should change playback control state to stopped") {
@@ -143,7 +143,7 @@ class MediaControlTests: QuickSpec {
                     
                     it("Should trigger not playing event when selecting button") {
                         var callbackWasCalled = false
-                        mediaControl.once(MediaControlEvent.notPlaying.rawValue) { _ in
+                        mediaControl.once(Event.didStop.rawValue) { _ in
                             callbackWasCalled = true
                         }
                         
@@ -152,17 +152,7 @@ class MediaControlTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
                 }
-                
-                context("Live") {
-                    it("Should hide labels when playback is live") {
-                        mediaControl.playbackControlState = .playing
-                        playback.type = .live
-                        container.trigger(ContainerEvent.ready.rawValue)
-                        
-//                        expect(mediaControl.labelsWrapperView.hidden).to(beTrue())
-                    }
-                }
-                
+
                 context("Current Time") {
                     it("Should start with 00:00 as current time") {
                         expect(mediaControl.currentTimeLabel!.text) == "00:00"
@@ -191,7 +181,7 @@ class MediaControlTests: QuickSpec {
                 context("End") {
                     it("Should reset play button state after container end event") {
                         mediaControl.playbackControlState = .playing
-                        container.trigger(ContainerEvent.ended.rawValue)
+                        container.playback?.trigger(Event.didComplete.rawValue)
                         
                         expect(mediaControl.playbackControlState) == PlaybackControlState.stopped
                     }

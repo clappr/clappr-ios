@@ -89,23 +89,25 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     fileprivate func bindEventListeners() {
-        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenEnter.rawValue, callback: enterFullscreen)
-        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenExit.rawValue, callback: exitFullscreen)
+        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
     }
     
     fileprivate func enterFullscreen(_: EventUserInfo) {
+        trigger(InternalEvent.willEnterFullscreen.rawValue)
         mediaControl.fullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
         parentController?.present(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(self)
-        trigger(CoreEvent.EnterFullscreen.rawValue)
+        trigger(InternalEvent.didEnterFullscreen.rawValue)
     }
     
     fileprivate func exitFullscreen(_: EventUserInfo) {
+        trigger(InternalEvent.willExitFullscreen.rawValue)
         renderInContainerView()
         fullscreenController.dismiss(animated: false, completion: nil)
-        trigger(CoreEvent.ExitFullscreen.rawValue)
+        trigger(InternalEvent.didExitFullscreen.rawValue)
     }
     
     fileprivate func renderInContainerView() {

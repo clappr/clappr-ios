@@ -18,4 +18,6 @@ public enum Event: String {
     case didStop
     case error
     case airPlayStatusUpdate
+    case requestFullscreen
+    case exitFullscreen
 }

@@ -92,12 +92,13 @@ open class Player: BaseObject {
         
         self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        self.core?.on(Event.requestFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        self.core?.on(Event.exitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
         
         bindPlaybackEvents()
     }
     
     open func attachTo(_ view: UIView, controller: UIViewController) {
-        bindEvents()
         core?.parentController = controller
         core?.parentView = view
         core?.render()
@@ -109,19 +110,19 @@ open class Player: BaseObject {
     }
     
     open func play() {
-        core?.activeContainer?.play()
+        core?.activePlayback?.play()
     }
     
     open func pause() {
-        core?.activeContainer?.pause()
+        core?.activePlayback?.pause()
     }
     
     open func stop() {
-        core?.activeContainer?.stop()
+        core?.activePlayback?.stop()
     }
     
     open func seek(_ timeInterval: TimeInterval) {
-        core?.activeContainer?.seek(timeInterval: timeInterval)
+        core?.activePlayback?.seek(timeInterval)
     }
     
     open func setFullscreen(_ fullscreen: Bool) {
@@ -129,39 +130,8 @@ open class Player: BaseObject {
     }
 
     @discardableResult
-    open func on(_ event: PlayerEvent, callback: @escaping EventCallback) -> String {
+    open func on(_ event: Event, callback: @escaping EventCallback) -> String {
         return on(event.rawValue, callback: callback)
-    }
-    
-    fileprivate func bindEvents() {
-        guard let core = self.core, let container = core.activeContainer else {
-            return
-        }
-        
-        for (event, callback) in coreBindings() {
-            listenTo(core, eventName: event.rawValue, callback: callback)
-        }
-        
-        for (event, callback) in containerBindings() {
-            listenTo(container, eventName: event.rawValue, callback: callback)
-        }
-    }
-
-    fileprivate func coreBindings() -> [CoreEvent : EventCallback] {
-        return [
-            .EnterFullscreen : { [weak self] (info: EventUserInfo) in self?.forward(.enterFullscreen, userInfo: info)},
-            .ExitFullscreen  : { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info)}
-        ]
-    }
-    
-    fileprivate func containerBindings() -> [ContainerEvent : EventCallback] {
-        return [
-            .play  : { [weak self] (info: EventUserInfo) in self?.forward(.play, userInfo: info)},
-            .ready : { [weak self] (info: EventUserInfo) in self?.forward(.ready, userInfo: info)},
-            .ended : { [weak self] (info: EventUserInfo) in self?.forward(.ended, userInfo: info)},
-            .stop  : { [weak self] (info: EventUserInfo) in self?.forward(.stop, userInfo: info)},
-            .pause : { [weak self] (info: EventUserInfo) in self?.forward(.pause, userInfo: info)}
-        ]
     }
     
     fileprivate func bindPlaybackEvents() {
@@ -185,7 +155,7 @@ open class Player: BaseObject {
         playbackEventsListenIds.removeAll()
     }
     
-    fileprivate func forward(_ event: PlayerEvent, userInfo: EventUserInfo) {
+    fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
         trigger(event.rawValue, userInfo: userInfo)
     }
     

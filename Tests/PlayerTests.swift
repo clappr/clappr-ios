@@ -17,6 +17,12 @@ class PlayerTests: QuickSpec {
                     fail("player.core is nil")
                 }
             }
+            
+            
+            
+            
+        
+            
         }
     }
 }
