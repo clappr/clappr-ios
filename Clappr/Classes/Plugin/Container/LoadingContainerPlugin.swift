@@ -23,7 +23,7 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     }
     
     private func bindDidChangePlayback() {
-        listenTo(container, eventName: InternalEvent.didChangeActivePlayback.rawValue, callback: didChangePlayback)
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue, callback: didChangePlayback)
     }
     
     private func didChangePlayback(_ userInfo: EventUserInfo) {
