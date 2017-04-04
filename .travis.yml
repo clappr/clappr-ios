@@ -20,4 +20,4 @@ before_install:
 
 script:
   - xcodebuild clean test -project "${PROJECT}" -scheme "${SCHEME}" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}
-  - pod lib lint
+  - pod lib lint --verbose
