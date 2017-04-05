@@ -36,8 +36,8 @@ open class Container: UIBaseObject {
         trigger(InternalEvent.willLoadSource.rawValue)
         
         var playbackOptions = options
-        playbackOptions[kSourceUrl] = source as AnyObject?
-        playbackOptions[kMimeType] = mimeType as AnyObject?
+        playbackOptions[kSourceUrl] = source
+        playbackOptions[kMimeType] = mimeType
         
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         
