@@ -163,8 +163,8 @@ class ContainerTests: QuickSpec {
                     container.playback?.play()
                     container.load("http://clappr.com/video.mp4")
 
-                    expect(container.options[kStartAt] as? TimeInterval) == 0
-                    expect(container.playback?.startAt) == 0
+                    expect(container.options[kStartAt] as? TimeInterval) == 0.0
+                    expect(container.playback?.startAt) == 0.0
                 }
             }
         }

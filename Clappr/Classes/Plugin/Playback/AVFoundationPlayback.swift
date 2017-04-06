@@ -337,9 +337,11 @@ open class AVFoundationPlayback: Playback {
             return
         }
         
-        let info = ["start_position" : CMTimeGetSeconds(timeRange.start),
-                      "end_position" : CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-                          "duration" : CMTimeGetSeconds(timeRange.start)]
+        let info = [
+            "start_position" : CMTimeGetSeconds(timeRange.start),
+            "end_position" : CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
+            "duration" : CMTimeGetSeconds(timeRange.start)
+        ]
 
         trigger(.bufferUpdate, userInfo: info)
     }
