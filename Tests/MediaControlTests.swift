@@ -112,7 +112,7 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.playbackControlState) == PlaybackControlState.paused
                     }
                     
-                    it("Should trigger not playing event when selecting button") {
+                    it("Should trigger didPause event when selecting button") {
                         var callbackWasCalled = false
                         mediaControl.once(Event.didPause.rawValue) { _ in
                             callbackWasCalled = true
@@ -141,7 +141,7 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.playbackControlState) == PlaybackControlState.stopped
                     }
                     
-                    it("Should trigger not playing event when selecting button") {
+                    it("Should trigger didStop event when selecting button") {
                         var callbackWasCalled = false
                         mediaControl.once(Event.didStop.rawValue) { _ in
                             callbackWasCalled = true
