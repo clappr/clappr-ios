@@ -19,11 +19,23 @@ open class LoadingContainerPlugin: UIContainerPlugin {
         self.spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         addSubview(spinningWheel)
         isUserInteractionEnabled = false
+        bindDidChangePlayback()
     }
-
+    
+    private func bindDidChangePlayback() {
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) {
+            [weak self] (info: EventUserInfo) in self?.didChangePlayback(info)
+        }
+    }
+    
+    private func didChangePlayback(_ userInfo: EventUserInfo) {
+        stopListening()
+        bindPlaybackEvents()
+        bindDidChangePlayback()
+    }
+    
     override open func render() {
         addCenteringConstraints()
-        bindEventListeners()
     }
     
     fileprivate func addCenteringConstraints() {
@@ -45,17 +57,21 @@ open class LoadingContainerPlugin: UIContainerPlugin {
             relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0)
         container.addConstraint(yCenterConstraint)
     }
-    
-    fileprivate func bindEventListeners() {
-        listenTo(container, eventName: ContainerEvent.buffering.rawValue) {[weak self] _ in
-            self?.spinningWheel.startAnimating()
-            Logger.logDebug("started animating spinning wheel", scope: self?.pluginName)
+
+    private func bindPlaybackEvents() {
+        if let playback = container.playback {
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+            listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
         }
-        
-        listenTo(container, eventName: ContainerEvent.play.rawValue, callback: stopAnimating)
-        listenTo(container, eventName: ContainerEvent.ended.rawValue, callback: stopAnimating)
     }
-    
+
+    fileprivate func startAnimating(_ userInfo: EventUserInfo) {
+        spinningWheel.startAnimating()
+        Logger.logDebug("started animating spinning wheel", scope: self.pluginName)
+    }
+
     fileprivate func stopAnimating(_ userInfo: EventUserInfo) {
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: self.pluginName)

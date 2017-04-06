@@ -20,6 +20,7 @@ open class PosterPlugin: UIContainerPlugin {
         super.init(context: context)
         translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .scaleAspectFit
+        bindDidChangePlayback()
     }
     
     open override func render() {
@@ -37,7 +38,6 @@ open class PosterPlugin: UIContainerPlugin {
         
         configurePlayButton()
         configureViews()
-        bindEvents()
     }
     
     fileprivate func configurePlayButton() {
@@ -49,8 +49,8 @@ open class PosterPlugin: UIContainerPlugin {
     }
     
     func playTouched() {
-        container.seek(0)
-        container.play()
+        container.playback?.seek(0)
+        container.playback?.play()
     }
     
     fileprivate func configureViews() {
@@ -68,22 +68,26 @@ open class PosterPlugin: UIContainerPlugin {
         addConstraint(yCenterConstraint)
     }
     
-    fileprivate func bindEvents() {
-        for (event, callback) in eventsToBind() {
-            listenTo(container, eventName: event.rawValue, callback: callback)
+    private func bindPlaybackEvents() {
+        if let playback = container.playback {
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
+            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.playbackReady() }
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
         }
     }
     
-    fileprivate func eventsToBind() -> [ContainerEvent : EventCallback] {
-        return [
-            .buffering  : { [weak self] _ in self?.playbackBuffering() },
-            .play       : { [weak self] _ in self?.playbackStarted() },
-            .ended      : { [weak self] _ in self?.playbackEnded() },
-            .ready      : { [weak self] _ in self?.playbackReady() },
-        ]
+    private func didChangePlayback() {
+        stopListening()
+        bindPlaybackEvents()
+        bindDidChangePlayback()
     }
     
-    fileprivate func playbackBuffering() {
+    private func bindDidChangePlayback() {
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+    }
+    
+    fileprivate func playbackStalled() {
         playButton.isHidden = true
     }
     
@@ -97,9 +101,9 @@ open class PosterPlugin: UIContainerPlugin {
         playButton.isHidden = false
         isHidden = false
     }
-    
+
     fileprivate func playbackReady() {
-        if container.playback.pluginName == "NoOp" {
+        if container.playback?.pluginName == "NoOp" {
             isHidden = true
         }
     }

@@ -1,6 +1,6 @@
 open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     open fileprivate(set) var options: Options
-    open fileprivate(set) var container: Container!
+    open fileprivate(set) var containers: [Container] = []
     open fileprivate(set) var mediaControl: MediaControl!
     open fileprivate(set) var plugins: [UICorePlugin] = []
     
@@ -9,10 +9,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate var loader: Loader
     fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
-    open var activeContainer: Container? {
-        return container
-    }
-
+    open var activeContainer: Container?
+    
     open var activePlayback: Playback? {
         return activeContainer?.playback
     }
@@ -29,27 +27,57 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.loader = loader
         self.options = options
+        self.containers.append(Container(loader: loader, options: options))
+        
         super.init(frame: CGRect.zero)
+        
+        if let container = self.containers.first {
+            setActiveContainer(container)
+        }
+        
         setup()
     }
     
+    fileprivate func setActiveContainer(_ container: Container) {
+        if activeContainer != container  {
+            activeContainer?.stopListening()
+            
+            trigger(InternalEvent.willChangeActiveContainer.rawValue)
+            
+            activeContainer = container
+            
+            activeContainer?.on(
+                InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                    self?.trigger(InternalEvent.willChangeActivePlayback.rawValue, userInfo: info)
+            }
+            
+            activeContainer?.on(
+                InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                    self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
+            }
+            
+            trigger(InternalEvent.didChangeActiveContainer.rawValue)
+        }
+    }
+    
+    fileprivate func loadPlugins() {
+        for plugin in loader.corePlugins {
+            addPlugin(plugin.init(context: self) as! UICorePlugin)
+        }
+    }
+    
     fileprivate func setup() {
+        loadPlugins()
         backgroundColor = UIColor.black
-        createContainers()
         createMediaControl()
         bindEventListeners()
     }
-    
-    fileprivate func createContainers() {
-        let factory = ContainerFactory(loader: loader, options: options)
-        container = factory.createContainer()
-    }
-    
+
     fileprivate func createMediaControl() {
         mediaControl = loader.mediaControl.create()
         addTapRecognizer()
         
-        if let container = container {
+        if let container = self.activeContainer {
             mediaControl.setup(container)
         }
     }
@@ -61,23 +89,25 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
     
     fileprivate func bindEventListeners() {
-        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenEnter.rawValue, callback: enterFullscreen)
-        listenTo(mediaControl, eventName: MediaControlEvent.fullscreenExit.rawValue, callback: exitFullscreen)
+        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
     }
     
     fileprivate func enterFullscreen(_: EventUserInfo) {
+        trigger(InternalEvent.willEnterFullscreen.rawValue)
         mediaControl.fullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
         parentController?.present(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(self)
-        trigger(CoreEvent.EnterFullscreen.rawValue)
+        trigger(InternalEvent.didEnterFullscreen.rawValue)
     }
     
     fileprivate func exitFullscreen(_: EventUserInfo) {
+        trigger(InternalEvent.willExitFullscreen.rawValue)
         renderInContainerView()
         fullscreenController.dismiss(animated: false, completion: nil)
-        trigger(CoreEvent.ExitFullscreen.rawValue)
+        trigger(InternalEvent.didExitFullscreen.rawValue)
     }
     
     fileprivate func renderInContainerView() {
@@ -89,12 +119,10 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         addToContainer()
         
         plugins.forEach(installPlugin)
+        containers.forEach(renderContainer)
         
-        addSubviewMatchingConstraints(container)
         addSubviewMatchingConstraints(mediaControl)
-        
         mediaControl.render()
-        container.render()
     }
     
     fileprivate func addToContainer() {
@@ -108,6 +136,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func installPlugin(_ plugin: UICorePlugin) {
         addSubview(plugin)
         plugin.render()
+    }
+    
+    fileprivate func renderContainer(_ container: Container) {
+        addSubviewMatchingConstraints(container)
+        container.render()
     }
     
     open func addPlugin(_ plugin: UICorePlugin) {

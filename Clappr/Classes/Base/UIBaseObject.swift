@@ -24,7 +24,7 @@ open class UIBaseObject: UIView, EventProtocol {
     
     open func trigger(_ eventName:String, userInfo: [AnyHashable: Any]?) {
         baseObject.trigger(eventName, userInfo: userInfo)
-        Logger.logDebug("[\(eventName)] triggered with \(userInfo)", scope: logIdentifier())
+        Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
 
     @discardableResult
@@ -55,6 +55,16 @@ open class UIBaseObject: UIView, EventProtocol {
         }
         return "\(type(of: self))"
     }
-    
+
     open func render() {}
+}
+
+public extension UIBaseObject {
+    public func trigger(_ event: Event) {
+        trigger(event.rawValue)
+    }
+
+    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
+    }
 }

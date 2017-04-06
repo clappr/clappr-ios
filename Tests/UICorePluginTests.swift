@@ -22,7 +22,7 @@ class UICorePluginTests: QuickSpec {
                 let context = UIBaseObject()
                 expect(StubCorePlugin(context: context)).to(raiseException(named: "WrongContextType"))
 
-                let container = Container(playback: Playback())
+                let container = Container()
                 expect(StubCorePlugin(context: container)).to(raiseException(named: "WrongContextType"))
             }
         }

@@ -76,7 +76,7 @@ open class MediaControl: UIBaseObject {
     }
 
     fileprivate var duration: CGFloat {
-        return CGFloat(container.playback.duration)
+        return CGFloat(container.playback?.duration ?? 0.0)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -150,54 +150,57 @@ open class MediaControl: UIBaseObject {
         updateBars()
         updateScrubberPosition()
     }
-    
+
     open func setup(_ container: Container) {
-        stopListening()
         self.container = container
-        bindEventListeners()
+        setupBindings()
         container.mediaControlEnabled ? enable() : disable()
-        playbackControlState = container.isPlaying ? .playing : .stopped
+        playbackControlState = isPlaybackPlaying() ? .playing : .stopped
         backgroundOverlayView?.backgroundColor = backgroundOverlayColor
         fullscreenButton?.isHidden = fullscreenDisabled
     }
     
-    open func bindEventListeners() {
-        for (event, callback) in eventBindings() {
-            listenTo(container, eventName: event.rawValue, callback: callback)
+    private func isPlaybackPlaying() -> Bool {
+        return container.playback?.isPlaying ?? false
+    }
+
+    private func setupBindings() {
+        bindEventListeners()
+
+        container.on(InternalEvent.didChangePlayback.rawValue) { [weak self] (userInfo) in
+            self?.stopListening()
+            self?.bindEventListeners()
         }
     }
     
-    open func eventBindings() -> [ContainerEvent : EventCallback] {
-        return [
-            .play       : { [weak self] (info: EventUserInfo) in self?.triggerPlay() },
-            .pause      : { [weak self] (info: EventUserInfo) in self?.triggerPause() },
-            .ready      : { [weak self] (info: EventUserInfo) in self?.containerReady() },
-            .timeUpdated: { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) },
-            .progress   : { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) },
-            .buffering  : { [weak self] _ in self?.playbackBuffering() },
-            .bufferFull : { [weak self] _ in self?.playbackBufferFull() },
-            .ended      : { [weak self] (info: EventUserInfo) in self?.playbackControlState = .stopped },
-            .mediaControlDisabled : { [weak self] (info: EventUserInfo) in self?.disable() },
-            .mediaControlEnabled  : { [weak self] (info: EventUserInfo) in self?.enable() },
-        ]
+    open func bindEventListeners() {
+        listenTo(container, eventName: Event.disableMediaControl.rawValue) { [weak self] _ in self?.disable() }
+        listenTo(container, eventName: Event.enableMediaControl.rawValue) { [weak self] _ in self?.enable() }
+        
+        if let playback = container.playback {
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.triggerPlay() }
+            listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.triggerPause() }
+            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.playbackReady() }
+            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackControlState = .stopped }
+            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) }
+            listenTo(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) }
+        }
     }
-
-    open func playbackBuffering() {
+    
+    func playbackStalled() {
         playbackControlButton?.isHidden = true
     }
 
-    open func playbackBufferFull() {
-        playbackControlButton?.isHidden = false
-    }
-    
     open func triggerPlay() {
         playbackControlState = .playing
-        trigger(.playing)
+        playbackControlButton?.isHidden = false
+        trigger(Event.playing)
     }
     
     open func triggerPause() {
         playbackControlState = .paused
-        trigger(.notPlaying)
+        trigger(Event.didPause)
     }
     
     open func disable() {
@@ -247,9 +250,9 @@ open class MediaControl: UIBaseObject {
             bufferBarView?.layoutIfNeeded()
         }
     }
-    
-    open func containerReady() {
-        livePlayback = container.playback.playbackType == .live
+
+    open func playbackReady() {
+        livePlayback = container.playback?.playbackType == .live
         livePlayback ? setupForLive() : setupForVOD()
         updateBars()
         updateScrubberPosition()
@@ -263,30 +266,30 @@ open class MediaControl: UIBaseObject {
     
     open func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
-        durationLabel?.text = DateFormatter.formatSeconds(container.playback.duration)
+        durationLabel?.text = DateFormatter.formatSeconds(container.playback?.duration ?? 0.0)
     }
     
     open func hide() {
         hideControlsTimer?.invalidate()
-        trigger(PlayerEvent.mediaControlHide.rawValue)
+        trigger(Event.disableMediaControl.rawValue)
         setSubviewsVisibility(hidden: true)
     }
     
     open func show() {
-        trigger(PlayerEvent.mediaControlShow.rawValue)
+        trigger(Event.enableMediaControl.rawValue)
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     open func showAnimated() {
-        trigger(PlayerEvent.mediaControlShow.rawValue)
+        trigger(Event.enableMediaControl.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
     
     open func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(PlayerEvent.mediaControlHide.rawValue)
+        trigger(Event.disableMediaControl.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
     
@@ -322,7 +325,7 @@ open class MediaControl: UIBaseObject {
     
     @IBAction open func toggleFullscreen(_ sender: UIButton) {
         fullscreen = !fullscreen
-        let event = fullscreen ? MediaControlEvent.fullscreenEnter : MediaControlEvent.fullscreenExit
+        let event = fullscreen ? Event.requestFullscreen : Event.exitFullscreen
         trigger(event.rawValue)
         scheduleTimerToHideControls()
         updateScrubberPosition()
@@ -330,20 +333,20 @@ open class MediaControl: UIBaseObject {
     
     fileprivate func pause() {
         playbackControlState = .paused
-        container.pause()
-        trigger(MediaControlEvent.notPlaying.rawValue)
+        container.playback?.pause()
+        trigger(Event.didPause.rawValue)
     }
     
     fileprivate func play() {
         playbackControlState = .playing
-        container.play()
-        trigger(MediaControlEvent.playing.rawValue)
+        container.playback?.play()
+        trigger(Event.playing.rawValue)
     }
     
     fileprivate func stop() {
         playbackControlState = .stopped
-        container.stop()
-        trigger(MediaControlEvent.notPlaying.rawValue)
+        container.playback?.stop()
+        trigger(Event.didStop.rawValue)
     }
     
     open func scheduleTimerToHideControls() {
@@ -354,10 +357,10 @@ open class MediaControl: UIBaseObject {
     
     func hideAfterPlay() {
         hideControlsTimer?.invalidate()
-        if container.isPlaying {
+        if isPlaybackPlaying() {
             hideAnimated()
-        } else {
-            listenToOnce(container, eventName: ContainerEvent.play.rawValue, callback: { [weak self] _ in self?.hideAnimated() })
+        } else if let playback = container.playback {
+            listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.hideAnimated() }
         }
     }
 
@@ -372,7 +375,7 @@ open class MediaControl: UIBaseObject {
                 isSeeking = true
                 hideControlsTimer?.invalidate()
             case .ended:
-                container.seek(secondsRelativeToPoint(touchPoint))
+                container.playback?.seek(secondsRelativeToPoint(touchPoint))
                 isSeeking = false
                 scheduleTimerToHideControls()
             default: break
@@ -388,10 +391,6 @@ open class MediaControl: UIBaseObject {
             return Double(duration * positionPercentage)
         }
         return 0
-    }
-
-    fileprivate func trigger(_ event: MediaControlEvent) {
-        trigger(event.rawValue)
     }
     
     deinit {

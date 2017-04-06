@@ -24,14 +24,16 @@ class CoreTests: QuickSpec {
             
             context("Containers"){
                 it("Should be created given a source") {
-                    expect(core.container).toNot(beNil())
+                    expect(core.activeContainer).toNot(beNil())
+                    expect(core.plugins).to(beEmpty())
+                    expect(core.containers).toNot(beEmpty())
                 }
             }
             
             context("Media Control") {
                 it("Should have container reference") {
                     expect(core.mediaControl).toNot(beNil())
-                    expect(core.mediaControl.container) == core.container
+                    expect(core.mediaControl.container) == core.activeContainer
                 }
                 
                 it("Should be the top view on core") {
