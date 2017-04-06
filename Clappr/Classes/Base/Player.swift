@@ -137,10 +137,11 @@ open class Player: BaseObject {
     fileprivate func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
-                let listenId = listenTo(playback, eventName: event.rawValue,
-                                        callback: { [weak self] (info: EventUserInfo) in
-                                            self?.trigger(event.rawValue, userInfo: info)
-                                        })
+                let listenId = listenTo(
+                    playback, eventName: event.rawValue,
+                    callback: { [weak self] (info: EventUserInfo) in
+                        self?.trigger(event.rawValue, userInfo: info)
+                })
                 
                 playbackEventsListenIds.append(listenId)
             }
