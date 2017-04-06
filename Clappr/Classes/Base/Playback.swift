@@ -28,7 +28,7 @@ open class Playback: UIBaseObject, Plugin {
     }
     
     open var startAt: TimeInterval {
-        return options[kStartAt] as? TimeInterval ?? 0
+        return options[kStartAt] as? TimeInterval ?? 0.0
     }
 
     open var isPlaying: Bool {
