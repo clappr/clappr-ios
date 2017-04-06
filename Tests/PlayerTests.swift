@@ -29,21 +29,21 @@ class PlayerTests: QuickSpec {
             }
             
             it("Should listen to playing event") {
-                var callbacklWasCalled = false
+                var callbackWasCalled = false
                 
                 player.on(.playing) { _ in
-                    callbacklWasCalled = true
+                    callbackWasCalled = true
                 }
                 
                 playback.trigger(.playing)
-                expect(callbacklWasCalled).to(beTrue())
+                expect(callbackWasCalled).to(beTrue())
             }
             
             it("Should route events after new playback is created") {
-                var callbacklWasCalled = false
+                var callbackWasCalled = false
                 
                 player.on(.playing) { _ in
-                    callbacklWasCalled = true
+                    callbackWasCalled = true
                 }
                 
                 expect(player.activePlayback is StubPlayback).to(beTrue())
@@ -51,7 +51,7 @@ class PlayerTests: QuickSpec {
                 expect(player.activePlayback is SpecialStubPlayback).to(beTrue())
                 
                 player.activePlayback?.trigger(.playing)
-                expect(callbacklWasCalled).to(beTrue())
+                expect(callbackWasCalled).to(beTrue())
             }
         }
     }
