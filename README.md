@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
+![language](https://img.shields.io/badge/language-swift%202.3-orange.svg)
 
 # Clappr for iOS
 
@@ -69,7 +70,7 @@ Define a start position in seconds with `kStartAt : x`. Default is `0`.
 
 ##### Fullscreen
 Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
- 
+
 ##### FullscreenDisabled
 Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
@@ -78,6 +79,15 @@ Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
 
 ##### Media Control
 Adding a custom media control is possible by informing the `Type` of your class via `kMediaControl : YourCustomControl.self`
+
+### External Playback in Background
+To enable external playback while your app is in background, you should include the `audio` value to your app's **Background Modes** capabilities.
+
+#### Manually editing Info.plist
+Add the key `UIBackgroundModes`. Just after adding it to your Info.plist file, Xcode will translate to a more readable value `Required background modes`, which represents an array of values. Then, add a new item with value `audio`, which will be translated to `App plays audio or streams audio/video using Airplay`.
+
+#### Capabilities Tab
+Click on the target that represents your app. Open the Capabilities tab, and there, you'll see the list of available capabilities. One of them is the `Background Modes`. Change its toggle to `on` and mark the `Audio, Airplay, and Picture in Picture` checkbox.
 
 ### License
 

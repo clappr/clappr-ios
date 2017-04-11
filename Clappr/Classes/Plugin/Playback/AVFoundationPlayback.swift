@@ -16,6 +16,7 @@ public class AVFoundationPlayback: Playback {
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
     private var currentState = PlaybackState.Idle
+    private var backgroundSessionBackup: String?
     
     public var url: NSURL?
     
@@ -62,7 +63,11 @@ public class AVFoundationPlayback: Playback {
     }
 
     public override var isPlaying: Bool {
-        return player != nil && player?.rate > 0
+        if let concretePlayer = player {
+            return concretePlayer.rate > 0
+        }
+
+        return false
     }
 
     public override var isPaused: Bool {
@@ -178,8 +183,25 @@ public class AVFoundationPlayback: Playback {
         player?.addObserver(self, forKeyPath: "externalPlaybackActive",
                             options: .New, context: &kvoExternalPlaybackActiveContext)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AVFoundationPlayback.playbackDidEnd),
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: player?.currentItem)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(AVFoundationPlayback.playbackDidEnd),
+            name: AVPlayerItemDidPlayToEndTimeNotification,
+            object: player?.currentItem)
+
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: #selector(AVFoundationPlayback.appMovedToBackground),
+            name: UIApplicationDidEnterBackgroundNotification,
+            object: nil)
+        }
+
+    func appMovedToBackground() {
+        let externalPlaybackActive = player?.externalPlaybackActive ?? false
+
+        if !externalPlaybackActive {
+            pause()
+        }
     }
     
     func playbackDidEnd() {
@@ -245,9 +267,42 @@ public class AVFoundationPlayback: Playback {
     }
 
     private func handleExternalPlaybackActiveEvent() {
+        guard let concretePlayer = player else {
+            return
+        }
+
+        if concretePlayer.externalPlaybackActive {
+            enableBackgroundSession()
+        } else {
+            restoreBackgroundSession()
+        }
+
         self.trigger(.ExternalPlaybackActiveUpdated, userInfo: ["externalPlaybackActive": player!.externalPlaybackActive])
     }
-    
+
+    private func enableBackgroundSession() {
+        backgroundSessionBackup = AVAudioSession.sharedInstance().category
+        changeBackgroundSession(to: AVAudioSessionCategoryPlayback)
+    }
+
+    private func restoreBackgroundSession() {
+        if let concreteBackgroundSession = backgroundSessionBackup {
+            changeBackgroundSession(to: concreteBackgroundSession)
+        }
+    }
+
+    private func changeBackgroundSession(to category: String) {
+        do {
+            if #available(iOS 10.0, *) {
+                try AVAudioSession.sharedInstance().setCategory(category, withOptions: .AllowAirPlay)
+            } else {
+                try AVAudioSession.sharedInstance().setCategory(category)
+            }
+        } catch {
+            print("It was not possible to set the audio session category")
+        }
+    }
+
     private func handleStatusChangedEvent() {
         if player?.status == .ReadyToPlay && currentState != .Paused {
             readyToPlay()
