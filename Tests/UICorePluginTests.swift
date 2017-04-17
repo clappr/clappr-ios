@@ -36,5 +36,4 @@ class UICorePluginTests: QuickSpec {
 
     class NoNameCorePlugin: UICorePlugin {
     }
-
 }
