@@ -14,7 +14,7 @@ env:
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
-  - brew install swiftlint
+  - brew outdated swiftlint || brew upgrade swiftlint
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
