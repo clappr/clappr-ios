@@ -93,7 +93,9 @@ open class Container: UIBaseObject {
 
     fileprivate func loadPlugins() {
         for type in loader.containerPlugins {
-            addPlugin(type.init(context: self) as! UIContainerPlugin)
+            if let plugin = type.init(context: self) as? UIContainerPlugin {
+                addPlugin(plugin)
+            }
         }
     }
 

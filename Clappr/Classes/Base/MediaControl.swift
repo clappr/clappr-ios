@@ -98,8 +98,9 @@ open class MediaControl: UIBaseObject {
 
     open class func create() -> MediaControl {
         var mediaControl: MediaControl!
-        if let nib = loadNib() {
-            mediaControl = nib.instantiate(withOwner: self, options: nil).last as! MediaControl
+        if let nib = loadNib(),
+            let control = nib.instantiate(withOwner: self, options: nil).last as? MediaControl {
+            mediaControl = control
         } else {
             mediaControl = initCustom()
         }
