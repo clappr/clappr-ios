@@ -62,7 +62,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate func loadPlugins() {
         for plugin in loader.corePlugins {
-            addPlugin(plugin.init(context: self) as! UICorePlugin)
+            if let corePlugin = plugin.init(context: self) as? UICorePlugin {
+                addPlugin(corePlugin)
+            }
         }
     }
 
