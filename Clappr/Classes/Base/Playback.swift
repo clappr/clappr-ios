@@ -14,10 +14,10 @@ open class Playback: UIBaseObject, Plugin {
 
     open var selectedSubtitle: MediaOption?
     open var selectedAudioSource: MediaOption?
-    open fileprivate(set) var subtitles: [MediaOption]?
-    open fileprivate(set) var audioSources: [MediaOption]?
+    fileprivate(set) open var subtitles: [MediaOption]?
+    fileprivate(set) open var audioSources: [MediaOption]?
 
-    open internal(set) var options: Options
+    internal(set) open var options: Options
 
     open var source: String? {
         return options[kSourceUrl] as? String
@@ -26,7 +26,7 @@ open class Playback: UIBaseObject, Plugin {
     open var autoPlay: Bool {
         return options[kAutoPlay] as? Bool ?? false
     }
-    
+
     open var startAt: TimeInterval {
         return options[kStartAt] as? TimeInterval ?? 0.0
     }
@@ -51,7 +51,7 @@ open class Playback: UIBaseObject, Plugin {
         return 0.0
     }
 
-    open var settings: [String : Any] {
+    open var settings: [String: Any] {
         return [:]
     }
 
@@ -66,7 +66,7 @@ open class Playback: UIBaseObject, Plugin {
     public required init() {
         options = [:]
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     public required init(options: Options) {
@@ -76,25 +76,25 @@ open class Playback: UIBaseObject, Plugin {
         isUserInteractionEnabled = false
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("Use init(url: NSURL) instead")
     }
 
-    public required init(context: UIBaseObject) {
+    public required init(context _: UIBaseObject) {
         fatalError("Use init(url: NSURL) instead")
     }
 
-    open class func canPlay(_ options: Options) -> Bool {
+    open class func canPlay(_: Options) -> Bool {
         return false
     }
 
     open func destroy() {
-        self.removeFromSuperview()
-        self.stopListening()
+        removeFromSuperview()
+        stopListening()
     }
 
     open override func render() {
-        once(Event.ready.rawValue) {[unowned self] _ in
+        once(Event.ready.rawValue) { [unowned self] _ in
             if self.startAt != 0.0 {
                 self.seek(self.startAt)
             }
@@ -109,12 +109,12 @@ open class Playback: UIBaseObject, Plugin {
 
     fileprivate func selectDefaultMediaOptions() {
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
-            let defaultSubtitle = subtitles?.filter({$0.language == defaultSubtitleLanguage}).first {
+            let defaultSubtitle = subtitles?.filter({ $0.language == defaultSubtitleLanguage }).first {
             selectedSubtitle = defaultSubtitle
         }
 
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
-            let defaultAudioSource = audioSources?.filter({$0.language == defaultAudioLanguage}).first {
+            let defaultAudioSource = audioSources?.filter({ $0.language == defaultAudioLanguage }).first {
             selectedAudioSource = defaultAudioSource
         }
     }
@@ -122,5 +122,5 @@ open class Playback: UIBaseObject, Plugin {
     open func play() {}
     open func pause() {}
     open func stop() {}
-    open func seek(_ timeInterval: TimeInterval) {}
+    open func seek(_: TimeInterval) {}
 }

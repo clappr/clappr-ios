@@ -1,6 +1,6 @@
 public enum LogLevel: Int {
     case off = 0, error, warning, info, debug
-    
+
     func description() -> String {
         switch self {
         case .debug:
