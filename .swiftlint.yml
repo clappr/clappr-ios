@@ -2,6 +2,8 @@ disabled_rules:
   - line_length
   - type_body_length
   - file_length
+  - trailing_comma
+  - operator_whitespace
 included: # paths to include during linting. `--path` is ignored if present.
   - Clappr
   - Example
