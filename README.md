@@ -29,20 +29,34 @@ player.attachTo(yourView, controller: self)
 ##### Listen to Events
 
 ```swift
-player.on(PlayerEvent.Play) { userInfo in
+player.on(Event.playing) { userInfo in
     print("on Play")
 }
 ```
 
-You can find public events on `PlayerEvents` enum and listed bellow:
+You can find public events on `Events` enum and listed bellow:
 
-* Ready
-* Play
-* Pause
-* Stop
-* EnterFullscreen
-* ExitFullscreen
-* Error: `userInfo` can contain the error that caused the event.
+* bufferUpdate
+* positionUpdate
+* ready
+* stalled
+* willUpdateAudioSource
+* didUpdateAudioSource
+* willUpdateSubtitleSource
+* didUpdateSubtitleSource
+* disableMediaControl
+* enableMediaControl
+* didComplete
+* willPlay
+* playing
+* willPause
+* didPause
+* willStop
+* didStop
+* airPlayStatusUpdate
+* requestFullscreen
+* exitFullscreen
+* error: `userInfo` can contain the error that caused the event.
 
 ### Built-in Plugins
 
