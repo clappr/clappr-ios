@@ -1,4 +1,4 @@
-public typealias Options = [String : Any]
+public typealias Options = [String: Any]
 
 public let kPosterUrl = "posterUrl"
 public let kSourceUrl = "sourceUrl"

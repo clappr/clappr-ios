@@ -14,10 +14,12 @@ env:
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
+  - brew outdated swiftlint || brew upgrade swiftlint
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
 
 script:
+  - swiftlint
   - pod lib lint
   - xcodebuild test -project "${PROJECT}" -scheme "${SCHEME}" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}

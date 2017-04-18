@@ -1,17 +1,17 @@
 open class UICorePlugin: UIPlugin, Plugin {
     open weak var core: Core!
-    
+
     open class var type: PluginType { return .core }
-    
+
     open class var name: String {
         return self.init().pluginName
     }
-    
+
     open var pluginName: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Core Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
-    
+
     public required init() {
         super.init(frame: CGRect.zero)
     }
@@ -25,7 +25,7 @@ open class UICorePlugin: UIPlugin, Plugin {
         }
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

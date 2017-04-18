@@ -1,0 +1,17 @@
+disabled_rules:
+  - line_length
+  - trailing_comma
+  - operator_whitespace
+included: # paths to include during linting. `--path` is ignored if present.
+  - Clappr
+  - Example
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Example/Pods
+  - Tests
+type_body_length:
+  warning: 300
+  error: 400
+file_length:
+  warning: 500
+  error: 1000

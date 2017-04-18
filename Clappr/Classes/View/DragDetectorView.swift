@@ -6,15 +6,15 @@ open class DragDetectorView: UIView {
         case began, moved, ended, canceled, idle
     }
 
-    open fileprivate(set) var touchState: State = .idle
+    fileprivate(set) open var touchState: State = .idle
 
-    open fileprivate(set) var currentTouch: UITouch?
+    fileprivate(set) open var currentTouch: UITouch?
 
     open var target: AnyObject?
 
     open var selector: Selector!
 
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
             touchState = .began
             currentTouch = touch
@@ -22,7 +22,7 @@ open class DragDetectorView: UIView {
         }
     }
 
-    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesMoved(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
             touchState = .moved
             currentTouch = touch
@@ -30,7 +30,7 @@ open class DragDetectorView: UIView {
         }
     }
 
-    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
             touchState = .ended
             currentTouch = touch
@@ -38,7 +38,7 @@ open class DragDetectorView: UIView {
         }
     }
 
-    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesCancelled(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
             touchState = .canceled
             currentTouch = touch

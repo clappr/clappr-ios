@@ -1,6 +1,6 @@
 open class DateFormatter {
-    fileprivate static let hourInSeconds:Double = 1 * 60 * 60
-    
+    fileprivate static let hourInSeconds: Double = 1 * 60 * 60
+
     open class func formatSeconds(_ totalSeconds: TimeInterval) -> String {
         let date = Date(timeIntervalSince1970: totalSeconds)
         let formatter = Foundation.DateFormatter()
