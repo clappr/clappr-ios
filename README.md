@@ -9,7 +9,7 @@
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod 'Clappr', '~> 0.4'
+pod 'Clappr', '~> 0.6'
 ```
 
 ### Using the Player
@@ -83,7 +83,7 @@ Define a start position in seconds with `kStartAt : x`. Default is `0`.
 
 ##### Fullscreen
 Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
- 
+
 ##### FullscreenDisabled
 Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
