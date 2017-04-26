@@ -1,8 +1,9 @@
 open class Player: BaseObject {
-    fileprivate(set) open var core: Core?
 
-    fileprivate var playbackEventsToListen: [Event]
+    fileprivate var playbackEventsToListen: [Event] = []
     fileprivate var playbackEventsListenIds: [String] = []
+    
+    fileprivate(set) open var core: Core?
 
     open var activeContainer: Container? {
         return core?.activeContainer
@@ -67,7 +68,10 @@ open class Player: BaseObject {
     }
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+        super.init()
+
         Logger.logInfo("loading with \(options)", scope: "Clappr")
+
         self.playbackEventsToListen = [
             .ready, .error,
             .playing, .didComplete,
@@ -75,15 +79,11 @@ open class Player: BaseObject {
             .didStop, .bufferUpdate,
             .positionUpdate, .willPlay,
             .willPause, .willStop,
-            .airPlayStatusUpdate,
-        ]
-
-        super.init()
+            .airPlayStatusUpdate]
 
         let loader = Loader(externalPlugins: externalPlugins, options: options)
-        let core = Core(loader: loader, options: options)
 
-        setCore(core)
+        setCore(Core(loader: loader, options: options))
     }
 
     fileprivate func setCore(_ core: Core) {
@@ -97,6 +97,8 @@ open class Player: BaseObject {
         self.core?.on(InternalEvent.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
         bindPlaybackEvents()
+
+        self.core?.render()
     }
 
     open func attachTo(_ view: UIView, controller: UIViewController) {
