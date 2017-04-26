@@ -13,7 +13,20 @@ open class Container: UIBaseObject {
         }
     }
 
-    internal(set) open var playback: Playback?
+    internal(set) open var playback: Playback? {
+        willSet {
+            if self.playback != newValue {
+                trigger(InternalEvent.willChangePlayback.rawValue)
+            }
+        }
+        didSet {
+            if self.playback != oldValue {
+                self.playback?.removeFromSuperview()
+                self.playback?.once(Event.playing.rawValue) { [weak self] _ in self?.options[kStartAt] = 0.0 }
+                trigger(InternalEvent.didChangePlayback.rawValue)
+            }
+        }
+    }
 
     public init(loader: Loader = Loader(), options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
@@ -41,26 +54,14 @@ open class Container: UIBaseObject {
 
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
 
-        setPlayback(playbackFactory.createPlayback())
-
-        renderPlayback()
+        self.playback = playbackFactory.createPlayback()
 
         if playback is NoOpPlayback {
+            render()
             trigger(InternalEvent.didNotLoadSource.rawValue)
         } else {
+            renderPlayback()
             trigger(InternalEvent.didLoadSource.rawValue)
-        }
-    }
-
-    fileprivate func setPlayback(_ playback: Playback) {
-        if self.playback != playback {
-            trigger(InternalEvent.willChangePlayback.rawValue)
-
-            self.playback?.removeFromSuperview()
-            self.playback = playback
-            playback.once(Event.playing.rawValue) { [weak self] _ in self?.options[kStartAt] = 0.0 }
-
-            trigger(InternalEvent.didChangePlayback.rawValue)
         }
     }
 
