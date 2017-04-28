@@ -2,7 +2,6 @@ open class Player: BaseObject {
 
     fileprivate var playbackEventsToListen: [Event] = []
     fileprivate var playbackEventsListenIds: [String] = []
-    
     fileprivate(set) open var core: Core?
 
     open var activeContainer: Container? {

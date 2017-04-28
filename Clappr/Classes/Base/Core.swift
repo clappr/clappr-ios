@@ -67,7 +67,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             trigger(InternalEvent.didChangeActiveContainer.rawValue)
         }
     }
-    
+
     fileprivate func loadPlugins(_ loader: Loader) {
         for plugin in loader.corePlugins {
             if let corePlugin = plugin.init(context: self) as? UICorePlugin {
