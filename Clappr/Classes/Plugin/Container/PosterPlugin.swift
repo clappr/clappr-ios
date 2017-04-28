@@ -26,7 +26,7 @@ open class PosterPlugin: UIContainerPlugin {
     open override func render() {
         guard let urlString = container.options[kPosterUrl] as? String else {
             removeFromSuperview()
-            container.mediaControlEnabled = true
+            container.mediaControlEnabled = false
             return
         }
 
