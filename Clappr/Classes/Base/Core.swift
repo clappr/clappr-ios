@@ -6,7 +6,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open var parentController: UIViewController?
     open var parentView: UIView?
-    fileprivate var loader: Loader
+
     fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     open var activeContainer: Container?
@@ -25,17 +25,25 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     public required init(loader: Loader = Loader(), options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
-        self.loader = loader
+
         self.options = options
-        containers.append(Container(loader: loader, options: options))
 
         super.init(frame: CGRect.zero)
 
-        if let container = self.containers.first {
-            setActiveContainer(container)
-        }
+        backgroundColor = UIColor.black
 
-        setup()
+        mediaControl = loader.mediaControl.create()
+        addTapRecognizer()
+
+        bindEventListeners()
+        loadPlugins(loader)
+
+        containers.append(Container(loader: loader, options: options))
+
+        if let container = containers.first {
+            setActiveContainer(container)
+            mediaControl.setup(container)
+        }
     }
 
     fileprivate func setActiveContainer(_ container: Container) {
@@ -47,12 +55,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             activeContainer = container
 
             activeContainer?.on(
-                InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+            InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
                 self?.trigger(InternalEvent.willChangeActivePlayback.rawValue, userInfo: info)
             }
 
             activeContainer?.on(
-                InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+            InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
                 self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
             }
 
@@ -60,27 +68,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func loadPlugins() {
+    fileprivate func loadPlugins(_ loader: Loader) {
         for plugin in loader.corePlugins {
             if let corePlugin = plugin.init(context: self) as? UICorePlugin {
                 addPlugin(corePlugin)
             }
-        }
-    }
-
-    fileprivate func setup() {
-        loadPlugins()
-        backgroundColor = UIColor.black
-        createMediaControl()
-        bindEventListeners()
-    }
-
-    fileprivate func createMediaControl() {
-        mediaControl = loader.mediaControl.create()
-        addTapRecognizer()
-
-        if let container = self.activeContainer {
-            mediaControl.setup(container)
         }
     }
 
