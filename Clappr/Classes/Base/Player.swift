@@ -1,8 +1,8 @@
 open class Player: BaseObject {
-    fileprivate(set) open var core: Core?
 
-    fileprivate var playbackEventsToListen: [Event]
+    open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
+    fileprivate(set) open var core: Core?
 
     open var activeContainer: Container? {
         return core?.activeContainer
@@ -67,23 +67,22 @@ open class Player: BaseObject {
     }
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
-        Logger.logInfo("loading with \(options)", scope: "Clappr")
-        self.playbackEventsToListen = [
-            .ready, .error,
-            .playing, .didComplete,
-            .didPause, .stalled,
-            .didStop, .bufferUpdate,
-            .positionUpdate, .willPlay,
-            .willPause, .willStop,
-            .airPlayStatusUpdate,
-        ]
-
         super.init()
 
-        let loader = Loader(externalPlugins: externalPlugins, options: options)
-        let core = Core(loader: loader, options: options)
+        Logger.logInfo("loading with \(options)", scope: "Clappr")
 
-        setCore(core)
+        self.playbackEventsToListen.append(contentsOf:
+            [Event.ready.rawValue, Event.error.rawValue,
+             Event.playing.rawValue, Event.didComplete.rawValue,
+             Event.didPause.rawValue, Event.stalled.rawValue,
+             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.willPause.rawValue, Event.willStop.rawValue,
+             Event.airPlayStatusUpdate.rawValue])
+
+        let loader = Loader(externalPlugins: externalPlugins, options: options)
+
+        setCore(Core(loader: loader, options: options))
     }
 
     fileprivate func setCore(_ core: Core) {
@@ -97,6 +96,8 @@ open class Player: BaseObject {
         self.core?.on(InternalEvent.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
         bindPlaybackEvents()
+
+        self.core?.render()
     }
 
     open func attachTo(_ view: UIView, controller: UIViewController) {
@@ -139,9 +140,9 @@ open class Player: BaseObject {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
                 let listenId = listenTo(
-                    playback, eventName: event.rawValue,
+                    playback, eventName: event,
                     callback: { [weak self] (info: EventUserInfo) in
-                        self?.trigger(event.rawValue, userInfo: info)
+                        self?.trigger(event, userInfo: info)
                 })
 
                 playbackEventsListenIds.append(listenId)

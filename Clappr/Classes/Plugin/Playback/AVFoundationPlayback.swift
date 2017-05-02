@@ -408,6 +408,7 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
         }
+
         NotificationCenter.default.removeObserver(self)
     }
 }
