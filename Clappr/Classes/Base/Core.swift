@@ -170,18 +170,18 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         stopListening()
 
         Logger.logDebug("destroying containers", scope: "Core")
-        containers.forEach{ container in container.destroy() }
+        containers.forEach { container in container.destroy() }
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach{ plugin in plugin.destroy() }
+        plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
         Logger.logDebug("destroying mediaControl", scope: "Core")
         mediaControl?.destroy()
-        
+
         trigger(InternalEvent.didDestroy.rawValue)
-        
+
         Logger.logDebug("destroyed", scope: "Core")
     }
 }
