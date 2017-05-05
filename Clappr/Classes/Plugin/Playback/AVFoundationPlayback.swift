@@ -19,6 +19,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
+    fileprivate var timeObserver: Any?
     private var backgroundSessionBackup: String?
 
     open var url: URL?
@@ -337,7 +338,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func addTimeElapsedCallback() {
-        player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
+        timeObserver = player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
             self?.timeUpdated(time)
         }
     }
@@ -407,6 +408,10 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
+
+            if let timeObserver = self.timeObserver {
+                player?.removeTimeObserver(observer: timeObserver)
+            }
         }
 
         NotificationCenter.default.removeObserver(self)
