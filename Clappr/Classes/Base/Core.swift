@@ -93,7 +93,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate func enterFullscreen(_: EventUserInfo) {
         trigger(InternalEvent.willEnterFullscreen.rawValue)
-        mediaControl.fullscreen = true
+        mediaControl?.fullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
         parentController?.present(fullscreenController, animated: false, completion: nil)
@@ -159,5 +159,29 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         let isFullscreen = fullscreenController.presentingViewController != nil
         guard fullscreen != isFullscreen else { return }
         fullscreen ? enterFullscreen(nil) : exitFullscreen([:])
+    }
+
+    open func destroy() {
+        Logger.logDebug("destroying", scope: "Core")
+
+        trigger(InternalEvent.willDestroy.rawValue)
+
+        Logger.logDebug("destroying listeners", scope: "Core")
+        stopListening()
+
+        Logger.logDebug("destroying containers", scope: "Core")
+        containers.forEach{ container in container.destroy() }
+        containers.removeAll()
+
+        Logger.logDebug("destroying plugins", scope: "Core")
+        plugins.forEach{ plugin in plugin.destroy() }
+        plugins.removeAll()
+
+        Logger.logDebug("destroying mediaControl", scope: "Core")
+        mediaControl?.destroy()
+        
+        trigger(InternalEvent.didDestroy.rawValue)
+        
+        Logger.logDebug("destroyed", scope: "Core")
     }
 }
