@@ -12,4 +12,6 @@ public enum InternalEvent: String {
     case willLoadSource
     case didLoadSource
     case didNotLoadSource
+    case willDestroy
+    case didDestroy
 }
