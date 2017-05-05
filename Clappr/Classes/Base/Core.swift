@@ -1,7 +1,7 @@
 open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate(set) open var options: Options
     fileprivate(set) open var containers: [Container] = []
-    fileprivate(set) open var mediaControl: MediaControl!
+    fileprivate(set) open var mediaControl: MediaControl?
     fileprivate(set) open var plugins: [UICorePlugin] = []
 
     open var parentController: UIViewController?
@@ -9,7 +9,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
-    open var activeContainer: Container?
+    open weak var activeContainer: Container?
 
     open var activePlayback: Playback? {
         return activeContainer?.playback
@@ -42,7 +42,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
         if let container = containers.first {
             setActiveContainer(container)
-            mediaControl.setup(container)
+            mediaControl?.setup(container)
         }
     }
 
@@ -83,6 +83,10 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func bindEventListeners() {
+        guard let mediaControl = self.mediaControl else {
+            return
+        }
+
         listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
         listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
     }
@@ -105,7 +109,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func renderInContainerView() {
-        mediaControl.fullscreen = false
+        mediaControl?.fullscreen = false
         parentView?.addSubviewMatchingConstraints(self)
     }
 
@@ -115,8 +119,10 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         plugins.forEach(installPlugin)
         containers.forEach(renderContainer)
 
-        addSubviewMatchingConstraints(mediaControl)
-        mediaControl.render()
+        if let mediaControl = self.mediaControl {
+            addSubviewMatchingConstraints(mediaControl)
+            mediaControl.render()
+        }
     }
 
     fileprivate func addToContainer() {
