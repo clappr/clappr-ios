@@ -162,7 +162,11 @@ open class Player: BaseObject {
         trigger(event.rawValue, userInfo: userInfo)
     }
 
-    deinit {
+    open func destroy() {
+        Logger.logDebug("destroying", scope: "Player")
         stopListening()
+        Logger.logDebug("destroying core", scope: "Player")
+        self.core?.destroy()
+        Logger.logDebug("destroyed", scope: "Player")
     }
 }
