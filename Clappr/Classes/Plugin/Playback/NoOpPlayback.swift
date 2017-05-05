@@ -45,4 +45,9 @@ open class NoOpPlayback: Playback {
         }
         return "Could not play video"
     }
+
+    override open func destroy() {
+        super.destroy()
+        Logger.logDebug("destroyed", scope: "NOOpPlayback")
+    }
 }
