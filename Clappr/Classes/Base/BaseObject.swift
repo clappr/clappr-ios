@@ -117,6 +117,7 @@ open class BaseObject: NSObject, EventProtocol {
     }
 
     deinit {
+        Logger.logDebug("deinit", scope: NSStringFromClass(type(of: self)))
         self.stopListening()
     }
 }
