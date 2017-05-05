@@ -85,13 +85,6 @@ open class Container: UIBaseObject {
         plugin.render()
     }
 
-    open func destroy() {
-        stopListening()
-        playback?.destroy()
-
-        removeFromSuperview()
-    }
-
     fileprivate func loadPlugins() {
         for type in loader.containerPlugins {
             if let plugin = type.init(context: self) as? UIContainerPlugin {
@@ -106,5 +99,26 @@ open class Container: UIBaseObject {
 
     open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
+    }
+
+    open func destroy() {
+        Logger.logDebug("destroying", scope: "Container")
+
+        trigger(InternalEvent.willDestroy.rawValue)
+
+        Logger.logDebug("destroying listeners", scope: "Container")
+        stopListening()
+
+        Logger.logDebug("destroying playback", scope: "Container")
+        playback?.destroy()
+
+        Logger.logDebug("destroying plugins", scope: "Container")
+        plugins.forEach{ plugin in plugin.destroy() }
+        plugins.removeAll()
+
+        removeFromSuperview()
+
+        trigger(InternalEvent.didDestroy.rawValue)
+        Logger.logDebug("destroyed", scope: "Container")
     }
 }
