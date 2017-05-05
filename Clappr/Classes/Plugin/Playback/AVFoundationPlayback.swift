@@ -222,11 +222,15 @@ open class AVFoundationPlayback: Playback {
         trigger(.willStop)
         player?.pause()
         updateState(.idle)
+        releaseResources()
+        trigger(.didStop)
+    }
+
+    func releaseResources() {
         removeObservers()
         playerLayer?.removeFromSuperlayer()
         playerLayer = nil
         player = nil
-        trigger(.didStop)
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
@@ -415,5 +419,12 @@ open class AVFoundationPlayback: Playback {
         }
 
         NotificationCenter.default.removeObserver(self)
+    }
+
+    override open func destroy() {
+        super.destroy()
+        Logger.logDebug("destroying", scope: "AVFoundationPlayback")
+        releaseResources()
+        Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
     }
 }
