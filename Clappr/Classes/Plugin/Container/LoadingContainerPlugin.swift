@@ -59,7 +59,7 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     }
 
     private func bindPlaybackEvents() {
-        if let playback = container?.playback {
+        if let playback = container.playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
             listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
             listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
