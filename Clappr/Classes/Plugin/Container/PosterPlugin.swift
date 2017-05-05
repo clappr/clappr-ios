@@ -24,9 +24,9 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     open override func render() {
-        guard let urlString = container.options[kPosterUrl] as? String else {
+        guard let urlString = container?.options[kPosterUrl] as? String else {
             removeFromSuperview()
-            container.mediaControlEnabled = false
+            container?.mediaControlEnabled = false
             return
         }
 
@@ -49,12 +49,12 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     func playTouched() {
-        container.playback?.seek(0)
-        container.playback?.play()
+        container?.playback?.seek(0)
+        container?.playback?.play()
     }
 
     fileprivate func configureViews() {
-        container.addMatchingConstraints(self)
+        container?.addMatchingConstraints(self)
         addSubviewMatchingConstraints(poster)
 
         addSubview(playButton)
@@ -69,7 +69,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     private func bindPlaybackEvents() {
-        if let playback = container.playback {
+        if let playback = container?.playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
             listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.playbackReady() }
             listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
@@ -84,7 +84,9 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     private func bindDidChangePlayback() {
-        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+        if let container = self.container {
+            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+        }
     }
 
     fileprivate func playbackStalled() {
@@ -93,18 +95,26 @@ open class PosterPlugin: UIContainerPlugin {
 
     fileprivate func playbackStarted() {
         isHidden = true
-        container.mediaControlEnabled = true
+        container?.mediaControlEnabled = true
     }
 
     fileprivate func playbackEnded() {
-        container.mediaControlEnabled = false
+        container?.mediaControlEnabled = false
         playButton.isHidden = false
         isHidden = false
     }
 
     fileprivate func playbackReady() {
-        if container.playback?.pluginName == "NoOp" {
+        if container?.playback?.pluginName == "NoOp" {
             isHidden = true
         }
+    }
+
+    override open func destroy() {
+        super.destroy()
+        Logger.logDebug("destroying", scope: "PosterPlugin")
+        Logger.logDebug("destroying ui elements", scope: "PosterPlugin")
+        removeFromSuperview()
+        Logger.logDebug("destroyed", scope: "PosterPlugin")
     }
 }
