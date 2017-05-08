@@ -13,22 +13,22 @@ class PosterPluginTests: QuickSpec {
             ]
 
             context("Initialization") {
-                it("Should not be rendered if container has no options") {
+                it("Should not be visible if container has no options") {
                     container = Container()
                     container.render()
 
                     let posterPlugin = self.getPosterPlugin(container)
 
-                    expect(posterPlugin.superview).to(beNil())
+                    expect(posterPlugin.isHidden).to(beTrue())
                 }
 
-                it("Should not be rendered if container doesn't have posterUrl Option") {
+                it("Should not be visible if container doesn't have posterUrl Option") {
                     container = Container(options: ["anotherOption": true])
                     container.render()
 
                     let posterPlugin = self.getPosterPlugin(container)
 
-                    expect(posterPlugin.superview).to(beNil())
+                    expect(posterPlugin.isHidden).to(beTrue())
                 }
 
                 it("Should be rendered if container have posterUrl Option") {
