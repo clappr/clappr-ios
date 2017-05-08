@@ -25,9 +25,10 @@ open class PosterPlugin: UIContainerPlugin {
 
     open override func render() {
         if let urlString = container.options[kPosterUrl] as? String {
+            setPosterImage(with: urlString)
+        } else {
             isHidden = true
             container.mediaControlEnabled = false
-            setPosterImage(with: urlString)
         }
 
         configurePlayButton()
