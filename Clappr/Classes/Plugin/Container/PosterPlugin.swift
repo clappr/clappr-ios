@@ -20,24 +20,27 @@ open class PosterPlugin: UIContainerPlugin {
         super.init(context: context)
         translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .scaleAspectFit
-        bindDidChangePlayback()
+        bindContainerEvents()
     }
 
     open override func render() {
-        guard let urlString = container?.options[kPosterUrl] as? String else {
-            removeFromSuperview()
-            container?.mediaControlEnabled = false
-            return
+        if let urlString = container.options[kPosterUrl] as? String {
+            isHidden = true
+            container.mediaControlEnabled = false
+            setPosterImage(with: urlString)
         }
 
+        configurePlayButton()
+        configureViews()
+    }
+
+    fileprivate typealias PosterUrl = String
+    fileprivate func setPosterImage(with urlString: PosterUrl) {
         if let url = URL(string: urlString) {
             poster.kf.setImage(with: url)
         } else {
             Logger.logWarn("invalid URL.", scope: pluginName)
         }
-
-        configurePlayButton()
-        configureViews()
     }
 
     fileprivate func configurePlayButton() {
@@ -77,16 +80,15 @@ open class PosterPlugin: UIContainerPlugin {
         }
     }
 
+    private func bindContainerEvents() {
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+        listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
+    }
+
     private func didChangePlayback() {
         stopListening()
         bindPlaybackEvents()
-        bindDidChangePlayback()
-    }
-
-    private func bindDidChangePlayback() {
-        if let container = self.container {
-            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
-        }
+        bindContainerEvents()
     }
 
     fileprivate func playbackStalled() {
@@ -110,11 +112,15 @@ open class PosterPlugin: UIContainerPlugin {
         }
     }
 
-    override open func destroy() {
-        super.destroy()
-        Logger.logDebug("destroying", scope: "PosterPlugin")
-        Logger.logDebug("destroying ui elements", scope: "PosterPlugin")
-        removeFromSuperview()
-        Logger.logDebug("destroyed", scope: "PosterPlugin")
+    fileprivate func updatePoster(_ info: EventUserInfo) {
+        Logger.logInfo("Updating poster", scope: pluginName)
+        guard let posterUrl = info?[kPosterUrl] as? String else {
+            Logger.logWarn("Unable to update poster, no url was found", scope: pluginName)
+            return
+        }
+        trigger(Event.willUpdatePoster)
+        setPosterImage(with: posterUrl)
+        trigger(Event.didUpdatePoster)
+
     }
 }
