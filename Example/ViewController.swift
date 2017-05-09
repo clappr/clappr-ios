@@ -26,7 +26,7 @@ class ViewController: UIViewController {
 
         player.on(Event.didStop) { _ in print("on Stop") }
 
-        player.on(Event.didComplete) { _ in print("on Ended") }
+        player.on(Event.didComplete) { _ in print("on Complete") }
 
         player.on(Event.ready) { _ in print("on Ready") }
 
@@ -35,6 +35,9 @@ class ViewController: UIViewController {
         player.on(Event.requestFullscreen) { _ in print("on Enter Fullscreen") }
 
         player.on(Event.exitFullscreen) { _ in print("on Exit Fullscreen") }
+
+        player.on(Event.stalled) { _ in print("on Stalled") }
+
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

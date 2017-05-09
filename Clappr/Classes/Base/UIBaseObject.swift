@@ -22,7 +22,7 @@ open class UIBaseObject: UIView, EventProtocol {
         Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
 
-    open func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
+    open func trigger(_ eventName: String, userInfo: EventUserInfo) {
         baseObject.trigger(eventName, userInfo: userInfo)
         Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
