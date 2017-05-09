@@ -24,6 +24,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     open override func render() {
+        guard let container = container else { return }
         if let urlString = container.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
@@ -82,6 +83,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     private func bindContainerEvents() {
+        guard let container = container else { return }
         listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
     }

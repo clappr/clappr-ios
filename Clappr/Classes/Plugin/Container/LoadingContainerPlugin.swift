@@ -59,12 +59,12 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     }
 
     private func bindPlaybackEvents() {
-        if let playback = container.playback {
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
-            listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-        }
+        guard let playback = container?.playback else { return }
+        listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+        listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+
     }
 
     fileprivate func startAnimating(_: EventUserInfo) {
@@ -77,7 +77,7 @@ open class LoadingContainerPlugin: UIContainerPlugin {
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
     }
 
-    override open func destroy() {
+    open override func destroy() {
         super.destroy()
         Logger.logDebug("destroying", scope: "LoadingContainerPlugin")
         Logger.logDebug("destroying ui elements", scope: "LoadingContainerPlugin")
