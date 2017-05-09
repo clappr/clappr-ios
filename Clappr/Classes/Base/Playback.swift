@@ -88,11 +88,6 @@ open class Playback: UIBaseObject, Plugin {
         return false
     }
 
-    open func destroy() {
-        removeFromSuperview()
-        stopListening()
-    }
-
     open override func render() {
         once(Event.ready.rawValue) { [unowned self] _ in
             if self.startAt != 0.0 {
@@ -123,4 +118,13 @@ open class Playback: UIBaseObject, Plugin {
     open func pause() {}
     open func stop() {}
     open func seek(_: TimeInterval) {}
+
+    open func destroy() {
+        Logger.logDebug("destroying", scope: "Playback")
+        Logger.logDebug("destroying ui elements", scope: "Playback")
+        removeFromSuperview()
+        Logger.logDebug("destroying listeners", scope: "Playback")
+        stopListening()
+        Logger.logDebug("destroyed", scope: "Playback")
+    }
 }

@@ -33,7 +33,7 @@ class CoreTests: QuickSpec {
             context("Media Control") {
                 it("Should have container reference") {
                     expect(core.mediaControl).toNot(beNil())
-                    expect(core.mediaControl.container) == core.activeContainer
+                    expect(core.mediaControl?.container) == core.activeContainer
                 }
 
                 it("Should be the top view on core") {

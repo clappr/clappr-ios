@@ -4,4 +4,5 @@ public protocol Plugin {
     var pluginName: String { get }
     init()
     init(context: UIBaseObject)
+    func destroy()
 }

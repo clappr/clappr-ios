@@ -54,7 +54,7 @@ open class BaseObject: NSObject, EventProtocol {
 
     open func off(_ listenId: String) {
         guard let event = events[listenId] else {
-            Logger.logError("could not find any event with given event listenId", scope: logIdentifier())
+            Logger.logError("could not find any event with given event listenId: \(listenId)", scope: logIdentifier())
             return
         }
 
@@ -117,6 +117,7 @@ open class BaseObject: NSObject, EventProtocol {
     }
 
     deinit {
+        Logger.logDebug("deinit", scope: NSStringFromClass(type(of: self)))
         self.stopListening()
     }
 }
