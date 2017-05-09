@@ -57,6 +57,10 @@ open class UIBaseObject: UIView, EventProtocol {
     }
 
     open func render() {}
+
+    deinit {
+        Logger.logDebug("deinit", scope: NSStringFromClass(type(of: self)))
+    }
 }
 
 public extension UIBaseObject {

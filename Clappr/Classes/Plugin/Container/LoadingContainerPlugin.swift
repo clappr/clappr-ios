@@ -23,7 +23,8 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     }
 
     private func bindDidChangePlayback() {
-        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info)
+        if let container = self.container {
+            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
         }
     }
 
@@ -50,15 +51,15 @@ open class LoadingContainerPlugin: UIContainerPlugin {
 
         let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerX,
                                                    relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0)
-        container.addConstraint(xCenterConstraint)
+        container?.addConstraint(xCenterConstraint)
 
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY,
                                                    relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0)
-        container.addConstraint(yCenterConstraint)
+        container?.addConstraint(yCenterConstraint)
     }
 
     private func bindPlaybackEvents() {
-        if let playback = container.playback {
+        if let playback = container?.playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
             listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
             listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
@@ -74,5 +75,13 @@ open class LoadingContainerPlugin: UIContainerPlugin {
     fileprivate func stopAnimating(_: EventUserInfo) {
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
+    }
+
+    override open func destroy() {
+        super.destroy()
+        Logger.logDebug("destroying", scope: "LoadingContainerPlugin")
+        Logger.logDebug("destroying ui elements", scope: "LoadingContainerPlugin")
+        removeFromSuperview()
+        Logger.logDebug("destroyed", scope: "LoadingContainerPlugin")
     }
 }
