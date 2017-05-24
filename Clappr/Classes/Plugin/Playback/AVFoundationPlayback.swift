@@ -15,7 +15,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var kvoBufferingContext = 0
     fileprivate var kvoExternalPlaybackActiveContext = 0
 
-    public var player: AVPlayer?
+    dynamic fileprivate var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
