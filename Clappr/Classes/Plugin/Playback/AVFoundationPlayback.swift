@@ -21,9 +21,13 @@ open class AVFoundationPlayback: Playback {
     fileprivate var playerStatus: AVPlayerStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
     fileprivate var timeObserver: Any?
+    fileprivate var asset: AVURLAsset?
+
     private var backgroundSessionBackup: String?
 
-    open var url: URL?
+    open var url: URL? {
+        return asset?.url
+    }
 
     open override var pluginName: String {
         return "AVPlayback"
@@ -126,8 +130,14 @@ open class AVFoundationPlayback: Playback {
         super.init(options: options)
 
         if let urlString = options[kSourceUrl] as? String {
-            url = URL(string: urlString)
+            if let url = URL(string: urlString) {
+                asset = AVURLAsset(url: url)
+            }
         }
+    }
+
+    public func setDelegate(delegate: AVAssetResourceLoaderDelegate) {
+        self.asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
     }
 
     public required init?(coder _: NSCoder) {
@@ -164,8 +174,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func setupPlayer() {
-        if let url = self.url {
-            player = AVPlayer(url: url)
+        if let asset = self.asset {
+            let item: AVPlayerItem = AVPlayerItem(asset: asset)
+            player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
