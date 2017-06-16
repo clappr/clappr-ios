@@ -14,6 +14,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var kvoTimeRangesContext = 0
     fileprivate var kvoBufferingContext = 0
     fileprivate var kvoExternalPlaybackActiveContext = 0
+    fileprivate var kvoPlayerRateContext = 0
 
     dynamic fileprivate var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
@@ -186,25 +187,14 @@ open class AVFoundationPlayback: Playback {
                             options: .new, context: &kvoBufferingContext)
         player?.addObserver(self, forKeyPath: "externalPlaybackActive",
                             options: .new, context: &kvoExternalPlaybackActiveContext)
+        player?.addObserver(self, forKeyPath: "rate",
+                            options: .new, context: &kvoPlayerRateContext)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player?.currentItem)
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appMovedToBackground),
-            name: Notification.Name.UIApplicationDidEnterBackground,
-            object: nil)
-    }
-
-    func appMovedToBackground() {
-        let externalPlaybackActive = player?.isExternalPlaybackActive ?? false
-        if !externalPlaybackActive {
-            pause()
-        }
     }
 
     func playbackDidEnd() {
@@ -256,6 +246,8 @@ open class AVFoundationPlayback: Playback {
             handleBufferingEvent(keyPath)
         case &kvoExternalPlaybackActiveContext:
             handleExternalPlaybackActiveEvent()
+        case &kvoPlayerRateContext:
+            handlePlayerRateChanged()
         default:
             break
         }
@@ -384,6 +376,12 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    fileprivate func handlePlayerRateChanged() {
+        if(player?.rate == 0) {
+            updateState(.paused)
+        }
+    }
+
     fileprivate func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: String) {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.select(option, in: group)
@@ -412,6 +410,7 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
+            player?.removeObserver(self, forKeyPath: "rate")
 
             if let timeObserver = self.timeObserver {
                 player?.removeTimeObserver(observer: timeObserver)
