@@ -18,7 +18,7 @@ open class AVFoundationPlayback: Playback {
 
     dynamic fileprivate var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
-    fileprivate var playerStatus: AVPlayerStatus = .unknown
+    fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
     fileprivate var timeObserver: Any?
     fileprivate var asset: AVURLAsset?
@@ -318,8 +318,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handleStatusChangedEvent() {
-        guard let player = player, playerStatus != player.status else { return }
-        playerStatus = player.status
+        guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        playerStatus = currentItem.status
 
         if playerStatus == .readyToPlay && currentState != .paused {
             readyToPlay()
