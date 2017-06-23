@@ -136,7 +136,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    public func setDelegate(delegate: AVAssetResourceLoaderDelegate) {
+    public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
         self.asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
     }
 
