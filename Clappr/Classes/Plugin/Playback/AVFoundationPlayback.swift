@@ -239,6 +239,7 @@ open class AVFoundationPlayback: Playback {
 
         player?.currentItem?.seek(to: time)
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+        trigger(.seek)
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
