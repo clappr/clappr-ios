@@ -18,12 +18,16 @@ open class AVFoundationPlayback: Playback {
 
     dynamic fileprivate var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
-    fileprivate var playerStatus: AVPlayerStatus = .unknown
+    fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
     fileprivate var timeObserver: Any?
+    fileprivate var asset: AVURLAsset?
+
     private var backgroundSessionBackup: String?
 
-    open var url: URL?
+    open var url: URL? {
+        return asset?.url
+    }
 
     open override var pluginName: String {
         return "AVPlayback"
@@ -126,8 +130,14 @@ open class AVFoundationPlayback: Playback {
         super.init(options: options)
 
         if let urlString = options[kSourceUrl] as? String {
-            url = URL(string: urlString)
+            if let url = URL(string: urlString) {
+                asset = AVURLAsset(url: url)
+            }
         }
+    }
+
+    public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
+        self.asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
     }
 
     public required init?(coder _: NSCoder) {
@@ -164,8 +174,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func setupPlayer() {
-        if let url = self.url {
-            player = AVPlayer(url: url)
+        if let asset = self.asset {
+            let item: AVPlayerItem = AVPlayerItem(asset: asset)
+            player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
@@ -307,8 +318,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handleStatusChangedEvent() {
-        guard let player = player, playerStatus != player.status else { return }
-        playerStatus = player.status
+        guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        playerStatus = currentItem.status
 
         if playerStatus == .readyToPlay && currentState != .paused {
             readyToPlay()
