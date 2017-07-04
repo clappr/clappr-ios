@@ -21,6 +21,5 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Clappr/Classes/**/*'
   s.resources = 'Clappr/Resources/*.{xib,ttf,png,xcassets}'
-
-  s.dependency 'Kingfisher', '~> 3.0'
+  
 end
