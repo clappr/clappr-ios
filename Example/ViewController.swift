@@ -7,7 +7,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
     let avPlayerViewController = AVPlayerViewController()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let options = [
@@ -20,20 +20,20 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
-        
+
         addChildViewController(avPlayerViewController)
         avPlayerViewController.view.frame = playerContainer.bounds
         avPlayerViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         playerContainer.addSubview(avPlayerViewController.view)
     }
-    
+
     func onReady() {
         print("on Ready")
-        
+
         let pb = player.activePlayback as? AVFoundationPlayback
         avPlayerViewController.player = pb?.player
     }
-    
+
     func listenToPlayerEvents() {
         player.on(Event.playing) { _ in print("on Play") }
 
@@ -55,6 +55,7 @@ class ViewController: UIViewController {
 
     }
 
+    #if !os(tvOS)
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
@@ -62,4 +63,5 @@ class ViewController: UIViewController {
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { // swiftlint:disable:this variable_name
         return UIInterfaceOrientation.portrait
     }
+    #endif
 }
