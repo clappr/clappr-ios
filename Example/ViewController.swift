@@ -22,9 +22,9 @@ class ViewController: UIViewController {
         player.attachTo(playerContainer, controller: self)
 
         addChildViewController(avPlayerViewController)
-        avPlayerViewController.view.frame = playerContainer.bounds
+        avPlayerViewController.view.frame = view.bounds
         avPlayerViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        playerContainer.addSubview(avPlayerViewController.view)
+        view.addSubview(avPlayerViewController.view)
     }
 
     func onReady() {
