@@ -139,8 +139,10 @@ open class MediaControl: UIBaseObject {
     }
 
     open func bindOrientationChangedListener() {
+        #if !os(tvOS)
         NotificationCenter.default.addObserver(self, selector: #selector(MediaControl.didRotate),
                                                name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        #endif
     }
 
     open func didRotate() {
