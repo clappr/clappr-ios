@@ -89,7 +89,8 @@ open class MediaControl: UIBaseObject {
     }
 
     open class func loadNib() -> UINib? {
-        return UINib(nibName: "MediaControlView", bundle: Bundle(for: MediaControl.self))
+//        return UINib(nibName: "MediaControlView", bundle: Bundle(for: MediaControl.self))
+        return nil
     }
 
     open class func initCustom() -> MediaControl {

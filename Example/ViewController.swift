@@ -1,24 +1,39 @@
 import UIKit
 import Clappr
+import AVKit
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
-
+    let avPlayerViewController = AVPlayerViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let options = [
-            kSourceUrl: "http://clappr.io/highline.mp4",
+            kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
             kPosterUrl: "http://clappr.io/poster.png",
-        ]
+            kAutoPlay: true
+            ] as [String : Any]
         player = Player(options: options)
 
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
+        
+        addChildViewController(avPlayerViewController)
+        avPlayerViewController.view.frame = playerContainer.bounds
+        avPlayerViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        playerContainer.addSubview(avPlayerViewController.view)
     }
-
+    
+    func onReady() {
+        print("on Ready")
+        
+        let pb = player.activePlayback as? AVFoundationPlayback
+        avPlayerViewController.player = pb?.player
+    }
+    
     func listenToPlayerEvents() {
         player.on(Event.playing) { _ in print("on Play") }
 
@@ -28,7 +43,7 @@ class ViewController: UIViewController {
 
         player.on(Event.didComplete) { _ in print("on Complete") }
 
-        player.on(Event.ready) { _ in print("on Ready") }
+        player.on(Event.ready) { _ in  self.onReady() }
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
