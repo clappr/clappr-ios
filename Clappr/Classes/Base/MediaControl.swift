@@ -28,8 +28,6 @@ open class MediaControl: UIBaseObject {
     @IBOutlet open var playbackControlButton: UIButton?
     @IBOutlet open var fullscreenButton: UIButton?
 
-    @IBOutlet open weak var airPlayVolumeView: MPVolumeView?
-
     internal(set) open weak var container: Container?
     internal(set) open var controlsHidden = false
 
@@ -109,9 +107,6 @@ open class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
         mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
-        mediaControl.airPlayVolumeView?.showsVolumeSlider = false
-        mediaControl.airPlayVolumeView?.showsRouteButton = true
-        mediaControl.airPlayVolumeView?.backgroundColor = UIColor.clear
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
