@@ -6,32 +6,22 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
-    let avPlayerViewController = AVPlayerViewController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let options = [
             kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
-            kPosterUrl: "http://clappr.io/poster.png",
             kAutoPlay: true
             ] as [String : Any]
         player = Player(options: options)
 
         listenToPlayerEvents()
 
-        player.attachTo(playerContainer, controller: self)
 
-        addChildViewController(avPlayerViewController)
-        avPlayerViewController.view.frame = view.bounds
-        avPlayerViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(avPlayerViewController.view)
-    }
-
-    func onReady() {
-        print("on Ready")
-
-        let pb = player.activePlayback as? AVFoundationPlayback
-        avPlayerViewController.player = pb?.player
+        addChildViewController(player)
+        player.view.frame = view.bounds
+        view.addSubview(player.view)
+        player.didMove(toParentViewController: self)
     }
 
     func listenToPlayerEvents() {
@@ -43,7 +33,7 @@ class ViewController: UIViewController {
 
         player.on(Event.didComplete) { _ in print("on Complete") }
 
-        player.on(Event.ready) { _ in  self.onReady() }
+        player.on(Event.ready) { _ in  print("on Ready") }
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
