@@ -91,7 +91,7 @@ Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
 
 ##### Media Control
-Adding a custom media control is possible by informing the `Type` of your class via `kMediaControl : YourCustomControl.self`
+Add `kMediaControl : false` if you want ti disable the media control.
 
 ### External Playback in Background
 To enable external playback while your app is in background, you should include the `audio` value to your app's **Background Modes** capabilities.
