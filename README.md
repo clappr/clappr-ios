@@ -28,7 +28,7 @@ end
 
 ##### Create
 ```swift
-let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
+let options = [kSourceUrl : "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"]
 let player = Player(options: options)
 ```
 
