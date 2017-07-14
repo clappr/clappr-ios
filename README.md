@@ -24,6 +24,12 @@ end
 
 ```
 
+An alternative option is [ Carthage](https://github.com/Carthage/Carthage). Add the dependency to your `Cartfile` and follows the [instructions](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
+
+```ruby
+github "clappr/clappr-ios" "tvos"
+```
+
 ### Using the Player
 
 ##### Create
