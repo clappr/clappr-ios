@@ -9,7 +9,7 @@
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod 'Clappr', '~> 0.6'
+pod 'Clappr', git: 'https://github.com/clappr/clappr-ios.git', branch: 'tvos'
 ```
 
 ### Using the Player
@@ -20,11 +20,17 @@ let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
 let player = Player(options: options)
 ```
 
-##### Add it in your view
+##### Add to your controller
 
 ```swift
-player.attachTo(yourView, controller: self)
+addChildViewController(player)
+player.view.frame = view.bounds
+view.addSubview(player.view)
+player.didMove(toParentViewController: self)
 ```
+Player default configuration assumes fullscreen in tvOS. Please ensure that the corresponding attached view fill all the windows area.
+
+Player also supports embeded mode. This mode requires [media control](#media_control)  being disabled.
 
 ##### Listen to Events
 
@@ -69,9 +75,6 @@ let player = Player(options: options)
 ##### Source
 Set the video source url with `kSourceUrl : "http://clappr.io/highline.mp4"`.
 
-##### Poster
-Define a poster by adding `kPosterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
-
 ##### Playback not supported custom message
 Add `kPlaybackNotSupportedMessage : 'Your custom message'` to define a custom message to be displayed for not supported videos.
 
@@ -81,17 +84,11 @@ Add `kAutoPlay: true` if you want the video to play automatically.
 ##### Start At
 Define a start position in seconds with `kStartAt : x`. Default is `0`.
 
-##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
-
-##### FullscreenDisabled
-Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
-
 ##### MimeType
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
 
 ##### Media Control
-Add `kMediaControl : false` if you want to disable the media control.
+Add `kMediaControl : false` if you want to disable the media control. Media control is only suported for fullscreen.
 
 ### External Playback in Background
 To enable external playback while your app is in background, you should include the `audio` value to your app's **Background Modes** capabilities.
