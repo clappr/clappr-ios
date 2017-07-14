@@ -11,6 +11,18 @@ The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dep
 ```ruby
 pod 'Clappr', git: 'https://github.com/clappr/clappr-ios.git', branch: 'tvos'
 ```
+Clappr supports Swift 3.2 only. If your project uses another version, add this your `Podfile`
+
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '3.2'
+    end
+  end
+end
+
+```
 
 ### Using the Player
 
@@ -28,9 +40,9 @@ player.view.frame = view.bounds
 view.addSubview(player.view)
 player.didMove(toParentViewController: self)
 ```
-Player default configuration assumes fullscreen in tvOS. Please ensure that the corresponding attached view fill all the windows area.
+Player default configuration assumes fullscreen in tvOS. Please ensure that the corresponding attached view fill all the window area.
 
-Player also supports embeded mode. This mode requires [media control](#media_control)  being disabled.
+Player also supports embeded mode. This mode requires [media control](#media-control)  being disabled.
 
 ##### Listen to Events
 
