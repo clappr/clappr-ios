@@ -6,7 +6,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let options = [
@@ -16,7 +16,6 @@ class ViewController: UIViewController {
         player = Player(options: options)
 
         listenToPlayerEvents()
-
 
         addChildViewController(player)
         player.view.frame = view.bounds

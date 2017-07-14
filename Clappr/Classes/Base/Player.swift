@@ -4,14 +4,14 @@ open class Player: UIViewController, EventProtocol {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) open var core: Core?
-    fileprivate var viewController : AVPlayerViewController?
+    fileprivate var viewController: AVPlayerViewController?
     fileprivate let base = BaseObject()
 
     override open func viewDidLoad() {
         core?.parentView = view
         core?.render()
 
-        if ( (core?.options[kMediaControl] as? Bool) != false) {
+        if core?.options[kMediaControl] as? Bool != false {
             viewController = AVPlayerViewController()
             if let vc = viewController {
                 addChildViewController(vc)
@@ -164,18 +164,18 @@ open class Player: UIViewController, EventProtocol {
 
                 playbackEventsListenIds.append(listenId)
             }
-            
+
             let listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
             playbackEventsListenIds.append(listenId)
         }
     }
-    
+
     fileprivate func bindPlayer(playback: Playback?) {
         if let player = (playback as? AVFoundationPlayback)?.player {
             viewController?.player = player
         }
     }
-    
+
     fileprivate func unbindPlaybackEvents() {
         for id in playbackEventsListenIds {
             stopListening(id)
@@ -195,7 +195,6 @@ open class Player: UIViewController, EventProtocol {
         self.core?.destroy()
         Logger.logDebug("destroyed", scope: "Player")
     }
-
 
     public func on(_ eventName: String, callback: @escaping EventCallback) -> String {
         return base.on(eventName, callback: callback)
@@ -236,6 +235,4 @@ open class Player: UIViewController, EventProtocol {
     public func getEventContextObject() -> BaseObject {
         return base.getEventContextObject()
     }
-
-
 }
