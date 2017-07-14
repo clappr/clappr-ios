@@ -193,6 +193,7 @@ open class Player: UIViewController, EventProtocol {
         stopListening()
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
+        self.viewController?.player = nil
         Logger.logDebug("destroyed", scope: "Player")
     }
 
