@@ -68,8 +68,6 @@ You can find public events on `Events` enum and listed bellow:
 * didUpdateAudioSource
 * willUpdateSubtitleSource
 * didUpdateSubtitleSource
-* disableMediaControl
-* enableMediaControl
 * didComplete
 * willPlay
 * playing
@@ -77,9 +75,6 @@ You can find public events on `Events` enum and listed bellow:
 * didPause
 * willStop
 * didStop
-* airPlayStatusUpdate
-* requestFullscreen
-* exitFullscreen
 * error: `userInfo` can contain the error that caused the event.
 
 ### Built-in Plugins
