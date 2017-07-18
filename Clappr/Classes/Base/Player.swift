@@ -236,4 +236,11 @@ open class Player: UIViewController, EventProtocol {
     public func getEventContextObject() -> BaseObject {
         return base.getEventContextObject()
     }
+
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if presentedViewController == nil {
+            destroy()
+        }
+    }
 }
