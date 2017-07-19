@@ -18,6 +18,8 @@ before_install:
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
+  - gem install simctl --no-rdoc --no-ri --no-document --quiet
+  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 6s Plus", "iOS 10.0", 300)'
 
 script:
   - swiftlint
