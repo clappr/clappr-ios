@@ -52,7 +52,7 @@ open class Container: UIBaseObject {
         playbackOptions[kSourceUrl] = source
         playbackOptions[kMimeType] = mimeType
 
-        self.playback?.removeFromSuperview()
+        self.playback?.destroy()
 
         let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         self.playback = playbackFactory.createPlayback()
