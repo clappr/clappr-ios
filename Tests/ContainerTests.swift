@@ -149,6 +149,14 @@ class ContainerTests: QuickSpec {
                     expect(container.playback?.pluginName) == "AVPlayback"
                     expect(container.playback?.superview) == container
                 }
+
+                it("should keep just one playback as subview at time") {
+                    let container = Container()
+                    container.load("anyVideo")
+                    expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
+                    container.load("anyOtherVideo")
+                    expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
+                }
             }
 
             describe("Options") {

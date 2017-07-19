@@ -52,8 +52,9 @@ open class Container: UIBaseObject {
         playbackOptions[kSourceUrl] = source
         playbackOptions[kMimeType] = mimeType
 
-        let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
+        self.playback?.removeFromSuperview()
 
+        let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
         self.playback = playbackFactory.createPlayback()
 
         if playback is NoOpPlayback {
