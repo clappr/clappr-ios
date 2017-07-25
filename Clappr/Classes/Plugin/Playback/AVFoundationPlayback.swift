@@ -242,6 +242,14 @@ open class AVFoundationPlayback: Playback {
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
+    open override func mute() {
+        player?.volume = 0.0
+    }
+
+    open override func unmute() {
+        player?.volume = 1.0
+    }
+
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
                                     change _: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
 

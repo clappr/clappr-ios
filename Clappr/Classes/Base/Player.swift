@@ -144,6 +144,14 @@ open class Player: UIViewController, EventProtocol {
         core?.activePlayback?.seek(timeInterval)
     }
 
+    open func mute() {
+        core?.activePlayback?.mute()
+    }
+
+    open func unmute() {
+        core?.activePlayback?.unmute()
+    }
+
     open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
     }

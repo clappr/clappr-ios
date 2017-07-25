@@ -118,6 +118,8 @@ open class Playback: UIBaseObject, Plugin {
     open func pause() {}
     open func stop() {}
     open func seek(_: TimeInterval) {}
+    open func mute() {}
+    open func unmute() {}
 
     open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
