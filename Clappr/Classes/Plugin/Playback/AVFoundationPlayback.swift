@@ -17,6 +17,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var kvoPlayerRateContext = 0
 
     dynamic internal var player: AVPlayer?
+    fileprivate var playerLooper: AVPlayerLooper?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
@@ -176,7 +177,12 @@ open class AVFoundationPlayback: Playback {
     fileprivate func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            player = AVPlayer(playerItem: item)
+            if (options[kLoop] as? Bool ?? false) {
+                player = AVQueuePlayer()
+                playerLooper = AVPlayerLooper(player: player as! AVQueuePlayer, templateItem: item)
+            } else {
+                player = AVPlayer(playerItem: item)
+            }
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
@@ -397,7 +403,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handlePlayerRateChanged() {
-        if player?.rate == 0 {
+        if player?.rate == 0 && playerStatus != .unknown {
             updateState(.paused)
         }
     }
