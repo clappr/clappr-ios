@@ -8,7 +8,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
-    ]
+        ]
 
     fileprivate var kvoStatusDidChangeContext = 0
     fileprivate var kvoTimeRangesContext = 0
@@ -248,12 +248,12 @@ open class AVFoundationPlayback: Playback {
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
-    open override func mute() {
-        player?.volume = 0.0
-    }
-
-    open override func unmute() {
-        player?.volume = 1.0
+    open override func mute(_ enabled: Bool) {
+        if (enabled) {
+            player?.volume = 0.0
+        } else {
+            player?.volume = 1.0
+        }
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
@@ -381,7 +381,7 @@ open class AVFoundationPlayback: Playback {
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
             "duration": CMTimeGetSeconds(timeRange.start),
-        ]
+            ]
 
         trigger(.bufferUpdate, userInfo: info)
     }
