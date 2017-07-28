@@ -193,6 +193,61 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    fileprivate func loadMetada() {
+        var items : [AVMetadataItem] = []
+        if let metaData = options[kMetaData] as? [String : Any] {
+            if let title = metaData[kMetaDataTitle] as? NSString {
+                let titleItem = AVMutableMetadataItem()
+                titleItem.identifier = AVMetadataCommonIdentifierTitle
+                titleItem.value = title
+                titleItem.extendedLanguageTag = "und"
+                items.append(titleItem)
+            }
+
+            if let description = metaData[kMetaDataDescription] as? NSString {
+                let descriptionItem = AVMutableMetadataItem()
+                descriptionItem.identifier = AVMetadataCommonIdentifierDescription
+                descriptionItem.value = description
+                descriptionItem.extendedLanguageTag = "und"
+                items.append(descriptionItem)
+            }
+
+            if let date = metaData[kMetaDataDate] as? Date {
+                let metadataDateFormatter = DateFormatter()
+                metadataDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                let creationDate = AVMutableMetadataItem()
+                creationDate.identifier = AVMetadataCommonIdentifierCreationDate
+                creationDate.value = metadataDateFormatter.string(from: date) as NSString
+                creationDate.extendedLanguageTag = "und"
+                items.append(creationDate)
+            }
+        }
+
+        if (!items.isEmpty) {
+            if let item = player?.currentItem {
+                item.externalMetadata = items
+            }
+        }
+
+        loadPosterMetada()
+    }
+
+    fileprivate func loadPosterMetada() {
+        if let poster = self.options[kPosterUrl] as? String {
+            let task = URLSession.shared.dataTask(with: URL(string: poster)!) { data, _, _ in
+                if let data = data, let item = self.player?.currentItem {
+                    let artWork = AVMutableMetadataItem()
+                    artWork.value = data as NSData
+                    artWork.dataType = kCMMetadataBaseDataType_PNG as String
+                    artWork.identifier = AVMetadataCommonIdentifierArtwork
+                    artWork.extendedLanguageTag = "und"
+                    item.externalMetadata.append(artWork)
+                }
+            }
+            task.resume()
+        }
+    }
+
     fileprivate func addObservers() {
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
@@ -355,6 +410,8 @@ open class AVFoundationPlayback: Playback {
         if let audioSources = self.audioSources {
             trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
         }
+
+        loadMetada()
 
         addTimeElapsedCallback()
     }

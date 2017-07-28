@@ -12,3 +12,8 @@ public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 public let kLoop = "loop"
+public let kMetaData = "metadata"
+
+public let kMetaDataTitle = "mdTitle"
+public let kMetaDataDescription = "mdDescription"
+public let kMetaDataDate = "mdDate"
