@@ -40,6 +40,10 @@ class ViewController: UIViewController {
 
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        player.destroy()
+    }
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }

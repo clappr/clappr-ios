@@ -223,7 +223,9 @@
 				607FACD11AFB9204008FA782 /* Products */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
