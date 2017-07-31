@@ -2,7 +2,7 @@ import Foundation
 
 open class Container: UIBaseObject {
     internal(set) open var plugins: [UIContainerPlugin] = []
-    internal(set) open var options: Options
+    open var options: Options
 
     fileprivate var loader: Loader
 
