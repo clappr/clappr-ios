@@ -167,6 +167,7 @@ open class Player: BaseObject {
         stopListening()
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
+        self.core = nil
         Logger.logDebug("destroyed", scope: "Player")
     }
 }

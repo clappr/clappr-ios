@@ -110,12 +110,12 @@ open class Container: UIBaseObject {
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
 
-        Logger.logDebug("destroying playback", scope: "Container")
-        playback?.destroy()
-
         Logger.logDebug("destroying plugins", scope: "Container")
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
+
+        Logger.logDebug("destroying playback", scope: "Container")
+        playback?.destroy()
 
         removeFromSuperview()
 

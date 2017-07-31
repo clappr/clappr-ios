@@ -389,7 +389,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handlePlayerRateChanged() {
-        if(player?.rate == 0) {
+        if player?.rate == 0 {
             updateState(.paused)
         }
     }
@@ -436,6 +436,7 @@ open class AVFoundationPlayback: Playback {
         super.destroy()
         Logger.logDebug("destroying", scope: "AVFoundationPlayback")
         releaseResources()
+        self.player = nil
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
     }
 }
