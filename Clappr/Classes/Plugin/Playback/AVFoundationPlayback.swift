@@ -238,7 +238,7 @@ open class AVFoundationPlayback: Playback {
                 if let data = data, let item = self.player?.currentItem {
                     let artWork = AVMutableMetadataItem()
                     artWork.value = data as NSData
-                    artWork.dataType = kCMMetadataBaseDataType_PNG as String
+                    artWork.dataType = kCMMetadataBaseDataType_JPEG as String
                     artWork.identifier = AVMetadataCommonIdentifierArtwork
                     artWork.extendedLanguageTag = "und"
                     item.externalMetadata.append(artWork)
