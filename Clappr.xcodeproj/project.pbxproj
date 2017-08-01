@@ -69,7 +69,7 @@
 		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
 		9E3F43F91F3102D800417919 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43F81F3102D800417919 /* AppStateManager.swift */; };
-		9E3F43FB1F3102E900417919 /* AppStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */; };
+		9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
@@ -699,6 +699,7 @@
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
+				9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
@@ -739,7 +740,6 @@
 				9E3F43F91F3102D800417919 /* AppStateManager.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
 				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
-				9E3F43FB1F3102E900417919 /* AppStateManagerTests.swift in Sources */,
 				96D362C91D41339400CCB866 /* Loader.swift in Sources */,
 				968E5BD91D6CBFA50092F372 /* Logger.swift in Sources */,
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
