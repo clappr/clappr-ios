@@ -239,9 +239,9 @@ open class AVFoundationPlayback: Playback {
             addArtworkItem(image: artwork)
         } else {
             if let poster = self.options[kPosterUrl] as? String {
-                let task = URLSession.shared.dataTask(with: URL(string: poster)!) { data, _, _ in
+                let task = URLSession.shared.dataTask(with: URL(string: poster)!) { [weak self] data, _, _ in
                     if let data = data, let image = UIImage(data: data) {
-                        self.addArtworkItem(image: image)
+                        self?.addArtworkItem(image: image)
                     }
                 }
                 task.resume()
