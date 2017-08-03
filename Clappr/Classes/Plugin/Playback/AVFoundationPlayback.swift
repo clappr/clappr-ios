@@ -233,18 +233,30 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func loadPosterMetada() {
-        if let poster = self.options[kPosterUrl] as? String {
-            let task = URLSession.shared.dataTask(with: URL(string: poster)!) { data, _, _ in
-                if let data = data, let item = self.player?.currentItem {
-                    let artWork = AVMutableMetadataItem()
-                    artWork.value = data as NSData
-                    artWork.dataType = kCMMetadataBaseDataType_JPEG as String
-                    artWork.identifier = AVMetadataCommonIdentifierArtwork
-                    artWork.extendedLanguageTag = "und"
-                    item.externalMetadata.append(artWork)
+        if let artwork = (options[kMetaData] as? [String : Any])?[kMetaDataArtwork] as? UIImage {
+            addArtworkItem(image: artwork)
+        } else {
+            if let poster = self.options[kPosterUrl] as? String {
+                let task = URLSession.shared.dataTask(with: URL(string: poster)!) { data, _, _ in
+                    if let data = data, let image = UIImage(data: data) {
+                        self.addArtworkItem(image: image)
+                    }
                 }
+                task.resume()
             }
-            task.resume()
+        }
+    }
+
+    fileprivate func addArtworkItem(image: UIImage) {
+        if let item = self.player?.currentItem {
+            if let jpegData = UIImageJPEGRepresentation(image, 1) {
+                let artWork = AVMutableMetadataItem()
+                artWork.value = jpegData as NSData
+                artWork.dataType = kCMMetadataBaseDataType_JPEG as String
+                artWork.identifier = AVMetadataCommonIdentifierArtwork
+                artWork.extendedLanguageTag = "und"
+                item.externalMetadata.append(artWork)
+            }
         }
     }
 
