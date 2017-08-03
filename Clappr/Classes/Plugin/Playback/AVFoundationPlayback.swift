@@ -177,9 +177,11 @@ open class AVFoundationPlayback: Playback {
     fileprivate func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            if (options[kLoop] as? Bool ?? false) {
+            if options[kLoop] as? Bool ?? false {
                 player = AVQueuePlayer()
-                playerLooper = AVPlayerLooper(player: player as! AVQueuePlayer, templateItem: item)
+                if let queuePlayer = player as? AVQueuePlayer {
+                    playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: item)
+                }
             } else {
                 player = AVPlayer(playerItem: item)
             }
@@ -194,7 +196,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func loadMetada() {
-        var items : [AVMetadataItem] = []
+        var items: [AVMetadataItem] = []
         if let metaData = options[kMetaData] as? [String : Any] {
             if let title = metaData[kMetaDataTitle] as? NSString {
                 let titleItem = AVMutableMetadataItem()
@@ -223,7 +225,7 @@ open class AVFoundationPlayback: Playback {
             }
         }
 
-        if (!items.isEmpty) {
+        if !items.isEmpty {
             if let item = player?.currentItem {
                 item.externalMetadata = items
             }
@@ -316,7 +318,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func mute(_ enabled: Bool) {
-        if (enabled) {
+        if enabled {
             player?.volume = 0.0
         } else {
             player?.volume = 1.0
