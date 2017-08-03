@@ -197,8 +197,22 @@ open class Player: UIViewController, EventProtocol {
         stopListening()
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
-        self.viewController?.player = nil
+        Logger.logDebug("destroying viewController", scope: "Player")
+        destroyViewController()
         Logger.logDebug("destroyed", scope: "Player")
+    }
+
+    fileprivate func destroyViewController() {
+        if let viewController = viewController {
+            viewController.player = nil
+            viewController.willMove(toParentViewController: nil)
+            viewController.view.removeFromSuperview()
+            viewController.removeFromParentViewController()
+        }
+
+        willMove(toParentViewController: nil)
+        view.removeFromSuperview()
+        removeFromParentViewController()
     }
 
     public func on(_ eventName: String, callback: @escaping EventCallback) -> String {
