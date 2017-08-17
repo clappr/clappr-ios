@@ -11,7 +11,7 @@ open class Player: UIViewController, EventProtocol {
         core?.parentView = view
         core?.render()
 
-        if core?.options[kMediaControl] as? Bool != false {
+        if isMediaControlEnabled != false {
             viewController = AVPlayerViewController()
             if let vc = viewController {
                 addChildViewController(vc)
@@ -20,6 +20,20 @@ open class Player: UIViewController, EventProtocol {
                 view.addSubview(vc.view)
                 vc.didMove(toParentViewController: self)
             }
+        }
+
+        NotificationCenter.default.addObserver(self, selector:#selector(Player.willEnterForeground), name:
+            Notification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+
+    open var isMediaControlEnabled: Bool {
+        return core?.options[kMediaControl] as? Bool ?? false
+    }
+
+    @objc fileprivate func willEnterForeground() {
+        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled {
+            Logger.logDebug("forced play after return from background", scope: "Player")
+            playback.play()
         }
     }
 
@@ -260,5 +274,9 @@ open class Player: UIViewController, EventProtocol {
         if presentedViewController == nil {
             destroy()
         }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
