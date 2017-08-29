@@ -377,28 +377,13 @@ open class MediaControl: UIBaseObject {
             case .began:
                 isSeeking = true
                 hideControlsTimer?.invalidate()
-                toggleScrollEnable(in: view, to: false)
             case .ended:
                 container?.playback?.seek(secondsRelativeToPoint(touchPoint))
                 isSeeking = false
                 scheduleTimerToHideControls()
-                toggleScrollEnable(in: view, to: true)
             default: break
             }
         }
-    }
-    
-    //This function was necessary because our apps were using the player inside
-    //a scrollview, so a conflict was happening between the swipe event in the
-    //slider and the scrollview.
-    private func toggleScrollEnable(in view: UIView?,to isEnabled: Bool) {
-        guard let view = view else {
-            return
-        }
-        if let scrollView = view as? UIScrollView {
-            scrollView.isScrollEnabled = isEnabled
-        }
-        toggleScrollEnable(in: view.superview, to: isEnabled)
     }
 
     open func secondsRelativeToPoint(_ touchPoint: CGPoint) -> Double {
