@@ -482,7 +482,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handlePlayerRateChanged() {
-        if player?.rate == 0 && playerStatus != .unknown {
+        if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
             updateState(.paused)
         }
     }
