@@ -304,8 +304,8 @@ open class AVFoundationPlayback: Playback {
 
     open override func stop() {
         trigger(.willStop)
-        player?.pause()
         updateState(.idle)
+        player?.pause()
         releaseResources()
         trigger(.didStop)
     }
