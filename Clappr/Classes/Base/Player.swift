@@ -9,10 +9,12 @@ open class Player: UIViewController, EventProtocol {
 
     override open func viewDidLoad() {
         core?.parentView = view
-        core?.render()
+
 
         if isMediaControlEnabled != false {
             viewController = AVPlayerViewController()
+            core?.parentView = viewController?.contentOverlayView
+            core?.parentController = self
             if let vc = viewController {
                 addChildViewController(vc)
                 vc.view.frame = view.bounds
@@ -24,6 +26,8 @@ open class Player: UIViewController, EventProtocol {
 
         NotificationCenter.default.addObserver(self, selector:#selector(Player.willEnterForeground), name:
             Notification.Name.UIApplicationWillEnterForeground, object: nil)
+
+        core?.render()
     }
 
     open var isMediaControlEnabled: Bool {
