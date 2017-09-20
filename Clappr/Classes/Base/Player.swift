@@ -272,9 +272,6 @@ open class Player: UIViewController, EventProtocol {
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if presentedViewController == nil {
-            if isPlaying {
-                stop()
-            }
             destroy()
         }
     }
