@@ -1,5 +1,5 @@
 protocol FullscreenStateHandler {
-    var core: Core? { get set }
+    var core: Core? { get }
     init(core: Core)
     func enterInFullscreen(_: EventUserInfo)
     func exitFullscreen(_: EventUserInfo)
@@ -15,7 +15,7 @@ struct FullscreenByApp: FullscreenStateHandler {
         guard let core = core else {
             return
         }
-        // external event of fullscreen
+        core.trigger(Event.requestFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
     }
 
@@ -23,7 +23,7 @@ struct FullscreenByApp: FullscreenStateHandler {
         guard let core = core else {
             return
         }
-        // external event of exit fullscreen
+        core.trigger(Event.exitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
     }
 }
