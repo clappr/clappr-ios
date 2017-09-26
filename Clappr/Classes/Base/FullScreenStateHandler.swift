@@ -12,17 +12,13 @@ struct FullscreenByApp: FullscreenStateHandler {
     }
 
     func enterInFullscreen(_: EventUserInfo) {
-        guard let core = core else {
-            return
-        }
+        guard let core = core else { return }
         core.trigger(Event.requestFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
     }
 
     func exitFullscreen(_: EventUserInfo) {
-        guard let core = core else {
-            return
-        }
+        guard let core = core else { return }
         core.trigger(Event.exitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
     }
@@ -35,9 +31,7 @@ struct FullscreenByPlayer: FullscreenStateHandler {
     }
 
     func enterInFullscreen(_: EventUserInfo) {
-        guard let core = core else {
-            return
-        }
+        guard let core = core else { return }
         core.trigger(InternalEvent.willEnterFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
         core.fullscreenController.view.backgroundColor = UIColor.black
@@ -48,9 +42,7 @@ struct FullscreenByPlayer: FullscreenStateHandler {
     }
 
     func exitFullscreen(_: EventUserInfo) {
-        guard let core = core else {
-            return
-        }
+        guard let core = core else { return }
         core.trigger(InternalEvent.willExitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
         core.parentView?.addSubviewMatchingConstraints(core)
