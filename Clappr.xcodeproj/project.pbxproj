@@ -70,6 +70,7 @@
 		96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
 		9E3F43F91F3102D800417919 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43F81F3102D800417919 /* AppStateManager.swift */; };
 		9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */; };
+		9EC8532F1F7B05EB00716778 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
@@ -179,6 +180,7 @@
 		96E7D2731E786FEE0056F358 /* InternalEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalEvent.swift; sourceTree = "<group>"; };
 		9E3F43F81F3102D800417919 /* AppStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
 		9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerTests.swift; sourceTree = "<group>"; };
+		9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenStateHandler.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -336,11 +338,11 @@
 		96D3628B1D41339400CCB866 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				9EC8532D1F7B05D000716778 /* FullScreen */,
 				96D3628C1D41339400CCB866 /* BaseObject.swift */,
 				96D3628D1D41339400CCB866 /* Container.swift */,
 				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628F1D41339400CCB866 /* EventHandler.swift */,
-				96D362901D41339400CCB866 /* FullscreenController.swift */,
 				96D362911D41339400CCB866 /* Loader.swift */,
 				96D362941D41339400CCB866 /* Options.swift */,
 				96D362921D41339400CCB866 /* MediaControl.swift */,
@@ -471,6 +473,15 @@
 				9E3F43F81F3102D800417919 /* AppStateManager.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		9EC8532D1F7B05D000716778 /* FullScreen */ = {
+			isa = PBXGroup;
+			children = (
+				96D362901D41339400CCB866 /* FullscreenController.swift */,
+				9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */,
+			);
+			name = FullScreen;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
@@ -742,6 +753,7 @@
 				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
 				96D362C91D41339400CCB866 /* Loader.swift in Sources */,
 				968E5BD91D6CBFA50092F372 /* Logger.swift in Sources */,
+				9EC8532F1F7B05EB00716778 /* FullScreenStateHandler.swift in Sources */,
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
