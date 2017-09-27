@@ -21,7 +21,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open var isFullscreen: Bool {
-        return fullscreenController.presentingViewController != nil
+        return mediaControl?.fullscreen ?? false
     }
 
     public required init?(coder _: NSCoder) {
@@ -143,10 +143,15 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
     }
 
-    open func setFullscreen(_ fullscreen: Bool) {
-        let isFullscreen = fullscreenController.presentingViewController != nil
-        guard fullscreen != isFullscreen else { return }
-        fullscreen ? fullscreenHandler.enterInFullscreen(nil) : fullscreenHandler.exitFullscreen([:])
+    open func setScreen(state: ScreenState) {
+        switch state {
+        case .fullscreen:
+            mediaControl?.fullscreen = true
+            fullscreenHandler.enterInFullscreen()
+        case .embed:
+            mediaControl?.fullscreen = false
+            fullscreenHandler.exitFullscreen()
+        }
     }
 
     open func destroy() {

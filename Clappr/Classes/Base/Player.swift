@@ -127,10 +127,10 @@ open class Player: BaseObject {
         core?.activePlayback?.seek(timeInterval)
     }
 
-    open func setFullscreen(_ fullscreen: Bool) {
-        core?.setFullscreen(fullscreen)
+    open func setScreen(state: ScreenState) {
+        core?.setScreen(state: state)
     }
-
+    
     @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
         return on(event.rawValue, callback: callback)

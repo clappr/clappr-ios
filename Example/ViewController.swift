@@ -14,6 +14,19 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            player.setScreen(state: .fullscreen)
+        } else {
+            player.setScreen(state: .embed)
+        }
     }
 
     func listenToPlayerEvents() {

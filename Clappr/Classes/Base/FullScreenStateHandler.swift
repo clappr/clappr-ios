@@ -1,8 +1,27 @@
+public enum ScreenState {
+    case fullscreen, embed
+}
+
 protocol FullscreenStateHandler {
     var core: Core? { get }
     init(core: Core)
+
     func enterInFullscreen(_: EventUserInfo)
+    func enterInFullscreen()
+
     func exitFullscreen(_: EventUserInfo)
+    func exitFullscreen()
+}
+
+extension FullscreenStateHandler {
+
+    func enterInFullscreen() {
+        enterInFullscreen([:])
+    }
+
+    func exitFullscreen() {
+        exitFullscreen([:])
+    }
 }
 
 class FullscreenByApp: BaseObject, FullscreenStateHandler {
@@ -11,16 +30,12 @@ class FullscreenByApp: BaseObject, FullscreenStateHandler {
         self.core = core
     }
 
-    func enterInFullscreen(_: EventUserInfo) {
-        guard let core = core else { return }
+    func enterInFullscreen(_: EventUserInfo = [:]) {
         trigger(Event.requestFullscreen.rawValue)
-        core.mediaControl?.fullscreen = true
     }
 
-    func exitFullscreen(_: EventUserInfo) {
-        guard let core = core else { return }
+    func exitFullscreen(_: EventUserInfo = [:]) {
         trigger(Event.exitFullscreen.rawValue)
-        core.mediaControl?.fullscreen = false
     }
 }
 
@@ -30,7 +45,7 @@ class FullscreenByPlayer: BaseObject, FullscreenStateHandler {
         self.core = core
     }
 
-    func enterInFullscreen(_: EventUserInfo) {
+    func enterInFullscreen(_: EventUserInfo = [:]) {
         guard let core = core else { return }
         trigger(InternalEvent.willEnterFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
@@ -41,7 +56,7 @@ class FullscreenByPlayer: BaseObject, FullscreenStateHandler {
         trigger(InternalEvent.didEnterFullscreen.rawValue)
     }
 
-    func exitFullscreen(_: EventUserInfo) {
+    func exitFullscreen(_: EventUserInfo = [:]) {
         guard let core = core else { return }
         trigger(InternalEvent.willExitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
