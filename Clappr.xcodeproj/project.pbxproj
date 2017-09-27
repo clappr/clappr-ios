@@ -72,6 +72,7 @@
 		9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */; };
 		9EC8532F1F7B05EB00716778 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */; };
 		9EC853311F7BF06A00716778 /* FullscreenStateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */; };
+		9EDD88C01F7C5E1200DAD927 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
@@ -183,6 +184,7 @@
 		9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerTests.swift; sourceTree = "<group>"; };
 		9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenStateHandler.swift; sourceTree = "<group>"; };
 		9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenStateHandlerTests.swift; sourceTree = "<group>"; };
+		9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				96D3620A1D41156A00CCB866 /* Images.xcassets */,
 				96D3620B1D41156A00CCB866 /* Info.plist */,
 				96D3620C1D41156A00CCB866 /* ViewController.swift */,
+				9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D3620D1D41156A00CCB866 /* AppDelegate.swift in Sources */,
+				9EDD88C01F7C5E1200DAD927 /* DashboardViewController.swift in Sources */,
 				96D362121D41156A00CCB866 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
