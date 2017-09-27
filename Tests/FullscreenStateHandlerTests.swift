@@ -10,21 +10,25 @@ class FullscreenStateHandlerTests: QuickSpec {
             context("when fullscreen is done by app") {
 
                 var core: Core!
+                var fullscreenHandler: FullscreenStateHandler!
 
                 beforeEach {
                     core = Core(options: [kFullscreenByApp: true] as Options)
+                    fullscreenHandler = core.fullscreenHandler
                 }
 
                 context("and player enter in fullscreen mode") {
 
+                    beforeEach {
+                        fullscreenHandler.exitFullscreen([:])
+                    }
+
                     it("should set property `fullscreen` of mediaControll to `true`") {
-                        core.mediaControl?.fullscreen = false
-                        core.fullscreenHandler.enterInFullscreen([:])
+                        fullscreenHandler.enterInFullscreen([:])
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
                     it("should post notification `requestFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: Event.requestFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
@@ -35,16 +39,16 @@ class FullscreenStateHandlerTests: QuickSpec {
 
                 context("and player close fullscreen mode") {
 
-                    it("should set property `fullscreen` of mediaControll to `true`") {
-                        core.mediaControl?.fullscreen = false
-                        core.fullscreenHandler.enterInFullscreen([:])
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    beforeEach {
+                        fullscreenHandler.enterInFullscreen([:])
                     }
 
-
+                    it("should set property `fullscreen` of mediaControll to `false`") {
+                        fullscreenHandler.exitFullscreen([:])
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                    }
 
                     it("should post notification `exitFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: Event.exitFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
@@ -57,21 +61,25 @@ class FullscreenStateHandlerTests: QuickSpec {
             context("when fullscreen is done by player") {
 
                 var core: Core!
+                var fullscreenHandler: FullscreenStateHandler!
 
                 beforeEach {
                     core = Core()
+                    fullscreenHandler = core.fullscreenHandler
                 }
 
                 context("and player enter in fullscreen mode") {
 
+                    beforeEach {
+                        fullscreenHandler.exitFullscreen([:])
+                    }
+
                     it("should set property `fullscreen` of mediaControll to `true`") {
-                        core.mediaControl?.fullscreen = false
-                        core.fullscreenHandler.enterInFullscreen([:])
+                        fullscreenHandler.enterInFullscreen([:])
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
                     it("should post notification `willEnterFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
@@ -80,25 +88,34 @@ class FullscreenStateHandlerTests: QuickSpec {
                     }
 
                     it("should post notification `didEnterFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
                         fullscreenHandler.enterInFullscreen([:])
                         self.waitForExpectations(timeout: 2, handler: nil)
                     }
+
+                    it("should set layout to fullscreen") {
+                        fullscreenHandler.enterInFullscreen([:])
+                        let controller = core.fullscreenController
+                        expect(controller.view.backgroundColor).to(equal(UIColor.black))
+                        expect(controller.modalPresentationStyle).to(equal(UIModalPresentationStyle.overFullScreen))
+                        expect(controller.view.subviews.contains(core)).to(beTrue())
+                    }
                 }
 
                 context("and player close fullscreen mode") {
 
+                    beforeEach {
+                        fullscreenHandler.enterInFullscreen([:])
+                    }
+
                     it("should set property `fullscreen` of mediaControll to `false`") {
-                        core.mediaControl?.fullscreen = false
-                        core.fullscreenHandler.exitFullscreen([:])
+                        fullscreenHandler.exitFullscreen([:])
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
                     it("should post notification `willExitFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: InternalEvent.willExitFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
@@ -107,12 +124,18 @@ class FullscreenStateHandlerTests: QuickSpec {
                     }
 
                     it("should post notification `didExitFullscreen`") {
-                        let fullscreenHandler = core.fullscreenHandler
                         self.expectation(forNotification: InternalEvent.didExitFullscreen.rawValue, object: fullscreenHandler) { notification in
                             return true
                         }
                         fullscreenHandler.exitFullscreen([:])
                         self.waitForExpectations(timeout: 2, handler: nil)
+                    }
+
+                    it("should set layout to embed") {
+                        core.parentView = UIView()
+                        fullscreenHandler.exitFullscreen([:])
+                        let controller = core.fullscreenController
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
                     }
                 }
             }
