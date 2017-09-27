@@ -71,6 +71,7 @@
 		9E3F43F91F3102D800417919 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43F81F3102D800417919 /* AppStateManager.swift */; };
 		9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */; };
 		9EC8532F1F7B05EB00716778 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */; };
+		9EC853311F7BF06A00716778 /* FullscreenStateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
@@ -181,6 +182,7 @@
 		9E3F43F81F3102D800417919 /* AppStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
 		9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerTests.swift; sourceTree = "<group>"; };
 		9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenStateHandler.swift; sourceTree = "<group>"; };
+		9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenStateHandlerTests.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				96B465691BF6027F0025975A /* UIPluginTests.swift */,
 				EDF652211D467CCA00627C48 /* UICorePluginTests.swift */,
 				EDF652231D46829100627C48 /* UIContainerPluginTests.swift */,
+				9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96A9797D1BFE2BCC00E5EA01 /* DateFormatterTests.swift in Sources */,
+				9EC853311F7BF06A00716778 /* FullscreenStateHandlerTests.swift in Sources */,
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
