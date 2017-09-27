@@ -13,14 +13,14 @@ class FullscreenStateHandlerTests: QuickSpec {
                     let core = Core(options: [kFullscreenByApp: true] as Options)
                     core.mediaControl?.fullscreen = false
                     core.fullscreenHandler.enterInFullscreen([:])
-                    expect(core.mediaControl?.fullscreen).toEventually(beTrue())
+                    expect(core.mediaControl?.fullscreen).to(beTrue())
                 }
 
                 it("should set property `fullscreen` of mediaControll to `false`") {
                     let core = Core(options: [kFullscreenByApp: true] as Options)
                     core.mediaControl?.fullscreen = true
                     core.fullscreenHandler.exitFullscreen([:])
-                    expect(core.mediaControl?.fullscreen).toEventually(beFalse())
+                    expect(core.mediaControl?.fullscreen).to(beFalse())
                 }
             }
 
@@ -30,14 +30,14 @@ class FullscreenStateHandlerTests: QuickSpec {
                     let core = Core()
                     core.mediaControl?.fullscreen = false
                     core.fullscreenHandler.enterInFullscreen([:])
-                    expect(core.mediaControl?.fullscreen).toEventually(beTrue())
+                    expect(core.mediaControl?.fullscreen).to(beTrue())
                 }
 
                 it("should set property `fullscreen` of mediaControll to `false`") {
                     let core = Core()
                     core.mediaControl?.fullscreen = true
                     core.fullscreenHandler.exitFullscreen([:])
-                    expect(core.mediaControl?.fullscreen).toEventually(beFalse())
+                    expect(core.mediaControl?.fullscreen).to(beFalse())
                 }
             }
         }
