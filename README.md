@@ -75,11 +75,12 @@ Add `kFullscreenByApp: true` to notify when user request's the control of fullsc
 let options: Options = [kFullscreenByApp: true]
 let player = Player(options: options)
 
-// You should inform the player when the application changes the screen state
 player.on(Event.requestFullscreen) { _ in 
+    // You must inform the player when the application changes the screen state
     player.setScreen(state: .fullscreen)
 }
 player.on(Event.exitFullscreen) { _ in 
+    // You must inform the player when the application changes the screen state
     player.setScreen(state: .embed)
 }
 ```
