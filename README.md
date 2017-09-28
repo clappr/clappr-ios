@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
+ [![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
 
 # Clappr for iOS
 
@@ -30,7 +30,7 @@ player.attachTo(yourView, controller: self)
 
 ```swift
 player.on(Event.playing) { userInfo in
-    print("on Play")
+print("on Play")
 }
 ```
 
@@ -66,6 +66,24 @@ To add plugins parameters use the options parameter on constructor. Example:
 let options = [kSourceUrl : "http://clappr.io/highline.mp4", pluginParameter1: "value1", pluginParameter2: true]
 let player = Player(options: options)
 ```
+
+##### kFullscreenByApp
+Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.
+
+**How to use**
+```swift
+let options: Options = [kFullscreenByApp: true]
+let player = Player(options: options)
+player.on(Event.requestFullscreen) { _ in print("request's fullscreen") }
+player.on(Event.exitFullscreen) { _ in print("exit's fullscreen") }
+
+// You should inform the player when the application changes the screen state
+// Enter in fullscreen
+player.setScreen(state: .fullscreen)
+// Exit fullscreen
+player.setScreen(state: .embed)
+```
+
 ##### Source
 Set the video source url with `kSourceUrl : "http://clappr.io/highline.mp4"`.
 

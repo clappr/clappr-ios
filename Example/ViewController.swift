@@ -48,6 +48,10 @@ class ViewController: UIViewController {
 
         player.on(Event.stalled) { _ in print("on Stalled") }
 
+        player.on(Event.requestFullscreen) { _ in print("request's fullscreen") }
+
+        player.on(Event.exitFullscreen) { _ in print("exit's fullscreen") }
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
