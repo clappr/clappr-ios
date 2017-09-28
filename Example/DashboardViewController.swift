@@ -3,7 +3,8 @@ import Clappr
 
 class DashboardViewController: UIViewController {
 
-    @IBOutlet weak var switchFullScreen: UISwitch!
+    @IBOutlet weak var switchFullscreenControledByApp: UISwitch!
+    @IBOutlet weak var switchFullscreen: UISwitch!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +19,8 @@ class DashboardViewController: UIViewController {
         let options: Options = [
             kSourceUrl: "http://clappr.io/highline.mp4",
             kPosterUrl: "http://clappr.io/poster.png",
-            kFullscreen: true,
-            kFullscreenByApp: switchFullScreen.isOn
+            kFullscreen: switchFullscreen.isOn,
+            kFullscreenByApp: switchFullscreenControledByApp.isOn
         ]
         viewController?.options = options
     }
