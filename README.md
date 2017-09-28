@@ -30,7 +30,7 @@ player.attachTo(yourView, controller: self)
 
 ```swift
 player.on(Event.playing) { userInfo in
-print("on Play")
+    print("on Play")
 }
 ```
 
@@ -70,6 +70,7 @@ let player = Player(options: options)
 ##### Fullscreen controled by app
 Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.
 
+Default is `false`.
 **How to use**
 ```swift
 let options: Options = [kFullscreenByApp: true]
