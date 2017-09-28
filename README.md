@@ -68,9 +68,9 @@ let player = Player(options: options)
 ```
 
 ##### Fullscreen controled by app
-Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.
-
+Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.  
 Default is `false`.
+
 **How to use**
 ```swift
 let options: Options = [kFullscreenByApp: true]
@@ -87,7 +87,8 @@ player.on(Event.exitFullscreen) { _ in
 ```
 
 ##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
+Define if video should start in fullscreen mode with `kFullscreen: true`. 
+Default is `false`.
 
 **obs**: This option doesnt work when `kFullscreenByApp` is enable
 
