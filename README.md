@@ -67,7 +67,7 @@ let options = [kSourceUrl : "http://clappr.io/highline.mp4", pluginParameter1: "
 let player = Player(options: options)
 ```
 
-##### kFullscreenByApp
+##### Fullscreen controled by app
 Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.
 
 **How to use**
@@ -83,6 +83,13 @@ player.setScreen(state: .fullscreen)
 // Exit fullscreen
 player.setScreen(state: .embed)
 ```
+##### Fullscreen
+Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
+
+**obs**: This option doesnt work when `kFullscreenByApp` is enable
+
+##### FullscreenDisabled
+Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
 ##### Source
 Set the video source url with `kSourceUrl : "http://clappr.io/highline.mp4"`.
@@ -98,12 +105,6 @@ Add `kAutoPlay: true` if you want the video to play automatically.
 
 ##### Start At
 Define a start position in seconds with `kStartAt : x`. Default is `0`.
-
-##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
-
-##### FullscreenDisabled
-Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
 ##### MimeType
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
