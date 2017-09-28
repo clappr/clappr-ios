@@ -9,10 +9,10 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
-    var fullscreenHandler: FullscreenStateHandler {
-        let fullscreenbyApp = options[kFullscreenByApp] as? Bool ?? false
+    lazy var fullscreenHandler: FullscreenStateHandler = {
+        let fullscreenbyApp = self.options[kFullscreenByApp] as? Bool ?? false
         return fullscreenbyApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
-    }
+    }()
 
     open weak var activeContainer: Container?
 
