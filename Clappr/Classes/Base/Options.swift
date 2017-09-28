@@ -12,3 +12,15 @@ public let kPlaybackNotSupportedMessage = "playbackNotSupportedMessage"
 public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
+
+struct OptionsWrapper {
+    let options: Options
+
+    var fullscreenControledByApp: Bool {
+        return options[kFullscreenByApp] as? Bool ?? false
+    }
+
+    var fullscreen: Bool {
+        return options[kFullscreen] as? Bool ?? false
+    }
+}
