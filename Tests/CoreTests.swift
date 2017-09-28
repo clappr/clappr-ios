@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import Clappr
+@testable import Clappr
 
 class CoreTests: QuickSpec {
     override func spec() {
@@ -14,11 +14,49 @@ class CoreTests: QuickSpec {
 
         describe("Core") {
             context("Options") {
+
                 it("Should have a constructor with options") {
                     let options = ["SomeOption": true]
                     let core = Core(loader: loader, options: options as Options)
 
                     expect(core.options["SomeOption"] as? Bool) == true
+                }
+
+                it("Should start as embed video when `kFullscreen: false`") {
+                    let options: Options = [kFullscreen: false]
+                    let core = Core(options: options)
+                    core.parentView = UIView()
+                    core.render()
+                    expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                    expect(core.mediaControl?.fullscreen).to(beFalse())
+                }
+
+                it("Should start as embed video when `kFullscreen` was not passed") {
+                    let core = Core()
+                    core.parentView = UIView()
+                    core.render()
+                    expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                    expect(core.mediaControl?.fullscreen).to(beFalse())
+                }
+
+                it("Should start as fullscreen video when `kFullscreen: true` was passed") {
+                    let options: Options = [kFullscreen: true]
+                    let core = Core(options: options)
+                    core.parentView = UIView()
+
+                    self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                        return true
+                    }
+
+                    self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                        return true
+                    }
+
+                    core.render()
+                    self.waitForExpectations(timeout: 2, handler: nil)
+                    expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                    expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
+                    expect(core.mediaControl?.fullscreen).to(beTrue())
                 }
             }
 
