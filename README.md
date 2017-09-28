@@ -74,15 +74,16 @@ Add `kFullscreenByApp: true` to notify when user request's the control of fullsc
 ```swift
 let options: Options = [kFullscreenByApp: true]
 let player = Player(options: options)
-player.on(Event.requestFullscreen) { _ in print("request's fullscreen") }
-player.on(Event.exitFullscreen) { _ in print("exit's fullscreen") }
 
 // You should inform the player when the application changes the screen state
-// Enter in fullscreen
-player.setScreen(state: .fullscreen)
-// Exit fullscreen
-player.setScreen(state: .embed)
+player.on(Event.requestFullscreen) { _ in 
+    player.setScreen(state: .fullscreen)
+}
+player.on(Event.exitFullscreen) { _ in 
+    player.setScreen(state: .embed)
+}
 ```
+
 ##### Fullscreen
 Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
 
