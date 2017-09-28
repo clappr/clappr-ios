@@ -22,41 +22,73 @@ class CoreTests: QuickSpec {
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
 
-                it("Should start as embed video when `kFullscreen: false`") {
-                    let options: Options = [kFullscreen: false]
-                    let core = Core(options: options)
-                    core.parentView = UIView()
-                    core.render()
-                    expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                    expect(core.mediaControl?.fullscreen).to(beFalse())
-                }
-
-                it("Should start as embed video when `kFullscreen` was not passed") {
-                    let core = Core()
-                    core.parentView = UIView()
-                    core.render()
-                    expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                    expect(core.mediaControl?.fullscreen).to(beFalse())
-                }
-
-                it("Should start as fullscreen video when `kFullscreen: true` was passed") {
-                    let options: Options = [kFullscreen: true]
-                    let core = Core(options: options)
-                    core.parentView = UIView()
-
-                    self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                        return true
+                context("Fullscreen") {
+                    it("Should start as embed video when `kFullscreen: false`") {
+                        let options: Options = [kFullscreen: false]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
+                        core.render()
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                        return true
+                    it("Should start as embed video when `kFullscreen` was not passed") {
+                        let core = Core()
+                        core.parentView = UIView()
+                        core.render()
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    core.render()
-                    self.waitForExpectations(timeout: 2, handler: nil)
-                    expect(core.parentView?.subviews.contains(core)).to(beFalse())
-                    expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
-                    expect(core.mediaControl?.fullscreen).to(beTrue())
+                    it("Should start as fullscreen video when `kFullscreen: true` was passed") {
+                        let options: Options = [kFullscreen: true]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
+
+                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                            return true
+                        }
+
+                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                            return true
+                        }
+
+                        core.render()
+                        self.waitForExpectations(timeout: 2, handler: nil)
+                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    }
+
+                    it("Should start as embed video when `kFullscreen: true` and `kFullscreenByApp: true` was passed") {
+                        let options: Options = [kFullscreen: true, kFullscreenByApp: true]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
+                        core.render()
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                    }
+
+                    it("Should start as fullscreen video when `kFullscreen: true` and `kFullscreenByApp: false` was passed") {
+                        let options: Options = [kFullscreen: true]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
+
+                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                            return true
+                        }
+
+                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                            return true
+                        }
+
+                        core.render()
+                        self.waitForExpectations(timeout: 2, handler: nil)
+                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    }
+                    
                 }
             }
 
@@ -107,6 +139,40 @@ class CoreTests: QuickSpec {
                         core.addPlugin(UICorePlugin())
                         let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
                         expect(containsPlugin).to(beFalse())
+                    }
+                }
+            }
+
+            describe("OptionWrapper") {
+
+                var optionsWrapper: OptionsWrapper!
+
+                context("Default values or nil") {
+
+                    beforeEach {
+                        optionsWrapper = OptionsWrapper(options: [:])
+                    }
+
+                    it("should returns `false` for `fullscreen`") {
+                        expect(optionsWrapper.fullscreen).to(beFalse())
+                    }
+
+                    it("should returns `false` for `kFullscreenByApp`") {
+                        expect(optionsWrapper.fullscreenControledByApp).to(beFalse())
+                    }
+                }
+
+                context("Set") {
+
+                    it("should returns correct value for `fullscreen`") {
+                        optionsWrapper = OptionsWrapper(options: [kFullscreen: true])
+                        expect(optionsWrapper.fullscreen).to(beTrue())
+
+                    }
+
+                    it("should returns correct value for `kFullscreenByApp`") {
+                        optionsWrapper = OptionsWrapper(options: [kFullscreenByApp: true])
+                        expect(optionsWrapper.fullscreenControledByApp).to(beTrue())
                     }
                 }
             }

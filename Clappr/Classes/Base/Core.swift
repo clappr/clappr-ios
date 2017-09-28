@@ -10,9 +10,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     lazy var fullscreenHandler: FullscreenStateHandler = {
-        let fullscreenbyApp = self.options[kFullscreenByApp] as? Bool ?? false
-        return fullscreenbyApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
+        let handler: FullscreenStateHandler = self.optionsWrapper.fullscreenControledByApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
+        return handler
     }()
+
+    lazy var optionsWrapper: OptionsWrapper = OptionsWrapper(options: self.options)
 
     open weak var activeContainer: Container?
 
@@ -114,8 +116,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addToContainer() {
-        if let fullscreen = options[kFullscreen] as? Bool {
-            fullscreen ? fullscreenHandler.enterInFullscreen() : renderInContainerView()
+        if optionsWrapper.fullscreen && !optionsWrapper.fullscreenControledByApp {
+            fullscreenHandler.enterInFullscreen()
         } else {
             renderInContainerView()
         }
