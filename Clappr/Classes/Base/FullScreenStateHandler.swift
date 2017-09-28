@@ -3,8 +3,8 @@ public enum ScreenState {
 }
 
 protocol FullscreenStateHandler {
-    var core: Core? { get }
-    init(core: Core)
+
+    init()
 
     func enterInFullscreen(_: EventUserInfo)
     func enterInFullscreen()
@@ -25,9 +25,9 @@ extension FullscreenStateHandler {
 }
 
 class FullscreenByApp: BaseObject, FullscreenStateHandler {
-    weak var core: Core?
-    required init(core: Core) {
-        self.core = core
+
+    required override init() {
+        super.init()
     }
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
@@ -40,8 +40,15 @@ class FullscreenByApp: BaseObject, FullscreenStateHandler {
 }
 
 class FullscreenByPlayer: BaseObject, FullscreenStateHandler {
+
     weak var core: Core?
-    required init(core: Core) {
+
+    required override init() {
+        super.init()
+    }
+
+    convenience init(core: Core) {
+        self.init()
         self.core = core
     }
 

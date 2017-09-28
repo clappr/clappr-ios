@@ -11,7 +11,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     var fullscreenHandler: FullscreenStateHandler {
         let fullscreenbyApp = options[kFullscreenByApp] as? Bool ?? false
-        return fullscreenbyApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self)
+        return fullscreenbyApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
     }
 
     open weak var activeContainer: Container?
@@ -115,7 +115,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate func addToContainer() {
         if let fullscreen = options[kFullscreen] as? Bool {
-            fullscreen ? fullscreenHandler.enterInFullscreen([:]) : renderInContainerView()
+            fullscreen ? fullscreenHandler.enterInFullscreen() : renderInContainerView()
         } else {
             renderInContainerView()
         }
