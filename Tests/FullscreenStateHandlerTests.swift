@@ -46,7 +46,7 @@ class FullscreenStateHandlerTests: QuickSpec {
 
                     it("should set property `fullscreen` of mediaControll to `false`") {
                         fullscreenHandler.exitFullscreen()
-                        player.setFullscreen(false)
+                        core.setFullscreen(false)
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
