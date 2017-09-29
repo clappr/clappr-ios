@@ -1,7 +1,3 @@
-public enum ScreenState {
-    case fullscreen, embed
-}
-
 protocol FullscreenStateHandler {
 
     init()

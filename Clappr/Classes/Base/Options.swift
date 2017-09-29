@@ -13,7 +13,7 @@ public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 
-struct OptionsWrapper {
+struct OptionsUnboxer {
     let options: Options
 
     var fullscreenControledByApp: Bool {

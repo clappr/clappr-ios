@@ -78,11 +78,11 @@ let player = Player(options: options)
 
 player.on(Event.requestFullscreen) { _ in 
     // You must inform the player when the application changes the screen state
-    player.setScreen(state: .fullscreen)
+    player.setFullscreen(true)
 }
 player.on(Event.exitFullscreen) { _ in 
     // You must inform the player when the application changes the screen state
-    player.setScreen(state: .embed)
+    player.setFullscreen(false)
 }
 ```
 

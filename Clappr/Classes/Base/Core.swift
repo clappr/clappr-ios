@@ -10,11 +10,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     lazy var fullscreenHandler: FullscreenStateHandler = {
-        let handler: FullscreenStateHandler = self.optionsWrapper.fullscreenControledByApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
+        let handler: FullscreenStateHandler = self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
         return handler
     }()
 
-    lazy var optionsWrapper: OptionsWrapper = OptionsWrapper(options: self.options)
+    lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
 
     open weak var activeContainer: Container?
 
@@ -116,7 +116,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addToContainer() {
-        if optionsWrapper.fullscreen && !optionsWrapper.fullscreenControledByApp {
+        if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
             fullscreenHandler.enterInFullscreen()
         } else {
             renderInContainerView()
@@ -145,13 +145,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
     }
 
-    open func setScreen(state: ScreenState) {
-        switch state {
-        case .fullscreen:
-            mediaControl?.fullscreen = true
+    open func setFullscreen(_ fullscreen: Bool) {
+        mediaControl?.fullscreen = fullscreen
+        if fullscreen {
             fullscreenHandler.enterInFullscreen()
-        case .embed:
-            mediaControl?.fullscreen = false
+        } else {
             fullscreenHandler.exitFullscreen()
         }
     }

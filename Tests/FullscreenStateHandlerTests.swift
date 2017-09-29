@@ -25,7 +25,7 @@ class FullscreenStateHandlerTests: QuickSpec {
 
                     it("should set property `fullscreen` of mediaControll to `true`") {
                         fullscreenHandler.enterInFullscreen()
-                        core.setScreen(state: .fullscreen)
+                        core.setFullscreen(true)
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
@@ -46,7 +46,7 @@ class FullscreenStateHandlerTests: QuickSpec {
 
                     it("should set property `fullscreen` of mediaControll to `false`") {
                         fullscreenHandler.exitFullscreen()
-                        core.setScreen(state: .embed)
+                        player.setFullscreen(false)
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 

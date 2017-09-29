@@ -23,9 +23,9 @@ class ViewController: UIViewController {
 
     func rotated() {
         if UIDevice.current.orientation.isLandscape {
-            player.setScreen(state: .fullscreen)
+            player.setFullscreen(true)
         } else {
-            player.setScreen(state: .embed)
+            player.setFullscreen(true)
         }
     }
 
@@ -49,13 +49,12 @@ class ViewController: UIViewController {
         player.on(Event.stalled) { _ in print("on Stalled") }
 
         player.on(Event.requestFullscreen) { _ in
-            self.player.setScreen(state: .fullscreen)
+            self.player.setFullscreen(true)
         }
 
         player.on(Event.exitFullscreen) { _ in
-            self.player.setScreen(state: .embed)
+            self.player.setFullscreen(false)
         }
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {
