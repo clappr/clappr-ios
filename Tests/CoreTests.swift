@@ -145,34 +145,34 @@ class CoreTests: QuickSpec {
 
             describe("OptionWrapper") {
 
-                var optionsWrapper: OptionsWrapper!
+                var optionsUnboxer: OptionsUnboxer!
 
                 context("Default values or nil") {
 
                     beforeEach {
-                        optionsWrapper = OptionsWrapper(options: [:])
+                        optionsUnboxer = OptionsUnboxer(options: [:])
                     }
 
                     it("should returns `false` for `fullscreen`") {
-                        expect(optionsWrapper.fullscreen).to(beFalse())
+                        expect(optionsUnboxer.fullscreen).to(beFalse())
                     }
 
                     it("should returns `false` for `kFullscreenByApp`") {
-                        expect(optionsWrapper.fullscreenControledByApp).to(beFalse())
+                        expect(optionsUnboxer.fullscreenControledByApp).to(beFalse())
                     }
                 }
 
                 context("Set") {
 
                     it("should returns correct value for `fullscreen`") {
-                        optionsWrapper = OptionsWrapper(options: [kFullscreen: true])
-                        expect(optionsWrapper.fullscreen).to(beTrue())
+                        optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true])
+                        expect(optionsUnboxer.fullscreen).to(beTrue())
 
                     }
 
                     it("should returns correct value for `kFullscreenByApp`") {
-                        optionsWrapper = OptionsWrapper(options: [kFullscreenByApp: true])
-                        expect(optionsWrapper.fullscreenControledByApp).to(beTrue())
+                        optionsUnboxer = OptionsUnboxer(options: [kFullscreenByApp: true])
+                        expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
                     }
                 }
             }
