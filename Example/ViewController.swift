@@ -5,18 +5,28 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
+    var options: Options = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let options = [
-            kSourceUrl: "http://clappr.io/highline.mp4",
-            kPosterUrl: "http://clappr.io/poster.png",
-        ]
         player = Player(options: options)
 
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            player.setFullscreen(true)
+        } else {
+            player.setFullscreen(true)
+        }
     }
 
     func listenToPlayerEvents() {
@@ -38,6 +48,13 @@ class ViewController: UIViewController {
 
         player.on(Event.stalled) { _ in print("on Stalled") }
 
+        player.on(Event.requestFullscreen) { _ in
+            self.player.setFullscreen(true)
+        }
+
+        player.on(Event.exitFullscreen) { _ in
+            self.player.setFullscreen(false)
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

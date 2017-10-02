@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
+ [![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
 
 # Clappr for iOS
 
@@ -66,6 +66,35 @@ To add plugins parameters use the options parameter on constructor. Example:
 let options = [kSourceUrl : "http://clappr.io/highline.mp4", pluginParameter1: "value1", pluginParameter2: true]
 let player = Player(options: options)
 ```
+
+##### Fullscreen controled by app
+Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.  
+Default is `false`.
+
+**How to use**
+```swift
+let options: Options = [kFullscreenByApp: true]
+let player = Player(options: options)
+
+player.on(Event.requestFullscreen) { _ in 
+    // You must inform the player when the application changes the screen state
+    player.setFullscreen(true)
+}
+player.on(Event.exitFullscreen) { _ in 
+    // You must inform the player when the application changes the screen state
+    player.setFullscreen(false)
+}
+```
+
+##### Fullscreen
+Define if video should start in fullscreen mode with `kFullscreen: true`. 
+Default is `false`.
+
+**obs**: This option doesnt work when `kFullscreenByApp` is enable
+
+##### FullscreenDisabled
+Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
+
 ##### Source
 Set the video source url with `kSourceUrl : "http://clappr.io/highline.mp4"`.
 
@@ -80,12 +109,6 @@ Add `kAutoPlay: true` if you want the video to play automatically.
 
 ##### Start At
 Define a start position in seconds with `kStartAt : x`. Default is `0`.
-
-##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscreen: true`. Default is `false`.
-
-##### FullscreenDisabled
-Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
 
 ##### MimeType
 Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
