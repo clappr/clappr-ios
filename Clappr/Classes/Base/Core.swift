@@ -7,7 +7,14 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     open var parentController: UIViewController?
     open var parentView: UIView?
 
-    fileprivate lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+    private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+
+    lazy var fullscreenHandler: FullscreenStateHandler = {
+        let handler: FullscreenStateHandler = self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
+        return handler
+    }()
+
+    lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
 
     open weak var activeContainer: Container?
 
@@ -16,7 +23,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open var isFullscreen: Bool {
-        return fullscreenController.presentingViewController != nil
+        return mediaControl?.fullscreen ?? false
     }
 
     public required init?(coder _: NSCoder) {
@@ -87,25 +94,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             return
         }
 
-        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
-        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
-    }
-
-    fileprivate func enterFullscreen(_: EventUserInfo) {
-        trigger(InternalEvent.willEnterFullscreen.rawValue)
-        mediaControl?.fullscreen = true
-        fullscreenController.view.backgroundColor = UIColor.black
-        fullscreenController.modalPresentationStyle = .overFullScreen
-        parentController?.present(fullscreenController, animated: false, completion: nil)
-        fullscreenController.view.addSubviewMatchingConstraints(self)
-        trigger(InternalEvent.didEnterFullscreen.rawValue)
-    }
-
-    fileprivate func exitFullscreen(_: EventUserInfo) {
-        trigger(InternalEvent.willExitFullscreen.rawValue)
-        renderInContainerView()
-        fullscreenController.dismiss(animated: false, completion: nil)
-        trigger(InternalEvent.didExitFullscreen.rawValue)
+        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.fullscreenHandler.enterInFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.fullscreenHandler.exitFullscreen(userInfo) }
     }
 
     fileprivate func renderInContainerView() {
@@ -126,8 +116,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addToContainer() {
-        if let fullscreen = options[kFullscreen] as? Bool {
-            fullscreen ? enterFullscreen([:]) : renderInContainerView()
+        if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
+            fullscreenHandler.enterInFullscreen()
         } else {
             renderInContainerView()
         }
@@ -156,9 +146,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open func setFullscreen(_ fullscreen: Bool) {
-        let isFullscreen = fullscreenController.presentingViewController != nil
-        guard fullscreen != isFullscreen else { return }
-        fullscreen ? enterFullscreen(nil) : exitFullscreen([:])
+        mediaControl?.fullscreen = fullscreen
+        if fullscreen {
+            fullscreenHandler.enterInFullscreen()
+        } else {
+            fullscreenHandler.exitFullscreen()
+        }
     }
 
     open func destroy() {

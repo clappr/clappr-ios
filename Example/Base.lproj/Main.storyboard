@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X5F-KS-Cdq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X5F-KS-Cdq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="-1314" y="247"/>
         </scene>
-        <!--View Controller-->
+        <!--Dashboard View Controller-->
         <scene sceneID="5X2-nt-SO7">
             <objects>
-                <viewController id="b2n-EE-xfA" sceneMemberID="viewController">
+                <viewController id="b2n-EE-xfA" customClass="DashboardViewController" customModule="Clappr_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mZa-R5-Qwk"/>
                         <viewControllerLayoutGuide type="bottom" id="2pD-ht-Ixh"/>
@@ -38,27 +38,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fullscreen controlled by app" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5g-dh-ZqY">
+                                <rect key="frame" x="16" y="104" width="286" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tY3-dQ-IX8">
-                                <rect key="frame" x="149" y="318" width="77" height="30"/>
-                                <state key="normal" title="Start Video"/>
+                                <rect key="frame" x="40" y="503" width="295" height="44"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Z98-Aq-F6R"/>
+                                </constraints>
+                                <state key="normal" title="Start Video">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="show" id="Tab-hp-Thc"/>
+                                    <action selector="startVideo:" destination="b2n-EE-xfA" eventType="touchUpInside" id="SWj-4F-87t"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jcb-bi-KKQ">
+                                <rect key="frame" x="310" y="97" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start player as fullscreen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOy-Tl-w1v">
+                                <rect key="frame" x="16" y="160" width="286" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yI1-Wk-Mdf">
+                                <rect key="frame" x="310" y="153" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tY3-dQ-IX8" firstAttribute="top" secondItem="mZa-R5-Qwk" secondAttribute="bottom" constant="254" id="D4y-sE-bhq"/>
-                            <constraint firstItem="2pD-ht-Ixh" firstAttribute="top" secondItem="tY3-dQ-IX8" secondAttribute="bottom" constant="319" id="EyJ-qr-RV6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tY3-dQ-IX8" secondAttribute="trailing" constant="133" id="Yng-hp-jaA"/>
-                            <constraint firstItem="tY3-dQ-IX8" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leadingMargin" constant="133" id="vGF-mn-fFH"/>
+                            <constraint firstAttribute="trailing" secondItem="Jcb-bi-KKQ" secondAttribute="trailing" constant="16" id="5dJ-ue-yzY"/>
+                            <constraint firstItem="D5g-dh-ZqY" firstAttribute="top" secondItem="mZa-R5-Qwk" secondAttribute="bottom" constant="40" id="DLz-88-U3Z"/>
+                            <constraint firstAttribute="trailing" secondItem="yI1-Wk-Mdf" secondAttribute="trailing" constant="16" id="Fb3-9l-2hl"/>
+                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="top" secondItem="D5g-dh-ZqY" secondAttribute="bottom" constant="40" id="M60-2S-z2W"/>
+                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leading" constant="16" id="TGA-uw-N8H"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tY3-dQ-IX8" secondAttribute="trailing" constant="24" id="Yng-hp-jaA"/>
+                            <constraint firstItem="Jcb-bi-KKQ" firstAttribute="leading" secondItem="D5g-dh-ZqY" secondAttribute="trailing" constant="8" id="fyG-94-ARv"/>
+                            <constraint firstItem="D5g-dh-ZqY" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leading" constant="16" id="gdj-4X-2oi"/>
+                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="leading" secondItem="LOy-Tl-w1v" secondAttribute="trailing" constant="8" id="ihT-g0-zFR"/>
+                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="centerY" secondItem="LOy-Tl-w1v" secondAttribute="centerY" id="jof-V1-oCb"/>
+                            <constraint firstItem="tY3-dQ-IX8" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leadingMargin" constant="24" id="vGF-mn-fFH"/>
+                            <constraint firstItem="2pD-ht-Ixh" firstAttribute="top" secondItem="tY3-dQ-IX8" secondAttribute="bottom" constant="120" id="wvC-ZK-gPU"/>
+                            <constraint firstItem="Jcb-bi-KKQ" firstAttribute="centerY" secondItem="D5g-dh-ZqY" secondAttribute="centerY" id="x2q-b4-hVE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2H6-cX-44I"/>
+                    <connections>
+                        <outlet property="switchFullscreen" destination="yI1-Wk-Mdf" id="I5w-Qt-MwA"/>
+                        <outlet property="switchFullscreenControledByApp" destination="Jcb-bi-KKQ" id="UMY-ZK-BgU"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="startVideo" id="kqb-41-0Yy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8EC-n9-cHB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="247"/>
+            <point key="canvasLocation" x="-487.19999999999999" y="246.9265367316342"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -73,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-hA-IRs" userLabel="Player Container">
-                                <rect key="frame" x="-4" y="40" width="383" height="377"/>
+                                <rect key="frame" x="-4" y="84" width="383" height="333"/>
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="30R-xP-Ym2"/>
