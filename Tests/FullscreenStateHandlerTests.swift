@@ -36,6 +36,20 @@ class FullscreenStateHandlerTests: QuickSpec {
                         fullscreenHandler.enterInFullscreen()
                         self.waitForExpectations(timeout: 2, handler: nil)
                     }
+
+                    it("should listen event from player") {
+                        let player = Player(options: core.options)
+                        var callbackWasCalled = false
+
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+
+                        player.attachTo(UIView(), controller: UIViewController())
+                        player.setFullscreen(true)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
+                    }
                 }
 
                 context("and player close fullscreen mode") {
@@ -56,6 +70,20 @@ class FullscreenStateHandlerTests: QuickSpec {
                         }
                         fullscreenHandler.exitFullscreen()
                         self.waitForExpectations(timeout: 2, handler: nil)
+                    }
+
+                    it("should listen event from player") {
+                        let player = Player(options: core.options)
+                        var callbackWasCalled = false
+
+                        player.on(.exitFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+
+                        player.attachTo(UIView(), controller: UIViewController())
+                        player.setFullscreen(false)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
                     }
                 }
             }
@@ -104,6 +132,48 @@ class FullscreenStateHandlerTests: QuickSpec {
                         expect(controller.modalPresentationStyle).to(equal(UIModalPresentationStyle.overFullScreen))
                         expect(controller.view.subviews.contains(core)).to(beTrue())
                     }
+
+                    it("should trigger event on core") {
+                        var callbackWasCalled = false
+
+                        core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                            callbackWasCalled = true
+                        }
+
+                        fullscreenHandler.enterInFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
+                    }
+
+                    context("and call setFullscreen again") {
+                        beforeEach {
+                            core.setFullscreen(true)
+                        }
+
+                        it("should keep property `fullscreen` of mediaControll to `true`") {
+                            core.setFullscreen(true)
+                            expect(core.mediaControl?.fullscreen).to(beTrue())
+                        }
+
+                        it("shouldn't post notification `willEnterFullscreen`") {
+                            let expect = self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
+                                return true
+                            }
+
+                            expect.isInverted = true
+                            core.setFullscreen(true)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
+                        it("shouldn't post notification `didEnterFullscreen`") {
+                            let expect = self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
+                                return true
+                            }
+                            expect.isInverted = true
+                            core.setFullscreen(true)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
+                    }
                 }
 
                 context("and player close fullscreen mode") {
@@ -137,6 +207,45 @@ class FullscreenStateHandlerTests: QuickSpec {
                         core.parentView = UIView()
                         fullscreenHandler.exitFullscreen()
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                    }
+
+                    it("should trigger event on core") {
+                        var callbackWasCalled = false
+
+                        core.on(InternalEvent.didExitFullscreen.rawValue) { _ in
+                            callbackWasCalled = true
+                        }
+
+                        fullscreenHandler.exitFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
+                    }
+
+                    context("and call setFullscreen twice") {
+                        beforeEach {
+                            core.setFullscreen(false)
+                        }
+
+                        it("should keep property `fullscreen` of mediaControll to `false`") {
+                            core.setFullscreen(false)
+                            expect(core.mediaControl?.fullscreen).to(beFalse())
+                        }
+
+                        it("shouldn't post notification `willExitFullscreen`") {
+                            self.expectation(forNotification: InternalEvent.willExitFullscreen.rawValue, object: fullscreenHandler) { notification in
+                                return false
+                            }
+                            core.setFullscreen(false)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
+                        it("shouldn't post notification `didExitFullscreen`") {
+                            self.expectation(forNotification: InternalEvent.didExitFullscreen.rawValue, object: fullscreenHandler) { notification in
+                                return false
+                            }
+                            core.setFullscreen(false)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
                     }
                 }
             }
