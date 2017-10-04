@@ -45,11 +45,11 @@ class CoreTests: QuickSpec {
                         let core = Core(options: options)
                         core.parentView = UIView()
 
-                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core) { notification in
                             return true
                         }
 
-                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
+                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core) { notification in
                             return true
                         }
 
