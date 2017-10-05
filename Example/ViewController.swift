@@ -32,10 +32,12 @@ class ViewController: UIViewController {
         player.on(Event.stalled) { _ in print("on Stalled") }
 
         player.on(Event.requestFullscreen) { _ in
+            self.showAlert(with: "Fullscreen", message: "Entrar em modo fullscreen")
             self.player.setFullscreen(true)
         }
 
         player.on(Event.exitFullscreen) { _ in
+            self.showAlert(with: "Fullscreen", message: "Sair do modo fullscreen")
             self.player.setFullscreen(false)
         }
     }
@@ -50,5 +52,11 @@ class ViewController: UIViewController {
 
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { // swiftlint:disable:this variable_name
         return UIInterfaceOrientation.portrait
+    }
+
+    func showAlert(with title: String, message: String) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+        self.navigationController?.present(alertViewController, animated: true, completion: nil)
     }
 }
