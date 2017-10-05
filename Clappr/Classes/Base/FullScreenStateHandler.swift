@@ -1,6 +1,6 @@
 protocol FullscreenStateHandler {
 
-    var core: Core? { get }
+    var core: Core { get }
     var isOnFullscreen: Bool { get }
 
     init(core: Core)
@@ -23,39 +23,31 @@ extension FullscreenStateHandler {
     }
 
     var isOnFullscreen: Bool {
-        return core?.isFullscreen ?? false
+        return core.mediaControl?.fullscreen ?? false
     }
 }
 
-class FullscreenByApp: FullscreenStateHandler {
+struct FullscreenByApp: FullscreenStateHandler {
 
-    weak var core: Core?
-
-    required init(core: Core) {
-        self.core = core
-    }
+    var core: Core
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
         guard !isOnFullscreen else { return }
-        core?.trigger(Event.requestFullscreen.rawValue)
+        core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
     }
 
     func exitFullscreen(_: EventUserInfo = [:]) {
         guard isOnFullscreen else { return }
-        core?.trigger(Event.exitFullscreen.rawValue)
+        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
     }
 }
 
-class FullscreenByPlayer: FullscreenStateHandler {
+struct FullscreenByPlayer: FullscreenStateHandler {
 
-    weak var core: Core?
-
-    required init(core: Core) {
-        self.core = core
-    }
+    var core: Core
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
-        guard let core = core, !isOnFullscreen else { return }
+        guard !isOnFullscreen else { return }
         core.trigger(InternalEvent.willEnterFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
         core.fullscreenController.view.backgroundColor = UIColor.black
@@ -66,7 +58,7 @@ class FullscreenByPlayer: FullscreenStateHandler {
     }
 
     func exitFullscreen(_: EventUserInfo = [:]) {
-        guard let core = core, isOnFullscreen else { return }
+        guard isOnFullscreen else { return }
         core.trigger(InternalEvent.willExitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
         core.parentView?.addSubviewMatchingConstraints(core)
