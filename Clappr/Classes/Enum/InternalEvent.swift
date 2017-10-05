@@ -14,4 +14,6 @@ public enum InternalEvent: String {
     case didNotLoadSource
     case willDestroy
     case didDestroy
+    case userRequestEnterInFullscreen
+    case userRequestExitFullscreen
 }
