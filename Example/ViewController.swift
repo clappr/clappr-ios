@@ -14,19 +14,6 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    func rotated() {
-        if UIDevice.current.orientation.isLandscape {
-            player.setFullscreen(true)
-        } else {
-            player.setFullscreen(true)
-        }
     }
 
     func listenToPlayerEvents() {
@@ -41,10 +28,6 @@ class ViewController: UIViewController {
         player.on(Event.ready) { _ in print("on Ready") }
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
-
-        player.on(Event.requestFullscreen) { _ in print("on Enter Fullscreen") }
-
-        player.on(Event.exitFullscreen) { _ in print("on Exit Fullscreen") }
 
         player.on(Event.stalled) { _ in print("on Stalled") }
 
