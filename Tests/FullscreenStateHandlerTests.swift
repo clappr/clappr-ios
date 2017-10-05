@@ -32,7 +32,7 @@ class FullscreenStateHandlerTests: QuickSpec {
                         player.on(.requestFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.setFullscreen(true)
+                        player.core?.fullscreenHandler.enterInFullscreen()
                         expect(callbackWasCalled).toEventually(beTrue())
                     }
                 }
@@ -53,7 +53,7 @@ class FullscreenStateHandlerTests: QuickSpec {
                         player.on(.exitFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.setFullscreen(false)
+                        player.core?.fullscreenHandler.exitFullscreen()
                         expect(callbackWasCalled).toEventually(beTrue())
                     }
                 }
@@ -82,12 +82,12 @@ class FullscreenStateHandlerTests: QuickSpec {
                         player.on(.requestFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.setFullscreen(true)
+                        player.core!.fullscreenHandler.enterInFullscreen()
                         expect(callbackWasCalled).toEventually(beTrue())
                     }
 
                     it("should set layout to fullscreen") {
-                        player.setFullscreen(true)
+                        player.core!.fullscreenHandler.enterInFullscreen()
                         let controller = player.core!.fullscreenController
                         expect(controller.view.backgroundColor).to(equal(UIColor.black))
                         expect(controller.modalPresentationStyle).to(equal(UIModalPresentationStyle.overFullScreen))
@@ -148,7 +148,7 @@ class FullscreenStateHandlerTests: QuickSpec {
                         player.on(.exitFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.setFullscreen(false)
+                        player.core?.fullscreenHandler.exitFullscreen()
                         expect(callbackWasCalled).toEventually(beTrue())
                     }
 
