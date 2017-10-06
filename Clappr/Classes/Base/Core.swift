@@ -10,8 +10,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     lazy var fullscreenHandler: FullscreenStateHandler = {
-        let handler: FullscreenStateHandler = self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp() : FullscreenByPlayer(core: self)
-        return handler
+        return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
     }()
 
     lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
@@ -147,11 +146,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open func setFullscreen(_ fullscreen: Bool) {
         mediaControl?.fullscreen = fullscreen
-        if fullscreen {
-            fullscreenHandler.enterInFullscreen()
-        } else {
-            fullscreenHandler.exitFullscreen()
-        }
     }
 
     open func destroy() {

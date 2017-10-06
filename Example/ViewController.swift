@@ -7,6 +7,10 @@ class ViewController: UIViewController {
     var player: Player!
     var options: Options = [:]
 
+    var fullscreenByApp: Bool {
+        return options[kFullscreenByApp] as? Bool ?? false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         player = Player(options: options)
@@ -14,19 +18,6 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    func rotated() {
-        if UIDevice.current.orientation.isLandscape {
-            player.setFullscreen(true)
-        } else {
-            player.setFullscreen(true)
-        }
     }
 
     func listenToPlayerEvents() {
@@ -42,18 +33,20 @@ class ViewController: UIViewController {
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
-        player.on(Event.requestFullscreen) { _ in print("on Enter Fullscreen") }
-
-        player.on(Event.exitFullscreen) { _ in print("on Exit Fullscreen") }
-
         player.on(Event.stalled) { _ in print("on Stalled") }
 
         player.on(Event.requestFullscreen) { _ in
-            self.player.setFullscreen(true)
+            Logger.logInfo("Entrar em modo fullscreen")
+            if self.fullscreenByApp {
+                self.player.setFullscreen(true)
+            }
         }
 
         player.on(Event.exitFullscreen) { _ in
-            self.player.setFullscreen(false)
+            Logger.logInfo("Sair do modo fullscreen")
+            if self.fullscreenByApp {
+                self.player.setFullscreen(false)
+            }
         }
     }
 
@@ -67,5 +60,11 @@ class ViewController: UIViewController {
 
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { // swiftlint:disable:this variable_name
         return UIInterfaceOrientation.portrait
+    }
+
+    func showAlert(with title: String, message: String) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+        self.navigationController?.present(alertViewController, animated: true, completion: nil)
     }
 }

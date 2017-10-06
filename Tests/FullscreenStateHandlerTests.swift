@@ -7,136 +7,181 @@ class FullscreenStateHandlerTests: QuickSpec {
     override func spec() {
         describe("FullscreenHandler") {
 
+            var player: Player!
+
             context("when fullscreen is done by app") {
 
-                var core: Core!
-                var fullscreenHandler: FullscreenStateHandler!
-
                 beforeEach {
-                    core = Core(options: [kFullscreenByApp: true] as Options)
-                    fullscreenHandler = core.fullscreenHandler
+                    player = Player(options: [kFullscreenByApp: true] as Options)
+                    player.attachTo(UIView(), controller: UIViewController())
                 }
 
                 context("and player enter in fullscreen mode") {
 
                     beforeEach {
-                        fullscreenHandler.exitFullscreen()
+                        player.core?.setFullscreen(false)
                     }
 
                     it("should set property `fullscreen` of mediaControll to `true`") {
-                        fullscreenHandler.enterInFullscreen()
-                        core.setFullscreen(true)
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                        player.setFullscreen(true)
+                        expect(player.core?.mediaControl?.fullscreen).to(beTrue())
                     }
 
-                    it("should post notification `requestFullscreen`") {
-                        self.expectation(forNotification: Event.requestFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
+                    it("should listen to requestFullscreen event from player") {
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
                         }
-                        fullscreenHandler.enterInFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
+                        player.core?.fullscreenHandler.enterInFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
                     }
                 }
 
                 context("and player close fullscreen mode") {
 
                     beforeEach {
-                        fullscreenHandler.enterInFullscreen()
+                        player.setFullscreen(true)
                     }
 
                     it("should set property `fullscreen` of mediaControll to `false`") {
-                        fullscreenHandler.exitFullscreen()
-                        core.setFullscreen(false)
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        player.setFullscreen(false)
+                        expect(player.core?.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    it("should post notification `exitFullscreen`") {
-                        self.expectation(forNotification: Event.exitFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
+                    it("should listen event from player") {
+                        var callbackWasCalled = false
+                        player.on(.exitFullscreen) { _ in
+                            callbackWasCalled = true
                         }
-                        fullscreenHandler.exitFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
+                        player.core?.fullscreenHandler.exitFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
                     }
                 }
             }
 
             context("when fullscreen is done by player") {
 
-                var core: Core!
-                var fullscreenHandler: FullscreenStateHandler!
-
                 beforeEach {
-                    core = Core()
-                    fullscreenHandler = core.fullscreenHandler
+                    player = Player()
+                    player.attachTo(UIView(), controller: UIViewController())
                 }
 
                 context("and player enter in fullscreen mode") {
 
                     beforeEach {
-                        fullscreenHandler.exitFullscreen()
+                        player.setFullscreen(false)
                     }
 
                     it("should set property `fullscreen` of mediaControll to `true`") {
-                        fullscreenHandler.enterInFullscreen()
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                        player.setFullscreen(true)
+                        expect(player.core?.mediaControl?.fullscreen).to(beTrue())
                     }
 
                     it("should post notification `willEnterFullscreen`") {
-                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
                         }
-                        fullscreenHandler.enterInFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
-                    }
-
-                    it("should post notification `didEnterFullscreen`") {
-                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
-                        }
-                        fullscreenHandler.enterInFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
+                        player.core!.fullscreenHandler.enterInFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
                     }
 
                     it("should set layout to fullscreen") {
-                        fullscreenHandler.enterInFullscreen()
-                        let controller = core.fullscreenController
+                        player.core!.fullscreenHandler.enterInFullscreen()
+                        let controller = player.core!.fullscreenController
                         expect(controller.view.backgroundColor).to(equal(UIColor.black))
                         expect(controller.modalPresentationStyle).to(equal(UIModalPresentationStyle.overFullScreen))
-                        expect(controller.view.subviews.contains(core)).to(beTrue())
+                        expect(controller.view.subviews.contains(player.core!)).to(beTrue())
+                    }
+
+                    context("and call setFullscreen again") {
+                        beforeEach {
+                            player.setFullscreen(true)
+                        }
+
+                        it("should keep property `fullscreen` of mediaControll to `true`") {
+                            player.setFullscreen(true)
+                            expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                        }
+
+                        it("shouldn't post notification `willEnterFullscreen`") {
+                            let expectation = self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: player.core!) { notification in
+                                return true
+                            }
+
+                            expectation.isInverted = true
+                            player.setFullscreen(true)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
+                        it("shouldn't post notification `didEnterFullscreen`") {
+                            let expectation = self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: player.core!) { notification in
+                                return true
+                            }
+                            expectation.isInverted = true
+                            player.setFullscreen(true)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
                     }
                 }
 
                 context("and player close fullscreen mode") {
 
                     beforeEach {
-                        fullscreenHandler.enterInFullscreen()
+                        player.setFullscreen(true)
                     }
 
                     it("should set property `fullscreen` of mediaControll to `false`") {
-                        fullscreenHandler.exitFullscreen()
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
-                    }
-
-                    it("should post notification `willExitFullscreen`") {
-                        self.expectation(forNotification: InternalEvent.willExitFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
-                        }
-                        fullscreenHandler.exitFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
-                    }
-
-                    it("should post notification `didExitFullscreen`") {
-                        self.expectation(forNotification: InternalEvent.didExitFullscreen.rawValue, object: fullscreenHandler) { notification in
-                            return true
-                        }
-                        fullscreenHandler.exitFullscreen()
-                        self.waitForExpectations(timeout: 2, handler: nil)
+                        player.setFullscreen(false)
+                        expect(player.core?.mediaControl?.fullscreen).to(beFalse())
                     }
 
                     it("should set layout to embed") {
-                        core.parentView = UIView()
-                        fullscreenHandler.exitFullscreen()
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        player.core!.parentView = UIView()
+                        player.core!.fullscreenHandler.exitFullscreen()
+                        expect(player.core!.parentView?.subviews.contains(player.core!)).to(beTrue())
+                    }
+
+                    it("should listen event from player") {
+                        var callbackWasCalled = false
+                        player.on(.exitFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.core?.fullscreenHandler.exitFullscreen()
+                        expect(callbackWasCalled).toEventually(beTrue())
+                    }
+
+                    context("and call setFullscreen twice") {
+                        beforeEach {
+                            player.setFullscreen(false)
+                        }
+
+                        it("should keep property `fullscreen` of mediaControll to `false`") {
+                            player.setFullscreen(false)
+                            expect(player.core!.mediaControl?.fullscreen).to(beFalse())
+                        }
+
+                        it("shouldn't post notification `willExitFullscreen`") {
+                            let expectation = self.expectation(forNotification: InternalEvent.willExitFullscreen.rawValue, object: player.core!) { notification in
+                                return true
+                            }
+
+                            expectation.isInverted = true
+                            player.setFullscreen(false)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
+                        it("shouldn't post notification `didExitFullscreen`") {
+                            let expectation = self.expectation(forNotification: InternalEvent.didExitFullscreen.rawValue, object: player.core!) { notification in
+                                return true
+                            }
+
+                            expectation.isInverted = true
+                            player.setFullscreen(false)
+                            self.waitForExpectations(timeout: 2, handler: nil)
+                        }
+
                     }
                 }
             }

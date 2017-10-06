@@ -76,6 +76,7 @@ open class Player: BaseObject {
              Event.playing.rawValue, Event.didComplete.rawValue,
              Event.didPause.rawValue, Event.stalled.rawValue,
              Event.didStop.rawValue, Event.bufferUpdate.rawValue,
+             Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
              Event.positionUpdate.rawValue, Event.willPlay.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
              Event.airPlayStatusUpdate.rawValue, Event.seek.rawValue])
@@ -94,10 +95,10 @@ open class Player: BaseObject {
         self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(InternalEvent.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         self.core?.on(InternalEvent.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
+        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
         bindPlaybackEvents()
-
-        self.core?.render()
     }
 
     open func attachTo(_ view: UIView, controller: UIViewController) {

@@ -1,6 +1,9 @@
 protocol FullscreenStateHandler {
 
-    init()
+    var core: Core { get }
+    var isOnFullscreen: Bool { get }
+
+    init(core: Core)
 
     func enterInFullscreen(_: EventUserInfo)
     func enterInFullscreen()
@@ -18,53 +21,48 @@ extension FullscreenStateHandler {
     func exitFullscreen() {
         exitFullscreen([:])
     }
+
+    var isOnFullscreen: Bool {
+        return core.mediaControl?.fullscreen ?? false
+    }
 }
 
-class FullscreenByApp: BaseObject, FullscreenStateHandler {
+struct FullscreenByApp: FullscreenStateHandler {
 
-    required override init() {
-        super.init()
-    }
+    var core: Core
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
-        trigger(Event.requestFullscreen.rawValue)
+        guard !isOnFullscreen else { return }
+        core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
     }
 
     func exitFullscreen(_: EventUserInfo = [:]) {
-        trigger(Event.exitFullscreen.rawValue)
+        guard isOnFullscreen else { return }
+        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
     }
 }
 
-class FullscreenByPlayer: BaseObject, FullscreenStateHandler {
+struct FullscreenByPlayer: FullscreenStateHandler {
 
-    weak var core: Core?
-
-    required override init() {
-        super.init()
-    }
-
-    convenience init(core: Core) {
-        self.init()
-        self.core = core
-    }
+    var core: Core
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
-        guard let core = core else { return }
-        trigger(InternalEvent.willEnterFullscreen.rawValue)
+        guard !isOnFullscreen else { return }
+        core.trigger(InternalEvent.willEnterFullscreen.rawValue)
         core.mediaControl?.fullscreen = true
         core.fullscreenController.view.backgroundColor = UIColor.black
         core.fullscreenController.modalPresentationStyle = .overFullScreen
         core.parentController?.present(core.fullscreenController, animated: false, completion: nil)
         core.fullscreenController.view.addSubviewMatchingConstraints(core)
-        trigger(InternalEvent.didEnterFullscreen.rawValue)
+        core.trigger(InternalEvent.didEnterFullscreen.rawValue)
     }
 
     func exitFullscreen(_: EventUserInfo = [:]) {
-        guard let core = core else { return }
-        trigger(InternalEvent.willExitFullscreen.rawValue)
+        guard isOnFullscreen else { return }
+        core.trigger(InternalEvent.willExitFullscreen.rawValue)
         core.mediaControl?.fullscreen = false
         core.parentView?.addSubviewMatchingConstraints(core)
         core.fullscreenController.dismiss(animated: false, completion: nil)
-        trigger(InternalEvent.didExitFullscreen.rawValue)
+        core.trigger(InternalEvent.didExitFullscreen.rawValue)
     }
 }
