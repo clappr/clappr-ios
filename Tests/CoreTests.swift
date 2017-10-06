@@ -44,17 +44,13 @@ class CoreTests: QuickSpec {
                         let options: Options = [kFullscreen: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
-
-                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                            return true
+                        var callbackWasCall = false
+                        core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                            callbackWasCall = true
                         }
-
-                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                            return true
-                        }
-
                         core.render()
-                        self.waitForExpectations(timeout: 2, handler: nil)
+                        expect(callbackWasCall).toEventually(beTrue())
+
                         expect(core.parentView?.subviews.contains(core)).to(beFalse())
                         expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beTrue())
@@ -70,23 +66,17 @@ class CoreTests: QuickSpec {
                     }
 
                     it("Should start as fullscreen video when `kFullscreen: true` and `kFullscreenByApp: false` was passed") {
-                        let options: Options = [kFullscreen: true]
-                        let core = Core(options: options)
-                        core.parentView = UIView()
-
-                        self.expectation(forNotification: InternalEvent.didEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                            return true
+                        let player = Player(options: [kFullscreen: true] as Options)
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
                         }
+                        player.attachTo(UIView(), controller: UIViewController())
+                        player.setFullscreen(true)
+                        expect(callbackWasCalled).toEventually(beTrue())
 
-                        self.expectation(forNotification: InternalEvent.willEnterFullscreen.rawValue, object: core.fullscreenHandler) { notification in
-                            return true
-                        }
-
-                        core.render()
-                        self.waitForExpectations(timeout: 2, handler: nil)
-                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
                     }
                     
                 }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Clappr"
-  s.version          = "0.6.8"
+  s.version          = "0.6.9"
   s.summary          = "An extensible media player for iOS"
   s.homepage         = "http://clappr.io"
   s.license          = 'MIT'
@@ -11,7 +11,8 @@ Pod::Spec.new do |s|
     "Bruno Torres" => "me@brunotorr.es",
     "Fernando Pinho" => "fpinho@gmail.com",
     "Uéliton Freitas" => "freitas.ueliton@gmail.com",
-    "Augusto Boranga" => "guto.boranga@gmail.com"
+    "Augusto Boranga" => "guto.boranga@gmail.com",
+    "Cristian Madrid" => "cristianmadridd@gmail.com",
   }
 
   s.source           = { :git => "https://github.com/clappr/clappr-ios.git", :tag => s.version.to_s }
