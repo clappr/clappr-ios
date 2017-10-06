@@ -7,6 +7,10 @@ class ViewController: UIViewController {
     var player: Player!
     var options: Options = [:]
 
+    var fullscreenByApp: Bool {
+        return options[kFullscreenByApp] as? Bool ?? false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         player = Player(options: options)
@@ -32,13 +36,17 @@ class ViewController: UIViewController {
         player.on(Event.stalled) { _ in print("on Stalled") }
 
         player.on(Event.requestFullscreen) { _ in
-            self.showAlert(with: "Fullscreen", message: "Entrar em modo fullscreen")
-            self.player.setFullscreen(true)
+            Logger.logInfo("Entrar em modo fullscreen")
+            if self.fullscreenByApp {
+                self.player.setFullscreen(true)
+            }
         }
 
         player.on(Event.exitFullscreen) { _ in
-            self.showAlert(with: "Fullscreen", message: "Sair do modo fullscreen")
-            self.player.setFullscreen(false)
+            Logger.logInfo("Sair do modo fullscreen")
+            if self.fullscreenByApp {
+                self.player.setFullscreen(false)
+            }
         }
     }
 
