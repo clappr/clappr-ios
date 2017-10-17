@@ -9,7 +9,7 @@ env:
   global:
     - PROJECT="Clappr.xcodeproj"
     - SCHEME="Clappr-Example"
-    - DESTINATION="platform=iOS Simulator,name=iPhone 6s Plus,OS=10.0"
+    - DESTINATION="platform=iOS Simulator,name=iPhone 6s Plus,OS=11.0"
 
 before_install:
   - brew update
@@ -19,7 +19,7 @@ before_install:
   - gem install cocoapods -v '1.1.1'
   - pod repo update
   - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 6s Plus", "iOS 10.0", 300)'
+  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 6s Plus", "iOS 11.0", 300)'
 
 script:
   - swiftlint
