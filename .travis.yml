@@ -19,7 +19,9 @@ before_install:
   - gem install cocoapods -v '1.1.1'
   - pod repo update
   - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 7", "iOS 11.1", 300)'
+  - xcrun simctl boot $(xcrun simctl create "iPhone 7" com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-1)
+  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+  - sleep 300
 
 script:
   - swiftlint
