@@ -9,7 +9,8 @@ env:
   global:
     - PROJECT="Clappr.xcodeproj"
     - SCHEME="Clappr-Example"
-    - DESTINATION="platform=iOS Simulator,name=iPhone 7,OS=11.1"
+    - SIMULATOR_ID=`xcrun simctl create "iPhone 7" com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-1`
+    - DESTINATION="platform=iOS Simulator,id=${SIMULATOR_ID}"
 
 before_install:
   - brew update
@@ -18,13 +19,11 @@ before_install:
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
-  - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - xcrun simctl shutdown all && xcrun simctl erase all
-  - xcrun simctl boot $(xcrun simctl create "iPhone 7" com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-1)
+  - xcrun simctl boot ${SIMULATOR_ID}
   - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
-  - sleep 300
+  - sleep 150
 
 script:
   - swiftlint
   - pod lib lint
-  - xcodebuild test -project "Clappr.xcodeproj" -scheme "Clappr-Example" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" | xcpretty -s && exit ${PIPESTATUS[0]}
+  - xcodebuild test -project "${PROJECT}" -scheme "${SCHEME}" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}
