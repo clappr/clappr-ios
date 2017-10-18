@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         return UIInterfaceOrientationMask.portrait
     }
 
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { // swiftlint:disable:this variable_name
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.portrait
     }
 
