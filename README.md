@@ -26,37 +26,8 @@ let player = Player(options: options)
 player.attachTo(yourView, controller: self)
 ```
 
-##### Listen to Events
-
-```swift
-player.on(Event.playing) { userInfo in
-    print("on Play")
-}
-```
-
-You can find public events on `Events` enum and listed bellow:
-
-* bufferUpdate
-* positionUpdate
-* ready
-* stalled
-* willUpdateAudioSource
-* didUpdateAudioSource
-* willUpdateSubtitleSource
-* didUpdateSubtitleSource
-* disableMediaControl
-* enableMediaControl
-* didComplete
-* willPlay
-* playing
-* willPause
-* didPause
-* willStop
-* didStop
-* airPlayStatusUpdate
-* requestFullscreen
-* exitFullscreen
-* error: `userInfo` can contain the error that caused the event.
+### Events 
+The player throw's a [list of events](https://github.com/clappr/clappr-ios/wiki/Events) that can be useful to your application.
 
 ### Built-in Plugins
 You can add options to the player.
