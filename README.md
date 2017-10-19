@@ -59,62 +59,9 @@ You can find public events on `Events` enum and listed bellow:
 * error: `userInfo` can contain the error that caused the event.
 
 ### Built-in Plugins
+You can add options to the player.
+[Here](https://github.com/clappr/clappr-ios/wiki/Options) you can see the list of available options and how to use it.
 
-To add plugins parameters use the options parameter on constructor. Example:
-
-```Swift
-let options = [kSourceUrl : "http://clappr.io/highline.mp4", pluginParameter1: "value1", pluginParameter2: true]
-let player = Player(options: options)
-```
-
-##### Fullscreen controled by app
-Add `kFullscreenByApp: true` to notify when user request's the control of fullscreen.  
-Default is `false`.
-
-**How to use**
-```swift
-let options: Options = [kFullscreenByApp: true]
-let player = Player(options: options)
-
-player.on(Event.requestFullscreen) { _ in 
-    // You must inform the player when the application changes the screen state
-    player.setFullscreen(true)
-}
-player.on(Event.exitFullscreen) { _ in 
-    // You must inform the player when the application changes the screen state
-    player.setFullscreen(false)
-}
-```
-
-##### Fullscreen
-Define if video should start in fullscreen mode with `kFullscreen: true`. 
-Default is `false`.
-
-**obs**: This option doesnt work when `kFullscreenByApp` is enable
-
-##### FullscreenDisabled
-Add `kFullscreenDisabled: true` to disable fullscreen button. Default is `false`.
-
-##### Source
-Set the video source url with `kSourceUrl : "http://clappr.io/highline.mp4"`.
-
-##### Poster
-Define a poster by adding `kPosterUrl: "http://url/img.png"` on your options. It will appear before the video starts, disappear on play and go back when video finishes.
-
-##### Playback not supported custom message
-Add `kPlaybackNotSupportedMessage : 'Your custom message'` to define a custom message to be displayed for not supported videos.
-
-##### AutoPlay
-Add `kAutoPlay: true` if you want the video to play automatically.
-
-##### Start At
-Define a start position in seconds with `kStartAt : x`. Default is `0`.
-
-##### MimeType
-Add `kMimeType: 'selected mimetype'` if you need to use a url without extension.
-
-##### Media Control
-Adding a custom media control is possible by informing the `Type` of your class via `kMediaControl : YourCustomControl.self`
 
 ### External Playback in Background
 To enable external playback while your app is in background, you should include the `audio` value to your app's **Background Modes** capabilities.
