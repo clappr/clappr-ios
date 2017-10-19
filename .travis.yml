@@ -3,13 +3,14 @@
 # * https://github.com/supermarin/xcpretty#usage
 language: objective-c
 
-osx_image: xcode8.3
+osx_image: xcode9.1
 
 env:
   global:
     - PROJECT="Clappr.xcodeproj"
     - SCHEME="Clappr-Example"
-    - DESTINATION="platform=iOS Simulator,name=iPhone 6s Plus,OS=10.0"
+    - SIMULATOR_ID=`xcrun simctl create "iPhone 7" com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-1`
+    - DESTINATION="platform=iOS Simulator,id=${SIMULATOR_ID}"
 
 before_install:
   - brew update
@@ -18,8 +19,9 @@ before_install:
   - carthage bootstrap --platform iOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
-  - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 6s Plus", "iOS 10.0", 300)'
+  - xcrun simctl boot ${SIMULATOR_ID}
+  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+  - sleep 150
 
 script:
   - swiftlint
