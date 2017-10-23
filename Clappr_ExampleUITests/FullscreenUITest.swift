@@ -5,6 +5,14 @@ class FullscreenUITest: XCTestCase {
     var dashboardInteractor: DashboardViewInteractor!
     var app: XCUIApplication!
 
+    var container: XCUIElement {
+        return app.otherElements["Container"]
+    }
+
+    var window: XCUIElement {
+        return app.windows.element(boundBy: 0)
+    }
+
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
@@ -17,14 +25,19 @@ class FullscreenUITest: XCTestCase {
     }
 
     func testStartAsFullscreen() {
-
         dashboardInteractor.fullscreenControledByApp = false
         dashboardInteractor.startAsFullscreen = true
         dashboardInteractor.startVideo()
-
-        let container = app.otherElements["Container"]
-        let window = app.windows.element(boundBy: 0)
         XCTAssert(container.frame == window.frame)
     }
+
+    func testStartAsFullscreenWithFullscreenControledByApp() {
+        dashboardInteractor.fullscreenControledByApp = true
+        dashboardInteractor.startAsFullscreen = true
+        dashboardInteractor.startVideo()
+        XCTAssert(container.frame != window.frame)
+    }
+
+    func 
     
 }
