@@ -63,6 +63,16 @@
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9EE140CD1F9E519300CCC287"
+               BuildableName = "Clappr_ExampleUITests.xctest"
+               BlueprintName = "Clappr_ExampleUITests"
+               ReferencedContainer = "container:Clappr.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
