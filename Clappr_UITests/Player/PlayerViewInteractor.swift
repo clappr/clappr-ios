@@ -17,6 +17,8 @@ class PlayerViewInteractor {
     }
 
     func tapOnFullscreen() {
-        elements.fullscreenButton.tap()
+        if XCTWaiter().waitFor(element: elements.fullscreenButton) {
+            elements.fullscreenButton.tap()
+        }
     }
 }
