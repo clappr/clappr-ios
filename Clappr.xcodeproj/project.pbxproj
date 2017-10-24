@@ -79,7 +79,7 @@
 		9EC8532F1F7B05EB00716778 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8532E1F7B05EB00716778 /* FullScreenStateHandler.swift */; };
 		9EC853311F7BF06A00716778 /* FullscreenStateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC853301F7BF06A00716778 /* FullscreenStateHandlerTests.swift */; };
 		9EDD88C01F7C5E1200DAD927 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */; };
-		9EE140F51F9E66C300CCC287 /* FullscreenUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE140F41F9E66C300CCC287 /* FullscreenUITest.swift */; };
+		9EE140F51F9E66C300CCC287 /* FullscreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE140F41F9E66C300CCC287 /* FullscreenUITests.swift */; };
 		9EE140F81F9E6FDD00CCC287 /* DashboardViewElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE140F71F9E6FDD00CCC287 /* DashboardViewElements.swift */; };
 		9EE140FA1F9E700200CCC287 /* DashboardViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE140F91F9E700200CCC287 /* DashboardViewInteractor.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
@@ -216,7 +216,7 @@
 		9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		9EE140EA1F9E51D300CCC287 /* Clappr_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE140EE1F9E51D300CCC287 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9EE140F41F9E66C300CCC287 /* FullscreenUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenUITest.swift; sourceTree = "<group>"; };
+		9EE140F41F9E66C300CCC287 /* FullscreenUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenUITests.swift; sourceTree = "<group>"; };
 		9EE140F71F9E6FDD00CCC287 /* DashboardViewElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewElements.swift; sourceTree = "<group>"; };
 		9EE140F91F9E700200CCC287 /* DashboardViewInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewInteractor.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -549,7 +549,7 @@
 			children = (
 				9E692DEB1F9F7D6C006510BE /* Player */,
 				9EE140F61F9E6FC800CCC287 /* Dashboard */,
-				9EE140F41F9E66C300CCC287 /* FullscreenUITest.swift */,
+				9EE140F41F9E66C300CCC287 /* FullscreenUITests.swift */,
 				9EE140EE1F9E51D300CCC287 /* Info.plist */,
 			);
 			path = Clappr_ExampleUITests;
@@ -890,7 +890,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E692DEF1F9F7E12006510BE /* PlayerViewInteractor.swift in Sources */,
-				9EE140F51F9E66C300CCC287 /* FullscreenUITest.swift in Sources */,
+				9EE140F51F9E66C300CCC287 /* FullscreenUITests.swift in Sources */,
 				9E692DED1F9F7D85006510BE /* PlayerViewElements.swift in Sources */,
 				9EE140FA1F9E700200CCC287 /* DashboardViewInteractor.swift in Sources */,
 				9EE140F81F9E6FDD00CCC287 /* DashboardViewElements.swift in Sources */,

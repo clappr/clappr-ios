@@ -2,7 +2,7 @@ import XCTest
 import Quick
 import Nimble
 
-class FullscreenUITest: QuickSpec {
+class FullscreenUITests: QuickSpec {
     override func spec() {
 
         var dashboardInteractor: DashboardViewInteractor!
