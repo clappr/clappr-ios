@@ -2,7 +2,7 @@ import XCTest
 
 class DashboardViewInteractor {
 
-    private var elements: DashboardViewElements
+    var elements: DashboardViewElements
 
     var startAsFullscreen: Bool {
         didSet {

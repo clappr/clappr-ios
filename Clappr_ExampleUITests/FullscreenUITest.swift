@@ -1,66 +1,81 @@
 import XCTest
+import Quick
+import Nimble
 
-class FullscreenUITest: XCTestCase {
+class FullscreenUITest: QuickSpec {
+    override func spec() {
 
-    var dashboardInteractor: DashboardViewInteractor!
-    var app: XCUIApplication!
+        var dashboardInteractor: DashboardViewInteractor!
+        var playerInteractor: PlayerViewInteractor!
+        var app: XCUIApplication!
 
-    var container: XCUIElement {
-        return app.otherElements["Container"]
-    }
+        var window: XCUIElement {
+            return app.windows.element(boundBy: 0)
+        }
 
-    var window: XCUIElement {
-        return app.windows.element(boundBy: 0)
-    }
+        describe("Fullscreen") {
 
-    var fullscreenButton: XCUIElement {
-        return app.buttons["FullscreenButton"]
-    }
+            context("start as fullscreen") {
 
-    override func setUp() {
-        super.setUp()
-        app = XCUIApplication()
-        app.launch()
-        dashboardInteractor = DashboardViewInteractor(app: app)
-    }
+                beforeEach {
+                    app = XCUIApplication()
+                    app.launch()
 
-    override func tearDown() {
-        super.tearDown()
-    }
+                    dashboardInteractor = DashboardViewInteractor(app: app)
+                    dashboardInteractor.startAsFullscreen = true
 
-    func testPlayerShouldHaveTheSameSizeOfWindow() {
-        dashboardInteractor.fullscreenControledByApp = false
-        dashboardInteractor.startAsFullscreen = true
-        dashboardInteractor.startVideo()
-        XCTAssert(container.frame == window.frame)
-    }
+                    playerInteractor = PlayerViewInteractor(app: app)
+                }
 
-    func testPlayerShouldNotHaveTheSizeOfWindow() {
-        dashboardInteractor.fullscreenControledByApp = true
-        dashboardInteractor.startAsFullscreen = true
-        dashboardInteractor.startVideo()
-        XCTAssert(container.frame != window.frame)
-    }
+                it("player should have the same size of window") {
+                    dashboardInteractor.fullscreenControledByApp = false
+                    dashboardInteractor.startVideo()
 
-    func testPlayerShouldNotChangeTheLayerSizeWhenStartAsFullscreenIsDisabled() {
-        dashboardInteractor.fullscreenControledByApp = true
-        dashboardInteractor.startAsFullscreen = false
-        dashboardInteractor.startVideo()
+                    XCTAssert(playerInteractor.containerFrame == window.frame)
+                }
 
-        let currentFrame = container.frame
-        container.tap()
-        fullscreenButton.tap()
-        XCTAssert(currentFrame == container.frame)
-    }
+                it("player should not have the same size of window ") {
+                    dashboardInteractor.fullscreenControledByApp = true
+                    dashboardInteractor.startVideo()
 
-    func testPlayerShouldNotChangeTheLayerSizeWhenStartAsFullscreenIsEnabled() {
-        dashboardInteractor.fullscreenControledByApp = true
-        dashboardInteractor.startAsFullscreen = true
-        dashboardInteractor.startVideo()
+                    XCTAssert(playerInteractor.containerFrame != window.frame)
+                }
+            }
 
-        let currentFrame = container.frame
-        container.tap()
-        fullscreenButton.tap()
-        XCTAssert(currentFrame == container.frame)
+            context("fullscreen controled by app") {
+
+                beforeEach {
+                    app = XCUIApplication()
+                    app.launch()
+
+                    dashboardInteractor = DashboardViewInteractor(app: app)
+                    dashboardInteractor.fullscreenControledByApp = true
+
+                    playerInteractor = PlayerViewInteractor(app: app)
+                }
+
+                it("player should not change the container size when taps on fullscreen button") {
+                    dashboardInteractor.startAsFullscreen = false
+                    dashboardInteractor.startVideo()
+
+                    let currentFrame = playerInteractor.containerFrame
+                    playerInteractor.tapOnContainer()
+                    playerInteractor.tapOnFullscreen()
+                    
+                    XCTAssert(currentFrame == playerInteractor.containerFrame)
+                }
+
+                it("player should not change the container size when taps on fullscreen button") {
+                    dashboardInteractor.startAsFullscreen = true
+                    dashboardInteractor.startVideo()
+
+                    let currentFrame = playerInteractor.containerFrame
+                    playerInteractor.tapOnContainer()
+                    playerInteractor.tapOnFullscreen()
+
+                    XCTAssert(currentFrame == playerInteractor.containerFrame)
+                }
+            }
+        }
     }
 }
