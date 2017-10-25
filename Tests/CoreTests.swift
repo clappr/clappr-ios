@@ -98,7 +98,18 @@ class CoreTests: QuickSpec {
                         expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
                         expect(player.core!.mediaControl?.fullscreen).to(beTrue())
                     }
-                    
+
+                    it("Should set to fullscreen video by call `setFullscreen(true)`") {
+                        let core = Core()
+                        core.parentView = UIView()
+
+                        core.render()
+                        core.setFullscreen(true)
+
+                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    }
                 }
             }
 
@@ -188,7 +199,7 @@ class CoreTests: QuickSpec {
 
                     it("should returns correct value for `kFullscreenByApp`") {
                         optionsUnboxer = OptionsUnboxer(options: [kFullscreenByApp: true])
-                        
+
                         expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
                     }
                 }
