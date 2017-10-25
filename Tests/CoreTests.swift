@@ -39,7 +39,9 @@ class CoreTests: QuickSpec {
                         let options: Options = [kFullscreen: false]
                         let core = Core(options: options)
                         core.parentView = UIView()
+
                         core.render()
+
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
@@ -47,7 +49,9 @@ class CoreTests: QuickSpec {
                     it("Should start as embed video when `kFullscreen` was not passed") {
                         let core = Core()
                         core.parentView = UIView()
+
                         core.render()
+
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
@@ -60,9 +64,10 @@ class CoreTests: QuickSpec {
                         core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
                             callbackWasCall = true
                         }
-                        core.render()
-                        expect(callbackWasCall).toEventually(beTrue())
 
+                        core.render()
+
+                        expect(callbackWasCall).toEventually(beTrue())
                         expect(core.parentView?.subviews.contains(core)).to(beFalse())
                         expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beTrue())
@@ -72,7 +77,9 @@ class CoreTests: QuickSpec {
                         let options: Options = [kFullscreen: true, kFullscreenByApp: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
+
                         core.render()
+
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
@@ -84,9 +91,10 @@ class CoreTests: QuickSpec {
                             callbackWasCalled = true
                         }
                         player.attachTo(UIView(), controller: UIViewController())
-                        player.setFullscreen(true)
-                        expect(callbackWasCalled).toEventually(beTrue())
 
+                        player.setFullscreen(true)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
                         expect(player.core!.mediaControl?.fullscreen).to(beTrue())
                     }
@@ -110,6 +118,7 @@ class CoreTests: QuickSpec {
 
                 it("Should be the top view on core") {
                     core.render()
+
                     expect(core.subviews.last) == core.mediaControl
                 }
             }
@@ -118,12 +127,14 @@ class CoreTests: QuickSpec {
                 context("Addition") {
                     it("Should be able to add plugins") {
                         core.addPlugin(FakeCorePlugin())
+
                         expect(core.plugins.count) == 1
                     }
 
                     it("Should add plugin as subview after rendered") {
                         let plugin = FakeCorePlugin()
                         core.addPlugin(plugin)
+
                         core.render()
 
                         expect(plugin.superview) == core
@@ -134,12 +145,14 @@ class CoreTests: QuickSpec {
                     it("Should return true if a plugin is installed") {
                         core.addPlugin(FakeCorePlugin())
                         let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
+
                         expect(containsPlugin).to(beTrue())
                     }
 
                     it("Should return false if a plugin isn't installed") {
                         core.addPlugin(UICorePlugin())
                         let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
+
                         expect(containsPlugin).to(beFalse())
                     }
                 }
@@ -168,12 +181,14 @@ class CoreTests: QuickSpec {
 
                     it("should returns correct value for `fullscreen`") {
                         optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true])
+
                         expect(optionsUnboxer.fullscreen).to(beTrue())
 
                     }
 
                     it("should returns correct value for `kFullscreenByApp`") {
                         optionsUnboxer = OptionsUnboxer(options: [kFullscreenByApp: true])
+                        
                         expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
                     }
                 }
