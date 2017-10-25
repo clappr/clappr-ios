@@ -146,7 +146,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open func setFullscreen(_ fullscreen: Bool) {
         guard let mediaControl = mediaControl, mediaControl.fullscreen != fullscreen else { return }
-        mediaControl.fullscreen = fullscreen
+        if optionsUnboxer.fullscreenControledByApp {
+            mediaControl.fullscreen = fullscreen
+        } else {
+            fullscreen ? fullscreenHandler.enterInFullscreen() : fullscreenHandler.exitFullscreen()
+        }
     }
 
     open func destroy() {
