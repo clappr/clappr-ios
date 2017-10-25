@@ -110,6 +110,19 @@ class CoreTests: QuickSpec {
                         expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
+
+                    it("Should not try to set fullscreen video twice by call `setFullscreen(true)` twice") {
+                        let core = Core()
+                        core.parentView = UIView()
+
+                        core.render()
+                        core.setFullscreen(true)
+                        core.setFullscreen(true)
+
+                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(core.fullscreenController.view.subviews.filter { $0 == core }.count).to(equal(1))
+                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    }
                 }
             }
 
