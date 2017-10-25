@@ -20,6 +20,33 @@ class ViewController: UIViewController {
         player.attachTo(playerContainer, controller: self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: .UIDeviceOrientationDidChange, object: nil)
+    }
+
+    func rotated() {
+        if (player?.isFullscreen)! && (UIDevice.current.orientation == .faceUp || UIDevice.current.orientation == .faceDown) {
+            return
+        }
+
+        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
+            UIApplication.shared.isStatusBarHidden = true
+            player?.setFullscreen(true)
+        } else {
+            UIApplication.shared.isStatusBarHidden = false
+            player?.setFullscreen(false)
+            self.forceOrientation(.portrait)
+        }
+    }
+
+    fileprivate func forceOrientation(_ orientation: UIInterfaceOrientation = .portrait) {
+        UIDevice.current.setValue(
+            orientation.rawValue,
+            forKey: "orientation"
+        )
+    }
+
     func listenToPlayerEvents() {
         player.on(Event.playing) { _ in print("on Play") }
 
