@@ -35,7 +35,7 @@ open class Container: UIBaseObject {
         super.init(frame: CGRect.zero)
         backgroundColor = UIColor.clear
         loadPlugins()
-
+        accessibilityIdentifier = "Container"
         if let source = options[kSourceUrl] as? String {
             load(source, mimeType: options[kMimeType] as? String)
         }
