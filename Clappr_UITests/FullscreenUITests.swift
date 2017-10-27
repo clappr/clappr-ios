@@ -15,65 +15,81 @@ class FullscreenUITests: QuickSpec {
 
         describe("Fullscreen") {
 
+            beforeEach {
+                app = XCUIApplication()
+                app.launch()
+                XCUIDevice.shared.orientation = .portrait
+
+                dashboardInteractor = DashboardViewInteractor(app: app)
+                playerInteractor = PlayerViewInteractor(app: app)
+            }
+
+            afterEach {
+                app.terminate()
+            }
+
+            context("setFullscreen") {
+                it("player should set to fullscreen when setFullscreen is called") {
+                    dashboardInteractor.startAsFullscreen = false
+                    dashboardInteractor.fullscreenControledByApp = false
+
+                    dashboardInteractor.startVideo()
+                    playerInteractor.tapOnContainer()
+                    XCUIDevice.shared.orientation = .landscapeLeft
+
+                    expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                }
+            }
+
             context("start as fullscreen") {
 
                 beforeEach {
-                    app = XCUIApplication()
-                    app.launch()
-
-                    dashboardInteractor = DashboardViewInteractor(app: app)
                     dashboardInteractor.startAsFullscreen = true
-
-                    playerInteractor = PlayerViewInteractor(app: app)
                 }
 
                 it("player should have the same size of window") {
                     dashboardInteractor.fullscreenControledByApp = false
+
                     dashboardInteractor.startVideo()
 
-                    XCTAssert(playerInteractor.containerFrame == window.frame)
+                    expect(playerInteractor.containerFrame == window.frame).to(beTrue())
                 }
 
                 it("player should not have the same size of window ") {
                     dashboardInteractor.fullscreenControledByApp = true
+
                     dashboardInteractor.startVideo()
 
-                    XCTAssert(playerInteractor.containerFrame != window.frame)
+                    expect(playerInteractor.containerFrame != window.frame).to(beTrue())
                 }
             }
 
             context("fullscreen controled by app") {
 
                 beforeEach {
-                    app = XCUIApplication()
-                    app.launch()
-
-                    dashboardInteractor = DashboardViewInteractor(app: app)
-                    dashboardInteractor.fullscreenControledByApp = true
-
                     playerInteractor = PlayerViewInteractor(app: app)
                 }
 
                 it("player should not change the container size when taps on fullscreen button") {
                     dashboardInteractor.startAsFullscreen = false
-                    dashboardInteractor.startVideo()
 
+                    dashboardInteractor.startVideo()
                     let currentFrame = playerInteractor.containerFrame
                     playerInteractor.tapOnContainer()
                     playerInteractor.tapOnFullscreen()
                     
-                    XCTAssert(currentFrame == playerInteractor.containerFrame)
+                    expect(currentFrame == playerInteractor.containerFrame).to(beTrue())
                 }
 
                 it("player should not change the container size when taps on fullscreen button") {
                     dashboardInteractor.startAsFullscreen = true
-                    dashboardInteractor.startVideo()
 
+                    dashboardInteractor.startVideo()
                     let currentFrame = playerInteractor.containerFrame
                     playerInteractor.tapOnContainer()
                     playerInteractor.tapOnFullscreen()
 
-                    XCTAssert(currentFrame == playerInteractor.containerFrame)
+                    expect(currentFrame == playerInteractor.containerFrame).to(beTrue())
                 }
             }
         }
