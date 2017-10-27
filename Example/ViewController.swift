@@ -11,6 +11,10 @@ class ViewController: UIViewController {
         return options[kFullscreenByApp] as? Bool ?? false
     }
 
+    var deviceIsOnLandscape: Bool {
+        return [UIDeviceOrientation.landscapeLeft, UIDeviceOrientation.landscapeRight].contains(UIDevice.current.orientation)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         player = Player(options: options)
@@ -26,21 +30,19 @@ class ViewController: UIViewController {
     }
 
     func rotated() {
-        if (player?.isFullscreen)! && (UIDevice.current.orientation == .faceUp || UIDevice.current.orientation == .faceDown) {
-            return
-        }
-
-        if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {
-            UIApplication.shared.isStatusBarHidden = true
-            player?.setFullscreen(true)
-        } else {
-            UIApplication.shared.isStatusBarHidden = false
-            player?.setFullscreen(false)
-            self.forceOrientation(.portrait)
+        guard let playerIsOnFullscreen = player?.isFullscreen else { return }
+        setPlayerTo(fullscreen: deviceIsOnLandscape && !playerIsOnFullscreen)
+        if !deviceIsOnLandscape {
+            forceOrientation(to: .portrait)
         }
     }
 
-    fileprivate func forceOrientation(_ orientation: UIInterfaceOrientation = .portrait) {
+    func setPlayerTo(fullscreen: Bool) {
+        UIApplication.shared.isStatusBarHidden = fullscreen
+        player?.setFullscreen(fullscreen)
+    }
+
+    fileprivate func forceOrientation(to orientation: UIInterfaceOrientation = .portrait) {
         UIDevice.current.setValue(
             orientation.rawValue,
             forKey: "orientation"
