@@ -27,6 +27,14 @@ class ContainerTests: QuickSpec {
                     expect(container.playback?.pluginName) == "AVPlayback"
                 }
 
+                it("should has background color `clear`") {
+                    expect(Container().backgroundColor) == .clear
+                }
+
+                it("should have acessibility indentifier named: 'Container'") {
+                    expect(Container().accessibilityIdentifier) == "Container"
+                }
+
                 it("Should create a container with invalid playback for url that cannot be played") {
                     let container = Container(options: optionsWithInvalidSource)
 
