@@ -51,6 +51,10 @@ class ContainerTests: QuickSpec {
                     expect(container.subviews.first) == playback
                 }
 
+                it("should set frame of container as CGRect.zero") {
+                    expect(container.view?.frame) == CGRect.zero
+                }
+
                 it("Should have a constructor that receive options") {
                     let options = ["aOption": "option"]
                     let container = Container(options: options)
