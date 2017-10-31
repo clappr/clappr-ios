@@ -25,6 +25,22 @@ class CoreTests: QuickSpec {
         }
 
         describe("Core") {
+
+            context("Initialization") {
+                it("Should set backgroundColor to black") {
+                    expect(core.backgroundColor) == .black
+                }
+
+                it("Should set frame Rect to zero") {
+                    expect(core.frame) == CGRect.zero
+                }
+
+                it("Should add gesture recognizer") {
+                    expect(core.gestureRecognizers?.count) > 0
+                }
+
+            }
+
             context("Options") {
 
                 it("Should have a constructor with options") {
@@ -126,11 +142,106 @@ class CoreTests: QuickSpec {
                 }
             }
 
+            fcontext("Destroy") {
+                it("Should trigger willDestroy") {
+                    var didCallWillDestroy = false
+
+                    core.on(InternalEvent.willDestroy.rawValue) { _ in
+                        didCallWillDestroy = true
+                    }
+                    core.destroy()
+                    
+                    expect(didCallWillDestroy).toEventually(beTrue())
+                }
+
+                it("Should trigger didDestroy") {
+                    var didCallDidDestroy = false
+
+                    core.on(InternalEvent.willDestroy.rawValue) { _ in
+                        didCallDidDestroy = true
+                    }
+                    core.destroy()
+
+                    expect(didCallDidDestroy).toEventually(beTrue())
+                }
+
+                it("Should remove listeners") {
+                    var didTriggerEvent = false
+                    let eventName = "teste"
+
+                    core.listenTo(core, eventName: eventName) { _ in
+                        didTriggerEvent = true
+                    }
+                    core.trigger(eventName)
+
+                    expect(didTriggerEvent).toEventually(beTrue())
+
+                    didTriggerEvent = false
+                    core.destroy()
+                    core.trigger(eventName)
+
+                    expect(didTriggerEvent).toEventually(beFalse())
+                }
+
+                it("Should remove all containers") {
+                    waitUntil { done in
+                        core.containers.first!.on(InternalEvent.didDestroy.rawValue) { _ in
+                            done()
+                        }
+                        core.destroy()
+                        expect(core.containers.count) == 0
+                    }
+                }
+            }
+
             context("Containers") {
                 it("Should be created given a source") {
                     expect(core.activeContainer).toNot(beNil())
                     expect(core.plugins).to(beEmpty())
                     expect(core.containers).toNot(beEmpty())
+                }
+
+                it("Should trigger willChangeActiveContainer event") {
+                    let core = Core()
+                    var didCallActiveContainerEvent = false
+
+                    core.on(InternalEvent.willChangeActiveContainer.rawValue)   { userInfo in
+                        didCallActiveContainerEvent = true
+                    }
+
+                    expect(didCallActiveContainerEvent).toEventually(beTrue())
+                }
+
+                it("Should trigger didChangeActiveContainer event") {
+                    let core = Core()
+                    var didCallChangeActiveContainer = false
+
+                    core.on(InternalEvent.didChangeActiveContainer.rawValue)   { userInfo in
+                        didCallChangeActiveContainer = true
+                    }
+
+                    expect(didCallChangeActiveContainer).toEventually(beTrue())
+                }
+
+                it("Should listen willChangePlayback and trigger willChangeActivePlayback if it was triggered") {
+                    let core = Core()
+                    var didCallWillChangeActivePlayback = false
+
+                    core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
+                        didCallWillChangeActivePlayback = true
+                    }
+
+                    expect(didCallWillChangeActivePlayback).toEventually(beTrue())
+                }
+
+                it("Should listen didChangePlayback and trigger didChangeActivePlayback if it was triggered") {
+                    let core = Core()
+                    var didCallWillChangeActivePlayback = false
+                    core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
+                        didCallWillChangeActivePlayback = true
+                    }
+
+                    expect(didCallWillChangeActivePlayback).toEventually(beTrue())
                 }
             }
 
