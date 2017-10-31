@@ -46,6 +46,11 @@ class ContainerTests: QuickSpec {
                     expect(playback.superview) == container
                 }
 
+                it("Should set playback to front of container") {
+                    container.render()
+                    expect(container.subviews.first) == playback
+                }
+
                 it("Should have a constructor that receive options") {
                     let options = ["aOption": "option"]
                     let container = Container(options: options)
