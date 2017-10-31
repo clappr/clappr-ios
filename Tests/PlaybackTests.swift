@@ -13,6 +13,18 @@ class PlaybackTests: QuickSpec {
                 playback = StubPlayback(options: options as Options)
             }
 
+            it("Should set frame of Playback to CGRect.zero") {
+                expect(playback.frame) == CGRect.zero
+            }
+
+            it("Should set backgroundColor to clear") {
+                expect(playback.backgroundColor).to(beNil())
+            }
+
+            it("Should set isUserInteractionEnabled to false") {
+                expect(playback.isUserInteractionEnabled) == false
+            }
+
             it("Should have a play method") {
                 let responds = playback.responds(to: #selector(Playback.play))
                 expect(responds).to(beTrue())
