@@ -52,7 +52,7 @@ class ContainerTests: QuickSpec {
                 }
 
                 it("should set frame of container as CGRect.zero") {
-                    expect(container.view?.frame) == CGRect.zero
+                    expect(container.frame) == CGRect.zero
                 }
 
                 it("Should have a constructor that receive options") {
