@@ -104,7 +104,46 @@ class ContainerTests: QuickSpec {
                     container.destroy()
                     container.trigger("some-event")
 
-                    expect(callbackWasCalled) == false
+                    expect(callbackWasCalled).toEventually(beFalse())
+                }
+
+                it("Should trigger willDestroy when destroying containers") {
+                    var didCallEvent = false
+
+                    container.on(InternalEvent.willDestroy.rawValue) { _ in
+                        didCallEvent = true
+                    }
+
+                    container.destroy()
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("Should trigger didDestroy when destroying containers") {
+                    var didCallEvent = false
+
+                    container.on(InternalEvent.didDestroy.rawValue) { _ in
+                        didCallEvent = true
+                    }
+
+                    container.destroy()
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("Should call destroy of plugins") {
+                    loader.addExternalPlugins([FakeContainerPlugin.self])
+                    let container = Container(loader: loader, options: options)
+                    var countOfDestroy = 0
+
+                    container.plugins.forEach { plugin in
+                        plugin.on(InternalEvent.didDestroy.rawValue) { _ in
+                            countOfDestroy += 1
+                        }
+                    }
+
+                    container.destroy()
+
+                    expect(countOfDestroy) == 1
+                    expect(container.plugins.count) == 0
                 }
             }
 
@@ -212,6 +251,10 @@ class ContainerTests: QuickSpec {
     class FakeContainerPlugin: UIContainerPlugin {
         override var pluginName: String {
             return "FakeContainerPlugin"
+        }
+
+        override func destroy() {
+            trigger(InternalEvent.didDestroy.rawValue)
         }
     }
 
