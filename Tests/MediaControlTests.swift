@@ -3,7 +3,7 @@ import Nimble
 import Clappr
 
 class MediaControlTests: QuickSpec {
-
+    #if os(iOS)
     override func spec() {
         describe("MediaControl") {
             let options = [kSourceUrl: "http://globo.com/video.mp4"]
@@ -237,4 +237,5 @@ class MediaControlTests: QuickSpec {
             return 30
         }
     }
+    #endif
 }
