@@ -1,10 +1,11 @@
 import AVFoundation
+import AVKit
 
 enum PlaybackState {
     case idle, paused, playing, buffering
 }
 
-open class AVFoundationPlayback: Playback {
+open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
@@ -323,6 +324,10 @@ open class AVFoundationPlayback: Playback {
         player?.currentItem?.seek(to: time)
         trigger(.seek)
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
+        trigger(.seek)
     }
 
     open override func mute(_ enabled: Bool) {
