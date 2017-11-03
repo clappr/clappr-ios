@@ -4,6 +4,18 @@ import Clappr
 
 class CoreTests: QuickSpec {
     override func spec() {
+        class StubPlayback: Playback {
+            override var pluginName: String {
+                return "stupPlayback"
+            }
+        }
+
+        class FakeCorePlugin: UICorePlugin {
+            override var pluginName: String {
+                return "FakeCorePLugin"
+            }
+        }
+
         let options = [kSourceUrl: "http//test.com"]
         var core: Core!
         let loader = Loader(externalPlugins: [StubPlayback.self])
@@ -72,18 +84,6 @@ class CoreTests: QuickSpec {
                     }
                 }
             }
-        }
-    }
-
-    class StubPlayback: Playback {
-        override var pluginName: String {
-            return "stupPlayback"
-        }
-    }
-
-    class FakeCorePlugin: UICorePlugin {
-        override var pluginName: String {
-            return "FakeCorePLugin"
         }
     }
 }
