@@ -193,8 +193,9 @@ open class Player: UIViewController, EventProtocol {
     }
 
     fileprivate func bindPlayer(playback: Playback?) {
-        if let player = (playback as? AVFoundationPlayback)?.player {
+        if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
             viewController?.player = player
+            viewController?.delegate = avFoundationPlayback
         }
     }
 
