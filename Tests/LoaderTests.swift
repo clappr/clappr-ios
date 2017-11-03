@@ -20,6 +20,7 @@ class LoaderTests: QuickSpec {
                 expect(loader.corePlugins.count) == nativeCorePluginsCount + 1
             }
 
+            #if os(iOS)
             it("Should give more priority for external plugin if names colide") {
                 let loader = Loader()
 
@@ -33,6 +34,7 @@ class LoaderTests: QuickSpec {
                 expect(spinnerPlugins.count) == 1
                 expect(spinner).toNot(beNil())
             }
+            #endif
 
             it("Should be able to set custom Media Control") {
                 let loader = Loader(externalPlugins: [], options: [kMediaControl: StubMediaControl.self])
