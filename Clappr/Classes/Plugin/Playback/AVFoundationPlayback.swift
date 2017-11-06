@@ -130,7 +130,7 @@ open class AVFoundationPlayback: Playback {
         super.init(options: options)
 
         if let urlString = options[kSourceUrl] as? String {
-            if let url = URL(string: urlString), let asset = AVURLAssetWithCookies(url: url).asset {
+            if let url = URL(string: urlString), let asset = AVURLAssetWithCookiesBuilder(url: url).asset {
                 self.asset = asset
             }
         }

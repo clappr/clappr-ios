@@ -23,10 +23,11 @@ class AVURLAssetWithCookiesTests: QuickSpec {
             }
 
             it("sets the cookies associated with the media url") {
-                let avUrlAssetWithCookies = AVURLAssetWithCookies(url: URL(string: "http://clappr.io/highline.mp4")!)
+                let avUrlAssetWithCookies = AVURLAssetWithCookiesBuilder(url: URL(string: "http://clappr.io/highline.mp4")!)
 
                 expect(avUrlAssetWithCookies.cookies?.count).to(equal(1))
                 expect(avUrlAssetWithCookies.cookies?.first).to(equal(cookie))
+                expect(avUrlAssetWithCookies.options[AVURLAssetHTTPCookiesKey]).toNot(beNil())
             }
 
             it("doesn't sets cookies that aren't associated with the media url") {
@@ -36,24 +37,24 @@ class AVURLAssetWithCookiesTests: QuickSpec {
                                                  HTTPCookiePropertyKey.value: "don't send me"])!
                 HTTPCookieStorage.shared.setCookie(anotherCookie)
 
-                let avUrlAssetWithCookies = AVURLAssetWithCookies(url: URL(string: "http://clappr.io/highline.mp4")!)
+                let avUrlAssetWithCookies = AVURLAssetWithCookiesBuilder(url: URL(string: "http://clappr.io/highline.mp4")!)
 
                 expect(avUrlAssetWithCookies.cookies?.count).to(equal(1))
                 expect(avUrlAssetWithCookies.cookies).toNot(contain(anotherCookie))
             }
 
             it("sets the cookies and maintains the existing options") {
-                let avUrlAssetWithCookies = AVURLAssetWithCookies(
+                let avUrlAssetWithCookies = AVURLAssetWithCookiesBuilder(
                     url: URL(string: "http://clappr.io/highline.mp4")!,
                     options: ["foo":"bar"]
                 )
 
                 expect(avUrlAssetWithCookies.cookies?.count).to(equal(1))
-                expect((avUrlAssetWithCookies.options?["foo"] as! String)).to(equal("bar"))
+                expect((avUrlAssetWithCookies.options["foo"] as! String)).to(equal("bar"))
             }
 
             it("has a AVURLAsset") {
-                let avUrlAssetWithCookies = AVURLAssetWithCookies(url: URL(string: "http://clappr.io/highline.mp4")!)
+                let avUrlAssetWithCookies = AVURLAssetWithCookiesBuilder(url: URL(string: "http://clappr.io/highline.mp4")!)
 
                 expect(avUrlAssetWithCookies.asset).toNot(beNil())
                 expect(avUrlAssetWithCookies.asset).to(beAKindOf(AVURLAsset.self))
