@@ -21,7 +21,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle
     fileprivate var timeObserver: Any?
-    fileprivate var asset: AVURLAsset?
+    open var asset: AVURLAsset?
 
     private var backgroundSessionBackup: String?
 
