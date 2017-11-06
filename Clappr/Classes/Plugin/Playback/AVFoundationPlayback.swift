@@ -131,7 +131,7 @@ open class AVFoundationPlayback: Playback {
 
         if let urlString = options[kSourceUrl] as? String {
             if let url = URL(string: urlString) {
-                asset = AVURLAsset(url: url)
+                asset = AVURLAsset(url: url, options: [AVURLAssetHTTPCookiesKey: cookiesFor(url: url) as Any])
             }
         }
     }
@@ -430,6 +430,13 @@ open class AVFoundationPlayback: Playback {
         }
 
         NotificationCenter.default.removeObserver(self)
+    }
+
+    fileprivate func cookiesFor(url: URL) -> [HTTPCookie]? {
+        if let host = url.host, let cookieUrl = URL(string: "http://\(host)") {
+            return HTTPCookieStorage.shared.cookies(for: cookieUrl)
+        }
+        return nil
     }
 
     override open func destroy() {
