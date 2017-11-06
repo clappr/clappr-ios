@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import Clappr
+@testable import Clappr
 
 class PlayerTests: QuickSpec {
     static let specialSource = "specialSource"
