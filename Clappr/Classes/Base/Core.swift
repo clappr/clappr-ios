@@ -17,6 +17,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open weak var activeContainer: Container? {
 
+        willSet {
+            activeContainer?.stopListening()
+            trigger(InternalEvent.willChangeActiveContainer.rawValue)
+        }
+        
         didSet {
             activeContainer?.on(
             InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
@@ -28,11 +33,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
                 self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
             }
             trigger(InternalEvent.didChangeActiveContainer.rawValue)
-        }
-
-        willSet {
-            activeContainer?.stopListening()
-            trigger(InternalEvent.willChangeActiveContainer.rawValue)
         }
     }
 
