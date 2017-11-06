@@ -142,7 +142,7 @@ class CoreTests: QuickSpec {
                 }
             }
 
-            fcontext("Destroy") {
+            context("Destroy") {
                 it("Should trigger willDestroy") {
                     var didCallWillDestroy = false
 
@@ -208,6 +208,7 @@ class CoreTests: QuickSpec {
                     core.on(InternalEvent.willChangeActiveContainer.rawValue)   { userInfo in
                         didCallActiveContainerEvent = true
                     }
+                    core.activeContainer = Container()
 
                     expect(didCallActiveContainerEvent).toEventually(beTrue())
                 }
@@ -219,29 +220,69 @@ class CoreTests: QuickSpec {
                     core.on(InternalEvent.didChangeActiveContainer.rawValue)   { userInfo in
                         didCallChangeActiveContainer = true
                     }
+                    core.activeContainer = Container()
 
                     expect(didCallChangeActiveContainer).toEventually(beTrue())
                 }
 
-                it("Should listen willChangePlayback and trigger willChangeActivePlayback if it was triggered") {
+                it("Should listen willChangePlayback and trigger willChangeActivePlayback for new Container") {
                     let core = Core()
-                    var didCallWillChangeActivePlayback = false
+                    let container = Container()
+                    var countOfCallEvents = 0
 
                     core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
-                        didCallWillChangeActivePlayback = true
+                        countOfCallEvents += 1
                     }
 
-                    expect(didCallWillChangeActivePlayback).toEventually(beTrue())
+                    container.on(InternalEvent.willChangePlayback.rawValue)   { userInfo in
+                        countOfCallEvents += 1
+                    }
+
+                    core.activeContainer = container
+                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer = Container() // prevent events to be called for old container
+
+                    expect(countOfCallEvents).toEventually(equal(2))
                 }
 
-                it("Should listen didChangePlayback and trigger didChangeActivePlayback if it was triggered") {
+                it("Should listen didChangePlayback and trigger didChangeActivePlayback for new Container") {
                     let core = Core()
-                    var didCallWillChangeActivePlayback = false
-                    core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
-                        didCallWillChangeActivePlayback = true
+                    let container = Container()
+                    var countOfCallEvents = 0
+
+                    core.on(InternalEvent.didChangeActivePlayback.rawValue)   { userInfo in
+                        countOfCallEvents += 1
                     }
 
-                    expect(didCallWillChangeActivePlayback).toEventually(beTrue())
+                    container.on(InternalEvent.didChangePlayback.rawValue)   { userInfo in
+                        countOfCallEvents += 1
+                    }
+
+                    core.activeContainer = container
+                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer = Container() // prevent events to be called for old container
+
+                    expect(countOfCallEvents).toEventually(equal(2))
+                }
+
+                it("Should'nt trigger events twice when container and playback was changed") {
+                    let core = Core()
+                    let container = Container()
+                    var countOfCallEvents = 0
+
+                    container.on(InternalEvent.willChangePlayback.rawValue)   { userInfo in
+                        countOfCallEvents += 1
+                    }
+
+                    container.on(InternalEvent.didChangePlayback.rawValue)   { userInfo in
+                        countOfCallEvents += 1
+                    }
+
+                    core.activeContainer = container
+                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer = Container()
+
+                    expect(countOfCallEvents).toEventually(equal(2))
                 }
             }
 
