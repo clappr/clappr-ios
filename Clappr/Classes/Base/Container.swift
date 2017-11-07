@@ -94,7 +94,7 @@ open class Container: UIBaseObject {
         }
     }
 
-    open func addPlugin(_ plugin: UIContainerPlugin) {
+    private func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
 
