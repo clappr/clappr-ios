@@ -11,7 +11,7 @@ class ContainerTests: QuickSpec {
             static let valid = [kSourceUrl: "http://clappr.com/video.mp4"]
         }
 
-        fdescribe(".Container") {
+        describe(".Container") {
 
             var container: Container!
             var loader: Loader!
