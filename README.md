@@ -9,7 +9,7 @@
 The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
 
 ```ruby
-pod 'Clappr', '~> 0.6'
+pod 'Clappr', '~> 0.7.1'
 ```
 
 ### Using the Player
@@ -26,7 +26,7 @@ let player = Player(options: options)
 player.attachTo(yourView, controller: self)
 ```
 
-### Events 
+### Events
 The player throw's a [list of events](https://github.com/clappr/clappr-ios/wiki/Events) that can be useful to your application.
 
 ### Built-in Plugins
