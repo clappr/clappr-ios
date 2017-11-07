@@ -4,6 +4,7 @@ import Nimble
 
 class CoreTests: QuickSpec {
     override func spec() {
+
         class StubPlayback: Playback {
             override var pluginName: String {
                 return "stupPlayback"
@@ -24,35 +25,43 @@ class CoreTests: QuickSpec {
             core = Core(loader: loader, options: options as Options)
         }
 
-        describe("Core") {
+        describe(".Core") {
 
-            context("Initialization") {
-                it("Should set backgroundColor to black") {
+            describe("#init") {
+
+                beforeEach {
+                    core = Core(loader: loader, options: options as Options)
+                }
+                
+                it("set backgroundColor to black") {
                     expect(core.backgroundColor) == .black
                 }
 
-                it("Should set frame Rect to zero") {
+                it("set frame Rect to zero") {
                     expect(core.frame) == CGRect.zero
                 }
 
-                it("Should add gesture recognizer") {
+                it("add gesture recognizer") {
                     expect(core.gestureRecognizers?.count) > 0
                 }
 
-            }
-
-            context("Options") {
-
-                it("Should have a constructor with options") {
+                it("save options passed on parameter") {
                     let options = ["SomeOption": true]
                     let core = Core(loader: loader, options: options as Options)
 
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
+            }
 
-                context("Fullscreen") {
-                    it("Should start as embed video when `kFullscreen: false`") {
-                        let options: Options = [kFullscreen: false]
+            describe("Fullscreen") {
+                var options: Options!
+
+                beforeEach {
+                    options = [kFullscreen: false]
+                }
+
+                context("when kFullscreen is false") {
+                    it("start as embed video") {
                         let core = Core(options: options)
                         core.parentView = UIView()
 
@@ -62,8 +71,9 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    it("Should start as embed video when `kFullscreen` was not passed") {
-                        let core = Core()
+                    it("start as embed video when `kFullscreenByApp: true`") {
+                        options[kFullscreenByApp] = true
+                        let core = Core(options: options)
                         core.parentView = UIView()
 
                         core.render()
@@ -72,7 +82,26 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    it("Should start as fullscreen video when `kFullscreen: true` was passed") {
+                    it("start as fullscreen video when `kFullscreenByApp: false` and setFullscreen is called") {
+                        options[kFullscreenByApp] = false
+                        let player = Player(options: options)
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.attachTo(UIView(), controller: UIViewController())
+
+                        player.setFullscreen(true)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
+                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                    }
+                }
+
+                context("when kFullscreen is true") {
+
+                    it("start as fullscreen video") {
                         let options: Options = [kFullscreen: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
@@ -89,7 +118,7 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
-                    it("Should start as embed video when `kFullscreen: true` and `kFullscreenByApp: true` was passed") {
+                    it("start as embed video when `kFullscreenByApp: true`") {
                         let options: Options = [kFullscreen: true, kFullscreenByApp: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
@@ -100,22 +129,21 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
 
-                    it("Should start as fullscreen video when `kFullscreen: true` and `kFullscreenByApp: false` was passed") {
-                        let player = Player(options: [kFullscreen: true] as Options)
-                        var callbackWasCalled = false
-                        player.on(.requestFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
-                        player.attachTo(UIView(), controller: UIViewController())
+                    it("start as fullscreen video when `kFullscreenByApp: false`") {
+                        let options: Options = [kFullscreenByApp: true]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
 
-                        player.setFullscreen(true)
+                        core.render()
 
-                        expect(callbackWasCalled).toEventually(beTrue())
-                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
                     }
+                }
 
-                    it("Should set to fullscreen video by call `setFullscreen(true)`") {
+                describe("#setFullscreen") {
+
+                    it("set to fullscreen video by call `setFullscreen(true)`") {
                         let core = Core()
                         core.parentView = UIView()
 
@@ -127,7 +155,7 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
-                    it("Should not try to set fullscreen video twice by call `setFullscreen(true)` twice") {
+                    it("only set fullscreen video once by call `setFullscreen(true)` twice") {
                         let core = Core()
                         core.parentView = UIView()
 
@@ -140,10 +168,51 @@ class CoreTests: QuickSpec {
                         expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
                 }
+
+                context("when no options of fullscreen was passed") {
+                    it("start as embed video") {
+                        let core = Core()
+                        core.parentView = UIView()
+
+                        core.render()
+
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                    }
+                }
+
+                context("when only kFullscreenByApp is passed") {
+
+                    it("start as embed video when its true") {
+                        let options: Options = [kFullscreenByApp: true]
+                        let core = Core(options: options)
+                        core.parentView = UIView()
+
+                        core.render()
+
+                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                    }
+
+                    it("start as fullscreen video when its false") {
+                        let player = Player(options: [kFullscreenByApp: false] as Options)
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.attachTo(UIView(), controller: UIViewController())
+
+                        player.setFullscreen(true)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
+                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                    }
+                }
             }
 
-            context("Destroy") {
-                it("Should trigger willDestroy") {
+            describe("#Destroy") {
+                it("trigger willDestroy event") {
                     var didCallWillDestroy = false
 
                     core.on(InternalEvent.willDestroy.rawValue) { _ in
@@ -154,7 +223,7 @@ class CoreTests: QuickSpec {
                     expect(didCallWillDestroy).toEventually(beTrue())
                 }
 
-                it("Should trigger didDestroy") {
+                it("trigger didDestroy event") {
                     var didCallDidDestroy = false
 
                     core.on(InternalEvent.willDestroy.rawValue) { _ in
@@ -165,32 +234,32 @@ class CoreTests: QuickSpec {
                     expect(didCallDidDestroy).toEventually(beTrue())
                 }
 
-                it("Should remove listeners") {
+                it("remove listeners") {
                     var didTriggerEvent = false
                     let eventName = "teste"
 
                     core.listenTo(core, eventName: eventName) { _ in
                         didTriggerEvent = true
                     }
-                    core.trigger(eventName)
 
-                    expect(didTriggerEvent).toEventually(beTrue())
-
-                    didTriggerEvent = false
                     core.destroy()
                     core.trigger(eventName)
 
                     expect(didTriggerEvent).toEventually(beFalse())
                 }
 
-                it("Should remove all containers") {
-                    waitUntil { done in
-                        core.containers.first!.on(InternalEvent.didDestroy.rawValue) { _ in
-                            done()
+                it("remove all containers") {
+                    var countOfDestroyedContainers = 0
+                    core.containers.forEach { container in
+                        container.on(InternalEvent.didDestroy.rawValue) { _ in
+                            countOfDestroyedContainers += 1
                         }
-                        core.destroy()
-                        expect(core.containers.count) == 0
                     }
+                    let countOfContainers = core.containers.count
+
+                    core.destroy()
+
+                    expect(countOfContainers) == countOfDestroyedContainers
                 }
             }
 
