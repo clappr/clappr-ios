@@ -51,6 +51,32 @@ class CoreTests: QuickSpec {
 
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
+
+                it("activeContainer is not nil") {
+                    expect(core.activeContainer).toNot(beNil())
+                }
+
+                it("plugins is not empty") {
+                    expect(core.plugins).to(beEmpty())
+                }
+
+                it("containers list is not empty") {
+                    expect(core.containers).toNot(beEmpty())
+                }
+
+                it("activeContainer is referenced on mediaControl container") {
+                    expect(core.mediaControl?.container) == core.activeContainer
+                }
+
+                it("media control is not nil") {
+                    expect(core.mediaControl).toNot(beNil())
+                }
+
+                it("Should be the top view on core") {
+                    core.render()
+
+                    expect(core.subviews.last) == core.mediaControl
+                }
             }
 
             describe("Fullscreen") {
@@ -263,179 +289,105 @@ class CoreTests: QuickSpec {
                 }
             }
 
-            context("Containers") {
-                it("Should be created given a source") {
-                    expect(core.activeContainer).toNot(beNil())
-                    expect(core.plugins).to(beEmpty())
-                    expect(core.containers).toNot(beEmpty())
-                }
+            context("when changes a activePlayback") {
 
-                it("Should trigger willChangeActiveContainer event") {
-                    let core = Core()
-                    var didCallActiveContainerEvent = false
-
-                    core.on(InternalEvent.willChangeActiveContainer.rawValue)   { userInfo in
-                        didCallActiveContainerEvent = true
-                    }
-                    core.activeContainer = Container()
-
-                    expect(didCallActiveContainerEvent).toEventually(beTrue())
-                }
-
-                it("Should trigger didChangeActiveContainer event") {
-                    let core = Core()
-                    var didCallChangeActiveContainer = false
-
-                    core.on(InternalEvent.didChangeActiveContainer.rawValue)   { userInfo in
-                        didCallChangeActiveContainer = true
-                    }
-                    core.activeContainer = Container()
-
-                    expect(didCallChangeActiveContainer).toEventually(beTrue())
-                }
-
-                it("Should listen willChangePlayback and trigger willChangeActivePlayback for new Container") {
+                it("trigger willChangeActivePlayback event") {
                     let core = Core()
                     let container = Container()
-                    var countOfCallEvents = 0
+                    var didCallEvent = false
 
                     core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
-                    }
-
-                    container.on(InternalEvent.willChangePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
+                        didCallEvent = true
                     }
 
                     core.activeContainer = container
                     core.activeContainer?.playback = AVFoundationPlayback()
-                    core.activeContainer = Container() // prevent events to be called for old container
-
-                    expect(countOfCallEvents).toEventually(equal(2))
+                    expect(didCallEvent).toEventually(beTrue())
                 }
 
-                it("Should listen didChangePlayback and trigger didChangeActivePlayback for new Container") {
+                it("trigger willChangePlayback on container") {
                     let core = Core()
                     let container = Container()
-                    var countOfCallEvents = 0
-
-                    core.on(InternalEvent.didChangeActivePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
-                    }
-
-                    container.on(InternalEvent.didChangePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
-                    }
-
-                    core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
-                    core.activeContainer = Container() // prevent events to be called for old container
-
-                    expect(countOfCallEvents).toEventually(equal(2))
-                }
-
-                it("Should'nt trigger events twice when container and playback was changed") {
-                    let core = Core()
-                    let container = Container()
-                    var countOfCallEvents = 0
+                    var didCallEvent = false
 
                     container.on(InternalEvent.willChangePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
-                    }
-
-                    container.on(InternalEvent.didChangePlayback.rawValue)   { userInfo in
-                        countOfCallEvents += 1
+                        didCallEvent = true
                     }
 
                     core.activeContainer = container
                     core.activeContainer?.playback = AVFoundationPlayback()
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+            }
+
+            context("when changes a activeContainer") {
+
+                it("trigger willChangeActiveContainer event") {
+                    let core = Core()
+                    var didCallEvent = false
+
+                    core.on(InternalEvent.willChangeActiveContainer.rawValue)   { userInfo in
+                        didCallEvent = true
+                    }
                     core.activeContainer = Container()
 
-                    expect(countOfCallEvents).toEventually(equal(2))
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("trigger didChangeActiveContainer event") {
+                    let core = Core()
+                    var didCallEvent = false
+
+                    core.on(InternalEvent.didChangeActiveContainer.rawValue)   { userInfo in
+                        didCallEvent = true
+                    }
+                    core.activeContainer = Container()
+
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("removes events for old container") {
+                    let core = Core()
+                    let container = Container()
+                    var didCallEvent = false
+
+                    core.activeContainer = container
+                    core.activeContainer?.playback = AVFoundationPlayback()
+                    container.on(InternalEvent.didChangeActivePlayback.rawValue)   { userInfo in
+                        didCallEvent = true
+                    }
+
+                    core.activeContainer = Container()
+                    container.playback = AVFoundationPlayback()
+
+                    expect(didCallEvent).toEventually(beFalse())
                 }
             }
 
-            context("Media Control") {
-                it("Should have container reference") {
-                    expect(core.mediaControl).toNot(beNil())
-                    expect(core.mediaControl?.container) == core.activeContainer
+            context("when a plugin is added") {
+
+                var plugin: FakeCorePlugin!
+
+                beforeEach {
+                    core = Core()
+                    plugin = FakeCorePlugin()
+                    core.addPlugin(plugin)
                 }
 
-                it("Should be the top view on core") {
+                it("no default plugin is added") {
+                    expect(core.plugins.count) == 1
+                    expect(core.hasPlugin(FakeCorePlugin.self)) == true
+                }
+
+                it("add plugin as subview after rendered") {
                     core.render()
 
-                    expect(core.subviews.last) == core.mediaControl
-                }
-            }
-
-            describe("Plugins") {
-                context("Addition") {
-                    it("Should be able to add plugins") {
-                        core.addPlugin(FakeCorePlugin())
-
-                        expect(core.plugins.count) == 1
-                    }
-
-                    it("Should add plugin as subview after rendered") {
-                        let plugin = FakeCorePlugin()
-                        core.addPlugin(plugin)
-
-                        core.render()
-
-                        expect(plugin.superview) == core
-                    }
+                    expect(plugin.superview) == core
                 }
 
-                context("Verification") {
-                    it("Should return true if a plugin is installed") {
-                        core.addPlugin(FakeCorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
-
-                        expect(containsPlugin).to(beTrue())
-                    }
-
-                    it("Should return false if a plugin isn't installed") {
-                        core.addPlugin(UICorePlugin())
-                        let containsPlugin = core.hasPlugin(FakeCorePlugin.self)
-
-                        expect(containsPlugin).to(beFalse())
-                    }
-                }
-            }
-
-            describe("OptionWrapper") {
-
-                var optionsUnboxer: OptionsUnboxer!
-
-                context("Default values or nil") {
-
-                    beforeEach {
-                        optionsUnboxer = OptionsUnboxer(options: [:])
-                    }
-
-                    it("should returns `false` for `fullscreen`") {
-                        expect(optionsUnboxer.fullscreen).to(beFalse())
-                    }
-
-                    it("should returns `false` for `kFullscreenByApp`") {
-                        expect(optionsUnboxer.fullscreenControledByApp).to(beFalse())
-                    }
-                }
-
-                context("Set") {
-
-                    it("should returns correct value for `fullscreen`") {
-                        optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true])
-
-                        expect(optionsUnboxer.fullscreen).to(beTrue())
-
-                    }
-
-                    it("should returns correct value for `kFullscreenByApp`") {
-                        optionsUnboxer = OptionsUnboxer(options: [kFullscreenByApp: true])
-
-                        expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
-                    }
+                it("Should return false if a plugin isn't installed") {
+                    let core = Core()
+                    expect(core.hasPlugin(UICorePlugin.self)) == false
                 }
             }
         }
