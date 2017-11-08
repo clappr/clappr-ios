@@ -5,6 +5,7 @@ protocol FullscreenStateHandler {
 
     init(core: Core)
 
+    func set(fullscreen: Bool)
     func enterInFullscreen(_: EventUserInfo)
     func enterInFullscreen()
 
@@ -31,6 +32,10 @@ struct FullscreenByApp: FullscreenStateHandler {
 
     var core: Core
 
+    func set(fullscreen: Bool) {
+        core.mediaControl?.fullscreen = fullscreen
+    }
+
     func enterInFullscreen(_: EventUserInfo = [:]) {
         guard !isOnFullscreen else { return }
         core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
@@ -45,6 +50,17 @@ struct FullscreenByApp: FullscreenStateHandler {
 struct FullscreenByPlayer: FullscreenStateHandler {
 
     var core: Core
+
+    func set(fullscreen: Bool) {
+        if shouldChange(fullscreen: fullscreen) {
+            fullscreen ? enterInFullscreen() : exitFullscreen()
+        }
+    }
+
+    func shouldChange(fullscreen: Bool) -> Bool {
+        guard let mediaControl = core.mediaControl else { return false }
+        return mediaControl.fullscreen != fullscreen
+    }
 
     func enterInFullscreen(_: EventUserInfo = [:]) {
         guard !isOnFullscreen else { return }

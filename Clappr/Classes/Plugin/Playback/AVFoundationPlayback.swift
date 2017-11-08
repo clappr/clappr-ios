@@ -8,7 +8,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
-    ]
+        ]
 
     fileprivate var kvoStatusDidChangeContext = 0
     fileprivate var kvoTimeRangesContext = 0
@@ -130,8 +130,8 @@ open class AVFoundationPlayback: Playback {
         super.init(options: options)
 
         if let urlString = options[kSourceUrl] as? String {
-            if let url = URL(string: urlString) {
-                asset = AVURLAsset(url: url)
+            if let url = URL(string: urlString), let asset = AVURLAssetWithCookiesBuilder(url: url).asset {
+                self.asset = asset
             }
         }
     }
@@ -367,7 +367,7 @@ open class AVFoundationPlayback: Playback {
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
             "duration": CMTimeGetSeconds(timeRange.start),
-        ]
+            ]
 
         trigger(.bufferUpdate, userInfo: info)
     }

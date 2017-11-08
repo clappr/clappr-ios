@@ -145,7 +145,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open func setFullscreen(_ fullscreen: Bool) {
-        mediaControl?.fullscreen = fullscreen
+        fullscreenHandler.set(fullscreen: fullscreen)
     }
 
     open func destroy() {
