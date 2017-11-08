@@ -30,11 +30,11 @@ class OptionsUnboxerTests: QuickSpec {
                     optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true, kFullscreenByApp: true])
                 }
 
-                it("should returns correct value for `fullscreen`") {
+                it("returns correct value for `fullscreen`") {
                     expect(optionsUnboxer.fullscreen).to(beTrue())
                 }
 
-                it("should returns correct value for `kFullscreenByApp`") {
+                it("returns correct value for `kFullscreenByApp`") {
                     expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
                 }
             }
