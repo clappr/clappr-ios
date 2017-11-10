@@ -1,84 +1,141 @@
 import Quick
 import Nimble
-import Clappr
+@testable import Clappr
 
 class ContainerTests: QuickSpec {
 
     override func spec() {
-        describe("Container") {
-            let options: Options = [kSourceUrl: "http://clappr.com/video.mp4"]
-            let optionsWithInvalidSource = [kSourceUrl: "invalid"]
+
+        struct Resource {
+            static let invalid = [kSourceUrl: "invalid"]
+            static let valid = [kSourceUrl: "http://clappr.com/video.mp4"]
+        }
+
+        describe(".Container") {
 
             var container: Container!
-            var playback: StubPlayback!
             var loader: Loader!
 
             beforeEach {
                 loader = Loader()
-                loader.addExternalPlugins([StubPlayback.self])
-                container = Container(loader: loader, options: options)
-                playback = container.playback as! StubPlayback
             }
 
-            describe("Initialization") {
-                it("Should create a container with valid playback for a valid source") {
-                    let container = Container(options: options)
+            describe("#Init") {
 
-                    expect(container.playback?.pluginName) == "AVPlayback"
+                context("with a invalid resource") {
+
+                    beforeEach {
+                        container = Container(loader: loader, options: Resource.invalid)
+                    }
+
+                    it("creates a container with invalid playback") {
+                        expect(container.playback?.pluginName) == "NoOp"
+                    }
                 }
 
-                it("Should create a container with invalid playback for url that cannot be played") {
-                    let container = Container(options: optionsWithInvalidSource)
+                context("with a valid resource") {
 
-                    expect(container.playback?.pluginName) == "NoOp"
+                    beforeEach {
+                        container = Container(loader: loader, options: Resource.valid)
+                    }
+
+                    it("creates a container with valid playback") {
+                        expect(container.playback?.pluginName) == "AVPlayback"
+                    }
                 }
 
-                it("Should have the playback as subview after rendered") {
-                    container.render()
-                    expect(playback.superview) == container
+                context("when resource is not empty") {
+
+                    beforeEach {
+                        container = Container(loader: loader, options: Resource.valid)
+                    }
+
+                    context("and add container plugins from loader") {
+
+                        beforeEach {
+                            loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+                            container = Container(loader: loader, options: [:])
+                        }
+
+                        it("saves plugins on container") {
+                            expect(container.hasPlugin(FakeContainerPlugin.self)).to(beTrue())
+                            expect(container.hasPlugin(AnotherFakeContainerPlugin.self)).to(beTrue())
+                        }
+                    }
+
+                    it("set playback as subview") {
+                        expect(container.playback?.superview) == container
+                    }
+
+                    it("set playback to front of container") {
+                        expect(container.subviews.first) == container.playback
+                    }
+
+                    it("set background color to `clear`") {
+                        expect(container.backgroundColor) == .clear
+                    }
+
+                    it("set the frame of container as CGRect.zero") {
+                        expect(container.frame) == CGRect.zero
+                    }
+
+                    it("set acessibility indentifier to 'Container'") {
+                        expect(container.accessibilityIdentifier) == "Container"
+                    }
+
+                    it("save options without mutating") {
+                        let options = ["aOption": "option"]
+                        let container = Container(options: options)
+                        let option = container.options["aOption"] as! String
+
+                        expect(option) == "option"
+                    }
+
+                    it("add a container context to all plugins") {
+                        expect(container.plugins).toNot(beEmpty())
+                        container.plugins.forEach { plugin in
+                            expect(plugin.container) == container
+                        }
+                    }
                 }
 
-                it("Should have a constructor that receive options") {
-                    let options = ["aOption": "option"]
-                    let container = Container(options: options)
+                context("when resource is empty") {
 
-                    let option = container.options["aOption"] as! String
+                    beforeEach {
+                        container = Container(loader: loader, options: [:])
+                    }
 
-                    expect(option) == "option"
-                }
+                    it("set playback as subview") {
+                        expect(container.playback?.superview).to(beNil())
+                    }
 
-                it("Should add container plugins from loader") {
-                    loader.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-
-                    let container = Container(loader: loader, options: options)
-
-                    expect(container.hasPlugin(FakeContainerPlugin.self)).to(beTrue())
-                    expect(container.hasPlugin(AnotherFakeContainerPlugin.self)).to(beTrue())
-                }
-
-                it("Should add a container context to all plugins") {
-                    let container = Container(loader: loader, options: optionsWithInvalidSource)
-
-                    expect(container.plugins).toNot(beEmpty())
-
-                    for plugin in container.plugins {
-                        expect(plugin.container) == container
+                    it("set playback to front of container") {
+                        expect(container.subviews.first).to(beNil())
                     }
                 }
             }
 
-            describe("Destroy") {
-                it("Should be removed from superview and destroy playback when destroy is called") {
+            describe("#Destroy") {
+
+                beforeEach {
+                    container = Container(loader: loader, options: [:])
+                }
+
+                it("remove container from superview") {
                     let wrapperView = UIView()
                     wrapperView.addSubview(container)
 
                     container.destroy()
 
-                    expect(playback.superview).to(beNil())
                     expect(container.superview).to(beNil())
                 }
 
-                it("Should stop listening to events after destroy is called") {
+                it("destroy playback") {
+                    container.destroy()
+                    expect(container.playback?.superview).to(beNil())
+                }
+
+                it("stop listening events") {
                     var callbackWasCalled = false
                     container.on("some-event") { _ in
                         callbackWasCalled = true
@@ -87,80 +144,116 @@ class ContainerTests: QuickSpec {
                     container.destroy()
                     container.trigger("some-event")
 
-                    expect(callbackWasCalled) == false
+                    expect(callbackWasCalled).toEventually(beFalse())
+                }
+
+                it("trigger willDestroy") {
+                    var didCallEvent = false
+                    container.on(InternalEvent.willDestroy.rawValue) { _ in
+                        didCallEvent = true
+                    }
+
+                    container.destroy()
+
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("trigger didDestroy") {
+                    var didCallEvent = false
+                    container.on(InternalEvent.didDestroy.rawValue) { _ in
+                        didCallEvent = true
+                    }
+
+                    container.destroy()
+
+                    expect(didCallEvent).toEventually(beTrue())
+                }
+
+                it("destroy all plugins and clear plugins list") {
+                    loader.addExternalPlugins([FakeContainerPlugin.self])
+                    let container = Container(loader: loader, options: [:])
+                    var countOfDestroyedPlugins = 0
+
+                    container.plugins.forEach { plugin in
+                        plugin.on(InternalEvent.didDestroy.rawValue) { _ in
+                            countOfDestroyedPlugins += 1
+                        }
+                    }
+
+                    container.destroy()
+
+                    expect(countOfDestroyedPlugins) == 1
+                    expect(container.plugins.count) == 0
                 }
             }
 
-            describe("Plugins") {
-                class FakeUIContainerPlugin: UIContainerPlugin {}
-                class AnotherUIContainerPlugin: UIContainerPlugin {}
+            describe("#load") {
 
-                it("Should be able to add a new container UIPlugin") {
-                    container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.plugins).toNot(beEmpty())
+                context("when pass a valid resource") {
+
+                    let source: String = Resource.valid[kSourceUrl]!
+
+                    beforeEach {
+                        container = Container(loader: loader, options: [:])
+                    }
+
+                    it("loads a valid playback") {
+                        container.load(source)
+
+                        expect(container.playback?.pluginName) == "AVPlayback"
+                        expect(container.playback?.superview) == container
+                    }
+
+                    it("load a source with mime type") {
+                        container.load(source, mimeType: "video/mp4")
+
+                        expect(container.playback?.pluginName) == "AVPlayback"
+                        expect(container.playback?.superview) == container
+                    }
                 }
 
-                it("Should be able to check if has a plugin with given class") {
-                    container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(FakeUIContainerPlugin.self)).to(beTrue())
+                context("when pass a invalid resource") {
+
+                    let source: String = Resource.invalid[kSourceUrl]!
+
+                    beforeEach {
+                        container = Container(loader: loader, options: [:])
+                    }
+
+                    it("set playback as a 'noop' playback") {
+                        container.load(source)
+
+                        expect(container.playback?.pluginName) == NoOpPlayback.name
+                        expect(container.playback?.superview) == container
+                    }
+
+                    it("set playback as a 'noop' playback with mimetype") {
+                        container.load(source, mimeType: "video/mp4")
+
+                        expect(container.playback?.pluginName) == "AVPlayback"
+                        expect(container.playback?.superview) == container
+                    }
                 }
 
-                it("Should return false if plugin isn't on container") {
-                    container.addPlugin(FakeUIContainerPlugin())
-                    expect(container.hasPlugin(AnotherUIContainerPlugin.self)).to(beFalse())
-                }
-
-                it("Should not add self reference on the plugin") {
-                    let plugin = FakeUIContainerPlugin()
-                    container.addPlugin(plugin)
-                    expect(plugin.container).to(beNil())
-                }
-
-                it("Should instantiate plugin with self reference") {
-                    let plugin = FakeUIContainerPlugin(context: container)
-                    container.addPlugin(plugin)
-                    expect(plugin.container) == container
-                }
-
-                it("Should add plugin as subview after rendered") {
-                    let plugin = FakeUIContainerPlugin()
-                    container.addPlugin(plugin)
-                    container.render()
-
-                    expect(plugin.superview) == container
-                }
-            }
-
-            describe("Source") {
-                it("Should be able to load a source") {
-                    let container = Container()
-
-                    container.load("http://clappr.com/video.mp4")
-
-                    expect(container.playback?.pluginName) == "AVPlayback"
-                    expect(container.playback?.superview) == container
-                }
-
-                it("Should be able to load a source with mime type") {
-                    let container = Container()
-
-                    container.load("http://clappr.com/video", mimeType: "video/mp4")
-
-                    expect(container.playback?.pluginName) == "AVPlayback"
-                    expect(container.playback?.superview) == container
-                }
-
-                it("should keep just one playback as subview at time") {
+                it("keep just one playback as subview at time") {
                     let container = Container()
                     container.load("anyVideo")
                     expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
+
                     container.load("anyOtherVideo")
                     expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
                 }
             }
 
-            describe("Options") {
-                it("Should reset startAt after first play event") {
+            context("when play event is trigger") {
+
+                beforeEach {
+                    loader = Loader()
+                    loader.addExternalPlugins([StubPlayback.self])
+                    container = Container(loader: loader, options: [kSourceUrl: "http://clappr.com/video.mp4"])
+                }
+
+                it("reset startAt after first play event") {
 
                     let options = [kSourceUrl: "someUrl", kStartAt: 15.0] as Options
                     let container = Container(loader: loader, options: options)
@@ -195,6 +288,10 @@ class ContainerTests: QuickSpec {
     class FakeContainerPlugin: UIContainerPlugin {
         override var pluginName: String {
             return "FakeContainerPlugin"
+        }
+
+        override func destroy() {
+            trigger(InternalEvent.didDestroy.rawValue)
         }
     }
 

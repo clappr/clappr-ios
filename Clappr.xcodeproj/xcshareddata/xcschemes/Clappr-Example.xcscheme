@@ -58,26 +58,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96D362611D41330E00CCB866"
-               BuildableName = "Clappr-iOSTests.xctest"
-               BlueprintName = "Clappr-iOSTests"
-               ReferencedContainer = "container:Clappr.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9EE140E91F9E51D300CCC287"
-               BuildableName = "Clappr_ExampleUITests.xctest"
-               BlueprintName = "Clappr_ExampleUITests"
-               ReferencedContainer = "container:Clappr.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "9E692DFE1F9F898F006510BE"
                BuildableName = "Clappr_UITests.xctest"
                BlueprintName = "Clappr_UITests"

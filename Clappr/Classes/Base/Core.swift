@@ -15,7 +15,26 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
 
-    open weak var activeContainer: Container?
+    open weak var activeContainer: Container? {
+
+        willSet {
+            activeContainer?.stopListening()
+            trigger(InternalEvent.willChangeActiveContainer.rawValue)
+        }
+        
+        didSet {
+            activeContainer?.on(
+            InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                self?.trigger(InternalEvent.willChangeActivePlayback.rawValue, userInfo: info)
+            }
+
+            activeContainer?.on(
+            InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
+            }
+            trigger(InternalEvent.didChangeActiveContainer.rawValue)
+        }
+    }
 
     open var activePlayback: Playback? {
         return activeContainer?.playback
@@ -47,30 +66,14 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         containers.append(Container(loader: loader, options: options))
 
         if let container = containers.first {
-            setActiveContainer(container)
+            setActive(container: container)
             mediaControl?.setup(container)
         }
     }
 
-    fileprivate func setActiveContainer(_ container: Container) {
+    fileprivate func setActive(container: Container) {
         if activeContainer != container {
-            activeContainer?.stopListening()
-
-            trigger(InternalEvent.willChangeActiveContainer.rawValue)
-
             activeContainer = container
-
-            activeContainer?.on(
-            InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(InternalEvent.willChangeActivePlayback.rawValue, userInfo: info)
-            }
-
-            activeContainer?.on(
-            InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
-            }
-
-            trigger(InternalEvent.didChangeActiveContainer.rawValue)
         }
     }
 

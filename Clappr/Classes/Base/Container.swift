@@ -94,7 +94,7 @@ open class Container: UIBaseObject {
         }
     }
 
-    open func addPlugin(_ plugin: UIContainerPlugin) {
+    private func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
 
@@ -107,9 +107,6 @@ open class Container: UIBaseObject {
 
         trigger(InternalEvent.willDestroy.rawValue)
 
-        Logger.logDebug("destroying listeners", scope: "Container")
-        stopListening()
-
         Logger.logDebug("destroying playback", scope: "Container")
         playback?.destroy()
 
@@ -120,6 +117,8 @@ open class Container: UIBaseObject {
         removeFromSuperview()
 
         trigger(InternalEvent.didDestroy.rawValue)
+        Logger.logDebug("destroying listeners", scope: "Container")
+        stopListening()
         Logger.logDebug("destroyed", scope: "Container")
     }
 }
