@@ -5,15 +5,16 @@ import Nimble
 class PosterPluginTests: QuickSpec {
 
     override func spec() {
-        describe("Poster Plugin") {
+
+        describe(".PosterPlugin") {
             var container: Container!
             let options = [
                 kSourceUrl: "http://globo.com/video.mp4",
                 kPosterUrl: "http://clappr.io/poster.png",
             ]
 
-            context("Initialization") {
-                it("Should not be visible if container has no options") {
+            context("when container has no options") {
+                it("plugin is set to invisible") {
                     container = Container()
                     container.render()
 
@@ -21,8 +22,10 @@ class PosterPluginTests: QuickSpec {
 
                     expect(posterPlugin.isHidden).to(beTrue())
                 }
+            }
 
-                it("Should not be visible if container doesn't have posterUrl Option") {
+            context("when container doesnt have posterUrl option") {
+                it("plugin is set to invisible") {
                     container = Container(options: ["anotherOption": true])
                     container.render()
 
@@ -30,8 +33,10 @@ class PosterPluginTests: QuickSpec {
 
                     expect(posterPlugin.isHidden).to(beTrue())
                 }
+            }
 
-                it("Should be rendered if container have posterUrl Option") {
+            context("when container has posterUrl option") {
+                it("plugin is render") {
                     container = Container(options: options)
                     container.render()
 
@@ -59,17 +64,21 @@ class PosterPluginTests: QuickSpec {
                     posterPlugin = self.getPosterPlugin(container)
                 }
 
-                it("Should be hidden after container Play event ") {
-                    expect(posterPlugin.isHidden).to(beFalse())
-                    container.playback?.trigger(Event.playing.rawValue)
-                    expect(posterPlugin.isHidden).to(beTrue())
+                context("when container trigger a play event") {
+                    it("plugin is set to invisible") {
+                        expect(posterPlugin.isHidden).to(beFalse())
+                        container.playback?.trigger(Event.playing.rawValue)
+                        expect(posterPlugin.isHidden).to(beTrue())
+                    }
                 }
 
-                it("Should be not hidden after container Ended event") {
-                    container.playback?.trigger(Event.playing.rawValue)
-                    container.playback?.trigger(Event.didComplete.rawValue)
+                context("when container trigger a end event") {
+                    it("plugin is set to visible") {
+                        container.playback?.trigger(Event.playing.rawValue)
+                        container.playback?.trigger(Event.didComplete.rawValue)
 
-                    expect(posterPlugin.isHidden).to(beFalse())
+                        expect(posterPlugin.isHidden).to(beFalse())
+                    }
                 }
             }
         }
