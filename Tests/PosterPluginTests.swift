@@ -44,18 +44,50 @@ class PosterPluginTests: QuickSpec {
 
                     expect(posterPlugin.superview) == container
                 }
+            }
 
-                it("Should be hidden if playback is a NoOp") {
-                    container = Container(options: [kSourceUrl: "none", kPosterUrl: "http://clappr.io/poster.png"])
-                    container.render()
+            context("when change a playback") {
 
-                    let posterPlugin = self.getPosterPlugin(container)
+                var posterPlugin: PosterPlugin!
 
-                    expect(posterPlugin.isHidden).to(beTrue())
+                beforeEach {
+                    container = Container()
+                }
+
+                context("and playback is NoOP") {
+
+                    beforeEach {
+                        container.playback = NoOpPlayback()
+                        posterPlugin = self.getPosterPlugin(container)
+                    }
+
+                    it("plugin is set to invisible") {
+                        expect(posterPlugin.isHidden).toEventually(beTrue())
+                    }
+
+                    it("isNoOpPlayback is true") {
+                        expect(posterPlugin.isNoOpPlayback) == true
+                    }
+                }
+
+                context("and playback isnt NoOp") {
+
+                    beforeEach {
+                        container.playback = AVFoundationPlayback()
+                        posterPlugin = self.getPosterPlugin(container)
+                    }
+
+                    it("plugin is set to visible") {
+                        expect(posterPlugin.isHidden).toEventually(beFalse())
+                    }
+
+                    it("isNoOpPlayback is true") {
+                        expect(posterPlugin.isNoOpPlayback) == false
+                    }
                 }
             }
 
-            context("State") {
+            describe("Container Events") {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {

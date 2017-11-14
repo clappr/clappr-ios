@@ -76,7 +76,6 @@ open class PosterPlugin: UIContainerPlugin {
     private func bindPlaybackEvents() {
         if let playback = container?.playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.playbackReady() }
             listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
         }
@@ -88,7 +87,13 @@ open class PosterPlugin: UIContainerPlugin {
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
     }
 
+    var isNoOpPlayback: Bool {
+        guard let playback = container?.playback else { return false }
+        return type(of: playback) == NoOpPlayback.self
+    }
+
     private func didChangePlayback() {
+        isHidden = isNoOpPlayback
         stopListening()
         bindPlaybackEvents()
         bindContainerEvents()
@@ -107,12 +112,6 @@ open class PosterPlugin: UIContainerPlugin {
         container?.mediaControlEnabled = false
         playButton.isHidden = false
         isHidden = false
-    }
-
-    fileprivate func playbackReady() {
-        if container?.playback?.pluginName == "NoOp" {
-            isHidden = true
-        }
     }
 
     fileprivate func updatePoster(_ info: EventUserInfo) {
