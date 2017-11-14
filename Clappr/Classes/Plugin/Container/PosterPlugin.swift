@@ -88,15 +88,16 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     var isNoOpPlayback: Bool {
-        guard let playback = container?.playback else { return false }
-        return type(of: playback) == NoOpPlayback.self
+        return container?.playback?.pluginName == "NoOp"
     }
 
     private func didChangePlayback() {
-        isHidden = isNoOpPlayback
         stopListening()
         bindPlaybackEvents()
         bindContainerEvents()
+        if isNoOpPlayback {
+            isHidden = true
+        }
     }
 
     fileprivate func playbackStalled() {
