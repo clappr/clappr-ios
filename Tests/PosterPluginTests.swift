@@ -14,7 +14,7 @@ class PosterPluginTests: QuickSpec {
             ]
 
             context("when container has no options") {
-                it("plugin is set to invisible") {
+                it("hides itself") {
                     container = Container()
                     container.render()
 
@@ -25,7 +25,7 @@ class PosterPluginTests: QuickSpec {
             }
 
             context("when container doesnt have posterUrl option") {
-                it("plugin is set to invisible") {
+                it("hides itself") {
                     container = Container(options: ["anotherOption": true])
                     container.render()
 
@@ -36,7 +36,7 @@ class PosterPluginTests: QuickSpec {
             }
 
             context("when container has posterUrl option") {
-                it("plugin is render") {
+                it("it renders itself") {
                     container = Container(options: options)
                     container.render()
 
@@ -61,7 +61,7 @@ class PosterPluginTests: QuickSpec {
                         posterPlugin = self.getPosterPlugin(container)
                     }
 
-                    it("plugin is set to invisible") {
+                    it("hides itself") {
                         expect(posterPlugin.isHidden).toEventually(beTrue())
                     }
 
@@ -77,7 +77,7 @@ class PosterPluginTests: QuickSpec {
                         posterPlugin = self.getPosterPlugin(container)
                     }
 
-                    it("plugin is set to visible") {
+                    it("reveal itself") {
                         expect(posterPlugin.isHidden).toEventually(beFalse())
                     }
 
@@ -97,7 +97,7 @@ class PosterPluginTests: QuickSpec {
                 }
 
                 context("when container trigger a play event") {
-                    it("plugin is set to invisible") {
+                    it("hides itself") {
                         expect(posterPlugin.isHidden).to(beFalse())
                         container.playback?.trigger(Event.playing.rawValue)
                         expect(posterPlugin.isHidden).to(beTrue())
@@ -105,7 +105,7 @@ class PosterPluginTests: QuickSpec {
                 }
 
                 context("when container trigger a end event") {
-                    it("plugin is set to visible") {
+                    it("reveal itself") {
                         container.playback?.trigger(Event.playing.rawValue)
                         container.playback?.trigger(Event.didComplete.rawValue)
 
