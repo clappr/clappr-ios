@@ -46,7 +46,7 @@ class PosterPluginTests: QuickSpec {
                 }
             }
 
-            context("when change a playback") {
+            context("when changes the activePlayback") {
 
                 var posterPlugin: PosterPlugin!
 
@@ -54,7 +54,7 @@ class PosterPluginTests: QuickSpec {
                     container = Container()
                 }
 
-                context("and playback is NoOP") {
+                context("to NoOpPlayback") {
 
                     beforeEach {
                         container.playback = NoOpPlayback()
@@ -68,9 +68,21 @@ class PosterPluginTests: QuickSpec {
                     it("isNoOpPlayback is true") {
                         expect(posterPlugin.isNoOpPlayback) == true
                     }
+
+                    context("and change again to another playback") {
+
+                        beforeEach {
+                            container.playback = AVFoundationPlayback()
+                            posterPlugin = self.getPosterPlugin(container)
+                        }
+
+                        it("hides itself") {
+                            expect(posterPlugin.isHidden).toEventually(beTrue())
+                        }
+                    }
                 }
 
-                context("and playback isnt NoOp") {
+                context("to another a playback diferent from NoOpPlayback") {
 
                     beforeEach {
                         container.playback = AVFoundationPlayback()
@@ -87,7 +99,7 @@ class PosterPluginTests: QuickSpec {
                 }
             }
 
-            describe("Container Events") {
+            describe("Playback Events") {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
@@ -96,7 +108,7 @@ class PosterPluginTests: QuickSpec {
                     posterPlugin = self.getPosterPlugin(container)
                 }
 
-                context("when container trigger a play event") {
+                context("when playback trigger a play event") {
                     it("hides itself") {
                         expect(posterPlugin.isHidden).to(beFalse())
                         container.playback?.trigger(Event.playing.rawValue)
@@ -104,7 +116,7 @@ class PosterPluginTests: QuickSpec {
                     }
                 }
 
-                context("when container trigger a end event") {
+                context("when playback trigger a end event") {
                     it("reveal itself") {
                         container.playback?.trigger(Event.playing.rawValue)
                         container.playback?.trigger(Event.didComplete.rawValue)
