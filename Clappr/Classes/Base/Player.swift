@@ -5,7 +5,7 @@ open class Player: UIViewController, EventProtocol {
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) open var core: Core?
     fileprivate var viewController: AVPlayerViewController?
-    fileprivate let base = BaseObject()
+    fileprivate let base = EventDispatcher()
 
     override open func viewDidLoad() {
         core?.parentView = view
@@ -269,7 +269,7 @@ open class Player: UIViewController, EventProtocol {
         base.stopListening(listenId)
     }
 
-    public func getEventContextObject() -> BaseObject {
+    public func getEventContextObject() -> EventDispatcher {
         return base.getEventContextObject()
     }
 

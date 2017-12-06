@@ -2,11 +2,11 @@ import Foundation
 
 private struct EventHolder {
     var eventHandler: EventHandler
-    var contextObject: BaseObject
+    var contextObject: EventDispatcher
     var name: String
 }
 
-open class BaseObject: NSObject, EventProtocol {
+open class EventDispatcher: NSObject, EventProtocol {
     fileprivate var events = [String: EventHolder]()
     fileprivate var onceEventsHashes = [String]()
 
@@ -16,7 +16,7 @@ open class BaseObject: NSObject, EventProtocol {
     }
 
     @discardableResult
-    fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
+    fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: EventDispatcher) -> String {
         let listenId = createListenId(eventName, contextObject: contextObject)
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))
 
@@ -46,7 +46,7 @@ open class BaseObject: NSObject, EventProtocol {
     }
 
     @discardableResult
-    fileprivate func once(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
+    fileprivate func once(_ eventName: String, callback: @escaping EventCallback, contextObject: EventDispatcher) -> String {
         let listenId = on(eventName, callback: callback, contextObject: contextObject)
         onceEventsHashes.append(listenId)
         return listenId
@@ -69,7 +69,7 @@ open class BaseObject: NSObject, EventProtocol {
     open func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
         notificationCenter().post(name: Notification.Name(rawValue: eventName), object: self, userInfo: userInfo)
 
-        if type(of: self) != BaseObject.self {
+        if type(of: self) != EventDispatcher.self {
             Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
         }
     }
@@ -96,11 +96,11 @@ open class BaseObject: NSObject, EventProtocol {
         off(listenId)
     }
 
-    open func getEventContextObject() -> BaseObject {
+    open func getEventContextObject() -> EventDispatcher {
         return self
     }
 
-    fileprivate func createListenId(_ eventName: String, contextObject: BaseObject) -> String {
+    fileprivate func createListenId(_ eventName: String, contextObject: EventDispatcher) -> String {
         let contextObjectHash = ObjectIdentifier(contextObject).hashValue
         return eventName + String(contextObjectHash) + String(Date().timeIntervalSince1970)
     }

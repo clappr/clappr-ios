@@ -2,12 +2,12 @@ import Quick
 import Nimble
 import Clappr
 
-class BaseObjectTests: QuickSpec {
+class EventDispatcherTests: QuickSpec {
 
     override func spec() {
         describe("BaseObject") {
 
-            var baseObject: BaseObject!
+            var baseObject: EventDispatcher!
             var callbackWasCalled: Bool!
 
             let eventName = "some-event"
@@ -16,7 +16,7 @@ class BaseObjectTests: QuickSpec {
             }
 
             beforeEach {
-                baseObject = BaseObject()
+                baseObject = EventDispatcher()
                 callbackWasCalled = false
             }
 
@@ -62,7 +62,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 it("Callback should not be called for another context object") {
-                    let anotherObject = BaseObject()
+                    let anotherObject = EventDispatcher()
 
                     baseObject.on(eventName, callback: callback)
 
@@ -101,7 +101,7 @@ class BaseObjectTests: QuickSpec {
 
             describe("listenTo") {
                 it("Should fire callback for an event on a given context object") {
-                    let contextObject = BaseObject()
+                    let contextObject = EventDispatcher()
 
                     baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
                     contextObject.trigger(eventName)
@@ -112,7 +112,7 @@ class BaseObjectTests: QuickSpec {
 
             describe("listenToOnce") {
                 it("Should fire callback just one time for an event on a given context object") {
-                    let contextObject = BaseObject()
+                    let contextObject = EventDispatcher()
 
                     baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
                     contextObject.trigger(eventName)
@@ -165,7 +165,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 it("Should cancel event handlers only on context object") {
-                    let anotherObject = BaseObject()
+                    let anotherObject = EventDispatcher()
                     var anotherCallbackWasCalled = false
                     anotherObject.on(eventName) { _ in
                         anotherCallbackWasCalled = true
@@ -183,7 +183,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 it("Should cancel handler for an event on a given context object") {
-                    let contextObject = BaseObject()
+                    let contextObject = EventDispatcher()
 
                     let listenId = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
                     baseObject.stopListening(listenId)

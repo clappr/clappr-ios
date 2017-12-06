@@ -1,7 +1,7 @@
 import Foundation
 
 open class UIBaseObject: UIView, EventProtocol {
-    fileprivate let baseObject = BaseObject()
+    fileprivate let baseObject = EventDispatcher()
 
     @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
@@ -45,7 +45,7 @@ open class UIBaseObject: UIView, EventProtocol {
         baseObject.stopListening(listenId)
     }
 
-    open func getEventContextObject() -> BaseObject {
+    open func getEventContextObject() -> EventDispatcher {
         return baseObject
     }
 
