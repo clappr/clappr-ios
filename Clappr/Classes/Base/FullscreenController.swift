@@ -11,7 +11,7 @@ class FullscreenController: UIViewController {
         return UIInterfaceOrientationMask.landscape
     }
 
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation { // swiftlint:disable:this variable_name
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.landscapeRight
     }
     #endif
