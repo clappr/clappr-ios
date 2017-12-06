@@ -198,7 +198,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     fileprivate func loadMetada() {
         var items: [AVMetadataItem] = []
-        if let metaData = options[kMetaData] as? [String : Any] {
+        if let metaData = options[kMetaData] as? [String: Any] {
             if let title = metaData[kMetaDataTitle] as? NSString {
                 let titleItem = AVMutableMetadataItem()
                 titleItem.identifier = AVMetadataCommonIdentifierTitle
@@ -236,7 +236,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     fileprivate func loadPosterMetada() {
-        if let artwork = (options[kMetaData] as? [String : Any])?[kMetaDataArtwork] as? UIImage {
+        if let artwork = (options[kMetaData] as? [String: Any])?[kMetaDataArtwork] as? UIImage {
             addArtworkItem(image: artwork)
         } else {
             if let poster = self.options[kPosterUrl] as? String {

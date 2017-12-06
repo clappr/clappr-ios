@@ -10,7 +10,6 @@ open class Player: UIViewController, EventProtocol {
     override open func viewDidLoad() {
         core?.parentView = view
 
-
         if isMediaControlEnabled != false {
             viewController = AVPlayerViewController()
             core?.parentView = viewController?.contentOverlayView
@@ -24,7 +23,7 @@ open class Player: UIViewController, EventProtocol {
             }
         }
 
-        NotificationCenter.default.addObserver(self, selector:#selector(Player.willEnterForeground), name:
+        NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             Notification.Name.UIApplicationWillEnterForeground, object: nil)
 
         core?.render()
@@ -250,15 +249,15 @@ open class Player: UIViewController, EventProtocol {
         base.trigger(eventName)
     }
 
-    public func trigger(_ eventName: String, userInfo: [AnyHashable : Any]?) {
+    public func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
         base.trigger(eventName, userInfo: userInfo)
     }
 
-    public func listenTo<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T : EventProtocol {
+    public func listenTo<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T: EventProtocol {
         return base.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
-    public func listenToOnce<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T : EventProtocol {
+    public func listenToOnce<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T: EventProtocol {
         return base.listenToOnce(contextObject, eventName: eventName, callback: callback)
     }
 
