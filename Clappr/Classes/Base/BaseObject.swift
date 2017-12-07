@@ -31,10 +31,12 @@ extension BaseObject {
 
     public func trigger(_ eventName: String) {
         eventDispatcher.trigger(eventName)
+        Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
 
     public func trigger(_ eventName: String, userInfo: EventUserInfo) {
         eventDispatcher.trigger(eventName, userInfo: userInfo)
+        Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
 
     @discardableResult
@@ -57,5 +59,21 @@ extension BaseObject {
 
     public func getEventContextObject() -> EventDispatcher {
         return eventDispatcher
+    }
+
+    public func trigger(_ event: Event) {
+        trigger(event.rawValue)
+    }
+
+    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
+    }
+
+    func logIdentifier() -> String {
+        if let plugin = self as? Plugin {
+            return plugin.pluginName
+        }
+
+        return "\(type(of: self))"
     }
 }
