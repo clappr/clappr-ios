@@ -45,7 +45,7 @@ open class UIBaseObject: UIView, EventProtocol {
         dispatcher.stopListening(listenId)
     }
 
-    open func getEventContextObject() -> EventDispatcher {
+    open func getEventDispatcher() -> EventDispatcher {
         return dispatcher
     }
 

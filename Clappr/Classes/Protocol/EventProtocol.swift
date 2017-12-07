@@ -11,5 +11,5 @@ public protocol EventProtocol {
     func stopListening()
     func stopListening(_ listenId: String)
 
-    func getEventContextObject() -> EventDispatcher
+    func getEventDispatcher() -> EventDispatcher
 }
