@@ -57,7 +57,7 @@ extension BaseObject {
         eventDispatcher.stopListening(listenId)
     }
 
-    public func getEventContextObject() -> EventDispatcher {
+    public func getEventDispatcher() -> EventDispatcher {
         return eventDispatcher
     }
 

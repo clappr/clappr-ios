@@ -76,12 +76,12 @@ open class EventDispatcher: NSObject, EventProtocol {
 
     @discardableResult
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return on(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
+        return on(eventName, callback: callback, contextObject: contextObject.getEventDispatcher())
     }
 
     @discardableResult
     open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return once(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
+        return once(eventName, callback: callback, contextObject: contextObject.getEventDispatcher())
     }
 
     open func stopListening() {
@@ -96,7 +96,7 @@ open class EventDispatcher: NSObject, EventProtocol {
         off(listenId)
     }
 
-    open func getEventContextObject() -> EventDispatcher {
+    open func getEventDispatcher() -> EventDispatcher {
         return self
     }
 
