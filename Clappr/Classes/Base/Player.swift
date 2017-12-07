@@ -1,11 +1,10 @@
 import AVKit
 
-open class Player: UIViewController, EventProtocol {
+open class Player: UIViewController, BaseObject {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) open var core: Core?
     fileprivate var viewController: AVPlayerViewController?
-    fileprivate let base = EventDispatcher()
 
     override open func viewDidLoad() {
         core?.parentView = view
@@ -231,46 +230,6 @@ open class Player: UIViewController, EventProtocol {
         willMove(toParentViewController: nil)
         view.removeFromSuperview()
         removeFromParentViewController()
-    }
-
-    public func on(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return base.on(eventName, callback: callback)
-    }
-
-    public func once(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return base.once(eventName, callback: callback)
-    }
-
-    public func off(_ listenId: String) {
-        base.off(listenId)
-    }
-
-    public func trigger(_ eventName: String) {
-        base.trigger(eventName)
-    }
-
-    public func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
-        base.trigger(eventName, userInfo: userInfo)
-    }
-
-    public func listenTo<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T: EventProtocol {
-        return base.listenTo(contextObject, eventName: eventName, callback: callback)
-    }
-
-    public func listenToOnce<T>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String where T: EventProtocol {
-        return base.listenToOnce(contextObject, eventName: eventName, callback: callback)
-    }
-
-    public func stopListening() {
-        base.stopListening()
-    }
-
-    public func stopListening(_ listenId: String) {
-        base.stopListening(listenId)
-    }
-
-    public func getEventContextObject() -> EventDispatcher {
-        return base.getEventContextObject()
     }
 
     override open func viewWillDisappear(_ animated: Bool) {
