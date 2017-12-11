@@ -15,3 +15,6 @@ setup:
 
 test:
 	$(FASTLANE) test
+
+release:
+	$(FASTLANE) release version:$(version)
