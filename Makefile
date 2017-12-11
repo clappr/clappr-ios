@@ -6,7 +6,7 @@ setup:
 	brew update
 	brew upgrade
 	brew cleanup
-	brew install rbenv swiftlint
+	brew install rbenv carthage swiftlint
 	rbenv install -s
 	rbenv exec gem install bundler
 	rbenv rehash
