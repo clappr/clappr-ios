@@ -3,25 +3,25 @@
 # * https://github.com/supermarin/xcpretty#usage
 language: objective-c
 
-osx_image: xcode8.3
+osx_image: xcode9.1
 
 env:
   global:
     - PROJECT="Clappr.xcodeproj"
     - SCHEME="Clappr-Example"
-    - DESTINATION="platform=iOS Simulator,name=iPhone 6s Plus,OS=10.0"
+    - DESTINATION="platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2"
 
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
-  - carthage bootstrap --platform iOS
+  - carthage bootstrap --platform tvOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
   - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - ruby -rsimctl -e 'SimCtl.warmup("iPhone 6s Plus", "iOS 10.0", 300)'
+  - ruby -rsimctl -e 'SimCtl.warmup("Apple TV 1080p", "tvOS 10.2", 300)'
 
 script:
   - swiftlint
   - pod lib lint
-  - xcodebuild test -project "${PROJECT}" -scheme "${SCHEME}" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}
+  - xcodebuild test -project "${PROJECT}" -scheme "${SCHEME}" -sdk appletvsimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}
