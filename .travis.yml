@@ -5,25 +5,10 @@ language: objective-c
 
 osx_image: xcode9.1
 
-env:
-  global:
-    - PROJECT="Clappr.xcodeproj"
-    - SCHEME="Clappr-Example"
-    - SIMULATOR_ID=`xcrun simctl create "iPhone 7" com.apple.CoreSimulator.SimDeviceType.iPhone-7 com.apple.CoreSimulator.SimRuntime.iOS-11-1`
-    - DESTINATION="platform=iOS Simulator,id=${SIMULATOR_ID}"
-
 before_install:
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
-  - brew outdated swiftlint || brew upgrade swiftlint
-  - carthage bootstrap --platform iOS
-  - gem install cocoapods -v '1.1.1'
-  - pod repo update
-  - xcrun simctl boot ${SIMULATOR_ID}
-  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
-  - sleep 150
+  - make setup
 
 script:
   - swiftlint
   - pod lib lint
-  - xcodebuild test -project "${PROJECT}" -scheme "${SCHEME}" -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination "${DESTINATION}" | xcpretty -s && exit ${PIPESTATUS[0]}
+  - make test
