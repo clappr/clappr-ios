@@ -5,9 +5,9 @@ import Clappr
 class EventDispatcherTests: QuickSpec {
 
     override func spec() {
-        describe("BaseObject") {
+        describe("EventDispatcher") {
 
-            var baseObject: EventDispatcher!
+            var eventDispatcher: EventDispatcher!
             var callbackWasCalled: Bool!
 
             let eventName = "some-event"
@@ -16,135 +16,135 @@ class EventDispatcherTests: QuickSpec {
             }
 
             beforeEach {
-                baseObject = EventDispatcher()
+                eventDispatcher = EventDispatcher()
                 callbackWasCalled = false
             }
 
             describe("on") {
-                it("Callback should be called on event trigger") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.trigger(eventName)
+                it("executes callback function") {
+                    eventDispatcher.on(eventName, callback: callback)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == true
                 }
 
-                it("Callback should receive userInfo on trigger with params") {
+                it("receives userInfo when triggered with params") {
                     var value = "Not Expected"
-                    baseObject.on(eventName) { userInfo in
+                    eventDispatcher.on(eventName) { userInfo in
                         value = userInfo?["new_value"] as! String
                     }
 
-                    baseObject.trigger(eventName, userInfo: ["new_value": "Expected"])
+                    eventDispatcher.trigger(eventName, userInfo: ["new_value": "Expected"])
 
                     expect(value) == "Expected"
                 }
 
-                it("Callback should be called for every callback registered") {
-                    baseObject.on(eventName, callback: callback)
+                it("executes multiple callback functions") {
+                    eventDispatcher.on(eventName, callback: callback)
 
                     var secondCallbackWasCalled = false
-                    baseObject.on(eventName) { _ in
+                    eventDispatcher.on(eventName) { _ in
                         secondCallbackWasCalled = true
                     }
 
-                    baseObject.trigger(eventName)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == true
                     expect(secondCallbackWasCalled) == true
                 }
 
-                it("Callback should not be called for another event trigger") {
-                    baseObject.on(eventName, callback: callback)
+                it("doesn't execute callback for another event") {
+                    eventDispatcher.on(eventName, callback: callback)
 
-                    baseObject.trigger("another-event")
+                    eventDispatcher.trigger("another-event")
 
                     expect(callbackWasCalled) == false
                 }
 
-                it("Callback should not be called for another context object") {
-                    let anotherObject = EventDispatcher()
+                it("doesn't executes callback for another context object") {
+                    let anotherDispatcher = EventDispatcher()
 
-                    baseObject.on(eventName, callback: callback)
+                    eventDispatcher.on(eventName, callback: callback)
 
-                    anotherObject.trigger(eventName)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
             }
 
             describe("once") {
-                it("Callback should be called on event trigger") {
-                    baseObject.once(eventName, callback: callback)
-                    baseObject.trigger(eventName)
+                it("executes callback function") {
+                    eventDispatcher.once(eventName, callback: callback)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == true
                 }
 
-                it("Callback should not be called twice") {
-                    baseObject.once(eventName, callback: callback)
+                it("doesn't execute callback function twice") {
+                    eventDispatcher.once(eventName, callback: callback)
 
-                    baseObject.trigger(eventName)
+                    eventDispatcher.trigger(eventName)
                     callbackWasCalled = false
-                    baseObject.trigger(eventName)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
 
-                it("Callback should not be called if removed") {
-                    let listenId = baseObject.once(eventName, callback: callback)
-                    baseObject.off(listenId)
-                    baseObject.trigger(eventName)
+                it("doesn't execute callback function when it is removed") {
+                    let listenId = eventDispatcher.once(eventName, callback: callback)
+                    eventDispatcher.off(listenId)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
             }
 
             describe("listenTo") {
-                it("Should fire callback for an event on a given context object") {
-                    let contextObject = EventDispatcher()
+                it("executes callback function for an event on a given context object") {
+                    let anotherDispatcher = EventDispatcher()
 
-                    baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
-                    contextObject.trigger(eventName)
+                    eventDispatcher.listenTo(anotherDispatcher, eventName: eventName, callback: callback)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == true
                 }
             }
 
             describe("listenToOnce") {
-                it("Should fire callback just one time for an event on a given context object") {
-                    let contextObject = EventDispatcher()
+                it("executes callback function just one time for an event on a given context object") {
+                    let anotherDispatcher = EventDispatcher()
 
-                    baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
-                    contextObject.trigger(eventName)
+                    eventDispatcher.listenToOnce(anotherDispatcher, eventName: eventName, callback: callback)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == true
 
                     callbackWasCalled = false
-                    contextObject.trigger(eventName)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
             }
 
             describe("off") {
-                it("Callback should not be called if removed") {
-                    let listenId = baseObject.on(eventName, callback: callback)
-                    baseObject.off(listenId)
-                    baseObject.trigger(eventName)
+                it("doesn't executes callback function if it is removed") {
+                    let listenId = eventDispatcher.on(eventName, callback: callback)
+                    eventDispatcher.off(listenId)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
-                it("Callback should not be called if removed, but the others should") {
+                it("doesn't execute callback if it is removed, but the others are called") {
                     var anotherCallbackWasCalled = false
                     let anotherCallback: EventCallback = { _ in
                         anotherCallbackWasCalled = true
                     }
 
-                    let listenId = baseObject.on(eventName, callback: callback)
-                    baseObject.on(eventName, callback: anotherCallback)
+                    let listenId = eventDispatcher.on(eventName, callback: callback)
+                    eventDispatcher.on(eventName, callback: anotherCallback)
 
-                    baseObject.off(listenId)
-                    baseObject.trigger(eventName)
+                    eventDispatcher.off(listenId)
+                    eventDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                     expect(anotherCallbackWasCalled) == true
@@ -152,43 +152,43 @@ class EventDispatcherTests: QuickSpec {
             }
 
             describe("stopListening") {
-                it("Should cancel all event handlers") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.on("another-event", callback: callback)
+                it("disables all callbacks") {
+                    eventDispatcher.on(eventName, callback: callback)
+                    eventDispatcher.on("another-event", callback: callback)
 
-                    baseObject.stopListening()
+                    eventDispatcher.stopListening()
 
-                    baseObject.trigger(eventName)
-                    baseObject.trigger("another-event")
+                    eventDispatcher.trigger(eventName)
+                    eventDispatcher.trigger("another-event")
 
                     expect(callbackWasCalled) == false
                 }
 
-                it("Should cancel event handlers only on context object") {
-                    let anotherObject = EventDispatcher()
+                it("cancels all callback functions on only one context object") {
+                    let anotherDispatcher = EventDispatcher()
                     var anotherCallbackWasCalled = false
-                    anotherObject.on(eventName) { _ in
+                    anotherDispatcher.on(eventName) { _ in
                         anotherCallbackWasCalled = true
                     }
 
-                    baseObject.on(eventName, callback: callback)
+                    eventDispatcher.on(eventName, callback: callback)
 
-                    baseObject.stopListening()
+                    eventDispatcher.stopListening()
 
-                    baseObject.trigger(eventName)
-                    anotherObject.trigger(eventName)
+                    eventDispatcher.trigger(eventName)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                     expect(anotherCallbackWasCalled) == true
                 }
 
-                it("Should cancel handler for an event on a given context object") {
-                    let contextObject = EventDispatcher()
+                it("cancels a specific callback function for an event on a given context object") {
+                    let anotherDispatcher = EventDispatcher()
 
-                    let listenId = baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
-                    baseObject.stopListening(listenId)
+                    let listenId = eventDispatcher.listenTo(anotherDispatcher, eventName: eventName, callback: callback)
+                    eventDispatcher.stopListening(listenId)
 
-                    contextObject.trigger(eventName)
+                    anotherDispatcher.trigger(eventName)
 
                     expect(callbackWasCalled) == false
                 }
