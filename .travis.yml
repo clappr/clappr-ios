@@ -9,7 +9,8 @@ env:
   global:
     - PROJECT="Clappr.xcodeproj"
     - SCHEME="Clappr-Example"
-    - DESTINATION="platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2"
+    - SIMULATOR_ID=`xcrun simctl create "Apple TV 1080p" com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p com.apple.CoreSimulator.SimRuntime.tvOS-10-2`
+    - DESTINATION="platform=tvOS Simulator,id=${SIMULATOR_ID}"
 
 before_install:
   - brew update
@@ -18,8 +19,9 @@ before_install:
   - carthage bootstrap --platform tvOS
   - gem install cocoapods -v '1.1.1'
   - pod repo update
-  - gem install simctl --no-rdoc --no-ri --no-document --quiet
-  - ruby -rsimctl -e 'SimCtl.warmup("Apple TV 1080p", "tvOS 10.2", 300)'
+  - xcrun simctl boot ${SIMULATOR_ID}
+  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+  - sleep 150
 
 script:
   - swiftlint
