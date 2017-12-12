@@ -11,7 +11,6 @@ setup:
 	rbenv exec gem install bundler
 	rbenv rehash
 	$(BUNDLE) install
-	git submodule update --init --recursive
 
 test:
 	$(FASTLANE) test
