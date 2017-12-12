@@ -2,7 +2,6 @@ import Quick
 import Nimble
 @testable import Clappr
 
-fileprivate var eventDispatcherPointer: UInt8 = 0
 class BaseObjectTests: QuickSpec {
 
     class FakeBaseObject: BaseObject { }
@@ -24,22 +23,21 @@ class BaseObjectTests: QuickSpec {
             }
 
             context("initialization") {
-                it("Should not initialize EventDispatcher twice") {
+                it("doesn't initialize EventDispatcher twice") {
                     expect(fake.eventDispatcher) == fake.eventDispatcher
                 }
             }
 
             context("events") {
-
                 describe("on") {
-                    it("Callback should be called on event trigger") {
+                    it("executes callback function") {
                         fake.on(eventName, callback: callback)
                         fake.trigger(eventName)
 
                         expect(callbackWasCalled) == true
                     }
 
-                    it("Callback should receive userInfo on trigger with params") {
+                    it("receives userInfo when triggered with params") {
                         var value = "Not Expected"
 
                         fake.on(eventName) { userInfo in
@@ -50,7 +48,7 @@ class BaseObjectTests: QuickSpec {
                         expect(value) == "Expected"
                     }
 
-                    it("Callback should be called for every callback registered") {
+                    it("executes multiple callback functions") {
                         var secondCallbackWasCalled = false
 
                         fake.on(eventName, callback: callback)
@@ -63,14 +61,14 @@ class BaseObjectTests: QuickSpec {
                         expect(secondCallbackWasCalled) == true
                     }
 
-                    it("Callback should not be called for another event trigger") {
+                    it("doesn't execute callback for another event") {
                         fake.on(eventName, callback: callback)
                         fake.trigger("another-event")
 
                         expect(callbackWasCalled) == false
                     }
 
-                    it("Callback should not be called for another context object") {
+                    it("doesn't executes callback for another context object") {
                         let anotherFake = FakeBaseObject()
 
                         fake.on(eventName, callback: callback)
@@ -81,14 +79,14 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 describe("once") {
-                    it("Callback should be called on event trigger") {
+                    it("executes callback function") {
                         fake.once(eventName, callback: callback)
                         fake.trigger(eventName)
 
                         expect(callbackWasCalled) == true
                     }
 
-                    it("Callback should not be called twice") {
+                    it("doesn't execute callback function twice") {
                         fake.once(eventName, callback: callback)
 
                         fake.trigger(eventName)
@@ -98,7 +96,7 @@ class BaseObjectTests: QuickSpec {
                         expect(callbackWasCalled) == false
                     }
 
-                    it("Callback should not be called if removed") {
+                    it("doesn't execute callback function when it is removed") {
                         let listenId = fake.once(eventName, callback: callback)
                         fake.off(listenId)
                         fake.trigger(eventName)
@@ -108,7 +106,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 describe("listenTo") {
-                    it("Should fire callback for an event on a given context object") {
+                    it("executes callback function for an event on a given context object") {
                         let anotherFake = FakeBaseObject()
 
                         fake.listenTo(anotherFake, eventName: eventName, callback: callback)
@@ -119,7 +117,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 describe("listenToOnce") {
-                    it("Should fire callback just one time for an event on a given context object") {
+                    it("executes callback function just one time for an event on a given context object") {
                         let anotherFake = FakeBaseObject()
 
                         fake.listenToOnce(anotherFake, eventName: eventName, callback: callback)
@@ -135,14 +133,14 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 describe("off") {
-                    it("Callback should not be called if removed") {
+                    it("doesn't executes callback function if it is removed") {
                         let listenId = fake.on(eventName, callback: callback)
                         fake.off(listenId)
                         fake.trigger(eventName)
 
                         expect(callbackWasCalled) == false
                     }
-                    it("Callback should not be called if removed, but the others should") {
+                    it("doesn't execute callback if it is removed, but the others are called") {
                         var anotherCallbackWasCalled = false
                         let anotherCallback: EventCallback = { _ in
                             anotherCallbackWasCalled = true
@@ -160,7 +158,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 describe("stopListening") {
-                    it("Should cancel all event handlers") {
+                    it("disables all callbacks") {
                         fake.on(eventName, callback: callback)
                         fake.on("another-event", callback: callback)
 
@@ -172,7 +170,7 @@ class BaseObjectTests: QuickSpec {
                         expect(callbackWasCalled) == false
                     }
 
-                    it("Should cancel event handlers only on context object") {
+                    it("cancels all callback functions on only one context object") {
                         let anotherFake = FakeBaseObject()
                         var anotherCallbackWasCalled = false
 
@@ -188,7 +186,7 @@ class BaseObjectTests: QuickSpec {
                         expect(anotherCallbackWasCalled) == true
                     }
 
-                    it("Should cancel handler for an event on a given context object") {
+                    it("cancels a specific callback function for an event on a given context object") {
                         let anotherFake = FakeBaseObject()
 
                         let listenId = fake.listenTo(anotherFake, eventName: eventName, callback: callback)
