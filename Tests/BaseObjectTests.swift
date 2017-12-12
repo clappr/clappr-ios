@@ -4,12 +4,12 @@ import Nimble
 
 class BaseObjectTests: QuickSpec {
 
-    class FakeBaseObject: BaseObject { }
+    class ConcreteBaseObject: BaseObject { }
 
     override func spec() {
         describe("BaseObject") {
 
-            var fake: FakeBaseObject!
+            var baseObject: ConcreteBaseObject!
             var callbackWasCalled: Bool!
 
             let eventName = "some-event"
@@ -18,21 +18,21 @@ class BaseObjectTests: QuickSpec {
             }
 
             beforeEach {
-                fake = FakeBaseObject()
+                baseObject = ConcreteBaseObject()
                 callbackWasCalled = false
             }
 
             context("initialization") {
                 it("doesn't initialize EventDispatcher twice") {
-                    expect(fake.eventDispatcher) == fake.eventDispatcher
+                    expect(baseObject.eventDispatcher) == baseObject.eventDispatcher
                 }
             }
 
             context("events") {
                 describe("on") {
                     it("executes callback function") {
-                        fake.on(eventName, callback: callback)
-                        fake.trigger(eventName)
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == true
                     }
@@ -40,10 +40,10 @@ class BaseObjectTests: QuickSpec {
                     it("receives userInfo when triggered with params") {
                         var value = "Not Expected"
 
-                        fake.on(eventName) { userInfo in
+                        baseObject.on(eventName) { userInfo in
                             value = userInfo?["new_value"] as! String
                         }
-                        fake.trigger(eventName, userInfo: ["new_value": "Expected"])
+                        baseObject.trigger(eventName, userInfo: ["new_value": "Expected"])
 
                         expect(value) == "Expected"
                     }
@@ -51,27 +51,27 @@ class BaseObjectTests: QuickSpec {
                     it("executes multiple callback functions") {
                         var secondCallbackWasCalled = false
 
-                        fake.on(eventName, callback: callback)
-                        fake.on(eventName) { _ in
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.on(eventName) { _ in
                             secondCallbackWasCalled = true
                         }
-                        fake.trigger(eventName)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == true
                         expect(secondCallbackWasCalled) == true
                     }
 
                     it("doesn't execute callback for another event") {
-                        fake.on(eventName, callback: callback)
-                        fake.trigger("another-event")
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.trigger("another-event")
 
                         expect(callbackWasCalled) == false
                     }
 
                     it("doesn't executes callback for another context object") {
-                        let anotherFake = FakeBaseObject()
+                        let anotherFake = ConcreteBaseObject()
 
-                        fake.on(eventName, callback: callback)
+                        baseObject.on(eventName, callback: callback)
                         anotherFake.trigger(eventName)
 
                         expect(callbackWasCalled) == false
@@ -80,26 +80,26 @@ class BaseObjectTests: QuickSpec {
 
                 describe("once") {
                     it("executes callback function") {
-                        fake.once(eventName, callback: callback)
-                        fake.trigger(eventName)
+                        baseObject.once(eventName, callback: callback)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == true
                     }
 
                     it("doesn't execute callback function twice") {
-                        fake.once(eventName, callback: callback)
+                        baseObject.once(eventName, callback: callback)
 
-                        fake.trigger(eventName)
+                        baseObject.trigger(eventName)
                         callbackWasCalled = false
-                        fake.trigger(eventName)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == false
                     }
 
                     it("doesn't execute callback function when it is removed") {
-                        let listenId = fake.once(eventName, callback: callback)
-                        fake.off(listenId)
-                        fake.trigger(eventName)
+                        let listenId = baseObject.once(eventName, callback: callback)
+                        baseObject.off(listenId)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == false
                     }
@@ -107,9 +107,9 @@ class BaseObjectTests: QuickSpec {
 
                 describe("listenTo") {
                     it("executes callback function for an event on a given context object") {
-                        let anotherFake = FakeBaseObject()
+                        let anotherFake = ConcreteBaseObject()
 
-                        fake.listenTo(anotherFake, eventName: eventName, callback: callback)
+                        baseObject.listenTo(anotherFake, eventName: eventName, callback: callback)
                         anotherFake.trigger(eventName)
 
                         expect(callbackWasCalled) == true
@@ -118,9 +118,9 @@ class BaseObjectTests: QuickSpec {
 
                 describe("listenToOnce") {
                     it("executes callback function just one time for an event on a given context object") {
-                        let anotherFake = FakeBaseObject()
+                        let anotherFake = ConcreteBaseObject()
 
-                        fake.listenToOnce(anotherFake, eventName: eventName, callback: callback)
+                        baseObject.listenToOnce(anotherFake, eventName: eventName, callback: callback)
                         anotherFake.trigger(eventName)
 
                         expect(callbackWasCalled) == true
@@ -134,9 +134,9 @@ class BaseObjectTests: QuickSpec {
 
                 describe("off") {
                     it("doesn't executes callback function if it is removed") {
-                        let listenId = fake.on(eventName, callback: callback)
-                        fake.off(listenId)
-                        fake.trigger(eventName)
+                        let listenId = baseObject.on(eventName, callback: callback)
+                        baseObject.off(listenId)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == false
                     }
@@ -146,11 +146,11 @@ class BaseObjectTests: QuickSpec {
                             anotherCallbackWasCalled = true
                         }
 
-                        let listenId = fake.on(eventName, callback: callback)
-                        fake.on(eventName, callback: anotherCallback)
+                        let listenId = baseObject.on(eventName, callback: callback)
+                        baseObject.on(eventName, callback: anotherCallback)
 
-                        fake.off(listenId)
-                        fake.trigger(eventName)
+                        baseObject.off(listenId)
+                        baseObject.trigger(eventName)
 
                         expect(callbackWasCalled) == false
                         expect(anotherCallbackWasCalled) == true
@@ -159,27 +159,27 @@ class BaseObjectTests: QuickSpec {
 
                 describe("stopListening") {
                     it("disables all callbacks") {
-                        fake.on(eventName, callback: callback)
-                        fake.on("another-event", callback: callback)
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.on("another-event", callback: callback)
 
-                        fake.stopListening()
+                        baseObject.stopListening()
 
-                        fake.trigger(eventName)
-                        fake.trigger("another-event")
+                        baseObject.trigger(eventName)
+                        baseObject.trigger("another-event")
 
                         expect(callbackWasCalled) == false
                     }
 
                     it("cancels all callback functions on only one context object") {
-                        let anotherFake = FakeBaseObject()
+                        let anotherFake = ConcreteBaseObject()
                         var anotherCallbackWasCalled = false
 
                         anotherFake.on(eventName) { _ in
                             anotherCallbackWasCalled = true
                         }
-                        fake.on(eventName, callback: callback)
-                        fake.stopListening()
-                        fake.trigger(eventName)
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.stopListening()
+                        baseObject.trigger(eventName)
                         anotherFake.trigger(eventName)
 
                         expect(callbackWasCalled) == false
@@ -187,10 +187,10 @@ class BaseObjectTests: QuickSpec {
                     }
 
                     it("cancels a specific callback function for an event on a given context object") {
-                        let anotherFake = FakeBaseObject()
+                        let anotherFake = ConcreteBaseObject()
 
-                        let listenId = fake.listenTo(anotherFake, eventName: eventName, callback: callback)
-                        fake.stopListening(listenId)
+                        let listenId = baseObject.listenTo(anotherFake, eventName: eventName, callback: callback)
+                        baseObject.stopListening(listenId)
                         anotherFake.trigger(eventName)
 
                         expect(callbackWasCalled) == false
