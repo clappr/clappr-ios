@@ -10,6 +10,11 @@ open class EventDispatcher: NSObject, EventProtocol {
     fileprivate var events = [String: EventHolder]()
     fileprivate var onceEventsHashes = [String]()
 
+    deinit {
+        Logger.logDebug("deinit", scope: logIdentifier())
+        self.stopListening()
+    }
+
     @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: self)
@@ -85,7 +90,7 @@ open class EventDispatcher: NSObject, EventProtocol {
     }
 
     open func stopListening() {
-        for (_, event) in events {
+        events.values.forEach { event in
             notificationCenter().removeObserver(event.eventHandler)
         }
 
@@ -114,10 +119,5 @@ open class EventDispatcher: NSObject, EventProtocol {
             return plugin.pluginName
         }
         return "\(type(of: self))"
-    }
-
-    deinit {
-        Logger.logDebug("deinit", scope: NSStringFromClass(type(of: self)))
-        self.stopListening()
     }
 }

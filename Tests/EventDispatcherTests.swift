@@ -5,7 +5,7 @@ import Clappr
 class EventDispatcherTests: QuickSpec {
 
     override func spec() {
-        describe("EventDispatcher") {
+        describe(".EventDispatcher") {
 
             var eventDispatcher: EventDispatcher!
             var callbackWasCalled: Bool!
@@ -20,7 +20,7 @@ class EventDispatcherTests: QuickSpec {
                 callbackWasCalled = false
             }
 
-            describe("on") {
+            describe("#on") {
                 it("executes callback function") {
                     eventDispatcher.on(eventName, callback: callback)
                     eventDispatcher.trigger(eventName)
@@ -72,7 +72,7 @@ class EventDispatcherTests: QuickSpec {
                 }
             }
 
-            describe("once") {
+            describe("#once") {
                 it("executes callback function") {
                     eventDispatcher.once(eventName, callback: callback)
                     eventDispatcher.trigger(eventName)
@@ -99,7 +99,7 @@ class EventDispatcherTests: QuickSpec {
                 }
             }
 
-            describe("listenTo") {
+            describe("#listenTo") {
                 it("executes callback function for an event on a given context object") {
                     let anotherDispatcher = EventDispatcher()
 
@@ -110,7 +110,7 @@ class EventDispatcherTests: QuickSpec {
                 }
             }
 
-            describe("listenToOnce") {
+            describe("#listenToOnce") {
                 it("executes callback function just one time for an event on a given context object") {
                     let anotherDispatcher = EventDispatcher()
 
@@ -126,7 +126,7 @@ class EventDispatcherTests: QuickSpec {
                 }
             }
 
-            describe("off") {
+            describe("#off") {
                 it("doesn't executes callback function if it is removed") {
                     let listenId = eventDispatcher.on(eventName, callback: callback)
                     eventDispatcher.off(listenId)
@@ -151,7 +151,7 @@ class EventDispatcherTests: QuickSpec {
                 }
             }
 
-            describe("stopListening") {
+            describe("#stopListening") {
                 it("disables all callbacks") {
                     eventDispatcher.on(eventName, callback: callback)
                     eventDispatcher.on("another-event", callback: callback)
