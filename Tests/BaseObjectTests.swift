@@ -62,12 +62,14 @@ class BaseObjectTests: QuickSpec {
                     expect(callbackWasCalled) == true
                     expect(secondCallbackWasCalled) == true
                 }
+                
+                context("when another event is triggered") {
+                    it("doesn't execute callback") {
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.trigger("another-event")
 
-                it("doesn't execute callback for another event") {
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.trigger("another-event")
-
-                    expect(callbackWasCalled) == false
+                        expect(callbackWasCalled) == false
+                    }
                 }
 
                 it("doesn't executes callback for another context object") {
@@ -137,27 +139,30 @@ class BaseObjectTests: QuickSpec {
             }
 
             describe("#off") {
-                it("doesn't executes callback function if it is removed") {
-                    let listenId = baseObject.on(eventName, callback: callback)
-                    baseObject.off(listenId)
-                    baseObject.trigger(eventName)
+                context("when it is removed") {
+                    it("doesn't execute callback") {
+                        let listenId = baseObject.on(eventName, callback: callback)
+                        baseObject.off(listenId)
+                        baseObject.trigger(eventName)
 
-                    expect(callbackWasCalled) == false
-                }
-                it("doesn't execute callback if it is removed, but the others are called") {
-                    var anotherCallbackWasCalled = false
-                    let anotherCallback: EventCallback = { _ in
-                        anotherCallbackWasCalled = true
+                        expect(callbackWasCalled) == false
                     }
 
-                    let listenId = baseObject.on(eventName, callback: callback)
-                    baseObject.on(eventName, callback: anotherCallback)
+                    it("executes others callback functions") {
+                        var anotherCallbackWasCalled = false
+                        let anotherCallback: EventCallback = { _ in
+                            anotherCallbackWasCalled = true
+                        }
 
-                    baseObject.off(listenId)
-                    baseObject.trigger(eventName)
+                        let listenId = baseObject.on(eventName, callback: callback)
+                        baseObject.on(eventName, callback: anotherCallback)
 
-                    expect(callbackWasCalled) == false
-                    expect(anotherCallbackWasCalled) == true
+                        baseObject.off(listenId)
+                        baseObject.trigger(eventName)
+
+                        expect(callbackWasCalled) == false
+                        expect(anotherCallbackWasCalled) == true
+                    }
                 }
             }
 
@@ -174,30 +179,32 @@ class BaseObjectTests: QuickSpec {
                     expect(callbackWasCalled) == false
                 }
 
-                it("cancels all callback functions on only one context object") {
-                    let anotherBaseObject = ConcreteBaseObject()
-                    var anotherCallbackWasCalled = false
+                context("when stops listening only one event") {
+                    it("doesn't execute callback") {
+                        let anotherBaseObject = ConcreteBaseObject()
+                        var anotherCallbackWasCalled = false
 
-                    anotherBaseObject.on(eventName) { _ in
-                        anotherCallbackWasCalled = true
+                        anotherBaseObject.on(eventName) { _ in
+                            anotherCallbackWasCalled = true
+                        }
+                        baseObject.on(eventName, callback: callback)
+                        baseObject.stopListening()
+                        baseObject.trigger(eventName)
+                        anotherBaseObject.trigger(eventName)
+
+                        expect(callbackWasCalled) == false
+                        expect(anotherCallbackWasCalled) == true
                     }
-                    baseObject.on(eventName, callback: callback)
-                    baseObject.stopListening()
-                    baseObject.trigger(eventName)
-                    anotherBaseObject.trigger(eventName)
 
-                    expect(callbackWasCalled) == false
-                    expect(anotherCallbackWasCalled) == true
-                }
+                    it("cancels a specific callback") {
+                        let anotherBaseObject = ConcreteBaseObject()
 
-                it("cancels a specific callback function for an event on a given context object") {
-                    let anotherBaseObject = ConcreteBaseObject()
+                        let listenId = baseObject.listenTo(anotherBaseObject, eventName: eventName, callback: callback)
+                        baseObject.stopListening(listenId)
+                        anotherBaseObject.trigger(eventName)
 
-                    let listenId = baseObject.listenTo(anotherBaseObject, eventName: eventName, callback: callback)
-                    baseObject.stopListening(listenId)
-                    anotherBaseObject.trigger(eventName)
-
-                    expect(callbackWasCalled) == false
+                        expect(callbackWasCalled) == false
+                    }
                 }
             }
         }
