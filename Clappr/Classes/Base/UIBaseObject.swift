@@ -1,52 +1,52 @@
 import Foundation
 
 open class UIBaseObject: UIView, EventProtocol {
-    fileprivate let baseObject = BaseObject()
+    fileprivate let dispatcher = EventDispatcher()
 
     @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return baseObject.on(eventName, callback: callback)
+        return dispatcher.on(eventName, callback: callback)
     }
 
     @discardableResult
     open func once(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return baseObject.once(eventName, callback: callback)
+        return dispatcher.once(eventName, callback: callback)
     }
 
     open func off(_ listenId: String) {
-        baseObject.off(listenId)
+        dispatcher.off(listenId)
     }
 
     open func trigger(_ eventName: String) {
-        baseObject.trigger(eventName)
+        dispatcher.trigger(eventName)
         Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
 
     open func trigger(_ eventName: String, userInfo: EventUserInfo) {
-        baseObject.trigger(eventName, userInfo: userInfo)
+        dispatcher.trigger(eventName, userInfo: userInfo)
         Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
 
     @discardableResult
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+        return dispatcher.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
     @discardableResult
     open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
+        return dispatcher.listenToOnce(contextObject, eventName: eventName, callback: callback)
     }
 
     open func stopListening() {
-        baseObject.stopListening()
+        dispatcher.stopListening()
     }
 
     open func stopListening(_ listenId: String) {
-        baseObject.stopListening(listenId)
+        dispatcher.stopListening(listenId)
     }
 
-    open func getEventContextObject() -> BaseObject {
-        return baseObject
+    open func getEventDispatcher() -> EventDispatcher {
+        return dispatcher
     }
 
     fileprivate func logIdentifier() -> String {

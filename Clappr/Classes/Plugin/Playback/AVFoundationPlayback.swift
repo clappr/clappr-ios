@@ -410,7 +410,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
                 try AVAudioSession.sharedInstance().setCategory(category)
             }
         } catch {
-            print("It was not possible to set the audio session category")
+            Logger.logError("It was not possible to set the audio session category", scope: pluginName)
         }
     }
 
