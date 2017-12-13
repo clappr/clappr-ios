@@ -19,7 +19,10 @@ platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
     # cocoapods
-    carthage(platform: 'iOS')
+    carthage(
+      platform: 'iOS',
+      cache_builds: true
+    )
   end
 
   desc "Runs all the tests"
@@ -49,6 +52,10 @@ platform :ios do
 
   desc "Release a new version of Clappr"
   lane :release do |options|
+    ensure_environment_vars
+    
+    pull_dev_and_master
+
     ensure_git_status_clean
 
     ensure_git_branch(
@@ -158,6 +165,15 @@ end
 
 def checkout(branch_name)
   Actions.sh("git checkout #{branch_name}")
+end
+
+def ensure_environment_vars
+  UI.user_error!("You need to setup a GITHUB_TOKEN enviroment var.") unless ENV["GITHUB_TOKEN"]
+end
+
+def pull_dev_and_master
+  Actions.sh("git fetch origin dev:dev")
+  Actions.sh("git fetch origin master:master")
 end
 
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
