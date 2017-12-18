@@ -181,6 +181,7 @@ open class AVFoundationPlayback: Playback {
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
             addObservers()
+            trigger(.ready)
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
@@ -332,8 +333,6 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func readyToPlay() {
-        trigger(.ready)
-
         if let subtitles = self.subtitles {
             trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
         }
