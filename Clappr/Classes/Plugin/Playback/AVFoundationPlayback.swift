@@ -173,6 +173,11 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    open override func render() {
+        super.render()
+        trigger(.ready)
+    }
+
     fileprivate func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
@@ -181,7 +186,6 @@ open class AVFoundationPlayback: Playback {
             playerLayer = AVPlayerLayer(player: player)
             self.layer.addSublayer(playerLayer!)
             addObservers()
-            trigger(.ready)
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
