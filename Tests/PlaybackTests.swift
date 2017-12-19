@@ -88,34 +88,6 @@ class PlaybackTests: QuickSpec {
                 expect(canPlay) == false
             }
 
-            context("AutoPlay") {
-                it("have autoplay set to false if autoplay option is not set") {
-                    expect(playback.autoPlay) == false
-                }
-
-                it("have autoplay set to false if autoplay option is false") {
-                    let playback = StubPlayback(options: [kAutoPlay: false])
-                    expect(playback.autoPlay) == false
-                }
-
-                it("have autoplay set to true if autoplay option is true") {
-                    let playback = StubPlayback(options: [kAutoPlay: true])
-                    expect(playback.autoPlay) == true
-                }
-
-                it("call play on render if auto play is set") {
-                    let playback = StubPlayback(options: [kAutoPlay: true])
-                    playback.render()
-                    expect(playback.playWasCalled) == true
-                }
-
-                it("not call play on render if auto play is set to false") {
-                    let playback = StubPlayback(options: [kAutoPlay: false])
-                    playback.render()
-                    expect(playback.playWasCalled) == false
-                }
-            }
-
             context("StartAt") {
                 it("set start at property from options") {
                     let playback = StubPlayback(options: [kStartAt: 10.0])
