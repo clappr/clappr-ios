@@ -1,0 +1,183 @@
+# Customize this file, documentation can be found here:
+# https://docs.fastlane.tools/actions/
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.64.0"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    # cocoapods
+    carthage(
+      platform: 'iOS',
+      cache_builds: true
+    )
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan(scheme: "Clappr-Example")
+    xcov(scheme: "Clappr-Example")
+  end
+
+  desc "Bump version in Podspec and Info.plist"
+  lane :version_bump do |options|
+    UI.user_error!("You need to provide the new version number.") unless options[:version]
+
+    version = options[:version]
+    version_bump_podspec(path: "Clappr.podspec", version_number: version)
+
+    update_info_plist(
+      plist_path: "Clappr/Info.plist",
+      block: lambda { |plist|
+        plist["CFBundleShortVersionString"] = version
+      }
+    )
+
+    increment_build_number(
+      build_number: version
+    )
+  end
+
+  desc "Release a new version of Clappr"
+  lane :release do |options|
+    ensure_environment_vars
+    
+    pull_dev_and_master
+
+    ensure_git_status_clean
+
+    ensure_git_branch(
+     branch: 'dev'
+    )
+
+    test
+
+    branch_name = "release/#{options[:version]}"
+    create_branch(branch_name)
+
+    version_bump(options)
+
+    git_add
+
+    commit_version_bump(
+      xcodeproj: "Clappr.xcodeproj",
+      force: true
+    )
+
+    push_to_git_remote(
+      local_branch: branch_name,
+      remote_branch: branch_name,
+      tags: false
+    )
+
+    merge(
+      branch: branch_name,
+      into: "master"
+    )
+
+    push_to_git_remote(
+      local_branch: "master",
+      remote_branch: "master",
+      tags: false
+    )
+
+    merge(
+      branch: branch_name,
+      into: "dev"
+    )
+
+    push_to_git_remote(
+      local_branch: "dev",
+      remote_branch: "dev",
+      tags: false
+    )
+
+    delete_branch(branch_name)
+
+    checkout("master")
+
+    add_git_tag(
+      tag: "#{options[:version]}"
+    )
+
+    push_to_git_remote(
+      local_branch: "master",
+      remote_branch: "master",
+      tags: true
+    )
+
+    set_github_release(
+      repository_name: "clappr/clappr-ios",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "",
+      tag_name: options[:version],
+      description: "TODO: write release notes here"
+    )
+
+    pod_push
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+def create_branch(branch_name)
+  Actions.sh("git checkout -b #{branch_name}")
+  UI.success("Successfully created branch \"#{branch_name}\" 💾.")
+end
+
+def merge(branch:, into:)
+  checkout("#{into}")
+  Actions.sh("git merge #{branch}")
+  UI.success("Successfully merged \"#{branch}\" into \"#{into}\" 💾.")
+end
+
+def delete_branch(branch_name)
+  Actions.sh("git push -d origin #{branch_name}")
+  Actions.sh("git branch -D #{branch_name}")
+end
+
+def checkout(branch_name)
+  Actions.sh("git checkout #{branch_name}")
+end
+
+def ensure_environment_vars
+  UI.user_error!("You need to setup a GITHUB_TOKEN enviroment var.") unless ENV["GITHUB_TOKEN"]
+end
+
+def pull_dev_and_master
+  Actions.sh("git fetch origin dev:dev")
+  Actions.sh("git fetch origin master:master")
+end
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://docs.fastlane.tools/actions
+
+# fastlane reports which actions are used. No personal data is recorded.
+# Learn more at https://docs.fastlane.tools/#metrics
