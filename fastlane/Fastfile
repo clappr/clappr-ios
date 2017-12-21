@@ -172,8 +172,8 @@ def ensure_environment_vars
 end
 
 def pull_dev_and_master
-  Actions.sh("git fetch origin dev:dev")
-  Actions.sh("git fetch origin master:master")
+  Actions.sh("git fetch origin dev:dev --update-head-ok")
+  Actions.sh("git fetch origin master:master --update-head-ok")
 end
 
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
