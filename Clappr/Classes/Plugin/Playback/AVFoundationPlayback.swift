@@ -197,38 +197,12 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     fileprivate func loadMetada() {
-        var items: [AVMetadataItem] = []
-        if let metaData = options[kMetaData] as? [String: Any] {
-            if let title = metaData[kMetaDataTitle] as? NSString {
-                let titleItem = AVMutableMetadataItem()
-                titleItem.identifier = AVMetadataCommonIdentifierTitle
-                titleItem.value = title
-                titleItem.extendedLanguageTag = "und"
-                items.append(titleItem)
-            }
+        let metaData = options[kMetaData] as? [String: Any] ?? [:]
+        let nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metaData)
 
-            if let description = metaData[kMetaDataDescription] as? NSString {
-                let descriptionItem = AVMutableMetadataItem()
-                descriptionItem.identifier = AVMetadataCommonIdentifierDescription
-                descriptionItem.value = description
-                descriptionItem.extendedLanguageTag = "und"
-                items.append(descriptionItem)
-            }
-
-            if let date = metaData[kMetaDataDate] as? Date {
-                let metadataDateFormatter = DateFormatter()
-                metadataDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                let creationDate = AVMutableMetadataItem()
-                creationDate.identifier = AVMetadataCommonIdentifierCreationDate
-                creationDate.value = metadataDateFormatter.string(from: date) as NSString
-                creationDate.extendedLanguageTag = "und"
-                items.append(creationDate)
-            }
-        }
-
-        if !items.isEmpty {
+        if !nowPlayingBuilder.items.isEmpty {
             if let item = player?.currentItem {
-                item.externalMetadata = items
+                item.externalMetadata = nowPlayingBuilder.items
             }
         }
 
