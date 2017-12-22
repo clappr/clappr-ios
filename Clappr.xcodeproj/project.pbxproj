@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
@@ -276,12 +277,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		321781B01FED945400EDD678 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				96D362BD1D41339400CCB866 /* Info.plist */,
+				96D362881D41339400CCB866 /* Clappr.h */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				96D362041D41156A00CCB866 /* Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				321781B01FED945400EDD678 /* Sources */,
 				96D3627D1D41337600CCB866 /* Clappr */,
 				9E692E001F9F898F006510BE /* Clappr_UITests */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -375,7 +386,6 @@
 		96D3627D1D41337600CCB866 /* Clappr */ = {
 			isa = PBXGroup;
 			children = (
-				96D362EF1D4133AD00CCB866 /* Header */,
 				96D362891D41339400CCB866 /* Classes */,
 				96D362BE1D41339400CCB866 /* Resources */,
 			);
@@ -523,15 +533,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		96D362EF1D4133AD00CCB866 /* Header */ = {
-			isa = PBXGroup;
-			children = (
-				96D362881D41339400CCB866 /* Clappr.h */,
-				96D362BD1D41339400CCB866 /* Info.plist */,
-			);
-			name = Header;
-			sourceTree = "<group>";
-		};
 		9E3F43F21F30F89D00417919 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +593,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		321781A51FED90CC00EDD678 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				321781B21FED97D100EDD678 /* Clappr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96D362791D41337600CCB866 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -821,6 +830,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		321781A31FED90CC00EDD678 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1142,7 +1158,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Clappr/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1170,7 +1186,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Clappr/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
