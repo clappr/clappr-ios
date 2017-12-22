@@ -685,9 +685,9 @@
 			productReference = 607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		96D3627B1D41337600CCB866 /* Clappr */ = {
+		96D3627B1D41337600CCB866 /* Clappr-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr" */;
+			buildConfigurationList = 96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr-iOS" */;
 			buildPhases = (
 				96D362771D41337600CCB866 /* Sources */,
 				96D362781D41337600CCB866 /* Frameworks */,
@@ -700,7 +700,7 @@
 			);
 			dependencies = (
 			);
-			name = Clappr;
+			name = "Clappr-iOS";
 			productName = Clappr;
 			productReference = 96D3627C1D41337600CCB866 /* Clappr.framework */;
 			productType = "com.apple.product-type.framework";
@@ -780,7 +780,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* Clappr_Example */,
 				607FACE41AFB9204008FA782 /* Clappr_Tests */,
-				96D3627B1D41337600CCB866 /* Clappr */,
+				96D3627B1D41337600CCB866 /* Clappr-iOS */,
 				9E692DFE1F9F898F006510BE /* Clappr_UITests */,
 				321781A71FED90CC00EDD678 /* Clappr-tvOS */,
 			);
@@ -992,7 +992,7 @@
 		};
 		96D362821D41337600CCB866 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 96D3627B1D41337600CCB866 /* Clappr */;
+			target = 96D3627B1D41337600CCB866 /* Clappr-iOS */;
 			targetProxy = 96D362811D41337600CCB866 /* PBXContainerItemProxy */;
 		};
 		9E692E051F9F898F006510BE /* PBXTargetDependency */ = {
@@ -1288,8 +1288,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-iOS";
+				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1316,8 +1316,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-iOS";
+				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1434,7 +1434,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr" */ = {
+		96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96D362861D41337600CCB866 /* Debug */,
