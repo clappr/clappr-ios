@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0910"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96D3627B1D41337600CCB866"
+               BlueprintIdentifier = "321781A71FED90CC00EDD678"
                BuildableName = "Clappr.framework"
-               BlueprintName = "Clappr"
+               BlueprintName = "Clappr-tvOS"
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96D3627B1D41337600CCB866"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr"
+            BlueprintName = "Clappr-tvOS"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96D3627B1D41337600CCB866"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr"
+            BlueprintName = "Clappr-tvOS"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
