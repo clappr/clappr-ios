@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96D3627B1D41337600CCB866"
                BuildableName = "Clappr.framework"
-               BlueprintName = "Clappr-iOS"
+               BlueprintName = "Clappr"
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,7 +49,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "96D3627B1D41337600CCB866"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr-iOS"
+            BlueprintName = "Clappr"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,7 +67,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "96D3627B1D41337600CCB866"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr-iOS"
+            BlueprintName = "Clappr"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
