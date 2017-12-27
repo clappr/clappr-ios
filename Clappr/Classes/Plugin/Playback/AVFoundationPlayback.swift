@@ -196,7 +196,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         }
     }
 
-    fileprivate func loadMetada() {
+    fileprivate func loadMetadata() {
         guard let playerItem = player?.currentItem else { return }
 
         let metaData = options[kMetaData] as? [String: Any] ?? [:]
@@ -388,7 +388,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
         }
 
-        loadMetada()
+        loadMetadata()
 
         addTimeElapsedCallback()
     }
