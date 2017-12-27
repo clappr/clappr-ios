@@ -7,7 +7,7 @@ import MediaPlayer
 class AVFoundationNowPlayingBuilderTests: QuickSpec {
 
     override func spec() {
-        fdescribe(".AVFoundationNowPlayingBuilder") {
+        describe(".AVFoundationNowPlayingBuilder") {
 
             var nowPlayingBuilder: AVFoundationNowPlayingBuilder?
             var metadata: [String: Any]?
@@ -25,7 +25,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyExternalContentIdentifier }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.contentIdentifierKey }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -42,7 +42,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyExternalContentIdentifier }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.contentIdentifierKey }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -61,7 +61,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyPlaybackProgress }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.playbackProgressKey }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -78,7 +78,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyPlaybackProgress }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.playbackProgressKey }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -191,6 +191,67 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
                 }
             }
+
+            describe("#getArtwork(with options)") {
+
+                context("When has MetaDataArtwork") {
+
+                    beforeEach {
+                        metadata = [kMetaDataArtwork: self.generateNewImage()]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        waitUntil() { done in
+                            nowPlayingBuilder?.getArtwork(with: [:]) { item in
+                                expect(item).toNot(beNil())
+                                done()
+                            }
+                        }
+                    }
+                }
+
+                context("When doesn't have metadata image") {
+
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("loads poster image") {
+                        waitUntil() { done in
+                            let url = "https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png"
+                            nowPlayingBuilder?.getArtwork(with: [kPosterUrl: url]) { item in
+                                expect(item).toNot(beNil())
+                                done()
+                            }
+                        }
+                    }
+                }
+            }
+
+            describe("#getArtwork(with image)") {
+
+                beforeEach {
+                    metadata = [:]
+                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                }
+
+                it("returns non nil value") {
+                    expect(nowPlayingBuilder?.getArtwork(with: self.generateNewImage())).toNot(beNil())
+                }
+            }
         }
+    }
+
+    func generateNewImage() -> UIImage {
+        let size = CGSize(width: 20, height: 20)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIColor.red.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return image
     }
 }
