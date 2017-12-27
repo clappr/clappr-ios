@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+import MediaPlayer
 
 @testable import Clappr
 
@@ -11,168 +12,183 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
             var nowPlayingBuilder: AVFoundationNowPlayingBuilder?
             var metadata: [String: Any]?
 
-            context("When metadata has kMetaDataWatchedTime") {
+            describe("#getContentIdentifier") {
+                context("When metadata has kMetaDataWatchedTime") {
 
-                beforeEach {
-                    metadata = [kMetaDataContentIdentifier: "Foo"]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    beforeEach {
+                        metadata = [kMetaDataContentIdentifier: "Foo"]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        expect(nowPlayingBuilder?.getContentIdentifier()).toNot(beNil())
+                    }
+
+                    it("sets the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyExternalContentIdentifier }
+                        expect(filteredItem).toNot(beEmpty())
+                    }
                 }
 
-                it("returns non nil for contentIdentifier property") {
-                    expect(nowPlayingBuilder?.contentIdentifier).toNot(beNil())
-                }
+                context("When metadata hasn't kMetaDataContentIdentifier") {
 
-                it("sets the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.contentIdentifier }
-                    expect(filteredItem).toNot(beEmpty())
-                }
-            }
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
 
-            context("When metadata hasn't kMetaDataContentIdentifier") {
+                    it("returns nil value") {
+                        expect(nowPlayingBuilder?.getContentIdentifier()).to(beNil())
+                    }
 
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns nil for contentIdentifier property") {
-                    expect(nowPlayingBuilder?.contentIdentifier).to(beNil())
-                }
-
-                it("doesn't set the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.contentIdentifier }
-                    expect(filteredItem).to(beEmpty())
-                }
-            }
-
-            context("When metadata has kMetaDataWatchedTime") {
-
-                beforeEach {
-                    metadata = [kMetaDataWatchedTime: 0.5]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns non nil for whatched time property") {
-                    expect(nowPlayingBuilder?.watchedTime).toNot(beNil())
-                }
-
-                it("sets the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.watchedTime }
-                    expect(filteredItem).toNot(beEmpty())
+                    it("doesn't set the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyExternalContentIdentifier }
+                        expect(filteredItem).to(beEmpty())
+                    }
                 }
             }
 
-            context("When metadata hasn't kMetaDataWatchedTime") {
+            describe("getWatchedTime") {
+                context("When metadata has kMetaDataWatchedTime") {
 
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    beforeEach {
+                        metadata = [kMetaDataWatchedTime: 0.5]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        expect(nowPlayingBuilder?.getWatchedTime()).toNot(beNil())
+                    }
+
+                    it("sets the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyPlaybackProgress }
+                        expect(filteredItem).toNot(beEmpty())
+                    }
                 }
 
-                it("returns nil for watchedTime property") {
-                    expect(nowPlayingBuilder?.watchedTime).to(beNil())
-                }
+                context("When metadata hasn't kMetaDataWatchedTime") {
 
-                it("doesn't set the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.watchedTime }
-                    expect(filteredItem).to(beEmpty())
-                }
-            }
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
 
-            context("When metadata has kMetaDataTitle") {
+                    it("returns nil value") {
+                        expect(nowPlayingBuilder?.getWatchedTime()).to(beNil())
+                    }
 
-                beforeEach {
-                    metadata = [kMetaDataTitle: "Foo"]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns non nil for title property") {
-                    expect(nowPlayingBuilder?.title).toNot(beNil())
-                }
-
-                it("sets the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.title }
-                    expect(filteredItem).toNot(beEmpty())
-                }
-            }
-
-            context("When metadata hasn't kMetaDataTitle") {
-
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns nil for title property") {
-                    expect(nowPlayingBuilder?.title).to(beNil())
-                }
-
-                it("doesn't set the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.title }
-                    expect(filteredItem).to(beEmpty())
+                    it("doesn't set the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == MPNowPlayingInfoPropertyPlaybackProgress }
+                        expect(filteredItem).to(beEmpty())
+                    }
                 }
             }
 
-            context("When options has kMetaDataDescription") {
+            describe("#getTitle()") {
+                context("When metadata has kMetaDataTitle") {
 
-                beforeEach {
-                    metadata = [kMetaDataDescription: "Foo"]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    beforeEach {
+                        metadata = [kMetaDataTitle: "Foo"]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        expect(nowPlayingBuilder?.getTitle()).toNot(beNil())
+                    }
+
+                    it("sets the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        expect(filteredItem).toNot(beEmpty())
+                    }
                 }
 
-                it("returns non nil item") {
-                    expect(nowPlayingBuilder?.description).toNot(beNil())
-                }
+                context("When metadata hasn't kMetaDataTitle") {
 
-                it("sets the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.description }
-                    expect(filteredItem).toNot(beEmpty())
-                }
-            }
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
 
-            context("When options hasn't kMetaDataDescription") {
+                    it("returns nil value") {
+                        expect(nowPlayingBuilder?.getTitle()).to(beNil())
+                    }
 
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns nil for description item") {
-                    expect(nowPlayingBuilder?.description).to(beNil())
-                }
-
-                it("doesn't set the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.date }
-                    expect(filteredItem).to(beEmpty())
-                }
-            }
-
-            context("When options has kMetaDataDate") {
-
-                beforeEach {
-                    metadata = [kMetaDataDate: Date()]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
-                it("returns non nil item") {
-                    expect(nowPlayingBuilder?.date).toNot(beNil())
-                }
-
-                it("sets the item to the list of items") {
-                    let filteredItem = nowPlayingBuilder?.items.filter{ $0 == nowPlayingBuilder?.date }
-                    expect(filteredItem).toNot(beEmpty())
+                    it("doesn't set the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        expect(filteredItem).to(beEmpty())
+                    }
                 }
             }
 
-            context("When options hasn't kMetaDataDate") {
+            describe("#getDescription()") {
+                context("When options has kMetaDataDescription") {
 
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    beforeEach {
+                        metadata = [kMetaDataDescription: "Foo"]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        expect(nowPlayingBuilder?.getDescription()).toNot(beNil())
+                    }
+
+                    it("sets the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        expect(filteredItem).toNot(beEmpty())
+                    }
                 }
 
-                it("returns nil item") {
-                    expect(nowPlayingBuilder?.date).to(beNil())
+                context("When options hasn't kMetaDataDescription") {
+
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns nil value") {
+                        expect(nowPlayingBuilder?.getDescription()).to(beNil())
+                    }
+
+                    it("doesn't set the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        expect(filteredItem).to(beEmpty())
+                    }
+                }
+            }
+
+            describe("#getDate()") {
+                context("When options has kMetaDataDate") {
+
+                    beforeEach {
+                        metadata = [kMetaDataDate: Date()]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns non nil value") {
+                        expect(nowPlayingBuilder?.getDate()).toNot(beNil())
+                    }
+
+                    it("sets the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        expect(filteredItem).toNot(beEmpty())
+                    }
+                }
+
+                context("When options hasn't kMetaDataDate") {
+
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                    }
+
+                    it("returns nil value") {
+                        expect(nowPlayingBuilder?.getDate()).to(beNil())
+                    }
+
+                    it("doesn't set the item to the list of items") {
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        expect(filteredItem).to(beEmpty())
+                    }
                 }
             }
         }

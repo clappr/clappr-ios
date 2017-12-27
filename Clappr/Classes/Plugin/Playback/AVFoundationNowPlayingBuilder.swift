@@ -3,66 +3,60 @@ import AVFoundation
 
 class AVFoundationNowPlayingBuilder {
 
+    let extendedLanguageTag = "und"
     let metadata: [String: Any]
+    internal(set) var items: [AVMutableMetadataItem] = []
 
-    lazy var items: [AVMutableMetadataItem] = {
-        return [self.title, self.description, self.date, self.contentIdentifier, self.watchedTime].flatMap({ $0 })
-    }()
+    init(metadata: [String: Any]) {
+        self.metadata = metadata
+        items = [getTitle(), getDescription(), getDate(), getContentIdentifier(), getWatchedTime()].flatMap({ $0 })
+    }
 
-    lazy var title: AVMutableMetadataItem? = {
-        guard let title = self.metadata[kMetaDataTitle] as? NSString else { return nil }
-
-        let item = AVMutableMetadataItem()
-        item.identifier = AVMetadataCommonIdentifierTitle
-        item.value = title
-        item.extendedLanguageTag = "und"
-        return item
-    }()
-
-    lazy var description: AVMutableMetadataItem? = {
-        guard let description = self.metadata[kMetaDataDescription] as? NSString else { return nil }
-
-        let item = AVMutableMetadataItem()
-        item.identifier = AVMetadataCommonIdentifierDescription
-        item.value = description
-        item.extendedLanguageTag = "und"
-        return item
-    }()
-
-    lazy var contentIdentifier: AVMutableMetadataItem? = {
+    func getContentIdentifier() -> AVMutableMetadataItem? {
         guard let contentIdentifier = self.metadata[kMetaDataContentIdentifier] as? NSString else { return nil }
 
         let item = AVMutableMetadataItem()
         item.identifier = MPNowPlayingInfoPropertyExternalContentIdentifier
         item.value = contentIdentifier
-        item.extendedLanguageTag = "und"
+        item.extendedLanguageTag = extendedLanguageTag
         return item
-    }()
+    }
 
-    lazy var watchedTime: AVMutableMetadataItem? = {
-        guard let watchedTime = self.metadata[kMetaDataWatchedTime] as? Float else { return nil }
+    func getWatchedTime() -> AVMutableMetadataItem? {
+        guard let watchedTime = self.metadata[kMetaDataWatchedTime] as? Double else { return nil }
 
         let item = AVMutableMetadataItem()
         item.identifier = MPNowPlayingInfoPropertyPlaybackProgress
-        item.value = watchedTime as NSCopying & NSObjectProtocol
-        item.extendedLanguageTag = "und"
+        item.value = NSNumber(value: watchedTime)
+        item.extendedLanguageTag = extendedLanguageTag
         return item
-    }()
+    }
 
-    lazy var date: AVMutableMetadataItem? = {
+    func getTitle() -> AVMutableMetadataItem? {
+        guard let title = self.metadata[kMetaDataTitle] as? NSString else { return nil }
+        return generateItem(for: AVMetadataCommonIdentifierTitle, with: title)
+    }
+
+    func getDescription() -> AVMutableMetadataItem? {
+        guard let description = self.metadata[kMetaDataDescription] as? NSString else { return nil }
+        return generateItem(for: AVMetadataCommonIdentifierDescription, with: description)
+    }
+
+    func getDate() -> AVMutableMetadataItem? {
         guard let date = self.metadata[kMetaDataDate] as? Date else { return nil }
 
         let metadataDateFormatter = DateFormatter()
         metadataDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let value = metadataDateFormatter.string(from: date) as NSString
 
+        return generateItem(for: AVMetadataCommonIdentifierCreationDate, with: value)
+    }
+
+    func generateItem(for identifier: String, with value: (NSCopying & NSObjectProtocol)?) -> AVMutableMetadataItem {
         let item = AVMutableMetadataItem()
-        item.identifier = AVMetadataCommonIdentifierCreationDate
-        item.value = metadataDateFormatter.string(from: date) as NSString
-        item.extendedLanguageTag = "und"
+        item.identifier = identifier
+        item.value = value
+        item.extendedLanguageTag = extendedLanguageTag
         return item
-    }()
-
-    init(metadata: [String: Any]) {
-        self.metadata = metadata
     }
 }
