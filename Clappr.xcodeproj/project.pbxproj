@@ -45,6 +45,11 @@
 		32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BB1D41339400CCB866 /* DragDetectorView.swift */; };
 		32E401CE1FF42386001C2096 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BC1D41339400CCB866 /* GradientView.swift */; };
 		32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; };
+		32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402161FF433FA001C2096 /* EventDispatcherTests.swift */; };
+		32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402171FF433FA001C2096 /* BaseObjectTests.swift */; };
+		32E4021B1FF433FB001C2096 /* ContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402181FF433FB001C2096 /* ContainerTests.swift */; };
+		32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021C1FF43533001C2096 /* Quick.framework */; };
+		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
@@ -211,6 +216,11 @@
 		32E401AA1FF422B7001C2096 /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
 		32E4020A1FF43262001C2096 /* Clappr-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clappr-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32E402161FF433FA001C2096 /* EventDispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcherTests.swift; sourceTree = "<group>"; };
+		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
+		32E402181FF433FB001C2096 /* ContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerTests.swift; sourceTree = "<group>"; };
+		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
+		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
 		57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesTests.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Clappr_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -314,6 +324,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */,
+				32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */,
 				32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +448,9 @@
 		32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */ = {
 			isa = PBXGroup;
 			children = (
+				32E402171FF433FA001C2096 /* BaseObjectTests.swift */,
+				32E402181FF433FB001C2096 /* ContainerTests.swift */,
+				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
 			);
 			path = "Clappr-tvOS-Tests";
@@ -742,8 +757,10 @@
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32E4021D1FF43534001C2096 /* Nimble.framework */,
 				B46D05A71DB7DBD60004B23F /* Quick.framework */,
 				B46D05A51DB7DBC50004B23F /* Nimble.framework */,
+				32E4021C1FF43533001C2096 /* Quick.framework */,
 				96D362F01D41345E00CCB866 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -901,6 +918,7 @@
 					};
 					32E402091FF43262001C2096 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					607FACCF1AFB9204008FA782 = {
@@ -1112,6 +1130,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E4021B1FF433FB001C2096 /* ContainerTests.swift in Sources */,
+				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1343,6 +1364,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1353,6 +1375,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Clappr-tvOS-Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1360,7 +1386,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.1;
 			};
@@ -1372,6 +1399,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1381,13 +1409,17 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Clappr-tvOS-Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.1;
 			};
