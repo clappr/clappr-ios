@@ -386,11 +386,11 @@ open class MediaControl: UIBaseObject {
             }
         }
     }
-    
+
     //This function was necessary because our apps were using the player inside
     //a scrollview, so a conflict was happening between the swipe event in the
     //slider and the scrollview.
-    private func toggleScrollEnable(in view: UIView?,to isEnabled: Bool) {
+    private func toggleScrollEnable(in view: UIView?, to isEnabled: Bool) {
         guard let view = view else {
             return
         }

@@ -39,7 +39,7 @@ platform :ios do
     version_bump_podspec(path: "Clappr.podspec", version_number: version)
 
     update_info_plist(
-      plist_path: "Clappr/Info.plist",
+      plist_path: "Sources/Info.plist",
       block: lambda { |plist|
         plist["CFBundleShortVersionString"] = version
       }
