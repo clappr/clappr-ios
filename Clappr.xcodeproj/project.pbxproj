@@ -388,6 +388,16 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		323DF27A1FF4399600ECA3F3 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				607FACE81AFB9204008FA782 /* Clappr_Tests */,
+				9E692E001F9F898F006510BE /* Clappr_UITests */,
+				32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		32E401951FF422B7001C2096 /* Formatter */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,12 +471,10 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				96D362041D41156A00CCB866 /* Example */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				321781B01FED945400EDD678 /* Sources */,
 				96D3627D1D41337600CCB866 /* Clappr */,
-				9E692E001F9F898F006510BE /* Clappr_UITests */,
 				321781A91FED90CC00EDD678 /* Clappr-tvOS */,
-				32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */,
+				323DF27A1FF4399600ECA3F3 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
 			);
@@ -487,7 +495,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
+		607FACE81AFB9204008FA782 /* Clappr_Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
@@ -513,7 +521,7 @@
 				9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */,
 				9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */,
 			);
-			path = Tests;
+			path = Clappr_Tests;
 			sourceTree = "<group>";
 		};
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
@@ -1380,7 +1388,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Clappr-tvOS-Tests/Info.plist";
+				INFOPLIST_FILE = "Tests/Clappr-tvOS-Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1414,7 +1422,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Clappr-tvOS-Tests/Info.plist";
+				INFOPLIST_FILE = "Tests/Clappr-tvOS-Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1564,7 +1572,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1583,7 +1591,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1674,7 +1682,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Clappr_UITests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
@@ -1709,7 +1717,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Clappr_UITests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
