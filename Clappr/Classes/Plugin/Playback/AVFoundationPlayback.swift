@@ -197,42 +197,18 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     fileprivate func loadMetada() {
+        guard let playerItem = player?.currentItem else { return }
+
         let metaData = options[kMetaData] as? [String: Any] ?? [:]
         let nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metaData)
 
         if !nowPlayingBuilder.items.isEmpty {
-            if let item = player?.currentItem {
-                item.externalMetadata = nowPlayingBuilder.items
-            }
+            playerItem.externalMetadata = nowPlayingBuilder.items
         }
 
-        loadPosterMetada()
-    }
-
-    fileprivate func loadPosterMetada() {
-        if let artwork = (options[kMetaData] as? [String: Any])?[kMetaDataArtwork] as? UIImage {
-            addArtworkItem(image: artwork)
-        } else {
-            if let poster = self.options[kPosterUrl] as? String {
-                let task = URLSession.shared.dataTask(with: URL(string: poster)!) { [weak self] data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        self?.addArtworkItem(image: image)
-                    }
-                }
-                task.resume()
-            }
-        }
-    }
-
-    fileprivate func addArtworkItem(image: UIImage) {
-        if let item = self.player?.currentItem {
-            if let jpegData = UIImageJPEGRepresentation(image, 1) {
-                let artWork = AVMutableMetadataItem()
-                artWork.value = jpegData as NSData
-                artWork.dataType = kCMMetadataBaseDataType_JPEG as String
-                artWork.identifier = AVMetadataCommonIdentifierArtwork
-                artWork.extendedLanguageTag = "und"
-                item.externalMetadata.append(artWork)
+        nowPlayingBuilder.getArtwork(with: options) { artwork in
+            if let artwork = artwork {
+                playerItem.externalMetadata.append(artwork)
             }
         }
     }
