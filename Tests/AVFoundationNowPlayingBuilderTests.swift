@@ -25,7 +25,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.contentIdentifierKey }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -42,7 +42,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.contentIdentifierKey }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -61,7 +61,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.playbackProgressKey }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -78,7 +78,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == nowPlayingBuilder?.playbackProgressKey }
+                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -239,6 +239,51 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
 
                 it("returns non nil value") {
                     expect(nowPlayingBuilder?.getArtwork(with: self.generateNewImage())).toNot(beNil())
+                }
+            }
+
+            describe("#setItems(to, with options)") {
+
+                context("when has no metadata items") {
+
+                    beforeEach {
+                        metadata = [:]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+
+                    }
+
+                    it("doesn't set externalMetadata to item") {
+                        let url = URL(string: "http://test.com")
+                        let playerItem = AVPlayerItem(url: url!)
+
+                        nowPlayingBuilder?.setItems(to: playerItem, with: [:])
+
+                        let didSetAllItems = !playerItem.externalMetadata.map({ nowPlayingBuilder!.items.contains($0) }).contains(true)
+                        expect(didSetAllItems).to(beTrue())
+                    }
+                }
+
+                context("when has metadata items") {
+
+                    beforeEach {
+                        metadata = [kMetaDataTitle: "Foo",
+                                    kMetaDataDescription: "Lorem ipsum lorem",
+                                    kMetaDataContentIdentifier: "Foo v2",
+                                    kMetaDataDate: Date(),
+                                    kMetaDataWatchedTime: 1] as [String : Any]
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+
+                    }
+
+                    it("doesn't set externalMetadata to item") {
+                        let url = URL(string: "http://test.com")
+                        let playerItem = AVPlayerItem(url: url!)
+
+                        nowPlayingBuilder?.setItems(to: playerItem, with: [:])
+
+                        let didSetAllItems = !playerItem.externalMetadata.map({ nowPlayingBuilder!.items.contains($0) }).contains(false)
+                        expect(didSetAllItems).to(beTrue())
+                    }
                 }
             }
         }
