@@ -2,41 +2,43 @@ import MediaPlayer
 import AVKit
 import AVFoundation
 
-class AVFoundationNowPlayingBuilder {
+class AVFoundationNowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol {
+
+    struct Keys {
+        static var contentIdentifier: String {
+            if #available(tvOS 10.1, *) {
+                return AVKitMetadataIdentifierExternalContentIdentifier
+            } else {
+                return "NPI/_MPNowPlayingInfoPropertyExternalContentIdentifier"
+            }
+        }
+
+        static var playbackProgress: String {
+            if #available(tvOS 10.1, *) {
+                return AVKitMetadataIdentifierPlaybackProgress
+            } else {
+                return "NPI/_MPNowPlayingInfoPropertyPlaybackProgress"
+            }
+        }
+    }
 
     let metadata: [String: Any]
-    internal(set) lazy var items: [AVMutableMetadataItem] = {
+    internal(set) lazy var items: [AVMetadataItem] = {
         return [self.getTitle(), self.getDescription(), self.getDate(), self.getContentIdentifier(), self.getWatchedTime()].flatMap({ $0 })
     }()
 
-    var contentIdentifierKey: String {
-        if #available(tvOS 10.1, *) {
-            return AVKitMetadataIdentifierExternalContentIdentifier
-        } else {
-            return "NPI/_MPNowPlayingInfoPropertyExternalContentIdentifier"
-        }
-    }
-
-    var playbackProgressKey: String {
-        if #available(tvOS 10.1, *) {
-            return AVKitMetadataIdentifierPlaybackProgress
-        } else {
-            return "NPI/_MPNowPlayingInfoPropertyPlaybackProgress"
-        }
-    }
-
-    init(metadata: [String: Any] = [:]) {
+    required init(metadata: [String: Any] = [:]) {
         self.metadata = metadata
     }
 
     func getContentIdentifier() -> AVMutableMetadataItem? {
         guard let contentIdentifier = self.metadata[kMetaDataContentIdentifier] as? NSString else { return nil }
-        return generateItem(for: contentIdentifierKey, with: contentIdentifier)
+        return generateItem(for: Keys.contentIdentifier, with: contentIdentifier)
     }
 
     func getWatchedTime() -> AVMutableMetadataItem? {
         guard let watchedTime = self.metadata[kMetaDataWatchedTime] as? (NSCopying & NSObjectProtocol) else { return nil }
-        return generateItem(for: playbackProgressKey, with: watchedTime)
+        return generateItem(for: Keys.playbackProgress, with: watchedTime)
     }
 
     func getTitle() -> AVMutableMetadataItem? {
@@ -87,5 +89,17 @@ class AVFoundationNowPlayingBuilder {
         item.value = value
         item.extendedLanguageTag = "und"
         return item
+    }
+
+    func setItems(to playerItem: AVPlayerItem, with options: Options) {
+        if !items.isEmpty {
+            playerItem.externalMetadata = items
+        }
+
+        getArtwork(with: options) { artwork in
+            if let artwork = artwork {
+                playerItem.externalMetadata.append(artwork)
+            }
+        }
     }
 }

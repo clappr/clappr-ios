@@ -18,6 +18,12 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     fileprivate var kvoPlayerRateContext = 0
 
     dynamic internal var player: AVPlayer?
+
+    lazy var nowPlayingBuilder: AVFoundationNowPlayingBuilder = {
+        let metaData = self.options[kMetaData] as? [String: Any] ?? [:]
+        return AVFoundationNowPlayingBuilder(metadata: metaData)
+    }()
+
     fileprivate var playerLooper: AVPlayerLooper?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
@@ -197,19 +203,8 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     fileprivate func loadMetadata() {
-        guard let playerItem = player?.currentItem else { return }
-
-        let metaData = options[kMetaData] as? [String: Any] ?? [:]
-        let nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metaData)
-
-        if !nowPlayingBuilder.items.isEmpty {
-            playerItem.externalMetadata = nowPlayingBuilder.items
-        }
-
-        nowPlayingBuilder.getArtwork(with: options) { artwork in
-            if let artwork = artwork {
-                playerItem.externalMetadata.append(artwork)
-            }
+        if let playerItem = player?.currentItem {
+            nowPlayingBuilder.setItems(to: playerItem, with: options)
         }
     }
 
