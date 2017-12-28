@@ -40,7 +40,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            fcontext("when player is ready to play") {
+            context("when player is ready to play") {
 
                 var avFoundationPlayback: AVFoundationPlayback!
 
