@@ -1,11 +1,12 @@
 import Quick
 import Nimble
-import Clappr
+import AVFoundation
+@testable import Clappr
 
 class AVFoundationPlaybackTests: QuickSpec {
 
     override func spec() {
-        describe("AVFoundationPlayback Tests") {
+        describe(".AVFoundationPlayback") {
 
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
@@ -38,6 +39,37 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(canPlay) == false
                 }
             }
+
+            fcontext("when player is ready to play") {
+
+                var avFoundationPlayback: AVFoundationPlayback!
+
+                beforeEach {
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"])
+                }
+
+                context("and avplayer has playerItem") {
+
+                    var nowPlayingBuilder: NowPlayingStub!
+
+                    beforeEach {
+                        nowPlayingBuilder = NowPlayingStub()
+                        avFoundationPlayback.nowPlayingBuilder = nowPlayingBuilder
+                        avFoundationPlayback.play()
+                    }
+
+                    it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
+                        expect(nowPlayingBuilder.didCallSetItems).toEventually(beTrue(), timeout: 10)
+                    }
+                }
+            }
         }
+    }
+}
+
+fileprivate class NowPlayingStub: AVFoundationNowPlayingBuilder {
+    var didCallSetItems = false
+    override func setItems(to playerItem: AVPlayerItem, with options: Options) {
+        didCallSetItems = true
     }
 }

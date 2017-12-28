@@ -19,7 +19,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     dynamic internal var player: AVPlayer?
 
-    lazy var nowPlayingBuilder: AVFoundationNowPlayingBuilder = {
+    lazy var nowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol = {
         let metaData = self.options[kMetaData] as? [String: Any] ?? [:]
         return AVFoundationNowPlayingBuilder(metadata: metaData)
     }()
