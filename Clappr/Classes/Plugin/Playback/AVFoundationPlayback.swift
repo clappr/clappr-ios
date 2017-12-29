@@ -173,11 +173,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    open override func render() {
-        super.render()
-        trigger(.ready)
-    }
-
     fileprivate func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
@@ -337,6 +332,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func readyToPlay() {
+        trigger(.ready)
+
         if let subtitles = self.subtitles {
             trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
         }
