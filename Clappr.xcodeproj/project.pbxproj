@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		32E401AB1FF422B7001C2096 /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401961FF422B7001C2096 /* ClapprDateFormatter.swift */; };
 		32E401AC1FF422B7001C2096 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401981FF422B7001C2096 /* Options.swift */; };
-		32E401AD1FF422B7001C2096 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401991FF422B7001C2096 /* MediaOption.swift */; };
 		32E401AE1FF422B7001C2096 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019A1FF422B7001C2096 /* Playback.swift */; };
 		32E401AF1FF422B7001C2096 /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019B1FF422B7001C2096 /* UIBaseObject.swift */; };
 		32E401B01FF422B7001C2096 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019C1FF422B7001C2096 /* Container.swift */; };
@@ -199,7 +199,6 @@
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E401961FF422B7001C2096 /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
 		32E401981FF422B7001C2096 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
-		32E401991FF422B7001C2096 /* MediaOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOption.swift; sourceTree = "<group>"; };
 		32E4019A1FF422B7001C2096 /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
 		32E4019B1FF422B7001C2096 /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
 		32E4019C1FF422B7001C2096 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
@@ -411,7 +410,6 @@
 			isa = PBXGroup;
 			children = (
 				32E401981FF422B7001C2096 /* Options.swift */,
-				32E401991FF422B7001C2096 /* MediaOption.swift */,
 				32E4019A1FF422B7001C2096 /* Playback.swift */,
 				32E4019B1FF422B7001C2096 /* UIBaseObject.swift */,
 				32E4019C1FF422B7001C2096 /* Container.swift */,
@@ -1096,6 +1094,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32E401BA1FF422B7001C2096 /* NoOpPlayback.swift in Sources */,
+				32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */,
 				32E401B51FF422B7001C2096 /* FullscreenController.swift in Sources */,
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				32E401B31FF422B7001C2096 /* Core.swift in Sources */,
@@ -1117,7 +1116,6 @@
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401AF1FF422B7001C2096 /* UIBaseObject.swift in Sources */,
-				32E401AD1FF422B7001C2096 /* MediaOption.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
