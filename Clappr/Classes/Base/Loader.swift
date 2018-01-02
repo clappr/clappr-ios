@@ -1,6 +1,10 @@
 open class Loader {
     internal(set) open var playbackPlugins: [Plugin.Type] = [AVFoundationPlayback.self, NoOpPlayback.self]
+    #if os (iOS)
     internal(set) open var containerPlugins: [Plugin.Type] = [PosterPlugin.self, LoadingContainerPlugin.self]
+    #else
+    internal(set) open var containerPlugins: [Plugin.Type] = []
+    #endif
     internal(set) open var corePlugins = [Plugin.Type]()
     internal(set) open var mediaControl: MediaControl.Type = MediaControl.self
 

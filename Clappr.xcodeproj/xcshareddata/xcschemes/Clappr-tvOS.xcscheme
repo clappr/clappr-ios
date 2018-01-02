@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32E402091FF43262001C2096"
+               BuildableName = "Clappr-tvOS-Tests.xctest"
+               BlueprintName = "Clappr-tvOS-Tests"
+               ReferencedContainer = "container:Clappr.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
+            BuildableName = "Clappr.framework"
+            BlueprintName = "Clappr-tvOS"
+            ReferencedContainer = "container:Clappr.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
