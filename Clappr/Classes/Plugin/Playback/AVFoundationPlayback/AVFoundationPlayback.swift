@@ -19,9 +19,8 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     dynamic internal var player: AVPlayer?
 
-    lazy var nowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol = {
-        let metaData = self.options[kMetaData] as? [String: Any] ?? [:]
-        return AVFoundationNowPlayingBuilder(metadata: metaData)
+    lazy var nowPlayingService: AVFoundationNowPlayingService = {
+        return AVFoundationNowPlayingService()
     }()
 
     fileprivate var playerLooper: AVPlayerLooper?
@@ -204,7 +203,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     fileprivate func loadMetadata() {
         if let playerItem = player?.currentItem {
-            nowPlayingBuilder.setItems(to: playerItem, with: options)
+            nowPlayingService.setItems(to: playerItem, with: options)
         }
     }
 

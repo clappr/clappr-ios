@@ -7,7 +7,7 @@ import MediaPlayer
 class AVFoundationNowPlayingBuilderTests: QuickSpec {
 
     override func spec() {
-        describe(".AVFoundationNowPlayingBuilder") {
+        describe("AVFoundationNowPlayingBuilder") {
 
             var nowPlayingBuilder: AVFoundationNowPlayingBuilder?
             var metadata: [String: Any]?
@@ -25,7 +25,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -42,7 +43,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -61,7 +63,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
+
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -78,7 +81,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -97,7 +100,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -114,7 +118,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -133,7 +138,8 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -150,7 +156,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -169,7 +175,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -186,7 +192,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.items.filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -219,7 +225,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("loads poster image") {
-                        waitUntil() { done in
+                        waitUntil(timeout: 10) { done in
                             let url = "https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png"
                             nowPlayingBuilder?.getArtwork(with: [kPosterUrl: url]) { item in
                                 expect(item).toNot(beNil())
@@ -239,51 +245,6 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
 
                 it("returns non nil value") {
                     expect(nowPlayingBuilder?.getArtwork(with: self.generateNewImage())).toNot(beNil())
-                }
-            }
-
-            describe("#setItems(to, with options)") {
-
-                context("when has no metadata items") {
-
-                    beforeEach {
-                        metadata = [:]
-                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-
-                    }
-
-                    it("doesn't set externalMetadata to item") {
-                        let url = URL(string: "http://test.com")
-                        let playerItem = AVPlayerItem(url: url!)
-
-                        nowPlayingBuilder?.setItems(to: playerItem, with: [:])
-
-                        let didSetAllItems = !playerItem.externalMetadata.map({ nowPlayingBuilder!.items.contains($0) }).contains(true)
-                        expect(didSetAllItems).to(beTrue())
-                    }
-                }
-
-                context("when has metadata items") {
-
-                    beforeEach {
-                        metadata = [kMetaDataTitle: "Foo",
-                                    kMetaDataDescription: "Lorem ipsum lorem",
-                                    kMetaDataContentIdentifier: "Foo v2",
-                                    kMetaDataDate: Date(),
-                                    kMetaDataWatchedTime: 1] as [String : Any]
-                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-
-                    }
-
-                    it("doesn't set externalMetadata to item") {
-                        let url = URL(string: "http://test.com")
-                        let playerItem = AVPlayerItem(url: url!)
-
-                        nowPlayingBuilder?.setItems(to: playerItem, with: [:])
-
-                        let didSetAllItems = !playerItem.externalMetadata.map({ nowPlayingBuilder!.items.contains($0) }).contains(false)
-                        expect(didSetAllItems).to(beTrue())
-                    }
                 }
             }
         }

@@ -2,7 +2,7 @@ import MediaPlayer
 import AVKit
 import AVFoundation
 
-class AVFoundationNowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol {
+struct AVFoundationNowPlayingBuilder {
 
     struct Keys {
         static var contentIdentifier: String {
@@ -23,11 +23,8 @@ class AVFoundationNowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol {
     }
 
     let metadata: [String: Any]
-    internal(set) lazy var items: [AVMetadataItem] = {
-        return [self.getTitle(), self.getDescription(), self.getDate(), self.getContentIdentifier(), self.getWatchedTime()].flatMap({ $0 })
-    }()
 
-    required init(metadata: [String: Any] = [:]) {
+    init(metadata: [String: Any] = [:]) {
         self.metadata = metadata
     }
 
@@ -91,15 +88,7 @@ class AVFoundationNowPlayingBuilder: AVFoundationNowPlayingBuilderProtocol {
         return item
     }
 
-    func setItems(to playerItem: AVPlayerItem, with options: Options) {
-        if !items.isEmpty {
-            playerItem.externalMetadata = items
-        }
-
-        getArtwork(with: options) { artwork in
-            if let artwork = artwork {
-                playerItem.externalMetadata.append(artwork)
-            }
-        }
+    func build() -> [AVMetadataItem] {
+        return [getTitle(), getDescription(), getDate(), getContentIdentifier(), getWatchedTime()].flatMap({ $0 })
     }
 }

@@ -6,7 +6,7 @@ import AVFoundation
 class AVFoundationPlaybackTests: QuickSpec {
 
     override func spec() {
-        describe(".AVFoundationPlayback") {
+        describe("AVFoundationPlayback") {
 
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
@@ -50,16 +50,16 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("and avplayer has playerItem") {
 
-                    var nowPlayingBuilder: NowPlayingStub!
+                    var nowPlayingService: NowPlayingServiceStub!
 
                     beforeEach {
-                        nowPlayingBuilder = NowPlayingStub()
-                        avFoundationPlayback.nowPlayingBuilder = nowPlayingBuilder
+                        nowPlayingService = NowPlayingServiceStub()
+                        avFoundationPlayback.nowPlayingService = nowPlayingService
                         avFoundationPlayback.play()
                     }
 
                     it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
-                        expect(nowPlayingBuilder.didCallSetItems).toEventually(beTrue(), timeout: 10)
+                        expect(nowPlayingService.didCallSetItems).toEventually(beTrue(), timeout: 10)
                     }
                 }
             }
@@ -67,8 +67,9 @@ class AVFoundationPlaybackTests: QuickSpec {
     }
 }
 
-fileprivate class NowPlayingStub: AVFoundationNowPlayingBuilder {
+fileprivate class NowPlayingServiceStub: AVFoundationNowPlayingService {
     var didCallSetItems = false
+    
     override func setItems(to playerItem: AVPlayerItem, with options: Options) {
         didCallSetItems = true
     }
