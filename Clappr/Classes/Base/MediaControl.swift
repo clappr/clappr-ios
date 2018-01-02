@@ -222,7 +222,7 @@ open class MediaControl: UIBaseObject {
             return
         }
 
-        currentTimeLabel?.text = DateFormatter.formatSeconds(position)
+        currentTimeLabel?.text = ClapprDateFormatter.formatSeconds(position)
         seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
         updateScrubberPosition()
     }
@@ -269,7 +269,7 @@ open class MediaControl: UIBaseObject {
 
     open func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
-        durationLabel?.text = DateFormatter.formatSeconds(container?.playback?.duration ?? 0.0)
+        durationLabel?.text = ClapprDateFormatter.formatSeconds(container?.playback?.duration ?? 0.0)
     }
 
     open func hide() {
@@ -370,7 +370,7 @@ open class MediaControl: UIBaseObject {
         if let touch = view.currentTouch, !livePlayback {
             let touchPoint = touch.location(in: seekBarView)
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
-            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            scrubberLabel?.text = ClapprDateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
             scrubberView?.setNeedsLayout()
             switch view.touchState {
             case .began:
