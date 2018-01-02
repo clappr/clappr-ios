@@ -108,7 +108,6 @@ open class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
         mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
         mediaControl.hide()
-        mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
             seekBarView.target = mediaControl
             seekBarView.selector = #selector(handleSeekbarViewTouch(_:))
@@ -136,13 +135,6 @@ open class MediaControl: UIBaseObject {
         }
 
         playbackControlButton?.setImage(image, for: UIControlState())
-    }
-
-    open func bindOrientationChangedListener() {
-        #if !os(tvOS)
-        NotificationCenter.default.addObserver(self, selector: #selector(MediaControl.didRotate),
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        #endif
     }
 
     open func didRotate() {
