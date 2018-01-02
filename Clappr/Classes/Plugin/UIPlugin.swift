@@ -1,11 +1,3 @@
-open class UIPlugin: UIBaseObject {
-
-    open var enabled = true {
-        didSet {
-            isHidden = !enabled
-            if !enabled {
-                stopListening()
-            }
-        }
-    }
+open class UIPlugin: UIBaseObject, UIObject {
+    var view: UIView?
 }

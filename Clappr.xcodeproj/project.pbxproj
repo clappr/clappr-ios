@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0A1DE1FF40C3600891037 /* UIObject.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
@@ -148,6 +149,7 @@
 /* Begin PBXFileReference section */
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
 		57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesTests.swift; sourceTree = "<group>"; };
+		57B0A1DE1FF40C3600891037 /* UIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIObject.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Clappr_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				96D362951D41339400CCB866 /* Playback.swift */,
 				96D362961D41339400CCB866 /* Player.swift */,
 				96D362971D41339400CCB866 /* UIBaseObject.swift */,
+				57B0A1DE1FF40C3600891037 /* UIObject.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
+				57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
 				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
 				96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */,
