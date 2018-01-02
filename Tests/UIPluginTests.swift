@@ -12,7 +12,7 @@ class UIPluginTests: QuickSpec {
                 expect(uiPlugin as UIObject).toNot(beNil())
             }
 
-            describe("view") {
+            describe("#view") {
                 it("stores a view") {
                     let view = UIView()
                     let uiPlugin = UIPlugin()

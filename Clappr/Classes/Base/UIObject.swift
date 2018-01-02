@@ -1,5 +1,5 @@
 protocol UIObject {
-    var view: UIView? { get set }
+    var view: UIView? { get }
 
     func render()
 }
