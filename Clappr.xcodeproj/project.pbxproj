@@ -409,7 +409,7 @@
 		96D362B21D41339400CCB866 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
-				9E18A7401FF5512E00C706F4 /* AVFoundation */,
+				9E18A7401FF5512E00C706F4 /* AVFoundationPlayback */,
 				96D362B41D41339400CCB866 /* NoOpPlayback.swift */,
 			);
 			path = Playback;
@@ -451,14 +451,14 @@
 			name = Header;
 			sourceTree = "<group>";
 		};
-		9E18A7401FF5512E00C706F4 /* AVFoundation */ = {
+		9E18A7401FF5512E00C706F4 /* AVFoundationPlayback */ = {
 			isa = PBXGroup;
 			children = (
 				96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */,
 				9EABA3E01FED516100C36814 /* AVFoundationNowPlayingBuilder.swift */,
 				9E18A7411FF5515D00C706F4 /* AVFoundationNowPlayingBuilderProtocol.swift */,
 			);
-			path = AVFoundation;
+			path = AVFoundationPlayback;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
