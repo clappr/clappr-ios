@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
+		32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362911D41339400CCB866 /* Loader.swift */; };
 		32E401AB1FF422B7001C2096 /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401961FF422B7001C2096 /* ClapprDateFormatter.swift */; };
 		32E401AC1FF422B7001C2096 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401981FF422B7001C2096 /* Options.swift */; };
 		32E401AE1FF422B7001C2096 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019A1FF422B7001C2096 /* Playback.swift */; };
 		32E401AF1FF422B7001C2096 /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019B1FF422B7001C2096 /* UIBaseObject.swift */; };
 		32E401B01FF422B7001C2096 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019C1FF422B7001C2096 /* Container.swift */; };
-		32E401B11FF422B7001C2096 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019D1FF422B7001C2096 /* Loader.swift */; };
 		32E401B21FF422B7001C2096 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019E1FF422B7001C2096 /* EventHandler.swift */; };
 		32E401B31FF422B7001C2096 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E4019F1FF422B7001C2096 /* Core.swift */; };
 		32E401B41FF422B7001C2096 /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E401A01FF422B7001C2096 /* BaseObject.swift */; };
@@ -202,7 +202,6 @@
 		32E4019A1FF422B7001C2096 /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
 		32E4019B1FF422B7001C2096 /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
 		32E4019C1FF422B7001C2096 /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
-		32E4019D1FF422B7001C2096 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		32E4019E1FF422B7001C2096 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		32E4019F1FF422B7001C2096 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		32E401A01FF422B7001C2096 /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -413,7 +412,6 @@
 				32E4019A1FF422B7001C2096 /* Playback.swift */,
 				32E4019B1FF422B7001C2096 /* UIBaseObject.swift */,
 				32E4019C1FF422B7001C2096 /* Container.swift */,
-				32E4019D1FF422B7001C2096 /* Loader.swift */,
 				32E4019E1FF422B7001C2096 /* EventHandler.swift */,
 				32E4019F1FF422B7001C2096 /* Core.swift */,
 				32E401A01FF422B7001C2096 /* BaseObject.swift */,
@@ -1120,13 +1118,13 @@
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
+				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				32E401B21FF422B7001C2096 /* EventHandler.swift in Sources */,
 				32E401B81FF422B7001C2096 /* EventDispatcher.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
 				32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */,
 				32E401C71FF42351001C2096 /* LoadingContainerPlugin.swift in Sources */,
-				32E401B11FF422B7001C2096 /* Loader.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				32E401AB1FF422B7001C2096 /* ClapprDateFormatter.swift in Sources */,
 			);
