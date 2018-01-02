@@ -55,18 +55,6 @@ class ContainerTests: QuickSpec {
                     expect(container.hasPlugin(FakeContainerPlugin.self)).to(beTrue())
                     expect(container.hasPlugin(AnotherFakeContainerPlugin.self)).to(beTrue())
                 }
-
-                #if os(iOS)
-                it("Should add a container context to all plugins") {
-                    let container = Container(loader: loader, options: optionsWithInvalidSource)
-
-                    expect(container.plugins).toNot(beEmpty())
-
-                    for plugin in container.plugins {
-                        expect(plugin.container) == container
-                    }
-                }
-                #endif
             }
 
             describe("Destroy") {
