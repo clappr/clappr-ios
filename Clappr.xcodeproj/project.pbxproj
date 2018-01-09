@@ -314,6 +314,11 @@
 		FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackTests.swift; sourceTree = "<group>"; };
 		FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackNowPlayingServiceTests.swift; sourceTree = "<group>"; };
 		FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilderTests.swift; sourceTree = "<group>"; };
+		FC7785CD20052BDE00EC879F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FC7785CF20052BDE00EC879F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FC7785D220052BDE00EC879F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FC7785D420052BDF00EC879F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FC7785D620052BDF00EC879F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,13 +505,7 @@
 		96D362041D41156A00CCB866 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				96D362051D41156A00CCB866 /* AppDelegate.swift */,
-				96D362061D41156A00CCB866 /* LaunchScreen.xib */,
-				96D362081D41156A00CCB866 /* Main.storyboard */,
-				96D3620A1D41156A00CCB866 /* Images.xcassets */,
-				96D3620B1D41156A00CCB866 /* Info.plist */,
-				96D3620C1D41156A00CCB866 /* ViewController.swift */,
-				9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */,
+				FC7785C620052B3000EC879F /* Clappr */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -782,6 +781,32 @@
 			path = AVFoundationPlayback;
 			sourceTree = "<group>";
 		};
+		FC7785C620052B3000EC879F /* Clappr */ = {
+			isa = PBXGroup;
+			children = (
+				96D362051D41156A00CCB866 /* AppDelegate.swift */,
+				96D362061D41156A00CCB866 /* LaunchScreen.xib */,
+				96D362081D41156A00CCB866 /* Main.storyboard */,
+				96D3620A1D41156A00CCB866 /* Images.xcassets */,
+				96D3620B1D41156A00CCB866 /* Info.plist */,
+				96D3620C1D41156A00CCB866 /* ViewController.swift */,
+				9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */,
+			);
+			path = Clappr;
+			sourceTree = "<group>";
+		};
+		FC7785CC20052BDE00EC879F /* org.cocoapods.demo.Clappr_tvOS_Example */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785CD20052BDE00EC879F /* AppDelegate.swift */,
+				FC7785CF20052BDE00EC879F /* ViewController.swift */,
+				FC7785D120052BDE00EC879F /* Main.storyboard */,
+				FC7785D420052BDF00EC879F /* Assets.xcassets */,
+				FC7785D620052BDF00EC879F /* Info.plist */,
+			);
+			path = org.cocoapods.demo.Clappr_tvOS_Example;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -925,7 +950,7 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -1310,6 +1335,14 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		FC7785D120052BDE00EC879F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC7785D220052BDE00EC879F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1557,7 +1590,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -1577,7 +1610,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
