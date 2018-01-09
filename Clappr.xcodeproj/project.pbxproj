@@ -202,7 +202,7 @@
 /* Begin PBXFileReference section */
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32DA341B1FFBD1AE00484C90 /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
-		32E4020A1FF43262001C2096 /* Clappr-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Clappr-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_tvOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E402161FF433FA001C2096 /* EventDispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcherTests.swift; sourceTree = "<group>"; };
 		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
@@ -372,12 +372,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		321781A91FED90CC00EDD678 /* Clappr-tvOS */ = {
+		321781A91FED90CC00EDD678 /* Clappr_tvOS */ = {
 			isa = PBXGroup;
 			children = (
 				FC7785942005233D00EC879F /* Classes */,
 			);
-			path = "Clappr-tvOS";
+			path = Clappr_tvOS;
 			sourceTree = "<group>";
 		};
 		321781B01FED945400EDD678 /* Sources */ = {
@@ -394,12 +394,12 @@
 			children = (
 				607FACE81AFB9204008FA782 /* Clappr_Tests */,
 				9E692E001F9F898F006510BE /* Clappr_UITests */,
-				32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */,
+				32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */ = {
+		32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */ = {
 			isa = PBXGroup;
 			children = (
 				FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */,
@@ -409,7 +409,7 @@
 				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
 			);
-			path = "Clappr-tvOS-Tests";
+			path = Clappr_tvOS_Tests;
 			sourceTree = "<group>";
 		};
 		607FACC71AFB9204008FA782 = {
@@ -419,7 +419,7 @@
 				96D362041D41156A00CCB866 /* Example */,
 				321781B01FED945400EDD678 /* Sources */,
 				96D3627D1D41337600CCB866 /* Clappr */,
-				321781A91FED90CC00EDD678 /* Clappr-tvOS */,
+				321781A91FED90CC00EDD678 /* Clappr_tvOS */,
 				323DF27A1FF4399600ECA3F3 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
@@ -436,7 +436,7 @@
 				96D3627C1D41337600CCB866 /* Clappr.framework */,
 				9E692DFF1F9F898F006510BE /* Clappr_UITests.xctest */,
 				321781A81FED90CC00EDD678 /* Clappr.framework */,
-				32E4020A1FF43262001C2096 /* Clappr-tvOS-Tests.xctest */,
+				32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -804,9 +804,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		321781A71FED90CC00EDD678 /* Clappr-tvOS */ = {
+		321781A71FED90CC00EDD678 /* Clappr_tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr-tvOS" */;
+			buildConfigurationList = 321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr_tvOS" */;
 			buildPhases = (
 				321781A31FED90CC00EDD678 /* Sources */,
 				321781A41FED90CC00EDD678 /* Frameworks */,
@@ -818,14 +818,14 @@
 			);
 			dependencies = (
 			);
-			name = "Clappr-tvOS";
+			name = Clappr_tvOS;
 			productName = "Clappr-tvOS";
 			productReference = 321781A81FED90CC00EDD678 /* Clappr.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		32E402091FF43262001C2096 /* Clappr-tvOS-Tests */ = {
+		32E402091FF43262001C2096 /* Clappr_tvOS_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr-tvOS-Tests" */;
+			buildConfigurationList = 32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Tests" */;
 			buildPhases = (
 				32E402061FF43262001C2096 /* Sources */,
 				32E402071FF43262001C2096 /* Frameworks */,
@@ -837,9 +837,9 @@
 			dependencies = (
 				32E402111FF43263001C2096 /* PBXTargetDependency */,
 			);
-			name = "Clappr-tvOS-Tests";
+			name = Clappr_tvOS_Tests;
 			productName = "Clappr-tvOS-Tests";
-			productReference = 32E4020A1FF43262001C2096 /* Clappr-tvOS-Tests.xctest */;
+			productReference = 32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		607FACCF1AFB9204008FA782 /* Clappr_Example */ = {
@@ -981,8 +981,8 @@
 				96D3627B1D41337600CCB866 /* Clappr */,
 				607FACE41AFB9204008FA782 /* Clappr_Tests */,
 				9E692DFE1F9F898F006510BE /* Clappr_UITests */,
-				321781A71FED90CC00EDD678 /* Clappr-tvOS */,
-				32E402091FF43262001C2096 /* Clappr-tvOS-Tests */,
+				321781A71FED90CC00EDD678 /* Clappr_tvOS */,
+				32E402091FF43262001C2096 /* Clappr_tvOS_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1273,7 +1273,7 @@
 /* Begin PBXTargetDependency section */
 		32E402111FF43263001C2096 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 321781A71FED90CC00EDD678 /* Clappr-tvOS */;
+			target = 321781A71FED90CC00EDD678 /* Clappr_tvOS */;
 			targetProxy = 32E402101FF43263001C2096 /* PBXContainerItemProxy */;
 		};
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
@@ -1340,7 +1340,7 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS;
 				PRODUCT_NAME = Clappr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
@@ -1380,7 +1380,7 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS;
 				PRODUCT_NAME = Clappr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
@@ -1415,9 +1415,9 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Tests/Clappr-tvOS-Tests/Info.plist";
+				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1449,9 +1449,9 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Tests/Clappr-tvOS-Tests/Info.plist";
+				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 3.0;
@@ -1758,7 +1758,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr-tvOS" */ = {
+		321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr_tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				321781AD1FED90CC00EDD678 /* Debug */,
@@ -1767,7 +1767,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr-tvOS-Tests" */ = {
+		32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32E402121FF43263001C2096 /* Debug */,
