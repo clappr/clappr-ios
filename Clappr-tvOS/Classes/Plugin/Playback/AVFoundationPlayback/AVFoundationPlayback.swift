@@ -18,6 +18,11 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     fileprivate var kvoPlayerRateContext = 0
 
     dynamic internal var player: AVPlayer?
+
+    lazy var nowPlayingService: AVFoundationNowPlayingService = {
+        return AVFoundationNowPlayingService()
+    }()
+
     fileprivate var playerLooper: AVPlayerLooper?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
@@ -196,70 +201,9 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         }
     }
 
-    fileprivate func loadMetada() {
-        var items: [AVMetadataItem] = []
-        if let metaData = options[kMetaData] as? [String: Any] {
-            if let title = metaData[kMetaDataTitle] as? NSString {
-                let titleItem = AVMutableMetadataItem()
-                titleItem.identifier = AVMetadataCommonIdentifierTitle
-                titleItem.value = title
-                titleItem.extendedLanguageTag = "und"
-                items.append(titleItem)
-            }
-
-            if let description = metaData[kMetaDataDescription] as? NSString {
-                let descriptionItem = AVMutableMetadataItem()
-                descriptionItem.identifier = AVMetadataCommonIdentifierDescription
-                descriptionItem.value = description
-                descriptionItem.extendedLanguageTag = "und"
-                items.append(descriptionItem)
-            }
-
-            if let date = metaData[kMetaDataDate] as? Date {
-                let metadataDateFormatter = DateFormatter()
-                metadataDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                let creationDate = AVMutableMetadataItem()
-                creationDate.identifier = AVMetadataCommonIdentifierCreationDate
-                creationDate.value = metadataDateFormatter.string(from: date) as NSString
-                creationDate.extendedLanguageTag = "und"
-                items.append(creationDate)
-            }
-        }
-
-        if !items.isEmpty {
-            if let item = player?.currentItem {
-                item.externalMetadata = items
-            }
-        }
-
-        loadPosterMetada()
-    }
-
-    fileprivate func loadPosterMetada() {
-        if let artwork = (options[kMetaData] as? [String: Any])?[kMetaDataArtwork] as? UIImage {
-            addArtworkItem(image: artwork)
-        } else {
-            if let poster = self.options[kPosterUrl] as? String {
-                let task = URLSession.shared.dataTask(with: URL(string: poster)!) { [weak self] data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        self?.addArtworkItem(image: image)
-                    }
-                }
-                task.resume()
-            }
-        }
-    }
-
-    fileprivate func addArtworkItem(image: UIImage) {
-        if let item = self.player?.currentItem {
-            if let jpegData = UIImageJPEGRepresentation(image, 1) {
-                let artWork = AVMutableMetadataItem()
-                artWork.value = jpegData as NSData
-                artWork.dataType = kCMMetadataBaseDataType_JPEG as String
-                artWork.identifier = AVMetadataCommonIdentifierArtwork
-                artWork.extendedLanguageTag = "und"
-                item.externalMetadata.append(artWork)
-            }
+    fileprivate func loadMetadata() {
+        if let playerItem = player?.currentItem {
+            nowPlayingService.setItems(to: playerItem, with: options)
         }
     }
 
@@ -438,7 +382,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
         }
 
-        loadMetada()
+        loadMetadata()
 
         addTimeElapsedCallback()
     }

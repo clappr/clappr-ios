@@ -1,11 +1,11 @@
-protocol BaseObject: EventProtocol {
+public protocol BaseObject: EventProtocol {
     var eventDispatcher: EventDispatcher { get }
 }
 
 private var eventDispatcherPointer: UInt8 = 0
 
 extension BaseObject {
-    var eventDispatcher: EventDispatcher {
+    public var eventDispatcher: EventDispatcher {
         if let eventDispatcher = objc_getAssociatedObject(self, &eventDispatcherPointer) as? EventDispatcher {
             return eventDispatcher
         } else {
