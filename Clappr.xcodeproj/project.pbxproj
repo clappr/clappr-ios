@@ -137,6 +137,9 @@
 		FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */; };
 		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
 		FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */; };
+		FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */; };
+		FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */; };
+		FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +311,9 @@
 		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
 		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
 		FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlayback.swift; sourceTree = "<group>"; };
+		FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackTests.swift; sourceTree = "<group>"; };
+		FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackNowPlayingServiceTests.swift; sourceTree = "<group>"; };
+		FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,6 +402,9 @@
 		32E4020B1FF43262001C2096 /* Clappr-tvOS-Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */,
+				FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */,
+				FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */,
 				32E402171FF433FA001C2096 /* BaseObjectTests.swift */,
 				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
@@ -803,6 +812,7 @@
 				321781A41FED90CC00EDD678 /* Frameworks */,
 				321781A51FED90CC00EDD678 /* Headers */,
 				321781A61FED90CC00EDD678 /* Resources */,
+				FC7785C02005264F00EC879F /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -968,8 +978,8 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* Clappr_Example */,
-				607FACE41AFB9204008FA782 /* Clappr_Tests */,
 				96D3627B1D41337600CCB866 /* Clappr */,
+				607FACE41AFB9204008FA782 /* Clappr_Tests */,
 				9E692DFE1F9F898F006510BE /* Clappr_UITests */,
 				321781A71FED90CC00EDD678 /* Clappr-tvOS */,
 				32E402091FF43262001C2096 /* Clappr-tvOS-Tests */,
@@ -1087,6 +1097,20 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		FC7785C02005264F00EC879F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1139,8 +1163,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
+				FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
