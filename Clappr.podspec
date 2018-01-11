@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.resources = 'Sources/Clappr/Resources/*.{xib,ttf,png,xcassets}'
-  
+
   s.ios.deployment_target = "9.0"
   s.ios.source_files = 'Sources/Clappr/Classes/**/*'
   s.ios.dependency 'Kingfisher', '~> 3.0'
