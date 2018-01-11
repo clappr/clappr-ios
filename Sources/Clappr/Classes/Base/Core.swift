@@ -21,7 +21,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             activeContainer?.stopListening()
             trigger(InternalEvent.willChangeActiveContainer.rawValue)
         }
-
+        
         didSet {
             activeContainer?.on(
             InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in

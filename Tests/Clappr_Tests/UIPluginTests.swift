@@ -5,45 +5,21 @@ import Nimble
 class UIPluginTests: QuickSpec {
 
     override func spec() {
-        describe("Instantiation") {
+        describe("UIPlugin") {
+            it("conforms with UIObject protocol") {
+                let uiPlugin = UIPlugin()
 
-            it("Should enable plugin by default") {
-                let plugin = UIPlugin()
-                expect(plugin.enabled).to(beTrue())
-            }
-        }
-
-        describe("Behavior") {
-            var plugin: UIPlugin!
-
-            beforeEach {
-                plugin = UIPlugin()
+                expect(uiPlugin as UIObject).toNot(beNil())
             }
 
-            context("Enabling") {
-                it("Should not be hidden") {
-                    plugin.enabled = false
-                    plugin.enabled = true
-                    expect(plugin.isHidden).to(beFalse())
-                }
-            }
+            describe("#view") {
+                it("stores a view") {
+                    let view = UIView()
+                    let uiPlugin = UIPlugin()
 
-            context("Disabling") {
-                it("Should be hidden") {
-                    plugin.enabled = false
-                    expect(plugin.isHidden).to(beTrue())
-                }
+                    uiPlugin.view = view
 
-                it("Should stop listening to events") {
-                    var eventWasCalled = false
-                    plugin.on("event") { _ in
-                        eventWasCalled = true
-                    }
-
-                    plugin.enabled = false
-                    plugin.trigger("event")
-
-                    expect(eventWasCalled).to(beFalse())
+                    expect(uiPlugin.view).to(equal(view))
                 }
             }
         }
