@@ -20,15 +20,18 @@ platform :ios do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
     # cocoapods
     carthage(
-      platform: 'iOS',
+      platform: 'iOS,tvOS',
       cache_builds: true
     )
   end
 
   desc "Runs all the tests"
   lane :test do
-    scan(scheme: "Clappr-Example")
-    xcov(scheme: "Clappr-Example")
+    scan(scheme: "Clappr_Example", output_directory: "fastlane/test_output_ios")
+    xcov(scheme: "Clappr_Example", output_directory: "fastlane/xcov_report_ios")
+
+    scan(scheme: "Clappr_tvOS", output_directory: "fastlane/test_output_tvos")
+    xcov(scheme: "Clappr_tvOS", output_directory: "fastlane/xcov_report_tvos")
   end
 
   desc "Bump version in Podspec and Info.plist"
@@ -39,7 +42,7 @@ platform :ios do
     version_bump_podspec(path: "Clappr.podspec", version_number: version)
 
     update_info_plist(
-      plist_path: "Clappr/Info.plist",
+      plist_path: "Sources/Info.plist",
       block: lambda { |plist|
         plist["CFBundleShortVersionString"] = version
       }
