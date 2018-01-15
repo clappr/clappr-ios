@@ -36,8 +36,6 @@ platform :ios do
 
   desc "Bump version in Podspec and Info.plist"
   lane :version_bump do |options|
-    UI.user_error!("You need to provide the new version number.") unless options[:version]
-
     version = options[:version]
     version_bump_podspec(path: "Clappr.podspec", version_number: version)
 
@@ -55,8 +53,10 @@ platform :ios do
 
   desc "Release a new version of Clappr"
   lane :release do |options|
-    ensure_environment_vars
+    UI.user_error!("You need to provide the new version number like: make release version=X.X.X") if options[:version].to_s.strip.empty?
     
+    ensure_environment_vars
+
     pull_dev_and_master
 
     ensure_git_status_clean
