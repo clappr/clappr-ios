@@ -1,4 +1,4 @@
-open class DateFormatter {
+open class ClapprDateFormatter {
     fileprivate static let hourInSeconds: Double = 1 * 60 * 60
 
     open class func formatSeconds(_ totalSeconds: TimeInterval) -> String {

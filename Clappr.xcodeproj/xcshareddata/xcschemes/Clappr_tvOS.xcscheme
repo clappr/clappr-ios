@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0910"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96D3627B1D41337600CCB866"
+               BlueprintIdentifier = "321781A71FED90CC00EDD678"
                BuildableName = "Clappr.framework"
-               BlueprintName = "Clappr"
+               BlueprintName = "Clappr_tvOS"
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32E402091FF43262001C2096"
+               BuildableName = "Clappr_tvOS_Tests.xctest"
+               BlueprintName = "Clappr_tvOS_Tests"
+               ReferencedContainer = "container:Clappr.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
+            BuildableName = "Clappr.framework"
+            BlueprintName = "Clappr_tvOS"
+            ReferencedContainer = "container:Clappr.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -47,9 +66,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96D3627B1D41337600CCB866"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr"
+            BlueprintName = "Clappr_tvOS"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +84,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "96D3627B1D41337600CCB866"
+            BlueprintIdentifier = "321781A71FED90CC00EDD678"
             BuildableName = "Clappr.framework"
-            BlueprintName = "Clappr"
+            BlueprintName = "Clappr_tvOS"
             ReferencedContainer = "container:Clappr.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

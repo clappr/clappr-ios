@@ -28,8 +28,6 @@ open class MediaControl: UIBaseObject {
     @IBOutlet open var playbackControlButton: UIButton?
     @IBOutlet open var fullscreenButton: UIButton?
 
-    @IBOutlet open weak var airPlayVolumeView: MPVolumeView?
-
     internal(set) open weak var container: Container?
     internal(set) open var controlsHidden = false
 
@@ -89,7 +87,8 @@ open class MediaControl: UIBaseObject {
     }
 
     open class func loadNib() -> UINib? {
-        return UINib(nibName: "MediaControlView", bundle: Bundle(for: MediaControl.self))
+//        return UINib(nibName: "MediaControlView", bundle: Bundle(for: MediaControl.self))
+        return nil
     }
 
     open class func initCustom() -> MediaControl {
@@ -108,11 +107,7 @@ open class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
         mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
-        mediaControl.airPlayVolumeView?.showsVolumeSlider = false
-        mediaControl.airPlayVolumeView?.showsRouteButton = true
-        mediaControl.airPlayVolumeView?.backgroundColor = UIColor.clear
         mediaControl.hide()
-        mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
             seekBarView.target = mediaControl
             seekBarView.selector = #selector(handleSeekbarViewTouch(_:))
@@ -140,11 +135,6 @@ open class MediaControl: UIBaseObject {
         }
 
         playbackControlButton?.setImage(image, for: UIControlState())
-    }
-
-    open func bindOrientationChangedListener() {
-        NotificationCenter.default.addObserver(self, selector: #selector(MediaControl.didRotate),
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
 
     open func didRotate() {
@@ -222,7 +212,7 @@ open class MediaControl: UIBaseObject {
             return
         }
 
-        currentTimeLabel?.text = DateFormatter.formatSeconds(position)
+        currentTimeLabel?.text = ClapprDateFormatter.formatSeconds(position)
         seekPercentage = duration == 0 ? 0 : CGFloat(position) / duration
         updateScrubberPosition()
     }
@@ -269,7 +259,7 @@ open class MediaControl: UIBaseObject {
 
     open func setupForVOD() {
         progressBarView?.backgroundColor = vodProgressBarColor
-        durationLabel?.text = DateFormatter.formatSeconds(container?.playback?.duration ?? 0.0)
+        durationLabel?.text = ClapprDateFormatter.formatSeconds(container?.playback?.duration ?? 0.0)
     }
 
     open func hide() {
@@ -327,7 +317,8 @@ open class MediaControl: UIBaseObject {
     }
 
     @IBAction open func toggleFullscreen(_: UIButton) {
-        let event = fullscreen ? Event.exitFullscreen : Event.requestFullscreen
+        fullscreen = !fullscreen
+        let event = fullscreen ? Event.requestFullscreen : Event.exitFullscreen
         trigger(event.rawValue)
         scheduleTimerToHideControls()
         updateScrubberPosition()
@@ -370,34 +361,19 @@ open class MediaControl: UIBaseObject {
         if let touch = view.currentTouch, !livePlayback {
             let touchPoint = touch.location(in: seekBarView)
             progressBarWidthConstraint?.constant = touchPoint.x + scrubberInitialPosition
-            scrubberLabel?.text = DateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
+            scrubberLabel?.text = ClapprDateFormatter.formatSeconds(secondsRelativeToPoint(touchPoint))
             scrubberView?.setNeedsLayout()
             switch view.touchState {
             case .began:
                 isSeeking = true
                 hideControlsTimer?.invalidate()
-                toggleScrollEnable(in: view, to: false)
             case .ended:
                 container?.playback?.seek(secondsRelativeToPoint(touchPoint))
                 isSeeking = false
                 scheduleTimerToHideControls()
-                toggleScrollEnable(in: view, to: true)
             default: break
             }
         }
-    }
-    
-    //This function was necessary because our apps were using the player inside
-    //a scrollview, so a conflict was happening between the swipe event in the
-    //slider and the scrollview.
-    private func toggleScrollEnable(in view: UIView?,to isEnabled: Bool) {
-        guard let view = view else {
-            return
-        }
-        if let scrollView = view as? UIScrollView {
-            scrollView.isScrollEnabled = isEnabled
-        }
-        toggleScrollEnable(in: view.superview, to: isEnabled)
     }
 
     open func secondsRelativeToPoint(_ touchPoint: CGPoint) -> Double {

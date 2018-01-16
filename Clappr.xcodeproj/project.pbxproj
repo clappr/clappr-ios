@@ -7,6 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
+		32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
+		32DA34191FFBCFC400484C90 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628D1D41339400CCB866 /* Container.swift */; };
+		32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362911D41339400CCB866 /* Loader.swift */; };
+		32E401BC1FF422E0001C2096 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968E5BD81D6CBFA50092F372 /* Logger.swift */; };
+		32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968E5BDA1D6CC0680092F372 /* LogLevel.swift */; };
+		32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629C1D41339400CCB866 /* MediaControlState.swift */; };
+		32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629D1D41339400CCB866 /* MediaOptionType.swift */; };
+		32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3629F1D41339400CCB866 /* PlaybackType.swift */; };
+		32E401C11FF42321001C2096 /* PluginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A11D41339400CCB866 /* PluginType.swift */; };
+		32E401C21FF42321001C2096 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
+		32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
+		32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
+		32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
+		32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
+		32E401C71FF42351001C2096 /* LoadingContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */; };
+		32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
+		32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B11D41339400CCB866 /* UICorePlugin.swift */; };
+		32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B51D41339400CCB866 /* UIPlugin.swift */; };
+		32E401CB1FF42379001C2096 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B81D41339400CCB866 /* Plugin.swift */; };
+		32E401CC1FF42386001C2096 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BA1D41339400CCB866 /* BorderView.swift */; };
+		32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BB1D41339400CCB866 /* DragDetectorView.swift */; };
+		32E401CE1FF42386001C2096 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BC1D41339400CCB866 /* GradientView.swift */; };
+		32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; };
+		32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402161FF433FA001C2096 /* EventDispatcherTests.swift */; };
+		32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402171FF433FA001C2096 /* BaseObjectTests.swift */; };
+		32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021C1FF43533001C2096 /* Quick.framework */; };
+		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0A1DE1FF40C3600891037 /* UIObject.swift */; };
@@ -23,7 +52,6 @@
 		969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9697039F1BEA716100B7F282 /* EventHandlerTests.swift */; };
 		969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */; };
 		96A979731BFBB65E00E5EA01 /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */; };
-		96A9797D1BFE2BCC00E5EA01 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */; };
 		96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
 		96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9CE371C97387000C21E80 /* LoaderTests.swift */; };
 		96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B465691BF6027F0025975A /* UIPluginTests.swift */; };
@@ -54,7 +82,6 @@
 		96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
 		96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
 		96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
-		96D362DE1D41339400CCB866 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AA1D41339400CCB866 /* DateFormatter.swift */; };
 		96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */; };
 		96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AE1D41339400CCB866 /* PosterPlugin.swift */; };
 		96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
@@ -94,9 +121,43 @@
 		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
+		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
+		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
+		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
+		FC7785A72005233D00EC879F /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785972005233D00EC879F /* Core.swift */; };
+		FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785982005233D00EC879F /* EventDispatcher.swift */; };
+		FC7785A92005233D00EC879F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785992005233D00EC879F /* EventHandler.swift */; };
+		FC7785AA2005233D00EC879F /* FullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859A2005233D00EC879F /* FullscreenController.swift */; };
+		FC7785AB2005233D00EC879F /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859B2005233D00EC879F /* MediaControl.swift */; };
+		FC7785AC2005233D00EC879F /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859C2005233D00EC879F /* Options.swift */; };
+		FC7785AD2005233D00EC879F /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859D2005233D00EC879F /* Playback.swift */; };
+		FC7785AE2005233D00EC879F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859E2005233D00EC879F /* Player.swift */; };
+		FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859F2005233D00EC879F /* UIBaseObject.swift */; };
+		FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A32005233D00EC879F /* NoOpPlayback.swift */; };
+		FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A52005233D00EC879F /* EventProtocol.swift */; };
+		FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */; };
+		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
+		FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */; };
+		FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */; };
+		FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */; };
+		FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */; };
+		FC7785E120052CB800EC879F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785E020052CB800EC879F /* AppDelegate.swift */; };
+		FC7785E320052CB800EC879F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785E220052CB800EC879F /* ViewController.swift */; };
+		FC7785E620052CB800EC879F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC7785E420052CB800EC879F /* Main.storyboard */; };
+		FC7785E820052CB800EC879F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC7785E720052CB800EC879F /* Assets.xcassets */; };
+		FC7785ED20052EB300EC879F /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; };
+		FC7785EE20052EB300EC879F /* Clappr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FCF11C3E2007E86F008DC4D6 /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0A1DE1FF40C3600891037 /* UIObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		32E402101FF43263001C2096 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 321781A71FED90CC00EDD678;
+			remoteInfo = "Clappr-tvOS";
+		};
 		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
@@ -117,6 +178,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = Clappr_Example;
+		};
+		FC7785EF20052EB300EC879F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 321781A71FED90CC00EDD678;
+			remoteInfo = Clappr_tvOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -144,9 +212,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FC7785F120052EB300EC879F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FC7785EE20052EB300EC879F /* Clappr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_tvOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32E402161FF433FA001C2096 /* EventDispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcherTests.swift; sourceTree = "<group>"; };
+		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
+		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
+		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
 		57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesTests.swift; sourceTree = "<group>"; };
 		57B0A1DE1FF40C3600891037 /* UIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIObject.swift; sourceTree = "<group>"; };
@@ -167,7 +253,6 @@
 		9697039F1BEA716100B7F282 /* EventHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandlerTests.swift; sourceTree = "<group>"; };
 		969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
-		96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		96A979861BFF964C00E5EA01 /* CoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		96A9CE371C97387000C21E80 /* LoaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderTests.swift; sourceTree = "<group>"; };
 		96B465691BF6027F0025975A /* UIPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPluginTests.swift; sourceTree = "<group>"; };
@@ -198,7 +283,6 @@
 		96D362A31D41339400CCB866 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		96D362A71D41339400CCB866 /* MediaOptionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionFactory.swift; sourceTree = "<group>"; };
 		96D362A81D41339400CCB866 /* PlaybackFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactory.swift; sourceTree = "<group>"; };
-		96D362AA1D41339400CCB866 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingContainerPlugin.swift; sourceTree = "<group>"; };
 		96D362AE1D41339400CCB866 /* PosterPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterPlugin.swift; sourceTree = "<group>"; };
 		96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPlugin.swift; sourceTree = "<group>"; };
@@ -237,9 +321,52 @@
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
+		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
+		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
+		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
+		FC7785972005233D00EC879F /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		FC7785982005233D00EC879F /* EventDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcher.swift; sourceTree = "<group>"; };
+		FC7785992005233D00EC879F /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		FC77859A2005233D00EC879F /* FullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenController.swift; sourceTree = "<group>"; };
+		FC77859B2005233D00EC879F /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
+		FC77859C2005233D00EC879F /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		FC77859D2005233D00EC879F /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
+		FC77859E2005233D00EC879F /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		FC77859F2005233D00EC879F /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
+		FC7785A32005233D00EC879F /* NoOpPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoOpPlayback.swift; sourceTree = "<group>"; };
+		FC7785A52005233D00EC879F /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
+		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
+		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
+		FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlayback.swift; sourceTree = "<group>"; };
+		FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackTests.swift; sourceTree = "<group>"; };
+		FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackNowPlayingServiceTests.swift; sourceTree = "<group>"; };
+		FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilderTests.swift; sourceTree = "<group>"; };
+		FC7785DE20052CB800EC879F /* Clappr_tvOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_tvOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC7785E020052CB800EC879F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FC7785E220052CB800EC879F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FC7785E520052CB800EC879F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FC7785E720052CB800EC879F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FC7785E920052CB800EC879F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		321781A41FED90CC00EDD678 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32E402071FF43262001C2096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */,
+				32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */,
+				32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,17 +402,66 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FC7785DB20052CB800EC879F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC7785ED20052EB300EC879F /* Clappr.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		321781A91FED90CC00EDD678 /* Clappr_tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785942005233D00EC879F /* Classes */,
+			);
+			path = Clappr_tvOS;
+			sourceTree = "<group>";
+		};
+		321781B01FED945400EDD678 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				96D362BD1D41339400CCB866 /* Info.plist */,
+				96D362881D41339400CCB866 /* Clappr.h */,
+				96D3627D1D41337600CCB866 /* Clappr */,
+				321781A91FED90CC00EDD678 /* Clappr_tvOS */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		323DF27A1FF4399600ECA3F3 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				607FACE81AFB9204008FA782 /* Clappr_Tests */,
+				9E692E001F9F898F006510BE /* Clappr_UITests */,
+				32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */,
+				FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */,
+				FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */,
+				32E402171FF433FA001C2096 /* BaseObjectTests.swift */,
+				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
+				32E4020E1FF43262001C2096 /* Info.plist */,
+			);
+			path = Clappr_tvOS_Tests;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				96D362041D41156A00CCB866 /* Example */,
-				607FACE81AFB9204008FA782 /* Tests */,
-				96D3627D1D41337600CCB866 /* Clappr */,
-				9E692E001F9F898F006510BE /* Clappr_UITests */,
+				321781B01FED945400EDD678 /* Sources */,
+				323DF27A1FF4399600ECA3F3 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
 			);
@@ -300,19 +476,22 @@
 				607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */,
 				96D3627C1D41337600CCB866 /* Clappr.framework */,
 				9E692DFF1F9F898F006510BE /* Clappr_UITests.xctest */,
+				321781A81FED90CC00EDD678 /* Clappr.framework */,
+				32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */,
+				FC7785DE20052CB800EC879F /* Clappr_tvOS_Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
+		607FACE81AFB9204008FA782 /* Clappr_Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */,
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
 				969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */,
 				96664E6B1BF209CB00095E6E /* ContainerTests.swift */,
 				96A979861BFF964C00E5EA01 /* CoreTests.swift */,
 				9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */,
-				96A9797C1BFE2BCC00E5EA01 /* DateFormatterTests.swift */,
 				9697039F1BEA716100B7F282 /* EventHandlerTests.swift */,
 				96A9CE371C97387000C21E80 /* LoaderTests.swift */,
 				96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */,
@@ -330,7 +509,7 @@
 				9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */,
 				9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */,
 			);
-			path = Tests;
+			path = Clappr_Tests;
 			sourceTree = "<group>";
 		};
 		607FACE91AFB9204008FA782 /* Supporting Files */ = {
@@ -363,13 +542,8 @@
 		96D362041D41156A00CCB866 /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				96D362051D41156A00CCB866 /* AppDelegate.swift */,
-				96D362061D41156A00CCB866 /* LaunchScreen.xib */,
-				96D362081D41156A00CCB866 /* Main.storyboard */,
-				96D3620A1D41156A00CCB866 /* Images.xcassets */,
-				96D3620B1D41156A00CCB866 /* Info.plist */,
-				96D3620C1D41156A00CCB866 /* ViewController.swift */,
-				9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */,
+				FC7785C620052B3000EC879F /* Clappr */,
+				FC7785DF20052CB800EC879F /* Clappr_tvOS */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -377,7 +551,6 @@
 		96D3627D1D41337600CCB866 /* Clappr */ = {
 			isa = PBXGroup;
 			children = (
-				96D362EF1D4133AD00CCB866 /* Header */,
 				96D362891D41339400CCB866 /* Classes */,
 				96D362BE1D41339400CCB866 /* Resources */,
 			);
@@ -455,7 +628,7 @@
 		96D362A91D41339400CCB866 /* Formatter */ = {
 			isa = PBXGroup;
 			children = (
-				96D362AA1D41339400CCB866 /* DateFormatter.swift */,
+				FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */,
 			);
 			path = Formatter;
 			sourceTree = "<group>";
@@ -526,15 +699,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		96D362EF1D4133AD00CCB866 /* Header */ = {
-			isa = PBXGroup;
-			children = (
-				96D362881D41339400CCB866 /* Clappr.h */,
-				96D362BD1D41339400CCB866 /* Info.plist */,
-			);
-			name = Header;
-			sourceTree = "<group>";
-		};
 		9E3F43F21F30F89D00417919 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,16 +749,114 @@
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32E4021D1FF43534001C2096 /* Nimble.framework */,
 				B46D05A71DB7DBD60004B23F /* Quick.framework */,
 				B46D05A51DB7DBC50004B23F /* Nimble.framework */,
+				32E4021C1FF43533001C2096 /* Quick.framework */,
 				96D362F01D41345E00CCB866 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FC7785942005233D00EC879F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785952005233D00EC879F /* Base */,
+				FC7785A02005233D00EC879F /* Plugin */,
+				FC7785A42005233D00EC879F /* Protocol */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		FC7785952005233D00EC879F /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785962005233D00EC879F /* BaseObject.swift */,
+				FC7785972005233D00EC879F /* Core.swift */,
+				FC7785982005233D00EC879F /* EventDispatcher.swift */,
+				FC7785992005233D00EC879F /* EventHandler.swift */,
+				FC77859A2005233D00EC879F /* FullscreenController.swift */,
+				FC77859B2005233D00EC879F /* MediaControl.swift */,
+				FC77859C2005233D00EC879F /* Options.swift */,
+				FC77859D2005233D00EC879F /* Playback.swift */,
+				FC77859E2005233D00EC879F /* Player.swift */,
+				FC77859F2005233D00EC879F /* UIBaseObject.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		FC7785A02005233D00EC879F /* Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785A12005233D00EC879F /* Playback */,
+			);
+			path = Plugin;
+			sourceTree = "<group>";
+		};
+		FC7785A12005233D00EC879F /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785B3200523E400EC879F /* AVFoundationPlayback */,
+				FC7785A32005233D00EC879F /* NoOpPlayback.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
+		FC7785A42005233D00EC879F /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785A52005233D00EC879F /* EventProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		FC7785B3200523E400EC879F /* AVFoundationPlayback */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */,
+				FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */,
+				FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */,
+			);
+			path = AVFoundationPlayback;
+			sourceTree = "<group>";
+		};
+		FC7785C620052B3000EC879F /* Clappr */ = {
+			isa = PBXGroup;
+			children = (
+				96D362051D41156A00CCB866 /* AppDelegate.swift */,
+				96D362061D41156A00CCB866 /* LaunchScreen.xib */,
+				96D362081D41156A00CCB866 /* Main.storyboard */,
+				96D3620A1D41156A00CCB866 /* Images.xcassets */,
+				96D3620B1D41156A00CCB866 /* Info.plist */,
+				96D3620C1D41156A00CCB866 /* ViewController.swift */,
+				9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */,
+			);
+			path = Clappr;
+			sourceTree = "<group>";
+		};
+		FC7785DF20052CB800EC879F /* Clappr_tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				FC7785E020052CB800EC879F /* AppDelegate.swift */,
+				FC7785E220052CB800EC879F /* ViewController.swift */,
+				FC7785E420052CB800EC879F /* Main.storyboard */,
+				FC7785E720052CB800EC879F /* Assets.xcassets */,
+				FC7785E920052CB800EC879F /* Info.plist */,
+			);
+			path = Clappr_tvOS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		321781A51FED90CC00EDD678 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				321781B21FED97D100EDD678 /* Clappr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		96D362791D41337600CCB866 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -606,6 +868,44 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		321781A71FED90CC00EDD678 /* Clappr_tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr_tvOS" */;
+			buildPhases = (
+				321781A31FED90CC00EDD678 /* Sources */,
+				321781A41FED90CC00EDD678 /* Frameworks */,
+				321781A51FED90CC00EDD678 /* Headers */,
+				321781A61FED90CC00EDD678 /* Resources */,
+				FC7785C02005264F00EC879F /* Swiftlint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Clappr_tvOS;
+			productName = "Clappr-tvOS";
+			productReference = 321781A81FED90CC00EDD678 /* Clappr.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		32E402091FF43262001C2096 /* Clappr_tvOS_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Tests" */;
+			buildPhases = (
+				32E402061FF43262001C2096 /* Sources */,
+				32E402071FF43262001C2096 /* Frameworks */,
+				32E402081FF43262001C2096 /* Resources */,
+				32E402151FF43277001C2096 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32E402111FF43263001C2096 /* PBXTargetDependency */,
+			);
+			name = Clappr_tvOS_Tests;
+			productName = "Clappr-tvOS-Tests";
+			productReference = 32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		607FACCF1AFB9204008FA782 /* Clappr_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Clappr_Example" */;
@@ -683,16 +983,44 @@
 			productReference = 9E692DFF1F9F898F006510BE /* Clappr_UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		FC7785DD20052CB800EC879F /* Clappr_tvOS_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC7785EC20052CB800EC879F /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Example" */;
+			buildPhases = (
+				FC7785DA20052CB800EC879F /* Sources */,
+				FC7785DB20052CB800EC879F /* Frameworks */,
+				FC7785DC20052CB800EC879F /* Resources */,
+				FC7785F120052EB300EC879F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FC7785F020052EB300EC879F /* PBXTargetDependency */,
+			);
+			name = Clappr_tvOS_Example;
+			productName = Clappr_tvOS_Example;
+			productReference = FC7785DE20052CB800EC879F /* Clappr_tvOS_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
+					321781A71FED90CC00EDD678 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Manual;
+					};
+					32E402091FF43262001C2096 = {
+						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
+						ProvisioningStyle = Automatic;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0820;
@@ -717,6 +1045,10 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
+					FC7785DD20052CB800EC879F = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Clappr" */;
@@ -732,15 +1064,32 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* Clappr_Example */,
-				607FACE41AFB9204008FA782 /* Clappr_Tests */,
 				96D3627B1D41337600CCB866 /* Clappr */,
+				607FACE41AFB9204008FA782 /* Clappr_Tests */,
 				9E692DFE1F9F898F006510BE /* Clappr_UITests */,
+				607FACCF1AFB9204008FA782 /* Clappr_Example */,
+				321781A71FED90CC00EDD678 /* Clappr_tvOS */,
+				32E402091FF43262001C2096 /* Clappr_tvOS_Tests */,
+				FC7785DD20052CB800EC879F /* Clappr_tvOS_Example */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		321781A61FED90CC00EDD678 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32E402081FF43262001C2096 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -774,6 +1123,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FC7785DC20052CB800EC879F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC7785E820052CB800EC879F /* Assets.xcassets in Resources */,
+				FC7785E620052CB800EC879F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -790,6 +1148,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		32E402151FF43277001C2096 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		96D362F21D41346300CCB866 /* Carthage Copy Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -821,9 +1194,81 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		FC7785C02005264F00EC879F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		321781A31FED90CC00EDD678 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */,
+				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
+				FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */,
+				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
+				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
+				FC7785AA2005233D00EC879F /* FullscreenController.swift in Sources */,
+				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
+				FC7785AD2005233D00EC879F /* Playback.swift in Sources */,
+				FC7785AB2005233D00EC879F /* MediaControl.swift in Sources */,
+				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
+				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
+				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
+				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
+				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
+				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
+				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
+				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
+				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
+				FCF11C3E2007E86F008DC4D6 /* UIObject.swift in Sources */,
+				FC7785A72005233D00EC879F /* Core.swift in Sources */,
+				32E401C21FF42321001C2096 /* Event.swift in Sources */,
+				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
+				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
+				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
+				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
+				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
+				FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */,
+				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
+				FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */,
+				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
+				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
+				32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */,
+				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
+				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
+				32E401C71FF42351001C2096 /* LoadingContainerPlugin.swift in Sources */,
+				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
+				FC7785AC2005233D00EC879F /* Options.swift in Sources */,
+				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
+				FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32E402061FF43262001C2096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
+				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
+				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
+				FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -838,11 +1283,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96A9797D1BFE2BCC00E5EA01 /* DateFormatterTests.swift in Sources */,
 				9EC853311F7BF06A00716778 /* FullscreenStateHandlerTests.swift in Sources */,
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
+				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
@@ -866,7 +1311,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D362DE1D41339400CCB866 /* DateFormatter.swift in Sources */,
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
@@ -896,6 +1340,7 @@
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
+				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,
 				57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
 				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
@@ -922,9 +1367,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FC7785DA20052CB800EC879F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC7785E320052CB800EC879F /* ViewController.swift in Sources */,
+				FC7785E120052CB800EC879F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		32E402111FF43263001C2096 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 321781A71FED90CC00EDD678 /* Clappr_tvOS */;
+			targetProxy = 32E402101FF43263001C2096 /* PBXContainerItemProxy */;
+		};
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* Clappr_Example */;
@@ -939,6 +1398,11 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* Clappr_Example */;
 			targetProxy = 9E692E041F9F898F006510BE /* PBXContainerItemProxy */;
+		};
+		FC7785F020052EB300EC879F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 321781A71FED90CC00EDD678 /* Clappr_tvOS */;
+			targetProxy = FC7785EF20052EB300EC879F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -959,9 +1423,162 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		FC7785E420052CB800EC879F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC7785E520052CB800EC879F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		321781AD1FED90CC00EDD678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
+				PRODUCT_NAME = Clappr;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		321781AE1FED90CC00EDD678 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
+				PRODUCT_NAME = Clappr;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		32E402121FF43263001C2096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.1;
+			};
+			name = Debug;
+		};
+		32E402131FF43263001C2096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.1;
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1059,7 +1676,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -1079,7 +1696,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -1101,7 +1718,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1120,7 +1737,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1146,12 +1763,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Clappr/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1174,12 +1791,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Clappr/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1211,7 +1828,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Clappr_UITests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
@@ -1246,7 +1863,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Clappr_UITests/Info.plist;
+				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
@@ -1257,9 +1874,85 @@
 			};
 			name = Release;
 		};
+		FC7785EA20052CB800EC879F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		FC7785EB20052CB800EC879F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr_tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				321781AD1FED90CC00EDD678 /* Debug */,
+				321781AE1FED90CC00EDD678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32E402121FF43263001C2096 /* Debug */,
+				32E402131FF43263001C2096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Clappr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1301,6 +1994,15 @@
 			buildConfigurations = (
 				9E692E071F9F898F006510BE /* Debug */,
 				9E692E081F9F898F006510BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC7785EC20052CB800EC879F /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC7785EA20052CB800EC879F /* Debug */,
+				FC7785EB20052CB800EC879F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
