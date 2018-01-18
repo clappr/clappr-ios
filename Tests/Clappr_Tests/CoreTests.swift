@@ -390,6 +390,18 @@ class CoreTests: QuickSpec {
                     expect(core.hasPlugin(UICorePlugin.self)) == false
                 }
             }
+
+            context("core position") {
+                it("is positioned in front of Container view") {
+                    let loader = Loader(externalPlugins: [FakeCorePlugin.self])
+                    let core = Core(loader: loader, options: options as Options)
+
+                    core.render()
+
+                    expect(core.subviews.first).to(beAKindOf(Container.self))
+                    expect(core.subviews[1]).to(beAKindOf(FakeCorePlugin.self))
+                }
+            }
         }
     }
 }
