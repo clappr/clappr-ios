@@ -38,10 +38,12 @@ fastlane/Preview.html
 fastlane/screenshots
 
 # scan temporary files
-fastlane/test_output
+fastlane/test_output_ios
+fastlane/test_output_tvos
 
 # xcov reports
-fastlane/xcov_report
+fastlane/xcov_report_ios
+fastlane/xcov_report_tvos
 
 # lint output
 fastlane/lint_output
