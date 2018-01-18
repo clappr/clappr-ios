@@ -54,7 +54,7 @@ platform :ios do
   desc "Release a new version of Clappr"
   lane :release do |options|
     UI.user_error!("You need to provide the new version number like: make release version=X.X.X") if options[:version].to_s.strip.empty?
-    
+
     ensure_environment_vars
 
     pull_dev_and_master
@@ -157,6 +157,7 @@ end
 
 def merge(branch:, into:)
   checkout("#{into}")
+  Actions.sh("git pull origin #{into}")
   Actions.sh("git merge #{branch}")
   UI.success("Successfully merged \"#{branch}\" into \"#{into}\" 💾.")
 end
@@ -175,7 +176,9 @@ def ensure_environment_vars
 end
 
 def pull_dev_and_master
+  Actions.sh("git push origin dev:dev")
   Actions.sh("git fetch origin dev:dev --update-head-ok")
+  Actions.sh("git push origin master:master")
   Actions.sh("git fetch origin master:master --update-head-ok")
 end
 
