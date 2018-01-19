@@ -51,43 +51,69 @@ github "clappr/clappr-ios"  ~> 0.9.0
 
 Run `carthage update` to build the framework and drag the built `Clappr.framework` into your Xcode project.
 
-### Using the Player
+## Usage
 
-##### Create
+### iOS
+
+#### Create
 ```swift
 let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
 let player = Player(options: options)
 ```
 
-##### Add it in your view
+#### Add it in your view
 
 ```swift
 player.attachTo(yourView, controller: self)
 ```
 
-### Events
+### tvOS
+
+#### Create
+```swift
+let options = [kSourceUrl : "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"]
+let player = Player(options: options)
+```
+
+#### Add to your controller
+
+```swift
+addChildViewController(player)
+player.view.frame = view.bounds
+view.addSubview(player.view)
+player.didMove(toParentViewController: self)
+```
+
+The default configuration assumes fullscreen in tvOS, ensure that the corresponding attached view fills all the window area.
+
+Player also supports embedded mode. For this you'll have to disable MediaControl through options:
+
+```
+kMediaControl: false
+```
+
+You can read more about options [here](https://github.com/clappr/clappr-ios/wiki/Options).
+
+## Events
 The player throw's a [list of events](https://github.com/clappr/clappr-ios/wiki/Events) that can be useful to your application.
 
-### Built-in Plugins
+## Options
 You can add options to the player.
 [Here](https://github.com/clappr/clappr-ios/wiki/Options) you can see the list of available options and how to use it.
 
-
-### External Playback in Background
+## External Playback in Background
 To enable external playback while your app is in background, you should include the `audio` value to your app's **Background Modes** capabilities.
 
-#### Manually editing Info.plist
+### Manually editing Info.plist
 Add the key `UIBackgroundModes`. Just after adding it to your Info.plist file, Xcode will translate to a more readable value `Required background modes`, which represents an array of values. Then, add a new item with value `audio`, which will be translated to `App plays audio or streams audio/video using Airplay`.
 
-#### Capabilities Tab
+### Capabilities Tab
 Click on the target that represents your app. Open the Capabilities tab, and there, you'll see the list of available capabilities. One of them is the `Background Modes`. Change its toggle to `on` and mark the `Audio, Airplay, and Picture in Picture` checkbox.
 
-
-### License
+## License
 
 You can find it [here](https://github.com/clappr/clappr-ios/blob/master/LICENSE).
 
-
-### Sponsor
+## Sponsor
 
 [![image](https://cloud.githubusercontent.com/assets/244265/5900100/ef156258-a54b-11e4-9862-7e5851ed9b81.png)](http://globo.com)
