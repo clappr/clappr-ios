@@ -1,16 +1,55 @@
- [![Build Status](https://travis-ci.org/clappr/clappr-ios.svg?branch=master)](https://travis-ci.org/clappr/clappr-ios)
-
-# Clappr for iOS
+# Clappr for iOS and tvOS
 
 ![image](https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png)
 
-### Installation
+Clappr is an extensible media player for iOS and tvOS.
 
-The easiest way is through [CocoaPods](http://cocoapods.org). Simply add the dependency to your `Podfile` and then `pod install`:
+## Installation
+
+### CocoaPods
+
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```bash
+$ gem install cocoapods
+```
+
+To integrate Clappr into your Xcode project using CocoaPods, specify it to a target in your `Podfile`:
 
 ```ruby
-pod 'Clappr', '~> 0.7.1'
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+    pod 'Clappr', '~> 0.9.0'
+end
 ```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate Clappr into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "clappr/clappr-ios"  ~> 0.9.0
+```
+
+Run `carthage update` to build the framework and drag the built `Clappr.framework` into your Xcode project.
 
 ### Using the Player
 
