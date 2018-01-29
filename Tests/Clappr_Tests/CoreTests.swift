@@ -331,32 +331,6 @@ class CoreTests: QuickSpec {
                             expect(didTriggerEvent).toEventually(beTrue())
                         }
                     }
-
-                    context("when core trigger InternalEvent.didExitFullscreen") {
-                        it("triggers Event.exitFullscreen on player") {
-                            var didTriggerEvent = false
-                            player.on(.exitFullscreen) { _ in
-                                didTriggerEvent = true
-                            }
-
-                            player.core?.trigger(InternalEvent.didExitFullscreen.rawValue)
-
-                            expect(didTriggerEvent).toEventually(beTrue())
-                        }
-                    }
-
-                    context("when core trigger InternalEvent.didEnterFullscreen") {
-                        it("triggers Event.requestFullscreen on player") {
-                            var didTriggerEvent = false
-                            player.on(.requestFullscreen) { _ in
-                                didTriggerEvent = true
-                            }
-
-                            player.core?.trigger(InternalEvent.didEnterFullscreen.rawValue)
-
-                            expect(didTriggerEvent).toEventually(beTrue())
-                        }
-                    }
                 }
 
                 context("when fullscreen is controled by app") {
