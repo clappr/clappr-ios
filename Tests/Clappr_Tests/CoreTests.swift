@@ -94,7 +94,7 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
 
                     it("start as embed video when `kFullscreenByApp: true`") {
@@ -105,7 +105,7 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
 
                     it("start as fullscreen video when `kFullscreenByApp: false` and setFullscreen is called") {
@@ -121,7 +121,7 @@ class CoreTests: QuickSpec {
 
                         expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                        expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
 
@@ -141,7 +141,7 @@ class CoreTests: QuickSpec {
                         expect(callbackWasCall).toEventually(beTrue())
                         expect(core.parentView?.subviews.contains(core)).to(beFalse())
                         expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                        expect(core.isFullscreen).to(beTrue())
                     }
 
                     it("start as embed video when `kFullscreenByApp: true`") {
@@ -152,7 +152,7 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
 
                     it("start as fullscreen video when `kFullscreenByApp: false`") {
@@ -163,35 +163,278 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
                 }
 
-                describe("#setFullscreen") {
+                context("when fullscreen is controled by player") {
 
-                    it("set to fullscreen video by call `setFullscreen(true)`") {
-                        let core = Core()
+                    beforeEach {
+                        core = Core(options: [kFullscreenByApp: false])
                         core.parentView = UIView()
-
                         core.render()
-                        core.setFullscreen(true)
-
-                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
                     }
 
-                    it("only set fullscreen video once by call `setFullscreen(true)` twice") {
-                        let core = Core()
+                    context("and setFullscreen(true) is called") {
+
+                        beforeEach {
+                            core.setFullscreen(false)
+                        }
+
+                        it("removes core from parentView") {
+                            core.setFullscreen(true)
+
+                            expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                        }
+
+                        it("sets core as subview of fullscreenController") {
+                            core.setFullscreen(true)
+
+                            expect(core.fullscreenController.view.subviews.contains(core)).to(beTrue())
+                        }
+
+                        it("set isFullscreen to true") {
+                            core.setFullscreen(true)
+
+                            expect(core.isFullscreen).to(beTrue())
+                        }
+
+                        it("sets the backgroundColor of fullscreenController to black") {
+                            core.setFullscreen(true)
+
+                            expect(core.fullscreenController.view.backgroundColor).to(equal(.black))
+                        }
+
+                        it("sets the modalPresentationStyle of fullscreenController to .overFullscreen") {
+                            core.setFullscreen(true)
+
+                            expect(core.fullscreenController.modalPresentationStyle)
+                                .to(equal(UIModalPresentationStyle.overFullScreen))
+                        }
+
+                        it("triggers InternalEvent.didEnterFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(true)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("triggers InternalEvent.willEnterFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.willEnterFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(true)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("only set core as subview of fullscreenController once") {
+                            core.setFullscreen(true)
+                            core.setFullscreen(true)
+
+                            expect(core.fullscreenController.view.subviews.filter { $0 == core }.count).to(equal(1))
+                        }
+                    }
+
+                    context("and setFullscreen(false) is called") {
+
+                        beforeEach {
+                            core.setFullscreen(true)
+                        }
+
+                        it("set isFullscreen to false") {
+                            core.setFullscreen(false)
+
+                            expect(core.isFullscreen).to(beFalse())
+                        }
+
+                        it("triggers InternalEvent.willExitFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.willExitFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(false)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("triggers InternalEvent.didExitFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.didExitFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(false)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("sets core as subview of core.parentView") {
+                            core.setFullscreen(false)
+
+                            expect(core.parentView?.subviews).to(contain(core))
+                        }
+
+                        it("removes core as subview of fullscreenController") {
+                            core.setFullscreen(false)
+
+                            expect(core.fullscreenController.view.subviews).toNot(contain(core))
+                        }
+
+                        it("only set core as subview of parentView once") {
+                            core.setFullscreen(false)
+                            core.setFullscreen(false)
+
+                            expect(core.parentView?.subviews.filter { $0 == core }.count).to(equal(1))
+                        }
+                    }
+                }
+
+                describe("Forward events") {
+
+                    var player: Player!
+
+                    beforeEach {
+                        player = Player()
+                        player.attachTo(UIView(), controller: UIViewController())
+                    }
+
+                    context("when core trigger InternalEvent.userRequestEnterInFullscreen") {
+                        it("triggers Event.requestFullscreen on player") {
+                            var didTriggerEvent = false
+                            player.on(.requestFullscreen) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            player.core?.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+
+                    context("when core trigger InternalEvent.userRequestExitFullscreen") {
+                        it("triggers Event.exitFullscreen on player") {
+                            var didTriggerEvent = false
+                            player.on(.exitFullscreen) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            player.core?.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+
+                    context("when core trigger InternalEvent.didExitFullscreen") {
+                        it("triggers Event.exitFullscreen on player") {
+                            var didTriggerEvent = false
+                            player.on(.exitFullscreen) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            player.core?.trigger(InternalEvent.didExitFullscreen.rawValue)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+
+                    context("when core trigger InternalEvent.didEnterFullscreen") {
+                        it("triggers Event.requestFullscreen on player") {
+                            var didTriggerEvent = false
+                            player.on(.requestFullscreen) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            player.core?.trigger(InternalEvent.didEnterFullscreen.rawValue)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+                }
+
+                context("when fullscreen is controled by app") {
+
+                    beforeEach {
+                        core = Core(options: [kFullscreenByApp: false])
                         core.parentView = UIView()
-
                         core.render()
-                        core.setFullscreen(true)
-                        core.setFullscreen(true)
+                    }
 
-                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(core.fullscreenController.view.subviews.filter { $0 == core }.count).to(equal(1))
-                        expect(core.mediaControl?.fullscreen).to(beTrue())
+                    context("and setFullscreen(true) is called") {
+
+                        beforeEach {
+                            core.setFullscreen(false)
+                        }
+
+                        it("set isFullscreen to true") {
+                            core.setFullscreen(true)
+
+                            expect(core.isFullscreen).to(beTrue())
+                        }
+
+                        it("triggers InternalEvent.didEnterFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(true)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("triggers InternalEvent.willEnterFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.willEnterFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(true)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+                    }
+
+                    context("and setFullscreen(false) is called") {
+
+                        beforeEach {
+                            core.setFullscreen(true)
+                        }
+
+                        it("set isFullscreen to false") {
+                            core.setFullscreen(false)
+
+                            expect(core.isFullscreen).to(beFalse())
+                        }
+
+                        it("triggers InternalEvent.willExitFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.willExitFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(false)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
+
+                        it("triggers InternalEvent.didExitFullscreen") {
+                            var didTriggerEvent = false
+                            core.on(InternalEvent.didExitFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            core.setFullscreen(false)
+
+                            expect(didTriggerEvent).to(beTrue())
+                        }
                     }
                 }
 
@@ -203,13 +446,13 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
                 }
 
-                context("when only kFullscreenByApp is passed") {
+                context("when only kFullscreenByApp is true") {
 
-                    it("start as embed video when its true") {
+                    it("start as embed video") {
                         let options: Options = [kFullscreenByApp: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
@@ -217,7 +460,7 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core)).to(beTrue())
-                        expect(core.mediaControl?.fullscreen).to(beFalse())
+                        expect(core.isFullscreen).to(beFalse())
                     }
 
                     it("start as fullscreen video when its false") {
@@ -232,7 +475,25 @@ class CoreTests: QuickSpec {
 
                         expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(player.core!.mediaControl?.fullscreen).to(beTrue())
+                        expect(player.core!.isFullscreen).to(beTrue())
+                    }
+                }
+
+                context("when only kFullscreenByApp is false") {
+
+                    it("start as fullscreen video") {
+                        let player = Player(options: [kFullscreenByApp: false] as Options)
+                        var callbackWasCalled = false
+                        player.on(.requestFullscreen) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.attachTo(UIView(), controller: UIViewController())
+
+                        player.setFullscreen(true)
+
+                        expect(callbackWasCalled).toEventually(beTrue())
+                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
             }

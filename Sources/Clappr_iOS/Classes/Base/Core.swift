@@ -40,9 +40,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         return activeContainer?.playback
     }
 
-    open var isFullscreen: Bool {
-        return mediaControl?.fullscreen ?? false
-    }
+    open var isFullscreen: Bool = false
 
     public required init?(coder _: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
@@ -58,6 +56,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.black
 
         mediaControl = loader.mediaControl.create()
+        mediaControl?.core = self
         addTapRecognizer()
 
         bindEventListeners()
@@ -96,12 +95,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             return
         }
 
-        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.fullscreenHandler.enterInFullscreen(userInfo) }
-        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.fullscreenHandler.exitFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler.enterInFullscreen() }
+        listenTo(mediaControl, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler.exitFullscreen() }
     }
 
     fileprivate func renderInContainerView() {
-        mediaControl?.fullscreen = false
+        isFullscreen = false
         parentView?.addSubviewMatchingConstraints(self)
     }
 
