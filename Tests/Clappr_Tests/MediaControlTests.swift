@@ -201,6 +201,89 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.fullscreenButton?.isHidden) == false
                     }
                 }
+
+                context("when mediaControl is on fullscreen mode") {
+
+                    var mediaControl: MediaControl!
+
+                    beforeEach {
+                        mediaControl = MediaControl.create()
+                        mediaControl.render()
+                        mediaControl.fullscreen = true
+                    }
+
+                    context("and user taps on fullscreen button") {
+                        it("triggers userRequestExitFullscreen") {
+                            var didTriggerEvent = false
+                            mediaControl.on(InternalEvent.userRequestExitFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            mediaControl.fullscreenButton!.sendActions(for: UIControlEvents.touchUpInside)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+                }
+
+                context("when mediaControl is on embed mode") {
+
+                    var mediaControl: MediaControl!
+
+                    beforeEach {
+                        mediaControl = MediaControl.create()
+                        mediaControl.fullscreen = false
+                    }
+
+                    context("and user taps on fullscreen button") {
+
+                        it("triggers userRequestEnterInFullscreen") {
+                            var didTriggerEvent = false
+                            mediaControl.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { _ in
+                                didTriggerEvent = true
+                            }
+
+                            mediaControl.fullscreenButton?.sendActions(for: UIControlEvents.touchUpInside)
+
+                            expect(didTriggerEvent).toEventually(beTrue())
+                        }
+                    }
+                }
+
+
+                context("when core trigger InternalEvent.didEnterFullscreen") {
+
+                    var core: Core!
+
+                    beforeEach {
+                        core = Core()
+                        core.render()
+                        core.isFullscreen = false
+                        core.mediaControl?.fullscreen = false
+                        core.setFullscreen(true)
+                    }
+
+                    it("sets fullscreen to true") {
+                        expect(core.mediaControl?.fullscreen).toEventually(beTrue())
+                    }
+                }
+
+                context("when core trigger InternalEvent.didExitFullscreen") {
+
+                    var core: Core!
+
+                    beforeEach {
+                        core = Core()
+                        core.render()
+                        core.isFullscreen = true
+                        core.mediaControl?.fullscreen = true
+                        core.setFullscreen(false)
+                    }
+
+                    it("sets fullscreen to false") {
+                        expect(core.mediaControl?.fullscreen).toEventually(beFalse())
+                    }
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ open class MediaControl: UIBaseObject {
 
     internal(set) open weak var container: Container?
     internal(set) open var controlsHidden = false
+    open weak var core: Core?
 
     open var bufferPercentage: CGFloat = 0.0
     open var seekPercentage: CGFloat = 0.0
@@ -65,7 +66,7 @@ open class MediaControl: UIBaseObject {
         }
     }
 
-    open var fullscreen = false {
+    var fullscreen = false {
         didSet {
             fullscreenButton?.isSelected = fullscreen
         }
@@ -175,6 +176,12 @@ open class MediaControl: UIBaseObject {
     }
 
     open func bindEventListeners() {
+
+        if let core = self.core {
+            listenTo(core, eventName: InternalEvent.didExitFullscreen.rawValue) { [weak self] _ in self?.fullscreen = false }
+            listenTo(core, eventName: InternalEvent.didEnterFullscreen.rawValue) { [weak self] _ in self?.fullscreen = true }
+        }
+
         if let container = self.container {
             listenTo(container, eventName: Event.disableMediaControl.rawValue) { [weak self] _ in self?.disable() }
             listenTo(container, eventName: Event.enableMediaControl.rawValue) { [weak self] _ in self?.enable() }
@@ -327,8 +334,11 @@ open class MediaControl: UIBaseObject {
     }
 
     @IBAction open func toggleFullscreen(_: UIButton) {
-        let event = fullscreen ? Event.exitFullscreen : Event.requestFullscreen
-        trigger(event.rawValue)
+        if fullscreen {
+            trigger(InternalEvent.userRequestExitFullscreen.rawValue)
+        } else {
+            trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+        }
         scheduleTimerToHideControls()
         updateScrubberPosition()
     }
