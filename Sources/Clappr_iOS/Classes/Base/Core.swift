@@ -105,8 +105,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open override func render() {
-        addToContainer()
-
         containers.forEach(renderContainer)
         plugins.forEach(installPlugin)
 
@@ -114,6 +112,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             addSubviewMatchingConstraints(mediaControl)
             mediaControl.render()
         }
+        addToContainer()
     }
 
     fileprivate func addToContainer() {
