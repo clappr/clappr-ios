@@ -24,4 +24,5 @@ public enum Event: String {
     case willUpdatePoster
     case didUpdatePoster
     case seek
+    case didSeek
 }

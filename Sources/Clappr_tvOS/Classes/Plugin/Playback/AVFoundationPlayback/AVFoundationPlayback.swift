@@ -265,8 +265,12 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     open override func seek(_ timeInterval: TimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
-        player?.currentItem?.seek(to: time)
         trigger(.seek)
+
+        player?.currentItem?.seek(to: time) { success in
+            trigger(.didSeek, userInfo: ["success": success])
+        }
+
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
