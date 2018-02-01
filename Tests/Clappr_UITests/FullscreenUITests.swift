@@ -13,7 +13,7 @@ class FullscreenUITests: QuickSpec {
             return app.windows.element(boundBy: 0)
         }
 
-        describe("Fullscreen") {
+        describe(".Fullscreen") {
 
             beforeEach {
                 app = XCUIApplication()
@@ -28,68 +28,63 @@ class FullscreenUITests: QuickSpec {
                 app.terminate()
             }
 
-            context("setFullscreen") {
-                it("player should set to fullscreen when setFullscreen is called") {
-                    dashboardInteractor.startAsFullscreen = false
-                    dashboardInteractor.fullscreenControledByApp = false
-
-                    dashboardInteractor.startVideo()
-                    playerInteractor.tapOnContainer()
-                    XCUIDevice.shared.orientation = .landscapeLeft
-
-                    expect(playerInteractor.containerFrame == window.frame).to(beTrue())
-                }
-            }
-
-            context("start as fullscreen") {
+            context("when the option of start as fullscreen is passed") {
 
                 beforeEach {
                     dashboardInteractor.startAsFullscreen = true
                 }
 
-                it("player should have the same size of window") {
-                    dashboardInteractor.fullscreenControledByApp = false
+                context("when fullscreen is controled by the player") {
+                    it("sets the player as fullscreen") {
+                        dashboardInteractor.fullscreenControledByApp = false
 
-                    dashboardInteractor.startVideo()
+                        dashboardInteractor.startVideo()
 
-                    expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                    }
                 }
 
-                it("player should not have the same size of window ") {
-                    dashboardInteractor.fullscreenControledByApp = true
+                context("when fullscreen is controled by the app") {
+                    it("doesn't sets fullscreen mode on player") {
+                        dashboardInteractor.fullscreenControledByApp = true
 
-                    dashboardInteractor.startVideo()
+                        dashboardInteractor.startVideo()
 
-                    expect(playerInteractor.containerFrame != window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame != window.frame).to(beTrue())
+                    }
                 }
             }
 
-            context("fullscreen controled by app") {
+            context("when the option of fullscreen controled by app is passed") {
 
                 beforeEach {
                     playerInteractor = PlayerViewInteractor(app: app)
                 }
 
-                it("player should not change the container size when taps on fullscreen button") {
-                    dashboardInteractor.startAsFullscreen = false
+                context("and user taps on fullscreen button") {
 
-                    dashboardInteractor.startVideo()
-                    let currentFrame = playerInteractor.containerFrame
-                    playerInteractor.tapOnContainer()
-                    playerInteractor.tapOnFullscreen()
-                    
-                    expect(currentFrame == playerInteractor.containerFrame).to(beTrue())
+                    it("sets the player as fullscreen") {
+                        dashboardInteractor.fullscreenControledByApp = true
+
+                        dashboardInteractor.startVideo()
+                        playerInteractor.tapOnContainer()
+                        playerInteractor.tapOnFullscreen()
+
+                        expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                    }
                 }
 
-                it("player should not change the container size when taps on fullscreen button") {
-                    dashboardInteractor.startAsFullscreen = true
+                context("and user taps on fullscreen button after a previous tap") {
+                    it("sets the player as embed mode") {
+                        dashboardInteractor.fullscreenControledByApp = true
 
-                    dashboardInteractor.startVideo()
-                    let currentFrame = playerInteractor.containerFrame
-                    playerInteractor.tapOnContainer()
-                    playerInteractor.tapOnFullscreen()
+                        dashboardInteractor.startVideo()
+                        playerInteractor.tapOnContainer()
+                        playerInteractor.tapOnFullscreen()
+                        playerInteractor.tapOnFullscreen()
 
-                    expect(currentFrame == playerInteractor.containerFrame).to(beTrue())
+                        expect(playerInteractor.containerFrame != window.frame).to(beTrue())
+                    }
                 }
             }
         }
