@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
+		3283BF062024D8B100F2B826 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		32DA34191FFBCFC400484C90 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628D1D41339400CCB866 /* Container.swift */; };
@@ -228,6 +230,7 @@
 
 /* Begin PBXFileReference section */
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_tvOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E402161FF433FA001C2096 /* EventDispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcherTests.swift; sourceTree = "<group>"; };
@@ -364,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */,
+				3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */,
 				32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */,
 				32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */,
 			);
@@ -817,6 +821,7 @@
 			isa = PBXGroup;
 			children = (
 				57351C6920248F08007DEBBE /* OHHTTPStubs.framework */,
+				3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */,
 				32E4021D1FF43534001C2096 /* Nimble.framework */,
 				B46D05A71DB7DBD60004B23F /* Quick.framework */,
 				B46D05A51DB7DBC50004B23F /* Nimble.framework */,
@@ -1155,6 +1160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3283BF062024D8B100F2B826 /* video.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,6 +1232,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
 			);
 			outputPaths = (
 			);
