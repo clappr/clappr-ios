@@ -1,6 +1,8 @@
 import Quick
 import Nimble
 import AVFoundation
+import AVKit
+import OHHTTPStubs
 @testable import Clappr
 
 class AVFoundationPlaybackTests: QuickSpec {
@@ -60,6 +62,59 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
                         expect(nowPlayingService.didCallSetItems).toEventually(beTrue(), timeout: 10)
+                    }
+                }
+            }
+
+            describe("#playerViewController") {
+                var avFoundationPlayback: AVFoundationPlayback!
+                var controller: AVPlayerViewController!
+                let fromTime = CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC))
+                let toTime = CMTimeMakeWithSeconds(10, Int32(NSEC_PER_SEC))
+
+                beforeEach {
+                    controller = AVPlayerViewController()
+
+                    stub(condition: isHost("clappr.io")) { _ in
+                        let stubPath = OHPathForFile("video.mp4", type(of: self))
+                        return fixture(filePath: stubPath!, headers: ["Content-Type":"video/mp4"])
+                    }
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.io/highline.mp4"])
+
+                    avFoundationPlayback.play()
+                }
+
+                context("when seek will begin") {
+                    it("triggers will seek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
+                                done()
+                            }
+
+                            _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
+                    }
+                }
+
+                context("when seek is executed") {
+                    it("triggers seek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.seek.rawValue) { _ in
+                                done()
+                            }
+
+                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
+                    }
+
+                    it("triggers didSeek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.didSeek.rawValue) { _ in
+                                done()
+                            }
+
+                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
                     }
                 }
             }

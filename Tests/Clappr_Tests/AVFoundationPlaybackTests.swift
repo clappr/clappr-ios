@@ -55,6 +55,18 @@ class AVFoundationPlaybackTests: QuickSpec {
                     avFoundationPlayback.play()
                 }
 
+                it("triggers willSeek event") {
+                    waitUntil { done in
+                        let listener = BaseObject()
+
+                        listener.listenTo(avFoundationPlayback, eventName: Event.willSeek.rawValue) { info in
+                            done()
+                        }
+
+                        avFoundationPlayback.seek(5)
+                    }
+                }
+
                 it("triggers seek event") {
                     waitUntil { done in
                         let listener = BaseObject()
@@ -72,7 +84,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                         let listener = BaseObject()
 
                         listener.listenTo(avFoundationPlayback, eventName: Event.didSeek.rawValue) { info in
-                            expect(info!["success"] as? Bool).to(beTrue())
                             done()
                         }
 
