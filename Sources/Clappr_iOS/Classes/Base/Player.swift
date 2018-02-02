@@ -79,7 +79,8 @@ open class Player: BaseObject {
              Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
              Event.positionUpdate.rawValue, Event.willPlay.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.seek.rawValue])
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
+             Event.seek.rawValue, Event.didSeek.rawValue])
 
         let loader = Loader(externalPlugins: externalPlugins, options: options)
 

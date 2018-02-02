@@ -64,6 +64,12 @@ class ViewController: UIViewController {
 
         player.on(Event.stalled) { _ in print("on Stalled") }
 
+        player.on(Event.willSeek) { _ in print("on willSeek") }
+
+        player.on(Event.seek) { _ in print("on seek") }
+
+        player.on(Event.didSeek) { _ in print("on didSeek") }
+
         player.on(Event.requestFullscreen) { _ in
             Logger.logInfo("Entrar em modo fullscreen")
             if self.fullscreenByApp {
