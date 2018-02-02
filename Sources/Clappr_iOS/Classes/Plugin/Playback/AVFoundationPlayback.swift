@@ -238,8 +238,15 @@ open class AVFoundationPlayback: Playback {
     open override func seek(_ timeInterval: TimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
-        player?.currentItem?.seek(to: time)
         trigger(.seek)
+        trigger(.willSeek)
+
+        player?.currentItem?.seek(to: time) { [weak self] success in
+            if success {
+                self?.trigger(.didSeek)
+            }
+        }
+
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
@@ -365,7 +372,7 @@ open class AVFoundationPlayback: Playback {
         let info = [
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-            "duration": CMTimeGetSeconds(timeRange.start),
+            "duration": CMTimeGetSeconds(timeRange.duration),
             ]
 
         trigger(.bufferUpdate, userInfo: info)
