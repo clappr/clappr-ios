@@ -265,13 +265,26 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     open override func seek(_ timeInterval: TimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
-        player?.currentItem?.seek(to: time)
         trigger(.seek)
+        trigger(.willSeek)
+
+        player?.currentItem?.seek(to: time) { [weak self] success in
+            if success {
+                self?.trigger(.didSeek)
+            }
+        }
+
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
+        trigger(.willSeek)
+        return targetTime
     }
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
         trigger(.seek)
+        trigger(.didSeek)
     }
 
     open override func mute(_ enabled: Bool) {
@@ -408,7 +421,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         let info = [
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-            "duration": CMTimeGetSeconds(timeRange.start),
+            "duration": CMTimeGetSeconds(timeRange.duration),
             ]
 
         trigger(.bufferUpdate, userInfo: info)
