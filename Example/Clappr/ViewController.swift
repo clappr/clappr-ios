@@ -3,16 +3,13 @@ import Clappr
 
 class ViewController: UIViewController {
 
+    var fullscreenController = UIViewController()
     @IBOutlet weak var playerContainer: UIView!
     var player: Player!
     var options: Options = [:]
 
     var fullscreenByApp: Bool {
         return options[kFullscreenByApp] as? Bool ?? false
-    }
-
-    var deviceIsOnLandscape: Bool {
-        return [UIDeviceOrientation.landscapeLeft, UIDeviceOrientation.landscapeRight].contains(UIDevice.current.orientation)
     }
 
     override func viewDidLoad() {
@@ -22,31 +19,6 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: .UIDeviceOrientationDidChange, object: nil)
-    }
-
-    func rotated() {
-        guard let playerIsOnFullscreen = player?.isFullscreen else { return }
-        setPlayerTo(fullscreen: deviceIsOnLandscape && !playerIsOnFullscreen)
-        if !deviceIsOnLandscape {
-            forceOrientation(to: .portrait)
-        }
-    }
-
-    func setPlayerTo(fullscreen: Bool) {
-        UIApplication.shared.isStatusBarHidden = fullscreen
-        player?.setFullscreen(fullscreen)
-    }
-
-    fileprivate func forceOrientation(to orientation: UIInterfaceOrientation = .portrait) {
-        UIDevice.current.setValue(
-            orientation.rawValue,
-            forKey: "orientation"
-        )
     }
 
     func listenToPlayerEvents() {
@@ -66,17 +38,30 @@ class ViewController: UIViewController {
 
         player.on(Event.requestFullscreen) { _ in
             Logger.logInfo("Entrar em modo fullscreen")
-            if self.fullscreenByApp {
-                self.player.setFullscreen(true)
-            }
+            self.onRequestFullscreen()
         }
 
         player.on(Event.exitFullscreen) { _ in
             Logger.logInfo("Sair do modo fullscreen")
-            if self.fullscreenByApp {
-                self.player.setFullscreen(false)
-            }
+            self.onExitFullscreen()
         }
+    }
+
+    func onRequestFullscreen() {
+        guard fullscreenByApp else { return }
+        fullscreenController.modalPresentationStyle = .overFullScreen
+        present(fullscreenController, animated: false) {
+            self.player.setFullscreen(true)
+        }
+        fullscreenController.view.addSubviewMatchingConstraints(player.core!)
+    }
+
+    func onExitFullscreen() {
+        guard let core = player.core, fullscreenByApp else { return }
+        fullscreenController.dismiss(animated: false) {
+            self.player.setFullscreen(false)
+        }
+        core.parentView?.addSubviewMatchingConstraints(core)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
