@@ -40,7 +40,7 @@ class FullscreenUITests: QuickSpec {
 
                         dashboardInteractor.startVideo()
 
-                        expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame == window.frame).toEventually(beTrue())
                     }
                 }
 
@@ -50,7 +50,7 @@ class FullscreenUITests: QuickSpec {
 
                         dashboardInteractor.startVideo()
 
-                        expect(playerInteractor.containerFrame != window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame != window.frame).toEventually(beTrue())
                     }
                 }
             }
@@ -70,7 +70,7 @@ class FullscreenUITests: QuickSpec {
                         playerInteractor.tapOnContainer()
                         playerInteractor.tapOnFullscreen()
 
-                        expect(playerInteractor.containerFrame == window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame == window.frame).toEventually(beTrue())
                     }
                 }
 
@@ -83,7 +83,7 @@ class FullscreenUITests: QuickSpec {
                         playerInteractor.tapOnFullscreen()
                         playerInteractor.tapOnFullscreen()
 
-                        expect(playerInteractor.containerFrame != window.frame).to(beTrue())
+                        expect(playerInteractor.containerFrame != window.frame).toEventually(beTrue())
                     }
                 }
             }
