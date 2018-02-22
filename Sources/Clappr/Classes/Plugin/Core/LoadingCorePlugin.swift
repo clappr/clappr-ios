@@ -24,6 +24,7 @@ open class LoadingCorePlugin: UICorePlugin {
         addSubview(spinningWheel)
         isUserInteractionEnabled = false
         bindCoreEvents()
+        accessibilityIdentifier = "LoadingCorePlugin"
     }
 
     private func bindCoreEvents() {
