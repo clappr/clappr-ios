@@ -64,11 +64,13 @@ open class LoadingCorePlugin: UICorePlugin {
 
     fileprivate func startAnimating(_: EventUserInfo) {
         spinningWheel.startAnimating()
+        isHidden = false
         Logger.logDebug("started animating spinning wheel", scope: pluginName)
     }
 
     fileprivate func stopAnimating(_: EventUserInfo) {
         spinningWheel.stopAnimating()
+        isHidden = true
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
     }
 
