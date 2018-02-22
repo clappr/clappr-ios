@@ -40,7 +40,6 @@ open class LoadingCorePlugin: UICorePlugin {
 
     open override func render() {
         setupConstraints()
-        layer.zPosition = 1
     }
 
     fileprivate func setupConstraints() {
