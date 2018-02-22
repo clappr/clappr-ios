@@ -25,7 +25,7 @@
 		32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
 		32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
 		32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
-		32E401C71FF42351001C2096 /* LoadingContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */; };
+		32E401C71FF42351001C2096 /* LoadingCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingCorePlugin.swift */; };
 		32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
 		32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B11D41339400CCB866 /* UICorePlugin.swift */; };
 		32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B51D41339400CCB866 /* UIPlugin.swift */; };
@@ -85,7 +85,7 @@
 		96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIViewExtension.swift */; };
 		96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
 		96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
-		96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */; };
+		96D362DF1D41339400CCB866 /* LoadingCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* LoadingCorePlugin.swift */; };
 		96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AE1D41339400CCB866 /* PosterPlugin.swift */; };
 		96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
 		96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B11D41339400CCB866 /* UICorePlugin.swift */; };
@@ -288,7 +288,7 @@
 		96D362A31D41339400CCB866 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		96D362A71D41339400CCB866 /* MediaOptionFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOptionFactory.swift; sourceTree = "<group>"; };
 		96D362A81D41339400CCB866 /* PlaybackFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactory.swift; sourceTree = "<group>"; };
-		96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingContainerPlugin.swift; sourceTree = "<group>"; };
+		96D362AD1D41339400CCB866 /* LoadingCorePlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCorePlugin.swift; sourceTree = "<group>"; };
 		96D362AE1D41339400CCB866 /* PosterPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterPlugin.swift; sourceTree = "<group>"; };
 		96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPlugin.swift; sourceTree = "<group>"; };
 		96D362B11D41339400CCB866 /* UICorePlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePlugin.swift; sourceTree = "<group>"; };
@@ -650,7 +650,6 @@
 		96D362AC1D41339400CCB866 /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				96D362AD1D41339400CCB866 /* LoadingContainerPlugin.swift */,
 				96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */,
 			);
 			path = Container;
@@ -659,6 +658,7 @@
 		96D362B01D41339400CCB866 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				96D362AD1D41339400CCB866 /* LoadingCorePlugin.swift */,
 				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
 			);
 			path = Core;
@@ -1326,7 +1326,7 @@
 				32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */,
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
-				32E401C71FF42351001C2096 /* LoadingContainerPlugin.swift in Sources */,
+				32E401C71FF42351001C2096 /* LoadingCorePlugin.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				FC7785AC2005233D00EC879F /* Options.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
@@ -1426,7 +1426,7 @@
 				96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
-				96D362DF1D41339400CCB866 /* LoadingContainerPlugin.swift in Sources */,
+				96D362DF1D41339400CCB866 /* LoadingCorePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
