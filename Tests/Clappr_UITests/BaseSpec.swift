@@ -27,7 +27,7 @@ class BaseSpec: QuickSpec {
         waitUntil(timeout: timeout) { done in
             var timer: Timer!
             timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
-                if self.app.staticTexts["ClapprElapsedTime"].label == "00:01" {
+                if self.app.staticTexts["ClapprElapsedTime"].exists" {
                     timer.invalidate()
                     action(done)
                 }
