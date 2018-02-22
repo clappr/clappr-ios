@@ -30,6 +30,19 @@ class AVURLAssetWithCookiesTests: QuickSpec {
                 expect(avUrlAssetWithCookies.options[AVURLAssetHTTPCookiesKey]).toNot(beNil())
             }
 
+            it("retrieve cookies with different paths") {
+                let anotherCookie = HTTPCookie(properties: [HTTPCookiePropertyKey.domain: "clappr.io",
+                                                            HTTPCookiePropertyKey.path: "/another/path",
+                                                            HTTPCookiePropertyKey.name: "testing",
+                                                            HTTPCookiePropertyKey.value: "still works"])!
+                HTTPCookieStorage.shared.setCookie(anotherCookie)
+
+                let avUrlAssetWithCookies = AVURLAssetWithCookiesBuilder(url: URL(string: "http://clappr.io/highline.mp4")!)
+
+                expect(avUrlAssetWithCookies.cookies?.count).to(equal(2))
+                expect(avUrlAssetWithCookies.options[AVURLAssetHTTPCookiesKey]).toNot(beNil())
+            }
+
             it("doesn't sets cookies that aren't associated with the media url") {
                 let anotherCookie = HTTPCookie(properties: [HTTPCookiePropertyKey.domain: "anotherdomain.io",
                                                  HTTPCookiePropertyKey.path: "/",
