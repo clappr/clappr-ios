@@ -101,6 +101,9 @@
 		96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C11D41339400CCB866 /* MediaControlView.xib */; };
 		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
+		9E20D046203F51250056786D /* LoadingCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20D045203F51250056786D /* LoadingCorePluginTests.swift */; };
+		9E20D049203F527C0056786D /* LoadingCorePluginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20D048203F527C0056786D /* LoadingCorePluginUITests.swift */; };
+		9E20D04B203F53810056786D /* BaseSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20D04A203F53810056786D /* BaseSpec.swift */; };
 		9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E26CFF12016149600AE92B7 /* FullScreenStateHandler.swift */; };
 		9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E26CFF22016149600AE92B7 /* FullscreenController.swift */; };
 		9E2F9B191F9F8C2400A07786 /* FullscreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E121F9F8A54006510BE /* FullscreenUITests.swift */; };
@@ -305,6 +308,9 @@
 		96D362C11D41339400CCB866 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
 		96D362F01D41345E00CCB866 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		96E7D2731E786FEE0056F358 /* InternalEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalEvent.swift; sourceTree = "<group>"; };
+		9E20D045203F51250056786D /* LoadingCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCorePluginTests.swift; sourceTree = "<group>"; };
+		9E20D048203F527C0056786D /* LoadingCorePluginUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCorePluginUITests.swift; sourceTree = "<group>"; };
+		9E20D04A203F53810056786D /* BaseSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSpec.swift; sourceTree = "<group>"; };
 		9E26CFF12016149600AE92B7 /* FullScreenStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullScreenStateHandler.swift; path = Sources/Clappr_iOS/Classes/Base/FullScreen/FullScreenStateHandler.swift; sourceTree = SOURCE_ROOT; };
 		9E26CFF22016149600AE92B7 /* FullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullscreenController.swift; path = Sources/Clappr_iOS/Classes/Base/FullScreen/FullscreenController.swift; sourceTree = SOURCE_ROOT; };
 		9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsUnboxerTests.swift; sourceTree = "<group>"; };
@@ -524,6 +530,7 @@
 				57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */,
 				9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */,
 				9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */,
+				9E20D045203F51250056786D /* LoadingCorePluginTests.swift */,
 			);
 			path = Clappr_Tests;
 			sourceTree = "<group>";
@@ -691,6 +698,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		9E20D047203F52630056786D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				9E692E121F9F8A54006510BE /* FullscreenUITests.swift */,
+				9E20D048203F527C0056786D /* LoadingCorePluginUITests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		9E26CFEB201612B800AE92B7 /* Clappr_iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -790,11 +806,12 @@
 		9E692E001F9F898F006510BE /* Clappr_UITests */ = {
 			isa = PBXGroup;
 			children = (
+				9E20D047203F52630056786D /* Tests */,
 				9E692E0E1F9F8A53006510BE /* Info.plist */,
 				9E692E161F9F8A6E006510BE /* Player */,
 				9E692E151F9F8A63006510BE /* Dashboard */,
-				9E692E121F9F8A54006510BE /* FullscreenUITests.swift */,
 				9E692E141F9F8A54006510BE /* XCTWaiter+WaitFor.swift */,
+				9E20D04A203F53810056786D /* BaseSpec.swift */,
 			);
 			path = Clappr_UITests;
 			sourceTree = "<group>";
@@ -1368,6 +1385,7 @@
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
+				9E20D046203F51250056786D /* LoadingCorePluginTests.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
@@ -1439,7 +1457,9 @@
 				9E2F9B1E1F9F8C3100A07786 /* PlayerViewInteractor.swift in Sources */,
 				9E2F9B1D1F9F8C2F00A07786 /* PlayerViewElements.swift in Sources */,
 				9E2F9B1C1F9F8C2C00A07786 /* DashboardViewInteractor.swift in Sources */,
+				9E20D049203F527C0056786D /* LoadingCorePluginUITests.swift in Sources */,
 				9E2F9B1B1F9F8C2A00A07786 /* DashboardViewElements.swift in Sources */,
+				9E20D04B203F53810056786D /* BaseSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

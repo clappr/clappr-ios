@@ -12,9 +12,10 @@ class BaseSpec: QuickSpec {
     override func spec() {
         beforeEach {
             self.app = XCUIApplication()
+            self.app.launch()
+
             self.dashboard = DashboardViewInteractor(app: self.app)
             self.player = PlayerViewInteractor(app: self.app)
-            self.app.launch()
         }
 
         afterEach {
