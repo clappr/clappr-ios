@@ -26,10 +26,7 @@ class LoadingCorePluginUITests: BaseSpec {
                 self.dashboard.startVideo()
                 self.player.tapOnContainer()
 
-                self.waitVOD { done in
-                    expect(self.app.otherElements["LoadingCorePlugin"].exists).toEventually(beFalse())
-                    done()
-                }
+                expect(self.app.otherElements["LoadingCorePlugin"].exists).toEventually(beFalse(), timeout: 10)
             }
         }
     }
