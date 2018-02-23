@@ -53,6 +53,13 @@ class PlayerTests: QuickSpec {
                 player.activePlayback?.trigger(.playing)
                 expect(callbackWasCalled).to(beTrue())
             }
+
+            it("loads LoadingCorePlugin") {
+                let player = Player()
+
+                let containsPlugin = player.core?.plugins.filter { $0 is LoadingCorePlugin }.count
+                expect(containsPlugin).to(equal(1))
+            }
         }
     }
 
