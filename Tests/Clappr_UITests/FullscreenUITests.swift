@@ -73,19 +73,6 @@ class FullscreenUITests: QuickSpec {
                         expect(playerInteractor.containerFrame == window.frame).toEventually(beTrue())
                     }
                 }
-
-                context("and user taps on fullscreen button after a previous tap") {
-                    it("sets the player as embed mode") {
-                        dashboardInteractor.fullscreenControledByApp = true
-
-                        dashboardInteractor.startVideo()
-                        playerInteractor.tapOnContainer()
-                        playerInteractor.tapOnFullscreen()
-                        playerInteractor.tapOnFullscreen()
-
-                        expect(playerInteractor.containerFrame != window.frame).toEventually(beTrue())
-                    }
-                }
             }
         }
     }
