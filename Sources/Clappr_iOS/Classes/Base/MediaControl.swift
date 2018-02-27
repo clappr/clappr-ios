@@ -105,10 +105,6 @@ open class MediaControl: UIBaseObject {
         } else {
             mediaControl = initCustom()
         }
-
-        mediaControl.playbackControlButton?.accessibilityIdentifier = "ClapprPlayButton"
-        mediaControl.currentTimeLabel?.accessibilityIdentifier = "ClapprElapsedTime"
-        
         mediaControl.setupAspectFitButtonResize(mediaControl.playbackControlButton)
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
