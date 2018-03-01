@@ -1,4 +1,4 @@
-open class LoadingContainerPlugin: UIContainerPlugin {
+open class SpinnerPlugin: UIContainerPlugin {
 
     fileprivate var spinningWheel: UIActivityIndicatorView!
 
@@ -20,6 +20,7 @@ open class LoadingContainerPlugin: UIContainerPlugin {
         addSubview(spinningWheel)
         isUserInteractionEnabled = false
         bindDidChangePlayback()
+        accessibilityIdentifier = "SpinnerPlugin"
     }
 
     private func bindDidChangePlayback() {
@@ -79,9 +80,9 @@ open class LoadingContainerPlugin: UIContainerPlugin {
 
     open override func destroy() {
         super.destroy()
-        Logger.logDebug("destroying", scope: "LoadingContainerPlugin")
-        Logger.logDebug("destroying ui elements", scope: "LoadingContainerPlugin")
+        Logger.logDebug("destroying", scope: "SpinnerPlugin")
+        Logger.logDebug("destroying ui elements", scope: "SpinnerPlugin")
         removeFromSuperview()
-        Logger.logDebug("destroyed", scope: "LoadingContainerPlugin")
+        Logger.logDebug("destroyed", scope: "SpinnerPlugin")
     }
 }
