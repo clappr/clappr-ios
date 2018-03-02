@@ -18,7 +18,7 @@ class SpinnerPluginTests: QuickSpec {
             container.playback = playback
         }
 
-        fdescribe("SpinnerPlugin") {
+        describe("SpinnerPlugin") {
 
             describe("#init") {
 

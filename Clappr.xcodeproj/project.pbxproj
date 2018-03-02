@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
+		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
 		3283BF062024D8B100F2B826 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
@@ -231,6 +233,8 @@
 
 /* Begin PBXFileReference section */
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
+		32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIApplicationExtension.swift; sourceTree = "<group>"; };
 		3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		32D18C8D20484CA10097653C /* SpinnerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerPluginTests.swift; sourceTree = "<group>"; };
 		32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_tvOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -451,6 +455,14 @@
 				32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		32580AED2049FA0F002D49B2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */ = {
@@ -793,10 +805,12 @@
 		9E692E001F9F898F006510BE /* Clappr_UITests */ = {
 			isa = PBXGroup;
 			children = (
+				32580AED2049FA0F002D49B2 /* Extension */,
 				9E692E0E1F9F8A53006510BE /* Info.plist */,
 				9E692E161F9F8A6E006510BE /* Player */,
 				9E692E151F9F8A63006510BE /* Dashboard */,
 				9E692E121F9F8A54006510BE /* FullscreenUITests.swift */,
+				32580AE82049F087002D49B2 /* PlaybackTests.swift */,
 				9E692E141F9F8A54006510BE /* XCTWaiter+WaitFor.swift */,
 			);
 			path = Clappr_UITests;
@@ -1440,6 +1454,8 @@
 			files = (
 				9E2F9B1A1F9F8C2600A07786 /* XCTWaiter+WaitFor.swift in Sources */,
 				9E2F9B191F9F8C2400A07786 /* FullscreenUITests.swift in Sources */,
+				32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */,
+				32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */,
 				9E2F9B1E1F9F8C3100A07786 /* PlayerViewInteractor.swift in Sources */,
 				9E2F9B1D1F9F8C2F00A07786 /* PlayerViewElements.swift in Sources */,
 				9E2F9B1C1F9F8C2C00A07786 /* DashboardViewInteractor.swift in Sources */,
