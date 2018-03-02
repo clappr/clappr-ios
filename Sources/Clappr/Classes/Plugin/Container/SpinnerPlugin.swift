@@ -2,6 +2,10 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     fileprivate var spinningWheel: UIActivityIndicatorView!
 
+    var isAnimating: Bool {
+        return spinningWheel.isAnimating
+    }
+
     public required init() {
         super.init()
     }
@@ -69,11 +73,13 @@ open class SpinnerPlugin: UIContainerPlugin {
     }
 
     fileprivate func startAnimating(_: EventUserInfo) {
+        isHidden = false
         spinningWheel.startAnimating()
         Logger.logDebug("started animating spinning wheel", scope: pluginName)
     }
 
     fileprivate func stopAnimating(_: EventUserInfo) {
+        isHidden = true
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
     }
