@@ -45,7 +45,6 @@ fastlane/test_example_output_ios
 # xcov reports
 fastlane/xcov_report_ios
 fastlane/xcov_report_tvos
-fastlane/xcov_example_report_ios
 
 # lint output
 fastlane/lint_output
