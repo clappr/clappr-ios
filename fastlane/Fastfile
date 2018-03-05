@@ -30,10 +30,10 @@ platform :ios do
     scan(scheme: "Clappr_tvOS", output_directory: "fastlane/test_output_tvos")
     xcov(scheme: "Clappr_tvOS", output_directory: "fastlane/xcov_report_tvos")
 
+    scan(scheme: "Clappr_Example", output_directory: "fastlane/test_example_output_ios")
+
     scan(scheme: "Clappr", output_directory: "fastlane/test_output_ios")
     xcov(scheme: "Clappr", output_directory: "fastlane/xcov_report_ios")
-
-    scan(scheme: "Clappr_Example", output_directory: "fastlane/test_example_output_ios")
   end
 
   desc "Bump version in Podspec and Info.plist"
