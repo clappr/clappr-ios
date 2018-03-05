@@ -31,6 +31,7 @@ class PlaybackTests: QuickSpec {
                     dashboardInteractor.startVideo()
                     playerInteractor.tapOnContainer()
 
+                    expect(app.isVideoIn(state: .buffering)).to(beTrue())
                     expect(app.isVideoIn(state: .playing)).to(beTrue())
                 }
             }
