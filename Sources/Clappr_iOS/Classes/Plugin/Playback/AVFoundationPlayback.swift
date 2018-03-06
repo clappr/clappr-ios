@@ -340,6 +340,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func readyToPlay() {
+        trigger(InternalEvent.readyToPlay.rawValue)
+
         if let subtitles = self.subtitles {
             trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
         }
