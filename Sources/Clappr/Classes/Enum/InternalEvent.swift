@@ -1,5 +1,4 @@
 public enum InternalEvent: String {
-    case readyToPlay
     case willChangePlayback
     case didChangePlayback
     case willChangeActiveContainer
