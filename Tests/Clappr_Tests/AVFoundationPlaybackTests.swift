@@ -8,7 +8,7 @@ import AVFoundation
 class AVFoundationPlaybackTests: QuickSpec {
 
     override func spec() {
-        describe("AVFoundationPlayback Tests") {
+        fdescribe("AVFoundationPlayback Tests") {
 
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
@@ -87,12 +87,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 var avFoundationPlayback: AVFoundationPlayback!
 
                 beforeEach {
-                    stub(condition: isHost("clappr.io")) { _ in
-                        let stubPath = OHPathForFile("video.mp4", type(of: self))
-                        return fixture(filePath: stubPath!, headers: ["Content-Type":"video/mp4"])
-                    }
-                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.io/highline.mp4"])
-
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/highline.mp4"])
                     avFoundationPlayback.play()
                 }
 
@@ -100,7 +95,9 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     it("doesn't store the desired seek time") {
                         let playback = AVFoundationPlayback()
-                        playback.player = AVPlayerStub()
+                        let player = AVPlayerStub()
+                        player.setStatus(to: .readyToPlay)
+                        playback.player = player
 
                         playback.seek(20)
 
@@ -110,6 +107,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("calls seek right away") {
                         let playback = AVFoundationPlayback()
                         let player = AVPlayerStub()
+                        player.setStatus(to: .readyToPlay)
                         playback.player = player
 
                         playback.seek(20)
@@ -174,7 +172,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers willSeek event") {
-                    waitUntil { done in
+                    waitUntil(timeout: 3) { done in
                         let listener = BaseObject()
 
                         listener.listenTo(avFoundationPlayback, eventName: Event.willSeek.rawValue) { info in
@@ -186,7 +184,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers seek event") {
-                    waitUntil { done in
+                    waitUntil(timeout: 3) { done in
                         let listener = BaseObject()
 
                         listener.listenTo(avFoundationPlayback, eventName: Event.seek.rawValue) { info in
@@ -198,7 +196,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didSeek when a seek is completed") {
-                    waitUntil { done in
+                    waitUntil(timeout: 3) { done in
                         let listener = BaseObject()
 
                         listener.listenTo(avFoundationPlayback, eventName: Event.didSeek.rawValue) { info in
@@ -210,7 +208,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers positionUpdate for the desired position") {
-                    waitUntil { done in
+                    waitUntil(timeout: 3) { done in
                         let listener = BaseObject()
 
                         listener.listenTo(avFoundationPlayback, eventName: Event.positionUpdate.rawValue) { info in
