@@ -8,7 +8,7 @@ import AVFoundation
 class AVFoundationPlaybackTests: QuickSpec {
 
     override func spec() {
-        fdescribe("AVFoundationPlayback Tests") {
+        describe("AVFoundationPlayback Tests") {
 
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
