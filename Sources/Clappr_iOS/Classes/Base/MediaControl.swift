@@ -28,7 +28,7 @@ open class MediaControl: UIBaseObject {
     @IBOutlet open var playbackControlButton: UIButton?
     @IBOutlet open var fullscreenButton: UIButton?
 
-    @IBOutlet open weak var airPlayVolumeView: MPVolumeView?
+    @IBOutlet open var airPlayVolumeView: MPVolumeView?
 
     internal(set) open weak var container: Container?
     internal(set) open var controlsHidden = false
