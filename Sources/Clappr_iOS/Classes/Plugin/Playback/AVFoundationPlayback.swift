@@ -16,7 +16,9 @@ open class AVFoundationPlayback: Playback {
     fileprivate var kvoExternalPlaybackActiveContext = 0
     fileprivate var kvoPlayerRateContext = 0
 
-    dynamic fileprivate var player: AVPlayer?
+    private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
+
+    internal var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle {
@@ -201,7 +203,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    fileprivate func addObservers() {
+    internal func addObservers() {
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
         player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
@@ -248,7 +250,16 @@ open class AVFoundationPlayback: Playback {
         player = nil
     }
 
+    var isReadyToSeek: Bool {
+        return player?.currentItem?.status == .readyToPlay
+    }
+
     open override func seek(_ timeInterval: TimeInterval) {
+        if !isReadyToSeek {
+            seekToTimeWhenReadyToPlay = timeInterval
+            return
+        }
+
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
         trigger(.seek)
@@ -352,8 +363,15 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    internal func seekOnReadyIfNeeded() {
+        if let timeToSeek = seekToTimeWhenReadyToPlay {
+            seek(timeToSeek)
+            self.seekToTimeWhenReadyToPlay = nil
+        }
+    }
+
     fileprivate func readyToPlay() {
-        trigger(InternalEvent.readyToPlay.rawValue)
+        seekOnReadyIfNeeded()
 
         if let subtitles = self.subtitles {
             trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
@@ -437,6 +455,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func removeObservers() {
+        if player?.observationInfo == nil { return }
         if player != nil {
             player?.removeObserver(self, forKeyPath: "currentItem.status")
             player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")

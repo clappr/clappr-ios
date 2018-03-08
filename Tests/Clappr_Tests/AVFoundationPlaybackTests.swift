@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import OHHTTPStubs
+import AVFoundation
 
 @testable import Clappr
 
@@ -41,6 +42,46 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("#isReadyToSeek") {
+                context("when AVPlayer status is readyToPlay") {
+                    it("returns true") {
+                        let playback = AVFoundationPlayback()
+                        let playerStub = AVPlayerStub()
+                        playback.player = playerStub
+
+                        playerStub.setStatus(to: .readyToPlay)
+
+                        expect(playback.isReadyToSeek).to(beTrue())
+                    }
+                }
+
+                context("when AVPlayer status is unknown") {
+
+                    it("returns false") {
+                        let playback = AVFoundationPlayback()
+                        let playerStub = AVPlayerStub()
+                        playback.player = playerStub
+
+                        playerStub.setStatus(to: .unknown)
+
+                        expect(playback.isReadyToSeek).to(beFalse())
+                    }
+                }
+
+                context("when AVPlayer status is failed") {
+
+                    it("returns false") {
+                        let playback = AVFoundationPlayback()
+                        let playerStub = AVPlayerStub()
+                        playback.player = playerStub
+
+                        playerStub.setStatus(to: .failed)
+
+                        expect(playback.isReadyToSeek).to(beFalse())
+                    }
+                }
+            }
+
             describe("#seek") {
 
                 var avFoundationPlayback: AVFoundationPlayback!
@@ -53,6 +94,83 @@ class AVFoundationPlaybackTests: QuickSpec {
                     avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.io/highline.mp4"])
 
                     avFoundationPlayback.play()
+                }
+
+                context("when AVPlayer status is readyToPlay") {
+
+                    it("doesn't store the desired seek time") {
+                        let playback = AVFoundationPlayback()
+                        playback.player = AVPlayerStub()
+
+                        playback.seek(20)
+
+                        expect(playback.seekToTimeWhenReadyToPlay).to(beNil())
+                    }
+
+                    it("calls seek right away") {
+                        let playback = AVFoundationPlayback()
+                        let player = AVPlayerStub()
+                        playback.player = player
+
+                        playback.seek(20)
+
+                        expect(player._item.didCallSeekWithCompletionHandler).to(beTrue())
+                    }
+                }
+
+                context("when AVPlayer status is not readyToPlay") {
+
+                    it("stores the desired seek time") {
+                        let playback = AVFoundationPlayback()
+
+                        playback.seek(20)
+
+                        expect(playback.seekToTimeWhenReadyToPlay).to(equal(20))
+                    }
+
+                    it("doesn't calls seek right away") {
+                        let playback = AVFoundationPlayback()
+                        let player = AVPlayerStub()
+                        playback.player = player
+
+                        player.setStatus(to: .unknown)
+                        playback.seek(20)
+
+                        expect(player._item.didCallSeekWithCompletionHandler).to(beFalse())
+                    }
+                }
+
+                describe("#seekIfNeeded") {
+
+                    context("when seekToTimeWhenReadyToPlay is nil") {
+                        it("doesnt perform a seek") {
+                            let playback = AVFoundationPlayback()
+                            let player = AVPlayerStub()
+                            playback.player = player
+                            player.setStatus(to: .readyToPlay)
+
+                            playback.seekOnReadyIfNeeded()
+
+                            expect(player._item.didCallSeekWithCompletionHandler).to(beFalse())
+                            expect(playback.seekToTimeWhenReadyToPlay).to(beNil())
+                        }
+                    }
+
+                    context("when seekToTimeWhenReadyToPlay is not nil") {
+                        it("does perform a seek") {
+                            let playback = AVFoundationPlayback()
+                            let player = AVPlayerStub()
+                            playback.player = player
+                            player.setStatus(to: .unknown)
+
+                            playback.seek(20)
+                            player.setStatus(to: .readyToPlay)
+                            playback.seekOnReadyIfNeeded()
+
+                            expect(player._item.didCallSeekWithCompletionHandler).to(beTrue())
+                            expect(playback.seekToTimeWhenReadyToPlay).to(beNil())
+                        }
+                    }
                 }
 
                 it("triggers willSeek event") {
@@ -105,5 +223,34 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
         }
+
+        class AVPlayerStub: AVPlayer {
+
+            override var currentItem: AVPlayerItem? {
+                return _item
+            }
+
+            var _item = AVPlayerItemMock(url: URL(string: "https://clappr.io/highline.mp4")!)
+
+            func setStatus(to newStatus: AVPlayerItemStatus) {
+                _item._status = newStatus
+            }
+        }
+
+        class AVPlayerItemMock: AVPlayerItem {
+
+            override var status: AVPlayerItemStatus {
+                return _status
+            }
+
+            var didCallSeekWithCompletionHandler = false
+
+            var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
+
+            override func seek(to time: CMTime, completionHandler: @escaping (Bool) -> Void) {
+                didCallSeekWithCompletionHandler = true
+            }
+        }
+
     }
 }
