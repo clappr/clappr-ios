@@ -6,7 +6,7 @@ open class MediaOption: Equatable {
     open var raw: AnyObject?
     open var language: String
 
-    init(name: String, type: MediaOptionType, language: String, raw: AnyObject? = nil) {
+    public init(name: String, type: MediaOptionType, language: String, raw: AnyObject? = nil) {
         self.name = name
         self.type = type
         self.language = language
