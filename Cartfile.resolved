@@ -1,4 +1,5 @@
 github "AliSoftware/OHHTTPStubs" "6.1.0"
 github "Quick/Nimble" "v7.0.3"
 github "Quick/Quick" "v1.2.0"
+github "glock45/swifter" "1.4.0"
 github "onevcat/Kingfisher" "3.13.1"

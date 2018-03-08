@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import OHHTTPStubs
 import AVFoundation
+import Swifter
 
 @testable import Clappr
 
@@ -9,6 +10,16 @@ class AVFoundationPlaybackTests: QuickSpec {
 
     override func spec() {
         describe("AVFoundationPlayback Tests") {
+
+            let server = HTTPStub()
+
+            beforeSuite {
+                server.start()
+            }
+
+            afterSuite {
+                server.stop()
+            }
 
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
@@ -87,7 +98,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 var avFoundationPlayback: AVFoundationPlayback!
 
                 beforeEach {
-                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/highline.mp4"])
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "http://localhost:8080/sample.m3u8"])
                     avFoundationPlayback.play()
                 }
 
