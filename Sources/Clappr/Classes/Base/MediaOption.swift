@@ -12,8 +12,8 @@ open class MediaOption: Equatable {
         self.language = language
         self.raw = raw
     }
-}
 
-public func ==(lhs: MediaOption, rhs: MediaOption) -> Bool {
-    return lhs.name == rhs.name && lhs.type == rhs.type && lhs.language == rhs.language
+    public static func ==(lhs: MediaOption, rhs: MediaOption) -> Bool {
+        return lhs.name == rhs.name && lhs.type == rhs.type && lhs.language == rhs.language
+    }
 }
