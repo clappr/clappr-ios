@@ -118,6 +118,13 @@ class PlaybackTests: QuickSpec {
                     expect(playback.source).to(beNil())
                 }
             }
+            
+            context("AutoPlay") {
+                it("set autoPlay at property from options") {
+                    let playback = StubPlayback(options: [kAutoPlay: true])
+                    expect(playback.autoPlay).to(beTrue())
+                }
+            }
         }
     }
 
