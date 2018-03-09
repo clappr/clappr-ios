@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        options[kAutoPlay] = true
         player = Player(options: options)
 
         listenToPlayerEvents()

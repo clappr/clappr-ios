@@ -23,6 +23,10 @@ open class Playback: UIBaseObject, Plugin {
         return options[kSourceUrl] as? String
     }
 
+    open var autoPlay: Bool {
+        return options[kAutoPlay] as? Bool ?? false
+    }
+
     open var startAt: TimeInterval {
         return options[kStartAt] as? TimeInterval ?? 0.0
     }

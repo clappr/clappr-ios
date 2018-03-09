@@ -63,6 +63,17 @@ open class Container: UIBaseObject {
         } else {
             renderPlayback()
             trigger(InternalEvent.didLoadSource.rawValue)
+            autoPlayIfNeeded()
+        }
+    }
+
+    fileprivate func autoPlayIfNeeded() {
+        guard let playback = playback else {
+            return
+        }
+
+        if playback.autoPlay {
+            playback.play()
         }
     }
 

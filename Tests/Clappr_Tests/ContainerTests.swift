@@ -234,6 +234,21 @@ class ContainerTests: QuickSpec {
                         expect(container.playback?.superview) == container
                     }
                 }
+                
+                context("when auto play is enable") {
+
+                    let source: String = Resource.valid[kSourceUrl]!
+
+                    beforeEach {
+                        container = Container(loader: loader, options: [kAutoPlay: true])
+                    }
+
+                    it("triggers play") {
+                        container.load(source)
+
+                        expect(container.playback?.isPlaying).toEventually(beTrue())
+                    }
+                }
 
                 it("keep just one playback as subview at time") {
                     let container = Container()
@@ -272,6 +287,7 @@ class ContainerTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
+        
         override var pluginName: String {
             return "AVPlayback"
         }
