@@ -22,19 +22,19 @@ class MediaOptionTests: QuickSpec {
                 }
 
                 it("has name") {
-                    expect(mediaOption.name) == name
+                    expect(mediaOption.name).to(equal(name))
                 }
 
                 it("has type") {
-                    expect(mediaOption.type) == type
+                    expect(mediaOption.type).to(equal(type))
                 }
 
                 it("has language") {
-                    expect(mediaOption.language) == language
+                    expect(mediaOption.language).to(equal(language))
                 }
 
                 it("has raw") {
-                    expect(mediaOption.raw as? String) == raw
+                    expect(mediaOption.raw as? String).to(equal(raw))
                 }
             }
 
