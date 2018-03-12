@@ -105,6 +105,11 @@
 		96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C11D41339400CCB866 /* MediaControlView.xib */; };
 		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
+		9E1613F82051CD4B006E95F2 /* sample1.ts in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F52051CD4A006E95F2 /* sample1.ts */; };
+		9E1613F92051CD4B006E95F2 /* sample.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F62051CD4B006E95F2 /* sample.m3u8 */; };
+		9E1613FA2051CD4B006E95F2 /* sample0.ts in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F72051CD4B006E95F2 /* sample0.ts */; };
+		9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1613FB2051CD89006E95F2 /* HTTPStub.swift */; };
+		9E1613FE2051D3DD006E95F2 /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1613FD2051D3DC006E95F2 /* Swifter.framework */; };
 		9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E26CFF12016149600AE92B7 /* FullScreenStateHandler.swift */; };
 		9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E26CFF22016149600AE92B7 /* FullscreenController.swift */; };
 		9E2F9B191F9F8C2400A07786 /* FullscreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E121F9F8A54006510BE /* FullscreenUITests.swift */; };
@@ -313,6 +318,11 @@
 		96D362C11D41339400CCB866 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
 		96D362F01D41345E00CCB866 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		96E7D2731E786FEE0056F358 /* InternalEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalEvent.swift; sourceTree = "<group>"; };
+		9E1613F52051CD4A006E95F2 /* sample1.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample1.ts; sourceTree = "<group>"; };
+		9E1613F62051CD4B006E95F2 /* sample.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.m3u8; sourceTree = "<group>"; };
+		9E1613F72051CD4B006E95F2 /* sample0.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample0.ts; sourceTree = "<group>"; };
+		9E1613FB2051CD89006E95F2 /* HTTPStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStub.swift; sourceTree = "<group>"; };
+		9E1613FD2051D3DC006E95F2 /* Swifter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swifter.framework; path = Carthage/Build/iOS/Swifter.framework; sourceTree = "<group>"; };
 		9E26CFF12016149600AE92B7 /* FullScreenStateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullScreenStateHandler.swift; path = Sources/Clappr_iOS/Classes/Base/FullScreen/FullScreenStateHandler.swift; sourceTree = SOURCE_ROOT; };
 		9E26CFF22016149600AE92B7 /* FullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullscreenController.swift; path = Sources/Clappr_iOS/Classes/Base/FullScreen/FullscreenController.swift; sourceTree = SOURCE_ROOT; };
 		9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsUnboxerTests.swift; sourceTree = "<group>"; };
@@ -397,6 +407,7 @@
 				B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */,
 				B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */,
 				57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */,
+				9E1613FE2051D3DD006E95F2 /* Swifter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +494,11 @@
 		57351C6620248D66007DEBBE /* Stub */ = {
 			isa = PBXGroup;
 			children = (
+				9E1613F62051CD4B006E95F2 /* sample.m3u8 */,
+				9E1613F72051CD4B006E95F2 /* sample0.ts */,
+				9E1613F52051CD4A006E95F2 /* sample1.ts */,
 				57351C6720248D78007DEBBE /* video.mp4 */,
+				9E1613FB2051CD89006E95F2 /* HTTPStub.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -840,6 +855,7 @@
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E1613FD2051D3DC006E95F2 /* Swifter.framework */,
 				57351C6920248F08007DEBBE /* OHHTTPStubs.framework */,
 				3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */,
 				32E4021D1FF43534001C2096 /* Nimble.framework */,
@@ -1198,7 +1214,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1613F82051CD4B006E95F2 /* sample1.ts in Resources */,
+				9E1613FA2051CD4B006E95F2 /* sample0.ts in Resources */,
 				57351C6820248D78007DEBBE /* video.mp4 in Resources */,
+				9E1613F92051CD4B006E95F2 /* sample.m3u8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1284,6 +1303,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Swifter.framework",
 			);
 			outputPaths = (
 			);
@@ -1400,6 +1420,7 @@
 				32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */,
 				57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */,
 				96A979731BFBB65E00E5EA01 /* MediaControlTests.swift in Sources */,
+				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
 				96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */,
 			);
