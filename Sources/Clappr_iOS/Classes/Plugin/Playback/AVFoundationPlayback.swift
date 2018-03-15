@@ -18,7 +18,7 @@ open class AVFoundationPlayback: Playback {
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
-    internal var player: AVPlayer?
+    @objc internal var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle {
@@ -40,7 +40,7 @@ open class AVFoundationPlayback: Playback {
 
     private var backgroundSessionBackup: String?
 
-    open var url: URL? {
+    @objc open var url: URL? {
         return asset?.url
     }
 
@@ -50,29 +50,29 @@ open class AVFoundationPlayback: Playback {
 
     open override var selectedSubtitle: MediaOption? {
         get {
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
-            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
+            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
         }
     }
 
     open override var selectedAudioSource: MediaOption? {
         get {
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.audible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .audioSource)
         }
         set {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
-                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicAudible)
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
         }
     }
 
     open override var subtitles: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.legible.rawValue) else {
             return []
         }
 
@@ -81,7 +81,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var audioSources: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
             return []
         }
         return mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
@@ -151,7 +151,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
+    @objc public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
         self.asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
     }
 
@@ -203,7 +203,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    internal func addObservers() {
+    @objc internal func addObservers() {
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
         player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
@@ -224,7 +224,7 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    func playbackDidEnd() {
+    @objc func playbackDidEnd() {
         trigger(.didComplete)
         updateState(.idle)
     }
@@ -243,14 +243,14 @@ open class AVFoundationPlayback: Playback {
         trigger(.didStop)
     }
 
-    func releaseResources() {
+    @objc func releaseResources() {
         removeObservers()
         playerLayer?.removeFromSuperlayer()
         playerLayer = nil
         player = nil
     }
 
-    var isReadyToSeek: Bool {
+    @objc var isReadyToSeek: Bool {
         return player?.currentItem?.status == .readyToPlay
     }
 
@@ -363,7 +363,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    internal func seekOnReadyIfNeeded() {
+    @objc internal func seekOnReadyIfNeeded() {
         if let timeToSeek = seekToTimeWhenReadyToPlay {
             seek(timeToSeek)
             self.seekToTimeWhenReadyToPlay = nil
@@ -447,7 +447,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
-        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
+        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: characteristic))
     }
 
     deinit {
@@ -465,7 +465,7 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "rate")
 
             if let timeObserver = self.timeObserver {
-                player?.removeTimeObserver(observer: timeObserver)
+                player?.removeTimeObserver(timeObserver)
             }
         }
 

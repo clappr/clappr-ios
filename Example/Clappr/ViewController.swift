@@ -3,12 +3,12 @@ import Clappr
 
 class ViewController: UIViewController {
 
-    var fullscreenController = UIViewController()
+    @objc var fullscreenController = UIViewController()
     @IBOutlet weak var playerContainer: UIView!
-    var player: Player!
-    var options: Options = [:]
+    @objc var player: Player!
+    @objc var options: Options = [:]
 
-    var fullscreenByApp: Bool {
+    @objc var fullscreenByApp: Bool {
         return options[kFullscreenByApp] as? Bool ?? false
     }
 
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         player.attachTo(playerContainer, controller: self)
     }
 
-    func listenToPlayerEvents() {
+    @objc func listenToPlayerEvents() {
         player.on(Event.playing) { _ in print("on Play") }
 
         player.on(Event.didPause) { _ in print("on Pause") }
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func onRequestFullscreen() {
+    @objc func onRequestFullscreen() {
         guard fullscreenByApp else { return }
         fullscreenController.modalPresentationStyle = .overFullScreen
         present(fullscreenController, animated: false) {
@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         fullscreenController.view.addSubviewMatchingConstraints(player.core!)
     }
 
-    func onExitFullscreen() {
+    @objc func onExitFullscreen() {
         guard let core = player.core, fullscreenByApp else { return }
         fullscreenController.dismiss(animated: false) {
             self.player.setFullscreen(false)
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         return UIInterfaceOrientation.portrait
     }
 
-    func showAlert(with title: String, message: String) {
+    @objc func showAlert(with title: String, message: String) {
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
         self.navigationController?.present(alertViewController, animated: true, completion: nil)

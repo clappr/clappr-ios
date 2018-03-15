@@ -1,18 +1,18 @@
 open class Player: BaseObject {
 
-    open var playbackEventsToListen: [String] = []
+    @objc open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
-    fileprivate(set) open var core: Core?
+    @objc fileprivate(set) open var core: Core?
 
-    open var activeContainer: Container? {
+    @objc open var activeContainer: Container? {
         return core?.activeContainer
     }
 
-    open var activePlayback: Playback? {
+    @objc open var activePlayback: Playback? {
         return core?.activePlayback
     }
 
-    open var isFullscreen: Bool {
+    @objc open var isFullscreen: Bool {
         guard let core = self.core else {
             return false
         }
@@ -20,23 +20,23 @@ open class Player: BaseObject {
         return core.isFullscreen
     }
 
-    open var isPlaying: Bool {
+    @objc open var isPlaying: Bool {
         return activePlayback?.isPlaying ?? false
     }
 
-    open var isPaused: Bool {
+    @objc open var isPaused: Bool {
         return activePlayback?.isPaused ?? false
     }
 
-    open var isBuffering: Bool {
+    @objc open var isBuffering: Bool {
         return activePlayback?.isBuffering ?? false
     }
 
-    open var duration: Double {
+    @objc open var duration: Double {
         return activePlayback?.duration ?? 0
     }
 
-    open var position: Double {
+    @objc open var position: Double {
         return activePlayback?.position ?? 0
     }
 
@@ -100,34 +100,34 @@ open class Player: BaseObject {
         bindPlaybackEvents()
     }
 
-    open func attachTo(_ view: UIView, controller: UIViewController) {
+    @objc open func attachTo(_ view: UIView, controller: UIViewController) {
         core?.parentController = controller
         core?.parentView = view
         core?.render()
     }
 
-    open func load(_ source: String, mimeType: String? = nil) {
+    @objc open func load(_ source: String, mimeType: String? = nil) {
         core?.activeContainer?.load(source, mimeType: mimeType)
         play()
     }
 
-    open func play() {
+    @objc open func play() {
         core?.activePlayback?.play()
     }
 
-    open func pause() {
+    @objc open func pause() {
         core?.activePlayback?.pause()
     }
 
-    open func stop() {
+    @objc open func stop() {
         core?.activePlayback?.stop()
     }
 
-    open func seek(_ timeInterval: TimeInterval) {
+    @objc open func seek(_ timeInterval: TimeInterval) {
         core?.activePlayback?.seek(timeInterval)
     }
 
-    open func setFullscreen(_ fullscreen: Bool) {
+    @objc open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
     }
 
@@ -162,7 +162,7 @@ open class Player: BaseObject {
         trigger(event.rawValue, userInfo: userInfo)
     }
 
-    open func destroy() {
+    @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Player")
         stopListening()
         Logger.logDebug("destroying core", scope: "Player")

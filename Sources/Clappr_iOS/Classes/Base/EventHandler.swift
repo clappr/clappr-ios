@@ -8,11 +8,11 @@ open class EventHandler: NSObject {
 
     fileprivate var callback: EventCallback?
 
-    public init(callback: @escaping EventCallback) {
+    @objc public init(callback: @escaping EventCallback) {
         self.callback = callback
     }
 
-    open func handleEvent(_ notification: Notification) {
+    @objc open func handleEvent(_ notification: Notification) {
         callback?(notification.userInfo)
     }
 }

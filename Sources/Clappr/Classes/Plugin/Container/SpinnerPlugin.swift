@@ -2,7 +2,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     fileprivate var spinningWheel: UIActivityIndicatorView!
 
-    var isAnimating: Bool {
+    @objc var isAnimating: Bool {
         return spinningWheel.isAnimating
     }
 

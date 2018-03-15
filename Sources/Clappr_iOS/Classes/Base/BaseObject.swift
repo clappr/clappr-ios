@@ -10,7 +10,7 @@ open class BaseObject: NSObject, EventProtocol {
     fileprivate var events = [String: EventHolder]()
     fileprivate var onceEventsHashes = [String]()
 
-    @discardableResult
+    @objc @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
         return on(eventName, callback: callback, contextObject: self)
     }
@@ -40,7 +40,7 @@ open class BaseObject: NSObject, EventProtocol {
         }
     }
 
-    @discardableResult
+    @objc @discardableResult
     open func once(_ eventName: String, callback: @escaping EventCallback) -> String {
         return once(eventName, callback: callback, contextObject: self)
     }
@@ -52,7 +52,7 @@ open class BaseObject: NSObject, EventProtocol {
         return listenId
     }
 
-    open func off(_ listenId: String) {
+    @objc open func off(_ listenId: String) {
         guard let event = events[listenId] else {
             Logger.logError("could not find any event with given event listenId: \(listenId)", scope: logIdentifier())
             return
@@ -62,11 +62,11 @@ open class BaseObject: NSObject, EventProtocol {
         events.removeValue(forKey: listenId)
     }
 
-    open func trigger(_ eventName: String) {
+    @objc open func trigger(_ eventName: String) {
         trigger(eventName, userInfo: [:])
     }
 
-    open func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
+    @objc open func trigger(_ eventName: String, userInfo: [AnyHashable: Any]?) {
         notificationCenter().post(name: Notification.Name(rawValue: eventName), object: self, userInfo: userInfo)
 
         if type(of: self) != BaseObject.self {
@@ -84,7 +84,7 @@ open class BaseObject: NSObject, EventProtocol {
         return once(eventName, callback: callback, contextObject: contextObject.getEventContextObject())
     }
 
-    open func stopListening() {
+    @objc open func stopListening() {
         for (_, event) in events {
             notificationCenter().removeObserver(event.eventHandler)
         }
@@ -92,11 +92,11 @@ open class BaseObject: NSObject, EventProtocol {
         events.removeAll()
     }
 
-    open func stopListening(_ listenId: String) {
+    @objc open func stopListening(_ listenId: String) {
         off(listenId)
     }
 
-    open func getEventContextObject() -> BaseObject {
+    @objc open func getEventContextObject() -> BaseObject {
         return self
     }
 

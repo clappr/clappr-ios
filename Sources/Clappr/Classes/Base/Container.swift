@@ -1,19 +1,19 @@
 import Foundation
 
 open class Container: UIBaseObject {
-    internal(set) open var plugins: [UIContainerPlugin] = []
-    open var options: Options
+    @objc internal(set) open var plugins: [UIContainerPlugin] = []
+    @objc open var options: Options
 
     fileprivate var loader: Loader
 
-    open var mediaControlEnabled = false {
+    @objc open var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: Event = mediaControlEnabled ? .enableMediaControl : .disableMediaControl
             trigger(eventToTrigger)
         }
     }
 
-    internal(set) open var playback: Playback? {
+    @objc internal(set) open var playback: Playback? {
         willSet {
             if self.playback != newValue {
                 trigger(InternalEvent.willChangePlayback.rawValue)
@@ -45,7 +45,7 @@ open class Container: UIBaseObject {
         fatalError("Use init(playback: Playback) instead")
     }
 
-    open func load(_ source: String, mimeType: String? = nil) {
+    @objc open func load(_ source: String, mimeType: String? = nil) {
         trigger(InternalEvent.willLoadSource.rawValue)
 
         var playbackOptions = options
@@ -98,11 +98,11 @@ open class Container: UIBaseObject {
         plugins.append(plugin)
     }
 
-    open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
+    @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
     }
 
-    open func destroy() {
+    @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
 
         trigger(InternalEvent.willDestroy.rawValue)

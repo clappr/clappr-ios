@@ -18,12 +18,12 @@ class AppStateManager: NSObject {
         stopMonitoring()
     }
 
-    func startMonitoring() {
+    @objc func startMonitoring() {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeState), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeState), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }
 
-    func stopMonitoring() {
+    @objc func stopMonitoring() {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
     }

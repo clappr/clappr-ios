@@ -1,13 +1,13 @@
 open class UICorePlugin: UIPlugin, Plugin {
-    open weak var core: Core?
+    @objc open weak var core: Core?
 
     open class var type: PluginType { return .core }
 
-    open class var name: String {
+    @objc open class var name: String {
         return self.init().pluginName
     }
 
-    open var pluginName: String {
+    @objc open var pluginName: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Core Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
@@ -16,7 +16,7 @@ open class UICorePlugin: UIPlugin, Plugin {
         super.init(frame: CGRect.zero)
     }
 
-    public required init(context: UIBaseObject) {
+    @objc public required init(context: UIBaseObject) {
         super.init(frame: CGRect.zero)
         if let core = context as? Core {
             self.core = core
@@ -29,7 +29,7 @@ open class UICorePlugin: UIPlugin, Plugin {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func destroy() {
+    @objc open func destroy() {
         Logger.logDebug("destroying", scope: "UICorePlugin")
         Logger.logDebug("destroying listeners", scope: "UICorePlugin")
         stopListening()
