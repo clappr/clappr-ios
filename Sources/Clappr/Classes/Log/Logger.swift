@@ -21,19 +21,19 @@ open class Logger: NSObject {
         }
     }
 
-    open class func logError(_ message: String, scope: String? = nil) {
+    @objc open class func logError(_ message: String, scope: String? = nil) {
         log(.error, scope: scope, message: message)
     }
 
-    open class func logWarn(_ message: String, scope: String? = nil) {
+    @objc open class func logWarn(_ message: String, scope: String? = nil) {
         log(.warning, scope: scope, message: message)
     }
 
-    open class func logInfo(_ message: String, scope: String? = nil) {
+    @objc open class func logInfo(_ message: String, scope: String? = nil) {
         log(.info, scope: scope, message: message)
     }
 
-    open class func logDebug(_ message: String, scope: String? = nil) {
+    @objc open class func logDebug(_ message: String, scope: String? = nil) {
         log(.debug, scope: scope, message: message)
     }
 }

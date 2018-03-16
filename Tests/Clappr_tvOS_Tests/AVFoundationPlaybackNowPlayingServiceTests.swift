@@ -31,7 +31,7 @@ class AVFoundationNowPlayingServiceTests: QuickSpec {
                         nowPlayingService?.setItems(to: playerItem, with: options)
 
                         let items = nowPlayingService?.nowPlayingBuilder?.build().flatMap{ $0.identifier } ?? []
-                        let externalMetadataIdentifiers = playerItem.externalMetadata.map({ $0.identifier ?? "" })
+                        let externalMetadataIdentifiers = playerItem.externalMetadata.map({ $0.identifier ?? AVMetadataIdentifier(rawValue: "") })
                         let didSetAllItems = !items.flatMap({ externalMetadataIdentifiers.contains($0) }).contains(true)
                         expect(didSetAllItems).to(beTrue())
                     }
@@ -56,7 +56,7 @@ class AVFoundationNowPlayingServiceTests: QuickSpec {
                         nowPlayingService?.setItems(to: playerItem, with: options)
 
                         let items = nowPlayingService?.nowPlayingBuilder?.build().flatMap{ $0.identifier } ?? []
-                        let externalMetadataIdentifiers = playerItem.externalMetadata.map({ $0.identifier ?? "" })
+                        let externalMetadataIdentifiers = playerItem.externalMetadata.map({ $0.identifier ?? AVMetadataIdentifier(rawValue: "") })
                         let didSetAllItems = !items.flatMap({ externalMetadataIdentifiers.contains($0) }).contains(false)
                         expect(didSetAllItems).to(beTrue())
                     }

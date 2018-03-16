@@ -25,7 +25,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier!.rawValue == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
 
                         expect(filteredItem).toNot(beEmpty())
                     }
@@ -43,7 +43,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
+                        let filteredItem = nowPlayingBuilder!.build().filter{ $0.identifier!.rawValue == AVFoundationNowPlayingBuilder.Keys.contentIdentifier }
 
                         expect(filteredItem).to(beEmpty())
                     }
@@ -63,7 +63,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier!.rawValue == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
 
                         expect(filteredItem).toNot(beEmpty())
                     }
@@ -81,7 +81,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier!.rawValue == AVFoundationNowPlayingBuilder.Keys.playbackProgress }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -100,7 +100,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierTitle }
 
                         expect(filteredItem).toNot(beEmpty())
                     }
@@ -118,7 +118,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierTitle }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierTitle }
                         
                         expect(filteredItem).to(beEmpty())
                     }
@@ -138,7 +138,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierDescription }
 
                         expect(filteredItem).toNot(beEmpty())
                     }
@@ -156,7 +156,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierDescription }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierDescription }
                         expect(filteredItem).to(beEmpty())
                     }
                 }
@@ -175,7 +175,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("sets the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierCreationDate }
                         expect(filteredItem).toNot(beEmpty())
                     }
                 }
@@ -192,7 +192,7 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                     }
 
                     it("doesn't set the item to the list of items") {
-                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataCommonIdentifierCreationDate }
+                        let filteredItem = nowPlayingBuilder?.build().filter{ $0.identifier == AVMetadataIdentifier.commonIdentifierCreationDate }
                         expect(filteredItem).to(beEmpty())
                     }
                 }

@@ -53,7 +53,7 @@ open class PosterPlugin: UIContainerPlugin {
         playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), for: .touchUpInside)
     }
 
-    func playTouched() {
+    @objc func playTouched() {
         container?.playback?.seek(0)
         container?.playback?.play()
     }
@@ -87,7 +87,7 @@ open class PosterPlugin: UIContainerPlugin {
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
     }
 
-    var isNoOpPlayback: Bool {
+    @objc var isNoOpPlayback: Bool {
         return container?.playback?.pluginName == "NoOp"
     }
 

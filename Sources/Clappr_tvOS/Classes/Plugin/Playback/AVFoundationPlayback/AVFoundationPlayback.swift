@@ -5,6 +5,7 @@ enum PlaybackState {
     case idle, paused, playing, buffering
 }
 
+@objcMembers
 open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
@@ -55,29 +56,29 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     open override var selectedSubtitle: MediaOption? {
         get {
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicLegible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
-            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicLegible)
+            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
         }
     }
 
     open override var selectedAudioSource: MediaOption? {
         get {
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristicAudible)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.audible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .audioSource)
         }
         set {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
-                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristicAudible)
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
         }
     }
 
     open override var subtitles: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicLegible) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.legible.rawValue) else {
             return []
         }
 
@@ -86,7 +87,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     open override var audioSources: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristicAudible) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
             return []
         }
         return mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
@@ -476,7 +477,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     fileprivate func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
-        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
+        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: characteristic))
     }
 
     deinit {
@@ -493,7 +494,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             player?.removeObserver(self, forKeyPath: "rate")
 
             if let timeObserver = self.timeObserver {
-                player?.removeTimeObserver(observer: timeObserver)
+                player?.removeTimeObserver(timeObserver)
             }
         }
 

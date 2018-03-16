@@ -1,13 +1,13 @@
 open class Core: UIBaseObject, UIGestureRecognizerDelegate {
-    fileprivate(set) open var options: Options
-    fileprivate(set) open var containers: [Container] = []
-    fileprivate(set) open var mediaControl: MediaControl?
-    fileprivate(set) open var plugins: [UICorePlugin] = []
+    @objc fileprivate(set) open var options: Options
+    @objc fileprivate(set) open var containers: [Container] = []
+    @objc fileprivate(set) open var mediaControl: MediaControl?
+    @objc fileprivate(set) open var plugins: [UICorePlugin] = []
 
-    open var parentController: UIViewController?
-    open var parentView: UIView?
+    @objc open var parentController: UIViewController?
+    @objc open var parentView: UIView?
 
-    private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+    @objc private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
 
     lazy var fullscreenHandler: FullscreenStateHandler = {
         return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
@@ -15,7 +15,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
 
-    open weak var activeContainer: Container? {
+    @objc open weak var activeContainer: Container? {
 
         willSet {
             activeContainer?.stopListening()
@@ -36,11 +36,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
 
-    open var activePlayback: Playback? {
+    @objc open var activePlayback: Playback? {
         return activeContainer?.playback
     }
 
-    open var isFullscreen: Bool = false
+    @objc open var isFullscreen: Bool = false
 
     public required init?(coder _: NSCoder) {
         fatalError("Should be using init(sources:[NSURL]) instead")
@@ -133,11 +133,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         container.render()
     }
 
-    open func addPlugin(_ plugin: UICorePlugin) {
+    @objc open func addPlugin(_ plugin: UICorePlugin) {
         plugins.append(plugin)
     }
 
-    open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
+    @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
     }
 
@@ -145,11 +145,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
     }
 
-    open func setFullscreen(_ fullscreen: Bool) {
+    @objc open func setFullscreen(_ fullscreen: Bool) {
         fullscreenHandler.set(fullscreen: fullscreen)
     }
 
-    open func destroy() {
+    @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
         trigger(InternalEvent.willDestroy.rawValue)

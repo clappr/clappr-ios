@@ -12,7 +12,7 @@ open class EventHandler: NSObject {
         self.callback = callback
     }
 
-    open func handleEvent(_ notification: Notification) {
+    @objc open func handleEvent(_ notification: Notification) {
         callback?(notification.userInfo)
     }
 }

@@ -3,11 +3,11 @@ import AVFoundation
 open class Playback: UIBaseObject, Plugin {
     open class var type: PluginType { return .playback }
 
-    open class var name: String {
+    @objc open class var name: String {
         return self.init().pluginName
     }
 
-    open var pluginName: String {
+    @objc open var pluginName: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
@@ -17,37 +17,37 @@ open class Playback: UIBaseObject, Plugin {
     fileprivate(set) open var subtitles: [MediaOption]?
     fileprivate(set) open var audioSources: [MediaOption]?
 
-    internal(set) open var options: Options
+    @objc internal(set) open var options: Options
 
-    open var source: String? {
+    @objc open var source: String? {
         return options[kSourceUrl] as? String
     }
 
-    open var startAt: TimeInterval {
+    @objc open var startAt: TimeInterval {
         return options[kStartAt] as? TimeInterval ?? 0.0
     }
 
-    open var isPlaying: Bool {
+    @objc open var isPlaying: Bool {
         return false
     }
 
-    open var isPaused: Bool {
+    @objc open var isPaused: Bool {
         return false
     }
 
-    open var isBuffering: Bool {
+    @objc open var isBuffering: Bool {
         return false
     }
 
-    open var duration: Double {
+    @objc open var duration: Double {
         return 0.0
     }
 
-    open var position: Double {
+    @objc open var position: Double {
         return 0.0
     }
 
-    open var settings: [String: Any] {
+    @objc open var settings: [String: Any] {
         return [:]
     }
 
@@ -55,7 +55,7 @@ open class Playback: UIBaseObject, Plugin {
         return .unknown
     }
 
-    open var isHighDefinitionInUse: Bool {
+    @objc open var isHighDefinitionInUse: Bool {
         return false
     }
 
@@ -65,8 +65,8 @@ open class Playback: UIBaseObject, Plugin {
         backgroundColor = UIColor.clear
     }
 
-    public required init(options: Options) {
-        Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
+    @objc public required init(options: Options) {
+        Logger.logDebug("loading with \(options)", scope: "\(Swift.type(of: self))")
         self.options = options
         super.init(frame: CGRect.zero)
         isUserInteractionEnabled = false
@@ -76,11 +76,11 @@ open class Playback: UIBaseObject, Plugin {
         fatalError("Use init(url: NSURL) instead")
     }
 
-    public required init(context _: UIBaseObject) {
+    @objc public required init(context _: UIBaseObject) {
         fatalError("Use init(url: NSURL) instead")
     }
 
-    open class func canPlay(_: Options) -> Bool {
+    @objc open class func canPlay(_: Options) -> Bool {
         return false
     }
 
@@ -106,12 +106,12 @@ open class Playback: UIBaseObject, Plugin {
         }
     }
 
-    open func play() {}
-    open func pause() {}
-    open func stop() {}
-    open func seek(_: TimeInterval) {}
+    @objc open func play() {}
+    @objc open func pause() {}
+    @objc open func stop() {}
+    @objc open func seek(_: TimeInterval) {}
 
-    open func destroy() {
+    @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
         Logger.logDebug("destroying ui elements", scope: "Playback")
         removeFromSuperview()

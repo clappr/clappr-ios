@@ -25,7 +25,7 @@ class AppStateManagerTests: XCTestCase {
         let stateManagerDelegate = AppStateManager(delegate: fakeHandler)
         stateManagerDelegate.startMonitoring()
 
-        XCUIDevice.shared().press(XCUIDeviceButton.home)
+        XCUIDevice.shared.press(XCUIDevice.Button.home)
 
         waitForExpectations(timeout: 20) { error in
             if error != nil {

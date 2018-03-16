@@ -70,7 +70,7 @@ open class Playback: UIBaseObject, Plugin {
     }
 
     public required init(options: Options) {
-        Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
+        Logger.logDebug("loading with \(options)", scope: "\(Swift.type(of: self))")
         self.options = options
         super.init(frame: CGRect.zero)
         isUserInteractionEnabled = false

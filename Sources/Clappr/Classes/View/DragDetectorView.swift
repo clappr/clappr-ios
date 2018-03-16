@@ -8,11 +8,11 @@ open class DragDetectorView: UIView {
 
     fileprivate(set) open var touchState: State = .idle
 
-    fileprivate(set) open var currentTouch: UITouch?
+    @objc fileprivate(set) open var currentTouch: UITouch?
 
-    open var target: AnyObject?
+    @objc open var target: AnyObject?
 
-    open var selector: Selector!
+    @objc open var selector: Selector!
 
     open override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         if let touch = touches.first {
