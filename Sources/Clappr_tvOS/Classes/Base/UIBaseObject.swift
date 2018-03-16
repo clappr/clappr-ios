@@ -1,5 +1,6 @@
 import Foundation
 
+@objcMembers
 open class UIBaseObject: UIView, EventProtocol {
     fileprivate let dispatcher = EventDispatcher()
 
