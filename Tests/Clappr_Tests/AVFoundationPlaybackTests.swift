@@ -256,7 +256,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
             var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
 
-            override func seek(to time: CMTime, completionHandler: @escaping (Bool) -> Void) {
+            override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
                 didCallSeekWithCompletionHandler = true
             }
         }
