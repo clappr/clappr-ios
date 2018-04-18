@@ -53,6 +53,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            if #available(iOS 11.0, *) {
+                context("when did change bounds") {
+                    it("sets preferredMaximumResolution according to playback bounds size") {
+                        let playback = AVFoundationPlayback()
+                        playback.player = AVPlayerStub()
+
+                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(playback.bounds.size))
+                    }
+                }
+            }
+
             describe("#isReadyToSeek") {
                 context("when AVPlayer status is readyToPlay") {
                     it("returns true") {
