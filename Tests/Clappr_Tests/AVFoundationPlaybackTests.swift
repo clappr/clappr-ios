@@ -245,34 +245,5 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
         }
-
-        class AVPlayerStub: AVPlayer {
-
-            override var currentItem: AVPlayerItem? {
-                return _item
-            }
-
-            var _item = AVPlayerItemMock(url: URL(string: "https://clappr.io/highline.mp4")!)
-
-            func setStatus(to newStatus: AVPlayerItemStatus) {
-                _item._status = newStatus
-            }
-        }
-
-        class AVPlayerItemMock: AVPlayerItem {
-
-            override var status: AVPlayerItemStatus {
-                return _status
-            }
-
-            var didCallSeekWithCompletionHandler = false
-
-            var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
-
-            override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
-                didCallSeekWithCompletionHandler = true
-            }
-        }
-
     }
 }
