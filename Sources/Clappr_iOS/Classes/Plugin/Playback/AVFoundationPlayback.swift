@@ -106,7 +106,7 @@ open class AVFoundationPlayback: Playback {
     open override var bounds: CGRect {
         didSet {
             if #available(iOS 11.0, *) {
-                player?.currentItem?.preferredMaximumResolution = bounds.size
+                setupMaxResolution(for: bounds.size)
             }
         }
     }
