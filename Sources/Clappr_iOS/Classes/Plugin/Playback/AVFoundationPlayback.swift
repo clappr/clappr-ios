@@ -103,6 +103,14 @@ open class AVFoundationPlayback: Playback {
         return currentState == .buffering
     }
 
+    open override var bounds: CGRect {
+        didSet {
+            if #available(iOS 11.0, *) {
+                setupMaxResolution(for: bounds.size)
+            }
+        }
+    }
+
     open override var duration: Double {
         guard playbackType == .vod, let item = player?.currentItem else {
             return 0

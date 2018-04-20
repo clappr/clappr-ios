@@ -53,6 +53,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            if #available(iOS 11.0, *) {
+                context("when did change bounds") {
+                    it("sets preferredMaximumResolution according to playback bounds size") {
+                        let playback = AVFoundationPlayback()
+                        playback.player = AVPlayerStub()
+
+                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(playback.bounds.size))
+                    }
+                }
+            }
+
             describe("#isReadyToSeek") {
                 context("when AVPlayer status is readyToPlay") {
                     it("returns true") {
@@ -232,34 +245,5 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
         }
-
-        class AVPlayerStub: AVPlayer {
-
-            override var currentItem: AVPlayerItem? {
-                return _item
-            }
-
-            var _item = AVPlayerItemMock(url: URL(string: "https://clappr.io/highline.mp4")!)
-
-            func setStatus(to newStatus: AVPlayerItemStatus) {
-                _item._status = newStatus
-            }
-        }
-
-        class AVPlayerItemMock: AVPlayerItem {
-
-            override var status: AVPlayerItemStatus {
-                return _status
-            }
-
-            var didCallSeekWithCompletionHandler = false
-
-            var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
-
-            override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
-                didCallSeekWithCompletionHandler = true
-            }
-        }
-
     }
 }

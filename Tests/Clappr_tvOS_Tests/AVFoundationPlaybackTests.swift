@@ -66,6 +66,24 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            if #available(tvOS 11.0, *) {
+                context("when did change bounds") {
+
+                    let playback = AVFoundationPlayback()
+
+                    beforeEach {
+                        let player = AVPlayerStub()
+                        playback.player = player
+                    }
+
+                    it("sets preferredMaximumResolution according to playback bounds size") {
+                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(playback.bounds.size))
+                    }
+                }
+            }
+
             describe("#playerViewController") {
                 var avFoundationPlayback: AVFoundationPlayback!
                 var controller: AVPlayerViewController!
