@@ -688,7 +688,6 @@
 		96D362AB1D41339400CCB866 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				9EED96FF2088E2D700D1C84A /* Playback */,
 				96D362AC1D41339400CCB866 /* Container */,
 				96D362B01D41339400CCB866 /* Core */,
 				96D362B51D41339400CCB866 /* UIPlugin.swift */,
@@ -866,13 +865,6 @@
 				9E692E131F9F8A54006510BE /* PlayerViewInteractor.swift */,
 			);
 			path = Player;
-			sourceTree = "<group>";
-		};
-		9EED96FF2088E2D700D1C84A /* Playback */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Playback;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
