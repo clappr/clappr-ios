@@ -6,7 +6,7 @@ class AVPlayerStub: AVPlayer {
         return _item
     }
 
-    var _item = AVPlayerItemMock(url: URL(string: "https://clappr.io/highline.mp4")!)
+    var _item = AVPlayerItemStub(url: URL(string: "https://clappr.io/highline.mp4")!)
 
     func setStatus(to newStatus: AVPlayerItemStatus) {
         _item._status = newStatus

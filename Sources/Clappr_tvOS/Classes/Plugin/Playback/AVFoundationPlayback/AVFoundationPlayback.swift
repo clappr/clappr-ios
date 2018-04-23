@@ -223,7 +223,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         }
     }
 
-    fileprivate func loadMetadata() {
+    internal func loadMetadata() {
         if let playerItem = player?.currentItem {
             nowPlayingService.setItems(to: playerItem, with: options)
         }

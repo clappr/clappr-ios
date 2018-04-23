@@ -42,26 +42,42 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            context("when player is ready to play") {
+            describe("#loadMetadata") {
 
-                var avFoundationPlayback: AVFoundationPlayback!
+                func getPlayback(with source: String) -> AVFoundationPlayback {
+                    let asset = AVAsset(url: URL(string: source)!)
+                    let playerItem = AVPlayerItem(asset: asset)
 
-                beforeEach {
-                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"])
+                    let playback = AVFoundationPlayback(options: [kSourceUrl: source])
+                    playback.player = AVPlayer(playerItem: playerItem)
+                    return playback
                 }
 
-                context("and avplayer has playerItem") {
+                context("when avplayer has playerItem") {
 
-                    var nowPlayingService: NowPlayingServiceStub!
-
-                    beforeEach {
-                        nowPlayingService = NowPlayingServiceStub()
-                        avFoundationPlayback.nowPlayingService = nowPlayingService
-                        avFoundationPlayback.play()
-                    }
+                    let playback = getPlayback(with: "https://clappr.io/highline.mp4")
 
                     it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
-                        expect(nowPlayingService.didCallSetItems).toEventually(beTrue(), timeout: 10)
+                        let nowPlayingService = NowPlayingServiceStub()
+                        playback.nowPlayingService = nowPlayingService
+
+                        playback.loadMetadata()
+
+                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
+                    }
+                }
+
+                context("when AVPlayer don't have playerItem") {
+
+                    let playback = AVFoundationPlayback(options: [:])
+
+                    it("doesn't call setItemsToPlayerItem of AVFoundationNowPlaying") {
+                        let nowPlayingService = NowPlayingServiceStub()
+                        playback.nowPlayingService = nowPlayingService
+
+                        playback.loadMetadata()
+
+                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(0))
                     }
                 }
             }
@@ -141,9 +157,9 @@ class AVFoundationPlaybackTests: QuickSpec {
 }
 
 fileprivate class NowPlayingServiceStub: AVFoundationNowPlayingService {
-    var didCallSetItems = false
+    var countOfCallsOfSetItems = 0
     
     override func setItems(to playerItem: AVPlayerItem, with options: Options) {
-        didCallSetItems = true
+        countOfCallsOfSetItems += 1
     }
 }
