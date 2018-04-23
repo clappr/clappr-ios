@@ -1,6 +1,6 @@
 import AVFoundation
 
-class AVPlayerItemMock: AVPlayerItem {
+class AVPlayerItemStub: AVPlayerItem {
 
     override var status: AVPlayerItemStatus {
         return _status
@@ -12,5 +12,6 @@ class AVPlayerItemMock: AVPlayerItem {
 
     override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
         didCallSeekWithCompletionHandler = true
+        completionHandler!(true)
     }
 }

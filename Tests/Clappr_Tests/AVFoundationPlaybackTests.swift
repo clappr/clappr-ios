@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import OHHTTPStubs
 import AVFoundation
 import Swifter
 
@@ -196,52 +195,63 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers willSeek event") {
-                    waitUntil(timeout: 3) { done in
-                        let listener = BaseObject()
-
-                        listener.listenTo(avFoundationPlayback, eventName: Event.willSeek.rawValue) { info in
-                            done()
-                        }
-
-                        avFoundationPlayback.seek(5)
+                    let playback = AVFoundationPlayback()
+                    let player = AVPlayerStub()
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                    var didTriggerWillSeek = false
+                    playback.on(Event.willSeek.rawValue) { _ in
+                        didTriggerWillSeek = true
                     }
+
+                    playback.seek(5)
+
+                    expect(didTriggerWillSeek).to(beTrue())
                 }
 
                 it("triggers seek event") {
-                    waitUntil(timeout: 3) { done in
-                        let listener = BaseObject()
-
-                        listener.listenTo(avFoundationPlayback, eventName: Event.seek.rawValue) { info in
-                            done()
-                        }
-
-                        avFoundationPlayback.seek(5)
+                    let playback = AVFoundationPlayback()
+                    let player = AVPlayerStub()
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                    var didTriggerSeek = false
+                    playback.on(Event.seek.rawValue) { _ in
+                        didTriggerSeek = true
                     }
+
+                    playback.seek(5)
+
+                    expect(didTriggerSeek).to(beTrue())
                 }
 
                 it("triggers didSeek when a seek is completed") {
-                    waitUntil(timeout: 3) { done in
-                        let listener = BaseObject()
-
-                        listener.listenTo(avFoundationPlayback, eventName: Event.didSeek.rawValue) { info in
-                            done()
-                        }
-
-                        avFoundationPlayback.seek(5)
+                    let playback = AVFoundationPlayback()
+                    let player = AVPlayerStub()
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                    var didTriggerDidSeek = false
+                    playback.on(Event.didSeek.rawValue) { _ in
+                        didTriggerDidSeek = true
                     }
+
+                    playback.seek(5)
+
+                    expect(didTriggerDidSeek).to(beTrue())
                 }
 
                 it("triggers positionUpdate for the desired position") {
-                    waitUntil(timeout: 3) { done in
-                        let listener = BaseObject()
-
-                        listener.listenTo(avFoundationPlayback, eventName: Event.positionUpdate.rawValue) { info in
-                            expect(info!["position"] as? Float64).to(equal(5))
-                            done()
-                        }
-
-                        avFoundationPlayback.seek(5)
+                    let playback = AVFoundationPlayback()
+                    let player = AVPlayerStub()
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                    var updatedPosition: Float64? = nil
+                    playback.on(Event.positionUpdate.rawValue) { (userInfo: EventUserInfo) in
+                        updatedPosition = userInfo!["position"] as? Float64
                     }
+
+                    playback.seek(5)
+
+                    expect(updatedPosition).to(equal(5))
                 }
             }
         }

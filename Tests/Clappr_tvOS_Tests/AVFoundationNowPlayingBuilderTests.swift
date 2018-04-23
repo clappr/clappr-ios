@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import MediaPlayer
+import OHHTTPStubs
 
 @testable import Clappr
 
@@ -202,48 +203,47 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
 
                 context("When has MetaDataArtwork") {
 
-                    beforeEach {
+                    it("returns non nil value") {
                         metadata = [kMetaDataArtwork: self.generateNewImage()]
                         nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                    }
 
-                    it("returns non nil value") {
-                        waitUntil() { done in
-                            nowPlayingBuilder?.getArtwork(with: [:]) { item in
-                                expect(item).toNot(beNil())
-                                done()
-                            }
+                        var artwork: AVMutableMetadataItem?
+                        nowPlayingBuilder?.getArtwork(with: [:]) { item in
+                            artwork = item
                         }
+
+                        expect(artwork).toEventuallyNot(beNil())
                     }
                 }
 
                 context("When doesn't have metadata image") {
 
                     beforeEach {
-                        metadata = [:]
-                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
+                        stub(condition: isMethodGET()) { _ in
+                            let stubPath = OHPathForFile("cover.png", type(of: self))
+                            return fixture(filePath: stubPath!, headers: ["Content-Type":"image/png"])
+                        }
                     }
 
                     it("loads poster image") {
-                        waitUntil(timeout: 10) { done in
-                            let url = "https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png"
-                            nowPlayingBuilder?.getArtwork(with: [kPosterUrl: url]) { item in
-                                expect(item).toNot(beNil())
-                                done()
-                            }
+                        nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: [:])
+
+                        let url = "https://clappr.io/image.png"
+                        var artwork: AVMutableMetadataItem?
+                        nowPlayingBuilder?.getArtwork(with: [kPosterUrl: url]) { item in
+                            artwork = item
                         }
+
+                        expect(artwork).toEventuallyNot(beNil())
                     }
                 }
             }
 
             describe("#getArtwork(with image)") {
 
-                beforeEach {
-                    metadata = [:]
-                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: metadata!)
-                }
-
                 it("returns non nil value") {
+                    nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: [:])
+
                     expect(nowPlayingBuilder?.getArtwork(with: self.generateNewImage())).toNot(beNil())
                 }
             }
