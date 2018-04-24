@@ -46,12 +46,6 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     private var backgroundSessionBackup: String?
 
-    open override var bounds: CGRect {
-        didSet {
-            setupMaxResolution(for: bounds.size)
-        }
-    }
-
     open var url: URL? {
         return asset?.url
     }
@@ -214,7 +208,6 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
             layer.addSublayer(playerLayer!)
-            setupMaxResolution(for: bounds.size)
             addObservers()
         } else {
             trigger(.error)
