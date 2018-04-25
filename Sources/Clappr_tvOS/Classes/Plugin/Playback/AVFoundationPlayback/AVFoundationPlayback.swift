@@ -46,14 +46,6 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     private var backgroundSessionBackup: String?
 
-    open override var bounds: CGRect {
-        didSet {
-            if #available(tvOS 11.0, *) {
-                setupMaxResolution(for: bounds.size)
-            }
-        }
-    }
-
     open var url: URL? {
         return asset?.url
     }
@@ -215,7 +207,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             }
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
-            self.layer.addSublayer(playerLayer!)
+            layer.addSublayer(playerLayer!)
             addObservers()
         } else {
             trigger(.error)

@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import AVFoundation
 import Swifter
+import OHHTTPStubs
 
 @testable import Clappr
 
@@ -61,6 +62,25 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
 
                         expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(playback.bounds.size))
+                    }
+                }
+
+                context("when setups avplayer") {
+
+                    beforeEach {
+                        stub(condition: isHost("clappr.io")) { _ in
+                            let stubPath = OHPathForFile("video.mp4", type(of: self))
+                            return fixture(filePath: stubPath!, headers: ["Content-Type":"video/mp4"])
+                        }
+                    }
+
+                    it("sets preferredMaximumResolution according to playback bounds size") {
+                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+
+                        playback.play()
+
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).toEventually(equal(playback.bounds.size))
                     }
                 }
             }

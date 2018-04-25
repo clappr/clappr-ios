@@ -105,9 +105,7 @@ open class AVFoundationPlayback: Playback {
 
     open override var bounds: CGRect {
         didSet {
-            if #available(iOS 11.0, *) {
-                setupMaxResolution(for: bounds.size)
-            }
+            setupMaxResolution(for: bounds.size)
         }
     }
 
@@ -202,7 +200,8 @@ open class AVFoundationPlayback: Playback {
             player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
             playerLayer = AVPlayerLayer(player: player)
-            self.layer.addSublayer(playerLayer!)
+            layer.addSublayer(playerLayer!)
+            setupMaxResolution(for: bounds.size)
             addObservers()
             trigger(.ready)
         } else {
