@@ -18,7 +18,7 @@ open class AVFoundationPlayback: Playback {
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
-    @objc internal var player: AVPlayer?
+    @objc internal dynamic var player: AVPlayer?
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle {
