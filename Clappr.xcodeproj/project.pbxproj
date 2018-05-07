@@ -141,6 +141,7 @@
 		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
+		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
 		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
 		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
@@ -357,6 +358,7 @@
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
+		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
 		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
 		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
 		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 				9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */,
 				9EED97052088E48700D1C84A /* AVPlayerStub.swift */,
 				9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */,
+				FB61A3F2209F885800BDF267 /* FullscreenTests.swift */,
 			);
 			path = Clappr_Tests;
 			sourceTree = "<group>";
@@ -1434,6 +1437,7 @@
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
+				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
 				9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
