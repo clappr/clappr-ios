@@ -66,7 +66,7 @@ open class Player: BaseObject {
         }
     }
 
-    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+    @objc public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init()
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
@@ -87,10 +87,10 @@ open class Player: BaseObject {
         setCore(Core(loader: loader, options: options))
     }
     
-    public init(url: String) {
+    @objc public init(url: String) {
         super.init()
+        let options = [kSourceUrl : url]
         
-        let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         
         self.playbackEventsToListen.append(contentsOf:

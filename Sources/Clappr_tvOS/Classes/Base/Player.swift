@@ -101,7 +101,7 @@ open class Player: UIViewController, BaseObject {
         }
     }
 
-    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+    @objc public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
 
         Logger.logInfo("loading with \(options)", scope: "Clappr")
@@ -118,6 +118,27 @@ open class Player: UIViewController, BaseObject {
 
         let loader = Loader(externalPlugins: externalPlugins, options: options)
 
+        setCore(Core(loader: loader, options: options))
+    }
+    
+    @objc public init(url: String) {
+        super.init(nibName: nil, bundle: nil)
+        let options = [kSourceUrl: url]
+        
+        Logger.logInfo("loading with \(options)", scope: "Clappr")
+        
+        self.playbackEventsToListen.append(contentsOf:
+            [Event.ready.rawValue, Event.error.rawValue,
+             Event.playing.rawValue, Event.didComplete.rawValue,
+             Event.didPause.rawValue, Event.stalled.rawValue,
+             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.willPause.rawValue, Event.willStop.rawValue,
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
+             Event.seek.rawValue,Event.didSeek.rawValue])
+        
+        let loader = Loader(externalPlugins: [], options: options)
+        
         setCore(Core(loader: loader, options: options))
     }
 
