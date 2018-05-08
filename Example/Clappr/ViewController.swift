@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        player = Player(options: options)
+        player = Player(options: options, externalPlugins: [])
 
         listenToPlayerEvents()
 

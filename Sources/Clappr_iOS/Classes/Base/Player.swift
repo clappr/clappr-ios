@@ -66,7 +66,7 @@ open class Player: BaseObject {
         }
     }
 
-    public init(options: Options, externalPlugins: [Plugin.Type]) {
+    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init()
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
