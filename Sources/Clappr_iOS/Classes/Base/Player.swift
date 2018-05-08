@@ -66,9 +66,17 @@ open class Player: BaseObject {
         }
     }
 
-    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+    public init(var options: Options!, var externalPlugins: [Plugin.Type]!) {
         super.init()
-
+        
+        if options == nil {
+            options = [:]
+        }
+        
+        if externalPlugins == nil {
+            externalPlugins = []
+        }
+        
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
