@@ -86,6 +86,28 @@ open class Player: BaseObject {
 
         setCore(Core(loader: loader, options: options))
     }
+    
+    public init(url: String) {
+        super.init()
+        
+        let options = [kSourceUrl : "http://clappr.io/highline.mp4"]
+        Logger.logInfo("loading with \(options)", scope: "Clappr")
+        
+        self.playbackEventsToListen.append(contentsOf:
+            [Event.ready.rawValue, Event.error.rawValue,
+             Event.playing.rawValue, Event.didComplete.rawValue,
+             Event.didPause.rawValue, Event.stalled.rawValue,
+             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
+             Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.willPause.rawValue, Event.willStop.rawValue,
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
+             Event.seek.rawValue, Event.didSeek.rawValue])
+        
+        let loader = Loader(externalPlugins: [], options: options)
+        
+        setCore(Core(loader: loader, options: options))
+    }
 
     fileprivate func setCore(_ core: Core) {
         self.core?.stopListening()
