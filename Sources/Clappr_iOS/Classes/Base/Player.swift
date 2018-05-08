@@ -66,16 +66,8 @@ open class Player: BaseObject {
         }
     }
 
-    public init(var options: Options!, var externalPlugins: [Plugin.Type]!) {
+    public init(options: Options, externalPlugins: [Plugin.Type]) {
         super.init()
-        
-        if options == nil {
-            options = [:]
-        }
-        
-        if externalPlugins == nil {
-            externalPlugins = []
-        }
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
