@@ -61,11 +61,11 @@ extension BaseObject {
         return eventDispatcher
     }
 
-    public func trigger(_ event: Event) {
+    public func triggerEvent(_ event: Event) {
         trigger(event.eventName())
     }
 
-    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+    public func triggerEvent(_ event: Event, userInfo: EventUserInfo) {
         trigger(event.eventName(), userInfo: userInfo)
     }
 
@@ -77,3 +77,5 @@ extension BaseObject {
         return "\(type(of: self))"
     }
 }
+
+

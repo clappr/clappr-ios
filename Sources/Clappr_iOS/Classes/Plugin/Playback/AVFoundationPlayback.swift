@@ -184,7 +184,7 @@ open class AVFoundationPlayback: Playback {
             setupPlayer()
         }
 
-        trigger(.willPlay)
+        triggerEvent(.willPlay)
         player?.play()
 
         if let currentItem = player?.currentItem {
@@ -203,9 +203,9 @@ open class AVFoundationPlayback: Playback {
             layer.addSublayer(playerLayer!)
             setupMaxResolution(for: bounds.size)
             addObservers()
-            trigger(.ready)
+            triggerEvent(.ready)
         } else {
-            trigger(.error)
+            triggerEvent(.error)
             Logger.logError("could not setup player", scope: pluginName)
         }
     }
@@ -232,22 +232,22 @@ open class AVFoundationPlayback: Playback {
     }
 
     @objc func playbackDidEnd() {
-        trigger(.didComplete)
+        triggerEvent(.didComplete)
         updateState(.idle)
     }
 
     open override func pause() {
-        trigger(.willPause)
+        triggerEvent(.willPause)
         player?.pause()
         updateState(.paused)
     }
 
     open override func stop() {
-        trigger(.willStop)
+        triggerEvent(.willStop)
         player?.pause()
         updateState(.idle)
         releaseResources()
-        trigger(.didStop)
+        triggerEvent(.didStop)
     }
 
     @objc func releaseResources() {
@@ -269,16 +269,16 @@ open class AVFoundationPlayback: Playback {
 
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
-        trigger(.seek)
-        trigger(.willSeek)
+        triggerEvent(.seek)
+        triggerEvent(.willSeek)
 
         player?.currentItem?.seek(to: time) { [weak self] success in
             if success {
-                self?.trigger(.didSeek)
+                self?.triggerEvent(.didSeek)
             }
         }
 
-        trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+        triggerEvent(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
@@ -310,11 +310,11 @@ open class AVFoundationPlayback: Playback {
 
         switch newState {
         case .buffering:
-            trigger(.stalled)
+            triggerEvent(.stalled)
         case .paused:
-            trigger(.didPause)
+            triggerEvent(.didPause)
         case .playing:
-            trigger(.playing)
+            triggerEvent(.playing)
         default:
             break
         }
@@ -331,7 +331,7 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession()
         }
 
-        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.triggerEvent(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {
@@ -365,7 +365,7 @@ open class AVFoundationPlayback: Playback {
             readyToPlay()
         } else if playerStatus == .failed {
             let error = player.currentItem!.error!
-            self.trigger(.error, userInfo: ["error": error])
+            self.triggerEvent(.error, userInfo: ["error": error])
             Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
@@ -381,11 +381,11 @@ open class AVFoundationPlayback: Playback {
         seekOnReadyIfNeeded()
 
         if let subtitles = self.subtitles {
-            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
+            triggerEvent(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
+            triggerEvent(.didUpdateAudioSource, userInfo: ["audios": audioSources])
         }
 
         addTimeElapsedCallback()
@@ -400,7 +400,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate func timeUpdated(_ time: CMTime) {
         if isPlaying {
             updateState(.playing)
-            trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+            triggerEvent(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
         }
     }
 
@@ -415,7 +415,7 @@ open class AVFoundationPlayback: Playback {
             "duration": CMTimeGetSeconds(timeRange.duration),
             ]
 
-        trigger(.bufferUpdate, userInfo: info)
+        triggerEvent(.bufferUpdate, userInfo: info)
     }
 
     fileprivate func handleBufferingEvent(_ keyPath: String?) {

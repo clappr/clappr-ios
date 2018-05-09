@@ -205,12 +205,12 @@ open class MediaControl: UIBaseObject {
     @objc open func triggerPlay() {
         playbackControlState = .playing
         playbackControlButton?.isHidden = false
-        trigger(Event.playing)
+        triggerEvent(Event.playing)
     }
 
     @objc open func triggerPause() {
         playbackControlState = .paused
-        trigger(Event.didPause)
+        triggerEvent(Event.didPause)
     }
 
     @objc open func disable() {
