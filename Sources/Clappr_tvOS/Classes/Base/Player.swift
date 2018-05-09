@@ -121,9 +121,15 @@ open class Player: UIViewController, BaseObject {
         setCore(Core(loader: loader, options: options))
     }
     
-    @objc public init(url: String) {
-        super.init(nibName: nil, bundle: nil)
-        let options: Options = [kSourceUrl : url]
+    @objc public init(url: String, posterUrl: String, fullScreen: Bool, fullScreenByApp: Bool, mediaControl: Bool) {
+        super.init()
+        let options: Options = [
+            kSourceUrl: url,
+            kPosterUrl: posterUrl,
+            kFullscreen: fullScreen,
+            kFullscreenByApp: fullScreenByApp,
+            kMediaControl: mediaControl
+        ]
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         
