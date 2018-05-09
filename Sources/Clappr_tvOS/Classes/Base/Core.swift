@@ -87,8 +87,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
             return
         }
 
-        listenTo(mediaControl, eventName: Event.requestFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
-        listenTo(mediaControl, eventName: Event.exitFullscreen.rawValue) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: Event.requestFullscreen.eventName()) { [weak self] (userInfo: EventUserInfo) in self?.enterFullscreen(userInfo) }
+        listenTo(mediaControl, eventName: Event.exitFullscreen.eventName()) { [weak self] (userInfo: EventUserInfo) in self?.exitFullscreen(userInfo) }
     }
 
     fileprivate func enterFullscreen(_: EventUserInfo) {

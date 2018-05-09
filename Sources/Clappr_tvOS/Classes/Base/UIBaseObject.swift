@@ -65,11 +65,11 @@ open class UIBaseObject: UIView, EventProtocol {
 }
 
 public extension UIBaseObject {
-    public func trigger(_ event: Event) {
-        trigger(event.rawValue)
+    public func triggerEvent(_ event: Event) {
+        trigger(event.eventName())
     }
 
-    public func trigger(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
+    public func triggerEvent(_ event: Event, userInfo: EventUserInfo) {
+        trigger(event.eventName(), userInfo: userInfo)
     }
 }

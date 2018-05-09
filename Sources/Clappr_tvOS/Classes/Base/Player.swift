@@ -107,14 +107,14 @@ open class Player: UIViewController, BaseObject {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue,Event.didSeek.rawValue])
+            [Event.ready.eventName(), Event.error.eventName(),
+             Event.playing.eventName(), Event.didComplete.eventName(),
+             Event.didPause.eventName(), Event.stalled.eventName(),
+             Event.didStop.eventName(), Event.bufferUpdate.eventName(),
+             Event.positionUpdate.eventName(), Event.willPlay.eventName(),
+             Event.willPause.eventName(), Event.willStop.eventName(),
+             Event.airPlayStatusUpdate.eventName(), Event.willSeek.eventName(),
+             Event.seek.eventName(),Event.didSeek.eventName()])
 
         let loader = Loader(externalPlugins: externalPlugins, options: options)
 
@@ -128,14 +128,14 @@ open class Player: UIViewController, BaseObject {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         
         self.playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue,Event.didSeek.rawValue])
+            [Event.ready.eventName(), Event.error.eventName(),
+             Event.playing.eventName(), Event.didComplete.eventName(),
+             Event.didPause.eventName(), Event.stalled.eventName(),
+             Event.didStop.eventName(), Event.bufferUpdate.eventName(),
+             Event.positionUpdate.eventName(), Event.willPlay.eventName(),
+             Event.willPause.eventName(), Event.willStop.eventName(),
+             Event.airPlayStatusUpdate.eventName(), Event.willSeek.eventName(),
+             Event.seek.eventName(),Event.didSeek.eventName()])
         
         let loader = Loader(externalPlugins: [], options: options)
         
@@ -192,7 +192,7 @@ open class Player: UIViewController, BaseObject {
 
     @objc @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
-        return on(event.rawValue, callback: callback)
+        return on(event.eventName(), callback: callback)
     }
 
     fileprivate func bindPlaybackEvents() {
@@ -207,7 +207,7 @@ open class Player: UIViewController, BaseObject {
                 playbackEventsListenIds.append(listenId)
             }
 
-            let listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+            let listenId = listenToOnce(playback, eventName: Event.playing.eventName(), callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
             playbackEventsListenIds.append(listenId)
         }
     }
@@ -228,7 +228,7 @@ open class Player: UIViewController, BaseObject {
     }
 
     fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
+        trigger(event.eventName(), userInfo: userInfo)
     }
 
     open func destroy() {

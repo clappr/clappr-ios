@@ -167,18 +167,18 @@ open class MediaControl: UIBaseObject {
 
     open func bindEventListeners() {
         if let container = self.container {
-            listenTo(container, eventName: Event.disableMediaControl.rawValue) { [weak self] _ in self?.disable() }
-            listenTo(container, eventName: Event.enableMediaControl.rawValue) { [weak self] _ in self?.enable() }
+            listenTo(container, eventName: Event.disableMediaControl.eventName()) { [weak self] _ in self?.disable() }
+            listenTo(container, eventName: Event.enableMediaControl.eventName()) { [weak self] _ in self?.enable() }
         }
 
         if let playback = container?.playback {
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.triggerPlay() }
-            listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.triggerPause() }
-            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.playbackReady() }
-            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackControlState = .stopped }
-            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) }
-            listenTo(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) }
+            listenTo(playback, eventName: Event.playing.eventName()) { [weak self] _ in self?.triggerPlay() }
+            listenTo(playback, eventName: Event.didPause.eventName()) { [weak self] _ in self?.triggerPause() }
+            listenTo(playback, eventName: Event.stalled.eventName()) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.ready.eventName()) { [weak self] _ in self?.playbackReady() }
+            listenTo(playback, eventName: Event.didComplete.eventName()) { [weak self] _ in self?.playbackControlState = .stopped }
+            listenTo(playback, eventName: Event.positionUpdate.eventName()) { [weak self] (info: EventUserInfo) in self?.timeUpdated(info) }
+            listenTo(playback, eventName: Event.bufferUpdate.eventName()) { [weak self] (info: EventUserInfo) in self?.progressUpdated(info) }
         }
     }
 
@@ -189,12 +189,12 @@ open class MediaControl: UIBaseObject {
     open func triggerPlay() {
         playbackControlState = .playing
         playbackControlButton?.isHidden = false
-        trigger(Event.playing)
+        triggerEvent(Event.playing)
     }
 
     open func triggerPause() {
         playbackControlState = .paused
-        trigger(Event.didPause)
+        triggerEvent(Event.didPause)
     }
 
     open func disable() {
@@ -265,25 +265,25 @@ open class MediaControl: UIBaseObject {
 
     open func hide() {
         hideControlsTimer?.invalidate()
-        trigger(Event.disableMediaControl.rawValue)
+        trigger(Event.disableMediaControl.eventName())
         setSubviewsVisibility(hidden: true)
     }
 
     open func show() {
-        trigger(Event.enableMediaControl.rawValue)
+        trigger(Event.enableMediaControl.eventName())
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     open func showAnimated() {
-        trigger(Event.enableMediaControl.rawValue)
+        trigger(Event.enableMediaControl.eventName())
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
 
     open func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(Event.disableMediaControl.rawValue)
+        trigger(Event.disableMediaControl.eventName())
         setSubviewsVisibility(hidden: true, animated: true)
     }
 
@@ -320,7 +320,7 @@ open class MediaControl: UIBaseObject {
     @IBAction open func toggleFullscreen(_: UIButton) {
         fullscreen = !fullscreen
         let event = fullscreen ? Event.requestFullscreen : Event.exitFullscreen
-        trigger(event.rawValue)
+        trigger(event.eventName())
         scheduleTimerToHideControls()
         updateScrubberPosition()
     }
@@ -328,19 +328,19 @@ open class MediaControl: UIBaseObject {
     fileprivate func pause() {
         playbackControlState = .paused
         container?.playback?.pause()
-        trigger(Event.didPause.rawValue)
+        trigger(Event.didPause.eventName())
     }
 
     fileprivate func play() {
         playbackControlState = .playing
         container?.playback?.play()
-        trigger(Event.playing.rawValue)
+        trigger(Event.playing.eventName())
     }
 
     fileprivate func stop() {
         playbackControlState = .stopped
         container?.playback?.stop()
-        trigger(Event.didStop.rawValue)
+        trigger(Event.didStop.eventName())
     }
 
     open func scheduleTimerToHideControls() {
@@ -354,7 +354,7 @@ open class MediaControl: UIBaseObject {
         if isPlaybackPlaying() {
             hideAnimated()
         } else if let playback = container?.playback {
-            listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.hideAnimated() }
+            listenToOnce(playback, eventName: Event.playing.eventName()) { [weak self] _ in self?.hideAnimated() }
         }
     }
 

@@ -9,7 +9,7 @@ open class Container: UIBaseObject {
     @objc open var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: Event = mediaControlEnabled ? .enableMediaControl : .disableMediaControl
-            trigger(eventToTrigger)
+            triggerEvent(eventToTrigger)
         }
     }
 

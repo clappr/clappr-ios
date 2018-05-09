@@ -184,7 +184,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             setupPlayer()
         }
 
-        trigger(.willPlay)
+        triggerEvent(.willPlay)
         player?.play()
 
         if let currentItem = player?.currentItem {
@@ -210,7 +210,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             layer.addSublayer(playerLayer!)
             addObservers()
         } else {
-            trigger(.error)
+            triggerEvent(.error)
             Logger.logError("could not setup player", scope: pluginName)
         }
     }
@@ -248,7 +248,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
                 let duration = item.duration
                 let position = item.currentTime()
                 if fabs(CMTimeGetSeconds(duration) - CMTimeGetSeconds(position)) <= 2.0 {
-                    trigger(.didComplete)
+                    triggerEvent(.didComplete)
                     updateState(.idle)
                 }
             }
@@ -256,17 +256,17 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     }
 
     open override func pause() {
-        trigger(.willPause)
+        triggerEvent(.willPause)
         player?.pause()
         updateState(.paused)
     }
 
     open override func stop() {
-        trigger(.willStop)
+        triggerEvent(.willStop)
         updateState(.idle)
         player?.pause()
         releaseResources()
-        trigger(.didStop)
+        triggerEvent(.didStop)
     }
 
     func releaseResources() {
@@ -279,26 +279,26 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     open override func seek(_ timeInterval: TimeInterval) {
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
 
-        trigger(.seek)
-        trigger(.willSeek)
+        triggerEvent(.seek)
+        triggerEvent(.willSeek)
 
         player?.currentItem?.seek(to: time) { [weak self] success in
             if success {
-                self?.trigger(.didSeek)
+                self?.triggerEvent(.didSeek)
             }
         }
 
-        trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+        triggerEvent(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
-        trigger(.willSeek)
+        triggerEvent(.willSeek)
         return targetTime
     }
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
-        trigger(.seek)
-        trigger(.didSeek)
+        triggerEvent(.seek)
+        triggerEvent(.didSeek)
     }
 
     open override func mute(_ enabled: Bool) {
@@ -338,11 +338,11 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
         switch newState {
         case .buffering:
-            trigger(.stalled)
+            triggerEvent(.stalled)
         case .paused:
-            trigger(.didPause)
+            triggerEvent(.didPause)
         case .playing:
-            trigger(.playing)
+            triggerEvent(.playing)
         default:
             break
         }
@@ -359,7 +359,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             restoreBackgroundSession()
         }
 
-        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.triggerEvent(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {
@@ -393,20 +393,20 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             readyToPlay()
         } else if playerStatus == .failed {
             let error = player.currentItem!.error!
-            self.trigger(.error, userInfo: ["error": error])
+            self.triggerEvent(.error, userInfo: ["error": error])
             Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
 
     fileprivate func readyToPlay() {
-        trigger(.ready)
+        triggerEvent(.ready)
 
         if let subtitles = self.subtitles {
-            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
+            triggerEvent(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
+            triggerEvent(.didUpdateAudioSource, userInfo: ["audios": audioSources])
         }
 
         loadMetadata()
@@ -423,7 +423,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
     fileprivate func timeUpdated(_ time: CMTime) {
         if isPlaying {
             updateState(.playing)
-            trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+            triggerEvent(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
         }
     }
 
@@ -438,7 +438,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             "duration": CMTimeGetSeconds(timeRange.duration),
             ]
 
-        trigger(.bufferUpdate, userInfo: info)
+        triggerEvent(.bufferUpdate, userInfo: info)
     }
 
     fileprivate func handleBufferingEvent(_ keyPath: String?) {
