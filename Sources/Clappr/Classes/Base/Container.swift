@@ -22,7 +22,7 @@ open class Container: UIBaseObject {
         didSet {
             if self.playback != oldValue {
                 self.playback?.removeFromSuperview()
-                self.playback?.once(Event.playing.rawValue) { [weak self] _ in self?.options[kStartAt] = 0.0 }
+                self.playback?.once(Event.playing.eventName()) { [weak self] _ in self?.options[kStartAt] = 0.0 }
                 trigger(InternalEvent.didChangePlayback.rawValue)
             }
         }

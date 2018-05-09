@@ -75,16 +75,16 @@ open class PosterPlugin: UIContainerPlugin {
 
     private func bindPlaybackEvents() {
         if let playback = container?.playback {
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
-            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
-            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
+            listenTo(playback, eventName: Event.playing.eventName()) { [weak self] _ in self?.playbackStarted() }
+            listenTo(playback, eventName: Event.stalled.eventName()) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.didComplete.eventName()) { [weak self] _ in self?.playbackEnded() }
         }
     }
 
     private func bindContainerEvents() {
         guard let container = container else { return }
         listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
-        listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
+        listenTo(container, eventName: Event.requestPosterUpdate.eventName()) { [weak self] info in self?.updatePoster(info) }
     }
 
     @objc var isNoOpPlayback: Bool {

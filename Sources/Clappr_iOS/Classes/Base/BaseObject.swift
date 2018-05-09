@@ -15,7 +15,7 @@ open class BaseObject: NSObject, EventProtocol {
         return on(eventName, callback: callback, contextObject: self)
     }
 
-    @discardableResult
+    @objc @discardableResult
     fileprivate func on(_ eventName: String, callback: @escaping EventCallback, contextObject: BaseObject) -> String {
         let listenId = createListenId(eventName, contextObject: contextObject)
         let eventHandler = EventHandler(callback: wrapEventCallback(listenId, callback: callback))

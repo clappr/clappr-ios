@@ -190,7 +190,7 @@ open class Player: UIViewController, BaseObject {
         core?.setFullscreen(fullscreen)
     }
 
-    @discardableResult
+    @objc @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
         return on(event.rawValue, callback: callback)
     }

@@ -72,15 +72,15 @@ open class Player: BaseObject {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue, Event.didSeek.rawValue])
+            [Event.ready.eventName(), Event.error.eventName(),
+             Event.playing.eventName(), Event.didComplete.eventName(),
+             Event.didPause.eventName(), Event.stalled.eventName(),
+             Event.didStop.eventName(), Event.bufferUpdate.eventName(),
+             Event.requestFullscreen.eventName(), Event.exitFullscreen.eventName(),
+             Event.positionUpdate.eventName(), Event.willPlay.eventName(),
+             Event.willPause.eventName(), Event.willStop.eventName(),
+             Event.airPlayStatusUpdate.eventName(), Event.willSeek.eventName(),
+             Event.seek.eventName(), Event.didSeek.eventName()])
 
         let loader = Loader(externalPlugins: externalPlugins, options: options)
 
@@ -93,16 +93,15 @@ open class Player: BaseObject {
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         
-        self.playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue, Event.didSeek.rawValue])
+        self.playbackEventsToListen.append(contentsOf: [Event.ready.eventName(), Event.error.eventName(),
+             Event.playing.eventName(), Event.didComplete.eventName(),
+             Event.didPause.eventName(), Event.stalled.eventName(),
+             Event.didStop.eventName(), Event.bufferUpdate.eventName(),
+             Event.requestFullscreen.eventName(), Event.exitFullscreen.eventName(),
+             Event.positionUpdate.eventName(), Event.willPlay.eventName(),
+             Event.willPause.eventName(), Event.willStop.eventName(),
+             Event.airPlayStatusUpdate.eventName(), Event.willSeek.eventName(),
+             Event.seek.eventName(), Event.didSeek.eventName()])
         
         let loader = Loader(externalPlugins: [], options: options)
         
@@ -155,7 +154,7 @@ open class Player: BaseObject {
 
     @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
-        return on(event.rawValue, callback: callback)
+        return on(event.eventName(), callback: callback)
     }
 
     fileprivate func bindPlaybackEvents() {
@@ -181,7 +180,7 @@ open class Player: BaseObject {
     }
 
     fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
+        trigger(event.eventName(), userInfo: userInfo)
     }
 
     @objc open func destroy() {
