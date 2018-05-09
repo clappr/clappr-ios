@@ -122,12 +122,11 @@ open class Player: UIViewController, BaseObject {
     }
     
     @objc public init(url: String, posterUrl: String, fullScreen: Bool, fullScreenByApp: Bool, mediaControl: Bool) {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         let options: Options = [
             kSourceUrl: url,
             kPosterUrl: posterUrl,
             kFullscreen: fullScreen,
-            kFullscreenByApp: fullScreenByApp,
             kMediaControl: mediaControl
         ]
         
