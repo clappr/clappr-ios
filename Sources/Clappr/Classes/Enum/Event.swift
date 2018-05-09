@@ -83,8 +83,6 @@
             return "willSeek"
         case .didSeek:
             return "didSeek"
-        default:
-            return ""
         }
     }
 }
