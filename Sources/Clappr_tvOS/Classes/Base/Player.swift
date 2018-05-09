@@ -123,7 +123,7 @@ open class Player: UIViewController, BaseObject {
     
     @objc public init(url: String) {
         super.init(nibName: nil, bundle: nil)
-        let options = [kSourceUrl: url]
+        let options: Options = [kSourceUrl : url]
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         

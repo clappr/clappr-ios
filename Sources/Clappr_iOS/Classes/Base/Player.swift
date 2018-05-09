@@ -89,7 +89,7 @@ open class Player: BaseObject {
     
     @objc public init(url: String) {
         super.init()
-        let options = [kSourceUrl : url]
+        let options: Options = [kSourceUrl : url]
         
         Logger.logInfo("loading with \(options)", scope: "Clappr")
         
