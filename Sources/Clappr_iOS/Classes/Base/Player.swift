@@ -86,33 +86,6 @@ open class Player: BaseObject {
 
         setCore(Core(loader: loader, options: options))
     }
-    
-    @objc public init(url: String, posterUrl: String, fullScreen: Bool, fullScreenByApp: Bool, mediaControl: Bool) {
-        super.init()
-        let options: Options = [
-            kSourceUrl: url,
-            kPosterUrl: posterUrl,
-            kFullscreen: fullScreen,
-            kFullscreenByApp: fullScreenByApp,
-            kMediaControl: mediaControl
-        ]
-        
-        Logger.logInfo("loading with \(options)", scope: "Clappr")
-        
-        self.playbackEventsToListen.append(contentsOf: [Event.ready.eventName(), Event.error.eventName(),
-             Event.playing.eventName(), Event.didComplete.eventName(),
-             Event.didPause.eventName(), Event.stalled.eventName(),
-             Event.didStop.eventName(), Event.bufferUpdate.eventName(),
-             Event.requestFullscreen.eventName(), Event.exitFullscreen.eventName(),
-             Event.positionUpdate.eventName(), Event.willPlay.eventName(),
-             Event.willPause.eventName(), Event.willStop.eventName(),
-             Event.airPlayStatusUpdate.eventName(), Event.willSeek.eventName(),
-             Event.seek.eventName(), Event.didSeek.eventName()])
-        
-        let loader = Loader(externalPlugins: [], options: options)
-        
-        setCore(Core(loader: loader, options: options))
-    }
 
     fileprivate func setCore(_ core: Core) {
         self.core?.stopListening()
