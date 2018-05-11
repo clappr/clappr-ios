@@ -174,5 +174,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         mediaControl?.removeFromSuperview()
         mediaControl = nil
         fullscreenController = nil
+        removeFromSuperview()
     }
 }
