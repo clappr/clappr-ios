@@ -10,7 +10,7 @@ open class DragDetectorView: UIView {
 
     @objc fileprivate(set) open var currentTouch: UITouch?
 
-    @objc open var target: AnyObject?
+    @objc open weak var target: AnyObject?
 
     @objc open var selector: Selector!
 

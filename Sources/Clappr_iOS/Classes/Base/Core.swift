@@ -171,5 +171,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         trigger(InternalEvent.didDestroy.rawValue)
 
         Logger.logDebug("destroyed", scope: "Core")
+        mediaControl?.removeFromSuperview()
+        mediaControl = nil
     }
 }
