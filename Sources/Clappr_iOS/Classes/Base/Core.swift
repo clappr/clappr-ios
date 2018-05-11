@@ -7,7 +7,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     @objc open var parentController: UIViewController?
     @objc open var parentView: UIView?
 
-    @objc private (set) lazy var fullscreenController = FullscreenController(nibName: nil, bundle: nil)
+    @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
 
     lazy var fullscreenHandler: FullscreenStateHandler = {
         return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
@@ -173,5 +173,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         Logger.logDebug("destroyed", scope: "Core")
         mediaControl?.removeFromSuperview()
         mediaControl = nil
+        fullscreenController = nil
     }
 }
