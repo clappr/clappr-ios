@@ -5,7 +5,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     @objc fileprivate(set) open var plugins: [UICorePlugin] = []
 
     @objc open weak var parentController: UIViewController?
-    @objc open weak var parentView: UIView?
+    @objc open var parentView: UIView?
 
     @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
 
