@@ -522,6 +522,18 @@ class CoreTests: QuickSpec {
 
                     expect(countOfContainers) == countOfDestroyedContainers
                 }
+                
+                it("clears mediaControl reference") {
+                    core.destroy()
+                    
+                    expect(core.mediaControl).toEventually(beNil())
+                }
+                
+                it("clears fullscreen reference") {
+                    core.destroy()
+                    
+                    expect(core.fullscreenController).toEventually(beNil())
+                }
             }
 
             context("when changes a activePlayback") {
