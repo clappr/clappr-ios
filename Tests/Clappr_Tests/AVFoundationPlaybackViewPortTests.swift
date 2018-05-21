@@ -25,5 +25,3 @@ class AVFoundationPlaybackViewPortTests: QuickSpec {
         }
     }
 }
-
-
