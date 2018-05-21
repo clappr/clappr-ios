@@ -12,10 +12,12 @@ class AVFoundationPlaybackViewPortTests: QuickSpec {
                     it("sets preferredMaximumResolution according to the size") {
                         let playback = AVFoundationPlayback()
                         playback.player = AVPlayerStub()
-                        let expectedSize = CGSize(width: 200, height: 200)
+                        var expectedSize = CGSize(width: 200, height: 200)
 
                         playback.setupMaxResolution(for: expectedSize)
 
+                        let screenScale = UIScreen.main.scale
+                        expectedSize = CGSize(width: expectedSize.width * screenScale, height: expectedSize.height * screenScale)
                         expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(expectedSize))
                     }
                 }
@@ -23,4 +25,5 @@ class AVFoundationPlaybackViewPortTests: QuickSpec {
         }
     }
 }
+
 
