@@ -60,8 +60,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback.player = AVPlayerStub()
 
                         playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+                        let playerSize = playback.bounds.size
+                        let mainScale = UIScreen.main.scale
+                        let screenSize = CGSize(width: playerSize.width * mainScale, height: playerSize.height * mainScale)
 
-                        expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(playback.bounds.size))
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(screenSize))
                     }
                 }
 
@@ -77,10 +80,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
                         playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+                        let playerSize = playback.bounds.size
+                        let mainScale = UIScreen.main.scale
+                        let screenSize = CGSize(width: playerSize.width * mainScale, height: playerSize.height * mainScale)
 
                         playback.play()
 
-                        expect(playback.player?.currentItem?.preferredMaximumResolution).toEventually(equal(playback.bounds.size))
+                        expect(playback.player?.currentItem?.preferredMaximumResolution).toEventually(equal(screenSize))
                     }
                 }
             }

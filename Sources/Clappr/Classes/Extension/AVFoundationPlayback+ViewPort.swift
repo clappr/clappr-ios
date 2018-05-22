@@ -4,7 +4,9 @@ extension AVFoundationPlayback {
 
     func setupMaxResolution(for size: CGSize) {
         if #available(tvOS 11.0, iOS 11.0, *) {
-            player?.currentItem?.preferredMaximumResolution = size
+            let screenScale = UIScreen.main.scale
+            let screenSize = CGSize(width: size.width * screenScale, height: size.height * screenScale)
+            player?.currentItem?.preferredMaximumResolution = screenSize
         }
     }
 }
