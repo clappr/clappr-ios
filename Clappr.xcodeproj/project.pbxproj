@@ -507,6 +507,14 @@
 			path = Clappr_tvOS_Tests;
 			sourceTree = "<group>";
 		};
+		32FC971D20B733B300ABA0C2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		57351C6620248D66007DEBBE /* Stub */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +636,7 @@
 		96D362891D41339400CCB866 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				32FC971D20B733B300ABA0C2 /* Helper */,
 				968E5BD71D6CBF970092F372 /* Log */,
 				96D3628B1D41339400CCB866 /* Base */,
 				96D362981D41339400CCB866 /* Enum */,
@@ -766,20 +775,11 @@
 			isa = PBXGroup;
 			children = (
 				9E26CFEF2016136300AE92B7 /* Base */,
-				9E26CFED2016132600AE92B7 /* Extension */,
 				9E3F43F21F30F89D00417919 /* Helper */,
 				9E26CFF52016150A00AE92B7 /* Plugin */,
 				9E26CFEE2016134000AE92B7 /* Protocol */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		9E26CFED2016132600AE92B7 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
-			);
-			path = Extension;
 			sourceTree = "<group>";
 		};
 		9E26CFEE2016134000AE92B7 /* Protocol */ = {
