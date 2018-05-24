@@ -151,8 +151,8 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         super.init(options: options)
 
         if let urlString = options[kSourceUrl] as? String {
-            if let url = URL(string: urlString) {
-                asset = AVURLAsset(url: url)
+            if let url = URL(string: urlString), let asset = AVURLAssetWithCookiesBuilder(url: url).asset {
+                self.asset = asset
             }
         }
     }
