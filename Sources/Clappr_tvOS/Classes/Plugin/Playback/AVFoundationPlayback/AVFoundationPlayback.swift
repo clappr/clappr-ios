@@ -149,12 +149,15 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     public required init(options: Options) {
         super.init(options: options)
+        self.asset = createAsset(from: options[kSourceUrl] as? String)
+    }
 
-        if let urlString = options[kSourceUrl] as? String {
-            if let url = URL(string: urlString) {
-                asset = AVURLAsset(url: url)
-            }
+    private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
+        guard let urlString = sourceUrl, let url = URL(string: urlString) else {
+            return nil
         }
+
+        return AVURLAssetWithCookiesBuilder(url: url).asset
     }
 
     public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {

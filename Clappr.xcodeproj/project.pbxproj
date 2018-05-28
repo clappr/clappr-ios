@@ -42,6 +42,8 @@
 		32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402171FF433FA001C2096 /* BaseObjectTests.swift */; };
 		32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021C1FF43533001C2096 /* Quick.framework */; };
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
+		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
+		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
@@ -133,8 +135,6 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
-		9EED97092088E9F400D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
-		9EED970A2088EA0000D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
@@ -507,6 +507,14 @@
 			path = Clappr_tvOS_Tests;
 			sourceTree = "<group>";
 		};
+		32FC971D20B733B300ABA0C2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		57351C6620248D66007DEBBE /* Stub */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +636,7 @@
 		96D362891D41339400CCB866 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				32FC971D20B733B300ABA0C2 /* Helper */,
 				968E5BD71D6CBF970092F372 /* Log */,
 				96D3628B1D41339400CCB866 /* Base */,
 				96D362981D41339400CCB866 /* Enum */,
@@ -766,20 +775,11 @@
 			isa = PBXGroup;
 			children = (
 				9E26CFEF2016136300AE92B7 /* Base */,
-				9E26CFED2016132600AE92B7 /* Extension */,
 				9E3F43F21F30F89D00417919 /* Helper */,
 				9E26CFF52016150A00AE92B7 /* Plugin */,
 				9E26CFEE2016134000AE92B7 /* Protocol */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		9E26CFED2016132600AE92B7 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
-			);
-			path = Extension;
 			sourceTree = "<group>";
 		};
 		9E26CFEE2016134000AE92B7 /* Protocol */ = {
@@ -1366,7 +1366,6 @@
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
 				FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */,
-				9EED970A2088EA0000D1C84A /* AVPlayerItemStub.swift in Sources */,
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				FC7785AA2005233D00EC879F /* FullscreenController.swift in Sources */,
@@ -1388,7 +1387,6 @@
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
-				9EED97092088E9F400D1C84A /* AVPlayerStub.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
 				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
 				FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */,
@@ -1396,6 +1394,7 @@
 				FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
+				32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				32E401C41FF42335001C2096 /* UIViewExtension.swift in Sources */,
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
@@ -1413,6 +1412,7 @@
 			files = (
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
 				FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */,
