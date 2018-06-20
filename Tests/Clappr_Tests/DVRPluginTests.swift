@@ -1,25 +1,33 @@
 import Quick
 import Nimble
-import AVFoundation
-
-@testable import Clappr
 
 class DVRPluginTests: QuickSpec {
     override func spec() {
         super.spec()
 
         describe(".DVRPlugin") {
-            describe("#shouldEnableDVR") {
-                it("returns true when live media supports DVR") {
-                    let playback = AVFoundationPlayback(options: [:])
-                    let container = Container()
-                    container.playback = playback
-                    
-                    let dvrPlugin = DVRPlugin(context: container)
-                    
-                    let shouldEnableDVR = dvrPlugin.shouldEnableDVR()
-                    
-                    expect(shouldEnableDVR).to(beTrue())
+            context("when playback is Live") {
+                context("and has position higher than 100") {
+                    it("should trigger enable dvr with true") {
+                        
+                    }
+                }
+                context("and has position less than 100") {
+                    it("should trigger enable dvr with false") {
+                        
+                    }
+                }
+            }
+            context("when playback is VOD") {
+                context("and has position higher than 100") {
+                    it("should trigger enable dvr with false") {
+                        
+                    }
+                }
+                context("and has position less than 100") {
+                    it("should trigger enable dvr with false") {
+                        
+                    }
                 }
             }
         }
