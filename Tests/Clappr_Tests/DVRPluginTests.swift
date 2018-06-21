@@ -54,7 +54,7 @@ class DVRPluginTests: QuickSpec {
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
-                            core.trigger(InternalEvent.didChangeActivePlayback.rawValue)
+                            core.trigger(InternalEvent.didChangeActiveContainer.rawValue)
                             
                             expect(didHaveDvr).toEventually(beTrue())
                         }
@@ -69,7 +69,7 @@ class DVRPluginTests: QuickSpec {
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
-                            core.trigger(InternalEvent.didChangeActivePlayback.rawValue)
+                            core.trigger(InternalEvent.didChangeActiveContainer.rawValue)
                             
                             expect(didHaveDvr).toEventually(beFalse())
                         }
@@ -101,7 +101,7 @@ class DVRPluginTests: QuickSpec {
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                         }
                         
-                        core.trigger(InternalEvent.didChangeActivePlayback.rawValue)
+                        core.trigger(InternalEvent.didChangeActiveContainer.rawValue)
                         
                         expect(didHaveDvr).toEventually(beFalse())
                     }
@@ -112,16 +112,14 @@ class DVRPluginTests: QuickSpec {
                 
                 let loader = Loader(externalPlugins: [DVRPlugin.self])
                 let core = CoreStub(loader: loader)
-                let container = ContainerStub()
                 
                 let playback = AVFoundationPlaybackStub()
                 let player = AVPlayerStub()
                 player.set(currentTime: CMTime(seconds: seconds, preferredTimescale: 1))
                 playback.player = player
                 playback.set(playbackType: playbackType)
-                container.playback = playback
+                core.activeContainer?.playback = playback
                 
-                core.activeContainer = container
                 return core
             }
         }
@@ -165,5 +163,5 @@ class ContainerStub: Container {
         }
     }
     
-    private var _playback: Playback? = AVFoundationPlaybackStub()
+    private var _playback: Playback?
 }

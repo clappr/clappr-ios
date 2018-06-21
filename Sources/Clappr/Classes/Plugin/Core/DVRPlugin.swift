@@ -33,7 +33,7 @@ extension DVRPlugin {
     
     private func bindCoreEvents() {
         guard let core = core else { return }
-        listenTo(core, eventName: InternalEvent.didChangeActivePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+        listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
     }
     
     private func bindPlaybackEvents() {
