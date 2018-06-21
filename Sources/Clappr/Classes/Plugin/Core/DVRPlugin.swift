@@ -1,3 +1,5 @@
+import AVFoundation
+
 open class DVRPlugin: UICorePlugin {
     
     open override var pluginName: String {
@@ -35,16 +37,18 @@ extension DVRPlugin {
     }
     
     private func bindPlaybackEvents() {
-        guard let playback = self.core?.activeContainer?.playback else { return }
+        guard let playback = core?.activePlayback else { return }
         listenToOnce(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (_: EventUserInfo) in self?.triggerDvrEvent() }
     }
     
-    var dvrEnabled: Bool {
-        guard let playback = self.core?.activeContainer?.playback as? AVFoundationPlayback else { return false }
-        return playback.playbackType == .live && playback.position > 100
+    private var dvrEnabled: Bool {
+        guard let playback = core?.activePlayback as? AVFoundationPlayback else { return false }
+        guard let player = playback.player else { return false }
+        return playback.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= 100
     }
     
     func triggerDvrEvent() {
-        core?.trigger("DetectDVR", userInfo: ["enabled": dvrEnabled])
+        guard let playback = core?.activePlayback else { return }
+        playback.trigger("enableDVR", userInfo: ["enabled": dvrEnabled])
     }
 }
