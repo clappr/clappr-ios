@@ -49,6 +49,6 @@ extension DVRPlugin {
     
     func triggerDvrEvent() {
         guard let playback = core?.activePlayback else { return }
-        playback.trigger("enableDVR", userInfo: ["enabled": dvrEnabled])
+        playback.trigger(InternalEvent.detectDVR.rawValue, userInfo: ["enabled": dvrEnabled])
     }
 }

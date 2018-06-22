@@ -22,7 +22,7 @@ class DVRPluginTests: QuickSpec {
                         it("triggers enable dvr with true") {
                             let dvrPlugin = buildPlugin(position: 100, playbackType: .live)
                             var didHaveDvr = false
-                            dvrPlugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                            dvrPlugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
@@ -36,7 +36,7 @@ class DVRPluginTests: QuickSpec {
                         it("triggers enable dvr with false") {
                             let plugin = buildPlugin(position: 10, playbackType: .live)
                             var didHaveDvr = true
-                            plugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
@@ -54,7 +54,7 @@ class DVRPluginTests: QuickSpec {
                         it("triggers enable dvr with true") {
                             let plugin = buildPlugin(position: 100, playbackType: .live)
                             var didHaveDvr = false
-                            plugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
@@ -69,7 +69,7 @@ class DVRPluginTests: QuickSpec {
                         it("triggers enable dvr with false") {
                             let plugin = buildPlugin(position: 10, playbackType: .live)
                             var didHaveDvr = true
-                            plugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             }
                             
@@ -87,7 +87,7 @@ class DVRPluginTests: QuickSpec {
                     it("triggers enable dvr with false") {
                         let plugin = buildPlugin(position: 10, playbackType: .vod)
                         var didHaveDvr = true
-                        plugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                        plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                         }
                         
@@ -101,7 +101,7 @@ class DVRPluginTests: QuickSpec {
                     it("triggers enable dvr with false") {
                         let plugin = buildPlugin(position: 10, playbackType: .vod)
                         var didHaveDvr = true
-                        plugin.core?.activePlayback?.on("enableDVR") { (userInfo: EventUserInfo) in
+                        plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                         }
                         
