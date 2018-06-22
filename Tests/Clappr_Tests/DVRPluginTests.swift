@@ -12,7 +12,7 @@ class DVRPluginTests: QuickSpec {
     override func spec() {
         super.spec()
 
-        fdescribe(".DVRPlugin") {
+        describe(".DVRPlugin") {
             
             context("when playback is live") {
                 
