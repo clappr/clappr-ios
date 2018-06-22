@@ -7,7 +7,7 @@ open class DVRPlugin: UICorePlugin {
     }
     
     var minDvrSize: Double {
-        return 100
+        return 60
     }
     
     public required init?(coder _: NSCoder) {

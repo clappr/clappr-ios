@@ -15,10 +15,10 @@ class DVRPluginTests: QuickSpec {
         describe(".DVRPlugin") {
             
             describe("#minDvrSize") {
-                it("returns 100") {
+                it("returns 60") {
                     let plugin = DVRPlugin()
                     
-                    expect(plugin.minDvrSize).to(equal(100))
+                    expect(plugin.minDvrSize).to(equal(60))
                 }
             }
             
