@@ -30,8 +30,9 @@ extension DVRPlugin {
     fileprivate func bindEvents() {
         stopListening()
         
-        bindPlaybackEvents()
         bindCoreEvents()
+        bindContainerEvents()
+        bindPlaybackEvents()
         triggerDvrEvent()
     }
     
@@ -43,6 +44,11 @@ extension DVRPlugin {
     private func bindPlaybackEvents() {
         guard let playback = core?.activePlayback else { return }
         listenToOnce(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (_: EventUserInfo) in self?.triggerDvrEvent() }
+    }
+    
+    private func bindContainerEvents() {
+        guard let container = core?.activeContainer else { return }
+        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
     }
     
     private var dvrEnabled: Bool {
