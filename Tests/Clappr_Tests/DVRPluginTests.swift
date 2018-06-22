@@ -22,12 +22,26 @@ class DVRPluginTests: QuickSpec {
                 }
             }
             
+            context("when the activeContainer triggers didChangePlayback") {
+                it("triggers detectDVR event") {
+                    let dvrPlugin = buildPlugin(position: getMinDvrSize(), playbackType: .live)
+                    var didTriggerDetectDvr = false
+                    dvrPlugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
+                        didTriggerDetectDvr = true
+                    }
+                    
+                    dvrPlugin.core?.activeContainer?.trigger(InternalEvent.didChangePlayback.rawValue)
+                    
+                    expect(didTriggerDetectDvr).toEventually(beTrue())
+                }
+            }
+            
             context("when playback is live") {
                 
                 context("and playback triggers bufferUpdate") {
                     
                     context("and has position higher or equal than minDvrSize") {
-                        it("triggers enable dvr with true") {
+                        it("triggers detectDVR with enabled true") {
                             let dvrPlugin = buildPlugin(position: getMinDvrSize(), playbackType: .live)
                             var didHaveDvr = false
                             dvrPlugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
@@ -41,7 +55,7 @@ class DVRPluginTests: QuickSpec {
                     }
                     
                     context("and has position less than minDvrSize") {
-                        it("triggers enable dvr with false") {
+                        it("triggers detectDVR with enabled false") {
                             let plugin = buildPlugin(position: getMinDvrSize() - 10, playbackType: .live)
                             var didHaveDvr = true
                             plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
@@ -59,7 +73,7 @@ class DVRPluginTests: QuickSpec {
                     
                     context("and has position higher or equal than minDvrSize") {
                         
-                        it("triggers enable dvr with true") {
+                        it("triggers detectDVR with enabled true") {
                             let plugin = buildPlugin(position: getMinDvrSize(), playbackType: .live)
                             var didHaveDvr = false
                             plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
@@ -74,7 +88,7 @@ class DVRPluginTests: QuickSpec {
                     
                     context("and has position less than minDvrSize") {
                         
-                        it("triggers enable dvr with false") {
+                        it("triggers detectDVR with enabled false") {
                             let plugin = buildPlugin(position: getMinDvrSize() - 10, playbackType: .live)
                             var didHaveDvr = true
                             plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
@@ -92,7 +106,7 @@ class DVRPluginTests: QuickSpec {
             context("when playback is vod") {
                 
                 context("and playback triggers bufferUpdate") {
-                    it("triggers enable dvr with false") {
+                    it("triggers detectDVR with enabled false") {
                         let plugin = buildPlugin(position: getMinDvrSize(), playbackType: .vod)
                         var didHaveDvr = true
                         plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
@@ -106,7 +120,7 @@ class DVRPluginTests: QuickSpec {
                 }
                 
                 context("and core triggers didChangeActivePlayback") {
-                    it("triggers enable dvr with false") {
+                    it("triggers detectDVR with enabled false") {
                         let plugin = buildPlugin(position: getMinDvrSize(), playbackType: .vod)
                         var didHaveDvr = true
                         plugin.core?.activePlayback?.on(InternalEvent.detectDVR.rawValue) { (userInfo: EventUserInfo) in
