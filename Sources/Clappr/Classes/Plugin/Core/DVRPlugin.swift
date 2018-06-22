@@ -6,6 +6,10 @@ open class DVRPlugin: UICorePlugin {
         return "dvr"
     }
     
+    var minDvrSize: Double {
+        return 100
+    }
+    
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,7 +48,7 @@ extension DVRPlugin {
     private var dvrEnabled: Bool {
         guard let playback = core?.activePlayback as? AVFoundationPlayback else { return false }
         guard let player = playback.player else { return false }
-        return playback.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= 100
+        return playback.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= minDvrSize
     }
     
     func triggerDvrEvent() {
