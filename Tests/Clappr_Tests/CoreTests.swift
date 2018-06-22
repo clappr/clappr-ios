@@ -56,10 +56,6 @@ class CoreTests: QuickSpec {
                     expect(core.activeContainer).toNot(beNil())
                 }
 
-                it("plugins is not empty") {
-                    expect(core.plugins).to(beEmpty())
-                }
-
                 it("containers list is not empty") {
                     expect(core.containers).toNot(beEmpty())
                 }
@@ -621,20 +617,10 @@ class CoreTests: QuickSpec {
                     core.addPlugin(plugin)
                 }
 
-                it("no default plugin is added") {
-                    expect(core.plugins.count) == 1
-                    expect(core.hasPlugin(FakeCorePlugin.self)) == true
-                }
-
                 it("add plugin as subview after rendered") {
                     core.render()
 
                     expect(plugin.superview) == core
-                }
-
-                it("Should return false if a plugin isn't installed") {
-                    let core = Core()
-                    expect(core.hasPlugin(UICorePlugin.self)) == false
                 }
             }
 
