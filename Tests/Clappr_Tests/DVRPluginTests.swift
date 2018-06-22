@@ -5,6 +5,10 @@ import AVFoundation
 @testable import Clappr
 
 class DVRPluginTests: QuickSpec {
+    
+    var playback: AVFoundationPlaybackStub!
+    var container: Container!
+    
     override func spec() {
         super.spec()
 
@@ -87,7 +91,9 @@ class DVRPluginTests: QuickSpec {
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                         }
                         
-                        core.activePlayback!.trigger(Event.bufferUpdate.rawValue)
+                        core.activeContainer!.on(InternalEvent.didChangePlayback.rawValue) { _ in
+                            core.activePlayback!.trigger(Event.bufferUpdate.rawValue)
+                        }
                         
                         expect(didHaveDvr).toEventually(beFalse())
                     }
@@ -111,14 +117,16 @@ class DVRPluginTests: QuickSpec {
             func buildCore(position seconds: Double, playbackType: PlaybackType) -> Core {
                 
                 let loader = Loader(externalPlugins: [DVRPlugin.self])
-                let core = CoreStub(loader: loader)
+                let core = Core(loader: loader)
+                self.container = Container()
+                core.activeContainer = container
                 
-                let playback = AVFoundationPlaybackStub()
+                self.playback = AVFoundationPlaybackStub()
                 let player = AVPlayerStub()
                 player.set(currentTime: CMTime(seconds: seconds, preferredTimescale: 1))
-                playback.player = player
-                playback.set(playbackType: playbackType)
-                core.activeContainer?.playback = playback
+                self.playback.player = player
+                self.playback.set(playbackType: playbackType)
+                core.activeContainer?.playback = self.playback
                 
                 return core
             }
@@ -136,32 +144,4 @@ class AVFoundationPlaybackStub: AVFoundationPlayback {
     func set(playbackType: PlaybackType) {
         _playbackType = playbackType
     }
-}
-
-class CoreStub: Core {
-    
-    override var activeContainer: Container? {
-        get {
-            return _container
-        }
-        
-        set {
-            _container = activeContainer
-        }
-    }
-    
-    private var _container: Container? = ContainerStub()
-}
-
-class ContainerStub: Container {
-    override var playback: Playback? {
-        get {
-            return _playback
-        }
-        set {
-            _playback = newValue
-        }
-    }
-    
-    private var _playback: Playback?
 }
