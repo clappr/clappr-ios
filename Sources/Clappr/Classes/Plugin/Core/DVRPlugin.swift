@@ -6,10 +6,6 @@ open class DVRPlugin: UICorePlugin {
         return "dvr"
     }
     
-    var minDvrSize: Double {
-        return 60
-    }
-    
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -22,12 +18,15 @@ open class DVRPlugin: UICorePlugin {
         super.init(context: context)
         bindEvents()
     }
+    
+    private var playback: AVFoundationPlayback? {
+        return core?.activePlayback as? AVFoundationPlayback
+    }
 }
-
 
 //MARK: Events Binding
 extension DVRPlugin {
-    fileprivate func bindEvents() {
+    private func bindEvents() {
         stopListening()
         
         bindCoreEvents()
@@ -42,7 +41,7 @@ extension DVRPlugin {
     }
     
     private func bindPlaybackEvents() {
-        guard let playback = core?.activePlayback else { return }
+        guard let playback = playback else { return }
         listenToOnce(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (_: EventUserInfo) in self?.triggerDvrEvent() }
     }
     
@@ -51,14 +50,27 @@ extension DVRPlugin {
         listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
     }
     
-    private var dvrEnabled: Bool {
-        guard let playback = core?.activePlayback as? AVFoundationPlayback else { return false }
-        guard let player = playback.player else { return false }
-        return playback.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= minDvrSize
+    func triggerDvrEvent() {
+        guard let duration = duration else { return }
+        let userInfo = ["dvrEnabled": dvrEnabled,
+                        "duration": duration] as [String : Any]
+        playback?.trigger(InternalEvent.detectDVR.rawValue, userInfo: userInfo)
+    }
+}
+
+//MARK: DVR
+extension DVRPlugin {
+    var minDvrSize: Double {
+        return 60
     }
     
-    func triggerDvrEvent() {
-        guard let playback = core?.activePlayback else { return }
-        playback.trigger(InternalEvent.detectDVR.rawValue, userInfo: ["enabled": dvrEnabled])
+    var duration: Double? {
+        guard let currentTime = playback?.player?.currentTime() else { return nil }
+        return CMTimeGetSeconds(currentTime)
+    }
+    
+    private var dvrEnabled: Bool {
+        guard let player = playback?.player else { return false }
+        return playback?.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= minDvrSize
     }
 }
