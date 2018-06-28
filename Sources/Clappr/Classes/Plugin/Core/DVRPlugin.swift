@@ -70,7 +70,7 @@ extension DVRPlugin {
     }
     
     private var dvrEnabled: Bool {
-        guard let player = playback?.player else { return false }
-        return playback?.playbackType == .live && CMTimeGetSeconds(player.currentTime()) >= minDvrSize
+        guard let duration = duration else { return false }
+        return playback?.playbackType == .live && duration >= minDvrSize
     }
 }
