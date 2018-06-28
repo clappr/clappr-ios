@@ -6,7 +6,7 @@ class LoaderTests: QuickSpec {
 
     override func spec() {
         context("Loader") {
-            it("Should add external plugins to default plugins") {
+            it("adds external plugins to default plugins") {
                 let loader = Loader()
 
                 let nativePlaybackPluginsCount = loader.playbackPlugins.count
@@ -20,7 +20,7 @@ class LoaderTests: QuickSpec {
                 expect(loader.corePlugins.count) == nativeCorePluginsCount + 1
             }
 
-            it("Should give more priority for external plugin if names colide") {
+            it("gives more priority for external plugin if names colide") {
                 let loader = Loader()
 
                 expect(loader.containerPlugins.filter({ $0.name == "spinner" }).count) == 1
@@ -34,9 +34,18 @@ class LoaderTests: QuickSpec {
                 expect(spinner).toNot(beNil())
             }
 
-            it("Should be able to set custom Media Control") {
+            it("sets custom Media Control") {
                 let loader = Loader(externalPlugins: [], options: [kMediaControl: StubMediaControl.self])
                 expect(loader.mediaControl.loadNib()?.accessibilityHint).to(equal("StubMediaControl"))
+            }
+            
+            describe("#corePlugins") {
+                it("loads DVRPlugin") {
+                    let loader = Loader()
+                    
+                    let containsPlugin = loader.corePlugins.filter { $0 is DVRPlugin.Type }.count
+                    expect(containsPlugin).to(equal(1))
+                }
             }
         }
     }
