@@ -65,7 +65,8 @@ extension DVRPlugin {
     
     func triggerDvrUsageEvent(info: EventUserInfo) {
         guard let position = playback?.position else { return }
-        let dvrUsage = position < minDvrSize
+        guard let currentTime = duration else { return }
+        let dvrUsage = position < currentTime
         let userInfo = ["dvrUsage": dvrUsage] as [String : Any]
         playback?.trigger(InternalEvent.usingDVR.rawValue, userInfo: userInfo)
     }
