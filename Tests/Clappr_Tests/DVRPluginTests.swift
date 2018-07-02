@@ -106,7 +106,7 @@ class DVRPluginTests: QuickSpec {
                             
                             dvrPlugin.core?.activePlayback?.trigger(Event.didSeek.rawValue)
                             
-                            expect(didTriggerUsingDVR).toEventually(beFalse())
+                            expect(didTriggerUsingDVR).toEventually(beTrue())
                             expect(expectedUsingDvr).toEventually(beFalse())
                         }
                     }
