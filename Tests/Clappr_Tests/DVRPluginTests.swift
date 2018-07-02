@@ -95,7 +95,7 @@ class DVRPluginTests: QuickSpec {
                         }
                     }
                     context("and has position more or equal to the current time") {
-                        fit("triggers dvrUsage with enabled false") {
+                        it("triggers dvrUsage with enabled false") {
                             let dvrPlugin = buildPlugin(duration: getMinDvrSize(),position: 60, playbackType: .live)
                             var didTriggerUsingDVR = true
                             var expectedUsingDvr: Bool? = true
