@@ -94,6 +94,22 @@ class DVRPluginTests: QuickSpec {
                             expect(expectedUsingDvr).toEventually(beTrue())
                         }
                     }
+                    context("and has position more or equal to the current time") {
+                        fit("triggers dvrUsage with enabled false") {
+                            let dvrPlugin = buildPlugin(duration: getMinDvrSize(),position: 60, playbackType: .live)
+                            var didTriggerUsingDVR = true
+                            var expectedUsingDvr: Bool? = true
+                            dvrPlugin.core?.activePlayback?.on(InternalEvent.usingDVR.rawValue) { (userInfo: EventUserInfo) in
+                                didTriggerUsingDVR = true
+                                expectedUsingDvr = userInfo?["dvrUsage"] as? Bool
+                            }
+                            
+                            dvrPlugin.core?.activePlayback?.trigger(Event.didSeek.rawValue)
+                            
+                            expect(didTriggerUsingDVR).toEventually(beFalse())
+                            expect(expectedUsingDvr).toEventually(beFalse())
+                        }
+                    }
                 }
                 
                 context("and core triggers didChangeActivePlayback") {
