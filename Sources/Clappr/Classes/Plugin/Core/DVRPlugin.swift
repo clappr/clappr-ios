@@ -45,6 +45,7 @@ extension DVRPlugin {
     private func bindPlaybackEvents() {
         guard let playback = playback else { return }
         listenToOnce(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] _ in self?.triggerDvrEvent() }
+        listenTo(playback, eventName: Event.didSeek.rawValue) { [weak self] (info: EventUserInfo) in self?.triggerDvrUsageEvent(info: info) }
     }
     
     private func bindContainerEvents() {
@@ -60,6 +61,13 @@ extension DVRPlugin {
         let userInfo = ["dvrEnabled": dvrEnabled,
                         "duration": duration] as [String : Any]
         playback?.trigger(InternalEvent.detectDVR.rawValue, userInfo: userInfo)
+    }
+    
+    func triggerDvrUsageEvent(info: EventUserInfo) {
+        guard let position = playback?.position else { return }
+        let dvrUsage = position < minDvrSize
+        let userInfo = ["dvrUsage": dvrUsage] as [String : Any]
+        playback?.trigger(InternalEvent.usingDVR.rawValue, userInfo: userInfo)
     }
 }
 
