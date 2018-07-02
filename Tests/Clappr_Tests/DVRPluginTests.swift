@@ -80,7 +80,18 @@ class DVRPluginTests: QuickSpec {
                     
                     context("and has position less than current time") {
                         it("triggers dvrUsage with enabled true") {
+                            let dvrPlugin = buildPlugin(duration: getMinDvrSize(),position: -10, playbackType: .live)
+                            var didTriggerUsingDVR = false
+                            var expectedUsingDvr: Bool? = false
+                            dvrPlugin.core?.activePlayback?.on(InternalEvent.usingDVR.rawValue) { (userInfo: EventUserInfo) in
+                                didTriggerUsingDVR = true
+                                expectedUsingDvr = userInfo?["dvrUsage"] as? Bool
+                            }
                             
+                            dvrPlugin.core?.activePlayback?.trigger(Event.didSeek.rawValue)
+
+                            expect(didTriggerUsingDVR).toEventually(beTrue())
+                            expect(expectedUsingDvr).toEventually(beTrue())
                         }
                     }
                 }
@@ -167,7 +178,7 @@ class DVRPluginTests: QuickSpec {
                 return DVRPlugin().minDvrSize
             }
             
-            func buildPlugin(duration seconds: Double, playbackType: PlaybackType) -> DVRPlugin {
+            func buildPlugin(duration seconds: Double, position: Double = 0, playbackType: PlaybackType) -> DVRPlugin {
                 core = Core()
                 container = Container()
                 core.activeContainer = container
@@ -177,6 +188,7 @@ class DVRPluginTests: QuickSpec {
                 player.set(currentTime: CMTime(seconds: seconds, preferredTimescale: 1))
                 playback.player = player
                 playback.set(playbackType: playbackType)
+                playback.set(position: position)
                 core.activeContainer?.playback = playback
                 
                 return DVRPlugin(context: core)
@@ -190,9 +202,18 @@ class AVFoundationPlaybackStub: AVFoundationPlayback {
         return _playbackType
     }
     
+    override var position: Double {
+        return _position
+    }
+    
     private var _playbackType: PlaybackType = .vod
+    private var _position: Double = 0
     
     func set(playbackType: PlaybackType) {
         _playbackType = playbackType
+    }
+    
+    func set(position: Double) {
+        _position = position
     }
 }
