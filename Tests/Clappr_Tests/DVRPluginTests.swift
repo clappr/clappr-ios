@@ -77,6 +77,12 @@ class DVRPluginTests: QuickSpec {
                             expect(expectedDuration).toEventually(equal(duration))
                         }
                     }
+                    
+                    context("and has position less than current time") {
+                        it("triggers dvrUsage with enabled true") {
+                            
+                        }
+                    }
                 }
                 
                 context("and core triggers didChangeActivePlayback") {
