@@ -45,6 +45,7 @@ extension DVRPlugin {
     private func bindPlaybackEvents() {
         guard let playback = playback else { return }
         listenToOnce(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] _ in self?.triggerDvrEvent() }
+        listenTo(playback, eventName: Event.didSeek.rawValue) { [weak self] (info: EventUserInfo) in self?.triggerDvrUsageEvent(info: info) }
     }
     
     private func bindContainerEvents() {
@@ -54,12 +55,21 @@ extension DVRPlugin {
             self?.triggerDvrEvent()
         }
     }
-    
+
     func triggerDvrEvent() {
         guard let duration = duration else { return }
-        let userInfo = ["dvrEnabled": dvrEnabled,
+        let userInfo = ["enabled": supportDVR,
                         "duration": duration] as [String : Any]
-        playback?.trigger(InternalEvent.detectDVR.rawValue, userInfo: userInfo)
+        playback?.trigger(Event.supportDVR.rawValue, userInfo: userInfo)
+    }
+
+    func triggerDvrUsageEvent(info: EventUserInfo) {
+        guard supportDVR else { return }
+        guard let position = position else { return }
+        guard let currentTime = duration else { return }
+        let dvrUsage = position < currentTime
+        let userInfo = ["enabled": dvrUsage] as [String : Any]
+        playback?.trigger(Event.usingDVR.rawValue, userInfo: userInfo)
     }
 }
 
@@ -69,12 +79,19 @@ extension DVRPlugin {
         return 60
     }
     
-    var duration: Double? {
+    var position: Double? {
         guard let currentTime = playback?.player?.currentTime() else { return nil }
         return CMTimeGetSeconds(currentTime)
     }
     
-    private var dvrEnabled: Bool {
+    var duration: Double? {
+        guard let range = playback?.player?.currentItem?.seekableTimeRanges.compactMap({ $0.timeRangeValue }).first else {
+            return nil
+        }
+        return CMTimeGetSeconds(range.duration)
+    }
+    
+    private var supportDVR: Bool {
         guard let duration = duration else { return false }
         return playback?.playbackType == .live && duration >= minDvrSize
     }
