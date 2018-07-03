@@ -16,6 +16,4 @@ public enum InternalEvent: String {
     case didDestroy
     case userRequestEnterInFullscreen
     case userRequestExitFullscreen
-    case supportDVR
-    case usingDVR
 }

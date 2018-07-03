@@ -60,7 +60,7 @@ extension DVRPlugin {
         guard let duration = duration else { return }
         let userInfo = ["enabled": supportDVR,
                         "duration": duration] as [String : Any]
-        playback?.trigger(InternalEvent.supportDVR.rawValue, userInfo: userInfo)
+        playback?.trigger(Event.supportDVR.rawValue, userInfo: userInfo)
     }
 
     func triggerDvrUsageEvent(info: EventUserInfo) {
@@ -69,7 +69,7 @@ extension DVRPlugin {
         guard let currentTime = duration else { return }
         let dvrUsage = position < currentTime
         let userInfo = ["enabled": dvrUsage] as [String : Any]
-        playback?.trigger(InternalEvent.usingDVR.rawValue, userInfo: userInfo)
+        playback?.trigger(Event.usingDVR.rawValue, userInfo: userInfo)
     }
 }
 

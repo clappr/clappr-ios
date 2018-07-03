@@ -27,7 +27,7 @@ class DVRPluginTests: QuickSpec {
                     let dvrPlugin = buildPlugin(duration: getMinDvrSize(), playbackType: .live)
                     var didTriggerDetectDvr = false
                     var expectedDuration: Double?
-                    dvrPlugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                    dvrPlugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                         didTriggerDetectDvr = true
                         expectedDuration = userInfo?["duration"] as? Double
                     }
@@ -48,7 +48,7 @@ class DVRPluginTests: QuickSpec {
                             let dvrPlugin = buildPlugin(duration: getMinDvrSize(), playbackType: .live)
                             var didHaveDvr = false
                             var expectedDuration: Double?
-                            dvrPlugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                            dvrPlugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                                 expectedDuration = userInfo?["duration"] as? Double
                             }
@@ -66,7 +66,7 @@ class DVRPluginTests: QuickSpec {
                             let plugin = buildPlugin(duration: getMinDvrSize() - 10, playbackType: .live)
                             var didHaveDvr = true
                             var expectedDuration: Double?
-                            plugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                                 expectedDuration = userInfo?["duration"] as? Double
                             }
@@ -83,7 +83,7 @@ class DVRPluginTests: QuickSpec {
                             let dvrPlugin = buildPlugin(duration: getMinDvrSize(),position: -10, playbackType: .live)
                             var didTriggerUsingDVR = false
                             var expectedUsingDvr: Bool? = false
-                            dvrPlugin.core?.activePlayback?.on(InternalEvent.usingDVR.rawValue) { (userInfo: EventUserInfo) in
+                            dvrPlugin.core?.activePlayback?.on(Event.usingDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didTriggerUsingDVR = true
                                 expectedUsingDvr = userInfo?["enabled"] as? Bool
                             }
@@ -99,7 +99,7 @@ class DVRPluginTests: QuickSpec {
                             let dvrPlugin = buildPlugin(duration: getMinDvrSize(),position: 60, playbackType: .live)
                             var didTriggerUsingDVR = true
                             var expectedUsingDvr: Bool? = true
-                            dvrPlugin.core?.activePlayback?.on(InternalEvent.usingDVR.rawValue) { (userInfo: EventUserInfo) in
+                            dvrPlugin.core?.activePlayback?.on(Event.usingDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didTriggerUsingDVR = true
                                 expectedUsingDvr = userInfo?["enabled"] as? Bool
                             }
@@ -120,7 +120,7 @@ class DVRPluginTests: QuickSpec {
                             let plugin = buildPlugin(duration: getMinDvrSize(), playbackType: .live)
                             var didHaveDvr = false
                             var expectedDuration: Double?
-                            plugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                                 expectedDuration = userInfo?["duration"] as? Double
                             }
@@ -139,7 +139,7 @@ class DVRPluginTests: QuickSpec {
                             let plugin = buildPlugin(duration: duration, playbackType: .live)
                             var didHaveDvr = true
                             var expectedDuration: Double?
-                            plugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                            plugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                                 didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                                 expectedDuration = userInfo?["duration"] as? Double
                             }
@@ -160,7 +160,7 @@ class DVRPluginTests: QuickSpec {
                         let plugin = buildPlugin(duration: getMinDvrSize(), playbackType: .vod)
                         var didHaveDvr = true
                         var expectedDuration: Double?
-                        plugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                        plugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             expectedDuration = userInfo?["duration"] as? Double
                         }
@@ -177,7 +177,7 @@ class DVRPluginTests: QuickSpec {
                         let plugin = buildPlugin(duration: getMinDvrSize(), playbackType: .vod)
                         var didHaveDvr = true
                         var expectedDuration: Double?
-                        plugin.core?.activePlayback?.on(InternalEvent.supportDVR.rawValue) { (userInfo: EventUserInfo) in
+                        plugin.core?.activePlayback?.on(Event.supportDVR.rawValue) { (userInfo: EventUserInfo) in
                             didHaveDvr = (userInfo?["enabled"] as? Bool) ?? false
                             expectedDuration = userInfo?["duration"] as? Double
                         }
