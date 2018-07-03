@@ -64,7 +64,8 @@ extension DVRPlugin {
     }
     
     func triggerDvrUsageEvent(info: EventUserInfo) {
-        guard let position = playback?.position else { return }
+        guard dvrEnabled else { return }
+        guard let position = position else { return }
         guard let currentTime = duration else { return }
         let dvrUsage = position < currentTime
         let userInfo = ["dvrUsage": dvrUsage] as [String : Any]
@@ -78,9 +79,16 @@ extension DVRPlugin {
         return 60
     }
     
-    var duration: Double? {
+    var position: Double? {
         guard let currentTime = playback?.player?.currentTime() else { return nil }
         return CMTimeGetSeconds(currentTime)
+    }
+    
+    var duration: Double? {
+        guard let range = playback?.player?.currentItem?.seekableTimeRanges.compactMap({ $0.timeRangeValue }).first else {
+            return nil
+        }
+        return CMTimeGetSeconds(range.duration)
     }
     
     private var dvrEnabled: Bool {
