@@ -21,6 +21,167 @@ class AVFoundationPlaybackTests: QuickSpec {
                 server.stop()
             }
 
+            describe("AVFoundationPlaybackExtension") {
+                var asset: AVURLAssetStub!
+                var item: AVPlayerItemStub!
+                var player: AVPlayerStub!
+                var playback: AVFoundationPlayback!
+
+                beforeEach {
+                    asset = AVURLAssetStub(url: URL(string: "https://www.google.com")!, options: nil)
+                    item = AVPlayerItemStub(asset: asset)
+
+                    player = AVPlayerStub()
+                    player.set(currentItem: item)
+
+                    playback = AVFoundationPlayback()
+                    playback.player = player
+                }
+
+                describe("#minDvrSize") {
+                    it("returns 60") {
+                        expect(playback.minDvrSize).to(equal(60))
+                    }
+                }
+
+                describe("#usingDVR") {
+                    context("when video is vod") {
+                        it("returns false") {
+                            asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
+
+                            expect(playback.usingDVR).to(beFalse())
+                        }
+                    }
+
+                    context("when video is live") {
+
+                        beforeEach {
+                            asset.set(duration: kCMTimeIndefinite)
+                        }
+
+                        context("video has dvr") {
+                            context("when dvr is being used") {
+                                it("triggers usinDVR with enabled true") {
+                                    player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                                    item.setSeekableTimeRange(with: 60)
+                                    var usingDVR: Bool?
+                                    playback.on(Event.usingDVR.rawValue) { info in
+                                        if let enabled = info?["enabled"] as? Bool {
+                                            usingDVR = enabled
+                                        }
+                                    }
+
+                                    player.setStatus(to: .readyToPlay)
+                                    playback.seek(50)
+
+                                    expect(usingDVR).toEventually(beTrue())
+                                }
+                            }
+
+                            context("when dvr is not being used") {
+                                it("triggers usinDVR with enabled false") {
+                                    player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
+                                    item.setSeekableTimeRange(with: 60)
+                                    var usingDVR: Bool?
+                                    playback.on(Event.usingDVR.rawValue) { info in
+                                        if let enabled = info?["enabled"] as? Bool {
+                                            usingDVR = enabled
+                                        }
+                                    }
+
+                                    player.setStatus(to: .readyToPlay)
+                                    playback.seek(60)
+
+                                    expect(usingDVR).toEventually(beFalse())
+                                }
+                            }
+                        }
+
+                        context("whe video does not have dvr") {
+                            it("doesn't trigger usingDVR event") {
+                                player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                                var usingDVR: Bool?
+                                playback.on(Event.usingDVR.rawValue) { info in
+                                    if let enabled = info?["enabled"] as? Bool {
+                                        usingDVR = enabled
+                                    }
+                                }
+
+                                player.setStatus(to: .readyToPlay)
+                                playback.seek(60)
+
+                                expect(usingDVR).toEventually(beNil())
+                            }
+                        }
+                    }
+                }
+
+                describe("#seekableTimeRanges") {
+                    context("when player is nil") {
+                        it("is empty") {
+                            playback.player = nil
+
+                            expect(playback.seekableTimeRanges).to(beEmpty())
+                        }
+                    }
+
+                    context("when video has seekableTimeRanges") {
+                        it("returns an array with NSValue") {
+                            item.setSeekableTimeRange(with: 60)
+
+                            expect(playback.seekableTimeRanges).toNot(beEmpty())
+                        }
+                    }
+                    context("when video does not have seekableTimeRanges") {
+                        it("is empty") {
+                            expect(playback.seekableTimeRanges).to(beEmpty())
+                        }
+                    }
+                }
+
+                describe("#loadedTimeRanges") {
+                    context("when player is nil") {
+                        it("is empty") {
+                            playback.player = nil
+
+                            expect(playback.loadedTimeRanges).to(beEmpty())
+                        }
+                    }
+
+                    context("when video has loadedTimeRanges") {
+                        it("returns an array with NSValue") {
+                            item.setLoadedTimeRanges(with: 60)
+
+                            expect(playback.loadedTimeRanges).toNot(beEmpty())
+                        }
+                    }
+                    context("when video does not have loadedTimeRanges") {
+                        it("is empty") {
+                            expect(playback.loadedTimeRanges).to(beEmpty())
+                        }
+                    }
+                }
+
+                describe("#supportDVR") {
+                    context("when video is vod") {
+                        it("returns false") {
+                            asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
+
+                            expect(playback.supportDVR).to(beFalse())
+                        }
+                    }
+
+                    context("when video is live") {
+                        it("returns true") {
+                            asset.set(duration: kCMTimeIndefinite)
+                            item.setSeekableTimeRange(with: 60)
+
+                            expect(playback.supportDVR).to(beTrue())
+                        }
+                    }
+                }
+            }
+
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
