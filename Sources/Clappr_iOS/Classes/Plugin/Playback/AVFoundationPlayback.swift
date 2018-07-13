@@ -265,12 +265,18 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
+        var timeToSeek = timeInterval
+
+        if supportDVR, let seekStart = seekableTimeRanges?.first?.timeRangeValue.start.seconds {
+            timeToSeek = timeToSeek + seekStart
+        }
+
         if !isReadyToSeek {
-            seekToTimeWhenReadyToPlay = timeInterval
+            seekToTimeWhenReadyToPlay = timeToSeek
             return
         }
 
-        let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
+        let time = CMTimeMakeWithSeconds(timeToSeek, Int32(NSEC_PER_SEC))
 
         trigger(.seek)
         trigger(.willSeek)
@@ -278,6 +284,9 @@ open class AVFoundationPlayback: Playback {
         player?.currentItem?.seek(to: time) { [weak self] success in
             if success {
                 self?.trigger(.didSeek)
+                if let usingDVR = self?.usingDVR {
+                    self?.trigger(.usingDVR, userInfo: ["enabled": usingDVR])
+                }
             }
         }
 
