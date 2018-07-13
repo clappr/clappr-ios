@@ -131,12 +131,12 @@ extension Playback {
         return false
     }
 
-    @objc open var seekableTimeRanges: [NSValue]? {
-        return nil
+    @objc open var seekableTimeRanges: [NSValue] {
+        return []
     }
 
-    @objc open var loadedTimeRanges: [NSValue]? {
-       return nil
+    @objc open var loadedTimeRanges: [NSValue] {
+       return []
     }
 
     @objc open var supportDVR: Bool {

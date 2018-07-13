@@ -270,7 +270,7 @@ open class AVFoundationPlayback: Playback {
     open override func seek(_ timeInterval: TimeInterval) {
         var timeToSeek = timeInterval
 
-        if supportDVR, let seekStart = seekableTimeRanges?.first?.timeRangeValue.start.seconds {
+        if supportDVR, let seekStart = seekableTimeRanges.first?.timeRangeValue.start.seconds {
             timeToSeek = timeToSeek + seekStart
         }
 
@@ -436,7 +436,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handleSeekableTimeRangesEvent() {
-        guard let seekableTimeRanges = seekableTimeRanges else { return }
+        guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
     }
 
@@ -518,22 +518,22 @@ extension AVFoundationPlayback {
 
     open override var usingDVR: Bool {
         guard let currentTime = player?.currentItem?.currentTime().seconds else { return false }
-        guard let seekableEndTime = seekableTimeRanges?.first?.timeRangeValue.end.seconds else { return false }
+        guard let seekableEndTime = seekableTimeRanges.first?.timeRangeValue.end.seconds else { return false }
         return playbackType == .live && currentTime < seekableEndTime
     }
 
-    open override var seekableTimeRanges: [NSValue]? {
-        guard let ranges = player?.currentItem?.seekableTimeRanges else { return nil }
+    open override var seekableTimeRanges: [NSValue] {
+        guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
         return ranges
     }
 
-    open override var loadedTimeRanges: [NSValue]? {
-        guard let ranges = player?.currentItem?.loadedTimeRanges else { return nil }
+    open override var loadedTimeRanges: [NSValue] {
+        guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
         return ranges
     }
 
     open override var supportDVR: Bool {
-        guard let duration = seekableTimeRanges?.first?.timeRangeValue.duration.seconds else { return false }
+        guard let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds else { return false }
         return playbackType == .live && duration >= minDvrSize
     }
 }
