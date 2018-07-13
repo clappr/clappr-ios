@@ -287,7 +287,8 @@ open class AVFoundationPlayback: Playback {
         player?.currentItem?.seek(to: time) { [weak self] success in
             if success {
                 self?.trigger(.didSeek)
-                if let usingDVR = self?.usingDVR {
+
+                if self?.supportDVR == true, let usingDVR = self?.usingDVR {
                     self?.trigger(.usingDVR, userInfo: ["enabled": usingDVR])
                 }
             }
