@@ -11,7 +11,8 @@ open class AVFoundationPlayback: Playback {
         ]
 
     fileprivate var kvoStatusDidChangeContext = 0
-    fileprivate var kvoTimeRangesContext = 0
+    fileprivate var kvoLoadedTimeRangesContext = 0
+    fileprivate var kvoSeekableTimeRangesContext = 0
     fileprivate var kvoBufferingContext = 0
     fileprivate var kvoExternalPlaybackActiveContext = 0
     fileprivate var kvoPlayerRateContext = 0
@@ -217,7 +218,9 @@ open class AVFoundationPlayback: Playback {
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
         player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
-                            options: .new, context: &kvoTimeRangesContext)
+                            options: .new, context: &kvoLoadedTimeRangesContext)
+        player?.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
+                            options: .new, context: &kvoSeekableTimeRangesContext)
         player?.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
                             options: .new, context: &kvoBufferingContext)
         player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
@@ -303,8 +306,10 @@ open class AVFoundationPlayback: Playback {
         switch concreteContext {
         case &kvoStatusDidChangeContext:
             handleStatusChangedEvent()
-        case &kvoTimeRangesContext:
-            handleTimeRangesEvent()
+        case &kvoLoadedTimeRangesContext:
+            handleLoadedTimeRangesEvent()
+        case &kvoSeekableTimeRangesContext:
+            handleSeekableTimeRangesEvent()
         case &kvoBufferingContext:
             handleBufferingEvent(keyPath)
         case &kvoExternalPlaybackActiveContext:
@@ -416,7 +421,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    fileprivate func handleTimeRangesEvent() {
+    fileprivate func handleLoadedTimeRangesEvent() {
         guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else {
             return
         }
@@ -428,6 +433,11 @@ open class AVFoundationPlayback: Playback {
             ]
 
         trigger(.bufferUpdate, userInfo: info)
+    }
+
+    fileprivate func handleSeekableTimeRangesEvent() {
+        guard let seekableTimeRanges = seekableTimeRanges else { return }
+        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
     }
 
     fileprivate func handleBufferingEvent(_ keyPath: String?) {
@@ -478,6 +488,7 @@ open class AVFoundationPlayback: Playback {
         if player != nil {
             player?.removeObserver(self, forKeyPath: "currentItem.status")
             player?.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
+            player?.removeObserver(self, forKeyPath: "currentItem.seekableTimeRanges")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
