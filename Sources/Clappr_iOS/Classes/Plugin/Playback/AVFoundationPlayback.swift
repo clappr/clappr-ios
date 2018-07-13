@@ -489,3 +489,31 @@ open class AVFoundationPlayback: Playback {
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
     }
 }
+
+// MARK: - DVR
+extension AVFoundationPlayback {
+    open override var minDvrSize: Double {
+        return 60.0
+    }
+
+    open override var usingDVR: Bool {
+        guard let currentTime = player?.currentItem?.currentTime().seconds else { return false }
+        guard let seekableEndTime = seekableTimeRanges?.first?.timeRangeValue.end.seconds else { return false }
+        return playbackType == .live && currentTime < seekableEndTime
+    }
+
+    open override var seekableTimeRanges: [NSValue]? {
+        guard let ranges = player?.currentItem?.seekableTimeRanges else { return nil }
+        return ranges
+    }
+
+    open override var loadedTimeRanges: [NSValue]? {
+        guard let ranges = player?.currentItem?.loadedTimeRanges else { return nil }
+        return ranges
+    }
+
+    open override var supportDVR: Bool {
+        guard let duration = seekableTimeRanges?.first?.timeRangeValue.duration.seconds else { return false }
+        return playbackType == .live && duration >= minDvrSize
+    }
+}
