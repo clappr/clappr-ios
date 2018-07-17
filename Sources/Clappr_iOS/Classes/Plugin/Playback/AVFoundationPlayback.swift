@@ -518,9 +518,16 @@ extension AVFoundationPlayback {
     }
 
     open override var usingDVR: Bool {
+        guard playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
-        guard let seekableEndTime = seekableTimeRanges.first?.timeRangeValue.end.seconds else { return false }
-        return playbackType == .live && currentTime < seekableEndTime
+
+        for range in seekableTimeRanges {
+            if currentTime < range.timeRangeValue.end.seconds {
+                return true
+            }
+        }
+
+        return false
     }
 
     open override var seekableTimeRanges: [NSValue] {
@@ -534,7 +541,14 @@ extension AVFoundationPlayback {
     }
 
     open override var supportDVR: Bool {
-        guard let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds else { return false }
-        return playbackType == .live && duration >= minDvrSize
+        guard playbackType == .live else { return false }
+
+        for range in seekableTimeRanges {
+            if range.timeRangeValue.duration.seconds >= minDvrSize {
+                return true
+            }
+        }
+
+        return false
     }
 }
