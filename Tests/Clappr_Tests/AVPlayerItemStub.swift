@@ -6,6 +6,8 @@ class AVPlayerItemStub: AVPlayerItem {
     var _loadedTimeRanges: [NSValue] = []
 
     var _duration: CMTime = CMTime(seconds: 0, preferredTimescale: 0)
+
+    var _currentTime: CMTime = CMTime(seconds: 0, preferredTimescale: 0)
     
     var didCallSeekWithCompletionHandler = false
 
@@ -28,14 +30,18 @@ class AVPlayerItemStub: AVPlayerItem {
         return _status
     }
 
-    func createTimeRangeValue(with duration: Double) -> CMTimeRange {
-        let startCMTime = CMTime(seconds: 0, preferredTimescale: 1)
+    func createTimeRangeValue(with duration: Double, start: Double = 0) -> CMTimeRange {
+        let startCMTime = CMTime(seconds: start, preferredTimescale: 1)
         let durationCMTime = CMTime(seconds: duration, preferredTimescale: 1)
         return CMTimeRange(start: startCMTime, duration: durationCMTime)
     }
 
-    func setSeekableTimeRange(with duration: Double) {        
+    func setSeekableTimeRange(with duration: Double) {
         _seekableTimeRanges = [NSValue(timeRange: createTimeRangeValue(with: duration))]
+    }
+
+    func setWindow(start: Double, end: Double) {
+        _seekableTimeRanges = [NSValue(timeRange: createTimeRangeValue(with: end - start, start: start))]
     }
 
     func setLoadedTimeRanges(with duration: Double) {
@@ -44,5 +50,9 @@ class AVPlayerItemStub: AVPlayerItem {
 
     override var duration: CMTime {
         return _duration
+    }
+
+    override func currentTime() -> CMTime {
+        return _currentTime
     }
 }

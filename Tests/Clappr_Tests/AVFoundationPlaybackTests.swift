@@ -180,6 +180,16 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
                 }
+
+                describe("#dvrPosition") {
+                    it("returns the position inside the DVR window") {
+                        asset.set(duration: CMTime(seconds: 50, preferredTimescale: 1))
+                        item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
+                        item.setWindow(start: 100, end: 150)
+
+                        expect(playback.dvrPosition).to(equal(25))
+                    }
+                }
             }
 
             describe("#duration") {

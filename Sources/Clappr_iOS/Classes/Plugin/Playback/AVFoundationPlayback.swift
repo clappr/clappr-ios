@@ -565,4 +565,16 @@ extension AVFoundationPlayback {
         guard playbackType == .live else { return false }
         return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
     }
+
+    open override var dvrPosition: Double {
+        if let start = seekableTimeRanges.first?.timeRangeValue.start.seconds,
+            let end = seekableTimeRanges.first?.timeRangeValue.end.seconds {
+            let position = player?.currentItem?.currentTime().seconds
+            var calculatedPosition = (position! - start) * 100
+            calculatedPosition = calculatedPosition / ((end - start) / 100)
+            calculatedPosition = (calculatedPosition * duration) / 10000
+            return calculatedPosition
+        }
+        return position
+    }
 }

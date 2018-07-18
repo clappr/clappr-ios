@@ -142,4 +142,8 @@ extension Playback {
     @objc open var supportDVR: Bool {
         return false
     }
+
+    @objc open var dvrPosition: Double {
+        return 0
+    }
 }
