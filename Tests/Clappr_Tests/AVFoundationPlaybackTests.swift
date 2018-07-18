@@ -39,8 +39,26 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 describe("#minDvrSize") {
-                    it("returns 60") {
-                        expect(playback.minDvrSize).to(equal(60))
+                    context("when minDvrOption has correct type value") {
+                        it("return minDvrOption value") {
+                            let options = [kMinDvrOption: 15.1]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            expect(playback.minDvrSize).to(equal(15.1))
+                        }
+                    }
+                    context("when minDvrOption has wrong type value") {
+                        it("return default value") {
+                            let options = [kMinDvrOption: 15]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            expect(playback.minDvrSize).to(equal(60))
+                        }
+                    }
+                    context("when minDvrOption has no value") {
+                        it("returns default value") {
+                            expect(playback.minDvrSize).to(equal(60))
+                        }
                     }
                 }
 
