@@ -568,9 +568,9 @@ extension AVFoundationPlayback {
 
     open override var dvrPosition: Double {
         if let start = seekableTimeRanges.first?.timeRangeValue.start.seconds,
-            let end = seekableTimeRanges.first?.timeRangeValue.end.seconds {
-            let position = player?.currentItem?.currentTime().seconds
-            var calculatedPosition = (position! - start) * 100
+            let end = seekableTimeRanges.first?.timeRangeValue.end.seconds,
+            let position = player?.currentItem?.currentTime().seconds {
+            var calculatedPosition = (position - start) * 100
             calculatedPosition = calculatedPosition / ((end - start) / 100)
             calculatedPosition = (calculatedPosition * duration) / 10000
             return calculatedPosition
