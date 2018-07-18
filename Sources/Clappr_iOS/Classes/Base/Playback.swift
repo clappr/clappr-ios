@@ -127,7 +127,7 @@ extension Playback {
         return 0
     }
 
-    @objc var usingDVR: Bool {
+    @objc open var usingDVR: Bool {
         return false
     }
 
