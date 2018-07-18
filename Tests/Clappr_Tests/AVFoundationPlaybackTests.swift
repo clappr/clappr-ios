@@ -182,6 +182,55 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("#duration") {
+                var asset: AVURLAssetStub!
+                var item: AVPlayerItemStub!
+                var player: AVPlayerStub!
+                var playback: AVFoundationPlayback!
+
+                beforeEach {
+                    asset = AVURLAssetStub(url: URL(string: "https://www.google.com")!, options: nil)
+                    item = AVPlayerItemStub(asset: asset)
+
+                    player = AVPlayerStub()
+                    player.set(currentItem: item)
+
+                    playback = AVFoundationPlayback()
+                    playback.player = player
+                }
+
+                context("when video is vod") {
+                    it("returns different from zero") {
+                        asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
+                        player.set(currentItem: item)
+
+                        player.setStatus(to: .readyToPlay)
+
+                        expect(playback.duration) == 60
+                    }
+                }
+                context("when video is live") {
+                    context("when has dvr enabled") {
+                        it("returns different from zero") {
+                            asset.set(duration: kCMTimeIndefinite)
+                            item.setSeekableTimeRange(with: 60)
+
+                            player.setStatus(to: .readyToPlay)
+
+                            expect(playback.duration) == 60
+                        }
+                    }
+                    context("when doesn't have dvr enabled") {
+                        it("returns zero") {
+                            asset.set(duration: kCMTimeIndefinite)
+                            player.setStatus(to: .readyToPlay)
+
+                            expect(playback.duration) == 0
+                        }
+                    }
+                }
+            }
+
             context("canPlay") {
                 it("Should return true for valid url with mp4 path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
