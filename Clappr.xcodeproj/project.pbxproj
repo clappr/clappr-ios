@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
@@ -142,9 +143,6 @@
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
-		FB63B23A20DAEB15007C6687 /* DVRPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63B23920DAEB15007C6687 /* DVRPluginTests.swift */; };
-		FB63B23C20DB0076007C6687 /* DVRPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63B23B20DB0076007C6687 /* DVRPlugin.swift */; };
-		FB63B23D20DB0076007C6687 /* DVRPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63B23B20DB0076007C6687 /* DVRPlugin.swift */; };
 		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
 		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
@@ -251,6 +249,7 @@
 
 /* Begin PBXFileReference section */
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		322EA4C920F941300018973A /* AVURLAssetStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetStub.swift; sourceTree = "<group>"; };
 		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
 		32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIApplicationExtension.swift; sourceTree = "<group>"; };
 		3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
@@ -362,8 +361,6 @@
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
-		FB63B23920DAEB15007C6687 /* DVRPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DVRPluginTests.swift; sourceTree = "<group>"; };
-		FB63B23B20DB0076007C6687 /* DVRPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DVRPlugin.swift; sourceTree = "<group>"; };
 		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
 		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
 		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -563,7 +560,6 @@
 		607FACE81AFB9204008FA782 /* Clappr_Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FB63B23920DAEB15007C6687 /* DVRPluginTests.swift */,
 				FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */,
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
 				969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */,
@@ -591,6 +587,7 @@
 				9EED97052088E48700D1C84A /* AVPlayerStub.swift */,
 				9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */,
 				FB61A3F2209F885800BDF267 /* FullscreenTests.swift */,
+				322EA4C920F941300018973A /* AVURLAssetStub.swift */,
 			);
 			path = Clappr_Tests;
 			sourceTree = "<group>";
@@ -728,7 +725,6 @@
 		96D362B01D41339400CCB866 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				FB63B23B20DB0076007C6687 /* DVRPlugin.swift */,
 				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
 			);
 			path = Core;
@@ -1396,7 +1392,6 @@
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
 				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
-				FB63B23D20DB0076007C6687 /* DVRPlugin.swift in Sources */,
 				FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */,
@@ -1449,12 +1444,12 @@
 				9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
+				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
 				329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
-				FB63B23A20DAEB15007C6687 /* DVRPluginTests.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */,
@@ -1503,7 +1498,6 @@
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
-				FB63B23C20DB0076007C6687 /* DVRPlugin.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,

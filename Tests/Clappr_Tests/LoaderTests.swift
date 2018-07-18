@@ -38,15 +38,6 @@ class LoaderTests: QuickSpec {
                 let loader = Loader(externalPlugins: [], options: [kMediaControl: StubMediaControl.self])
                 expect(loader.mediaControl.loadNib()?.accessibilityHint).to(equal("StubMediaControl"))
             }
-            
-            describe("#corePlugins") {
-                it("loads DVRPlugin") {
-                    let loader = Loader()
-                    
-                    let containsPlugin = loader.corePlugins.filter { $0 is DVRPlugin.Type }.count
-                    expect(containsPlugin).to(equal(1))
-                }
-            }
         }
     }
 

@@ -5,7 +5,8 @@ open class Loader {
     #else
     internal(set) open var containerPlugins: [Plugin.Type] = []
     #endif
-    internal(set) open var corePlugins: [Plugin.Type] = [DVRPlugin.self]
+    internal(set) open var corePlugins = [Plugin.Type]()
+
     internal(set) open var mediaControl: MediaControl.Type = MediaControl.self
 
     fileprivate var externalPlugins = [Plugin.Type]()

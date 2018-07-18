@@ -10,7 +10,7 @@ class AVPlayerStub: AVPlayer {
     }
     
     override func currentTime() -> CMTime {
-        return _currentTime
+        return _item.duration
     }
 
     func setStatus(to newStatus: AVPlayerItemStatus) {
@@ -18,7 +18,7 @@ class AVPlayerStub: AVPlayer {
     }
     
     func set(currentTime: CMTime) {
-        _currentTime = currentTime
+        _item._duration = currentTime
     }
     
     func set(currentItem: AVPlayerItemStub) {
