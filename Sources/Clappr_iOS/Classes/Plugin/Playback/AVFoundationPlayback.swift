@@ -284,7 +284,7 @@ open class AVFoundationPlayback: Playback {
         if supportDVR {
             var timeToSeek = timeInterval
 
-            if let seekStartTime = seekableTimeRanges.first?.timeRangeValue.start.seconds {
+            if let seekStartTime = dvrWindowStart {
                 timeToSeek = timeToSeek + seekStartTime
             }
 
@@ -563,8 +563,8 @@ extension AVFoundationPlayback {
     }
 
     open override var dvrPosition: Double {
-        if let start = seekableTimeRanges.first?.timeRangeValue.start.seconds,
-            let end = seekableTimeRanges.first?.timeRangeValue.end.seconds,
+        if let start = dvrWindowStart,
+            let end = dvrWindowEnd,
             let position = player?.currentItem?.currentTime().seconds {
             var calculatedPosition = (position - start) * 100
             calculatedPosition = calculatedPosition / ((end - start) / 100)
@@ -572,5 +572,13 @@ extension AVFoundationPlayback {
             return calculatedPosition
         }
         return position
+    }
+
+    private var dvrWindowStart: Double? {
+        return seekableTimeRanges.min { rangeA, rangeB in rangeA.timeRangeValue.start.seconds < rangeB.timeRangeValue.start.seconds }?.timeRangeValue.start.seconds
+    }
+
+    private var dvrWindowEnd: Double? {
+        return seekableTimeRanges.max { rangeA, rangeB in rangeA.timeRangeValue.end.seconds < rangeB.timeRangeValue.end.seconds }?.timeRangeValue.end.seconds
     }
 }
