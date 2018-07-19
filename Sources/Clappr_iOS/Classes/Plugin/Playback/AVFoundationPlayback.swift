@@ -280,15 +280,11 @@ open class AVFoundationPlayback: Playback {
         return player?.currentItem?.status == .readyToPlay
     }
 
-    private func getSeekableTimeRange(with timeInterval: TimeInterval) -> CMTimeRange? {
-        return seekableTimeRanges.first(where: { $0.timeRangeValue.start.seconds >= timeInterval && timeInterval < $0.timeRangeValue.end.seconds })?.timeRangeValue
-    }
-
     open override func seek(_ timeInterval: TimeInterval) {
         if supportDVR {
             var timeToSeek = timeInterval
 
-            if let seekStartTime = getSeekableTimeRange(with: timeInterval)?.start.seconds {
+            if let seekStartTime = seekableTimeRanges.first?.timeRangeValue.start.seconds {
                 timeToSeek = timeToSeek + seekStartTime
             }
 
