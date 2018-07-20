@@ -11,7 +11,7 @@ public let kPlaybackNotSupportedMessage = "playbackNotSupportedMessage"
 public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
-public let kMinDvrOption = "minDvrTime"
+public let kMinDvrSize = "minDvrSize"
 
 struct OptionsUnboxer {
     let options: Options
