@@ -280,15 +280,11 @@ open class AVFoundationPlayback: Playback {
         return player?.currentItem?.status == .readyToPlay
     }
 
-    private func getSeekableTimeRange(with timeInterval: TimeInterval) -> CMTimeRange? {
-        return seekableTimeRanges.first(where: { $0.timeRangeValue.start.seconds >= timeInterval && timeInterval < $0.timeRangeValue.end.seconds })?.timeRangeValue
-    }
-
     open override func seek(_ timeInterval: TimeInterval) {
         if supportDVR {
             var timeToSeek = timeInterval
 
-            if let seekStartTime = getSeekableTimeRange(with: timeInterval)?.start.seconds {
+            if let seekStartTime = dvrWindowStart {
                 timeToSeek = timeToSeek + seekStartTime
             }
 
@@ -564,5 +560,25 @@ extension AVFoundationPlayback {
     open override var supportDVR: Bool {
         guard playbackType == .live else { return false }
         return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
+    }
+
+    open override var dvrPosition: Double {
+        if let start = dvrWindowStart,
+            let end = dvrWindowEnd,
+            let position = player?.currentItem?.currentTime().seconds {
+            var calculatedPosition = (position - start) * 100
+            calculatedPosition = calculatedPosition / ((end - start) / 100)
+            calculatedPosition = (calculatedPosition * duration) / 10000
+            return calculatedPosition
+        }
+        return position
+    }
+
+    private var dvrWindowStart: Double? {
+        return seekableTimeRanges.min { rangeA, rangeB in rangeA.timeRangeValue.start.seconds < rangeB.timeRangeValue.start.seconds }?.timeRangeValue.start.seconds
+    }
+
+    private var dvrWindowEnd: Double? {
+        return seekableTimeRanges.max { rangeA, rangeB in rangeA.timeRangeValue.end.seconds < rangeB.timeRangeValue.end.seconds }?.timeRangeValue.end.seconds
     }
 }

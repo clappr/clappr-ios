@@ -127,7 +127,7 @@ extension Playback {
         return 0
     }
 
-    @objc var usingDVR: Bool {
+    @objc open var usingDVR: Bool {
         return false
     }
 
@@ -141,5 +141,9 @@ extension Playback {
 
     @objc open var supportDVR: Bool {
         return false
+    }
+
+    @objc open var dvrPosition: Double {
+        return 0
     }
 }
