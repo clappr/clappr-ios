@@ -131,7 +131,9 @@ platform :ios do
       description: "TODO: write release notes here"
     )
 
-    pod_push
+    pod_push(
+      allow_warnings: true
+    )
   end
 
   # You can define as many lanes as you want
