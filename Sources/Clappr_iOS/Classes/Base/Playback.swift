@@ -127,19 +127,11 @@ extension Playback {
         return 0
     }
 
-    @objc open var usingDVR: Bool {
+    @objc open var isDvrInUse: Bool {
         return false
     }
 
-    @objc open var seekableTimeRanges: [NSValue] {
-        return []
-    }
-
-    @objc open var loadedTimeRanges: [NSValue] {
-       return []
-    }
-
-    @objc open var supportDVR: Bool {
+    @objc open var isDvrAvailable: Bool {
         return false
     }
 
@@ -149,5 +141,13 @@ extension Playback {
 
     @objc open var currentDate: Date? {
         return nil
+    }
+    
+    @objc open var seekableTimeRanges: [NSValue] {
+        return []
+    }
+    
+    @objc open var loadedTimeRanges: [NSValue] {
+        return []
     }
 }

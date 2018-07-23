@@ -120,7 +120,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         if playbackType == .live {
-            if supportDVR, let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds {
+            if isDvrAvailable, let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds {
                 return duration
             } else {
                 return 0
@@ -281,7 +281,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
-        if supportDVR {
+        if isDvrAvailable {
             var timeToSeek = timeInterval
 
             if let seekStartTime = dvrWindowStart {
@@ -541,23 +541,13 @@ extension AVFoundationPlayback {
         return self.options[kMinDvrSize] as? Double ?? 60.0
     }
 
-    open override var usingDVR: Bool {
+    open override var isDvrInUse: Bool {
         guard playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
         return seekableTimeRanges.first(where: { $0.timeRangeValue.end.seconds > currentTime}) != nil
     }
 
-    open override var seekableTimeRanges: [NSValue] {
-        guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
-        return ranges
-    }
-
-    open override var loadedTimeRanges: [NSValue] {
-        guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
-        return ranges
-    }
-
-    open override var supportDVR: Bool {
+    open override var isDvrAvailable: Bool {
         guard playbackType == .live else { return false }
         return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
     }
@@ -576,6 +566,15 @@ extension AVFoundationPlayback {
 
     open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
+    }
+    open override var seekableTimeRanges: [NSValue] {
+        guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
+        return ranges
+    }
+
+    open override var loadedTimeRanges: [NSValue] {
+        guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
+        return ranges
     }
 
     private var dvrWindowStart: Double? {
