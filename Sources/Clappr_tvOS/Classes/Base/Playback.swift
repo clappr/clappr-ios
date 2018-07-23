@@ -129,3 +129,30 @@ open class Playback: UIBaseObject, Plugin {
         Logger.logDebug("destroyed", scope: "Playback")
     }
 }
+
+// MARK: - DVR
+extension Playback {
+    @objc var minDvrSize: Double {
+        return 0
+    }
+    
+    @objc open var usingDVR: Bool {
+        return false
+    }
+    
+    @objc open var seekableTimeRanges: [NSValue] {
+        return []
+    }
+    
+    @objc open var loadedTimeRanges: [NSValue] {
+        return []
+    }
+    
+    @objc open var supportDVR: Bool {
+        return false
+    }
+    
+    @objc open var dvrPosition: Double {
+        return 0
+    }
+}
