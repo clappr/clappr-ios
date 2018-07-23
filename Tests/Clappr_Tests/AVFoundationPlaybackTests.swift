@@ -67,7 +67,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("returns false") {
                             asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
 
-                            expect(playback.usingDVR).to(beFalse())
+                            expect(playback.isDvrInUse).to(beFalse())
                         }
                     }
 
@@ -83,7 +83,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
-                                    playback.on(Event.usingDVR.rawValue) { info in
+                                    playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["enabled"] as? Bool {
                                             usingDVR = enabled
                                         }
@@ -101,7 +101,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
-                                    playback.on(Event.usingDVR.rawValue) { info in
+                                    playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["enabled"] as? Bool {
                                             usingDVR = enabled
                                         }
@@ -119,7 +119,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             it("doesn't trigger usingDVR event") {
                                 player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                                 var usingDVR: Bool?
-                                playback.on(Event.usingDVR.rawValue) { info in
+                                playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                     if let enabled = info?["enabled"] as? Bool {
                                         usingDVR = enabled
                                     }
@@ -185,7 +185,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("returns false") {
                             asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
 
-                            expect(playback.supportDVR).to(beFalse())
+                            expect(playback.isDvrAvailable).to(beFalse())
                         }
                     }
 
@@ -194,7 +194,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             asset.set(duration: kCMTimeIndefinite)
                             item.setSeekableTimeRange(with: 60)
 
-                            expect(playback.supportDVR).to(beTrue())
+                            expect(playback.isDvrAvailable).to(beTrue())
                         }
                     }
                 }
