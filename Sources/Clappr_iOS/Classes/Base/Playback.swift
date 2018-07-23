@@ -110,6 +110,7 @@ open class Playback: UIBaseObject, Plugin {
     @objc open func pause() {}
     @objc open func stop() {}
     @objc open func seek(_: TimeInterval) {}
+    @objc open func seekToLivePosition() {}
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")

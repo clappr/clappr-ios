@@ -321,6 +321,11 @@ open class AVFoundationPlayback: Playback {
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
+    open override func seekToLivePosition() {
+        guard let livePosition = (seekableTimeRanges.last as? CMTimeRange)?.end.seconds else { return }
+        seek(livePosition)
+    }
+
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
                                     change _: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
 
