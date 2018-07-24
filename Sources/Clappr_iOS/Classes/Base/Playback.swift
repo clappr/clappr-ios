@@ -136,10 +136,6 @@ extension Playback {
         return false
     }
 
-    @objc open var dvrPosition: Double {
-        return 0
-    }
-
     @objc open var currentDate: Date? {
         return nil
     }

@@ -205,7 +205,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
                         item.setWindow(start: 100, end: 150)
 
-                        expect(playback.dvrPosition).to(equal(25))
+                        expect(playback.position).to(equal(25))
                     }
                 }
 

@@ -131,6 +131,15 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var position: Double {
+        if let start = dvrWindowStart,
+            let end = dvrWindowEnd,
+            let position = player?.currentItem?.currentTime().seconds {
+            var calculatedPosition = (position - start) * 100
+            calculatedPosition = calculatedPosition / ((end - start) / 100)
+            calculatedPosition = (calculatedPosition * duration) / 10000
+            return calculatedPosition
+        }
+        
         guard playbackType == .vod, let player = self.player else {
             return 0
         }
@@ -572,6 +581,7 @@ extension AVFoundationPlayback {
     open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
     }
+
     open override var seekableTimeRanges: [NSValue] {
         guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
         return ranges
