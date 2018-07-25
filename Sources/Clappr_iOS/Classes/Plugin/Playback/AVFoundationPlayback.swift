@@ -574,7 +574,7 @@ extension AVFoundationPlayback {
         return position
     }
 
-    open var currentDate: Date? {
+    open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
     }
 
