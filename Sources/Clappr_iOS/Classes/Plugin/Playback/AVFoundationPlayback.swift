@@ -300,7 +300,7 @@ open class AVFoundationPlayback: Playback {
 
             seek(timeToSeek) { [weak self] in
                 if let usingDVR = self?.isDvrInUse {
-                    self?.trigger(.didChangeDvrStatus, userInfo: ["enabled": usingDVR])
+                    self?.trigger(.didChangeDvrStatus, userInfo: ["inUse": usingDVR])
                 }
             }
         } else {
@@ -480,7 +480,7 @@ open class AVFoundationPlayback: Playback {
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
         print("## lastDvrAvailability:\(lastDvrAvailability) - isDvrAvailable:\(isDvrAvailable)")
         if lastDvrAvailability != isDvrAvailable {
-            trigger(.didChangeDvrAvailability, userInfo: ["isDvrAvailable": isDvrAvailable])
+            trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
         }
     }
