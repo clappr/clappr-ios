@@ -208,6 +208,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.dvrPosition).to(equal(25))
                     }
                 }
+
+                describe("#currentDate") {
+                    it("returns the currentDate of the video") {
+                        let date = Date()
+                        item.set(currentDate: date)
+                        
+                        expect(playback.currentDate).to(equal(date))
+                    }
+                }
             }
 
             describe("#duration") {

@@ -13,6 +13,8 @@ class AVPlayerItemStub: AVPlayerItem {
 
     var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
 
+    var _currentDate: Date = Date()
+
     override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
         didCallSeekWithCompletionHandler = true
         completionHandler!(true)
@@ -48,11 +50,19 @@ class AVPlayerItemStub: AVPlayerItem {
         _loadedTimeRanges = [NSValue(timeRange: createTimeRangeValue(with: duration))]
     }
 
+    func set(currentDate: Date) {
+        _currentDate = currentDate
+    }
+
     override var duration: CMTime {
         return _duration
     }
 
     override func currentTime() -> CMTime {
         return _currentTime
+    }
+
+    override func currentDate() -> Date? {
+        return _currentDate
     }
 }
