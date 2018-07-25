@@ -555,6 +555,45 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(updatedPosition).to(equal(5))
                 }
             }
+            describe("#seekToLivePosition") {
+                var playback: AVFoundationPlayback!
+                var playerItem: AVPlayerItemStub!
+                
+                beforeEach {
+                    playback = AVFoundationPlayback()
+                    let url = URL(string: "http://localhost:8080/sample.m3u8")!
+                    let playerAsset = AVURLAssetStub(url: url)
+                    playerItem = AVPlayerItemStub(asset: playerAsset)
+                    playerItem.setSeekableTimeRange(with: 45)
+                    let player = AVPlayerStub()
+                    player.set(currentItem: playerItem)
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                }
+                it("triggers seek event") {
+                    var didTriggerDidSeek = false
+                    playback.on(Event.didSeek.rawValue) { _ in
+                        didTriggerDidSeek = true
+                    }
+
+                    playback.seekToLivePosition()
+
+                    expect(didTriggerDidSeek).toEventually(beTrue())
+                }
+
+                it("triggers positionUpdate for the desired position") {
+                    var updatedPosition: Float64? = nil
+                    playback.on(Event.positionUpdate.rawValue) { (userInfo: EventUserInfo) in
+                        updatedPosition = userInfo!["position"] as? Float64
+                    }
+                    
+                    
+                    playback.seekToLivePosition()
+                    
+                    let livePosition = (playerItem.seekableTimeRanges.last as? CMTimeRange)?.end.seconds
+                    expect(updatedPosition).to(equal(livePosition))
+                }
+            }
         }
     }
 }
