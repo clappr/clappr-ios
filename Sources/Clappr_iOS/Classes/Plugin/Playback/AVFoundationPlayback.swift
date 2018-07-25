@@ -575,18 +575,6 @@ extension AVFoundationPlayback {
         return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
     }
 
-    open override var dvrPosition: Double {
-        if let start = dvrWindowStart,
-            let end = dvrWindowEnd,
-            let position = player?.currentItem?.currentTime().seconds {
-            var calculatedPosition = (position - start) * 100
-            calculatedPosition = calculatedPosition / ((end - start) / 100)
-            calculatedPosition = (calculatedPosition * duration) / 10000
-            return calculatedPosition
-        }
-        return position
-    }
-
     open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
     }
