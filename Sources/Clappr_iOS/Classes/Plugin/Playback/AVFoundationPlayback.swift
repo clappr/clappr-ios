@@ -478,7 +478,10 @@ open class AVFoundationPlayback: Playback {
     fileprivate func handleSeekableTimeRangesEvent() {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
-        print("## lastDvrAvailability:\(lastDvrAvailability) - isDvrAvailable:\(isDvrAvailable)")
+        handleDvrAvailabilityChange()
+    }
+
+    fileprivate func handleDvrAvailabilityChange() {
         if lastDvrAvailability != isDvrAvailable {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
