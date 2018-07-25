@@ -84,7 +84,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
-                                        if let enabled = info?["enabled"] as? Bool {
+                                        if let enabled = info?["inUse"] as? Bool {
                                             usingDVR = enabled
                                         }
                                     }
@@ -102,7 +102,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
-                                        if let enabled = info?["enabled"] as? Bool {
+                                        if let enabled = info?["inUse"] as? Bool {
                                             usingDVR = enabled
                                         }
                                     }
@@ -120,7 +120,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                                 var usingDVR: Bool?
                                 playback.on(Event.didChangeDvrStatus.rawValue) { info in
-                                    if let enabled = info?["enabled"] as? Bool {
+                                    if let enabled = info?["inUse"] as? Bool {
                                         usingDVR = enabled
                                     }
                                 }
