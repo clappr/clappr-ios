@@ -28,4 +28,5 @@ public enum Event: String {
     case didSeek
     case didChangeDvrStatus
     case seekableUpdate
+    case didChangeDvrAvailability
 }

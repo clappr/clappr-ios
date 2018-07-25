@@ -38,6 +38,7 @@ open class AVFoundationPlayback: Playback {
     }
     fileprivate var timeObserver: Any?
     fileprivate var asset: AVURLAsset?
+    private var lastDvrAvailability: Bool?
 
     private var backgroundSessionBackup: String?
 
@@ -477,6 +478,11 @@ open class AVFoundationPlayback: Playback {
     fileprivate func handleSeekableTimeRangesEvent() {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+        print("## lastDvrAvailability:\(lastDvrAvailability) - isDvrAvailable:\(isDvrAvailable)")
+        if lastDvrAvailability != isDvrAvailable {
+            trigger(.didChangeDvrAvailability, userInfo: ["isDvrAvailable": isDvrAvailable])
+            lastDvrAvailability = isDvrAvailable
+        }
     }
 
     fileprivate func handleBufferingEvent(_ keyPath: String?) {
