@@ -574,6 +574,10 @@ extension AVFoundationPlayback {
         return position
     }
 
+    open var currentDate: Date? {
+        return player?.currentItem?.currentDate()
+    }
+
     private var dvrWindowStart: Double? {
         return seekableTimeRanges.min { rangeA, rangeB in rangeA.timeRangeValue.start.seconds < rangeB.timeRangeValue.start.seconds }?.timeRangeValue.start.seconds
     }
