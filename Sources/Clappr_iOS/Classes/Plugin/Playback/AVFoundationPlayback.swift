@@ -299,13 +299,15 @@ open class AVFoundationPlayback: Playback {
             }
 
             seek(timeToSeek) { [weak self] in
-                if let usingDVR = self?.isDvrInUse {
-                    self?.trigger(.didChangeDvrStatus, userInfo: ["inUse": usingDVR])
-                }
+                self?.triggerDvrStatusIfNeeded()
             }
         } else {
             seek(timeInterval, nil)
         }
+    }
+
+    private func triggerDvrStatusIfNeeded() {
+        trigger(.didChangeDvrStatus, userInfo: ["inUse": isDvrInUse])
     }
 
     private func seek(_ timeInterval: TimeInterval, _ triggerEvent: (() -> Void)?) {
