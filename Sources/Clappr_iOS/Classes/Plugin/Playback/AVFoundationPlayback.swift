@@ -372,6 +372,9 @@ open class AVFoundationPlayback: Playback {
             trigger(.stalled)
         case .paused:
             trigger(.didPause)
+            if isDvrAvailable {
+                triggerDvrStatusIfNeeded()
+            }
         case .playing:
             trigger(.playing)
         default:

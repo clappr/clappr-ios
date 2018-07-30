@@ -134,6 +134,41 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
+                describe("#pause") {
+                    beforeEach {
+                        asset.set(duration: kCMTimeIndefinite)
+                    }
+
+                    context("video has dvr") {
+                        it("triggers usinDVR with enabled true") {
+                            player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                            item.setSeekableTimeRange(with: 60)
+                            var didChangeDvrStatusTriggered = false
+                            playback.on(Event.didChangeDvrStatus.rawValue) { info in
+                                didChangeDvrStatusTriggered = true
+                            }
+
+                            playback.pause()
+
+                            expect(didChangeDvrStatusTriggered).toEventually(beTrue())
+                        }
+                    }
+
+                    context("whe video does not have dvr") {
+                        it("doesn't trigger usingDVR event") {
+                            player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                            var didChangeDvrStatusTriggered = false
+                            playback.on(Event.didChangeDvrStatus.rawValue) { info in
+                                didChangeDvrStatusTriggered = true
+                            }
+
+                            playback.pause()
+
+                            expect(didChangeDvrStatusTriggered).toEventually(beFalse())
+                        }
+                    }
+                }
+
                 describe("#seekableTimeRanges") {
                     context("when player is nil") {
                         it("is empty") {
