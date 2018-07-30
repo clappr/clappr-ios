@@ -10,6 +10,7 @@ class AVPlayerItemStub: AVPlayerItem {
     var _currentTime: CMTime = CMTime(seconds: 0, preferredTimescale: 0)
     
     var didCallSeekWithCompletionHandler = false
+    var didCallSeekWithTime: CMTime?
 
     var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
 
@@ -17,6 +18,7 @@ class AVPlayerItemStub: AVPlayerItem {
 
     override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
         didCallSeekWithCompletionHandler = true
+        didCallSeekWithTime = time
         completionHandler!(true)
     }
 

@@ -12,6 +12,10 @@ class AVFoundationPlaybackTests: QuickSpec {
         describe("AVFoundationPlayback Tests") {
 
             let server = HTTPStub()
+            var asset: AVURLAssetStub!
+            var item: AVPlayerItemStub!
+            var player: AVPlayerStub!
+            var playback: AVFoundationPlayback!
 
             beforeSuite {
                 server.start()
@@ -21,23 +25,18 @@ class AVFoundationPlaybackTests: QuickSpec {
                 server.stop()
             }
 
+            beforeEach {
+                asset = AVURLAssetStub(url: URL(string: "https://www.google.com")!, options: nil)
+                item = AVPlayerItemStub(asset: asset)
+
+                player = AVPlayerStub()
+                player.set(currentItem: item)
+
+                playback = AVFoundationPlayback()
+                playback.player = player
+            }
+
             describe("AVFoundationPlaybackExtension") {
-                var asset: AVURLAssetStub!
-                var item: AVPlayerItemStub!
-                var player: AVPlayerStub!
-                var playback: AVFoundationPlayback!
-
-                beforeEach {
-                    asset = AVURLAssetStub(url: URL(string: "https://www.google.com")!, options: nil)
-                    item = AVPlayerItemStub(asset: asset)
-
-                    player = AVPlayerStub()
-                    player.set(currentItem: item)
-
-                    playback = AVFoundationPlayback()
-                    playback.player = player
-                }
-
                 describe("#minDvrSize") {
                     context("when minDvrOption has correct type value") {
                         it("return minDvrOption value") {
@@ -606,6 +605,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback.seek(20)
 
                         expect(player._item.didCallSeekWithCompletionHandler).to(beFalse())
+                    }
+                }
+
+                context("when DVR is available") {
+                    it("seeks to the correct time inside the DVR window") {
+                        asset.set(duration: kCMTimeIndefinite)
+                        item.setSeekableTimeRange(with: 60)
+                        item.setWindow(start: 60, end: 120)
+
+                        player.setStatus(to: .readyToPlay)
+                        playback.seek(20)
+
+                        expect(item.didCallSeekWithTime?.seconds).to(equal(80))
                     }
                 }
 
