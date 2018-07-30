@@ -38,7 +38,7 @@ open class AVFoundationPlayback: Playback {
     }
     fileprivate var timeObserver: Any?
     fileprivate var asset: AVURLAsset?
-    private var lastDvrAvailability: Bool?
+    var lastDvrAvailability: Bool?
 
     private var backgroundSessionBackup: String?
 
@@ -486,7 +486,7 @@ open class AVFoundationPlayback: Playback {
         handleDvrAvailabilityChange()
     }
 
-    fileprivate func handleDvrAvailabilityChange() {
+    func handleDvrAvailabilityChange() {
         if lastDvrAvailability != isDvrAvailable {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable

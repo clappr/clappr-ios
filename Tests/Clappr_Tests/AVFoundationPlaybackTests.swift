@@ -62,7 +62,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#usingDVR") {
+                describe("#didChangeDvrStatus") {
                     context("when video is vod") {
                         it("returns false") {
                             asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
@@ -79,7 +79,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         context("video has dvr") {
                             context("when dvr is being used") {
-                                it("triggers usinDVR with enabled true") {
+                                it("triggers didChangeDvrStatus with inUse true") {
                                     player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
@@ -97,7 +97,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
 
                             context("when dvr is not being used") {
+<<<<<<< HEAD
                                 it("triggers usingDVR with enabled false") {
+=======
+                                it("triggers didChangeDvrStatus with inUse false") {
+>>>>>>> test: adjust tests with new names and create test case for changeDvrAvailability
                                     player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
@@ -116,7 +120,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
 
                         context("whe video does not have dvr") {
-                            it("doesn't trigger usingDVR event") {
+                            it("doesn't trigger didChangeDvrStatus event") {
                                 player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                                 var usingDVR: Bool?
                                 playback.on(Event.didChangeDvrStatus.rawValue) { info in
@@ -169,6 +173,114 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
+                describe("#didChangeDvrAvailability") {
+                    var playback: AVFoundationPlayback!
+                    var playerItem: AVPlayerItemStub?
+                    var available: Bool?
+                    var didCallChangeDvrAvailability: Bool?
+                    let playerAsset = AVURLAssetStub(url: URL(string: "http://localhost:8080/sample.m3u8")!)
+                    
+                    func setupTest(minDvrSize: Double, seekableTimeRange: Double) {
+                        playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
+                        playerAsset.set(duration: kCMTimeIndefinite)
+                        playerItem = AVPlayerItemStub(asset: playerAsset)
+                        playerItem!.setSeekableTimeRange(with: seekableTimeRange)
+                        let player = AVPlayerStub()
+                        player.set(currentItem: playerItem!)
+                        playback.player = player
+                        player.setStatus(to: .readyToPlay)
+                        
+                        playback.on(Event.didChangeDvrAvailability.rawValue) { info in
+                            didCallChangeDvrAvailability = true
+                            if let dvrAvailable = info?["available"] as? Bool {
+                                available = dvrAvailable
+                            }
+                        }
+                    }
+                    
+                    beforeEach {
+                        didCallChangeDvrAvailability = false
+                    }
+                    
+                    context("when calls handleDvrAvailabilityChange") {
+                        context("and lastDvrAvailability is nil") {
+                            context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
+                                it("calls didChangeDvrAvailability event with available false") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0)
+                                    playback.lastDvrAvailability = nil
+
+                                    playback.handleDvrAvailabilityChange()
+
+                                    expect(didCallChangeDvrAvailability).toEventually(beTrue())
+                                    expect(available).toEventually(beFalse())
+                                }
+                            }
+                            
+                            context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
+                                it("calls didChangeDvrAvailability event with available true") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0)
+                                    playback.lastDvrAvailability = nil
+                                    
+                                    playback.handleDvrAvailabilityChange()
+                                    
+                                    expect(didCallChangeDvrAvailability).toEventually(beTrue())
+                                    expect(available).toEventually(beTrue())
+                                }
+                            }
+                        }
+                        
+                        context("and lastDvrAvailability is true") {
+                            context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
+                                it("calls didChangeDvrAvailability event with available false") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0)
+                                    playback.lastDvrAvailability = true
+
+                                    playback.handleDvrAvailabilityChange()
+
+                                    expect(didCallChangeDvrAvailability).toEventually(beTrue())
+                                    expect(available).toEventually(beFalse())
+                                }
+                            }
+
+                            context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
+                                it("does not call didChangeDvrAvailability") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 85.0)
+                                    playback.lastDvrAvailability = true
+
+                                    playback.handleDvrAvailabilityChange()
+
+                                    expect(didCallChangeDvrAvailability).toEventually(beFalse())
+                                }
+                            }
+                        }
+
+                        context("and lastDvrAvailability is false") {
+                            context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
+                                it("does not call didChangeDvrAvailability") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 35.0)
+                                    playback.lastDvrAvailability = false
+                                    
+                                    playback.handleDvrAvailabilityChange()
+
+                                    expect(didCallChangeDvrAvailability).toEventually(beFalse())
+                                }
+                            }
+
+                            context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
+                                it("calls didChangeDvrAvailability event with available true") {
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0)
+                                    playback.lastDvrAvailability = false
+
+                                    playback.handleDvrAvailabilityChange()
+
+                                    expect(didCallChangeDvrAvailability).toEventually(beTrue())
+                                    expect(available).toEventually(beTrue())
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 describe("#seekableTimeRanges") {
                     context("when player is nil") {
                         it("is empty") {
@@ -215,7 +327,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#supportDVR") {
+                describe("#isDvrAvailable") {
                     context("when video is vod") {
                         it("returns false") {
                             asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
@@ -234,7 +346,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#dvrPosition") {
+                describe("#position") {
                     it("returns the position inside the DVR window") {
                         asset.set(duration: CMTime(seconds: 50, preferredTimescale: 1))
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
