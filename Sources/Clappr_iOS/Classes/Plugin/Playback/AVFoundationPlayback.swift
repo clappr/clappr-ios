@@ -291,23 +291,23 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
+        seek(relativeTime(to: timeInterval)) { [weak self] in
+            self?.triggerDvrStatusIfNeeded()
+        }
+    }
+
+    private func relativeTime(to time: TimeInterval) -> TimeInterval {
         if isDvrAvailable {
-            var timeToSeek = timeInterval
-
-            if let seekStartTime = dvrWindowStart {
-                timeToSeek = timeToSeek + seekStartTime
-            }
-
-            seek(timeToSeek) { [weak self] in
-                self?.triggerDvrStatusIfNeeded()
-            }
+            return time + (dvrWindowStart ?? 0)
         } else {
-            seek(timeInterval, nil)
+            return time
         }
     }
 
     private func triggerDvrStatusIfNeeded() {
-        trigger(.didChangeDvrStatus, userInfo: ["inUse": isDvrInUse])
+        if isDvrAvailable {
+            trigger(.didChangeDvrStatus, userInfo: ["inUse": isDvrInUse])
+        }
     }
 
     private func seek(_ timeInterval: TimeInterval, _ triggerEvent: (() -> Void)?) {
@@ -372,9 +372,7 @@ open class AVFoundationPlayback: Playback {
             trigger(.stalled)
         case .paused:
             trigger(.didPause)
-            if isDvrAvailable {
-                triggerDvrStatusIfNeeded()
-            }
+            triggerDvrStatusIfNeeded()
         case .playing:
             trigger(.playing)
         default:
