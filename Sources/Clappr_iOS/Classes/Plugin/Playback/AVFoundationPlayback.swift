@@ -330,8 +330,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seekToLivePosition() {
-        guard let livePosition = (seekableTimeRanges.last as? CMTimeRange)?.end.seconds else { return }
-        seek(livePosition)
+        seek(Double.infinity)
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
