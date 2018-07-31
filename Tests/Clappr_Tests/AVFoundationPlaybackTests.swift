@@ -96,11 +96,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
 
                             context("when dvr is not being used") {
-<<<<<<< HEAD
-                                it("triggers usingDVR with enabled false") {
-=======
                                 it("triggers didChangeDvrStatus with inUse false") {
->>>>>>> test: adjust tests with new names and create test case for changeDvrAvailability
                                     player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
