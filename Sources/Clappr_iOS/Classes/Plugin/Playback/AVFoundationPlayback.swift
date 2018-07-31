@@ -575,7 +575,13 @@ extension AVFoundationPlayback {
 
     open override var isDvrAvailable: Bool {
         guard playbackType == .live else { return false }
-        return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
+        var liveDuration: Double = 0
+        
+        for seekableTimeRange in seekableTimeRanges {
+            liveDuration += seekableTimeRange.timeRangeValue.duration.seconds
+        }
+        
+        return liveDuration >= minDvrSize
     }
 
     open override var currentDate: Date? {
