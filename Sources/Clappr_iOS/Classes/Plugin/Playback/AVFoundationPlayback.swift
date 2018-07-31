@@ -133,12 +133,8 @@ open class AVFoundationPlayback: Playback {
 
     open override var position: Double {
         if let start = dvrWindowStart,
-            let end = dvrWindowEnd,
             let position = player?.currentItem?.currentTime().seconds {
-            var calculatedPosition = (position - start) * 100
-            calculatedPosition = calculatedPosition / ((end - start) / 100)
-            calculatedPosition = (calculatedPosition * duration) / 10000
-            return calculatedPosition
+            return position - start
         }
         
         guard playbackType == .vod, let player = self.player else {
