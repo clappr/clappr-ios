@@ -119,13 +119,13 @@ open class AVFoundationPlayback: Playback {
         if playbackType == .vod {
             return CMTimeGetSeconds(item.asset.duration)
         }
-
-        if playbackType == .live {
-            if isDvrAvailable, let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds {
-                return duration
-            } else {
-                return 0
+        
+        if playbackType == .live, isDvrAvailable {
+            var liveDuration: Double = 0
+            for seekableTimeRange in seekableTimeRanges {
+                liveDuration += seekableTimeRange.timeRangeValue.duration.seconds
             }
+            return liveDuration
         }
 
         return 0
