@@ -593,10 +593,16 @@ extension AVFoundationPlayback {
     }
 
     private var dvrWindowStart: Double? {
-        return seekableTimeRanges.min { rangeA, rangeB in rangeA.timeRangeValue.start.seconds < rangeB.timeRangeValue.start.seconds }?.timeRangeValue.start.seconds
+        guard let end = dvrWindowEnd, isDvrAvailable, playbackType == .live else {
+            return nil
+        }
+        return end - duration
     }
 
     private var dvrWindowEnd: Double? {
+        guard isDvrAvailable, playbackType == .live else {
+            return nil
+        }
         return seekableTimeRanges.max { rangeA, rangeB in rangeA.timeRangeValue.end.seconds < rangeB.timeRangeValue.end.seconds }?.timeRangeValue.end.seconds
     }
 }
