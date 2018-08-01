@@ -343,9 +343,9 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 describe("#position") {
                     it("returns the position inside the DVR window") {
-                        asset.set(duration: CMTime(seconds: 50, preferredTimescale: 1))
+                        asset.set(duration: kCMTimeIndefinite)
+                        item.setWindow(start: 100, end: 160)
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
-                        item.setWindow(start: 100, end: 150)
 
                         expect(playback.position).to(equal(25))
                     }
@@ -744,7 +744,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     playback.seekToLivePosition()
-                    
+
                     expect(updatedPosition).to(equal(Double.infinity))
                 }
             }
