@@ -563,6 +563,7 @@ extension AVFoundationPlayback {
     }
 
     open override var isDvrInUse: Bool {
+        if isPaused && isDvrAvailable { return true }
         guard let end = dvrWindowEnd, playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
         return end > currentTime

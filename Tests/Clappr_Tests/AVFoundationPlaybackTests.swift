@@ -710,6 +710,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(updatedPosition).to(equal(5))
                 }
             }
+
             describe("#seekToLivePosition") {
                 var playback: AVFoundationPlayback!
                 var playerItem: AVPlayerItemStub!
@@ -741,12 +742,22 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playback.on(Event.positionUpdate.rawValue) { (userInfo: EventUserInfo) in
                         updatedPosition = userInfo!["position"] as? Float64
                     }
-                    
-                    
+
                     playback.seekToLivePosition()
                     
                     let livePosition = (playerItem.seekableTimeRanges.last as? CMTimeRange)?.end.seconds
                     expect(updatedPosition).to(equal(livePosition))
+                }
+            }
+
+            describe("#isDvrInUse") {
+                it("returns false when video is paused") {
+                    asset.set(duration: kCMTimeIndefinite)
+                    item.setSeekableTimeRange(with: 60)
+
+                    playback.pause()
+
+                    expect(playback.isDvrInUse).to(beTrue())
                 }
             }
         }
