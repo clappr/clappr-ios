@@ -132,7 +132,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var position: Double {
-        if let start = dvrWindowStart,
+        if isDvrAvailable, let start = dvrWindowStart,
             let position = player?.currentItem?.currentTime().seconds {
             return position - start
         }

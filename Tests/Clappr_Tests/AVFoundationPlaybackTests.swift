@@ -341,13 +341,35 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#position") {
-                    it("returns the position inside the DVR window") {
-                        asset.set(duration: kCMTimeIndefinite)
-                        item.setWindow(start: 100, end: 160)
-                        item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
+                fdescribe("#position") {
+                    context("when live") {
+                        context("and DVR is available") {
+                            it("returns the position inside the DVR window") {
+                                asset.set(duration: kCMTimeIndefinite)
+                                item.setSeekableTimeRange(with: 200)
+                                item.setWindow(start: 100, end: 160)
+                                item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
 
-                        expect(playback.position).to(equal(25))
+                                expect(playback.position).to(equal(25))
+                            }
+                        }
+                        context("and dvr is not available") {
+                            it("returns 0") {
+                                asset.set(duration: kCMTimeIndefinite)
+                                item.setSeekableTimeRange(with: 0)
+                                
+                                expect(playback.position).to(equal(0))
+                            }
+                        }
+                    }
+                    
+                    context("when vod") {
+                        it("returns current time") {
+                            asset.set(duration: CMTime(seconds: 160, preferredTimescale: 1))
+                            player.set(currentTime: CMTime(seconds: 125, preferredTimescale: 1))
+                            
+                            expect(playback.position).to(equal(125))
+                        }
                     }
                 }
 
