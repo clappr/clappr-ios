@@ -120,11 +120,11 @@ open class AVFoundationPlayback: Playback {
             return CMTimeGetSeconds(item.asset.duration)
         }
         
-        if playbackType == .live, isDvrAvailable {
-            var liveDuration: Double = 0
-            for seekableTimeRange in seekableTimeRanges {
-                liveDuration += seekableTimeRange.timeRangeValue.duration.seconds
-            }
+        if playbackType == .live {
+            let liveDuration = seekableTimeRanges.reduce(0.0, { previous, current in
+                return previous + current.timeRangeValue.duration.seconds
+            })
+
             return liveDuration
         }
 
@@ -572,13 +572,8 @@ extension AVFoundationPlayback {
 
     open override var isDvrAvailable: Bool {
         guard playbackType == .live else { return false }
-        var liveDuration: Double = 0
         
-        for seekableTimeRange in seekableTimeRanges {
-            liveDuration += seekableTimeRange.timeRangeValue.duration.seconds
-        }
-        
-        return liveDuration >= minDvrSize
+        return duration >= minDvrSize
     }
 
     open override var currentDate: Date? {
