@@ -330,6 +330,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seekToLivePosition() {
+        play()
         seek(Double.infinity)
     }
 
@@ -566,7 +567,7 @@ extension AVFoundationPlayback {
         if isPaused && isDvrAvailable { return true }
         guard let end = dvrWindowEnd, playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
-        return end > currentTime
+        return end - liveHeadTolerance > currentTime
     }
 
     open override var isDvrAvailable: Bool {
@@ -606,5 +607,9 @@ extension AVFoundationPlayback {
             return nil
         }
         return seekableTimeRanges.max { rangeA, rangeB in rangeA.timeRangeValue.end.seconds < rangeB.timeRangeValue.end.seconds }?.timeRangeValue.end.seconds
+    }
+
+    fileprivate var liveHeadTolerance: Double {
+        return 5
     }
 }
