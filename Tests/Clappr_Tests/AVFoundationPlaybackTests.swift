@@ -341,7 +341,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                fdescribe("#position") {
+                describe("#position") {
                     context("when live") {
                         context("and DVR is available") {
                             it("returns the position inside the DVR window") {
