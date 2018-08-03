@@ -79,7 +79,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         context("video has dvr") {
                             context("when dvr is being used") {
                                 it("triggers didChangeDvrStatus with inUse true") {
-                                    player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                                    player.set(currentTime: CMTime(seconds: 54, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
                                     var usingDVR: Bool?
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
@@ -772,13 +772,39 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             describe("#isDvrInUse") {
-                it("returns false when video is paused") {
-                    asset.set(duration: kCMTimeIndefinite)
-                    item.setSeekableTimeRange(with: 60)
+                context("when video is paused") {
+                    it("returns true") {
+                        asset.set(duration: kCMTimeIndefinite)
+                        item.setSeekableTimeRange(with: 160)
 
-                    playback.pause()
+                        playback.pause()
 
-                    expect(playback.isDvrInUse).to(beTrue())
+                        expect(playback.isDvrInUse).to(beTrue())
+                    }
+                }
+                
+                context("when currentTime is lower then dvrWindowEnd - liveHeadTolerance") {
+                    it("returns true") {
+                        asset.set(duration: kCMTimeIndefinite)
+                        item.setSeekableTimeRange(with: 160)
+                        player.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
+                        
+                        player.play()
+                        
+                        expect(playback.isDvrInUse).toEventually(beTrue())
+                    }
+                }
+                
+                context("when currentTime is higher or equal then dvrWindowEnd - liveHeadTolerance") {
+                    it("returns false") {
+                        asset.set(duration: kCMTimeIndefinite)
+                        item.setSeekableTimeRange(with: 160)
+                        player.set(currentTime: CMTime(seconds: 156, preferredTimescale: 1))
+                        
+                        player.play()
+                        
+                        expect(playback.isDvrInUse).toEventually(beFalse())
+                    }
                 }
             }
         }
