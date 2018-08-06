@@ -38,6 +38,7 @@ open class AVFoundationPlayback: Playback {
     }
     fileprivate var timeObserver: Any?
     fileprivate var asset: AVURLAsset?
+    var lastDvrAvailability: Bool?
 
     private var backgroundSessionBackup: String?
 
@@ -118,19 +119,24 @@ open class AVFoundationPlayback: Playback {
         if playbackType == .vod {
             return CMTimeGetSeconds(item.asset.duration)
         }
-
+        
         if playbackType == .live {
-            if supportDVR, let duration = seekableTimeRanges.first?.timeRangeValue.duration.seconds {
-                return duration
-            } else {
-                return 0
-            }
+            let liveDuration = seekableTimeRanges.reduce(0.0, { previous, current in
+                return previous + current.timeRangeValue.duration.seconds
+            })
+
+            return liveDuration
         }
 
         return 0
     }
 
     open override var position: Double {
+        if isDvrAvailable, let start = dvrWindowStart,
+            let position = player?.currentItem?.currentTime().seconds {
+            return position - start
+        }
+        
         guard playbackType == .vod, let player = self.player else {
             return 0
         }
@@ -281,20 +287,22 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
-        if supportDVR {
-            var timeToSeek = timeInterval
+        seek(relativeTime(to: timeInterval)) { [weak self] in
+            self?.triggerDvrStatusIfNeeded()
+        }
+    }
 
-            if let seekStartTime = dvrWindowStart {
-                timeToSeek = timeToSeek + seekStartTime
-            }
-
-            seek(timeToSeek) { [weak self] in
-                if let usingDVR = self?.usingDVR {
-                    self?.trigger(.usingDVR, userInfo: ["enabled": usingDVR])
-                }
-            }
+    private func relativeTime(to time: TimeInterval) -> TimeInterval {
+        if isDvrAvailable {
+            return time + (dvrWindowStart ?? 0)
         } else {
-            seek(timeInterval, nil)
+            return time
+        }
+    }
+
+    private func triggerDvrStatusIfNeeded() {
+        if isDvrAvailable {
+            trigger(.didChangeDvrStatus, userInfo: ["inUse": isDvrInUse])
         }
     }
 
@@ -319,6 +327,11 @@ open class AVFoundationPlayback: Playback {
         }
 
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+    }
+
+    open override func seekToLivePosition() {
+        play()
+        seek(Double.infinity)
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
@@ -355,6 +368,7 @@ open class AVFoundationPlayback: Playback {
             trigger(.stalled)
         case .paused:
             trigger(.didPause)
+            triggerDvrStatusIfNeeded()
         case .playing:
             trigger(.playing)
         default:
@@ -463,6 +477,14 @@ open class AVFoundationPlayback: Playback {
     fileprivate func handleSeekableTimeRangesEvent() {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+        handleDvrAvailabilityChange()
+    }
+
+    func handleDvrAvailabilityChange() {
+        if lastDvrAvailability != isDvrAvailable {
+            trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
+            lastDvrAvailability = isDvrAvailable
+        }
     }
 
     fileprivate func handleBufferingEvent(_ keyPath: String?) {
@@ -541,10 +563,21 @@ extension AVFoundationPlayback {
         return self.options[kMinDvrSize] as? Double ?? 60.0
     }
 
-    open override var usingDVR: Bool {
-        guard playbackType == .live else { return false }
+    open override var isDvrInUse: Bool {
+        if isPaused && isDvrAvailable { return true }
+        guard let end = dvrWindowEnd, playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
-        return seekableTimeRanges.first(where: { $0.timeRangeValue.end.seconds > currentTime}) != nil
+        return end - liveHeadTolerance > currentTime
+    }
+
+    open override var isDvrAvailable: Bool {
+        guard playbackType == .live else { return false }
+        
+        return duration >= minDvrSize
+    }
+
+    open override var currentDate: Date? {
+        return player?.currentItem?.currentDate()
     }
 
     open override var seekableTimeRanges: [NSValue] {
@@ -557,32 +590,21 @@ extension AVFoundationPlayback {
         return ranges
     }
 
-    open override var supportDVR: Bool {
-        guard playbackType == .live else { return false }
-        return seekableTimeRanges.first(where: { $0.timeRangeValue.duration.seconds >= minDvrSize}) != nil
-    }
-
-    open override var dvrPosition: Double {
-        if let start = dvrWindowStart,
-            let end = dvrWindowEnd,
-            let position = player?.currentItem?.currentTime().seconds {
-            var calculatedPosition = (position - start) * 100
-            calculatedPosition = calculatedPosition / ((end - start) / 100)
-            calculatedPosition = (calculatedPosition * duration) / 10000
-            return calculatedPosition
-        }
-        return position
-    }
-
-    open override var currentDate: Date? {
-        return player?.currentItem?.currentDate()
-    }
-
     private var dvrWindowStart: Double? {
-        return seekableTimeRanges.min { rangeA, rangeB in rangeA.timeRangeValue.start.seconds < rangeB.timeRangeValue.start.seconds }?.timeRangeValue.start.seconds
+        guard let end = dvrWindowEnd, isDvrAvailable, playbackType == .live else {
+            return nil
+        }
+        return end - duration
     }
 
     private var dvrWindowEnd: Double? {
+        guard isDvrAvailable, playbackType == .live else {
+            return nil
+        }
         return seekableTimeRanges.max { rangeA, rangeB in rangeA.timeRangeValue.end.seconds < rangeB.timeRangeValue.end.seconds }?.timeRangeValue.end.seconds
+    }
+
+    fileprivate var liveHeadTolerance: Double {
+        return 5
     }
 }

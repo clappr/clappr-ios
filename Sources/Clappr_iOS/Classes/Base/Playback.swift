@@ -110,6 +110,7 @@ open class Playback: UIBaseObject, Plugin {
     @objc open func pause() {}
     @objc open func stop() {}
     @objc open func seek(_: TimeInterval) {}
+    @objc open func seekToLivePosition() {}
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
@@ -127,27 +128,23 @@ extension Playback {
         return 0
     }
 
-    @objc open var usingDVR: Bool {
+    @objc open var isDvrInUse: Bool {
         return false
     }
 
-    @objc open var seekableTimeRanges: [NSValue] {
-        return []
-    }
-
-    @objc open var loadedTimeRanges: [NSValue] {
-       return []
-    }
-
-    @objc open var supportDVR: Bool {
+    @objc open var isDvrAvailable: Bool {
         return false
-    }
-
-    @objc open var dvrPosition: Double {
-        return 0
     }
 
     @objc open var currentDate: Date? {
         return nil
+    }
+    
+    @objc open var seekableTimeRanges: [NSValue] {
+        return []
+    }
+    
+    @objc open var loadedTimeRanges: [NSValue] {
+        return []
     }
 }
