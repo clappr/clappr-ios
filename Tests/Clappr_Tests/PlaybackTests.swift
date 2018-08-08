@@ -99,11 +99,24 @@ class PlaybackTests: QuickSpec {
                     expect(playback.startAt) == 0.0
                 }
 
-                it("seek video when rendering if startAt is set") {
-                    let playback = StubPlayback(options: [kStartAt: 15.0])
-                    playback.render()
-                    playback.play()
-                    expect(playback.seekWasCalledWithValue) == 15.0
+                context("when video is vod") {
+                    it("seek video when rendering if startAt is set") {
+                        let playback = StubPlayback(options: [kStartAt: 15.0])
+                        playback.type = .vod
+                        playback.render()
+                        playback.play()
+                        expect(playback.seekWasCalledWithValue) == 15.0
+                    }
+                }
+
+                context("when video is live") {
+                    it("doesn't seek video when rendering if startAt is set") {
+                        let playback = StubPlayback(options: [kStartAt: 15.0])
+                        playback.type = .live
+                        playback.render()
+                        playback.play()
+                        expect(playback.seekWasCalled).to(beFalse())
+                    }
                 }
             }
 
@@ -123,7 +136,9 @@ class PlaybackTests: QuickSpec {
 
     class StubPlayback: Playback {
         var playWasCalled = false
+        var seekWasCalled = false
         var seekWasCalledWithValue: TimeInterval = -1
+        var type: PlaybackType = .unknown
 
         override var pluginName: String {
             return "stupPlayback"
@@ -136,6 +151,11 @@ class PlaybackTests: QuickSpec {
 
         override func seek(_ timeInterval: TimeInterval) {
             seekWasCalledWithValue = timeInterval
+            seekWasCalled = true
+        }
+
+        override var playbackType: PlaybackType {
+            return type
         }
     }
 }
