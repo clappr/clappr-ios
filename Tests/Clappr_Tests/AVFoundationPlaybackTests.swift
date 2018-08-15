@@ -383,6 +383,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("#options") {
+                it("triggers didUpdateOptions when setted") {
+                    var didUpdateOptionsTriggered = false
+                    playback.on(Event.didUpdateOptions.rawValue) { _ in
+                        didUpdateOptionsTriggered = true
+                    }
+
+                    playback.options = [:]
+
+                    expect(didUpdateOptionsTriggered).to(beTrue())
+                }
+            }
+
             describe("#duration") {
                 var asset: AVURLAssetStub!
                 var item: AVPlayerItemStub!
