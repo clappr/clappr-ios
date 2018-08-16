@@ -1,5 +1,9 @@
 open class Core: UIBaseObject, UIGestureRecognizerDelegate {
-    @objc fileprivate(set) open var options: Options
+    @objc open var options: Options {
+        didSet {
+            containers.forEach { $0.options = options }
+        }
+    }
     @objc fileprivate(set) open var containers: [Container] = []
     @objc fileprivate(set) open var mediaControl: MediaControl?
     @objc fileprivate(set) open var plugins: [UICorePlugin] = []

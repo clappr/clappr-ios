@@ -468,6 +468,16 @@ class CoreTests: QuickSpec {
                 }
             }
 
+            describe("#options") {
+                it("updates the container options") {
+                    core.options = ["foo": "bar"]
+
+                    core.containers.forEach { container in
+                        expect(container.options["foo"] as? String).to(equal("bar"))
+                    }
+                }
+            }
+
             describe("#Destroy") {
                 it("trigger willDestroy event") {
                     var didCallWillDestroy = false
