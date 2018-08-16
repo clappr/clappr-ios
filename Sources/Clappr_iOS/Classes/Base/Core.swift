@@ -3,6 +3,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         didSet {
             containers.forEach { $0.options = options }
             trigger(Event.didUpdateOptions)
+            loadSourceIfNeeded()
         }
     }
     @objc fileprivate(set) open var containers: [Container] = []
@@ -136,6 +137,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func renderContainer(_ container: Container) {
         addSubviewMatchingConstraints(container)
         container.render()
+    }
+
+    fileprivate func loadSourceIfNeeded() {
+        if let source = options[kSourceUrl] as? String {
+            activeContainer?.load(source, mimeType: options[kMimeType] as? String)
+        }
     }
 
     @objc open func addPlugin(_ plugin: UICorePlugin) {
