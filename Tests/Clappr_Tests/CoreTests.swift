@@ -476,6 +476,17 @@ class CoreTests: QuickSpec {
                         expect(container.options["foo"] as? String).to(equal("bar"))
                     }
                 }
+
+                it("triggers didUpdateOptions when setted") {
+                    var didUpdateOptionsTriggered = false
+                    core.on(Event.didUpdateOptions.rawValue) { _ in
+                        didUpdateOptionsTriggered = true
+                    }
+
+                    core.options = [:]
+
+                    expect(didUpdateOptionsTriggered).to(beTrue())
+                }
             }
 
             describe("#Destroy") {

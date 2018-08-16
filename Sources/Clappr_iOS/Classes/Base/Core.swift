@@ -2,6 +2,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
+            trigger(Event.didUpdateOptions)
         }
     }
     @objc fileprivate(set) open var containers: [Container] = []
