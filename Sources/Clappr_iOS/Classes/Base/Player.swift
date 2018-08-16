@@ -112,6 +112,10 @@ open class Player: BaseObject {
         play()
     }
 
+    @objc open func configure(options: Options) {
+        core?.options = options
+    }
+
     @objc open func play() {
         core?.activePlayback?.play()
     }
