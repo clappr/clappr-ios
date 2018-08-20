@@ -1,7 +1,7 @@
 import Kingfisher
 
 open class PosterPlugin: UIContainerPlugin {
-    fileprivate var poster = UIImageView(frame: CGRect.zero)
+    internal(set) var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
 
     public required init?(coder _: NSCoder) {
@@ -85,6 +85,7 @@ open class PosterPlugin: UIContainerPlugin {
         guard let container = container else { return }
         listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
+        listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] info in self?.updatePoster(container.options) }
     }
 
     @objc var isNoOpPlayback: Bool {
