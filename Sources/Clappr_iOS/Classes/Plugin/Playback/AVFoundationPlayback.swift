@@ -91,7 +91,7 @@ open class AVFoundationPlayback: Playback {
             return []
         }
 
-        let availableOptions = mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        let availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
         return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
 
@@ -99,7 +99,7 @@ open class AVFoundationPlayback: Playback {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
             return []
         }
-        return mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
     }
 
     open override var isPlaying: Bool {
