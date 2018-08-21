@@ -3,6 +3,7 @@ import Foundation
 open class Container: UIBaseObject {
     @objc internal(set) open var plugins: [UIContainerPlugin] = []
     @objc open var options: Options
+    @objc open var sharedData = SharedData()
 
     fileprivate var loader: Loader
 
@@ -33,6 +34,7 @@ open class Container: UIBaseObject {
         self.options = options
         self.loader = loader
         super.init(frame: CGRect.zero)
+        self.sharedData.container = self
         backgroundColor = UIColor.clear
         loadPlugins()
         accessibilityIdentifier = "Container"
