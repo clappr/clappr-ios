@@ -11,6 +11,24 @@
 		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
+		32624CA0212C7741004C26ED /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
+		32624CA2212C7741004C26ED /* sample11.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8D212C773B004C26ED /* sample11.ts */; };
+		32624CA3212C7741004C26ED /* sample12.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8E212C773C004C26ED /* sample12.ts */; };
+		32624CA4212C7741004C26ED /* sample4.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8F212C773C004C26ED /* sample4.ts */; };
+		32624CA6212C7741004C26ED /* sample2.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C91212C773D004C26ED /* sample2.ts */; };
+		32624CA7212C7741004C26ED /* sample14.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C92212C773D004C26ED /* sample14.ts */; };
+		32624CA8212C7741004C26ED /* subtitles.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C93212C773D004C26ED /* subtitles.m3u8 */; };
+		32624CA9212C7741004C26ED /* master.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C94212C773D004C26ED /* master.m3u8 */; };
+		32624CAA212C7741004C26ED /* sample3.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C95212C773E004C26ED /* sample3.ts */; };
+		32624CAB212C7741004C26ED /* sample9.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C96212C773E004C26ED /* sample9.ts */; };
+		32624CAC212C7741004C26ED /* sample13.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C97212C773E004C26ED /* sample13.ts */; };
+		32624CAD212C7741004C26ED /* sub0.webvtt in Resources */ = {isa = PBXBuildFile; fileRef = 32624C98212C773E004C26ED /* sub0.webvtt */; };
+		32624CAE212C7741004C26ED /* sub-por.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C99212C773F004C26ED /* sub-por.m3u8 */; };
+		32624CB0212C7741004C26ED /* sample10.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9B212C773F004C26ED /* sample10.ts */; };
+		32624CB1212C7741004C26ED /* sample5.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9C212C7740004C26ED /* sample5.ts */; };
+		32624CB2212C7741004C26ED /* sample8.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9D212C7740004C26ED /* sample8.ts */; };
+		32624CB3212C7741004C26ED /* sub-por.webvtt in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9E212C7740004C26ED /* sub-por.webvtt */; };
+		32624CB4212C7741004C26ED /* sample6.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9F212C7740004C26ED /* sample6.ts */; };
 		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
 		3283BF062024D8B100F2B826 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329624A72051ECFF0062AE32 /* MediaOptionTests.swift */; };
@@ -252,6 +270,24 @@
 		322EA4C920F941300018973A /* AVURLAssetStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetStub.swift; sourceTree = "<group>"; };
 		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
 		32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIApplicationExtension.swift; sourceTree = "<group>"; };
+		32624C8B212C773B004C26ED /* sample7.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample7.ts; sourceTree = "<group>"; };
+		32624C8D212C773B004C26ED /* sample11.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample11.ts; sourceTree = "<group>"; };
+		32624C8E212C773C004C26ED /* sample12.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample12.ts; sourceTree = "<group>"; };
+		32624C8F212C773C004C26ED /* sample4.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample4.ts; sourceTree = "<group>"; };
+		32624C91212C773D004C26ED /* sample2.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample2.ts; sourceTree = "<group>"; };
+		32624C92212C773D004C26ED /* sample14.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample14.ts; sourceTree = "<group>"; };
+		32624C93212C773D004C26ED /* subtitles.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = subtitles.m3u8; sourceTree = "<group>"; };
+		32624C94212C773D004C26ED /* master.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master.m3u8; sourceTree = "<group>"; };
+		32624C95212C773E004C26ED /* sample3.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample3.ts; sourceTree = "<group>"; };
+		32624C96212C773E004C26ED /* sample9.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample9.ts; sourceTree = "<group>"; };
+		32624C97212C773E004C26ED /* sample13.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample13.ts; sourceTree = "<group>"; };
+		32624C98212C773E004C26ED /* sub0.webvtt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sub0.webvtt; sourceTree = "<group>"; };
+		32624C99212C773F004C26ED /* sub-por.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sub-por.m3u8"; sourceTree = "<group>"; };
+		32624C9B212C773F004C26ED /* sample10.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample10.ts; sourceTree = "<group>"; };
+		32624C9C212C7740004C26ED /* sample5.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample5.ts; sourceTree = "<group>"; };
+		32624C9D212C7740004C26ED /* sample8.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample8.ts; sourceTree = "<group>"; };
+		32624C9E212C7740004C26ED /* sub-por.webvtt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "sub-por.webvtt"; sourceTree = "<group>"; };
+		32624C9F212C7740004C26ED /* sample6.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample6.ts; sourceTree = "<group>"; };
 		3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		329624A72051ECFF0062AE32 /* MediaOptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOptionTests.swift; sourceTree = "<group>"; };
 		32D18C8D20484CA10097653C /* SpinnerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerPluginTests.swift; sourceTree = "<group>"; };
@@ -520,9 +556,27 @@
 		57351C6620248D66007DEBBE /* Stub */ = {
 			isa = PBXGroup;
 			children = (
+				32624C94212C773D004C26ED /* master.m3u8 */,
 				9E1613F62051CD4B006E95F2 /* sample.m3u8 */,
 				9E1613F72051CD4B006E95F2 /* sample0.ts */,
 				9E1613F52051CD4A006E95F2 /* sample1.ts */,
+				32624C91212C773D004C26ED /* sample2.ts */,
+				32624C95212C773E004C26ED /* sample3.ts */,
+				32624C8F212C773C004C26ED /* sample4.ts */,
+				32624C9C212C7740004C26ED /* sample5.ts */,
+				32624C9F212C7740004C26ED /* sample6.ts */,
+				32624C8B212C773B004C26ED /* sample7.ts */,
+				32624C9D212C7740004C26ED /* sample8.ts */,
+				32624C96212C773E004C26ED /* sample9.ts */,
+				32624C9B212C773F004C26ED /* sample10.ts */,
+				32624C8D212C773B004C26ED /* sample11.ts */,
+				32624C8E212C773C004C26ED /* sample12.ts */,
+				32624C97212C773E004C26ED /* sample13.ts */,
+				32624C92212C773D004C26ED /* sample14.ts */,
+				32624C99212C773F004C26ED /* sub-por.m3u8 */,
+				32624C9E212C7740004C26ED /* sub-por.webvtt */,
+				32624C98212C773E004C26ED /* sub0.webvtt */,
+				32624C93212C773D004C26ED /* subtitles.m3u8 */,
 				57351C6720248D78007DEBBE /* video.mp4 */,
 				9E1613FB2051CD89006E95F2 /* HTTPStub.swift */,
 			);
@@ -1248,9 +1302,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E1613F82051CD4B006E95F2 /* sample1.ts in Resources */,
+				32624CAC212C7741004C26ED /* sample13.ts in Resources */,
 				9E1613FA2051CD4B006E95F2 /* sample0.ts in Resources */,
+				32624CAD212C7741004C26ED /* sub0.webvtt in Resources */,
+				32624CB4212C7741004C26ED /* sample6.ts in Resources */,
+				32624CAE212C7741004C26ED /* sub-por.m3u8 in Resources */,
+				32624CA6212C7741004C26ED /* sample2.ts in Resources */,
+				32624CAA212C7741004C26ED /* sample3.ts in Resources */,
+				32624CB3212C7741004C26ED /* sub-por.webvtt in Resources */,
 				57351C6820248D78007DEBBE /* video.mp4 in Resources */,
 				9E1613F92051CD4B006E95F2 /* sample.m3u8 in Resources */,
+				32624CB1212C7741004C26ED /* sample5.ts in Resources */,
+				32624CA4212C7741004C26ED /* sample4.ts in Resources */,
+				32624CA9212C7741004C26ED /* master.m3u8 in Resources */,
+				32624CAB212C7741004C26ED /* sample9.ts in Resources */,
+				32624CA8212C7741004C26ED /* subtitles.m3u8 in Resources */,
+				32624CA3212C7741004C26ED /* sample12.ts in Resources */,
+				32624CB0212C7741004C26ED /* sample10.ts in Resources */,
+				32624CA2212C7741004C26ED /* sample11.ts in Resources */,
+				32624CB2212C7741004C26ED /* sample8.ts in Resources */,
+				32624CA0212C7741004C26ED /* sample7.ts in Resources */,
+				32624CA7212C7741004C26ED /* sample14.ts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
