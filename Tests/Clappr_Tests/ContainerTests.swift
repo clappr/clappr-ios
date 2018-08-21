@@ -268,6 +268,21 @@ class ContainerTests: QuickSpec {
                     expect(container.playback?.startAt) == 0.0
                 }
             }
+
+            describe("Container sharedData") {
+
+                context("when stores a value on sharedData") {
+
+                    beforeEach {
+                        container = Container(loader: loader, options: Resource.valid)
+                        container.sharedData.storeDictionary["testKey"] = "testValue"
+                    }
+
+                    it("retrieves stored value") {
+                        expect(container.sharedData.storeDictionary["testKey"] as? String) == "testValue"
+                    }
+                }
+            }
         }
     }
 
