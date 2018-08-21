@@ -405,11 +405,11 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         trigger(.ready)
 
         if let subtitles = self.subtitles {
-            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
+            trigger(.audioSourceAvailable, userInfo: ["audios": audioSources])
         }
 
         loadMetadata()

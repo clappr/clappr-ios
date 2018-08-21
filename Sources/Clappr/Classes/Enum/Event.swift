@@ -4,9 +4,9 @@ public enum Event: String {
     case ready
     case stalled
     case willUpdateAudioSource
-    case didUpdateAudioSource
     case willUpdateSubtitleSource
-    case didUpdateSubtitleSource
+    case audioSourceAvailable
+    case subtitleAvailable
     case disableMediaControl
     case enableMediaControl
     case didComplete
