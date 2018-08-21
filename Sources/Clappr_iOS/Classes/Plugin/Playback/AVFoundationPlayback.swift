@@ -454,7 +454,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         if let audioSources = self.audioSources {
-            trigger(.audioSourceAvailable, userInfo: ["audios": audioSources])
+            trigger(.audioAvailable, userInfo: ["audios": audioSources])
         }
 
         addTimeElapsedCallback()

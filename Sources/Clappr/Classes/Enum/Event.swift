@@ -3,7 +3,7 @@ public enum Event: String {
     case positionUpdate
     case ready
     case stalled
-    case audioSourceAvailable
+    case audioAvailable
     case subtitleAvailable
     case audioSelected
     case subtitleSelected

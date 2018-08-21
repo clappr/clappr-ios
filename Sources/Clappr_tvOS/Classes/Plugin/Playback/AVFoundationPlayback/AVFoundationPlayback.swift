@@ -409,7 +409,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         }
 
         if let audioSources = self.audioSources {
-            trigger(.audioSourceAvailable, userInfo: ["audios": audioSources])
+            trigger(.audioAvailable, userInfo: ["audios": audioSources])
         }
 
         loadMetadata()
