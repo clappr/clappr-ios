@@ -52,12 +52,14 @@ open class AVFoundationPlayback: Playback {
 
     open override var selectedSubtitle: MediaOption? {
         get {
+            guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
         }
     }
 
@@ -70,7 +72,18 @@ open class AVFoundationPlayback: Playback {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
         }
+    }
+
+    private func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
+        var userInfo: EventUserInfo
+
+        if option != nil {
+            userInfo = ["mediaOption": option as Any]
+        }
+
+        trigger(event.rawValue, userInfo: userInfo)
     }
 
     open override var subtitles: [MediaOption]? {
