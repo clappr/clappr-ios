@@ -6,7 +6,7 @@ enum PlaybackState {
 }
 
 @objcMembers
-open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
+open class AVFoundationPlayback: Playback {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
@@ -294,16 +294,6 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
-    public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
-        trigger(.willSeek)
-        return targetTime
-    }
-
-    public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
-        trigger(.seek)
-        trigger(.didSeek)
-    }
-
     open override func mute(_ enabled: Bool) {
         if enabled {
             player?.volume = 0.0
@@ -509,5 +499,17 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         Logger.logDebug("destroying", scope: "AVFoundationPlayback")
         releaseResources()
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
+    }
+}
+
+extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
+    public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
+        trigger(.willSeek)
+        return targetTime
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
+        trigger(.seek)
+        trigger(.didSeek)
     }
 }
