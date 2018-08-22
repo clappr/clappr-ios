@@ -56,12 +56,14 @@ open class AVFoundationPlayback: Playback {
 
     open override var selectedSubtitle: MediaOption? {
         get {
+            guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
         }
     }
 
@@ -74,7 +76,18 @@ open class AVFoundationPlayback: Playback {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
         }
+    }
+
+    private func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
+        var userInfo: EventUserInfo
+
+        if option != nil {
+            userInfo = ["mediaOption": option as Any]
+        }
+
+        trigger(event.rawValue, userInfo: userInfo)
     }
 
     open override var subtitles: [MediaOption]? {
@@ -511,5 +524,16 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
     public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
         trigger(.seek)
         trigger(.didSeek)
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, didSelect mediaSelectionOption: AVMediaSelectionOption?, in mediaSelectionGroup: AVMediaSelectionGroup) {
+        guard let mediaType = mediaSelectionGroup.options.first?.mediaType else { return }
+        if mediaType == AVMediaType.subtitle.rawValue {
+            triggerMediaOptionSelectedEvent(option: selectedSubtitle, event: Event.subtitleSelected)
+        }
+
+        if mediaType == AVMediaType.audio.rawValue {
+            triggerMediaOptionSelectedEvent(option: selectedAudioSource, event: Event.audioSelected)
+        }
     }
 }
