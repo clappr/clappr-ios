@@ -31,6 +31,28 @@
 		32624CB4212C7741004C26ED /* sample6.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9F212C7740004C26ED /* sample6.ts */; };
 		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
 		3283BF062024D8B100F2B826 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
+		3293658A212DC9CE001B4B15 /* master.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C94212C773D004C26ED /* master.m3u8 */; };
+		3293658B212DC9CE001B4B15 /* sample.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F62051CD4B006E95F2 /* sample.m3u8 */; };
+		3293658C212DC9CE001B4B15 /* sample0.ts in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F72051CD4B006E95F2 /* sample0.ts */; };
+		3293658D212DC9CE001B4B15 /* sample1.ts in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F52051CD4A006E95F2 /* sample1.ts */; };
+		3293658E212DC9CE001B4B15 /* sample2.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C91212C773D004C26ED /* sample2.ts */; };
+		3293658F212DC9CE001B4B15 /* sample3.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C95212C773E004C26ED /* sample3.ts */; };
+		32936590212DC9CE001B4B15 /* sample4.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8F212C773C004C26ED /* sample4.ts */; };
+		32936591212DC9CE001B4B15 /* sample5.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9C212C7740004C26ED /* sample5.ts */; };
+		32936592212DC9CE001B4B15 /* sample6.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9F212C7740004C26ED /* sample6.ts */; };
+		32936593212DC9CE001B4B15 /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
+		32936594212DC9CE001B4B15 /* sample8.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9D212C7740004C26ED /* sample8.ts */; };
+		32936595212DC9CE001B4B15 /* sample9.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C96212C773E004C26ED /* sample9.ts */; };
+		32936596212DC9CE001B4B15 /* sample10.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9B212C773F004C26ED /* sample10.ts */; };
+		32936597212DC9CE001B4B15 /* sample11.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8D212C773B004C26ED /* sample11.ts */; };
+		32936598212DC9CE001B4B15 /* sample12.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8E212C773C004C26ED /* sample12.ts */; };
+		32936599212DC9CE001B4B15 /* sample13.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C97212C773E004C26ED /* sample13.ts */; };
+		3293659A212DC9CE001B4B15 /* sample14.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C92212C773D004C26ED /* sample14.ts */; };
+		3293659B212DC9CE001B4B15 /* sub-por.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C99212C773F004C26ED /* sub-por.m3u8 */; };
+		3293659C212DC9CE001B4B15 /* sub-por.webvtt in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9E212C7740004C26ED /* sub-por.webvtt */; };
+		3293659D212DC9CE001B4B15 /* sub0.webvtt in Resources */ = {isa = PBXBuildFile; fileRef = 32624C98212C773E004C26ED /* sub0.webvtt */; };
+		3293659E212DC9CE001B4B15 /* subtitles.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C93212C773D004C26ED /* subtitles.m3u8 */; };
+		3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329624A72051ECFF0062AE32 /* MediaOptionTests.swift */; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
@@ -1282,8 +1304,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3293658B212DC9CE001B4B15 /* sample.m3u8 in Resources */,
 				3283BF062024D8B100F2B826 /* video.mp4 in Resources */,
+				32936596212DC9CE001B4B15 /* sample10.ts in Resources */,
+				3293658D212DC9CE001B4B15 /* sample1.ts in Resources */,
+				32936597212DC9CE001B4B15 /* sample11.ts in Resources */,
+				3293658A212DC9CE001B4B15 /* master.m3u8 in Resources */,
+				32936594212DC9CE001B4B15 /* sample8.ts in Resources */,
+				3293659D212DC9CE001B4B15 /* sub0.webvtt in Resources */,
+				32936591212DC9CE001B4B15 /* sample5.ts in Resources */,
+				32936599212DC9CE001B4B15 /* sample13.ts in Resources */,
+				32936595212DC9CE001B4B15 /* sample9.ts in Resources */,
+				3293658F212DC9CE001B4B15 /* sample3.ts in Resources */,
+				32936590212DC9CE001B4B15 /* sample4.ts in Resources */,
+				3293659A212DC9CE001B4B15 /* sample14.ts in Resources */,
 				9E1EB321208E3511005714D1 /* cover.png in Resources */,
+				32936593212DC9CE001B4B15 /* sample7.ts in Resources */,
+				32936592212DC9CE001B4B15 /* sample6.ts in Resources */,
+				32936598212DC9CE001B4B15 /* sample12.ts in Resources */,
+				3293659C212DC9CE001B4B15 /* sub-por.webvtt in Resources */,
+				3293658C212DC9CE001B4B15 /* sample0.ts in Resources */,
+				3293658E212DC9CE001B4B15 /* sample2.ts in Resources */,
+				3293659E212DC9CE001B4B15 /* subtitles.m3u8 in Resources */,
+				3293659B212DC9CE001B4B15 /* sub-por.m3u8 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,6 +1528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
