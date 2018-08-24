@@ -3,10 +3,10 @@ public enum Event: String {
     case positionUpdate
     case ready
     case stalled
-    case willUpdateAudioSource
-    case didUpdateAudioSource
-    case willUpdateSubtitleSource
-    case didUpdateSubtitleSource
+    case audioAvailable
+    case subtitleAvailable
+    case audioSelected
+    case subtitleSelected
     case disableMediaControl
     case enableMediaControl
     case didComplete

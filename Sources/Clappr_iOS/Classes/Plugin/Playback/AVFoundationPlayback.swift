@@ -52,12 +52,14 @@ open class AVFoundationPlayback: Playback {
 
     open override var selectedSubtitle: MediaOption? {
         get {
+            guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
         }
     }
 
@@ -70,7 +72,18 @@ open class AVFoundationPlayback: Playback {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
         }
+    }
+
+    private func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
+        var userInfo: EventUserInfo
+
+        if option != nil {
+            userInfo = ["mediaOption": option as Any]
+        }
+
+        trigger(event.rawValue, userInfo: userInfo)
     }
 
     open override var subtitles: [MediaOption]? {
@@ -78,7 +91,7 @@ open class AVFoundationPlayback: Playback {
             return []
         }
 
-        let availableOptions = mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        let availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
         return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
 
@@ -86,7 +99,7 @@ open class AVFoundationPlayback: Playback {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
             return []
         }
-        return mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
     }
 
     open override var isPlaying: Bool {
@@ -437,11 +450,11 @@ open class AVFoundationPlayback: Playback {
         seekOnReadyIfNeeded()
 
         if let subtitles = self.subtitles {
-            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
+            trigger(.audioAvailable, userInfo: ["audios": audioSources])
         }
 
         addTimeElapsedCallback()

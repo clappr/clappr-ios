@@ -89,6 +89,6 @@ struct AVFoundationNowPlayingBuilder {
     }
 
     func build() -> [AVMetadataItem] {
-        return [getTitle(), getDescription(), getDate(), getContentIdentifier(), getWatchedTime()].flatMap({ $0 })
+        return [getTitle(), getDescription(), getDate(), getContentIdentifier(), getWatchedTime()].compactMap({ $0 })
     }
 }

@@ -1,5 +1,7 @@
 import Quick
 import Nimble
+import AVFoundation
+
 @testable import Clappr
 
 class PlayerTests: QuickSpec {
@@ -51,6 +53,28 @@ class PlayerTests: QuickSpec {
                 expect(player.activePlayback is SpecialStubPlayback).to(beTrue())
 
                 player.activePlayback?.trigger(.playing)
+                expect(callbackWasCalled).to(beTrue())
+            }
+
+            it("Should listen to subtitleSelected event") {
+                var callbackWasCalled = false
+
+                player.on(.subtitleSelected) { _ in
+                    callbackWasCalled = true
+                }
+
+                playback.trigger(.subtitleSelected)
+                expect(callbackWasCalled).to(beTrue())
+            }
+
+            it("Should listen to audioSelected event") {
+                var callbackWasCalled = false
+
+                player.on(.audioSelected) { _ in
+                    callbackWasCalled = true
+                }
+
+                playback.trigger(.audioSelected)
                 expect(callbackWasCalled).to(beTrue())
             }
         }

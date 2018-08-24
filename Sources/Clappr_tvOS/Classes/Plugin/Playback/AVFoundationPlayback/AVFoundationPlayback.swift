@@ -6,7 +6,7 @@ enum PlaybackState {
 }
 
 @objcMembers
-open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
+open class AVFoundationPlayback: Playback {
     fileprivate static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
@@ -56,12 +56,14 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
 
     open override var selectedSubtitle: MediaOption? {
         get {
+            guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
         }
     }
 
@@ -74,7 +76,18 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
         }
+    }
+
+    private func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
+        var userInfo: EventUserInfo
+
+        if option != nil {
+            userInfo = ["mediaOption": option as Any]
+        }
+
+        trigger(event.rawValue, userInfo: userInfo)
     }
 
     open override var subtitles: [MediaOption]? {
@@ -82,7 +95,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
             return []
         }
 
-        let availableOptions = mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        let availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
         return availableOptions + [MediaOptionFactory.offSubtitle()]
     }
 
@@ -90,7 +103,7 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
             return []
         }
-        return mediaGroup.options.flatMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
     }
 
     open override var isPlaying: Bool {
@@ -294,16 +307,6 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
-    public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
-        trigger(.willSeek)
-        return targetTime
-    }
-
-    public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
-        trigger(.seek)
-        trigger(.didSeek)
-    }
-
     open override func mute(_ enabled: Bool) {
         if enabled {
             player?.volume = 0.0
@@ -405,11 +408,11 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         trigger(.ready)
 
         if let subtitles = self.subtitles {
-            trigger(.didUpdateSubtitleSource, userInfo: ["subtitles": subtitles])
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.didUpdateAudioSource, userInfo: ["audios": audioSources])
+            trigger(.audioAvailable, userInfo: ["audios": audioSources])
         }
 
         loadMetadata()
@@ -509,5 +512,28 @@ open class AVFoundationPlayback: Playback, AVPlayerViewControllerDelegate {
         Logger.logDebug("destroying", scope: "AVFoundationPlayback")
         releaseResources()
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
+    }
+}
+
+extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
+    public func playerViewController(_ playerViewController: AVPlayerViewController, timeToSeekAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) -> CMTime {
+        trigger(.willSeek)
+        return targetTime
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
+        trigger(.seek)
+        trigger(.didSeek)
+    }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, didSelect mediaSelectionOption: AVMediaSelectionOption?, in mediaSelectionGroup: AVMediaSelectionGroup) {
+        guard let mediaType = mediaSelectionGroup.options.first?.mediaType else { return }
+        if mediaType == AVMediaType.subtitle.rawValue {
+            triggerMediaOptionSelectedEvent(option: selectedSubtitle, event: Event.subtitleSelected)
+        }
+
+        if mediaType == AVMediaType.audio.rawValue {
+            triggerMediaOptionSelectedEvent(option: selectedAudioSource, event: Event.audioSelected)
+        }
     }
 }
