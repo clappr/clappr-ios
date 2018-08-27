@@ -13,6 +13,15 @@ public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
 
+public let kLoop = "loop"
+public let kMetaData = "metadata"
+public let kMetaDataContentIdentifier = "mdContentIdentifier"
+public let kMetaDataWatchedTime = "mdWatchedTime"
+public let kMetaDataTitle = "mdTitle"
+public let kMetaDataDescription = "mdDescription"
+public let kMetaDataDate = "mdDate"
+public let kMetaDataArtwork = "mdArtwork"
+
 struct OptionsUnboxer {
     let options: Options
 
