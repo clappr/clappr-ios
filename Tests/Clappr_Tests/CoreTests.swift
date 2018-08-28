@@ -75,6 +75,7 @@ class CoreTests: QuickSpec {
                 }
             }
 
+            #if os(iOS)
             describe("Fullscreen") {
                 var options: Options!
 
@@ -111,7 +112,8 @@ class CoreTests: QuickSpec {
                         player.on(.requestFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.attachTo(UIView(), controller: UIViewController())
+
+                        self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
@@ -299,8 +301,9 @@ class CoreTests: QuickSpec {
 
                     beforeEach {
                         player = Player()
-                        player.attachTo(UIView(), controller: UIViewController())
+                        self.playerSetup(player: player)
                     }
+
 
                     context("when core trigger InternalEvent.userRequestEnterInFullscreen") {
                         it("triggers Event.requestFullscreen on player") {
@@ -439,7 +442,8 @@ class CoreTests: QuickSpec {
                         player.on(.requestFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.attachTo(UIView(), controller: UIViewController())
+
+                        self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
@@ -457,7 +461,8 @@ class CoreTests: QuickSpec {
                         player.on(.requestFullscreen) { _ in
                             callbackWasCalled = true
                         }
-                        player.attachTo(UIView(), controller: UIViewController())
+
+                        self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
@@ -467,6 +472,7 @@ class CoreTests: QuickSpec {
                     }
                 }
             }
+            #endif
 
             describe("#options") {
                 it("updates the container options") {
@@ -545,12 +551,14 @@ class CoreTests: QuickSpec {
                     
                     expect(core.mediaControl).toEventually(beNil())
                 }
-                
+
+                #if os(iOS)
                 it("clears fullscreen reference") {
                     core.destroy()
                     
                     expect(core.fullscreenController).toEventually(beNil())
                 }
+                #endif
             }
 
             context("when changes a activePlayback") {
@@ -657,5 +665,17 @@ class CoreTests: QuickSpec {
                 }
             }
         }
+    }
+
+    func playerSetup(player: Player) {
+        #if os(iOS)
+        player.attachTo(UIView(), controller: UIViewController())
+        #else
+        let controller = UIViewController()
+        controller.addChildViewController(player)
+        player.view.frame = controller.view.bounds
+        controller.view.addSubview(player.view)
+        player.didMove(toParentViewController: controller)
+        #endif
     }
 }
