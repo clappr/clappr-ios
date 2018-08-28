@@ -146,6 +146,10 @@ open class Player: UIViewController, BaseObject {
         play()
     }
 
+    open func configure(options: Options) {
+        core?.options = options
+    }
+
     open func play() {
         core?.activePlayback?.play()
     }
