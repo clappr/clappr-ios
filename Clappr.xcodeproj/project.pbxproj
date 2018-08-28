@@ -12,6 +12,7 @@
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
 		3251114721359BD8001FEEBA /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
 		3251114821359C48001FEEBA /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
+		3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362921D41339400CCB866 /* MediaControl.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		32624CA0212C7741004C26ED /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
@@ -882,7 +883,6 @@
 				96D362951D41339400CCB866 /* Playback.swift */,
 				96D362961D41339400CCB866 /* Player.swift */,
 				96D362971D41339400CCB866 /* UIBaseObject.swift */,
-				96D362921D41339400CCB866 /* MediaControl.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1494,6 +1494,7 @@
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
+				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				FCF11C3E2007E86F008DC4D6 /* UIObject.swift in Sources */,
