@@ -91,6 +91,8 @@ open class Playback: UIBaseObject, Plugin {
             }
 
             self.selectDefaultMediaOptions()
+
+            self.play()
         }
     }
 

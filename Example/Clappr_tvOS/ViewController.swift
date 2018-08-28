@@ -12,7 +12,6 @@ class ViewController: UIViewController {
 
         let options = [
             kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
-            kAutoPlay: true,
             kMediaControl: true
             ] as [String: Any]
         player = Player(options: options)
