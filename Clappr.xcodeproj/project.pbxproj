@@ -10,6 +10,7 @@
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
+		3251114721359BD8001FEEBA /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		32624CA0212C7741004C26ED /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
@@ -190,7 +191,6 @@
 		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
 		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
-		FC7785A72005233D00EC879F /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785972005233D00EC879F /* Core.swift */; };
 		FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785982005233D00EC879F /* EventDispatcher.swift */; };
 		FC7785A92005233D00EC879F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785992005233D00EC879F /* EventHandler.swift */; };
 		FC7785AA2005233D00EC879F /* FullscreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859A2005233D00EC879F /* FullscreenController.swift */; };
@@ -426,7 +426,6 @@
 		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
 		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
 		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
-		FC7785972005233D00EC879F /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		FC7785982005233D00EC879F /* EventDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcher.swift; sourceTree = "<group>"; };
 		FC7785992005233D00EC879F /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		FC77859A2005233D00EC879F /* FullscreenController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenController.swift; sourceTree = "<group>"; };
@@ -737,6 +736,7 @@
 			isa = PBXGroup;
 			children = (
 				96D362941D41339400CCB866 /* Options.swift */,
+				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628D1D41339400CCB866 /* Container.swift */,
 				96D362911D41339400CCB866 /* Loader.swift */,
 				96D362931D41339400CCB866 /* MediaOption.swift */,
@@ -880,7 +880,6 @@
 			children = (
 				9E26CFF02016148400AE92B7 /* FullScreen */,
 				96D3628C1D41339400CCB866 /* BaseObject.swift */,
-				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628F1D41339400CCB866 /* EventHandler.swift */,
 				96D362921D41339400CCB866 /* MediaControl.swift */,
 				96D362951D41339400CCB866 /* Playback.swift */,
@@ -994,7 +993,6 @@
 			isa = PBXGroup;
 			children = (
 				FC7785962005233D00EC879F /* BaseObject.swift */,
-				FC7785972005233D00EC879F /* Core.swift */,
 				FC7785982005233D00EC879F /* EventDispatcher.swift */,
 				FC7785992005233D00EC879F /* EventHandler.swift */,
 				FC77859A2005233D00EC879F /* FullscreenController.swift */,
@@ -1505,10 +1503,10 @@
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				FCF11C3E2007E86F008DC4D6 /* UIObject.swift in Sources */,
-				FC7785A72005233D00EC879F /* Core.swift in Sources */,
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
+				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
 				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
