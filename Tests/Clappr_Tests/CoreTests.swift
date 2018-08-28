@@ -41,10 +41,6 @@ class CoreTests: QuickSpec {
                     expect(core.frame) == CGRect.zero
                 }
 
-                it("add gesture recognizer") {
-                    expect(core.gestureRecognizers?.count) > 0
-                }
-
                 it("save options passed on parameter") {
                     let options = ["SomeOption": true]
                     let core = Core(loader: loader, options: options as Options)
@@ -60,6 +56,12 @@ class CoreTests: QuickSpec {
                     expect(core.containers).toNot(beEmpty())
                 }
 
+                #if os(iOS)
+
+                it("add gesture recognizer") {
+                    expect(core.gestureRecognizers?.count) > 0
+                }
+
                 it("activeContainer is referenced on mediaControl container") {
                     expect(core.mediaControl?.container) == core.activeContainer
                 }
@@ -73,6 +75,7 @@ class CoreTests: QuickSpec {
 
                     expect(core.subviews.last) == core.mediaControl
                 }
+                #endif
             }
 
             #if os(iOS)

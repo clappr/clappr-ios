@@ -12,7 +12,6 @@
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
 		3251114721359BD8001FEEBA /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
 		3251114821359C48001FEEBA /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
-		325111492135E6F3001FEEBA /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362921D41339400CCB866 /* MediaControl.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		32624CA0212C7741004C26ED /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
@@ -883,6 +882,7 @@
 				96D362951D41339400CCB866 /* Playback.swift */,
 				96D362961D41339400CCB866 /* Player.swift */,
 				96D362971D41339400CCB866 /* UIBaseObject.swift */,
+				96D362921D41339400CCB866 /* MediaControl.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1485,7 +1485,6 @@
 				FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */,
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
-				325111492135E6F3001FEEBA /* MediaControl.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
 				FC7785AD2005233D00EC879F /* Playback.swift in Sources */,
 				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,

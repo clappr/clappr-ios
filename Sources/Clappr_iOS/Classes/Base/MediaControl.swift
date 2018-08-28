@@ -28,9 +28,7 @@ open class MediaControl: UIBaseObject {
     @IBOutlet open var playbackControlButton: UIButton?
     @IBOutlet open var fullscreenButton: UIButton?
 
-    #if os(iOS)
     @IBOutlet open var airPlayVolumeView: MPVolumeView?
-    #endif
 
     @objc internal(set) open weak var container: Container?
     @objc internal(set) open var controlsHidden = false
@@ -92,11 +90,7 @@ open class MediaControl: UIBaseObject {
     }
 
     @objc open class func loadNib() -> UINib? {
-        #if os(iOS)
         return UINib(nibName: "MediaControlView", bundle: Bundle(for: MediaControl.self))
-        #else
-        return nil
-        #endif
     }
 
     @objc open class func initCustom() -> MediaControl {
@@ -115,11 +109,9 @@ open class MediaControl: UIBaseObject {
         mediaControl.scrubberInitialPosition = mediaControl.progressBarWidthConstraint?.constant ?? 0
         mediaControl.scrubberInitialHeight = mediaControl.scrubberOuterCircleHeightConstraint?.constant ?? 0
         mediaControl.scrubberInitialWidth = mediaControl.scrubberOuterCircleWidthConstraint?.constant ?? 0
-        #if os(iOS)
         mediaControl.airPlayVolumeView?.showsVolumeSlider = false
         mediaControl.airPlayVolumeView?.showsRouteButton = true
         mediaControl.airPlayVolumeView?.backgroundColor = UIColor.clear
-        #endif
         mediaControl.hide()
         mediaControl.bindOrientationChangedListener()
         if let seekBarView = mediaControl.seekBarView as? DragDetectorView {
