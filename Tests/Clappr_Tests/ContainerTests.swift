@@ -269,6 +269,19 @@ class ContainerTests: QuickSpec {
                 }
             }
 
+            describe("#options") {
+                it("triggers didUpdateOptions when setted") {
+                    var didUpdateOptionsTriggered = false
+                    container.on(Event.didUpdateOptions.rawValue) { _ in
+                        didUpdateOptionsTriggered = true
+                    }
+
+                    container.options = [:]
+                    expect(didUpdateOptionsTriggered).to(beTrue())
+
+                }
+            }
+
             describe("Container sharedData") {
 
                 context("when stores a value on sharedData") {

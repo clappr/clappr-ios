@@ -125,6 +125,22 @@ class PosterPluginTests: QuickSpec {
                     }
                 }
             }
+
+            describe("When receiving didUpdateOptions event") {
+                var posterPlugin: PosterPlugin!
+
+                beforeEach {
+                    container = Container(options: options)
+                    container.render()
+                    posterPlugin = self.getPosterPlugin(container)
+                }
+
+                it("updates the poster") {
+                    container.options[kPosterUrl] = "https://clappr.io/another-poster.png"
+
+                    expect(posterPlugin.poster.kf.webURL?.absoluteString).to(equal("https://clappr.io/another-poster.png"))
+                }
+            }
         }
     }
 

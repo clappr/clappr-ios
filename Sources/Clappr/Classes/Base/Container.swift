@@ -2,8 +2,12 @@ import Foundation
 
 open class Container: UIBaseObject {
     @objc internal(set) open var plugins: [UIContainerPlugin] = []
-    @objc open var options: Options
     @objc open var sharedData = SharedData()
+    @objc open var options: Options {
+        didSet {
+            trigger(Event.didUpdateOptions)
+        }
+    }
 
     fileprivate var loader: Loader
 

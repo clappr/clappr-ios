@@ -23,10 +23,6 @@ open class Playback: UIBaseObject, Plugin {
         return options[kSourceUrl] as? String
     }
 
-    open var autoPlay: Bool {
-        return options[kAutoPlay] as? Bool ?? false
-    }
-
     open var startAt: TimeInterval {
         return options[kStartAt] as? TimeInterval ?? 0.0
     }
@@ -97,9 +93,7 @@ open class Playback: UIBaseObject, Plugin {
             self.selectDefaultMediaOptions()
         }
 
-        if autoPlay {
-            play()
-        }
+        play()
     }
 
     fileprivate func selectDefaultMediaOptions() {

@@ -17,7 +17,11 @@ open class Playback: UIBaseObject, Plugin {
     fileprivate(set) open var subtitles: [MediaOption]?
     fileprivate(set) open var audioSources: [MediaOption]?
 
-    @objc internal(set) open var options: Options
+    @objc internal(set) open var options: Options {
+        didSet {
+            trigger(Event.didUpdateOptions)
+        }
+    }
 
     @objc open var source: String? {
         return options[kSourceUrl] as? String
