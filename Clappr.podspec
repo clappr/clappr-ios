@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "9.0"
   s.ios.source_files = ['Sources/Clappr/Classes/**/*', 'Sources/Clappr_iOS/Classes/**/*']
-  s.ios.dependency 'Kingfisher', '~> 4.6.3'
+  s.ios.dependency 'Kingfisher', '~> 4.9.0'
 
   s.tvos.deployment_target = "10.0"
   s.tvos.source_files = ['Sources/Clappr/Classes/**/*', 'Sources/Clappr_tvOS/Classes/**/*']
