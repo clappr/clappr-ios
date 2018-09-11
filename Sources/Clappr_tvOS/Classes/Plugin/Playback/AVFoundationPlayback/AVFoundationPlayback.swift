@@ -409,16 +409,36 @@ open class AVFoundationPlayback: Playback {
         trigger(.ready)
 
         if let subtitles = self.subtitles {
-            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles])
+            let hasDefault = selectDefaultSubtitleIfNeeded()
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": hasDefault])
         }
 
         if let audioSources = self.audioSources {
-            trigger(.audioAvailable, userInfo: ["audios": audioSources])
+            let hasDefault = selectDefaultAudioIfNeeded()
+            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": hasDefault])
         }
 
         loadMetadata()
 
         addTimeElapsedCallback()
+    }
+
+    fileprivate func selectDefaultSubtitleIfNeeded() -> Bool {
+        if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
+            let defaultSubtitle = subtitles?.filter({ $0.language == defaultSubtitleLanguage }).first {
+            selectedSubtitle = defaultSubtitle
+            return true
+        }
+        return false
+    }
+
+    fileprivate func selectDefaultAudioIfNeeded() -> Bool {
+        if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
+            let defaultAudioSource = audioSources?.filter({ $0.language == defaultAudioLanguage }).first {
+            selectedAudioSource = defaultAudioSource
+            return true
+        }
+        return false
     }
 
     fileprivate func addTimeElapsedCallback() {
