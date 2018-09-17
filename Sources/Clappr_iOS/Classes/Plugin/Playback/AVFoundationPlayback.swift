@@ -235,6 +235,10 @@ open class AVFoundationPlayback: Playback {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
             player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
+            
+            selectDefaultAudioIfNeeded()
+            selectDefaultSubtitleIfNeeded()
+            
             playerLayer = AVPlayerLayer(player: player)
             layer.addSublayer(playerLayer!)
             setupMaxResolution(for: bounds.size)
@@ -449,36 +453,29 @@ open class AVFoundationPlayback: Playback {
 
     fileprivate func readyToPlay() {
         seekOnReadyIfNeeded()
-
-        if let subtitles = self.subtitles {
-            let hasDefault = selectDefaultSubtitleIfNeeded()
-            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": hasDefault])
-        }
-
-        if let audioSources = self.audioSources {
-            let hasDefault = selectDefaultAudioIfNeeded()
-            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": hasDefault])
-        }
-
         addTimeElapsedCallback()
     }
 
-    fileprivate func selectDefaultSubtitleIfNeeded() -> Bool {
+    fileprivate func selectDefaultSubtitleIfNeeded() {
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
-            let defaultSubtitle = subtitles?.filter({ $0.language == defaultSubtitleLanguage }).first {
-            selectedSubtitle = defaultSubtitle
-            return true
+            let defaultSubtitle = subtitles?.filter({ $0.language == defaultSubtitleLanguage }).first,
+            let subtitles = self.subtitles {
+            
+            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption
+            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": true])
         }
-        return false
     }
 
-    fileprivate func selectDefaultAudioIfNeeded() -> Bool {
+    fileprivate func selectDefaultAudioIfNeeded() {
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
-            let defaultAudioSource = audioSources?.filter({ $0.language == defaultAudioLanguage }).first {
-            selectedAudioSource = defaultAudioSource
-            return true
+            let defaultAudioSource = audioSources?.filter({ $0.language == defaultAudioLanguage }).first,
+            let audioSources = self.audioSources {
+            
+            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption
+            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
+            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": true])
         }
-        return false
     }
 
     fileprivate func addTimeElapsedCallback() {
