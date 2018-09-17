@@ -131,6 +131,19 @@ class PlaybackTests: QuickSpec {
                     expect(playback.source).to(beNil())
                 }
             }
+
+            describe("#options") {
+                it("triggers didUpdateOptions when setted") {
+                    var didUpdateOptionsTriggered = false
+                    playback.on(Event.didUpdateOptions.rawValue) { _ in
+                        didUpdateOptionsTriggered = true
+                    }
+
+                    playback.options = [:]
+
+                    expect(didUpdateOptionsTriggered).to(beTrue())
+                }
+            }
         }
     }
 
