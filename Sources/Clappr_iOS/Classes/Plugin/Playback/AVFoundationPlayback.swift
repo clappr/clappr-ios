@@ -235,10 +235,9 @@ open class AVFoundationPlayback: Playback {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
             player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
-            
+
             selectDefaultAudioIfNeeded()
-            selectDefaultSubtitleIfNeeded()
-            
+
             playerLayer = AVPlayerLayer(player: player)
             layer.addSublayer(playerLayer!)
             setupMaxResolution(for: bounds.size)
@@ -453,6 +452,7 @@ open class AVFoundationPlayback: Playback {
 
     fileprivate func readyToPlay() {
         seekOnReadyIfNeeded()
+        selectDefaultSubtitleIfNeeded()
         addTimeElapsedCallback()
     }
 
