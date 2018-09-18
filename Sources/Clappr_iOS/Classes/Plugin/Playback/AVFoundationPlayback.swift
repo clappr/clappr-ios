@@ -457,24 +457,28 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func selectDefaultSubtitleIfNeeded() {
+        guard let subtitles = self.subtitles else { return }
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
-            let defaultSubtitle = subtitles?.filter({ $0.language == defaultSubtitleLanguage }).first,
-            let subtitles = self.subtitles {
-            
-            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption
+            let defaultSubtitle = subtitles.filter({ $0.language == defaultSubtitleLanguage }).first,
+            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption {
+
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": true])
+        } else {
+            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": false])
         }
     }
 
     fileprivate func selectDefaultAudioIfNeeded() {
+        guard let audioSources = self.audioSources else { return }
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
-            let defaultAudioSource = audioSources?.filter({ $0.language == defaultAudioLanguage }).first,
-            let audioSources = self.audioSources {
-            
-            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption
+            let defaultAudioSource = audioSources.filter({ $0.language == defaultAudioLanguage }).first,
+            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption {
+
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": true])
+        } else {
+            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": false])
         }
     }
 
