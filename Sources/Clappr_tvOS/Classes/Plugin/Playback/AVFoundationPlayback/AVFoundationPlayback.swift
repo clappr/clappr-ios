@@ -289,6 +289,7 @@ open class AVFoundationPlayback: Playback {
         removeObservers()
         playerLayer?.removeFromSuperlayer()
         playerLayer = nil
+        player?.replaceCurrentItem(with: nil)
         player = nil
     }
 
