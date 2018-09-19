@@ -1,8 +1,8 @@
 import AVFoundation
 
 open class AvailableMediaOptions {
-    let sources: [MediaOption]
-    let hasDefaultSelected: Bool
+    open let sources: [MediaOption]
+    open let hasDefaultSelected: Bool
 
     init(_ sources: [MediaOption], hasDefaultSelected: Bool) {
         self.sources = sources
