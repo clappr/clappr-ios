@@ -1,5 +1,3 @@
-import AVFoundation
-
 open class AvailableMediaOptions {
     open let sources: [MediaOption]
     open let hasDefaultSelected: Bool
