@@ -462,9 +462,9 @@ open class AVFoundationPlayback: Playback {
             let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
-            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": true])
+            trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         } else {
-            trigger(.subtitleAvailable, userInfo: ["subtitles": subtitles, "hasDefaultFromOption": false])
+            trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
     }
 
@@ -475,9 +475,9 @@ open class AVFoundationPlayback: Playback {
             let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
-            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": true])
+            trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
         } else {
-            trigger(.audioAvailable, userInfo: ["audios": audioSources, "hasDefaultFromOption": false])
+            trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
     }
 
