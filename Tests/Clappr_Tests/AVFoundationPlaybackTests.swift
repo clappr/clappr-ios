@@ -811,34 +811,18 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#audioAvailable") {
                 
                 context("when video is ready") {
-                    context("and has default audio from options") {
-                        it("triggers audioAvailable event with hasDefaultFromOption true") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8", kDefaultAudioSource: "pt"]
-                            let playback = AVFoundationPlayback(options: options)
-                            var hasDefaultFromOption = false
-                            playback.on(Event.audioAvailable.rawValue) { (userInfo: EventUserInfo) in
-                                guard let hasDefault = userInfo?["hasDefaultFromOption"] as? Bool else { return }
-                                hasDefaultFromOption = hasDefault
-                            }
-                            
-                            playback.play()
-                            
-                            expect(hasDefaultFromOption).toEventually(beTrue())
-                        }
-                    }
-                    
                     context("and has no default audio from options") {
                         it("triggers audioAvailable event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
                             playback.on(Event.audioAvailable.rawValue) { (userInfo: EventUserInfo) in
-                                guard let hasDefault = userInfo?["hasDefaultFromOption"] as? Bool else { return }
-                                hasDefaultFromOption = hasDefault
+                                guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = audio.hasDefaultSelected
                             }
-                            
+
                             playback.play()
-                            
+
                             expect(hasDefaultFromOption).toEventually(beFalse())
                         }
                     }
@@ -854,8 +838,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = false
                             playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
-                                guard let hasDefault = userInfo?["hasDefaultFromOption"] as? Bool else { return }
-                                hasDefaultFromOption = hasDefault
+                                guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
                             
                             playback.play()
@@ -870,8 +854,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
                             playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
-                                guard let hasDefault = userInfo?["hasDefaultFromOption"] as? Bool else { return }
-                                hasDefaultFromOption = hasDefault
+                                guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
                             
                             playback.play()
