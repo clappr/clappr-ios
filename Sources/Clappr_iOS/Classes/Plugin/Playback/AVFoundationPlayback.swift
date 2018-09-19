@@ -452,7 +452,6 @@ open class AVFoundationPlayback: Playback {
 
     fileprivate func readyToPlay() {
         seekOnReadyIfNeeded()
-        selectDefaultSubtitleIfNeeded()
         addTimeElapsedCallback()
     }
 
@@ -530,6 +529,7 @@ open class AVFoundationPlayback: Playback {
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
             if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
                 play()
+                selectDefaultSubtitleIfNeeded()
             } else {
                 updateState(.buffering)
             }
