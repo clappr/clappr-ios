@@ -83,17 +83,6 @@ class MediaControlTests: QuickSpec {
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
                         expect(container.playback?.isPlaying).to(beTrue())
                     }
-
-                    it("Should trigger playing event ") {
-                        var callbackWasCalled = false
-                        mediaControl.once(Event.playing.rawValue) { _ in
-                            callbackWasCalled = true
-                        }
-
-                        mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-
-                        expect(callbackWasCalled).to(beTrue())
-                    }
                 }
 
                 context("Pause") {
@@ -110,17 +99,6 @@ class MediaControlTests: QuickSpec {
                     it("Should change playback control state to paused") {
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
                         expect(mediaControl.playbackControlState) == PlaybackControlState.paused
-                    }
-
-                    it("Should trigger didPause event when selecting button") {
-                        var callbackWasCalled = false
-                        mediaControl.once(Event.didPause.rawValue) { _ in
-                            callbackWasCalled = true
-                        }
-
-                        mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-
-                        expect(callbackWasCalled).to(beTrue())
                     }
                 }
 
@@ -139,17 +117,6 @@ class MediaControlTests: QuickSpec {
                     it("Should change playback control state to stopped") {
                         mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
                         expect(mediaControl.playbackControlState) == PlaybackControlState.stopped
-                    }
-
-                    it("Should trigger didStop event when selecting button") {
-                        var callbackWasCalled = false
-                        mediaControl.once(Event.didStop.rawValue) { _ in
-                            callbackWasCalled = true
-                        }
-
-                        mediaControl.playbackControlButton!.sendActions(for: UIControlEvents.touchUpInside)
-
-                        expect(callbackWasCalled).to(beTrue())
                     }
                 }
 
