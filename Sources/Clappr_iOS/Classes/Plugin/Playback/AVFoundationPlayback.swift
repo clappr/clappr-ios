@@ -235,6 +235,7 @@ open class AVFoundationPlayback: Playback {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
             player = AVPlayer(playerItem: item)
             player?.allowsExternalPlayback = true
+            player?.appliesMediaSelectionCriteriaAutomatically = false
 
             selectDefaultAudioIfNeeded()
 

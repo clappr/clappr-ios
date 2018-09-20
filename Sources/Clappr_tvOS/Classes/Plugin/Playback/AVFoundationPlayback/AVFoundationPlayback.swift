@@ -222,6 +222,7 @@ open class AVFoundationPlayback: Playback {
                 player = AVPlayer(playerItem: item)
             }
             player?.allowsExternalPlayback = true
+            player?.appliesMediaSelectionCriteriaAutomatically = false
             selectDefaultAudioIfNeeded()
             playerLayer = AVPlayerLayer(player: player)
             layer.addSublayer(playerLayer!)
