@@ -69,6 +69,29 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.controlsWrapperView!.alpha) == 1
                         expect(mediaControl.controlsHidden).to(beFalse())
                     }
+
+                }
+                context("Animated Visibility"){
+                    beforeEach {
+                        container.mediaControlEnabled = true
+                    }
+                    it("Should hide it's control after hideAnimated is called and media control is enabled") {
+                        mediaControl.hideAnimated()
+
+                        expect(mediaControl.controlsOverlayView!.alpha) == 0
+                        expect(mediaControl.controlsWrapperView!.alpha) == 0
+                        expect(mediaControl.controlsHidden).to(beTrue())
+                    }
+
+                    it("Should show it's control after showAnimated is called and media control is enabled") {
+                        container.mediaControlEnabled = true
+                        mediaControl.hide()
+                        mediaControl.showAnimated()
+
+                        expect(mediaControl.controlsOverlayView!.alpha) == 1
+                        expect(mediaControl.controlsWrapperView!.alpha) == 1
+                        expect(mediaControl.controlsHidden).to(beFalse())
+                    }
                 }
 
                 context("Play") {
