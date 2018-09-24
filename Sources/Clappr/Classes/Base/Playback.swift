@@ -96,6 +96,10 @@ open class Playback: UIBaseObject, Plugin {
 
             self.selectDefaultMediaOptions()
         }
+
+        #if os(tvOS)
+        play()
+        #endif
     }
 
     fileprivate func selectDefaultMediaOptions() {
@@ -115,6 +119,7 @@ open class Playback: UIBaseObject, Plugin {
     @objc open func stop() {}
     @objc open func seek(_: TimeInterval) {}
     @objc open func seekToLivePosition() {}
+    open func mute(_: Bool) {}
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")

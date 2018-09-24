@@ -33,6 +33,8 @@
 		32624CB2212C7741004C26ED /* sample8.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9D212C7740004C26ED /* sample8.ts */; };
 		32624CB3212C7741004C26ED /* sub-por.webvtt in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9E212C7740004C26ED /* sub-por.webvtt */; };
 		32624CB4212C7741004C26ED /* sample6.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C9F212C7740004C26ED /* sample6.ts */; };
+		32755E22215038CB0088724E /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362951D41339400CCB866 /* Playback.swift */; };
+		32755E2421503A830088724E /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E581BF0D58400095E6E /* PlaybackTests.swift */; };
 		3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */; };
 		3283BF062024D8B100F2B826 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		3293658A212DC9CE001B4B15 /* master.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C94212C773D004C26ED /* master.m3u8 */; };
@@ -195,7 +197,6 @@
 		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
 		FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785982005233D00EC879F /* EventDispatcher.swift */; };
 		FC7785A92005233D00EC879F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785992005233D00EC879F /* EventHandler.swift */; };
-		FC7785AD2005233D00EC879F /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859D2005233D00EC879F /* Playback.swift */; };
 		FC7785AE2005233D00EC879F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859E2005233D00EC879F /* Player.swift */; };
 		FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859F2005233D00EC879F /* UIBaseObject.swift */; };
 		FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A32005233D00EC879F /* NoOpPlayback.swift */; };
@@ -428,7 +429,6 @@
 		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
 		FC7785982005233D00EC879F /* EventDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcher.swift; sourceTree = "<group>"; };
 		FC7785992005233D00EC879F /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
-		FC77859D2005233D00EC879F /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
 		FC77859E2005233D00EC879F /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FC77859F2005233D00EC879F /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
 		FC7785A32005233D00EC879F /* NoOpPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoOpPlayback.swift; sourceTree = "<group>"; };
@@ -741,6 +741,7 @@
 				57B0A1DE1FF40C3600891037 /* UIObject.swift */,
 				ABE7D3ED212C36200049773A /* SharedData.swift */,
 				96D362921D41339400CCB866 /* MediaControl.swift */,
+				96D362951D41339400CCB866 /* Playback.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -880,7 +881,6 @@
 				9E26CFF02016148400AE92B7 /* FullScreen */,
 				96D3628C1D41339400CCB866 /* BaseObject.swift */,
 				96D3628F1D41339400CCB866 /* EventHandler.swift */,
-				96D362951D41339400CCB866 /* Playback.swift */,
 				96D362961D41339400CCB866 /* Player.swift */,
 				96D362971D41339400CCB866 /* UIBaseObject.swift */,
 			);
@@ -993,7 +993,6 @@
 				FC7785962005233D00EC879F /* BaseObject.swift */,
 				FC7785982005233D00EC879F /* EventDispatcher.swift */,
 				FC7785992005233D00EC879F /* EventHandler.swift */,
-				FC77859D2005233D00EC879F /* Playback.swift */,
 				FC77859E2005233D00EC879F /* Player.swift */,
 				FC77859F2005233D00EC879F /* UIBaseObject.swift */,
 			);
@@ -1486,7 +1485,6 @@
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
-				FC7785AD2005233D00EC879F /* Playback.swift in Sources */,
 				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
@@ -1501,6 +1499,7 @@
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
+				32755E22215038CB0088724E /* Playback.swift in Sources */,
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
@@ -1530,6 +1529,7 @@
 				3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
