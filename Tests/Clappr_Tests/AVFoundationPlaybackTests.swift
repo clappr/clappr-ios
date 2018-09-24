@@ -807,6 +807,64 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
+            
+            describe("#audioAvailable") {
+                
+                context("when video is ready") {
+                    context("and has no default audio from options") {
+                        it("triggers audioAvailable event with hasDefaultFromOption false") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            var hasDefaultFromOption = true
+                            playback.on(Event.audioAvailable.rawValue) { (userInfo: EventUserInfo) in
+                                guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = audio.hasDefaultSelected
+                            }
+
+                            playback.play()
+
+                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                        }
+                    }
+                }
+            }
+            
+            describe("#subtitleAvailable") {
+                
+                context("when video is ready") {
+                    context("and has default subtitle from options") {
+                        it("triggers subtitleAvailable event with hasDefaultFromOption true") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8", kDefaultSubtitle: "pt"]
+                            let playback = AVFoundationPlayback(options: options)
+                            var hasDefaultFromOption = false
+                            playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
+                                guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = subtitles.hasDefaultSelected
+                            }
+                            
+                            playback.play()
+                            
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 2)
+                        }
+                    }
+                    
+                    context("and has no default subtitle from options") {
+                        it("triggers subtitleAvailable event with hasDefaultFromOption false") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            var hasDefaultFromOption = true
+                            playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
+                                guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = subtitles.hasDefaultSelected
+                            }
+                            
+                            playback.play()
+                            
+                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                        }
+                    }
+                }
+            }
 
             describe("#subtitleSelected") {
 
