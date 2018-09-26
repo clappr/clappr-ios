@@ -7,6 +7,7 @@ protocol FullscreenStateHandler {
     func set(fullscreen: Bool)
     func enterInFullscreen()
     func exitFullscreen()
+    func destroy()
 }
 
 struct FullscreenByApp: FullscreenStateHandler {
@@ -34,6 +35,8 @@ struct FullscreenByApp: FullscreenStateHandler {
         guard core.isFullscreen else { return }
         core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
     }
+
+    func destroy() { }
 }
 
 struct FullscreenByPlayer: FullscreenStateHandler {
@@ -62,9 +65,18 @@ struct FullscreenByPlayer: FullscreenStateHandler {
         guard core.isFullscreen else { return }
         core.trigger(InternalEvent.willExitFullscreen.rawValue)
         core.isFullscreen = false
-        core.parentView?.addSubviewMatchingConstraints(core)
-        core.fullscreenController?.dismiss(animated: false, completion: nil)
+        handleExit()
         core.trigger(InternalEvent.didExitFullscreen.rawValue)
         core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
+    }
+
+    private func handleExit() {
+        core.parentView?.addSubviewMatchingConstraints(core)
+        core.fullscreenController?.dismiss(animated: false, completion: nil)
+    }
+
+    func destroy() {
+        guard core.isFullscreen else { return }
+        handleExit()
     }
 }
