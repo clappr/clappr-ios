@@ -12,6 +12,7 @@ public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
+public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
 
 public let kLoop = "loop"
 public let kMetaData = "metadata"
