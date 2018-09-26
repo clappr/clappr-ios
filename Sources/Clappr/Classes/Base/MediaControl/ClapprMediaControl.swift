@@ -1,19 +1,14 @@
 import Foundation
 
-class GloboMediaControl: UICorePlugin {
+class ClapprMediaControl: UICorePlugin {
 
-    internal(set) var view: UIView! {
+    override var view: UIView! {
         didSet {
             addSubview(view)
             view.addSubview(container)
 
             view.bindFrameToSuperviewBounds()
             container.bindFrameToSuperviewBounds()
-
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(self.tapped(sender:)))
-            gesture.delegate = self
-            self.view.addGestureRecognizer(gesture)
-            self.gesture = gesture
         }
     }
 
@@ -73,42 +68,8 @@ class GloboMediaControl: UICorePlugin {
     func bindCoreEvents() {
         if let core = self.core {
 
-            listenTo(core, eventName: PlayerInternalEvent.settingsClosed.rawValue) { [weak self] _ in
-                self?.disappearAfterSomeTime()
-                self?.view.backgroundColor = .steveBlack60Color()
-                if let gesture = self?.gesture {
-                    self?.view.addGestureRecognizer(gesture)
-                }
-            }
-
-            listenTo(core, eventName: PlayerInternalEvent.settingsOpened.rawValue) { [weak self] _ in
-                self?.keepVisible()
-                self?.view.backgroundColor = .clear
-                if let gesture = self?.gesture {
-                    self?.view.removeGestureRecognizer(gesture)
-                }
-            }
-
             listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in
                 self?.bindEvents()
-            }
-
-            listenTo(core, eventName: PlayerInternalEvent.showMediaControl.rawValue) { [weak self] _ in
-                if self?.showControls ?? true {
-                    self?.show(animated: true) { [weak self] in
-                        self?.disappearAfterSomeTime(self?.secondsToHideControlSlow)
-                    }
-                }
-            }
-
-            listenTo(core, eventName: PlayerInternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
-                self?.keepVisible()
-            }
-
-            listenTo(core, eventName: PlayerInternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
-                if self?.hideControlsTimer?.isValid ?? false {
-                    self?.disappearAfterSomeTime()
-                }
             }
 
             listenTo(core, eventName: InternalEvent.didEnterFullscreen.rawValue) { [weak self] _ in
@@ -204,7 +165,7 @@ class GloboMediaControl: UICorePlugin {
     private func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
         hideControlsTimer?.invalidate()
         hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? secondsToHideControlFast,
-                                                 target: self, selector: #selector(GloboMediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
+                                                 target: self, selector: #selector(ClapprMediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
     private func keepVisible() {
@@ -223,8 +184,8 @@ class GloboMediaControl: UICorePlugin {
     override func render() {
         self.isHidden = true
         view = UIView()
-        view.backgroundColor = UIColor.steveBlack60Color()
-
+        view.backgroundColor = UIColor(white: 0.0, alpha: 0.6)
+        
         loadPlugins()
         renderPlugins()
         showIfAlwaysVisible()
@@ -233,7 +194,7 @@ class GloboMediaControl: UICorePlugin {
     }
 
     private func loadPlugins() {
-        guard let mediaControlPlugins = options?[kMediaControlPlugins] as? [MediaControlPlugin.Type] else {
+        guard let mediaControlPlugins = options?["mediaControlPlugins"] as? [MediaControlPlugin.Type] else {
             return
         }
 
@@ -244,7 +205,8 @@ class GloboMediaControl: UICorePlugin {
 
     private func renderPlugins() {
         plugins.forEach { plugin in
-            container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
+            guard let view = plugin.view else { return }
+            container.addSubview(view, panel: plugin.panel, position: plugin.position)
 
             plugin.render()
         }
@@ -256,29 +218,4 @@ class GloboMediaControl: UICorePlugin {
         }
     }
 
-}
-
-extension GloboMediaControl: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if seekbarTouched(touch) {
-            preventViewControllerSwipeToBack()
-            return false
-        } else {
-            return true
-        }
-    }
-
-    private func preventViewControllerSwipeToBack() {
-        if let seekbar = plugins.first(where: { $0.pluginName == Seekbar.name }) as? Seekbar {
-            seekbar.preventViewControllerSwipeToBack()
-        }
-    }
-
-    private func seekbarTouched(_ touch: UITouch) -> Bool {
-        if let seekbar = plugins.first(where: { $0.pluginName == Seekbar.name })?.view,
-            seekbar.frame.contains(touch.location(in: seekbar)) {
-            return true
-        }
-        return false
-    }
 }
