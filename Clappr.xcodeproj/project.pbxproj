@@ -192,6 +192,14 @@
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
+		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
+		AB16350E215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
+		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
+		AB163510215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
+		AB163511215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
+		AB163512215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
+		AB163517215ACA0C00635233 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
+		AB163518215ACA0C00635233 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
 		ABE7D3EE212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
@@ -427,6 +435,10 @@
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPlugin.swift; sourceTree = "<group>"; };
+		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
+		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
+		AB16350C215AC9FC00635233 /* LayoutConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstants.swift; sourceTree = "<group>"; };
+		AB163514215ACA0C00635233 /* ClapprMediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprMediaControl.swift; sourceTree = "<group>"; };
 		ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableMediaOptions.swift; sourceTree = "<group>"; };
 		ABE7D3ED212C36200049773A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -771,6 +783,7 @@
 		96D3628B1D41339400CCB866 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				AB163508215AC98400635233 /* MediaControl */,
 				96D362941D41339400CCB866 /* Options.swift */,
 				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628D1D41339400CCB866 /* Container.swift */,
@@ -990,6 +1003,25 @@
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
 			);
 			path = MediaControl;
+			sourceTree = "<group>";
+		};
+		AB163508215AC98400635233 /* MediaControl */ = {
+			isa = PBXGroup;
+			children = (
+				AB163514215ACA0C00635233 /* ClapprMediaControl.swift */,
+				AB163509215AC9E600635233 /* Layout */,
+			);
+			path = MediaControl;
+			sourceTree = "<group>";
+		};
+		AB163509215AC9E600635233 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				AB16350C215AC9FC00635233 /* LayoutConstants.swift */,
+				AB16350A215AC9FC00635233 /* MediaControlView.swift */,
+				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
@@ -1331,6 +1363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB163510215AC9FC00635233 /* MediaControlView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1408,6 +1441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */,
+				AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */,
 				96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1516,6 +1550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB163518215ACA0C00635233 /* ClapprMediaControl.swift in Sources */,
 				32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */,
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
@@ -1524,11 +1559,13 @@
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
 				AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */,
 				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
+				AB163512215AC9FC00635233 /* LayoutConstants.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
+				AB16350E215AC9FC00635233 /* MediaControlView.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
@@ -1646,14 +1683,17 @@
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
+				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,
 				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
 				96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */,
 				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
+				AB163511215AC9FC00635233 /* LayoutConstants.swift in Sources */,
 				96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */,
 				968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */,
 				57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				96D362C61D41339400CCB866 /* Core.swift in Sources */,
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
+				AB163517215ACA0C00635233 /* ClapprMediaControl.swift in Sources */,
 				9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
 				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
