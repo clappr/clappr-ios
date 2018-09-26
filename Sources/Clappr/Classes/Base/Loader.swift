@@ -9,20 +9,10 @@ open class Loader {
 
     internal(set) open var mediaControl: MediaControl.Type = MediaControl.self
 
-    fileprivate var externalPlugins = [Plugin.Type]()
+    fileprivate var externalPlugins: [Plugin.Type]?
 
-    public convenience init() {
-        self.init(externalPlugins: [])
-    }
-
-    public init(externalPlugins: [Plugin.Type], options: Options = [:]) {
-        self.externalPlugins = externalPlugins
-
+    public init(options: Options = [:]) {
         loadExternalMediaControl(options)
-
-        if !externalPlugins.isEmpty {
-            addExternalPlugins(externalPlugins)
-        }
 
         Logger.logInfo("plugins:" +
             "\n - playback: \(playbackPlugins.map({ $0.name }))" +
@@ -45,6 +35,7 @@ open class Loader {
     }
 
     fileprivate func getPlugins(_ type: PluginType, defaultPlugins: [Plugin.Type]) -> [Plugin.Type] {
+        guard let externalPlugins = externalPlugins else { return [] }
         let filteredPlugins = externalPlugins.filter({ $0.type == type })
         return removeDuplicate(filteredPlugins + defaultPlugins)
     }
