@@ -192,8 +192,8 @@
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
-		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
-		AB16350E215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
+		AB16350D215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
+		AB16350E215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
 		AB16350F215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */; };
 		AB163510215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */; };
 		AB163511215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
@@ -435,7 +435,7 @@
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPlugin.swift; sourceTree = "<group>"; };
-		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
+		AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprMediaControlView.swift; sourceTree = "<group>"; };
 		AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClapprMediaControlView.xib; sourceTree = "<group>"; };
 		AB16350C215AC9FC00635233 /* LayoutConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutConstants.swift; sourceTree = "<group>"; };
 		AB163514215ACA0C00635233 /* ClapprMediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprMediaControl.swift; sourceTree = "<group>"; };
@@ -1018,7 +1018,7 @@
 			isa = PBXGroup;
 			children = (
 				AB16350C215AC9FC00635233 /* LayoutConstants.swift */,
-				AB16350A215AC9FC00635233 /* MediaControlView.swift */,
+				AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */,
 				AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */,
 			);
 			path = Layout;
@@ -1565,7 +1565,7 @@
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
-				AB16350E215AC9FC00635233 /* MediaControlView.swift in Sources */,
+				AB16350E215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
@@ -1683,7 +1683,7 @@
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
-				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,
+				AB16350D215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */,
 				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
 				96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */,
 				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
