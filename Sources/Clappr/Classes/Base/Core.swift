@@ -16,7 +16,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     #if os(iOS)
     @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
 
-    lazy var fullscreenHandler: FullscreenStateHandler = {
+    lazy var fullscreenHandler: FullscreenStateHandler? = {
         return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
     }()
     #endif
@@ -106,8 +106,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
 
         #if os(iOS)
-        listenTo(mediaControl, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler.enterInFullscreen() }
-        listenTo(mediaControl, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler.exitFullscreen() }
+        listenTo(mediaControl, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
+        listenTo(mediaControl, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
         #endif
     }
 
@@ -130,7 +130,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func addToContainer() {
         #if os(iOS)
         if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
-            fullscreenHandler.enterInFullscreen()
+            fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
         }
@@ -169,7 +169,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
         #if os(iOS)
-        fullscreenHandler.set(fullscreen: fullscreen)
+        fullscreenHandler?.set(fullscreen: fullscreen)
         #endif
     }
 
@@ -198,6 +198,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         mediaControl?.removeFromSuperview()
         mediaControl = nil
         #if os(iOS)
+        fullscreenHandler?.destroy()
+        fullscreenHandler = nil
         fullscreenController = nil
         #endif
         removeFromSuperview()
