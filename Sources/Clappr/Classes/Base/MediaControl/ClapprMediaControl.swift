@@ -14,7 +14,7 @@ class ClapprMediaControl: UICorePlugin {
 
     private var gesture: UITapGestureRecognizer?
 
-    var container: MediaControlView = .fromNib()
+    var container: ClapprMediaControlView = .fromNib()
 
     var options: Options? {
         return core?.options
@@ -31,7 +31,7 @@ class ClapprMediaControl: UICorePlugin {
     internal(set) var plugins: [MediaControlPlugin] = []
 
     override var pluginName: String {
-        return "GloboMediaControl"
+        return "ClapprMediaControl"
     }
 
     var hideControlsTimer: Timer?

@@ -20,6 +20,8 @@ open class Loader {
 
         loadExternalMediaControl(options)
 
+        addMediaControl()
+        
         if !externalPlugins.isEmpty {
             addExternalPlugins(externalPlugins)
         }
@@ -37,6 +39,10 @@ open class Loader {
         }
     }
 
+    fileprivate func addMediaControl() {
+        corePlugins.append(ClapprMediaControl.self)
+    }
+    
     open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
         self.externalPlugins = externalPlugins
         playbackPlugins = getPlugins(.playback, defaultPlugins: playbackPlugins)
