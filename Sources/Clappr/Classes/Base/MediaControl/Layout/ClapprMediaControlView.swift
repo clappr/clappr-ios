@@ -1,4 +1,4 @@
-class MediaControlView: UIView {
+class ClapprMediaControlView: UIView {
     @IBOutlet weak var topPanel: UIView!
     @IBOutlet weak var centerPanel: UIView!
     @IBOutlet weak var bottomPanel: UIView!

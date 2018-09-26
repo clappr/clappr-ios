@@ -64,7 +64,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.black
 
         #if os(iOS)
-        mediaControl = loader.mediaControl.create()
         mediaControl?.core = self
         addTapRecognizer()
         #endif
