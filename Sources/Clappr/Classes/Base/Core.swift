@@ -87,7 +87,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addTapRecognizer() {
-        let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: #selector(MediaControl.toggleVisibility))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
@@ -195,5 +195,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fullscreenController = nil
         #endif
         removeFromSuperview()
+    }
+    
+    @objc func didTappedView() {
+        trigger(Event.willShowMediaControl.rawValue)
     }
 }
