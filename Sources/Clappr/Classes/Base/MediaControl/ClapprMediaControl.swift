@@ -1,6 +1,6 @@
 import Foundation
 
-class ClapprMediaControl: UICorePlugin {
+class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     override var view: UIView! {
         didSet {
@@ -9,6 +9,11 @@ class ClapprMediaControl: UICorePlugin {
 
             view.bindFrameToSuperviewBounds()
             container.bindFrameToSuperviewBounds()
+
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+            gesture.delegate = self
+            self.view.addGestureRecognizer(gesture)
+            self.gesture = gesture
         }
     }
 
@@ -82,6 +87,10 @@ class ClapprMediaControl: UICorePlugin {
                 if self?.hideControlsTimer?.isValid ?? false {
                     self?.disappearAfterSomeTime()
                 }
+            }
+
+            listenTo(core, eventName: Event.willShowMediaControl.rawValue) { [weak self] _ in
+                self?.toggleVisibility()
             }
         }
     }
@@ -177,7 +186,7 @@ class ClapprMediaControl: UICorePlugin {
         hide(animated: true)
     }
 
-    @objc func tapped(sender: UITapGestureRecognizer) {
+    @objc func tapped() {
         hideAndStopTimer()
     }
 
@@ -218,4 +227,11 @@ class ClapprMediaControl: UICorePlugin {
         }
     }
 
+    fileprivate func toggleVisibility() {
+        if showControls {
+            show(animated: true) { [weak self] in
+                self?.disappearAfterSomeTime(self?.secondsToHideControlSlow)
+            }
+        }
+    }
 }
