@@ -63,19 +63,6 @@ class CoreTests: QuickSpec {
                     expect(core.gestureRecognizers?.count) > 0
                 }
 
-                it("activeContainer is referenced on mediaControl container") {
-                    expect(core.mediaControl?.container) == core.activeContainer
-                }
-
-                it("media control is not nil") {
-                    expect(core.mediaControl).toNot(beNil())
-                }
-
-                it("Should be the top view on core") {
-                    core.render()
-
-                    expect(core.subviews.last) == core.mediaControl
-                }
                 #endif
             }
 
