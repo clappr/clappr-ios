@@ -556,10 +556,16 @@ class CoreTests: QuickSpec {
                 }
 
                 #if os(iOS)
-                it("clears fullscreen reference") {
+                it("clears fullscreenController reference") {
                     core.destroy()
                     
                     expect(core.fullscreenController).toEventually(beNil())
+                }
+
+                it("clears fullscreenHandler reference") {
+                    core.destroy()
+
+                    expect(core.fullscreenHandler).toEventually(beNil())
                 }
                 #endif
             }
