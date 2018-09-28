@@ -61,6 +61,7 @@
 		3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329624A72051ECFF0062AE32 /* MediaOptionTests.swift */; };
 		32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B41D41339400CCB866 /* NoOpPlayback.swift */; };
+		32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D18C8D20484CA10097653C /* SpinnerPluginTests.swift */; };
@@ -1537,6 +1538,7 @@
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
 				3251114821359C48001FEEBA /* CoreTests.swift in Sources */,
+				32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */,
 				FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
