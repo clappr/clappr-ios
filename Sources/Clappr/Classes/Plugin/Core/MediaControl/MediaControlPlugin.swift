@@ -1,23 +1,23 @@
-protocol MediaControlPluginType {
+public protocol MediaControlPluginType {
     var panel: MediaControlPanel { get }
     var position: MediaControlPosition { get }
 }
 
-enum MediaControlPanel {
+public enum MediaControlPanel {
     case top
     case center
     case bottom
     case modal
 }
 
-enum MediaControlPosition {
+public enum MediaControlPosition {
     case left
     case center
     case right
     case none
 }
 
-class MediaControlPlugin: UICorePlugin, MediaControlPluginType {
+open class MediaControlPlugin: UICorePlugin, MediaControlPluginType {
     open var panel: MediaControlPanel {
         return .center
     }
