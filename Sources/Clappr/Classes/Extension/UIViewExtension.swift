@@ -1,4 +1,4 @@
-public extension UIView {
+extension UIView {
     @objc public func addSubviewMatchingConstraints(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
