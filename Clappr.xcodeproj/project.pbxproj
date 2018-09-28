@@ -60,6 +60,7 @@
 		3293659E212DC9CE001B4B15 /* subtitles.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 32624C93212C773D004C26ED /* subtitles.m3u8 */; };
 		3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329624A72051ECFF0062AE32 /* MediaOptionTests.swift */; };
+		32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B41D41339400CCB866 /* NoOpPlayback.swift */; };
 		32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D18C8D20484CA10097653C /* SpinnerPluginTests.swift */; };
@@ -201,7 +202,6 @@
 		FC7785A92005233D00EC879F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785992005233D00EC879F /* EventHandler.swift */; };
 		FC7785AE2005233D00EC879F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859E2005233D00EC879F /* Player.swift */; };
 		FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859F2005233D00EC879F /* UIBaseObject.swift */; };
-		FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A32005233D00EC879F /* NoOpPlayback.swift */; };
 		FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A52005233D00EC879F /* EventProtocol.swift */; };
 		FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */; };
 		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
@@ -434,7 +434,6 @@
 		FC7785992005233D00EC879F /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		FC77859E2005233D00EC879F /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		FC77859F2005233D00EC879F /* UIBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBaseObject.swift; sourceTree = "<group>"; };
-		FC7785A32005233D00EC879F /* NoOpPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoOpPlayback.swift; sourceTree = "<group>"; };
 		FC7785A52005233D00EC879F /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
 		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
 		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
@@ -1015,7 +1014,6 @@
 			isa = PBXGroup;
 			children = (
 				FC7785B3200523E400EC879F /* AVFoundationPlayback */,
-				FC7785A32005233D00EC879F /* NoOpPlayback.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -1485,7 +1483,6 @@
 				32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */,
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
-				FC7785B12005233D00EC879F /* NoOpPlayback.swift in Sources */,
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
@@ -1499,6 +1496,7 @@
 				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
+				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
 				FCF11C3E2007E86F008DC4D6 /* UIObject.swift in Sources */,
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
