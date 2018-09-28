@@ -20,7 +20,9 @@ open class Loader {
 
         loadExternalMediaControl(options)
 
+        #if os(iOS)
         addMediaControl()
+        #endif
         
         if !externalPlugins.isEmpty {
             addExternalPlugins(externalPlugins)

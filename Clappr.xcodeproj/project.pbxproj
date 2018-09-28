@@ -195,13 +195,13 @@
 		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB16350D215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
-		AB16350E215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
 		AB16350F215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */; };
 		AB163511215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
 		AB163512215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
 		AB163517215ACA0C00635233 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
-		AB163518215ACA0C00635233 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
+		AB8B7516215EA62E00656D57 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
+		AB8B7517215EA63800656D57 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
 		ABE7D3EE212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
 		ABE7D3EF212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
@@ -1545,7 +1545,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB163518215ACA0C00635233 /* ClapprMediaControl.swift in Sources */,
 				32B2F68C1FF6E23700820147 /* MediaOption.swift in Sources */,
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
@@ -1560,9 +1559,9 @@
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
-				AB16350E215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
+				AB8B7516215EA62E00656D57 /* ClapprMediaControl.swift in Sources */,
 				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
@@ -1587,6 +1586,7 @@
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
+				AB8B7517215EA63800656D57 /* ClapprMediaControlView.swift in Sources */,
 				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
