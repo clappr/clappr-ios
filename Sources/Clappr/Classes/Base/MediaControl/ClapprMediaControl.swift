@@ -2,7 +2,7 @@ import Foundation
 
 class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
-    override var view: UIView! {
+    override var view: UIView {
         didSet {
             addSubview(view)
             view.addSubview(container)
@@ -33,7 +33,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-    internal(set) var plugins: [MediaControlPlugin] = []
+    var plugins: [MediaControlPlugin] = []
 
     override var pluginName: String {
         return "ClapprMediaControl"
@@ -214,8 +214,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private func renderPlugins() {
         plugins.forEach { plugin in
-            guard let view = plugin.view else { return }
-            container.addSubview(view, panel: plugin.panel, position: plugin.position)
+            container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
 
             plugin.render()
         }
