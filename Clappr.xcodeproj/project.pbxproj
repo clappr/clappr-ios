@@ -198,7 +198,6 @@
 		AB16350D215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
 		AB16350E215AC9FC00635233 /* ClapprMediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* ClapprMediaControlView.swift */; };
 		AB16350F215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */; };
-		AB163510215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* ClapprMediaControlView.xib */; };
 		AB163511215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
 		AB163512215AC9FC00635233 /* LayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350C215AC9FC00635233 /* LayoutConstants.swift */; };
 		AB163517215ACA0C00635233 /* ClapprMediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* ClapprMediaControl.swift */; };
@@ -1363,7 +1362,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB163510215AC9FC00635233 /* ClapprMediaControlView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
