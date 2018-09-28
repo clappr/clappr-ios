@@ -557,6 +557,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		32A7A299215EA99400296DE3 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				96D362B41D41339400CCB866 /* NoOpPlayback.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
 		32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,6 +734,7 @@
 				96D362A21D41339400CCB866 /* Extension */,
 				96D362A41D41339400CCB866 /* Factory */,
 				96D362A91D41339400CCB866 /* Formatter */,
+				32A7A299215EA99400296DE3 /* Playback */,
 				96D362AB1D41339400CCB866 /* Plugin */,
 				96D362B61D41339400CCB866 /* Protocol */,
 				96D362B91D41339400CCB866 /* View */,
@@ -921,7 +930,6 @@
 			isa = PBXGroup;
 			children = (
 				96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */,
-				96D362B41D41339400CCB866 /* NoOpPlayback.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
