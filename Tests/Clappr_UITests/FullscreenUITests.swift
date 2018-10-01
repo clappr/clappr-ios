@@ -28,49 +28,15 @@ class FullscreenUITests: QuickSpec {
                 app.terminate()
             }
 
-            context("when the option of start as fullscreen is passed") {
-
-                beforeEach {
-                    dashboardInteractor.startAsFullscreen = true
-                }
-
-                context("when fullscreen is controled by the player") {
-                    it("sets the player as fullscreen") {
-                        dashboardInteractor.fullscreenControledByApp = false
-
-                        dashboardInteractor.startVideo()
-
-                        expect(playerInteractor.containerFrame == window.frame).toEventually(beTrue())
-                    }
-                }
-
+            describe("when the option of start as fullscreen is passed") {
                 context("when fullscreen is controled by the app") {
                     it("doesn't sets fullscreen mode on player") {
+                        dashboardInteractor.startAsFullscreen = true
                         dashboardInteractor.fullscreenControledByApp = true
 
                         dashboardInteractor.startVideo()
 
                         expect(playerInteractor.containerFrame != window.frame).toEventually(beTrue())
-                    }
-                }
-            }
-
-            context("when the option of fullscreen controled by app is passed") {
-
-                beforeEach {
-                    playerInteractor = PlayerViewInteractor(app: app)
-                }
-
-                context("and user taps on fullscreen button") {
-
-                    it("sets the player as fullscreen") {
-                        dashboardInteractor.fullscreenControledByApp = true
-
-                        dashboardInteractor.startVideo()
-                        playerInteractor.tapOnContainer()
-                        playerInteractor.tapOnFullscreen()
-
-                        expect(playerInteractor.containerFrame == window.frame).toEventually(beTrue())
                     }
                 }
             }
