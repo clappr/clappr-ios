@@ -7,7 +7,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
     @objc fileprivate(set) open var containers: [Container] = []
-    @objc fileprivate(set) open var mediaControl: MediaControl?
     @objc fileprivate(set) open var plugins: [UICorePlugin] = []
 
     @objc open weak var parentController: UIViewController?
@@ -64,7 +63,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.black
 
         #if os(iOS)
-        mediaControl?.core = self
         addTapRecognizer()
         #endif
 
@@ -75,7 +73,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
         if let container = containers.first {
             setActive(container: container)
-            mediaControl?.setup(container)
         }
     }
 
@@ -115,10 +112,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         containers.forEach(renderContainer)
         plugins.forEach(installPlugin)
 
-        if let mediaControl = self.mediaControl {
-            addSubviewMatchingConstraints(mediaControl)
-            mediaControl.render()
-        }
         addToContainer()
     }
 
@@ -159,7 +152,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
+        return touch.view!.isKind(of: Container.self)
     }
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
@@ -184,14 +177,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        Logger.logDebug("destroying mediaControl", scope: "Core")
-        mediaControl?.destroy()
-
         trigger(InternalEvent.didDestroy.rawValue)
 
         Logger.logDebug("destroyed", scope: "Core")
-        mediaControl?.removeFromSuperview()
-        mediaControl = nil
         #if os(iOS)
         fullscreenHandler?.destroy()
         fullscreenHandler = nil
