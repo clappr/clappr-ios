@@ -535,12 +535,6 @@ class CoreTests: QuickSpec {
 
                     expect(countOfContainers) == countOfDestroyedContainers
                 }
-                
-                it("clears mediaControl reference") {
-                    core.destroy()
-                    
-                    expect(core.mediaControl).toEventually(beNil())
-                }
 
                 #if os(iOS)
                 it("clears fullscreenController reference") {
