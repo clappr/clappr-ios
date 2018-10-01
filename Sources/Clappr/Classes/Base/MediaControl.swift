@@ -211,12 +211,10 @@ open class MediaControl: UIBaseObject {
     @objc open func triggerPlay() {
         playbackControlState = .playing
         playbackControlButton?.isHidden = false
-        trigger(Event.playing)
     }
 
     @objc open func triggerPause() {
         playbackControlState = .paused
-        trigger(Event.didPause)
     }
 
     @objc open func disable() {
@@ -287,25 +285,21 @@ open class MediaControl: UIBaseObject {
 
     @objc open func hide() {
         hideControlsTimer?.invalidate()
-        trigger(Event.disableMediaControl.rawValue)
         setSubviewsVisibility(hidden: true)
     }
 
     @objc open func show() {
-        trigger(Event.enableMediaControl.rawValue)
         setSubviewsVisibility(hidden: false)
         scheduleTimerToHideControls()
     }
 
     @objc open func showAnimated() {
-        trigger(Event.enableMediaControl.rawValue)
         setSubviewsVisibility(hidden: false, animated: true)
         scheduleTimerToHideControls()
     }
 
     @objc open func hideAnimated() {
         hideControlsTimer?.invalidate()
-        trigger(Event.disableMediaControl.rawValue)
         setSubviewsVisibility(hidden: true, animated: true)
     }
 
@@ -352,19 +346,16 @@ open class MediaControl: UIBaseObject {
     fileprivate func pause() {
         playbackControlState = .paused
         container?.playback?.pause()
-        trigger(Event.didPause.rawValue)
     }
 
     fileprivate func play() {
         playbackControlState = .playing
         container?.playback?.play()
-        trigger(Event.playing.rawValue)
     }
 
     fileprivate func stop() {
         playbackControlState = .stopped
         container?.playback?.stop()
-        trigger(Event.didStop.rawValue)
     }
 
     @objc open func scheduleTimerToHideControls() {
