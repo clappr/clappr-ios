@@ -7,8 +7,6 @@ open class Loader {
     #endif
     internal(set) open var corePlugins = [Plugin.Type]()
 
-    internal(set) open var mediaControl: MediaControl.Type = MediaControl.self
-
     fileprivate var externalPlugins = [Plugin.Type]()
 
     public convenience init() {
@@ -17,8 +15,6 @@ open class Loader {
 
     public init(externalPlugins: [Plugin.Type], options: Options = [:]) {
         self.externalPlugins = externalPlugins
-
-        loadExternalMediaControl(options)
 
         #if os(iOS)
         addMediaControl()
@@ -31,14 +27,7 @@ open class Loader {
         Logger.logInfo("plugins:" +
             "\n - playback: \(playbackPlugins.map({ $0.name }))" +
             "\n - container: \(containerPlugins.map({ $0.name }))" +
-            "\n - core: \(corePlugins.map({ $0.name }))" +
-            "\n - mediaControl: \(mediaControl)", scope: "\(type(of: self))")
-    }
-
-    fileprivate func loadExternalMediaControl(_ options: Options) {
-        if let externalMediaControl = options[kMediaControl] as? MediaControl.Type {
-            mediaControl = externalMediaControl
-        }
+            "\n - core: \(corePlugins.map({ $0.name }))", scope: "\(type(of: self))")
     }
 
     fileprivate func addMediaControl() {
