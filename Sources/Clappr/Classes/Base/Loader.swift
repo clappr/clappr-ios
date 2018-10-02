@@ -10,7 +10,7 @@ open class Loader {
     #endif
     internal(set) open var corePlugins = [Plugin.Type]()
     
-    private var externalPlugins: [Plugin.Type]?
+    var externalPlugins: [Plugin.Type] = []
     
     private init() {
         Logger.logInfo("plugins:" +
@@ -20,14 +20,14 @@ open class Loader {
     }
     
     open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
-        self.externalPlugins = externalPlugins
+        self.externalPlugins.append(contentsOf: externalPlugins)
+        self.externalPlugins = self.removeDuplicate(self.externalPlugins)
         playbacks = getPlugins(.playback, defaultPlugins: playbacks)
         containerPlugins = getPlugins(.container, defaultPlugins: containerPlugins)
         corePlugins = getPlugins(.core, defaultPlugins: corePlugins)
     }
     
     private func getPlugins(_ type: PluginType, defaultPlugins: [Plugin.Type]) -> [Plugin.Type] {
-        guard let externalPlugins = externalPlugins else { return [] }
         let filteredPlugins = externalPlugins.filter({ $0.type == type })
         return removeDuplicate(filteredPlugins + defaultPlugins)
     }
