@@ -11,6 +11,7 @@ class MediaControlTests: QuickSpec {
             var playback: StubedPlayback!
 
             beforeEach {
+                Loader.shared.resetPlugins()
                 Loader.shared.addExternalPlugins([StubedPlayback.self])
                 container = Container(options: options as Options)
                 playback = container.playback as! StubedPlayback

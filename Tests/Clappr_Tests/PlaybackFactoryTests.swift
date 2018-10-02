@@ -9,7 +9,7 @@ class PlaybackFactoryTests: QuickSpec {
         let optionsWithInvalidSource = [kSourceUrl: "invalid"]
 
         beforeEach {
-            Loader.shared.playbacks = []
+            Loader.shared.resetPlugins()
             Loader.shared.addExternalPlugins([StubPlayback.self])
         }
 

@@ -21,6 +21,7 @@ class ContainerTests: QuickSpec {
 
                     beforeEach {
                         container = Container(options: Resource.invalid)
+                        Loader.shared.resetPlugins()
                     }
 
                     it("creates a container with invalid playback") {
@@ -114,6 +115,7 @@ class ContainerTests: QuickSpec {
 
                 beforeEach {
                     container = Container(options: [:])
+                    Loader.shared.resetPlugins()
                 }
 
                 it("remove container from superview") {
@@ -243,6 +245,7 @@ class ContainerTests: QuickSpec {
             context("when play event is trigger") {
 
                 beforeEach {
+                    Loader.shared.resetPlugins()
                     Loader.shared.addExternalPlugins([StubPlayback.self])
                     container = Container(options: [kSourceUrl: "http://clappr.com/video.mp4"])
                 }

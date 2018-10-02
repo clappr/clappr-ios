@@ -19,10 +19,11 @@ class CoreTests: QuickSpec {
 
         let options = [kSourceUrl: "http//test.com"]
         var core: Core!
-        Loader.shared.addExternalPlugins([StubPlayback.self])
 
         beforeEach {
             core = Core(options: options as Options)
+            Loader.shared.resetPlugins()
+            Loader.shared.addExternalPlugins([StubPlayback.self])
         }
 
         describe(".Core") {

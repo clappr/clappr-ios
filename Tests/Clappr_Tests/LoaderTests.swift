@@ -8,6 +8,7 @@ class LoaderTests: QuickSpec {
         context("Loader") {
             it("adds external plugins to default plugins") {
 
+                Loader.shared.resetPlugins()
                 let playbacksCount = Loader.shared.playbacks.count
                 let containerPluginsCount = Loader.shared.containerPlugins.count
                 let corePluginsCount = Loader.shared.corePlugins.count

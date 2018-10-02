@@ -16,6 +16,7 @@ class PlayerTests: QuickSpec {
             var playback: StubPlayback!
             
             beforeEach {
+                Loader.shared.resetPlugins()
                 player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
                 playback = player.activePlayback as! StubPlayback
             }
