@@ -771,7 +771,6 @@
 		96D3628B1D41339400CCB866 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				AB163508215AC98400635233 /* MediaControl */,
 				96D362941D41339400CCB866 /* Options.swift */,
 				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628D1D41339400CCB866 /* Container.swift */,
@@ -875,7 +874,6 @@
 			isa = PBXGroup;
 			children = (
 				96D362C01D41339400CCB866 /* Assets.xcassets */,
-				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1005,16 +1003,9 @@
 		AB163504215AB93300635233 /* MediaControl */ = {
 			isa = PBXGroup;
 			children = (
-				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
-			);
-			path = MediaControl;
-			sourceTree = "<group>";
-		};
-		AB163508215AC98400635233 /* MediaControl */ = {
-			isa = PBXGroup;
-			children = (
-				AB163514215ACA0C00635233 /* MediaControl.swift */,
 				AB163509215AC9E600635233 /* Layout */,
+				AB163514215ACA0C00635233 /* MediaControl.swift */,
+				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1024,6 +1015,7 @@
 			children = (
 				AB16350C215AC9FC00635233 /* LayoutConstants.swift */,
 				AB16350A215AC9FC00635233 /* MediaControlView.swift */,
+				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -1031,7 +1023,6 @@
 		C9EDF8432162C8DF00789E2F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C9EDF85A2163E0E800789E2F /* Base */,
 				C9EDF8502162D06300789E2F /* Stubs */,
 				C9EDF84B2162CEE000789E2F /* Mocks */,
 				C9EDF8442162C8F200789E2F /* Plugins */,
@@ -1058,6 +1049,8 @@
 		C9EDF8462162C93900789E2F /* MediaControl */ = {
 			isa = PBXGroup;
 			children = (
+				C9EDF85C2163E17F00789E2F /* Layout */,
+				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
 				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
 			);
 			path = MediaControl;
@@ -1080,23 +1073,6 @@
 				C9EDF8552162D10B00789E2F /* ContainerStub.swift */,
 			);
 			path = Stubs;
-			sourceTree = "<group>";
-		};
-		C9EDF85A2163E0E800789E2F /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				C9EDF85B2163E16F00789E2F /* MedialControl */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		C9EDF85B2163E16F00789E2F /* MedialControl */ = {
-			isa = PBXGroup;
-			children = (
-				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
-				C9EDF85C2163E17F00789E2F /* Layout */,
-			);
-			path = MedialControl;
 			sourceTree = "<group>";
 		};
 		C9EDF85C2163E17F00789E2F /* Layout */ = {
