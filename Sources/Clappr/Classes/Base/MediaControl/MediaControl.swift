@@ -1,6 +1,6 @@
 import Foundation
 
-class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
+class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     override var view: UIView {
         didSet {
@@ -36,7 +36,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     var plugins: [MediaControlPlugin] = []
 
     override var pluginName: String {
-        return "ClapprMediaControl"
+        return "MediaControl"
     }
 
     var hideControlsTimer: Timer?
@@ -174,7 +174,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
         hideControlsTimer?.invalidate()
         hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? secondsToHideControlFast,
-                                                 target: self, selector: #selector(ClapprMediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
+                                                 target: self, selector: #selector(MediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
     private func keepVisible() {
