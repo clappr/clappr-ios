@@ -3,20 +3,20 @@ import Nimble
 
 @testable import Clappr
 
-class ClapprMediaControlTests: QuickSpec {
+class MediaControlTests: QuickSpec {
     override func spec() {
-        describe(".ClapprMediaControl") {
+        describe(".MediaControl") {
             describe("pluginName") {
                 it("returns the pluginName") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
-                    expect(mediaControl.pluginName).to(equal("ClapprMediaControl"))
+                    expect(mediaControl.pluginName).to(equal("MediaControl"))
                 }
             }
 
             describe("#animationDuration") {
                 it("is 0.3 seconds") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     expect(mediaControl.animationDuration).to(equal(0.3))
                 }
@@ -24,7 +24,7 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("#secondsToHideControlFast") {
                 it("is 0.4 seconds") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     expect(mediaControl.secondsToHideControlFast).to(equal(0.4))
                 }
@@ -32,7 +32,7 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("#secondsToHideControlSlow") {
                 it("is 4 seconds") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     expect(mediaControl.secondsToHideControlSlow).to(equal(4))
                 }
@@ -40,7 +40,7 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("#view") {
                 it("has 1 gesture recognizer") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     mediaControl.render()
 
@@ -50,7 +50,7 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("#tapped") {
                 it("hides the mediacontrol and stop timer") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
                     mediaControl.render()
 
                     mediaControl.tapped()
@@ -63,7 +63,7 @@ class ClapprMediaControlTests: QuickSpec {
                     it("doesn't hide the mediacontrol and stop timer") {
                         let options: Options = [kMediaControlAlwaysVisible: true]
                         let core = Core(loader: Loader(), options: options)
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
                         mediaControl.tapped()
@@ -80,7 +80,7 @@ class ClapprMediaControlTests: QuickSpec {
                     let viewController = UIViewControllerMock()
                     let options: Options = [kMediaControlPlugins: [Seekbar.self]]
                     let core = Core(loader: Loader(), options: options)
-                    let mediaControl = ClapprMediaControl(context: core)
+                    let mediaControl = MediaControl(context: core)
                     viewController.view.addSubview(mediaControl)
                     mediaControl.render()
                     if let seekbar = mediaControl.plugins.first(where: { $0.pluginName == Seekbar.name }) as? Seekbar {
@@ -96,7 +96,7 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("#render") {
                 it("starts hidden") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     mediaControl.render()
 
@@ -104,7 +104,7 @@ class ClapprMediaControlTests: QuickSpec {
                 }
 
                 it("has black background with 60% of opacity") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     mediaControl.render()
 
@@ -114,7 +114,7 @@ class ClapprMediaControlTests: QuickSpec {
                 it("fills the superview") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     superview.addSubview(mediaControl)
                     mediaControl.render()
@@ -123,7 +123,7 @@ class ClapprMediaControlTests: QuickSpec {
                 }
 
                 it("inflates the MediaControl xib in the view") {
-                    let mediaControl = ClapprMediaControl()
+                    let mediaControl = MediaControl()
 
                     mediaControl.render()
 
@@ -137,7 +137,7 @@ class ClapprMediaControlTests: QuickSpec {
                     let options: Options = ["foo": "bar"]
                     let core = Core(loader: Loader(), options: options)
 
-                    let mediaControl = ClapprMediaControl(context: core)
+                    let mediaControl = MediaControl(context: core)
 
                     expect(mediaControl.options).toNot(beNil())
                     expect((mediaControl.options!["foo"] as! String)).to(equal("bar"))
@@ -149,7 +149,7 @@ class ClapprMediaControlTests: QuickSpec {
                     let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
                     let core = Core(loader: Loader(), options: options)
 
-                    let mediaControl = ClapprMediaControl(context: core)
+                    let mediaControl = MediaControl(context: core)
                     mediaControl.render()
 
                     expect(mediaControl.plugins.count).to(equal(1))
@@ -159,12 +159,12 @@ class ClapprMediaControlTests: QuickSpec {
 
             describe("Events") {
                 var coreStub: CoreStub!
-                var mediaControl: ClapprMediaControl!
+                var mediaControl: MediaControl!
 
                 beforeEach {
                     coreStub = CoreStub()
 
-                    mediaControl = ClapprMediaControl(context: coreStub)
+                    mediaControl = MediaControl(context: coreStub)
                     mediaControl.animationDuration = 0.1
                     mediaControl.secondsToHideControlFast = 0.1
                     mediaControl.secondsToHideControlSlow = 0.1
@@ -175,7 +175,7 @@ class ClapprMediaControlTests: QuickSpec {
                     
                     it("doesnt hide the clappr media control after some time") {
                         coreStub = CoreStub()
-                        mediaControl = ClapprMediaControl(context: coreStub)
+                        mediaControl = MediaControl(context: coreStub)
                         mediaControl.animationDuration = 0
                         mediaControl.secondsToHideControlFast = 0
                         mediaControl.secondsToHideControlSlow = 0
@@ -194,7 +194,7 @@ class ClapprMediaControlTests: QuickSpec {
                     
                     it("hides the clappr media control after some time") {
                         coreStub = CoreStub()
-                        mediaControl = ClapprMediaControl(context: coreStub)
+                        mediaControl = MediaControl(context: coreStub)
                         mediaControl.animationDuration = 0
                         mediaControl.secondsToHideControlFast = 0
                         mediaControl.render()
@@ -211,7 +211,7 @@ class ClapprMediaControlTests: QuickSpec {
                     it("doesn't hide the clappr media control after some time if it should be always visible") {
                         let options: Options = [kMediaControlAlwaysVisible: true]
                         let core = Core(loader: Loader(), options: options)
-                        mediaControl = ClapprMediaControl(context: core)
+                        mediaControl = MediaControl(context: core)
                         mediaControl.animationDuration = 0
                         mediaControl.secondsToHideControlFast = 0
                         mediaControl.render()
@@ -421,7 +421,7 @@ class ClapprMediaControlTests: QuickSpec {
 
                 context("for any plugin configuration") {
                     it("always calls the MediaControlView to position the view") {
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
 
                         mediaControl.render()
@@ -430,7 +430,7 @@ class ClapprMediaControlTests: QuickSpec {
                     }
 
                     it("always calls the MediaControlView passing the plugin's view") {
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
 
                         mediaControl.render()
@@ -441,7 +441,7 @@ class ClapprMediaControlTests: QuickSpec {
 
                     it("always calls the MediaControlView passing the plugin's panel") {
                         MediaControlPluginMock._panel = .center
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
 
                         mediaControl.render()
@@ -451,7 +451,7 @@ class ClapprMediaControlTests: QuickSpec {
 
                     it("always calls the MediaControlView passing the plugin's position") {
                         MediaControlPluginMock._position = .left
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
 
                         mediaControl.render()
@@ -461,7 +461,7 @@ class ClapprMediaControlTests: QuickSpec {
 
                     it("always calls the method render") {
                         MediaControlPluginMock._panel = .top
-                        let mediaControl = ClapprMediaControl(context: core)
+                        let mediaControl = MediaControl(context: core)
 
                         mediaControl.render()
 
