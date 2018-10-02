@@ -193,7 +193,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     override func render() {
         self.isHidden = true
         view = UIView()
-        view.backgroundColor = UIColor(white: 0.0, alpha: 0.6)
+        view.backgroundColor = UIColor.clapprBlack60Color()
         
         loadPlugins()
         renderPlugins()
@@ -203,7 +203,7 @@ class ClapprMediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func loadPlugins() {
-        guard let mediaControlPlugins = options?["mediaControlPlugins"] as? [MediaControlPlugin.Type] else {
+        guard let mediaControlPlugins = options?[kMediaControlPlugins] as? [MediaControlPlugin.Type] else {
             return
         }
 
