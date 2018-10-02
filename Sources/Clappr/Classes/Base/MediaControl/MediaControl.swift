@@ -19,7 +19,7 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private var gesture: UITapGestureRecognizer?
 
-    var container: ClapprMediaControlView = .fromNib()
+    var container: MediaControlView = .fromNib()
 
     var options: Options? {
         return core?.options

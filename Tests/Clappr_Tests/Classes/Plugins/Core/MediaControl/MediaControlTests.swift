@@ -127,7 +127,7 @@ class MediaControlTests: QuickSpec {
 
                     mediaControl.render()
 
-                    expect(mediaControl.container).to(beAKindOf(ClapprMediaControlView.self))
+                    expect(mediaControl.container).to(beAKindOf(MediaControlView.self))
                     expect(mediaControl.view.subviews).to(contain(mediaControl.container))
                 }
             }
@@ -492,7 +492,7 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            class MediaControlViewMock: ClapprMediaControlView {
+            class MediaControlViewMock: MediaControlView {
                 var didCallAddSubview = false
                 var didCallAddSubviewWithView: UIView?
                 var didCallAddSubviewWithPanel: MediaControlPanel?
