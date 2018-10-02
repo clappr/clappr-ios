@@ -31,7 +31,7 @@ open class Loader {
     }
 
     fileprivate func addMediaControl() {
-        corePlugins.append(ClapprMediaControl.self)
+        corePlugins.append(MediaControl.self)
     }
     
     open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
