@@ -3,7 +3,7 @@ open class Player: BaseObject {
     @objc open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     @objc fileprivate(set) open var core: Core?
-    private var plugins: [Plugin.Type] = []
+    private static var plugins: [Plugin.Type] = []
 
     @objc open var activeContainer: Container? {
         return core?.activeContainer
@@ -85,7 +85,7 @@ open class Player: BaseObject {
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 
         Loader.shared.addExternalPlugins(externalPlugins)
-        Loader.shared.addExternalPlugins(plugins)
+        Loader.shared.addExternalPlugins(Player.plugins)
 
         setCore(Core(options: options))
     }
@@ -169,7 +169,7 @@ open class Player: BaseObject {
         trigger(event.rawValue, userInfo: userInfo)
     }
     
-    func register(plugin: Plugin.Type) {
+    public static func register(plugin: Plugin.Type) {
         plugins.append(plugin.self)
     }
 
