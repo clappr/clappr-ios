@@ -64,9 +64,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
         #if os(iOS)
         addTapRecognizer()
-        #endif
-
         bindEventListeners()
+        #endif
+        
         loadPlugins(loader)
 
         containers.append(Container(loader: loader, options: options))
@@ -95,14 +95,12 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
-
+    
     fileprivate func bindEventListeners() {
-        #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
         listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
-        #endif
     }
-
+    
     fileprivate func renderInContainerView() {
         isFullscreen = false
         parentView?.addSubviewMatchingConstraints(self)
