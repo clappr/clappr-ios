@@ -202,6 +202,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         self.bindFrameToSuperviewBounds()
     }
 
+    private func loadDefaultPlugins() {
+        defaultPlugins.forEach { plugin in
+            plugins.append(plugin.init(context: core!))
+        }
+    }
+    
     private func loadPlugins() {
         guard let mediaControlPlugins = options?[kMediaControlPlugins] as? [MediaControlPlugin.Type] else {
             return
