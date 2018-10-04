@@ -69,15 +69,6 @@ class FullscreenButton: MediaControlPlugin {
     
     private func setupButton() {
         button = UIButton(type: .custom)
-        
-        if let size = LayoutConstants.bottomRight[.size] as? CGSize {
-            button.setWidthAndHeight(with: size)
-        }
-        
-        if let insets = LayoutConstants.bottomRight[.insets] as? UIEdgeInsets {
-            button.imageEdgeInsets = insets
-        }
-        
         button.bindFrameToSuperviewBounds()
     }
     
