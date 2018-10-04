@@ -199,6 +199,8 @@
 		C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */; };
 		C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
+		C9177B3121664F2A001D0292 /* FullscreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B3021664F2A001D0292 /* FullscreenButton.swift */; };
+		C9177B3221664F33001D0292 /* FullscreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B3021664F2A001D0292 /* FullscreenButton.swift */; };
 		C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */; };
 		C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8492162CCB700789E2F /* MediaControlTests.swift */; };
 		C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */; };
@@ -442,6 +444,7 @@
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
 		C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		C9177B3021664F2A001D0292 /* FullscreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
 		C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPluginTests.swift; sourceTree = "<group>"; };
 		C9EDF8492162CCB700789E2F /* MediaControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
 		C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerMock.swift; sourceTree = "<group>"; };
@@ -1007,6 +1010,7 @@
 			isa = PBXGroup;
 			children = (
 				AB163509215AC9E600635233 /* Layout */,
+				C9177B3021664F2A001D0292 /* FullscreenButton.swift */,
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
 			);
@@ -1632,6 +1636,7 @@
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				AB8B7516215EA62E00656D57 /* MediaControl.swift in Sources */,
+				C9177B3221664F33001D0292 /* FullscreenButton.swift in Sources */,
 				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
@@ -1772,6 +1777,7 @@
 				ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
+				C9177B3121664F2A001D0292 /* FullscreenButton.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,
 				57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */,
