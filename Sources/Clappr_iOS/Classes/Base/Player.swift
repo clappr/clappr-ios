@@ -1,9 +1,9 @@
 open class Player: BaseObject {
 
     @objc open var playbackEventsToListen: [String] = []
-    fileprivate var playbackEventsListenIds: [String] = []
-    @objc fileprivate(set) open var core: Core?
-    private static var plugins: [Plugin.Type] = []
+    private var playbackEventsListenIds: [String] = []
+    @objc private(set) open var core: Core?
+    static var appPlugins: [Plugin.Type] = []
 
     @objc open var activeContainer: Container? {
         return core?.activeContainer
@@ -85,22 +85,22 @@ open class Player: BaseObject {
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 
         Loader.shared.addExternalPlugins(externalPlugins)
-        Loader.shared.addExternalPlugins(Player.plugins)
+        Loader.shared.addExternalPlugins(Player.appPlugins)
 
         setCore(Core(options: options))
+
+        bindPlaybackEvents()
     }
 
-    fileprivate func setCore(_ core: Core) {
+    private func setCore(_ core: Core) {
         self.core?.stopListening()
 
         self.core = core
 
         self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-
-        bindPlaybackEvents()
+        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
+        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }
 
     @objc open func attachTo(_ view: UIView, controller: UIViewController) {
@@ -143,7 +143,7 @@ open class Player: BaseObject {
         return on(event.rawValue, callback: callback)
     }
 
-    fileprivate func bindPlaybackEvents() {
+    private func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
                 let listenId = listenTo(
@@ -157,20 +157,16 @@ open class Player: BaseObject {
         }
     }
 
-    fileprivate func unbindPlaybackEvents() {
+    private func unbindPlaybackEvents() {
         for id in playbackEventsListenIds {
             stopListening(id)
         }
 
         playbackEventsListenIds.removeAll()
     }
-
-    fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
-    }
     
     public static func register(plugin: Plugin.Type) {
-        plugins.append(plugin.self)
+        appPlugins.append(plugin.self)
     }
 
     @objc open func destroy() {
