@@ -60,6 +60,12 @@ extension UIView {
             identifier: identifier)
     }
     
+    func setWidthAndHeight(with size: CGSize) {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        heightAnchor.constraint(equalToConstant: size.height).isActive = true
+    }
+    
     class func fromNib<T: UIView>() -> T {
         let nib = UINib(nibName: String(describing: T.self), bundle: Bundle(for: T.self))
         return (nib.instantiate(withOwner: nil, options: nil).last as? T)!
