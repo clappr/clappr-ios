@@ -196,18 +196,13 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view.backgroundColor = UIColor.clapprBlack60Color()
 
         loadPlugins()
+        loadDefaultPlugins()
         renderPlugins()
         showIfAlwaysVisible()
 
         self.bindFrameToSuperviewBounds()
     }
 
-    private func loadDefaultPlugins() {
-        defaultPlugins.forEach { plugin in
-            plugins.append(plugin.init(context: core!))
-        }
-    }
-    
     private func loadPlugins() {
         guard let mediaControlPlugins = options?[kMediaControlPlugins] as? [MediaControlPlugin.Type] else {
             return
@@ -215,6 +210,14 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         mediaControlPlugins.forEach { plugin in
             plugins.append(plugin.init(context: core!))
+        }
+    }
+
+    private func loadDefaultPlugins() {
+        defaultPlugins.forEach { defaultPlugin in
+            if !plugins.contains(where: { $0.pluginName == defaultPlugin.name}) {
+                plugins.append(defaultPlugin.init(context: core!))
+            }
         }
     }
 
