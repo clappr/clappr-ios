@@ -40,7 +40,8 @@ class MediaControlTests: QuickSpec {
 
             describe("#view") {
                 it("has 1 gesture recognizer") {
-                    let mediaControl = MediaControl()
+                    let coreStub = CoreStub()
+                    let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
@@ -50,7 +51,8 @@ class MediaControlTests: QuickSpec {
 
             describe("#tapped") {
                 it("hides the mediacontrol and stop timer") {
-                    let mediaControl = MediaControl()
+                    let coreStub = CoreStub()
+                    let mediaControl = MediaControl(context: coreStub)
                     mediaControl.render()
 
                     mediaControl.tapped()
@@ -95,8 +97,14 @@ class MediaControlTests: QuickSpec {
              */
 
             describe("#render") {
+                var coreStub: CoreStub!
+                
+                beforeEach {
+                    coreStub = CoreStub()
+                }
+
                 it("starts hidden") {
-                    let mediaControl = MediaControl()
+                    let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
@@ -104,7 +112,7 @@ class MediaControlTests: QuickSpec {
                 }
 
                 it("has black background with 60% of opacity") {
-                    let mediaControl = MediaControl()
+                    let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
@@ -114,7 +122,7 @@ class MediaControlTests: QuickSpec {
                 it("fills the superview") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
-                    let mediaControl = MediaControl()
+                    let mediaControl = MediaControl(context: coreStub)
 
                     superview.addSubview(mediaControl)
                     mediaControl.render()
@@ -123,7 +131,7 @@ class MediaControlTests: QuickSpec {
                 }
 
                 it("inflates the MediaControl xib in the view") {
-                    let mediaControl = MediaControl()
+                    let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
@@ -152,7 +160,7 @@ class MediaControlTests: QuickSpec {
                     let mediaControl = MediaControl(context: core)
                     mediaControl.render()
 
-                    expect(mediaControl.plugins.count).to(equal(1))
+                    expect(mediaControl.plugins.count).to(equal(2))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
             }
@@ -381,8 +389,11 @@ class MediaControlTests: QuickSpec {
 
                         mediaControl.render()
 
-                        let pluginView = mediaControl.plugins[0].view
-                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(pluginView))
+                        if let plugin = mediaControl.plugins.first(where: {$0.pluginName == "MediaControlPluginMock" }) {
+                            expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugin.view))
+                        } else {
+                            fail()
+                        }
                     }
 
                     it("always calls the MediaControlView passing the plugin's panel") {
@@ -421,6 +432,10 @@ class MediaControlTests: QuickSpec {
                 static var _position: MediaControlPosition = .left
                 static var didCallRender = false
 
+                override var pluginName: String {
+                    return "MediaControlPluginMock"
+                }
+                
                 open override var panel: MediaControlPanel {
                     return MediaControlPluginMock._panel
                 }
