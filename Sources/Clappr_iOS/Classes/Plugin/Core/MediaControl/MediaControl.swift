@@ -34,7 +34,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     public var plugins: [MediaControlPlugin] = []
-    var defaultPlugins: [MediaControlPlugin.Type] = [FullscreenButton.self]
+    let defaultPlugins: [MediaControlPlugin.Type] = [FullscreenButton.self, PlayButton.self]
 
     override open var pluginName: String {
         return "MediaControl"
@@ -225,7 +225,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             plugins.append(plugin.init(context: core!))
         }
     }
-    
+
     private func renderPlugins() {
         plugins.forEach { plugin in
             container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
