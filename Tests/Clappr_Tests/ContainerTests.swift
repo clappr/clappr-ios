@@ -32,6 +32,7 @@ class ContainerTests: QuickSpec {
                 context("with a valid resource") {
 
                     beforeEach {
+                        Loader.shared.addExternalPlugins([AVFoundationPlayback.self])
                         container = Container(options: Resource.valid)
                     }
 
@@ -83,6 +84,9 @@ class ContainerTests: QuickSpec {
                         let options = ["aOption": "option"]
                         let container = Container(options: options)
                         let option = container.options["aOption"] as! String
+                        let plugins: [Plugin.Type] = [AVFoundationPlayback.self, SpinnerPlugin.self]
+
+                        Loader.shared.addExternalPlugins(plugins)
 
                         expect(option) == "option"
                     }
@@ -191,6 +195,7 @@ class ContainerTests: QuickSpec {
                     let source: String = Resource.valid[kSourceUrl]!
 
                     beforeEach {
+                        Loader.shared.addExternalPlugins([AVFoundationPlayback.self])
                         container = Container(options: [:])
                     }
 

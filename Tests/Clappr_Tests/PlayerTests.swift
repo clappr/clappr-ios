@@ -243,7 +243,7 @@ class PlayerTests: QuickSpec {
 
                         player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
 
-                        expect(Loader.shared.externalPlugins.count).to(equal(2))
+                        expect(Loader.shared.plugins.count).to(equal(5))
                     }
 
                     it("pass third party plugins to loader") {
@@ -252,7 +252,7 @@ class PlayerTests: QuickSpec {
                         Player.register(plugin: LoggerPlugin.self)
                         player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
 
-                        expect(Loader.shared.externalPlugins.count).to(equal(3))
+                        expect(Loader.shared.plugins.count).to(equal(6))
                     }
 
                     it("ignore plugins registered after player initialization") {
@@ -261,7 +261,7 @@ class PlayerTests: QuickSpec {
 
                         Player.register(plugin: LoggerPlugin.self)
 
-                        expect(Loader.shared.externalPlugins.count).to(equal(2))
+                        expect(Loader.shared.plugins.count).to(equal(5))
                     }
                 }
             }
