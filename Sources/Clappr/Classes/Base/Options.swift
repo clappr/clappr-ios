@@ -14,8 +14,11 @@ public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
 public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
 
-/// List of MediaControl Plugins
+// List of MediaControl Plugins
 public let kMediaControlPlugins = "mediaControlPlugins"
+
+// Disable default plugins
+public let kDisableDefaultPlugins = "disableDefaultPlugins"
 
 public let kLoop = "loop"
 public let kMetaData = "metadata"
