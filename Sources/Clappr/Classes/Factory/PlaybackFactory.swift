@@ -6,7 +6,7 @@ open class PlaybackFactory {
     }
 
     open func createPlayback() -> Playback {
-        let availablePlaybacks = Loader.shared.playbacks.first { type in canPlay(type) }
+        let availablePlaybacks = Loader.shared.playbacks.first { playback in canPlay(playback) }
         if let playback = availablePlaybacks as? Playback.Type {
             return playback.init(options: options)
         }
