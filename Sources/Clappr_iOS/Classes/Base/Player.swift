@@ -84,6 +84,12 @@ open class Player: BaseObject {
              Event.seek.rawValue, Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 
+        var basePlugins: [Plugin.Type] = [AVFoundationPlayback.self]
+        #if os (iOS)
+        basePlugins.append(contentsOf: [PosterPlugin.self, SpinnerPlugin.self])
+        #endif
+
+        Loader.shared.addExternalPlugins(basePlugins)
         Loader.shared.addExternalPlugins(externalPlugins)
         Loader.shared.addExternalPlugins(Player.appPlugins)
 
