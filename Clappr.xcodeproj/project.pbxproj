@@ -206,6 +206,8 @@
 		C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */; };
+		E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B4216BDF9800F73491 /* PlayButton.swift */; };
+		E711A3B7216BE1C700F73491 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B6216BE1C700F73491 /* UIImageExtension.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
@@ -448,6 +450,8 @@
 		C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlViewTests.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
+		E711A3B4216BDF9800F73491 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
+		E711A3B6216BE1C700F73491 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
@@ -800,6 +804,7 @@
 				9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */,
 				96D362A31D41339400CCB866 /* UIViewExtension.swift */,
 				C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */,
+				E711A3B6216BE1C700F73491 /* UIImageExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1003,6 +1008,7 @@
 				AB163509215AC9E600635233 /* Layout */,
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
+				E711A3B4216BDF9800F73491 /* PlayButton.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1715,6 +1721,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */,
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
@@ -1761,6 +1768,7 @@
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
+				E711A3B7216BE1C700F73491 /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
