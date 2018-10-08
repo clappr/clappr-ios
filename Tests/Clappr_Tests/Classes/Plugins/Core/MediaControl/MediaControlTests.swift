@@ -170,60 +170,6 @@ class MediaControlTests: QuickSpec {
                     mediaControl.secondsToHideControlSlow = 0.1
                     mediaControl.render()
                 }
-                /*
-                context("when settings is opened") {
-                    
-                    it("doesnt hide the clappr media control after some time") {
-                        coreStub = CoreStub()
-                        mediaControl = MediaControl(context: coreStub)
-                        mediaControl.animationDuration = 0
-                        mediaControl.secondsToHideControlFast = 0
-                        mediaControl.secondsToHideControlSlow = 0
-                        mediaControl.render()
-                        
-                        mediaControlVisible()
-                        coreStub.trigger(PlayerInternalEvent.settingsOpened.rawValue)
-                        
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                        expect(mediaControl.view.backgroundColor).toEventually(equal(UIColor.clear))
-                        expect(mediaControl.view.gestureRecognizers).toEventually(beEmpty())
-                    }
-                }
-
-                context("when settings is closed") {
-                    
-                    it("hides the clappr media control after some time") {
-                        coreStub = CoreStub()
-                        mediaControl = MediaControl(context: coreStub)
-                        mediaControl.animationDuration = 0
-                        mediaControl.secondsToHideControlFast = 0
-                        mediaControl.render()
-                        mediaControl.view.backgroundColor = .red
-                        mediaControl.view.gestureRecognizers?.forEach { mediaControl.view.removeGestureRecognizer($0) }
-                        
-                        coreStub.trigger(PlayerInternalEvent.settingsClosed.rawValue)
-                        
-                        expect(mediaControl.hideControlsTimer).toEventuallyNot(beNil())
-                        expect(mediaControl.view.backgroundColor).toEventually(equal(UIColor.clapprBlack60Color()))
-                        expect(mediaControl.view.gestureRecognizers).toEventuallyNot(beEmpty())
-                    }
-                    
-                    it("doesn't hide the clappr media control after some time if it should be always visible") {
-                        let options: Options = [kMediaControlAlwaysVisible: true]
-                        let core = Core(loader: Loader(), options: options)
-                        mediaControl = MediaControl(context: core)
-                        mediaControl.animationDuration = 0
-                        mediaControl.secondsToHideControlFast = 0
-                        mediaControl.render()
-                        mediaControl.view.backgroundColor = .red
-                        mediaControl.view.gestureRecognizers?.forEach { mediaControl.view.removeGestureRecognizer($0) }
-                        
-                        coreStub.trigger(PlayerInternalEvent.settingsClosed.rawValue)
-                        
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                    }
-                }
-                */
 
                 context("when ready") {
                     it("shows the media control") {
