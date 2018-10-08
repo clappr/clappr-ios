@@ -214,13 +214,21 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func loadDefaultPlugins() {
+        if let disableDefaultPlugins = options?[kDisableDefaultPlugins] as? Bool, disableDefaultPlugins {
+            return
+        }
+
         defaultPlugins.forEach { defaultPlugin in
-            if !plugins.contains(where: { $0.pluginName == defaultPlugin.name}) {
-                plugins.append(defaultPlugin.init(context: core!))
-            }
+            addPlugin(defaultPlugin)
         }
     }
 
+    private func addPlugin(_ plugin: MediaControlPlugin.Type) {
+        if !plugins.contains(where: { $0.pluginName == plugin.name}) {
+            plugins.append(plugin.init(context: core!))
+        }
+    }
+    
     private func renderPlugins() {
         plugins.forEach { plugin in
             container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)

@@ -163,6 +163,21 @@ class MediaControlTests: QuickSpec {
                     expect(mediaControl.plugins.count).to(equal(2))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
+                
+                it("has the list of plugins that comes from options without default") {
+                    let options: Options = [
+                        kMediaControlPlugins: [MediaControlPluginMock.self],
+                        kDisableDefaultPlugins: true
+                    ]
+
+                    let core = Core(loader: Loader(), options: options)
+                    
+                    let mediaControl = MediaControl(context: core)
+                    mediaControl.render()
+                    
+                    expect(mediaControl.plugins.count).to(equal(1))
+                    expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
+                }
             }
 
             describe("Events") {
@@ -367,7 +382,11 @@ class MediaControlTests: QuickSpec {
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-                    options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
+                    options = [
+                        kMediaControlPlugins: [MediaControlPluginMock.self],
+                        kDisableDefaultPlugins: true
+                    ]
+
                     core = Core(loader: Loader(), options: options)
                     mediaControlViewMock = MediaControlViewMock()
                     MediaControlPluginMock.reset()
