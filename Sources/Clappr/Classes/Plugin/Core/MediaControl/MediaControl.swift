@@ -147,11 +147,11 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             withDuration: duration,
             animations: {
                 self.alpha = 1
-            },
+        },
             completion: { _ in
                 self.isHidden = false
                 completion?()
-            }
+        }
         )
     }
 
@@ -195,7 +195,7 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         self.isHidden = true
         view = UIView()
         view.backgroundColor = UIColor.clapprBlack60Color()
-        
+
         loadPlugins()
         loadDefaultPlugins()
         renderPlugins()
@@ -215,10 +215,18 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func loadDefaultPlugins() {
+        if let disableDefaultPlugins = options?[kDisableDefaultPlugins] as? Bool, disableDefaultPlugins {
+            return
+        }
+
         defaultPlugins.forEach { defaultPlugin in
-            if !plugins.contains(where: { $0.pluginName == defaultPlugin.name}) {
-                plugins.append(defaultPlugin.init(context: core!))
-            }
+            addPlugin(defaultPlugin)
+        }
+    }
+
+    private func addPlugin(_ plugin: MediaControlPlugin.Type) {
+        if !plugins.contains(where: { $0.pluginName == plugin.name}) {
+            plugins.append(plugin.init(context: core!))
         }
     }
 
