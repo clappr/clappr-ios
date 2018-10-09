@@ -1,31 +1,25 @@
-class PlayButton: MediaControlPlugin {
-    override var pluginName: String {
+open class PlayButton: MediaControlPlugin {
+    override open var pluginName: String {
         return "PlayButton"
     }
 
-    override var panel: MediaControlPanel {
+    override open var panel: MediaControlPanel {
         return .center
     }
 
-    override var position: MediaControlPosition {
+    override open var position: MediaControlPosition {
         return .center
     }
 
-    open let playIcon = UIImage.fromName("play")!
-    open let pauseIcon = UIImage.fromName("pause")!
+    public var playIcon = UIImage.fromName("play")!
+    public var pauseIcon = UIImage.fromName("pause")!
 
-    private var activeContainer: Container? {
+    public var activeContainer: Container? {
         return core?.activeContainer
     }
 
-    private var activePlayback: Playback? {
+    public var activePlayback: Playback? {
         return core?.activePlayback
-    }
-
-    private var isLive: Bool = false
-
-    private var isDvrAvailable: Bool {
-        return activePlayback?.isDvrAvailable ?? false
     }
 
     internal(set) var button: UIButton! {
@@ -38,16 +32,16 @@ class PlayButton: MediaControlPlugin {
         }
     }
 
-    required init(context: UIBaseObject) {
+    required public init(context: UIBaseObject) {
         super.init(context: context)
         bindEvents()
     }
 
-    required init() {
+    required public init() {
         super.init()
     }
 
-    required init?(coder argument: NSCoder) {
+    required public init?(coder argument: NSCoder) {
         super.init(coder: argument)
     }
 
@@ -59,13 +53,13 @@ class PlayButton: MediaControlPlugin {
         bindPlaybackEvents()
     }
 
-    private func bindCoreEvents() {
+    open func bindCoreEvents() {
         if let core = core {
             listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
         }
     }
 
-    private func bindContainerEvents() {
+    open func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container,
                      eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
@@ -80,7 +74,7 @@ class PlayButton: MediaControlPlugin {
         }
     }
 
-    override func render() {
+    override open func render() {
         if let superview = view.superview {
             view.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 0.6).isActive = true
             view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.6).isActive = true
@@ -90,7 +84,7 @@ class PlayButton: MediaControlPlugin {
         button.accessibilityIdentifier = "PlayPauseButton"
     }
 
-    private func onPlay() {
+    open func onPlay() {
         show()
         changeIcon()
     }
@@ -100,11 +94,11 @@ class PlayButton: MediaControlPlugin {
         changeIcon()
     }
 
-    private func hide() {
+    public func hide() {
         view.isHidden = true
     }
 
-    private func show() {
+    public func show() {
         view.isHidden = false
     }
 
@@ -120,7 +114,7 @@ class PlayButton: MediaControlPlugin {
         }
     }
 
-    private func changeIcon() {
+    public func changeIcon() {
         guard let playback = activePlayback else {
             return
         }
