@@ -78,27 +78,27 @@ class MediaControlTests: QuickSpec {
 
             /*
              describe("#gestureRecognizer") {
-                it("toggles the viewcontroller's swipe to back gesture to true") {
-                    let viewController = UIViewControllerMock()
-                    let options: Options = [kMediaControlPlugins: [Seekbar.self]]
-                    let core = Core(loader: Loader(), options: options)
-                    let mediaControl = MediaControl(context: core)
-                    viewController.view.addSubview(mediaControl)
-                    mediaControl.render()
-                    if let seekbar = mediaControl.plugins.first(where: { $0.pluginName == Seekbar.name }) as? Seekbar {
-                        seekbar.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-                    }
-                    
-                    _ = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: UITouch())
-                    
-                    expect(viewController.navigationController?.interactivePopGestureRecognizer?.isEnabled).to(beFalse())
-                }
-            }
+             it("toggles the viewcontroller's swipe to back gesture to true") {
+             let viewController = UIViewControllerMock()
+             let options: Options = [kMediaControlPlugins: [Seekbar.self]]
+             let core = Core(loader: Loader(), options: options)
+             let mediaControl = MediaControl(context: core)
+             viewController.view.addSubview(mediaControl)
+             mediaControl.render()
+             if let seekbar = mediaControl.plugins.first(where: { $0.pluginName == Seekbar.name }) as? Seekbar {
+             seekbar.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+             }
+
+             _ = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: UITouch())
+
+             expect(viewController.navigationController?.interactivePopGestureRecognizer?.isEnabled).to(beFalse())
+             }
+             }
              */
 
             describe("#render") {
                 var coreStub: CoreStub!
-                
+
                 beforeEach {
                     coreStub = CoreStub()
                 }
@@ -163,16 +163,16 @@ class MediaControlTests: QuickSpec {
                     expect(mediaControl.plugins.count).to(equal(2))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
-                
+
                 it("has the list of plugins that comes from options without default") {
                     let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
 
                     let core = Core(loader: Loader(), options: options)
-                    
+
                     let mediaControl = MediaControl(context: core)
                     mediaControl.defaultPlugins = []
                     mediaControl.render()
-                    
+
                     expect(mediaControl.plugins.count).to(equal(1))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
@@ -191,6 +191,59 @@ class MediaControlTests: QuickSpec {
                     mediaControl.secondsToHideControlSlow = 0.1
                     mediaControl.render()
                 }
+                /*
+                 context("when settings is opened") {
+
+                 it("doesnt hide the clappr media control after some time") {
+                 coreStub = CoreStub()
+                 mediaControl = MediaControl(context: coreStub)
+                 mediaControl.animationDuration = 0
+                 mediaControl.secondsToHideControlFast = 0
+                 mediaControl.secondsToHideControlSlow = 0
+                 mediaControl.render()
+
+                 mediaControlVisible()
+                 coreStub.trigger(PlayerInternalEvent.settingsOpened.rawValue)
+
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                 expect(mediaControl.view.backgroundColor).toEventually(equal(UIColor.clear))
+                 expect(mediaControl.view.gestureRecognizers).toEventually(beEmpty())
+                 }
+                 }
+                 context("when settings is closed") {
+
+                 it("hides the clappr media control after some time") {
+                 coreStub = CoreStub()
+                 mediaControl = MediaControl(context: coreStub)
+                 mediaControl.animationDuration = 0
+                 mediaControl.secondsToHideControlFast = 0
+                 mediaControl.render()
+                 mediaControl.view.backgroundColor = .red
+                 mediaControl.view.gestureRecognizers?.forEach { mediaControl.view.removeGestureRecognizer($0) }
+
+                 coreStub.trigger(PlayerInternalEvent.settingsClosed.rawValue)
+
+                 expect(mediaControl.hideControlsTimer).toEventuallyNot(beNil())
+                 expect(mediaControl.view.backgroundColor).toEventually(equal(UIColor.clapprBlack60Color()))
+                 expect(mediaControl.view.gestureRecognizers).toEventuallyNot(beEmpty())
+                 }
+
+                 it("doesn't hide the clappr media control after some time if it should be always visible") {
+                 let options: Options = [kMediaControlAlwaysVisible: true]
+                 let core = Core(loader: Loader(), options: options)
+                 mediaControl = MediaControl(context: core)
+                 mediaControl.animationDuration = 0
+                 mediaControl.secondsToHideControlFast = 0
+                 mediaControl.render()
+                 mediaControl.view.backgroundColor = .red
+                 mediaControl.view.gestureRecognizers?.forEach { mediaControl.view.removeGestureRecognizer($0) }
+
+                 coreStub.trigger(PlayerInternalEvent.settingsClosed.rawValue)
+
+                 expect(mediaControl.isHidden).toEventually(beFalse())
+                 }
+                 }
+                 */
 
                 context("when ready") {
                     it("shows the media control") {
@@ -267,39 +320,39 @@ class MediaControlTests: QuickSpec {
                 }
 
                 /*
-                context("when willBeginScrubbing") {
-                    it("keeps itself on the screen and visible") {
-                        mediaControlVisible()
-                        
-                        coreStub.activePlayback?.trigger(PlayerInternalEvent.willBeginScrubbing.rawValue)
-                        
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-                
-                context("when didFinishScrubbing") {
-                    it("hides the media control after some time if the video is playing") {
-                        mediaControlVisible()
-                        
-                        coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
-                        
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.isHidden).toEventually(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
-                    }
-                    
-                    it("doesn't hide the media control after some time if the video is playing") {
-                        mediaControlVisible()
-                        coreStub.activePlayback?.trigger(Event.didPause)
-                        
-                        coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
-                        
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-                */
+                 context("when willBeginScrubbing") {
+                 it("keeps itself on the screen and visible") {
+                 mediaControlVisible()
+
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.willBeginScrubbing.rawValue)
+
+                 expect(mediaControl.isHidden).toEventually(beFalse())
+                 expect(mediaControl.alpha).toEventually(equal(1))
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                 }
+                 }
+
+                 context("when didFinishScrubbing") {
+                 it("hides the media control after some time if the video is playing") {
+                 mediaControlVisible()
+
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
+
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
+                 expect(mediaControl.isHidden).toEventually(beTrue())
+                 expect(mediaControl.alpha).toEventually(equal(0))
+                 }
+
+                 it("doesn't hide the media control after some time if the video is playing") {
+                 mediaControlVisible()
+                 coreStub.activePlayback?.trigger(Event.didPause)
+
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
+
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                 }
+                 }
+                 */
 
                 context("when didEnterFullscreen") {
                     it("hides the media control after some time if the video is playing") {
@@ -449,7 +502,7 @@ class MediaControlTests: QuickSpec {
                 override var pluginName: String {
                     return "MediaControlPluginMock"
                 }
-                
+
                 open override var panel: MediaControlPanel {
                     return MediaControlPluginMock._panel
                 }
