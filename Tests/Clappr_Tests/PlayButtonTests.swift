@@ -122,7 +122,7 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("changes the image to a play icon") {
-                        let playIcon = UIImage.fromName("play")!
+                        let playIcon = UIImage.from(name: "play")!
 
                         playButton.button.sendActions(for: .touchUpInside)
 
@@ -157,7 +157,7 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("changes the image to a pause icon") {
-                        let pauseIcon = UIImage.fromName("pause")!
+                        let pauseIcon = UIImage.from(name: "pause")!
 
                         playButton.button.sendActions(for: .touchUpInside)
 
