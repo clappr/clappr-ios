@@ -65,7 +65,7 @@ open class FullscreenButton: MediaControlPlugin {
         button.bindFrameToSuperviewBounds()
     }
     
-    @objc func toggleFullscreenButton() {
+    @objc open func toggleFullscreenButton() {
         if isOnFullscreen {
             core?.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
         } else {
