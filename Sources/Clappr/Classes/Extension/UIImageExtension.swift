@@ -1,6 +1,6 @@
 
 public extension UIImage {
-    static func fromName(_ name: String) -> UIImage? {
-        return UIImage(named: name, in: Bundle(for: Player.self), compatibleWith: nil)
+    static func from(name named: String, aClass: AnyClass = Player.self) -> UIImage? {
+        return UIImage(named: named, in: Bundle(for: aClass), compatibleWith: nil)
     }
 }
