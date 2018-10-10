@@ -878,6 +878,7 @@
 		96D362BE1D41339400CCB866 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
 				96D362C01D41339400CCB866 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -1020,7 +1021,6 @@
 			isa = PBXGroup;
 			children = (
 				AB16350A215AC9FC00635233 /* MediaControlView.swift */,
-				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
