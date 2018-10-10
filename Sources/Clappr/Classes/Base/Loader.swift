@@ -30,11 +30,9 @@ open class Loader {
             "\n - core: \(corePlugins.map({ $0.name }))", scope: "\(type(of: self))")
     }
 
-    #if os(iOS)
     fileprivate func addMediaControl() {
         corePlugins.append(MediaControl.self)
     }
-    #endif
     
     open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
         self.externalPlugins = externalPlugins
