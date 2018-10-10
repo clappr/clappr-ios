@@ -1,4 +1,4 @@
-class FullscreenButton: MediaControlPlugin {
+open class FullscreenButton: MediaControlPlugin {
     private var icon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
     
     var button: UIButton! {
@@ -18,28 +18,28 @@ class FullscreenButton: MediaControlPlugin {
     
     private var isOnFullscreen = false
 
-    override var pluginName: String {
+    override open var pluginName: String {
         return "FullscreenButton"
     }
     
-    override var panel: MediaControlPanel {
+    override open var panel: MediaControlPanel {
         return .bottom
     }
     
-    override var position: MediaControlPosition {
+    override open var position: MediaControlPosition {
         return .right
     }
     
-    required init(context: UIBaseObject) {
+    required public init(context: UIBaseObject) {
         super.init(context: context)
         bindEvents()
     }
     
-    required init() {
+    required public init() {
         super.init()
     }
     
-    required init?(coder argument: NSCoder) {
+    required public init?(coder argument: NSCoder) {
         super.init(coder: argument)
     }
     
@@ -56,7 +56,7 @@ class FullscreenButton: MediaControlPlugin {
                  eventName: InternalEvent.didExitFullscreen.rawValue) { [weak self] (_: EventUserInfo) in self?.isOnFullscreen = false }
     }
     
-    override func render() {
+    override open func render() {
         setupButton()
     }
     
