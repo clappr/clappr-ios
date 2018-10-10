@@ -11,8 +11,8 @@ open class PlayButton: MediaControlPlugin {
         return .center
     }
 
-    public var playIcon = UIImage.fromName("play")!
-    public var pauseIcon = UIImage.fromName("pause")!
+    public var playIcon = UIImage.from(name: "play")!
+    public var pauseIcon = UIImage.from(name: "pause")!
 
     public var activeContainer: Container? {
         return core?.activeContainer
