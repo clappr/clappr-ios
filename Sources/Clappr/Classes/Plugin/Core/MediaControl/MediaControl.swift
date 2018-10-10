@@ -34,7 +34,11 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     var plugins: [MediaControlPlugin] = []
+    #if os(iOS)
     let defaultPlugins: [MediaControlPlugin.Type] = [PlayButton.self]
+    #else
+    let defaultPlugins: [MediaControlPlugin.Type] = []
+    #endif
 
     override var pluginName: String {
         return "MediaControl"
