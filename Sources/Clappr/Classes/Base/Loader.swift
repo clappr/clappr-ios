@@ -22,22 +22,10 @@ open class Loader {
             "\n - core: \(corePlugins.map({ $0.name }))")
     }
 
-<<<<<<< HEAD
     open func register(plugins: [Plugin.Type]) {
         plugins.forEach { plugin in
             self.plugins[plugin.name] = plugin
         }
-=======
-    fileprivate func addMediaControl() {
-        corePlugins.append(MediaControl.self)
-    }
-    
-    open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
-        self.externalPlugins = externalPlugins
-        playbackPlugins = getPlugins(.playback, defaultPlugins: playbackPlugins)
-        containerPlugins = getPlugins(.container, defaultPlugins: containerPlugins)
-        corePlugins = getPlugins(.core, defaultPlugins: corePlugins)
->>>>>>> refactor: renaming clapprMediaControl
     }
 
     open func loadPlugins(in core: Core) {
