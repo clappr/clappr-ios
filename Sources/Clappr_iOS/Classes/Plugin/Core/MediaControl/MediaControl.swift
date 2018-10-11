@@ -40,9 +40,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     public var hideControlsTimer: Timer?
-    var animationDuration = 0.3
-    var secondsToHideControlFast: TimeInterval = 0.4
-    var secondsToHideControlSlow: TimeInterval = 4
+    public var animationDuration = 0.3
+    public var secondsToHideControlFast: TimeInterval = 0.4
+    public var secondsToHideControlSlow: TimeInterval = 4
 
     private var showControls = true
 
