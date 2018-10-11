@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */; };
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
 		3251114721359BD8001FEEBA /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
 		3251114821359C48001FEEBA /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
-		3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362921D41339400CCB866 /* MediaControl.swift */; };
 		32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AE82049F087002D49B2 /* PlaybackTests.swift */; };
 		32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32580AEE2049FA37002D49B2 /* XCUIApplicationExtension.swift */; };
 		32624CA0212C7741004C26ED /* sample7.ts in Resources */ = {isa = PBXBuildFile; fileRef = 32624C8B212C773B004C26ED /* sample7.ts */; };
@@ -111,7 +111,6 @@
 		96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96912C3C1C219F25003A4AFD /* PosterPluginTests.swift */; };
 		969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9697039F1BEA716100B7F282 /* EventHandlerTests.swift */; };
 		969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */; };
-		96A979731BFBB65E00E5EA01 /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */; };
 		96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A979861BFF964C00E5EA01 /* CoreTests.swift */; };
 		96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A9CE371C97387000C21E80 /* LoaderTests.swift */; };
 		96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B465691BF6027F0025975A /* UIPluginTests.swift */; };
@@ -128,7 +127,6 @@
 		96D362C61D41339400CCB866 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628E1D41339400CCB866 /* Core.swift */; };
 		96D362C71D41339400CCB866 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628F1D41339400CCB866 /* EventHandler.swift */; };
 		96D362C91D41339400CCB866 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362911D41339400CCB866 /* Loader.swift */; };
-		96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362921D41339400CCB866 /* MediaControl.swift */; };
 		96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362931D41339400CCB866 /* MediaOption.swift */; };
 		96D362CC1D41339400CCB866 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
 		96D362CD1D41339400CCB866 /* Playback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362951D41339400CCB866 /* Playback.swift */; };
@@ -154,7 +152,6 @@
 		96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BB1D41339400CCB866 /* DragDetectorView.swift */; };
 		96D362EA1D41339400CCB866 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BC1D41339400CCB866 /* GradientView.swift */; };
 		96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C01D41339400CCB866 /* Assets.xcassets */; };
-		96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D362C11D41339400CCB866 /* MediaControlView.xib */; };
 		96D362F11D41345E00CCB866 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E7D2731E786FEE0056F358 /* InternalEvent.swift */; };
 		9E1613F82051CD4B006E95F2 /* sample1.ts in Resources */ = {isa = PBXBuildFile; fileRef = 9E1613F52051CD4A006E95F2 /* sample1.ts */; };
@@ -185,7 +182,14 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
+		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
+		AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
+		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
+		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
+		AB163517215ACA0C00635233 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* MediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
+		AB8B7516215EA62E00656D57 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* MediaControl.swift */; };
+		AB9AE436215EBF9900FE7041 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
 		ABE7D3EE212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
 		ABE7D3EF212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
@@ -193,6 +197,18 @@
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */; };
+		C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8492162CCB700789E2F /* MediaControlTests.swift */; };
+		C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */; };
+		C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF84E2162CF1600789E2F /* UINavigationControllerMock.swift */; };
+		C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8512162D07D00789E2F /* CoreStub.swift */; };
+		C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */; };
+		C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8552162D10B00789E2F /* ContainerStub.swift */; };
+		C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
+		C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
+		C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */; };
+		E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B4216BDF9800F73491 /* PlayButton.swift */; };
+		E711A3B7216BE1C700F73491 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B6216BE1C700F73491 /* UIImageExtension.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
@@ -295,6 +311,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonTests.swift; sourceTree = "<group>"; };
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		322EA4C920F941300018973A /* AVURLAssetStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetStub.swift; sourceTree = "<group>"; };
 		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
@@ -347,7 +364,6 @@
 		96912C3C1C219F25003A4AFD /* PosterPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterPluginTests.swift; sourceTree = "<group>"; };
 		9697039F1BEA716100B7F282 /* EventHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandlerTests.swift; sourceTree = "<group>"; };
 		969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
-		96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
 		96A979861BFF964C00E5EA01 /* CoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		96A9CE371C97387000C21E80 /* LoaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderTests.swift; sourceTree = "<group>"; };
 		96B465691BF6027F0025975A /* UIPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPluginTests.swift; sourceTree = "<group>"; };
@@ -364,7 +380,6 @@
 		96D3628E1D41339400CCB866 /* Core.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		96D3628F1D41339400CCB866 /* EventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		96D362911D41339400CCB866 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
-		96D362921D41339400CCB866 /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
 		96D362931D41339400CCB866 /* MediaOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaOption.swift; sourceTree = "<group>"; };
 		96D362941D41339400CCB866 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		96D362951D41339400CCB866 /* Playback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playback.swift; sourceTree = "<group>"; };
@@ -391,7 +406,6 @@
 		96D362BC1D41339400CCB866 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		96D362BD1D41339400CCB866 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96D362C01D41339400CCB866 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		96D362C11D41339400CCB866 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
 		96D362F01D41345E00CCB866 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
 		96E7D2731E786FEE0056F358 /* InternalEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalEvent.swift; sourceTree = "<group>"; };
 		9E1613F52051CD4A006E95F2 /* sample1.ts */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample1.ts; sourceTree = "<group>"; };
@@ -419,12 +433,27 @@
 		9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackViewPortTests.swift; sourceTree = "<group>"; };
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
+		AB163505215AB97800635233 /* MediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPlugin.swift; sourceTree = "<group>"; };
+		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
+		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
+		AB163514215ACA0C00635233 /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
 		ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableMediaOptions.swift; sourceTree = "<group>"; };
 		ABE7D3ED212C36200049773A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPluginTests.swift; sourceTree = "<group>"; };
+		C9EDF8492162CCB700789E2F /* MediaControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
+		C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerMock.swift; sourceTree = "<group>"; };
+		C9EDF84E2162CF1600789E2F /* UINavigationControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationControllerMock.swift; sourceTree = "<group>"; };
+		C9EDF8512162D07D00789E2F /* CoreStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreStub.swift; sourceTree = "<group>"; };
+		C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackMock.swift; sourceTree = "<group>"; };
+		C9EDF8552162D10B00789E2F /* ContainerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerStub.swift; sourceTree = "<group>"; };
+		C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ClapprAdditions.swift"; sourceTree = "<group>"; };
+		C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlViewTests.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
+		E711A3B4216BDF9800F73491 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
+		E711A3B6216BE1C700F73491 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
@@ -648,6 +677,7 @@
 		607FACE81AFB9204008FA782 /* Clappr_Tests */ = {
 			isa = PBXGroup;
 			children = (
+				C9EDF8432162C8DF00789E2F /* Classes */,
 				FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */,
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
 				969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */,
@@ -656,7 +686,6 @@
 				9E3F43FA1F3102E900417919 /* AppStateManagerTests.swift */,
 				9697039F1BEA716100B7F282 /* EventHandlerTests.swift */,
 				96A9CE371C97387000C21E80 /* LoaderTests.swift */,
-				96A979721BFBB65E00E5EA01 /* MediaControlTests.swift */,
 				96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */,
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
@@ -676,6 +705,7 @@
 				9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */,
 				FB61A3F2209F885800BDF267 /* FullscreenTests.swift */,
 				322EA4C920F941300018973A /* AVURLAssetStub.swift */,
+				320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */,
 			);
 			path = Clappr_Tests;
 			sourceTree = "<group>";
@@ -752,7 +782,6 @@
 				96D362931D41339400CCB866 /* MediaOption.swift */,
 				57B0A1DE1FF40C3600891037 /* UIObject.swift */,
 				ABE7D3ED212C36200049773A /* SharedData.swift */,
-				96D362921D41339400CCB866 /* MediaControl.swift */,
 				ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */,
 				96D362951D41339400CCB866 /* Playback.swift */,
 			);
@@ -777,6 +806,8 @@
 			children = (
 				9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */,
 				96D362A31D41339400CCB866 /* UIViewExtension.swift */,
+				C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */,
+				E711A3B6216BE1C700F73491 /* UIImageExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -820,6 +851,7 @@
 		96D362B01D41339400CCB866 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				AB163504215AB93300635233 /* MediaControl */,
 				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
 			);
 			path = Core;
@@ -847,7 +879,6 @@
 			isa = PBXGroup;
 			children = (
 				96D362C01D41339400CCB866 /* Assets.xcassets */,
-				96D362C11D41339400CCB866 /* MediaControlView.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -972,6 +1003,89 @@
 				9E692E131F9F8A54006510BE /* PlayerViewInteractor.swift */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		AB163504215AB93300635233 /* MediaControl */ = {
+			isa = PBXGroup;
+			children = (
+				AB163509215AC9E600635233 /* Layout */,
+				AB163514215ACA0C00635233 /* MediaControl.swift */,
+				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
+				E711A3B4216BDF9800F73491 /* PlayButton.swift */,
+			);
+			path = MediaControl;
+			sourceTree = "<group>";
+		};
+		AB163509215AC9E600635233 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				AB16350A215AC9FC00635233 /* MediaControlView.swift */,
+				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		C9EDF8432162C8DF00789E2F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF8502162D06300789E2F /* Stubs */,
+				C9EDF84B2162CEE000789E2F /* Mocks */,
+				C9EDF8442162C8F200789E2F /* Plugins */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C9EDF8442162C8F200789E2F /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF8452162C8FF00789E2F /* Core */,
+			);
+			path = Plugins;
+			sourceTree = "<group>";
+		};
+		C9EDF8452162C8FF00789E2F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF8462162C93900789E2F /* MediaControl */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		C9EDF8462162C93900789E2F /* MediaControl */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF85C2163E17F00789E2F /* Layout */,
+				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
+				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
+			);
+			path = MediaControl;
+			sourceTree = "<group>";
+		};
+		C9EDF84B2162CEE000789E2F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */,
+				C9EDF84E2162CF1600789E2F /* UINavigationControllerMock.swift */,
+				C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C9EDF8502162D06300789E2F /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF8512162D07D00789E2F /* CoreStub.swift */,
+				C9EDF8552162D10B00789E2F /* ContainerStub.swift */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		C9EDF85C2163E17F00789E2F /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
@@ -1381,7 +1495,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96D362EE1D41339400CCB866 /* MediaControlView.xib in Resources */,
+				AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */,
 				96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1495,6 +1609,7 @@
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
+				AB163507215AB97800635233 /* MediaControlPlugin.swift in Sources */,
 				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
@@ -1502,7 +1617,8 @@
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
-				3251114A2135FB05001FEEBA /* MediaControl.swift in Sources */,
+				AB8B7516215EA62E00656D57 /* MediaControl.swift in Sources */,
+				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
@@ -1527,6 +1643,7 @@
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
+				AB9AE436215EBF9900FE7041 /* MediaControlView.swift in Sources */,
 				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
@@ -1571,27 +1688,35 @@
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
 				9E3F43FC1F31116100417919 /* AppStateManagerTests.swift in Sources */,
+				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
+				C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */,
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
+				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
 				329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
+				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
+				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */,
+				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
+				C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */,
 				9E3AE5341FB330C000DFBBEB /* OptionsUnboxerTests.swift in Sources */,
+				320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */,
 				969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */,
 				9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */,
 				32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */,
 				9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */,
 				57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */,
-				96A979731BFBB65E00E5EA01 /* MediaControlTests.swift in Sources */,
 				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
+				C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */,
 				96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1600,6 +1725,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */,
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
@@ -1607,17 +1733,19 @@
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
+				AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
+				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,
 				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
-				96D362CA1D41339400CCB866 /* MediaControl.swift in Sources */,
 				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
 				96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */,
 				968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */,
 				57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				96D362C61D41339400CCB866 /* Core.swift in Sources */,
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
+				AB163517215ACA0C00635233 /* MediaControl.swift in Sources */,
 				9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */,
 				9E3F43F91F3102D800417919 /* AppStateManager.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
@@ -1637,12 +1765,14 @@
 				9EED97012088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
 				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
 				96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */,
+				C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				ABE7D3EE212C36200049773A /* SharedData.swift in Sources */,
 				96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */,
 				96D362CF1D41339400CCB866 /* UIBaseObject.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
+				E711A3B7216BE1C700F73491 /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

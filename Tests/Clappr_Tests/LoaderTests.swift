@@ -33,20 +33,6 @@ class LoaderTests: QuickSpec {
                 expect(spinnerPlugins.count) == 1
                 expect(spinner).toNot(beNil())
             }
-
-            it("sets custom Media Control") {
-                let loader = Loader(externalPlugins: [], options: [kMediaControl: StubMediaControl.self])
-                expect(loader.mediaControl.loadNib()?.accessibilityHint).to(equal("StubMediaControl"))
-            }
-        }
-    }
-
-    class StubMediaControl: MediaControl {
-
-        override class func loadNib() -> UINib? {
-            let nib = UINib()
-            nib.accessibilityHint = "StubMediaControl"
-            return nib
         }
     }
 
