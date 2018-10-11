@@ -1,6 +1,6 @@
 import Foundation
 
-class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
+open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     override var view: UIView {
         didSet {
@@ -33,7 +33,7 @@ class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-    var plugins: [MediaControlPlugin] = []
+    public var plugins: [MediaControlPlugin] = []
 
     override var pluginName: String {
         return "MediaControl"
