@@ -196,6 +196,7 @@
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */; };
 		C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */; };
 		C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8492162CCB700789E2F /* MediaControlTests.swift */; };
 		C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */; };
@@ -437,6 +438,7 @@
 		ABE7D3ED212C36200049773A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
 		C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPluginTests.swift; sourceTree = "<group>"; };
 		C9EDF8492162CCB700789E2F /* MediaControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
 		C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerMock.swift; sourceTree = "<group>"; };
@@ -1024,9 +1026,18 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		C92F1C98216F8EE20059D860 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C9EDF8432162C8DF00789E2F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C92F1C98216F8EE20059D860 /* Extensions */,
 				C9EDF8502162D06300789E2F /* Stubs */,
 				C9EDF84B2162CEE000789E2F /* Mocks */,
 				C9EDF8442162C8F200789E2F /* Plugins */,
@@ -1683,6 +1694,7 @@
 			files = (
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
 				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
+				C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
