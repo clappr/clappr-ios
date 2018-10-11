@@ -16,9 +16,7 @@ open class Loader {
     public init(externalPlugins: [Plugin.Type], options: Options = [:]) {
         self.externalPlugins = externalPlugins
 
-        #if os(iOS)
         addMediaControl()
-        #endif
         
         if !externalPlugins.isEmpty {
             addExternalPlugins(externalPlugins)
@@ -31,7 +29,9 @@ open class Loader {
     }
 
     fileprivate func addMediaControl() {
+        #if os(iOS)
         corePlugins.append(MediaControl.self)
+        #endif
     }
     
     open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
