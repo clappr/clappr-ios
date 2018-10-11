@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */; };
+		320A7A12216FB42A006D2B24 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A11216FB429006D2B24 /* PlayButton.swift */; };
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
@@ -211,7 +212,6 @@
 		C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */; };
-		E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B4216BDF9800F73491 /* PlayButton.swift */; };
 		E711A3B7216BE1C700F73491 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E711A3B6216BE1C700F73491 /* UIImageExtension.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
@@ -316,6 +316,7 @@
 
 /* Begin PBXFileReference section */
 		320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonTests.swift; sourceTree = "<group>"; };
+		320A7A11216FB429006D2B24 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayButton.swift; path = Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/PlayButton.swift; sourceTree = SOURCE_ROOT; };
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		322EA4C920F941300018973A /* AVURLAssetStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetStub.swift; sourceTree = "<group>"; };
 		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
@@ -460,7 +461,6 @@
 		C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlViewTests.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
-		E711A3B4216BDF9800F73491 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		E711A3B6216BE1C700F73491 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
@@ -1019,8 +1019,8 @@
 				AB163509215AC9E600635233 /* Layout */,
 				C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */,
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
+				320A7A11216FB429006D2B24 /* PlayButton.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
-				E711A3B4216BDF9800F73491 /* PlayButton.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1754,7 +1754,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E711A3B5216BDF9800F73491 /* PlayButton.swift in Sources */,
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
@@ -1786,6 +1785,7 @@
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */,
+				320A7A12216FB42A006D2B24 /* PlayButton.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
