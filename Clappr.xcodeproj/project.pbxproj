@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */; };
-		320A7A12216FB42A006D2B24 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A11216FB429006D2B24 /* PlayButton.swift */; };
+		320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A14216FBF89006D2B24 /* PlayButton.swift */; };
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
 		325111452134827F001FEEBA /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362941D41339400CCB866 /* Options.swift */; };
@@ -316,7 +316,7 @@
 
 /* Begin PBXFileReference section */
 		320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonTests.swift; sourceTree = "<group>"; };
-		320A7A11216FB429006D2B24 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayButton.swift; path = Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/PlayButton.swift; sourceTree = SOURCE_ROOT; };
+		320A7A14216FBF89006D2B24 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		322EA4C920F941300018973A /* AVURLAssetStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetStub.swift; sourceTree = "<group>"; };
 		32580AE82049F087002D49B2 /* PlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackTests.swift; sourceTree = "<group>"; };
@@ -1019,8 +1019,8 @@
 				AB163509215AC9E600635233 /* Layout */,
 				C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */,
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
-				320A7A11216FB429006D2B24 /* PlayButton.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
+				320A7A14216FBF89006D2B24 /* PlayButton.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1785,7 +1785,7 @@
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */,
-				320A7A12216FB42A006D2B24 /* PlayButton.swift in Sources */,
+				320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
