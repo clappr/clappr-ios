@@ -843,7 +843,6 @@
 		96D362B01D41339400CCB866 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				AB163504215AB93300635233 /* MediaControl */,
 				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
 			);
 			path = Core;
@@ -935,6 +934,7 @@
 		9E26CFF52016150A00AE92B7 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				C92F1C97216F80B80059D860 /* Core */,
 				9E26CFF62016151800AE92B7 /* Container */,
 				9E26CFF72016153E00AE92B7 /* Playback */,
 			);
@@ -1014,6 +1014,14 @@
 				AB16350B215AC9FC00635233 /* MediaControlView.xib */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		C92F1C97216F80B80059D860 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AB163504215AB93300635233 /* MediaControl */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		C9EDF8432162C8DF00789E2F /* Classes */ = {
