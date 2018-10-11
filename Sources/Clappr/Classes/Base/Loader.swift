@@ -1,7 +1,7 @@
 open class Loader {
 
-    static let shared = Loader()
-    var plugins: [String: Plugin.Type] = [:]
+    public static let shared = Loader()
+    public var plugins: [String: Plugin.Type] = [:]
 
     var playbacks: [Plugin.Type] {
         return plugins.filter { $0.value.type == .playback }.map { return $0.value }
