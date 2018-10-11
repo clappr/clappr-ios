@@ -2,7 +2,7 @@ import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
-    override var view: UIView {
+    override open var view: UIView {
         didSet {
             addSubview(view)
             view.addSubview(container)
@@ -17,7 +17,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
     }
 
-    private var gesture: UITapGestureRecognizer?
+    public var gesture: UITapGestureRecognizer?
 
     var container: MediaControlView = .fromNib()
 
@@ -35,11 +35,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     public var plugins: [MediaControlPlugin] = []
 
-    override var pluginName: String {
+    override open var pluginName: String {
         return "MediaControl"
     }
 
-    var hideControlsTimer: Timer?
+    public var hideControlsTimer: Timer?
     var animationDuration = 0.3
     var secondsToHideControlFast: TimeInterval = 0.4
     var secondsToHideControlSlow: TimeInterval = 4
@@ -48,17 +48,17 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private var alwaysVisible = false
 
-    required init(context: UIBaseObject) {
+    required public init(context: UIBaseObject) {
         super.init(context: context)
         alwaysVisible = (core?.options[kMediaControlAlwaysVisible] as? Bool) ?? false
         bindEvents()
     }
 
-    required init() {
+    required public init() {
         super.init()
     }
 
-    required init?(coder argument: NSCoder) {
+    required public init?(coder argument: NSCoder) {
         super.init(coder: argument)
     }
 
@@ -70,7 +70,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         bindPlaybackEvents()
     }
 
-    func bindCoreEvents() {
+    open func bindCoreEvents() {
         if let core = self.core {
 
             listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in
@@ -146,11 +146,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             withDuration: duration,
             animations: {
                 self.alpha = 1
-            },
+        },
             completion: { _ in
                 self.isHidden = false
                 completion?()
-            }
+        }
         )
     }
 
@@ -171,13 +171,13 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
     }
 
-    private func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
+    public func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
         hideControlsTimer?.invalidate()
         hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? secondsToHideControlFast,
                                                  target: self, selector: #selector(MediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
-    private func keepVisible() {
+    public func keepVisible() {
         hideControlsTimer?.invalidate()
     }
 
@@ -190,11 +190,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         hideAndStopTimer()
     }
 
-    override func render() {
+    override open func render() {
         self.isHidden = true
         view = UIView()
         view.backgroundColor = UIColor.clapprBlack60Color()
-        
+
         loadPlugins()
         renderPlugins()
         showIfAlwaysVisible()
@@ -232,5 +232,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 self?.disappearAfterSomeTime(self?.secondsToHideControlSlow)
             }
         }
+    }
+
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
     }
 }
