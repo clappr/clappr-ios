@@ -165,14 +165,12 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("has the list of plugins that comes from options without default") {
-                    let options: Options = [
-                        kMediaControlPlugins: [MediaControlPluginMock.self],
-                        kDisableDefaultPlugins: true
-                    ]
+                    let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
 
                     let core = Core(loader: Loader(), options: options)
                     
                     let mediaControl = MediaControl(context: core)
+                    mediaControl.defaultPlugins = []
                     mediaControl.render()
                     
                     expect(mediaControl.plugins.count).to(equal(1))
@@ -382,10 +380,7 @@ class MediaControlTests: QuickSpec {
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-                    options = [
-                        kMediaControlPlugins: [MediaControlPluginMock.self],
-                        kDisableDefaultPlugins: true
-                    ]
+                    options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
 
                     core = Core(loader: Loader(), options: options)
                     mediaControlViewMock = MediaControlViewMock()
@@ -396,7 +391,7 @@ class MediaControlTests: QuickSpec {
                     it("always calls the MediaControlView to position the view") {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
-
+                        mediaControl.defaultPlugins = []
                         mediaControl.render()
 
                         expect(mediaControlViewMock.didCallAddSubview).to(beTrue())
@@ -405,7 +400,7 @@ class MediaControlTests: QuickSpec {
                     it("always calls the MediaControlView passing the plugin's view") {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
-
+                        mediaControl.defaultPlugins = []
                         mediaControl.render()
 
                         if let plugin = mediaControl.plugins.first(where: {$0.pluginName == "MediaControlPluginMock" }) {
@@ -419,7 +414,7 @@ class MediaControlTests: QuickSpec {
                         MediaControlPluginMock._panel = .center
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
-
+                        mediaControl.defaultPlugins = []
                         mediaControl.render()
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))
@@ -429,7 +424,7 @@ class MediaControlTests: QuickSpec {
                         MediaControlPluginMock._position = .left
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
-
+                        mediaControl.defaultPlugins = []
                         mediaControl.render()
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
