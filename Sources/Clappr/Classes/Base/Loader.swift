@@ -22,8 +22,8 @@ open class Loader {
             "\n - core: \(corePlugins.map({ $0.name }))")
     }
     
-    open func addExternalPlugins(_ externalPlugins: [Plugin.Type]) {
-        externalPlugins.forEach { plugin in
+    open func register(plugins: [Plugin.Type]) {
+        plugins.forEach { plugin in
             self.plugins[plugin.name] = plugin
         }
     }
