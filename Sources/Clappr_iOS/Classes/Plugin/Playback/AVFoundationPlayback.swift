@@ -502,7 +502,6 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func readyToPlay() {
-        // tvOS triggers a ready here
         seekOnReadyIfNeeded()
         addTimeElapsedCallback()
     }
