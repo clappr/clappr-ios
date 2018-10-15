@@ -591,15 +591,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handlePlayerRateChanged() {
-        #if os(iOS)
-        if (player?.rate == 0) {
-            updateState(.paused)
-        }
-        #elseif os(tvOS)
         if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
             updateState(.paused)
         }
-        #endif
     }
 
     fileprivate func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: String) {
