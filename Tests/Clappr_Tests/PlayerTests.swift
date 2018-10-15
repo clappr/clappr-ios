@@ -18,7 +18,7 @@ class PlayerTests: QuickSpec {
                     var callbackWasCalled = false
 
                     beforeEach {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
                         Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
                         playback = player.activePlayback
@@ -220,7 +220,7 @@ class PlayerTests: QuickSpec {
 
                 context("external playbacks") {
                     it("sets external playback as active") {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
                         Player.register(plugins: [StubPlayback.self])
                         player = Player(options: options)
                         playback = player.activePlayback
@@ -229,7 +229,7 @@ class PlayerTests: QuickSpec {
                     }
 
                     it("changes external playback based on source") {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
                         Player.register(plugins: [SpecialStubPlayback.self])
                         player = Player(options: options)
                         
@@ -243,7 +243,7 @@ class PlayerTests: QuickSpec {
 
                 context("third party plugins") {
                     it("pass plugins to core") {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
 
                         Player.register(plugins: [LoggerPlugin.self])
                         player = Player(options: options)
@@ -253,7 +253,7 @@ class PlayerTests: QuickSpec {
                     }
                     
                     it("pass plugins to Loader") {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
                         
                         Player.register(plugins: [LoggerPlugin.self])
                         player = Player(options: options)
@@ -263,7 +263,7 @@ class PlayerTests: QuickSpec {
                     }
 
                     it("ignore plugins registered after player initialization") {
-                        self.resetPlugins()
+                        Loader.shared.resetPlugins()
                         Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
 
@@ -277,7 +277,7 @@ class PlayerTests: QuickSpec {
 
             describe("#configure") {
                 it("changes Core options") {
-                    self.resetPlugins()
+                    Loader.shared.resetPlugins()
                     Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
                     player = Player(options: options)
                     player.configure(options: ["foo": "bar"])
@@ -288,12 +288,6 @@ class PlayerTests: QuickSpec {
                 }
             }
         }
-    }
-
-    private func resetPlugins() {
-        Loader.shared.resetPlugins()
-        Player.hasAlreadyRegisteredPlugins = false
-        
     }
 
     class StubPlayback: Playback {
