@@ -307,14 +307,8 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    #if os(iOS)
-    @objc func playbackDidEnd() {
-        trigger(.didComplete)
-        updateState(.idle)
-    }
-    #elseif os(tvOS)
-    @objc func playbackDidEnd(notification: NSNotification) {
-        if let object = notification.object as? AVPlayerItem, let item = self.player?.currentItem {
+    @objc func playbackDidEnd(notification: NSNotification? = nil) {
+        if let object = notification?.object as? AVPlayerItem, let item = self.player?.currentItem {
             if object == item {
                 let duration = item.duration
                 let position = item.currentTime()
@@ -325,7 +319,6 @@ open class AVFoundationPlayback: Playback {
             }
         }
     }
-    #endif
 
     open override func pause() {
         trigger(.willPause)
