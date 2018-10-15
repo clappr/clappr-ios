@@ -36,6 +36,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var plugins: [MediaControlPlugin] = []
     var defaultPlugins: [MediaControlPlugin.Type] = [FullscreenButton.self, PlayButton.self]
 
+    #if os(iOS)
+    let defaultPlugins: [MediaControlPlugin.Type] = [TimeIndicator.self]
+    #else
+    let defaultPlugins: [MediaControlPlugin.Type] = []
+    #endif
+
     override open var pluginName: String {
         return "MediaControl"
     }
