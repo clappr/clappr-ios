@@ -95,6 +95,14 @@
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
+		571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
+		571B7B2A21750157005C0942 /* HTTPStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1613FB2051CD89006E95F2 /* HTTPStub.swift */; };
+		571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322EA4C920F941300018973A /* AVURLAssetStub.swift */; };
+		571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
+		571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
+		571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
+		571B7B31217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */; };
+		571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
@@ -107,7 +115,6 @@
 		96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E551BF0CBD100095E6E /* UIBaseObjectTests.swift */; };
 		96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E581BF0D58400095E6E /* PlaybackTests.swift */; };
 		96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96664E6B1BF209CB00095E6E /* ContainerTests.swift */; };
-		9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
 		968E5BD91D6CBFA50092F372 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968E5BD81D6CBFA50092F372 /* Logger.swift */; };
 		968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968E5BDA1D6CC0680092F372 /* LogLevel.swift */; };
 		96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96912C3C1C219F25003A4AFD /* PosterPluginTests.swift */; };
@@ -210,7 +217,6 @@
 		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
 		FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */; };
 		FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */; };
-		FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */; };
 		FC7785E120052CB800EC879F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785E020052CB800EC879F /* AppDelegate.swift */; };
 		FC7785E320052CB800EC879F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785E220052CB800EC879F /* ViewController.swift */; };
 		FC7785E620052CB800EC879F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC7785E420052CB800EC879F /* Main.storyboard */; };
@@ -327,6 +333,7 @@
 		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		57351C6720248D78007DEBBE /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		57351C6920248F08007DEBBE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
@@ -440,7 +447,6 @@
 		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
 		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
 		FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+tvOS.swift"; sourceTree = "<group>"; };
-		FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackTests.swift; sourceTree = "<group>"; };
 		FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackNowPlayingServiceTests.swift; sourceTree = "<group>"; };
 		FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilderTests.swift; sourceTree = "<group>"; };
 		FC7785DE20052CB800EC879F /* Clappr_tvOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_tvOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -569,10 +575,10 @@
 		32E4020B1FF43262001C2096 /* Clappr_tvOS_Tests */ = {
 			isa = PBXGroup;
 			children = (
+				571B7B2F21750398005C0942 /* Stub */,
 				9E1EB31F208E34FC005714D1 /* Assets */,
 				FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */,
 				FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */,
-				FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */,
 				32E402171FF433FA001C2096 /* BaseObjectTests.swift */,
 				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
@@ -586,6 +592,14 @@
 				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		571B7B2F21750398005C0942 /* Stub */ = {
+			isa = PBXGroup;
+			children = (
+				571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */,
+			);
+			path = Stub;
 			sourceTree = "<group>";
 		};
 		57351C6620248D66007DEBBE /* Stub */ = {
@@ -1429,6 +1443,7 @@
 				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
 				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
 				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Swifter.framework",
 			);
 			outputPaths = (
 			);
@@ -1543,13 +1558,18 @@
 				3293659F212DE462001B4B15 /* PlayerTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
+				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
+				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
+				571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */,
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
+				571B7B2A21750157005C0942 /* HTTPStub.swift in Sources */,
 				32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */,
 				3251114821359C48001FEEBA /* CoreTests.swift in Sources */,
+				571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */,
+				571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */,
-				FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1568,7 +1588,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
-				9684B6CA1D186E4700D012C2 /* AVFoundationPlaybackTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
@@ -1582,6 +1601,7 @@
 				329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
+				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
@@ -1607,6 +1627,7 @@
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
+				571B7B31217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
