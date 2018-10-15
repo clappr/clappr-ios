@@ -215,10 +215,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func loadDefaultPlugins() {
-        if let disableDefaultPlugins = options?[kDisableDefaultPlugins] as? Bool, disableDefaultPlugins {
-            return
-        }
-
         defaultPlugins.forEach { defaultPlugin in
             addPlugin(defaultPlugin)
         }
