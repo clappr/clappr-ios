@@ -37,7 +37,7 @@ open class Container: UIBaseObject {
         super.init(frame: CGRect.zero)
         self.sharedData.container = self
         backgroundColor = UIColor.clear
-        loadPlugins()
+        Loader.shared.loadPlugins(in: self)
         accessibilityIdentifier = "Container"
         if let source = options[kSourceUrl] as? String {
             load(source, mimeType: options[kMimeType] as? String)
@@ -89,15 +89,7 @@ open class Container: UIBaseObject {
         plugin.render()
     }
 
-    fileprivate func loadPlugins() {
-        for type in Loader.shared.containerPlugins {
-            if let plugin = type.init(context: self) as? UIContainerPlugin {
-                addPlugin(plugin)
-            }
-        }
-    }
-
-    private func addPlugin(_ plugin: UIContainerPlugin) {
+    func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
 

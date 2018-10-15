@@ -75,7 +75,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         #endif
 
         bindEventListeners()
-        loadPlugins()
+        Loader.shared.loadPlugins(in: self)
 
         containers.append(Container(options: options))
 
@@ -88,14 +88,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func setActive(container: Container) {
         if activeContainer != container {
             activeContainer = container
-        }
-    }
-
-    fileprivate func loadPlugins() {
-        for plugin in Loader.shared.corePlugins {
-            if let corePlugin = plugin.init(context: self) as? UICorePlugin {
-                addPlugin(corePlugin)
-            }
         }
     }
 
