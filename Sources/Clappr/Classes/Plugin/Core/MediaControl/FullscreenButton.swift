@@ -1,11 +1,12 @@
 open class FullscreenButton: MediaControlPlugin {
-    private var icon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
+    private var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
+    private var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
     
     var button: UIButton! {
         didSet {
             button.accessibilityIdentifier = "FullscreenButton"
             
-            button.setImage(icon, for: .normal)
+            button.setImage(fullscreenIcon, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
             button.contentVerticalAlignment = .fill
             button.contentHorizontalAlignment = .fill
@@ -16,7 +17,12 @@ open class FullscreenButton: MediaControlPlugin {
         }
     }
     
-    private var isOnFullscreen = false
+    private var isOnFullscreen = false {
+        didSet {
+            let icon = isOnFullscreen ? windowedIcon : fullscreenIcon
+            button.setImage(icon, for: .normal)
+        }
+    }
 
     override open var pluginName: String {
         return "FullscreenButton"
