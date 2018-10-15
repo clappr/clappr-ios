@@ -26,6 +26,9 @@ public let kMetaDataDescription = "mdDescription"
 public let kMetaDataDate = "mdDate"
 public let kMetaDataArtwork = "mdArtwork"
 
+// Disable default plugins
+public let kDisableDefaultPlugins = "disableDefaultPlugins"
+
 struct OptionsUnboxer {
     let options: Options
 
