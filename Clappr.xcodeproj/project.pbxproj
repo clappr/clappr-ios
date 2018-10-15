@@ -221,6 +221,7 @@
 		C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
+		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
@@ -469,6 +470,7 @@
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
+		E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicatorTests.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
@@ -1100,6 +1102,7 @@
 				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
 				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
 				C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */,
+				E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1757,6 +1760,7 @@
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIBaseObjectTests.swift in Sources */,
+				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
 				C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */,
