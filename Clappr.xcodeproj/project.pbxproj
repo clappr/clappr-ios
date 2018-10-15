@@ -93,6 +93,8 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
+		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
@@ -206,7 +208,6 @@
 		FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A52005233D00EC879F /* EventProtocol.swift */; };
 		FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */; };
 		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
-		FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */; };
 		FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */; };
 		FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */; };
 		FC7785C3200526DC00EC879F /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */; };
@@ -438,7 +439,7 @@
 		FC7785A52005233D00EC879F /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
 		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
 		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
-		FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlayback.swift; sourceTree = "<group>"; };
+		FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+tvOS.swift"; sourceTree = "<group>"; };
 		FC7785BA2005251700EC879F /* AVFoundationPlaybackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackTests.swift; sourceTree = "<group>"; };
 		FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackNowPlayingServiceTests.swift; sourceTree = "<group>"; };
 		FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilderTests.swift; sourceTree = "<group>"; };
@@ -1040,7 +1041,7 @@
 			children = (
 				FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */,
 				FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */,
-				FC7785B6200523E400EC879F /* AVFoundationPlayback.swift */,
+				FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */,
 			);
 			path = AVFoundationPlayback;
 			sourceTree = "<group>";
@@ -1497,6 +1498,7 @@
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
 				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
+				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
@@ -1517,7 +1519,6 @@
 				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
 				FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
-				FC7785B9200523E400EC879F /* AVFoundationPlayback.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
@@ -1529,6 +1530,7 @@
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
 				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
+				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */,
 			);
