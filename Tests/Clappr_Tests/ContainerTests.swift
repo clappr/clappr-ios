@@ -32,7 +32,7 @@ class ContainerTests: QuickSpec {
                 context("with a valid resource") {
 
                     beforeEach {
-                        Loader.shared.addExternalPlugins([AVFoundationPlayback.self])
+                        Loader.shared.register(plugins: [AVFoundationPlayback.self])
                         container = Container(options: Resource.valid)
                     }
 
@@ -50,7 +50,7 @@ class ContainerTests: QuickSpec {
                     context("and add container plugins from loader") {
 
                         beforeEach {
-                            Loader.shared.addExternalPlugins([FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+                            Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
                             container = Container(options: [:])
                         }
 
@@ -86,7 +86,7 @@ class ContainerTests: QuickSpec {
                         let option = container.options["aOption"] as! String
                         let plugins: [Plugin.Type] = [AVFoundationPlayback.self, SpinnerPlugin.self]
 
-                        Loader.shared.addExternalPlugins(plugins)
+                        Loader.shared.register(plugins: plugins)
 
                         expect(option) == "option"
                     }
@@ -171,7 +171,7 @@ class ContainerTests: QuickSpec {
                 }
 
                 it("destroy all plugins and clear plugins list") {
-                    Loader.shared.addExternalPlugins([FakeContainerPlugin.self])
+                    Loader.shared.register(plugins: [FakeContainerPlugin.self])
                     let container = Container(options: [:])
                     var countOfDestroyedPlugins = 0
 
@@ -195,7 +195,7 @@ class ContainerTests: QuickSpec {
                     let source: String = Resource.valid[kSourceUrl]!
 
                     beforeEach {
-                        Loader.shared.addExternalPlugins([AVFoundationPlayback.self])
+                        Loader.shared.register(plugins: [AVFoundationPlayback.self])
                         container = Container(options: [:])
                     }
 
@@ -251,7 +251,7 @@ class ContainerTests: QuickSpec {
 
                 beforeEach {
                     Loader.shared.resetPlugins()
-                    Loader.shared.addExternalPlugins([StubPlayback.self])
+                    Loader.shared.register(plugins: [StubPlayback.self])
                     container = Container(options: [kSourceUrl: "http://clappr.com/video.mp4"])
                 }
 

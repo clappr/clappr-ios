@@ -23,7 +23,7 @@ class CoreTests: QuickSpec {
         beforeEach {
             core = Core(options: options as Options)
             Loader.shared.resetPlugins()
-            Loader.shared.addExternalPlugins([StubPlayback.self])
+            Loader.shared.register(plugins: [StubPlayback.self])
         }
 
         describe(".Core") {
@@ -665,7 +665,7 @@ class CoreTests: QuickSpec {
 
             context("core position") {
                 it("is positioned in front of Container view") {
-                    Loader.shared.addExternalPlugins([FakeCorePlugin.self])
+                    Loader.shared.register(plugins: [FakeCorePlugin.self])
                     let core = Core(options: options as Options)
 
                     core.render()

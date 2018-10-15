@@ -10,7 +10,7 @@ class PlaybackFactoryTests: QuickSpec {
 
         beforeEach {
             Loader.shared.resetPlugins()
-            Loader.shared.addExternalPlugins([StubPlayback.self])
+            Loader.shared.register(plugins: [StubPlayback.self])
         }
 
         context("Playback creation") {

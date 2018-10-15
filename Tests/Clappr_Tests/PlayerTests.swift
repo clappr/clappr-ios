@@ -19,7 +19,8 @@ class PlayerTests: QuickSpec {
 
                     beforeEach {
                         self.resetPlugins()
-                        player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        player = Player(options: options)
                         playback = player.activePlayback
                         callbackWasCalled = false
                     }
@@ -220,7 +221,8 @@ class PlayerTests: QuickSpec {
                 context("external playbacks") {
                     it("sets external playback as active") {
                         self.resetPlugins()
-                        player = Player(options: options, externalPlugins: [StubPlayback.self])
+                        Player.register(plugins: [StubPlayback.self])
+                        player = Player(options: options)
                         playback = player.activePlayback
 
                         expect(player.activePlayback).to(beAKindOf(StubPlayback.self))
@@ -228,52 +230,60 @@ class PlayerTests: QuickSpec {
 
                     it("changes external playback based on source") {
                         self.resetPlugins()
-                        player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
-                        playback = player.activePlayback
+                        Player.register(plugins: [SpecialStubPlayback.self])
+                        player = Player(options: options)
+                        
 
                         player.load(PlayerTests.specialSource)
 
+                        playback = player.activePlayback
                         expect(player.activePlayback).to(beAKindOf(SpecialStubPlayback.self))
                     }
                 }
 
-                context("plugins in loader") {
-                    it("pass only player plugins to loader") {
+                context("third party plugins") {
+                    it("pass plugins to core") {
                         self.resetPlugins()
 
-                        player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(plugins: [LoggerPlugin.self])
+                        player = Player(options: options)
 
-                        expect(Loader.shared.plugins.count).to(equal(5))
+                        let loggerPlugin = player.core?.plugins.first { $0 is LoggerPlugin }
+                        expect(loggerPlugin).to(beAKindOf(LoggerPlugin.self))
                     }
-
-                    it("pass third party plugins to loader") {
+                    
+                    it("pass plugins to Loader") {
                         self.resetPlugins()
-
-                        Player.register(plugin: LoggerPlugin.self)
-                        player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
-
-                        expect(Loader.shared.plugins.count).to(equal(6))
+                        
+                        Player.register(plugins: [LoggerPlugin.self])
+                        player = Player(options: options)
+                        
+                        let loggerPlugin = Loader.shared.corePlugins.first { $0.name == "Logger" }
+                        expect(loggerPlugin).to(beAKindOf(LoggerPlugin.Type.self))
                     }
 
                     it("ignore plugins registered after player initialization") {
                         self.resetPlugins()
-                        player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        player = Player(options: options)
 
-                        Player.register(plugin: LoggerPlugin.self)
+                        Player.register(plugins: [LoggerPlugin.self])
 
-                        expect(Loader.shared.plugins.count).to(equal(5))
+                        let loggerPlugin = player.core?.plugins.first { $0 is LoggerPlugin }
+                        expect(loggerPlugin).to(beNil())
                     }
                 }
             }
-            
+
             describe("#configure") {
                 it("changes Core options") {
                     self.resetPlugins()
-                    player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                    Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                    player = Player(options: options)
                     player.configure(options: ["foo": "bar"])
 
                     let playerOptionValue = player.core?.options["foo"] as? String
-                    
+
                     expect(playerOptionValue).to(equal("bar"))
                 }
             }
@@ -282,14 +292,15 @@ class PlayerTests: QuickSpec {
 
     private func resetPlugins() {
         Loader.shared.resetPlugins()
-        Player.appPlugins = []
+        Player.hasAlreadyRegisteredPlugins = false
+        
     }
-    
+
     class StubPlayback: Playback {
         override var pluginName: String {
             return "StubPlayback"
         }
-        
+
         override class func canPlay(_: Options) -> Bool {
             return true
         }
