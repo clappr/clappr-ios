@@ -3,7 +3,8 @@ open class Player: BaseObject {
     @objc open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     @objc private(set) open var core: Core?
-    static var appPlugins: [Plugin.Type] = []
+
+    static var hasAlreadyRegisteredPlugins = false
 
     @objc open var activeContainer: Container? {
         return core?.activeContainer
@@ -67,9 +68,9 @@ open class Player: BaseObject {
         }
     }
 
-    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+    public init(options: Options = [:]) {
         super.init()
-
+        Player.register(plugins: [])
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -83,15 +84,6 @@ open class Player: BaseObject {
              Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
              Event.seek.rawValue, Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
-
-        var basePlugins: [Plugin.Type] = [AVFoundationPlayback.self]
-        #if os (iOS)
-        basePlugins.append(contentsOf: [PosterPlugin.self, SpinnerPlugin.self])
-        #endif
-
-        Loader.shared.addExternalPlugins(basePlugins)
-        Loader.shared.addExternalPlugins(externalPlugins)
-        Loader.shared.addExternalPlugins(Player.appPlugins)
 
         setCore(Core(options: options))
 
@@ -171,8 +163,17 @@ open class Player: BaseObject {
         playbackEventsListenIds.removeAll()
     }
     
-    public static func register(plugin: Plugin.Type) {
-        appPlugins.append(plugin.self)
+    public static func register(plugins: [Plugin.Type]) {
+        if(!hasAlreadyRegisteredPlugins) {
+            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
+            #if os (iOS)
+            builtInPlugins.append(contentsOf: [PosterPlugin.self, SpinnerPlugin.self])
+            #endif
+            Loader.shared.register(plugins: builtInPlugins)
+            hasAlreadyRegisteredPlugins = true
+        }
+
+        Loader.shared.register(plugins: plugins)
     }
 
     @objc open func destroy() {
