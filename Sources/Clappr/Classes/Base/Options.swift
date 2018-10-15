@@ -17,9 +17,6 @@ public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
 // List of MediaControl Plugins
 public let kMediaControlPlugins = "mediaControlPlugins"
 
-// Disable default plugins
-public let kDisableDefaultPlugins = "disableDefaultPlugins"
-
 public let kLoop = "loop"
 public let kMetaData = "metadata"
 public let kMetaDataContentIdentifier = "mdContentIdentifier"
