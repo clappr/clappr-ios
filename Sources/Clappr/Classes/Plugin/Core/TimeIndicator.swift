@@ -1,17 +1,17 @@
-class TimeIndicator: MediaControlPlugin {
-    override var pluginName: String {
+open class TimeIndicator: MediaControlPlugin {
+    override open var pluginName: String {
         return "TimeIndicator"
     }
 
-    override var panel: MediaControlPanel {
+    override open var panel: MediaControlPanel {
         return .bottom
     }
 
-    override var position: MediaControlPosition {
+    override open var position: MediaControlPosition {
         return .left
     }
 
-    var indicator: UIStackView! {
+    public var indicator: UIStackView! {
         didSet {
             view.addSubview(indicator)
             indicator.accessibilityIdentifier = "timeIndicator"
@@ -28,7 +28,7 @@ class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    var elapsedTimeLabel: UILabel! {
+    open var elapsedTimeLabel: UILabel! {
         didSet {
             indicator.addArrangedSubview(elapsedTimeLabel)
             elapsedTimeLabel.accessibilityIdentifier = "elapsedTime"
@@ -38,7 +38,7 @@ class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    var separatorLabel: UILabel! {
+    open var separatorLabel: UILabel! {
         didSet {
             indicator.addArrangedSubview(separatorLabel)
             separatorLabel.textColor = .white
@@ -47,7 +47,7 @@ class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    var durationTimeLabel: UILabel! {
+    open var durationTimeLabel: UILabel! {
         didSet {
             indicator.addArrangedSubview(durationTimeLabel)
             durationTimeLabel.textColor = .white
@@ -56,24 +56,24 @@ class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    private var activeContainer: Container? {
+    public var activeContainer: Container? {
         return core?.activeContainer
     }
 
-    private var activePlayback: Playback? {
+    public var activePlayback: Playback? {
         return core?.activePlayback
     }
 
-    required init(context: UIBaseObject) {
+    required public init(context: UIBaseObject) {
         super.init(context: context)
         bindEvents()
     }
 
-    required init() {
+    required public init() {
         super.init()
     }
 
-    required init?(coder argument: NSCoder) {
+    required public init?(coder argument: NSCoder) {
         super.init(coder: argument)
     }
 
@@ -105,7 +105,7 @@ class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    private func displayVideoDuration() {
+    open func displayVideoDuration() {
         durationTimeLabel?.text = ClapprDateFormatter.formatSeconds(activePlayback?.duration ?? 0.0)
         view.isHidden = false
     }
@@ -115,7 +115,7 @@ class TimeIndicator: MediaControlPlugin {
         elapsedTimeLabel?.text = ClapprDateFormatter.formatSeconds(position)
     }
 
-    override func render() {
+    override open func render() {
         view.isHidden = true
         indicator = UIStackView()
         leftMargin = UIView()
