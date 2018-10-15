@@ -276,11 +276,13 @@ open class AVFoundationPlayback: Playback {
         }
     }
     
+    #if os(tvOS)
     internal func loadMetadata() {
         if let playerItem = player?.currentItem {
             nowPlayingService.setItems(to: playerItem, with: options)
         }
     }
+    #endif
 
     @objc internal func addObservers() {
         player?.addObserver(self, forKeyPath: "currentItem.status",

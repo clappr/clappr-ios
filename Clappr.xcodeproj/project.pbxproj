@@ -101,7 +101,6 @@
 		571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
-		571B7B31217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */; };
 		571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
@@ -1627,7 +1626,6 @@
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
-				571B7B31217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIViewExtension.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
