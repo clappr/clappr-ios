@@ -849,7 +849,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             
-                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 2)
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
                         }
                     }
                     
@@ -865,7 +865,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             
-                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 4)
                         }
                     }
                 }

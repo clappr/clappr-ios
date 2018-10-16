@@ -224,6 +224,10 @@ class AVFoundationNowPlayingBuilderTests: QuickSpec {
                             return fixture(filePath: stubPath!, headers: ["Content-Type":"image/png"])
                         }
                     }
+                    
+                    afterEach {
+                        OHHTTPStubs.removeAllStubs()
+                    }
 
                     it("loads poster image") {
                         nowPlayingBuilder = AVFoundationNowPlayingBuilder(metadata: [:])
