@@ -631,6 +631,14 @@
 			path = Stub;
 			sourceTree = "<group>";
 		};
+		577A1EC9217624E5002737F6 /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+				96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */,
+			);
+			path = Playback;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -815,6 +823,7 @@
 		96D362AB1D41339400CCB866 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				577A1EC9217624E5002737F6 /* Playback */,
 				96D362AC1D41339400CCB866 /* Container */,
 				96D362B01D41339400CCB866 /* Core */,
 				96D362B51D41339400CCB866 /* UIPlugin.swift */,
@@ -927,7 +936,6 @@
 			isa = PBXGroup;
 			children = (
 				9E26CFF62016151800AE92B7 /* Container */,
-				9E26CFF72016153E00AE92B7 /* Playback */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -938,14 +946,6 @@
 				96D362AE1D41339400CCB866 /* PosterPlugin.swift */,
 			);
 			path = Container;
-			sourceTree = "<group>";
-		};
-		9E26CFF72016153E00AE92B7 /* Playback */ = {
-			isa = PBXGroup;
-			children = (
-				96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */,
-			);
-			path = Playback;
 			sourceTree = "<group>";
 		};
 		9E3F43F21F30F89D00417919 /* Helper */ = {
