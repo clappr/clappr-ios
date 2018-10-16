@@ -22,7 +22,7 @@ open class PlayButton: MediaControlPlugin {
         return core?.activePlayback
     }
 
-    internal(set) var button: UIButton! {
+    public var button: UIButton! {
         didSet {
             view.addSubview(button)
             button.setImage(playIcon, for: .normal)
