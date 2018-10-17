@@ -62,11 +62,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
         backgroundColor = UIColor.black
 
-        #if os(iOS)
         addTapRecognizer()
         bindEventListeners()
-        #endif
-        
         loadPlugins(loader)
 
         containers.append(Container(loader: loader, options: options))
@@ -91,9 +88,11 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addTapRecognizer() {
+        #if os(iOS)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
+        #endif
     }
     
     fileprivate func bindEventListeners() {
