@@ -127,7 +127,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqualTo(image: playIcon)).toEventually(beTrue())
+                        expect(currentButtonIcon.isEqual(playIcon)).to(beTrue())
                     }
 
                     context("and is vod") {
@@ -162,7 +162,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqualTo(image: pauseIcon)).toEventually(beTrue())
+                        expect(currentButtonIcon.isEqual(pauseIcon)).to(beTrue())
                     }
 
                     context("and is vod") {
