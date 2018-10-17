@@ -25,8 +25,6 @@ open class AVFoundationPlayback: Playback {
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
         return AVFoundationNowPlayingService()
     }()
-    
-    fileprivate var playerLooper: AVPlayerLooper?
     #endif
     
     fileprivate var playerLayer: AVPlayerLayer?
