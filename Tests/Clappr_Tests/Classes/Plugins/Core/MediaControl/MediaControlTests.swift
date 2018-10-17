@@ -141,7 +141,7 @@ class MediaControlTests: QuickSpec {
                     mediaControl.defaultPlugins = []
                     mediaControl.render()
 
-                    expect(mediaControl.plugins.count).to(equal(1))
+                    expect(mediaControl.plugins.count).to(equal(3))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
 
