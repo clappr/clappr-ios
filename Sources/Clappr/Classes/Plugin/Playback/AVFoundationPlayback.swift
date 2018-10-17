@@ -242,19 +242,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            
-            #if os(iOS)
             player = AVPlayer(playerItem: item)
-            #elseif os(tvOS)
-            if options[kLoop] as? Bool ?? false {
-                player = AVQueuePlayer()
-                if let queuePlayer = player as? AVQueuePlayer {
-                    playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: item)
-                }
-            } else {
-                player = AVPlayer(playerItem: item)
-            }
-            #endif
             
             player?.allowsExternalPlayback = true
             player?.appliesMediaSelectionCriteriaAutomatically = false

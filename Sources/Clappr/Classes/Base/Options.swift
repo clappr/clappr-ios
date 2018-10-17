@@ -13,7 +13,6 @@ public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
 
-public let kLoop = "loop"
 public let kMetaData = "metadata"
 public let kMetaDataContentIdentifier = "mdContentIdentifier"
 public let kMetaDataWatchedTime = "mdWatchedTime"
