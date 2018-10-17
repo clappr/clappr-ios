@@ -7,35 +7,35 @@ class PlayButtonTests: QuickSpec {
     override func spec() {
         describe(".PlayButton") {
 
-            describe("#init") {
-                it("is an MediaControlPlugin type") {
-                    let playButton = PlayButton()
+            describe("Plugin structure") {
+                var playButton: PlayButton!
 
-                    expect(playButton).to(beAKindOf(MediaControlPlugin.self))
+                beforeEach {
+                    playButton = PlayButton()
                 }
-            }
 
-            describe("pluginName") {
-                it("has a name") {
-                    let playButton = PlayButton()
-
-                    expect(playButton.pluginName).to(equal("PlayButton"))
+                context("#init") {
+                    it("is an MediaControlPlugin type") {
+                        expect(playButton).to(beAKindOf(MediaControlPlugin.self))
+                    }
                 }
-            }
 
-            describe("panel") {
-                it("is positioned in the center panel") {
-                    let playButton = PlayButton()
-
-                    expect(playButton.panel).to(equal(MediaControlPanel.center))
+                context("pluginName") {
+                    it("has a name") {
+                        expect(playButton.pluginName).to(equal("PlayButton"))
+                    }
                 }
-            }
 
-            describe("position") {
-                it("is aligned in the center") {
-                    let playButton = PlayButton()
+                context("panel") {
+                    it("is positioned in the center panel") {
+                        expect(playButton.panel).to(equal(MediaControlPanel.center))
+                    }
+                }
 
-                    expect(playButton.position).to(equal(MediaControlPosition.center))
+                context("position") {
+                    it("is aligned in the center") {
+                        expect(playButton.position).to(equal(MediaControlPosition.center))
+                    }
                 }
             }
 
