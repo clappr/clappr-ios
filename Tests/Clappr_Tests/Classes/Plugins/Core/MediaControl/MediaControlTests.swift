@@ -158,20 +158,15 @@ class MediaControlTests: QuickSpec {
                     let core = Core(loader: Loader(), options: options)
 
                     let mediaControl = MediaControl(context: core)
+                    mediaControl.defaultPlugins = []
                     mediaControl.render()
 
-                    expect(mediaControl.plugins.count).to(equal(2))
+                    expect(mediaControl.plugins.count).to(equal(1))
                     expect(mediaControl.plugins[0]).to(beAKindOf(MediaControlPluginMock.self))
                 }
 
                 it("has the list of plugins that comes from options without default") {
-<<<<<<< HEAD
                     let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
-=======
-                    let options: Options = [
-                        kMediaControlPlugins: [MediaControlPluginMock.self]
-                    ]
->>>>>>> feat: Remove tvOS schema from MediaControl and remove the necessity to the optopn kDisableDefaultPlungins
 
                     let core = Core(loader: Loader(), options: options)
 
@@ -351,13 +346,7 @@ class MediaControlTests: QuickSpec {
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-<<<<<<< HEAD
                     options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
-=======
-                    options = [
-                        kMediaControlPlugins: [MediaControlPluginMock.self]
-                    ]
->>>>>>> feat: Remove tvOS schema from MediaControl and remove the necessity to the optopn kDisableDefaultPlungins
 
                     core = Core(loader: Loader(), options: options)
                     mediaControlViewMock = MediaControlViewMock()
@@ -378,10 +367,6 @@ class MediaControlTests: QuickSpec {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
                         mediaControl.defaultPlugins = []
-<<<<<<< HEAD
-=======
-
->>>>>>> feat: Remove tvOS schema from MediaControl and remove the necessity to the optopn kDisableDefaultPlungins
                         mediaControl.render()
 
                         if let plugin = mediaControl.plugins.first(where: {$0.pluginName == "MediaControlPluginMock" }) {
@@ -406,10 +391,6 @@ class MediaControlTests: QuickSpec {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.container = mediaControlViewMock
                         mediaControl.defaultPlugins = []
-<<<<<<< HEAD
-=======
-
->>>>>>> feat: Remove tvOS schema from MediaControl and remove the necessity to the optopn kDisableDefaultPlungins
                         mediaControl.render()
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
