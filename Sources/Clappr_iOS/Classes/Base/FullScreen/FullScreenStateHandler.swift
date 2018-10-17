@@ -1,5 +1,4 @@
 protocol FullscreenStateHandler {
-
     var core: Core { get }
 
     init(core: Core)
@@ -10,8 +9,13 @@ protocol FullscreenStateHandler {
     func destroy()
 }
 
-struct FullscreenByApp: FullscreenStateHandler {
+extension FullscreenStateHandler {
+    func enterInFullscreen() { }
+    func exitFullscreen() { }
+    func destroy() { }
+}
 
+struct FullscreenByApp: FullscreenStateHandler {
     var core: Core
 
     func set(fullscreen: Bool) {
@@ -25,16 +29,9 @@ struct FullscreenByApp: FullscreenStateHandler {
             core.trigger(InternalEvent.didExitFullscreen.rawValue)
         }
     }
-
-    func enterInFullscreen() { }
-
-    func exitFullscreen() { }
-
-    func destroy() { }
 }
 
 struct FullscreenByPlayer: FullscreenStateHandler {
-
     var core: Core
 
     func set(fullscreen: Bool) {
