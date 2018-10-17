@@ -352,7 +352,7 @@ class MediaControlTests: QuickSpec {
                         if let plugin = mediaControl.plugins.first(where: {$0.pluginName == "MediaControlPluginMock" }) {
                             expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugin.view))
                         } else {
-                            fail()
+                            fail("Could not find MediaControlPluginMock in mediaControl.plugins")
                         }
                     }
 
