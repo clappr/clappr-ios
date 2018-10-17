@@ -34,7 +34,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     public var plugins: [MediaControlPlugin] = []
-    let defaultPlugins: [MediaControlPlugin.Type] = [FullscreenButton.self, PlayButton.self]
+    var defaultPlugins: [MediaControlPlugin.Type] = [FullscreenButton.self, PlayButton.self]
 
     override open var pluginName: String {
         return "MediaControl"
