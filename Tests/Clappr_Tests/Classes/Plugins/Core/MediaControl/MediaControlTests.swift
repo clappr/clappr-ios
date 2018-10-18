@@ -246,6 +246,41 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
                     }
                 }
+                
+                /*
+                 context("when willBeginScrubbing") {
+                 it("keeps itself on the screen and visible") {
+                 mediaControlVisible()
+                 
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.willBeginScrubbing.rawValue)
+                 
+                 expect(mediaControl.isHidden).toEventually(beFalse())
+                 expect(mediaControl.alpha).toEventually(equal(1))
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                 }
+                 }
+                 
+                 context("when didFinishScrubbing") {
+                 it("hides the media control after some time if the video is playing") {
+                 mediaControlVisible()
+                 
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
+                 
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
+                 expect(mediaControl.isHidden).toEventually(beTrue())
+                 expect(mediaControl.alpha).toEventually(equal(0))
+                 }
+                 
+                 it("doesn't hide the media control after some time if the video is playing") {
+                 mediaControlVisible()
+                 coreStub.activePlayback?.trigger(Event.didPause)
+                 
+                 coreStub.activePlayback?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
+                 
+                 expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                 }
+                 }
+                 */
 
                 context("when didEnterFullscreen") {
                     it("hides the media control after some time if the video is playing") {
