@@ -3,6 +3,9 @@ import Nimble
 import AVFoundation
 import Swifter
 import OHHTTPStubs
+#if os(tvOS)
+import AVKit
+#endif
 
 @testable import Clappr
 
@@ -488,6 +491,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
 
+                    #if os(iOS)
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
                         playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
@@ -499,6 +503,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         expect(playback.player?.currentItem?.preferredMaximumResolution).toEventually(equal(screenSize))
                     }
+                    #endif
                 }
             }
 
@@ -844,7 +849,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             
-                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 2)
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
                         }
                     }
                     
@@ -860,7 +865,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             
-                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 4)
                         }
                     }
                 }
@@ -927,6 +932,118 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
+            
+            #if os(tvOS)
+            describe("#loadMetadata") {
+                
+                func getPlayback(with source: String) -> AVFoundationPlayback {
+                    let asset = AVAsset(url: URL(string: source)!)
+                    let playerItem = AVPlayerItem(asset: asset)
+                    
+                    let playback = AVFoundationPlayback(options: [kSourceUrl: source])
+                    playback.player = AVPlayer(playerItem: playerItem)
+                    return playback
+                }
+                
+                context("when avplayer has playerItem") {
+                    
+                    let playback = getPlayback(with: "https://clappr.io/highline.mp4")
+                    
+                    it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
+                        let nowPlayingService = NowPlayingServiceStub()
+                        playback.nowPlayingService = nowPlayingService
+                        
+                        playback.loadMetadata()
+                        
+                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
+                    }
+                }
+                
+                context("when AVPlayer don't have playerItem") {
+                    
+                    let playback = AVFoundationPlayback(options: [:])
+                    
+                    it("doesn't call setItemsToPlayerItem of AVFoundationNowPlaying") {
+                        let nowPlayingService = NowPlayingServiceStub()
+                        playback.nowPlayingService = nowPlayingService
+                        
+                        playback.loadMetadata()
+                        
+                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(0))
+                    }
+                }
+            }
+            
+            describe("#playerViewController") {
+                var avFoundationPlayback: AVFoundationPlayback!
+                var controller: AVPlayerViewController!
+                let fromTime = CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC))
+                let toTime = CMTimeMakeWithSeconds(10, Int32(NSEC_PER_SEC))
+                
+                beforeEach {
+                    controller = AVPlayerViewController()
+                    
+                    stub(condition: isHost("clappr.sample")) { _ in
+                        let stubPath = OHPathForFile("sample.m3u8", type(of: self))
+                        return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
+                    }
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.sample/sample.m3u8"])
+                    
+                    avFoundationPlayback.play()
+                }
+                
+                context("when seek will begin") {
+                    it("triggers will seek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
+                                done()
+                            }
+                            
+                            _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
+                    }
+                }
+                
+                context("when seek is executed") {
+                    it("triggers seek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.seek.rawValue) { _ in
+                                done()
+                            }
+                            
+                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
+                    }
+                    
+                    it("triggers didSeek") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.didSeek.rawValue) { _ in
+                                done()
+                            }
+                            
+                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
+                        }
+                    }
+                }
+                
+                context("when subtitle is selected") {
+                    it("triggers subtitle selected event") {
+                        waitUntil { done in
+                            avFoundationPlayback.on(Event.subtitleSelected.rawValue) { _ in
+                                done()
+                            }
+                            
+                            let group = avFoundationPlayback.player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: AVMediaCharacteristic.legible.rawValue))
+                            
+                            
+                            let option = avFoundationPlayback.player?.currentItem?.currentMediaSelection.selectedMediaOption(in: group!)
+                            
+                            _ = avFoundationPlayback.playerViewController(controller, didSelect: option, in: group!)
+                        }
+                    }
+                }
+            }
+            #endif
         }
     }
 }

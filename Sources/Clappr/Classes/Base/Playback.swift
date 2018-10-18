@@ -96,7 +96,9 @@ open class Playback: UIBaseObject, Plugin {
         }
 
         #if os(tvOS)
-        play()
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            self?.play()
+        }
         #endif
     }
 

@@ -20,6 +20,13 @@ open class AVFoundationPlayback: Playback {
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
+    
+    #if os(tvOS)
+    lazy var nowPlayingService: AVFoundationNowPlayingService = {
+        return AVFoundationNowPlayingService()
+    }()
+    #endif
+    
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
     fileprivate var currentState = PlaybackState.idle {
@@ -76,7 +83,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
+    func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
         var userInfo: EventUserInfo
 
         if option != nil {
@@ -234,6 +241,7 @@ open class AVFoundationPlayback: Playback {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
             player = AVPlayer(playerItem: item)
+            
             player?.allowsExternalPlayback = true
             player?.appliesMediaSelectionCriteriaAutomatically = false
 
@@ -241,7 +249,11 @@ open class AVFoundationPlayback: Playback {
 
             playerLayer = AVPlayerLayer(player: player)
             layer.addSublayer(playerLayer!)
+            
+            #if os(iOS)
             setupMaxResolution(for: bounds.size)
+            #endif
+            
             addObservers()
             trigger(.ready)
         } else {
@@ -249,6 +261,14 @@ open class AVFoundationPlayback: Playback {
             Logger.logError("could not setup player", scope: pluginName)
         }
     }
+    
+    #if os(tvOS)
+    internal func loadMetadata() {
+        if let playerItem = player?.currentItem {
+            nowPlayingService.setItems(to: playerItem, with: options)
+        }
+    }
+    #endif
 
     @objc internal func addObservers() {
         player?.addObserver(self, forKeyPath: "currentItem.status",
@@ -273,9 +293,17 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    @objc func playbackDidEnd() {
-        trigger(.didComplete)
-        updateState(.idle)
+    @objc func playbackDidEnd(notification: NSNotification? = nil) {
+        if let object = notification?.object as? AVPlayerItem, let item = self.player?.currentItem {
+            if object == item {
+                let duration = item.duration
+                let position = item.currentTime()
+                if fabs(CMTimeGetSeconds(duration) - CMTimeGetSeconds(position)) <= 2.0 {
+                    trigger(.didComplete)
+                    updateState(.idle)
+                }
+            }
+        }
     }
 
     open override func pause() {
@@ -350,6 +378,14 @@ open class AVFoundationPlayback: Playback {
     open override func seekToLivePosition() {
         play()
         seek(Double.infinity)
+    }
+    
+    open override func mute(_ enabled: Bool) {
+        if enabled {
+            player?.volume = 0.0
+        } else {
+            player?.volume = 1.0
+        }
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
@@ -540,7 +576,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func handlePlayerRateChanged() {
-        if(player?.rate == 0) {
+        if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
             updateState(.paused)
         }
     }
