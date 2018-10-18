@@ -196,8 +196,6 @@
 		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
 		AB163517215ACA0C00635233 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* MediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
-		AB53448A2178FE0300AE892E /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
-		AB9AE436215EBF9900FE7041 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
 		ABE7D3EE212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
 		ABE7D3EF212C36200049773A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE7D3ED212C36200049773A /* SharedData.swift */; };
@@ -1678,7 +1676,6 @@
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
 				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
 				FC7785AF2005233D00EC879F /* UIBaseObject.swift in Sources */,
-				AB53448A2178FE0300AE892E /* MediaControlPlugin.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
@@ -1689,7 +1686,6 @@
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
-				AB9AE436215EBF9900FE7041 /* MediaControlView.swift in Sources */,
 				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
