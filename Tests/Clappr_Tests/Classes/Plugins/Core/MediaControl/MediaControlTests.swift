@@ -76,26 +76,6 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            /*
-             describe("#gestureRecognizer") {
-             it("toggles the viewcontroller's swipe to back gesture to true") {
-             let viewController = UIViewControllerMock()
-             let options: Options = [kMediaControlPlugins: [Seekbar.self]]
-             let core = Core(loader: Loader(), options: options)
-             let mediaControl = MediaControl(context: core)
-             viewController.view.addSubview(mediaControl)
-             mediaControl.render()
-             if let seekbar = mediaControl.plugins.first(where: { $0.pluginName == Seekbar.name }) as? Seekbar {
-             seekbar.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-             }
-
-             _ = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: UITouch())
-
-             expect(viewController.navigationController?.interactivePopGestureRecognizer?.isEnabled).to(beFalse())
-             }
-             }
-             */
-
             describe("#render") {
                 var coreStub: CoreStub!
 
