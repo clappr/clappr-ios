@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -71,7 +75,7 @@
                                     <rect key="frame" x="0.0" y="93.5" width="20" height="20"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" placeholderIntrinsicWidth="78.5" placeholderIntrinsicHeight="20.5" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3u-YP-Zws">
+                                <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" placeholderIntrinsicWidth="78.5" placeholderIntrinsicHeight="20.5" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3u-YP-Zws">
                                     <rect key="frame" x="452.5" y="93.5" width="78.5" height="20.5"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="531" placeholderIntrinsicHeight="20.5" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5Gc-7D-dUG">
