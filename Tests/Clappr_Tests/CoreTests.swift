@@ -19,10 +19,11 @@ class CoreTests: QuickSpec {
 
         let options = [kSourceUrl: "http//test.com"]
         var core: Core!
-        let loader = Loader(externalPlugins: [StubPlayback.self])
 
         beforeEach {
-            core = Core(loader: loader, options: options as Options)
+            core = Core(options: options as Options)
+            Loader.shared.resetPlugins()
+            Loader.shared.register(plugins: [StubPlayback.self])
         }
 
         describe(".Core") {
@@ -30,7 +31,7 @@ class CoreTests: QuickSpec {
             describe("#init") {
 
                 beforeEach {
-                    core = Core(loader: loader, options: options as Options)
+                    core = Core(options: options as Options)
                 }
                 
                 it("set backgroundColor to black") {
@@ -43,7 +44,7 @@ class CoreTests: QuickSpec {
 
                 it("save options passed on parameter") {
                     let options = ["SomeOption": true]
-                    let core = Core(loader: loader, options: options as Options)
+                    let core = Core(options: options as Options)
 
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
@@ -664,8 +665,8 @@ class CoreTests: QuickSpec {
 
             context("core position") {
                 it("is positioned in front of Container view") {
-                    let loader = Loader(externalPlugins: [FakeCorePlugin.self])
-                    let core = Core(loader: loader, options: options as Options)
+                    Loader.shared.register(plugins: [FakeCorePlugin.self])
+                    let core = Core(options: options as Options)
 
                     core.render()
 

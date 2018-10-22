@@ -75,6 +75,42 @@ let options = [kSourceUrl : "https://devstreaming-cdn.apple.com/videos/streaming
 let player = Player(options: options)
 ```
 
+#### Register Custom Plugins
+
+In order to register a custom plugin is necessary to pass the plugin type to Player before initialize it, using the static method `register` as the example below:
+
+
+```swift
+let plugins = [PluginExemplo.self]
+WMPlayer.register(plugins: plugins)
+
+var player = WMPlayer(options: options)
+
+player.attachTo(playerContainer, controller: self)
+```
+
+The Player does not support adding or removing plugins at runtime so it is necessary register the plugins before its initialization.
+In case player be destroyed and recreated, all plugins registered will be reused, like the example below:
+
+```swift
+let firstTimePlugins = [PluginExemploA.self]
+WMPlayer.register(plugins: firstTimePlugins)
+
+var player = WMPlayer(options: options)
+
+let secondTimePlugins = [PluginExemploB.self]
+WMPlayer.register(plugins: secondTimePlugins)
+
+// PluginExemploB will not be used in this instance of Player
+player.attachTo(playerContainer, controller: self) 
+
+player.destroy()
+
+// PluginExemploA and PluginExemploB will be used in this instance of Player
+player = WMPlayer(options: options)
+
+```
+
 #### Add to your controller
 
 ```swift

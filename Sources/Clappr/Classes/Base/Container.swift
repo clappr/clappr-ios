@@ -9,8 +9,6 @@ open class Container: UIBaseObject {
         }
     }
 
-    fileprivate var loader: Loader
-
     @objc open var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: Event = mediaControlEnabled ? .enableMediaControl : .disableMediaControl
@@ -33,14 +31,13 @@ open class Container: UIBaseObject {
         }
     }
 
-    public init(loader: Loader = Loader(), options: Options = [:]) {
+    public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
-        self.loader = loader
         super.init(frame: CGRect.zero)
         self.sharedData.container = self
         backgroundColor = UIColor.clear
-        loadPlugins()
+        Loader.shared.loadPlugins(in: self)
         accessibilityIdentifier = "Container"
         if let source = options[kSourceUrl] as? String {
             load(source, mimeType: options[kMimeType] as? String)
@@ -60,7 +57,7 @@ open class Container: UIBaseObject {
 
         self.playback?.destroy()
 
-        let playbackFactory = PlaybackFactory(loader: loader, options: playbackOptions)
+        let playbackFactory = PlaybackFactory(options: playbackOptions)
         self.playback = playbackFactory.createPlayback()
 
         if playback is NoOpPlayback {
@@ -92,15 +89,7 @@ open class Container: UIBaseObject {
         plugin.render()
     }
 
-    fileprivate func loadPlugins() {
-        for type in loader.containerPlugins {
-            if let plugin = type.init(context: self) as? UIContainerPlugin {
-                addPlugin(plugin)
-            }
-        }
-    }
-
-    private func addPlugin(_ plugin: UIContainerPlugin) {
+    func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
 

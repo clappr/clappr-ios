@@ -1,14 +1,12 @@
 open class PlaybackFactory {
-    fileprivate var loader: Loader
     fileprivate var options: Options
 
-    public init(loader: Loader = Loader(), options: Options = [:]) {
-        self.loader = loader
+    public init(options: Options = [:]) {
         self.options = options
     }
 
     open func createPlayback() -> Playback {
-        let availablePlaybacks = loader.playbackPlugins.first { type in canPlay(type) }
+        let availablePlaybacks = Loader.shared.playbacks.first { playback in canPlay(playback) }
         if let playback = availablePlaybacks as? Playback.Type {
             return playback.init(options: options)
         }

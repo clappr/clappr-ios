@@ -117,9 +117,9 @@ open class Player: UIViewController, BaseObject {
              Event.seek.rawValue,Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 
-        let loader = Loader(externalPlugins: externalPlugins, options: options)
-
-        setCore(Core(loader: loader, options: options))
+        Loader.shared.register(plugins: externalPlugins)
+        
+        setCore(Core(options: options))
     }
 
     required public init?(coder aDecoder: NSCoder) {

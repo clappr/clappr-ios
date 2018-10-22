@@ -1,8 +1,10 @@
 open class Player: BaseObject {
 
     @objc open var playbackEventsToListen: [String] = []
-    fileprivate var playbackEventsListenIds: [String] = []
-    @objc fileprivate(set) open var core: Core?
+    private var playbackEventsListenIds: [String] = []
+    @objc private(set) open var core: Core?
+
+    static var hasAlreadyRegisteredPlugins = false
 
     @objc open var activeContainer: Container? {
         return core?.activeContainer
@@ -66,9 +68,9 @@ open class Player: BaseObject {
         }
     }
 
-    public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
+    public init(options: Options = [:]) {
         super.init()
-
+        Player.register(plugins: [])
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -83,22 +85,20 @@ open class Player: BaseObject {
              Event.seek.rawValue, Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 
-        let loader = Loader(externalPlugins: externalPlugins, options: options)
+        setCore(Core(options: options))
 
-        setCore(Core(loader: loader, options: options))
+        bindPlaybackEvents()
     }
 
-    fileprivate func setCore(_ core: Core) {
+    private func setCore(_ core: Core) {
         self.core?.stopListening()
 
         self.core = core
 
         self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-
-        bindPlaybackEvents()
+        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
+        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }
 
     @objc open func attachTo(_ view: UIView, controller: UIViewController) {
@@ -141,7 +141,7 @@ open class Player: BaseObject {
         return on(event.rawValue, callback: callback)
     }
 
-    fileprivate func bindPlaybackEvents() {
+    private func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
                 let listenId = listenTo(
@@ -155,16 +155,27 @@ open class Player: BaseObject {
         }
     }
 
-    fileprivate func unbindPlaybackEvents() {
+    private func unbindPlaybackEvents() {
         for id in playbackEventsListenIds {
             stopListening(id)
         }
 
         playbackEventsListenIds.removeAll()
     }
+    
+    public static func register(plugins: [Plugin.Type]) {
+        if !hasAlreadyRegisteredPlugins {
+            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
 
-    fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
+            #if os (iOS)
+            builtInPlugins.append(contentsOf: [PosterPlugin.self, SpinnerPlugin.self])
+            #endif
+
+            Loader.shared.register(plugins: builtInPlugins)
+            hasAlreadyRegisteredPlugins = true
+        }
+
+        Loader.shared.register(plugins: plugins)
     }
 
     @objc open func destroy() {

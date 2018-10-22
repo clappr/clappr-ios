@@ -54,7 +54,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fatalError("Should be using init(sources:[NSURL]) instead")
     }
 
-    public required init(loader: Loader = Loader(), options: Options = [:]) {
+    public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
@@ -64,15 +64,20 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         backgroundColor = UIColor.black
 
         #if os(iOS)
-        mediaControl = loader.mediaControl.create()
+        if let externalMediaControl = options[kMediaControl] as? MediaControl.Type {
+            mediaControl = externalMediaControl.create()
+        } else {
+            mediaControl = MediaControl.create()
+        }
         mediaControl?.core = self
+        
         addTapRecognizer()
         #endif
 
         bindEventListeners()
-        loadPlugins(loader)
+        Loader.shared.loadPlugins(in: self)
 
-        containers.append(Container(loader: loader, options: options))
+        containers.append(Container(options: options))
 
         if let container = containers.first {
             setActive(container: container)
@@ -83,14 +88,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     fileprivate func setActive(container: Container) {
         if activeContainer != container {
             activeContainer = container
-        }
-    }
-
-    fileprivate func loadPlugins(_ loader: Loader) {
-        for plugin in loader.corePlugins {
-            if let corePlugin = plugin.init(context: self) as? UICorePlugin {
-                addPlugin(corePlugin)
-            }
         }
     }
 

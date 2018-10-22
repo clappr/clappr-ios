@@ -1,42 +1,75 @@
 import Quick
 import Nimble
+
 @testable import Clappr
 
 class LoaderTests: QuickSpec {
 
     override func spec() {
-        context("Loader") {
-            it("adds external plugins to default plugins") {
-                let loader = Loader()
+        describe(".Loader") {
 
-                let nativePlaybackPluginsCount = loader.playbackPlugins.count
-                let nativeContainerPluginsCount = loader.containerPlugins.count
-                let nativeCorePluginsCount = loader.corePlugins.count
-
-                loader.addExternalPlugins([StubPlayback.self, StubContainerPlugin.self, StubCorePlugin.self])
-
-                expect(loader.playbackPlugins.count) == nativePlaybackPluginsCount + 1
-                expect(loader.containerPlugins.count) == nativeContainerPluginsCount + 1
-                expect(loader.corePlugins.count) == nativeCorePluginsCount + 1
+            beforeEach {
+                Loader.shared.resetPlugins()
             }
 
-            it("gives more priority for external plugin if names colide") {
-                let loader = Loader()
+            context("when adds external playbacks") {
+                it("adds only playback to the correct array in Loader") {
+                    let numberOfInitialPlaybacks = Loader.shared.playbacks.count
+                    let numberOfContainerPlugins = Loader.shared.containerPlugins.count
+                    let numberOfCorePlugins = Loader.shared.corePlugins.count
 
-                expect(loader.containerPlugins.filter({ $0.name == "spinner" }).count) == 1
+                    Loader.shared.register(plugins: [StubPlayback.self])
 
-                loader.addExternalPlugins([StubSpinnerPlugin.self])
-
-                let spinnerPlugins = loader.containerPlugins.filter({ $0.name == "spinner" })
-                let spinner = spinnerPlugins[0].init() as? StubSpinnerPlugin
-
-                expect(spinnerPlugins.count) == 1
-                expect(spinner).toNot(beNil())
+                    expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks + 1))
+                    expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins))
+                    expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins))
+                }
             }
 
-            it("sets custom Media Control") {
-                let loader = Loader(externalPlugins: [], options: [kMediaControl: StubMediaControl.self])
-                expect(loader.mediaControl.loadNib()?.accessibilityHint).to(equal("StubMediaControl"))
+            context("when adds container plugins") {
+                it("adds only container to the correct array in Loader") {
+                    let numberOfInitialPlaybacks = Loader.shared.playbacks.count
+                    let numberOfContainerPlugins = Loader.shared.containerPlugins.count
+                    let numberOfCorePlugins = Loader.shared.corePlugins.count
+
+                    Loader.shared.register(plugins: [StubContainerPlugin.self])
+
+                    expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks))
+                    expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins + 1))
+                    expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins))
+                }
+            }
+            
+            context("when adds core plugins") {
+                it("adds only core to the correct array in Loader") {
+                    let numberOfInitialPlaybacks = Loader.shared.playbacks.count
+                    let numberOfContainerPlugins = Loader.shared.containerPlugins.count
+                    let numberOfCorePlugins = Loader.shared.corePlugins.count
+
+                    Loader.shared.register(plugins: [StubCorePlugin.self])
+
+                    expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks))
+                    expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins))
+                    expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins + 1))
+                }
+            }
+            
+            context("when adds plugin with same name") {
+                it("has one previous plugin with the same name") {
+                    Loader.shared.register(plugins: [StubSpinnerPlugin.self])
+                    let spinnerPlugins = Loader.shared.containerPlugins.filter({ $0.name == "spinner" })
+
+                    expect(spinnerPlugins.count).to(equal(1))
+                }
+
+                it("gives priority to external plugin") {
+                    Loader.shared.register(plugins: [StubSpinnerPlugin.self])
+                    let spinnerPlugins = Loader.shared.containerPlugins.filter({ $0.name == "spinner" })
+                    let spinner = spinnerPlugins.first?.init() as? StubSpinnerPlugin
+
+                    expect(spinnerPlugins.count).to(equal(1))
+                    expect(spinner).to(beAKindOf(StubSpinnerPlugin.self))
+                }
             }
         }
     }
