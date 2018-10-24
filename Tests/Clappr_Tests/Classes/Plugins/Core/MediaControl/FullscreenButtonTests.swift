@@ -68,7 +68,7 @@ class FullscreenButtonTests: QuickSpec {
                     context("when a new instance of button is created") {
                         context("and kFullscreenDisabled of core.options is true") {
                             it("hides view button") {
-                                core = Core(loader: Loader(), options: [kFullscreenDisabled: true])
+                                core = Core(options: [kFullscreenDisabled: true])
                                 fullscreenButton = FullscreenButton(context: core)
                                 
                                 fullscreenButton.button = UIButton()
@@ -79,7 +79,7 @@ class FullscreenButtonTests: QuickSpec {
                         
                         context("and kFullscreenDisabled of core.options is false") {
                             it("shows fullscreen button") {
-                                core = Core(loader: Loader(), options: [kFullscreenDisabled: false])
+                                core = Core(options: [kFullscreenDisabled: false])
                                 fullscreenButton = FullscreenButton(context: core)
                                 
                                 fullscreenButton.button = UIButton()
