@@ -76,11 +76,6 @@ class LoaderTests: QuickSpec {
 
     class StubMediaControl: MediaControl {
 
-        override class func loadNib() -> UINib? {
-            let nib = UINib()
-            nib.accessibilityHint = "StubMediaControl"
-            return nib
-        }
     }
 
     class StubPlayback: Playback {
