@@ -64,7 +64,7 @@ class MediaControlTests: QuickSpec {
                 context("when a option to keep media control always visible is given") {
                     it("doesn't hide the mediacontrol and stop timer") {
                         let options: Options = [kMediaControlAlwaysVisible: true]
-                        let core = Core(loader: Loader(), options: options)
+                        let core = Core(options: options)
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
@@ -123,7 +123,7 @@ class MediaControlTests: QuickSpec {
             describe("options") {
                 it("has the same options as the Core") {
                     let options: Options = ["foo": "bar"]
-                    let core = Core(loader: Loader(), options: options)
+                    let core = Core(options: options)
 
                     let mediaControl = MediaControl(context: core)
 
@@ -135,7 +135,7 @@ class MediaControlTests: QuickSpec {
             describe("plugins") {
                 it("has the list of plugins that comes from options") {
                     let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
-                    let core = Core(loader: Loader(), options: options)
+                    let core = Core(options: options)
 
                     let mediaControl = MediaControl(context: core)
                     mediaControl.defaultPlugins = []
@@ -148,7 +148,7 @@ class MediaControlTests: QuickSpec {
                 it("has the list of plugins that comes from options without default") {
                     let options: Options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
 
-                    let core = Core(loader: Loader(), options: options)
+                    let core = Core(options: options)
 
                     let mediaControl = MediaControl(context: core)
                     mediaControl.defaultPlugins = []
@@ -328,7 +328,7 @@ class MediaControlTests: QuickSpec {
                 beforeEach {
                     options = [kMediaControlPlugins: [MediaControlPluginMock.self]]
 
-                    core = Core(loader: Loader(), options: options)
+                    core = Core(options: options)
                     mediaControlViewMock = MediaControlViewMock()
                     MediaControlPluginMock.reset()
                 }
