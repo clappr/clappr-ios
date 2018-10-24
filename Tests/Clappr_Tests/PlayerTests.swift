@@ -287,6 +287,40 @@ class PlayerTests: QuickSpec {
                     expect(playerOptionValue).to(equal("bar"))
                 }
             }
+            
+            fdescribe("#player states") {
+                describe("when player is initialised") {
+                    it("starts player with idle state") {
+                        let player = Player(options: [:])
+                        expect(player.isPlaying).to(beFalse())
+                        expect(player.isPaused).to(beFalse())
+                        expect(player.isBuffering).to(beFalse())
+                    }
+                }
+                
+                describe("when play is called") {
+                    it("change state to buffering") {
+                        let player = Player(options: [kSourceUrl: "http://clappr.io/highline.mp4"])
+                        
+                        expect(player.isPlaying).to(beFalse())
+                        expect(player.isPaused).to(beFalse())
+                        expect(player.isBuffering).to(beFalse())
+                        
+                        it("starts player with idle state") {
+                            
+                        }
+                    }
+                }
+                
+                describe("when pause is called") {
+                    it("change state to paused then playing") {}
+                }
+                
+                describe("when video is buffering") {
+                    it("change state to stalled") {}
+                }
+            }
+            
         }
     }
 
