@@ -627,7 +627,7 @@ class CoreTests: QuickSpec {
                 }
             }
 
-            context("when a plugin is added") {
+            describe("#render") {
                 it("add plugin as subview after rendered") {
                     let core = Core()
                     let plugin = FakeCorePlugin()
@@ -646,6 +646,18 @@ class CoreTests: QuickSpec {
                     core.render()
                     
                     expect(plugin.superview).to(beNil())
+                }
+                
+                it("calls the mediacontrol to add the plugins into the panels") {
+                    let core = Core()
+                    let mediaControlMock = MediaControlMock()
+                    let mediaControlPluginMock = MediaControlPluginMock()
+                    
+                    core.addPlugin(mediaControlMock)
+                    core.addPlugin(mediaControlPluginMock)
+                    core.render()
+                    
+                    expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
                 }
             }
 
@@ -673,5 +685,13 @@ class CoreTests: QuickSpec {
         controller.view.addSubview(player.view)
         player.didMove(toParentViewController: controller)
         #endif
+    }
+}
+
+class MediaControlMock: MediaControl {
+    var didCallRenderPlugins = false
+    
+    override func renderPlugins(_ plugins: [UICorePlugin]) {
+        didCallRenderPlugins = true
     }
 }
