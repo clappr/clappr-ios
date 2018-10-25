@@ -13,7 +13,7 @@ class SeekbarView: UIView {
         }
     }
     @IBOutlet weak var seekBar: UIView!
-//    @IBOutlet weak var scrubberPosition: NSLayoutConstraint!
+    @IBOutlet weak var scrubberPosition: NSLayoutConstraint!
     @IBOutlet weak var scrubber: UIView! {
         didSet {
             scrubber.accessibilityIdentifier = "scrubber"
@@ -63,11 +63,11 @@ class SeekbarView: UIView {
 
         let touchPoint = touch.location(in: touchView)
         moveScrubber(relativeTo: touchPoint.x)
-//        seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
+        seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
 
         if isOfflineVideo {
             moveTimeLabel(relativeTo: touchPoint.x, state: view.touchState)
-//            updateTimeLabel(relativeTo: scrubberPosition.constant)
+            updateTimeLabel(relativeTo: scrubberPosition.constant)
         }
     }
 
@@ -79,7 +79,7 @@ class SeekbarView: UIView {
             } else if position < 0 {
                 position = 0
             }
-//            scrubberPosition.constant = position
+            scrubberPosition.constant = position
         }
     }
 
@@ -90,7 +90,7 @@ class SeekbarView: UIView {
         } else if position > seekBar.frame.width - scrubber.frame.width {
             position = seekBar.frame.width - scrubber.frame.width
         }
-//        scrubberPosition.constant = position
+        scrubberPosition.constant = position
     }
 
     private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
@@ -143,8 +143,8 @@ class SeekbarView: UIView {
 
     private func repositionScrubber() {
         if seekbarWidth > 0 {
-//            let position = (scrubberPosition.constant * (seekBar.frame.width - scrubber.frame.width)) / (seekbarWidth - scrubber.frame.width)
-//            scrubberPosition.constant = position
+            let position = (scrubberPosition.constant * (seekBar.frame.width - scrubber.frame.width)) / (seekbarWidth - scrubber.frame.width)
+            scrubberPosition.constant = position
         }
     }
 
@@ -184,7 +184,7 @@ class SeekbarView: UIView {
     }
 
     private func putScrubberAtTheEnd() {
-//        scrubberPosition.constant = seekBar.frame.width - scrubber.frame.width
+        scrubberPosition.constant = seekBar.frame.width - scrubber.frame.width
     }
 
     private func setupWhiteStyle() {

@@ -44,7 +44,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvE-Ry-POo" userLabel="Scrubber">
-                            <rect key="frame" x="-20" y="0.0" width="37" height="37"/>
+                            <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
                             <subviews>
                                 <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwm-i4-HST" userLabel="Scrubber Outer Circle" customClass="BorderView" customModule="Clappr" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
@@ -93,7 +93,7 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ou5-JO-feR">
-                            <rect key="frame" x="-24" y="-40" width="45" height="20"/>
+                            <rect key="frame" x="-4" y="-40" width="45" height="20"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-GR-npi" userLabel="Scrubber Label">
                                     <rect key="frame" x="8" y="4" width="29" height="12"/>
@@ -125,7 +125,7 @@
                         <constraint firstAttribute="trailing" secondItem="Xya-wK-sAi" secondAttribute="trailing" id="Nuz-8q-60m"/>
                         <constraint firstItem="miA-SA-EgP" firstAttribute="centerY" secondItem="Xya-wK-sAi" secondAttribute="centerY" id="Ok6-eH-y6F"/>
                         <constraint firstItem="Xya-wK-sAi" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="r1g-J7-Fwf"/>
-                        <constraint firstItem="UvE-Ry-POo" firstAttribute="leading" secondItem="PGN-FD-fyI" secondAttribute="trailing" constant="-20" id="rjc-OF-b6A"/>
+                        <constraint firstItem="UvE-Ry-POo" firstAttribute="leading" secondItem="Xya-wK-sAi" secondAttribute="leading" id="rjc-OF-b6A"/>
                     </constraints>
                 </view>
             </subviews>
@@ -144,6 +144,7 @@
                 <outlet property="scrubber" destination="UvE-Ry-POo" id="LRD-lt-ErZ"/>
                 <outlet property="scrubberOuterCircleHeightConstraint" destination="xwe-66-vor" id="xhC-vY-Zt3"/>
                 <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
+                <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
                 <outlet property="seekBar" destination="Xya-wK-sAi" id="7WV-px-pjL"/>
                 <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
             </connections>
