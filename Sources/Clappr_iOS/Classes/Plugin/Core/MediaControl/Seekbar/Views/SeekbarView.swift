@@ -36,7 +36,12 @@ class SeekbarView: UIView {
     }
 //    @IBOutlet weak var timeLabelPosition: NSLayoutConstraint!
 //    @IBOutlet weak var bufferWidth: NSLayoutConstraint!
-
+    
+    @IBOutlet open var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
+    @IBOutlet open var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
+    @IBOutlet open var bufferBarWidthConstraint: NSLayoutConstraint?
+    @IBOutlet open var progressBarWidthConstraint: NSLayoutConstraint?
+    
     var isLive = false {
         didSet {
             setupStyle()
