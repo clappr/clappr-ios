@@ -101,7 +101,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open override func render() {
         containers.forEach(renderContainer)
-        plugins.forEach(installPlugin)
+        plugins.filter { !($0 is MediaControlPlugin) }.forEach(installPlugin)
 
         addToContainer()
     }
