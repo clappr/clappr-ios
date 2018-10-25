@@ -142,6 +142,7 @@
                 <outlet property="progressBar" destination="PGN-FD-fyI" id="na8-8y-h27"/>
                 <outlet property="progressBarWidthConstraint" destination="8LN-fb-yw9" id="dyA-to-5Vs"/>
                 <outlet property="scrubber" destination="UvE-Ry-POo" id="LRD-lt-ErZ"/>
+                <outlet property="scrubberOuterCircle" destination="vwm-i4-HST" id="S9I-Lg-xUB"/>
                 <outlet property="scrubberOuterCircleHeightConstraint" destination="xwe-66-vor" id="xhC-vY-Zt3"/>
                 <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
                 <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
