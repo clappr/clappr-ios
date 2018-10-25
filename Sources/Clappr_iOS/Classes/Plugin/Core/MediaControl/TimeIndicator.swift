@@ -101,6 +101,7 @@ open class TimeIndicator: MediaControlPlugin {
         if let core = self.core {
             listenTo(core, eventName: InternalEvent.didEnterFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
             listenTo(core, eventName: InternalEvent.didExitFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
+            listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 
