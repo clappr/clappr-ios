@@ -376,32 +376,6 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            class MediaControlPluginMock: MediaControlPlugin {
-                static var _panel: MediaControlPanel = .top
-                static var _position: MediaControlPosition = .left
-                static var didCallRender = false
-
-                override var pluginName: String {
-                    return "MediaControlPluginMock"
-                }
-
-                open override var panel: MediaControlPanel {
-                    return MediaControlPluginMock._panel
-                }
-
-                open override var position: MediaControlPosition {
-                    return MediaControlPluginMock._position
-                }
-
-                override func render() {
-                    MediaControlPluginMock.didCallRender = true
-                }
-
-                static func reset() {
-                    MediaControlPluginMock.didCallRender = false
-                }
-            }
-
             class MediaControlViewMock: MediaControlView {
                 var didCallAddSubview = false
                 var didCallAddSubviewWithView: UIView?
@@ -416,5 +390,31 @@ class MediaControlTests: QuickSpec {
                 }
             }
         }
+    }
+}
+
+class MediaControlPluginMock: MediaControlPlugin {
+    static var _panel: MediaControlPanel = .top
+    static var _position: MediaControlPosition = .left
+    static var didCallRender = false
+    
+    override var pluginName: String {
+        return "MediaControlPluginMock"
+    }
+    
+    open override var panel: MediaControlPanel {
+        return MediaControlPluginMock._panel
+    }
+    
+    open override var position: MediaControlPosition {
+        return MediaControlPluginMock._position
+    }
+    
+    override func render() {
+        MediaControlPluginMock.didCallRender = true
+    }
+    
+    static func reset() {
+        MediaControlPluginMock.didCallRender = false
     }
 }
