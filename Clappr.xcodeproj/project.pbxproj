@@ -217,6 +217,9 @@
 		C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */; };
 		C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */; };
+		C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B42182650A0055A599 /* SeekbarView.swift */; };
+		C9F6D7B72182650B0055A599 /* SeekbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9F6D7B52182650A0055A599 /* SeekbarView.xib */; };
+		C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B8218265140055A599 /* Seekbar.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
@@ -465,6 +468,9 @@
 		C9EDF8552162D10B00789E2F /* ContainerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerStub.swift; sourceTree = "<group>"; };
 		C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ClapprAdditions.swift"; sourceTree = "<group>"; };
 		C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlViewTests.swift; sourceTree = "<group>"; };
+		C9F6D7B42182650A0055A599 /* SeekbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekbarView.swift; sourceTree = "<group>"; };
+		C9F6D7B52182650A0055A599 /* SeekbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeekbarView.xib; sourceTree = "<group>"; };
+		C9F6D7B8218265140055A599 /* Seekbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seekbar.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
@@ -1024,6 +1030,8 @@
 		AB163504215AB93300635233 /* MediaControl */ = {
 			isa = PBXGroup;
 			children = (
+				C9F6D7B2218264E90055A599 /* Seekbar */,
+				C9F6D7B8218265140055A599 /* Seekbar.swift */,
 				AB163509215AC9E600635233 /* Layout */,
 				E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */,
 				C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */,
@@ -1124,6 +1132,23 @@
 				C9EDF85D2163E1E800789E2F /* MediaControlViewTests.swift */,
 			);
 			path = Layout;
+			sourceTree = "<group>";
+		};
+		C9F6D7B2218264E90055A599 /* Seekbar */ = {
+			isa = PBXGroup;
+			children = (
+				C9F6D7B3218264F10055A599 /* Views */,
+			);
+			path = Seekbar;
+			sourceTree = "<group>";
+		};
+		C9F6D7B3218264F10055A599 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C9F6D7B42182650A0055A599 /* SeekbarView.swift */,
+				C9F6D7B52182650A0055A599 /* SeekbarView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
@@ -1543,6 +1568,7 @@
 			files = (
 				AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */,
 				96D362ED1D41339400CCB866 /* Assets.xcassets in Resources */,
+				C9F6D7B72182650B0055A599 /* SeekbarView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1791,6 +1817,7 @@
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
+				C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */,
 				C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
@@ -1829,6 +1856,7 @@
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
+				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
