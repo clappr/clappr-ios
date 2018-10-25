@@ -293,6 +293,89 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
+            describe("renderPlugins") {
+                var plugins: [MediaControlPlugin]!
+                var core: Core!
+                var mediaControlViewMock: MediaControlViewMock!
+
+                beforeEach {
+                    plugins = [MediaControlPluginMock()]
+
+                    core = Core(options: [:])
+                    mediaControlViewMock = MediaControlViewMock()
+                    MediaControlPluginMock.reset()
+                }
+
+                context("for any plugin configuration") {
+                    it("always calls the MediaControlView to position the view") {
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.container = mediaControlViewMock
+                        mediaControl.render()
+                        
+                        mediaControl.renderPlugins(plugins)
+
+                        expect(mediaControlViewMock.didCallAddSubview).to(beTrue())
+                    }
+
+                    it("always calls the MediaControlView passing the plugin's view") {
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.container = mediaControlViewMock
+                        mediaControl.render()
+                        
+                        mediaControl.renderPlugins(plugins)
+
+                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugins.first?.view))
+                    }
+
+                    it("always calls the MediaControlView passing the plugin's panel") {
+                        MediaControlPluginMock._panel = .center
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.container = mediaControlViewMock
+                        mediaControl.render()
+                        
+                        mediaControl.renderPlugins(plugins)
+
+                        expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))
+                    }
+
+                    it("always calls the MediaControlView passing the plugin's position") {
+                        MediaControlPluginMock._position = .left
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.container = mediaControlViewMock
+                        mediaControl.render()
+
+                        mediaControl.renderPlugins(plugins)
+                        
+                        expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
+                    }
+
+                    it("always calls the method render") {
+                        MediaControlPluginMock._panel = .top
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.render()
+                        
+                        mediaControl.renderPlugins(plugins)
+
+                        expect(MediaControlPluginMock.didCallRender).to(beTrue())
+                    }
+                }
+                
+                context("when passing a plugin that is not MediaControlPlugin") {
+                    it("does not add it to the view") {
+                        let plugins = [MediaControlPluginMock(), UICorePlugin()]
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.container = mediaControlViewMock
+                        mediaControl.render()
+
+                        
+                        mediaControl.renderPlugins(plugins)
+                        
+                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugins.first?.view))
+
+                    }
+                }
+            }
+
             class MediaControlPluginMock: MediaControlPlugin {
                 static var _panel: MediaControlPanel = .top
                 static var _position: MediaControlPosition = .left
