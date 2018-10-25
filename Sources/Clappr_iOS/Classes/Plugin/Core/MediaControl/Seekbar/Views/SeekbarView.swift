@@ -19,6 +19,7 @@ class SeekbarView: UIView {
             //scrubber.layer.addBlurShadow()
         }
     }
+    @IBOutlet weak var scrubberOuterCircle: UIView?
     @IBOutlet weak var bufferBar: UIView!
     @IBOutlet weak var progressBar: UIView!
     @IBOutlet weak var timeLabelView: UIView! {
@@ -63,10 +64,8 @@ class SeekbarView: UIView {
         let touchPoint = touch.location(in: seekBarContainerView)
         moveScrubber(relativeTo: touchPoint.x)
         seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
-
-        scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
-        scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
-
+        adjustScrubberConstraints()
+        
         if isOfflineVideo {
             moveTimeLabel(relativeTo: touchPoint.x, state: view.touchState)
             updateTimeLabel(relativeTo: scrubberPosition.constant)
@@ -128,6 +127,7 @@ class SeekbarView: UIView {
         case .ended:
             delegate?.seek(seconds(relativeTo: scrubberPosition))
             delegate?.didFinishScrubbing()
+            isSeeking = false
         case .canceled:
             delegate?.didFinishScrubbing()
             isSeeking = false
@@ -137,6 +137,13 @@ class SeekbarView: UIView {
         }
     }
 
+    private func adjustScrubberConstraints() {
+        scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
+        scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
+        scrubberOuterCircle?.layer.cornerRadius = isSeeking ? scrubberInitialWidth * 1.5 / 2 : scrubberInitialWidth / 2
+        scrubberOuterCircle?.layer.borderWidth = isSeeking ? 1.0 : 0
+    }
+    
     private func seconds(relativeTo scrubberPosition: CGFloat) -> Double {
         let width = seekBarContainerView.frame.width - scrubber.frame.width
         let positionPercentage = max(0, min(scrubberPosition / width, 1))
