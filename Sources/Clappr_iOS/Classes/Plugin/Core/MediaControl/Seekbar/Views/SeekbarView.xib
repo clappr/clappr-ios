@@ -145,7 +145,7 @@
                 <outlet property="scrubberOuterCircleHeightConstraint" destination="xwe-66-vor" id="xhC-vY-Zt3"/>
                 <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
                 <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
-                <outlet property="seekBar" destination="Xya-wK-sAi" id="7WV-px-pjL"/>
+                <outlet property="seekBarContainerView" destination="ag5-Ow-Xfy" id="5re-sz-EGh"/>
                 <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="-335"/>
