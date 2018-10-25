@@ -17,6 +17,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
+<<<<<<< HEAD
+=======
+    public var plugins: [MediaControlPlugin] = []
+    var defaultPlugins: [MediaControlPlugin.Type] = [PlayButton.self, TimeIndicator.self, FullscreenButton.self, Seekbar.self]
+
+>>>>>>> feat: adding seekbar plugin on media control default plugins
     override open var pluginName: String {
         return "MediaControl"
     }
