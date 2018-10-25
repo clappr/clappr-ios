@@ -168,7 +168,7 @@ open class Player: BaseObject {
             var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
 
             #if os (iOS)
-            builtInPlugins.append(contentsOf: [MediaControl.self, PosterPlugin.self, SpinnerPlugin.self])
+            builtInPlugins.append(contentsOf: [MediaControl.self, PosterPlugin.self, SpinnerPlugin.self, PlayButton.self, TimeIndicator.self, FullscreenButton.self])
             #endif
 
             Loader.shared.register(plugins: builtInPlugins)
