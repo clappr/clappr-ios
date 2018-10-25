@@ -48,11 +48,11 @@ class SeekbarView: UIView {
     }
 
     var seekbarWidth: CGFloat = 0
-
     var videoDuration: CGFloat = 0
-
     var isSeeking = false
-
+    var scrubberInitialWidth: CGFloat = 0.0
+    var scrubberInitialHeight: CGFloat = 0.0
+    
     weak var delegate: SeekbarDelegate?
 
     var isOfflineVideo = false
@@ -63,6 +63,9 @@ class SeekbarView: UIView {
         let touchPoint = touch.location(in: seekBarContainerView)
         moveScrubber(relativeTo: touchPoint.x)
         seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
+
+        scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
+        scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
 
         if isOfflineVideo {
             moveTimeLabel(relativeTo: touchPoint.x, state: view.touchState)
@@ -164,6 +167,9 @@ class SeekbarView: UIView {
         }
 
         seekbarWidth = seekBarContainerView.frame.width
+
+        scrubberInitialWidth = scrubberOuterCircleWidthConstraint?.constant ?? 0
+        scrubberInitialHeight = scrubberOuterCircleHeightConstraint?.constant ?? 0
     }
 
     private func setupStyle() {
