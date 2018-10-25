@@ -222,7 +222,7 @@ class PlayerTests: QuickSpec {
                     it("sets external playback as active") {
                         Loader.shared.resetPlugins()
                         Player.register(plugins: [StubPlayback.self])
-                        player = Player(options: options)
+                        player = Player(options: [kSourceUrl: "source"])
                         playback = player.activePlayback
 
                         expect(player.activePlayback).to(beAKindOf(StubPlayback.self))
