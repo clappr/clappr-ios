@@ -138,8 +138,12 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bufferBar" destination="miA-SA-EgP" id="k9j-dl-IuL"/>
+                <outlet property="bufferBarWidthConstraint" destination="02v-DB-lpk" id="WA3-N8-iXC"/>
                 <outlet property="progressBar" destination="PGN-FD-fyI" id="na8-8y-h27"/>
+                <outlet property="progressBarWidthConstraint" destination="8LN-fb-yw9" id="dyA-to-5Vs"/>
                 <outlet property="scrubber" destination="UvE-Ry-POo" id="LRD-lt-ErZ"/>
+                <outlet property="scrubberOuterCircleHeightConstraint" destination="xwe-66-vor" id="xhC-vY-Zt3"/>
+                <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
                 <outlet property="seekBar" destination="Xya-wK-sAi" id="7WV-px-pjL"/>
                 <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
             </connections>
