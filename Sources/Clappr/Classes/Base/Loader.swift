@@ -1,18 +1,18 @@
 open class Loader {
 
     public static let shared = Loader()
-    public var plugins: [String: Plugin.Type] = [:]
+    public var plugins: [Plugin.Type] = []
 
     var playbacks: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .playback }.map { return $0.value }
+        return plugins.filter { $0.type == .playback }.map { return $0 }
     }
 
     var containerPlugins: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .container }.map { return $0.value }
+        return plugins.filter { $0.type == .container }.map { return $0 }
     }
 
     var corePlugins: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .core }.map { return $0.value }
+        return plugins.filter { $0.type == .core }.map { return $0 }
     }
 
     private init() {
@@ -23,9 +23,8 @@ open class Loader {
     }
 
     open func register(plugins: [Plugin.Type]) {
-        plugins.forEach { plugin in
-            self.plugins[plugin.name] = plugin
-        }
+        self.plugins.append(contentsOf: plugins)
+        self.plugins = self.plugins.uniques
     }
 
     open func loadPlugins(in core: Core) {
