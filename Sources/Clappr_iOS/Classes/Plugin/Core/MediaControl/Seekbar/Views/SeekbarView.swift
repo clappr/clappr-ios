@@ -35,11 +35,11 @@ class SeekbarView: UIView {
         }
     }
 //    @IBOutlet weak var timeLabelPosition: NSLayoutConstraint!
-//    @IBOutlet weak var bufferWidth: NSLayoutConstraint!
+    @IBOutlet weak var bufferWidth: NSLayoutConstraint!
     
     @IBOutlet open var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
     @IBOutlet open var scrubberOuterCircleHeightConstraint: NSLayoutConstraint?
-    @IBOutlet open var bufferBarWidthConstraint: NSLayoutConstraint?
+
     @IBOutlet open var progressBarWidthConstraint: NSLayoutConstraint?
     
     var isLive = false {
@@ -118,7 +118,7 @@ class SeekbarView: UIView {
 
     func updateBuffer(time: CGFloat) {
         if videoDuration > 0 {
-//            bufferWidth.constant = (time / videoDuration) * seekBar.frame.width
+            bufferWidth.constant = (time / videoDuration) * seekBarContainerView.frame.width
         }
     }
 
@@ -161,8 +161,8 @@ class SeekbarView: UIView {
 
     private func repositionBuffer() {
         if seekbarWidth > 0 {
-//            let position = (bufferWidth.constant * seekBar.frame.width) / seekbarWidth
-//            bufferWidth.constant = position
+            let position = (bufferWidth.constant * seekBarContainerView.frame.width) / seekbarWidth
+            bufferWidth.constant = position
         }
     }
 
