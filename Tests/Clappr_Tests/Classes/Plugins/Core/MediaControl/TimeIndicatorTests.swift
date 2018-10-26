@@ -160,6 +160,7 @@ class TimeIndicatorTests: QuickSpec {
                 var timeIndicator: TimeIndicator!
 
                 beforeEach {
+                    Loader.shared.resetPlugins()
                     coreStub = CoreStub()
                     timeIndicator = TimeIndicator(context: coreStub)
 
