@@ -23,24 +23,6 @@ class Seekbar: MediaControlPlugin {
         }
     }
 
-    var marginLeftConstraint: NSLayoutConstraint?
-    var marginLeft: UIView! {
-        didSet {
-            container.addArrangedSubview(marginLeft)
-            marginLeftConstraint = marginLeft.widthAnchor.constraint(equalToConstant: 0)
-            marginLeftConstraint?.isActive = true
-        }
-    }
-
-    var marginRightConstraint: NSLayoutConstraint?
-    var marginRight: UIView! {
-        didSet {
-            container.addArrangedSubview(marginRight)
-            marginRightConstraint = marginRight.widthAnchor.constraint(equalToConstant: 0)
-            marginRightConstraint?.isActive = true
-        }
-    }
-
     private var isOfflinePlayback: Bool = false
 
     required init(context: UIBaseObject) {
@@ -124,13 +106,9 @@ class Seekbar: MediaControlPlugin {
     override func render() {
         setupHeightSize()
         container = UIStackView()
-        marginLeft = UIView()
         container.addArrangedSubview(seekbarView)
-        marginRight = UIView()
         seekbarView.delegate = self
         seekbarView.isOfflineVideo = isOfflinePlayback
-        marginLeftConstraint?.constant = 16
-        marginRightConstraint?.constant = 16
     }
 
     private func setupHeightSize() {
