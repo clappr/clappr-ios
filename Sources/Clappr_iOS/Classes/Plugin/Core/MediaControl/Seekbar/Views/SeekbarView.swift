@@ -81,6 +81,7 @@ class SeekbarView: UIView {
                 position = 0
             }
             scrubberPosition.constant = position
+            progressBarWidthConstraint?.constant = position + scrubber.frame.width / 2
         }
     }
 
@@ -92,8 +93,9 @@ class SeekbarView: UIView {
             position = seekBarContainerView.frame.width - scrubber.frame.width
         }
         scrubberPosition.constant = position
+        progressBarWidthConstraint?.constant = position + scrubber.frame.width / 2
     }
-
+    
     private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
         if state == .moved {
             timeLabelView.isHidden = false
