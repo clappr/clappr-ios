@@ -49,8 +49,6 @@ class SeekbarView: UIView {
     
     weak var delegate: SeekbarDelegate?
 
-    var isOfflineVideo = false
-
     @objc func handleSeekbarViewTouch(_ view: DragDetectorView) {
         guard let touch = view.currentTouch else { return }
 
@@ -58,11 +56,7 @@ class SeekbarView: UIView {
         moveScrubber(relativeTo: touchPoint.x)
         seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
         adjustScrubberConstraints()
-
-        if isOfflineVideo {
-            moveTimeLabel(relativeTo: touchPoint.x, state: view.touchState)
-            updateTimeLabel(relativeTo: scrubberPosition.constant)
-        }
+        updateTimeLabel(relativeTo: scrubberPosition.constant)
     }
 
     func updateScrubber(time: CGFloat) {
@@ -75,6 +69,7 @@ class SeekbarView: UIView {
             }
             scrubberPosition.constant = position
             progressBarWidthConstraint?.constant = position + scrubber.frame.width / 2
+            updateTimeLabel(relativeTo: scrubberPosition.constant)
         }
     }
 
@@ -176,16 +171,17 @@ class SeekbarView: UIView {
 
     private func setupStyle() {
         if !isLive {
-            setupWhiteStyle()
+            setupBlueStyle()
         } else {
             setupRedStyle()
         }
     }
 
     private func setupRedStyle() {
-        scrubber.backgroundColor = .red
         progressBar.backgroundColor = .red
         bufferBar.isHidden = true
+        timeLabelView.isHidden = true
+        timeLabel.isHidden = true
         putScrubberAtTheEnd()
         isUserInteractionEnabled = false
     }
@@ -194,10 +190,12 @@ class SeekbarView: UIView {
         scrubberPosition.constant = seekBarContainerView.frame.width - scrubber.frame.width
     }
 
-    private func setupWhiteStyle() {
-        scrubber.backgroundColor = .white
-        progressBar.backgroundColor = .white
+    private func setupBlueStyle() {
+        progressBar.backgroundColor = .blue
+        timeLabelView.isHidden = false
+        timeLabel.isHidden = false
         bufferBar.isHidden = false
+        bufferBar.backgroundColor = .gray
         isUserInteractionEnabled = true
     }
 }
