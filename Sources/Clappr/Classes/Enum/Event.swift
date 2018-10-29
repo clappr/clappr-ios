@@ -32,4 +32,6 @@ public enum Event: String {
     case didUpdateOptions
     case willShowMediaControl
     case didShowMediaControl
+    case willHideMediaControl
+    case didHideMediaControl
 }

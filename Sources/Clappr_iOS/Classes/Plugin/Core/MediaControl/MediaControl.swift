@@ -157,6 +157,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     func hide(animated: Bool = false, completion: (() -> Void)? = nil) {
         if !alwaysVisible {
+            trigger(Event.willHideMediaControl.rawValue)
+            
             let duration = animated ? animationDuration : 0
 
             UIView.animate(
@@ -164,8 +166,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 animations: {
                     self.alpha = 0
             },
-                completion: { _ in
-                    self.isHidden = true
+                completion: { [weak self] _ in
+                    self?.isHidden = true
+                    self?.trigger(Event.didHideMediaControl.rawValue)
                     completion?()
             }
             )
