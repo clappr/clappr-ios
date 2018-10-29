@@ -23,8 +23,7 @@ open class Loader {
     }
 
     open func register(plugins: [Plugin.Type]) {
-        self.plugins.append(contentsOf: plugins)
-        self.plugins = self.plugins.uniques
+        self.plugins.appendOrReplace(contentsOf: plugins)
     }
 
     open func loadPlugins(in core: Core) {
