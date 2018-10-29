@@ -138,7 +138,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         
         let duration = animated ? animationDuration : 0
         
-        trigger(Event.willShowMediaControl.rawValue)
+        core?.trigger(Event.willShowMediaControl.rawValue)
 
         if self.alpha == 0 {
             self.isHidden = false
@@ -151,7 +151,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         },
             completion: { [weak self] _ in
                 self?.isHidden = false
-                self?.trigger(Event.didShowMediaControl.rawValue)
+                self?.core?.trigger(Event.didShowMediaControl.rawValue)
                 completion?()
         }
         )
@@ -161,7 +161,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         if isHidden { return }
         
         if !alwaysVisible {
-            trigger(Event.willHideMediaControl.rawValue)
+            core?.trigger(Event.willHideMediaControl.rawValue)
             
             let duration = animated ? animationDuration : 0
 
@@ -172,7 +172,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             },
                 completion: { [weak self] _ in
                     self?.isHidden = true
-                    self?.trigger(Event.didHideMediaControl.rawValue)
+                    self?.core?.trigger(Event.didHideMediaControl.rawValue)
                     completion?()
             }
             )

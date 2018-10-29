@@ -302,7 +302,7 @@ class MediaControlTests: QuickSpec {
                     var viewIsVisible: Bool?
                     
                     mediaControl.render()
-                    mediaControl.on(Event.willShowMediaControl.rawValue) { _ in
+                    core.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.isHidden
                     }
@@ -313,12 +313,13 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("triggers didShowMediaControl after showing the view") {
-                    let mediaControl = MediaControl()
+                    let core = CoreStub()
+                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     mediaControl.isHidden = true
                     
-                    mediaControl.on(Event.didShowMediaControl.rawValue) { _ in
+                    core.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.isHidden
                     }
@@ -331,11 +332,12 @@ class MediaControlTests: QuickSpec {
             
             describe("hide") {
                 it("triggers willHideMediaControl before hiding the view") {
-                    let mediaControl = MediaControl()
+                    let core = CoreStub()
+                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
-                    mediaControl.on(Event.willHideMediaControl.rawValue) { _ in
+                    core.on(Event.willHideMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.isHidden
                     }
@@ -346,11 +348,12 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("triggers didHideMediaControl after showing the view") {
-                    let mediaControl = MediaControl()
+                    let core = CoreStub()
+                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
-                    mediaControl.on(Event.didHideMediaControl.rawValue) { _ in
+                    core.on(Event.didHideMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.isHidden
                     }
