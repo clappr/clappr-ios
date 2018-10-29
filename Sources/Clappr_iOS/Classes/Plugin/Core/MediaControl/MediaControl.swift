@@ -87,7 +87,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 }
             }
 
-            listenTo(core, eventName: Event.willShowMediaControl.rawValue) { [weak self] _ in
+            listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
                 self?.toggleVisibility()
             }
         }
