@@ -16,10 +16,10 @@ class Seekbar: MediaControlPlugin {
 
     var seekbarView: SeekbarView = .fromNib()
 
-    var container: UIStackView! {
+    var containerView: UIStackView! {
         didSet {
-            view.addSubview(container)
-            container.bindFrameToSuperviewBounds()
+            view.addSubview(containerView)
+            containerView.bindFrameToSuperviewBounds()
         }
     }
 
@@ -45,6 +45,8 @@ class Seekbar: MediaControlPlugin {
         bindContainerEvents()
         bindPlaybackEvents()
         bindOfflinePlaybackEvents()
+
+        seekbarView.isLive = activePlayback?.playbackType == .live && (activePlayback?.isDvrAvailable ?? false)
     }
 
     private var activeContainer: Container? {
@@ -105,10 +107,9 @@ class Seekbar: MediaControlPlugin {
 
     override func render() {
         setupHeightSize()
-        container = UIStackView()
-        container.addArrangedSubview(seekbarView)
+        containerView = UIStackView()
+        containerView.addArrangedSubview(seekbarView)
         seekbarView.delegate = self
-        seekbarView.isOfflineVideo = isOfflinePlayback
     }
 
     private func setupHeightSize() {
