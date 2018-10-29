@@ -208,6 +208,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     @objc func didTappedView() {
-        trigger(Event.willShowMediaControl.rawValue)
+        trigger(InternalEvent.didTappedCore.rawValue)
     }
 }
