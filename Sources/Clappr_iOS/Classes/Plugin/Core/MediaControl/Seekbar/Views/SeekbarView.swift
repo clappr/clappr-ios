@@ -16,7 +16,6 @@ class SeekbarView: UIView {
     @IBOutlet weak var scrubber: UIView! {
         didSet {
             scrubber.accessibilityIdentifier = "scrubber"
-            //scrubber.layer.addBlurShadow()
         }
     }
     @IBOutlet weak var scrubberOuterCircle: UIView?
@@ -24,17 +23,11 @@ class SeekbarView: UIView {
     @IBOutlet weak var progressBar: UIView!
     @IBOutlet weak var timeLabelView: UIView! {
         didSet {
-            timeLabelView.layer.cornerRadius = 1.5
             timeLabelView.isHidden = true
         }
     }
-    @IBOutlet weak var timeLabel: UILabel! {
-        didSet {
-//            timeLabel.font = UIFont.openSansBold(size: 15)
-//            timeLabel.layer.addBlurShadow()
-        }
-    }
-//    @IBOutlet weak var timeLabelPosition: NSLayoutConstraint!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var timeLabelPosition: NSLayoutConstraint!
     @IBOutlet weak var bufferWidth: NSLayoutConstraint!
     
     @IBOutlet open var scrubberOuterCircleWidthConstraint: NSLayoutConstraint?
@@ -65,7 +58,7 @@ class SeekbarView: UIView {
         moveScrubber(relativeTo: touchPoint.x)
         seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
         adjustScrubberConstraints()
-        
+
         if isOfflineVideo {
             moveTimeLabel(relativeTo: touchPoint.x, state: view.touchState)
             updateTimeLabel(relativeTo: scrubberPosition.constant)
@@ -99,13 +92,13 @@ class SeekbarView: UIView {
     private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
         if state == .moved {
             timeLabelView.isHidden = false
-//            var position = scrubberPosition.constant - timeLabelView.frame.width / 2 + scrubber.frame.width / 2
-//            if position <= 0 {
-//                position = 0
-//            } else if position > seekBar.frame.width - timeLabelView.frame.width {
-//                position = seekBar.frame.width - timeLabelView.frame.width
-//            }
-//            timeLabelPosition.constant = position
+            var position = scrubberPosition.constant - timeLabelView.frame.width / 2 + scrubber.frame.width / 2
+            if position <= 0 {
+                position = 0
+            } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width {
+                position = seekBarContainerView.frame.width - timeLabelView.frame.width
+            }
+            timeLabelPosition.constant = position
         } else {
             timeLabelView.isHidden = true
         }
@@ -190,8 +183,8 @@ class SeekbarView: UIView {
     }
 
     private func setupRedStyle() {
-//        scrubber.backgroundColor = .steveRedColor()
-//        progressBar.backgroundColor = .steveRedColor()
+        scrubber.backgroundColor = .red
+        progressBar.backgroundColor = .red
         bufferBar.isHidden = true
         putScrubberAtTheEnd()
         isUserInteractionEnabled = false
