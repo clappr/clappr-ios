@@ -31,4 +31,5 @@ public enum Event: String {
     case didChangeDvrAvailability
     case didUpdateOptions
     case willShowMediaControl
+    case didShowMediaControl
 }

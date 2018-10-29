@@ -292,6 +292,38 @@ class MediaControlTests: QuickSpec {
                     coreStub.trigger(InternalEvent.didTappedCore.rawValue)
                 }
             }
+            
+            describe("show") {
+                it("triggers willShowMediaControl before showing the view") {
+                    let mediaControl = MediaControl()
+                    var eventTriggered = false
+                    var viewIsVisible: Bool?
+                    
+                    mediaControl.on(Event.willShowMediaControl.rawValue) { _ in
+                        eventTriggered = true
+                        viewIsVisible = mediaControl.isHidden
+                    }
+                    mediaControl.show()
+                    
+                    expect(eventTriggered).toEventually(beTrue())
+                    expect(viewIsVisible).to(beFalse())
+                }
+                
+                it("triggers didShowMediaControl after showing the view") {
+                    let mediaControl = MediaControl()
+                    var eventTriggered = false
+                    var viewIsVisible: Bool?
+                    
+                    mediaControl.on(Event.didShowMediaControl.rawValue) { _ in
+                        eventTriggered = true
+                        viewIsVisible = mediaControl.isHidden
+                    }
+                    mediaControl.show()
+                    
+                    expect(eventTriggered).toEventually(beTrue())
+                    expect(viewIsVisible).to(beFalse())
+                }
+            }
 
             describe("renderPlugins") {
                 var plugins: [MediaControlPlugin]!
