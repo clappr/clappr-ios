@@ -135,6 +135,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
         let duration = animated ? animationDuration : 0
+        
+        trigger(Event.willShowMediaControl.rawValue)
 
         if self.alpha == 0 {
             self.isHidden = false
@@ -145,8 +147,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             animations: {
                 self.alpha = 1
         },
-            completion: { _ in
-                self.isHidden = false
+            completion: { [weak self] _ in
+                self?.isHidden = false
+                self?.trigger(Event.didShowMediaControl.rawValue)
                 completion?()
         }
         )
