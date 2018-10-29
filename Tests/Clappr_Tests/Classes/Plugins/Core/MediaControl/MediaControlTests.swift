@@ -193,18 +193,19 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
-                        expect(mediaControl.isHidden).to(beFalse())
-                        expect(mediaControl.alpha).to(equal(1))
+                        expect(mediaControl.isHidden).toEventually(beFalse())
+                        expect(mediaControl.alpha).toEventually(equal(1))
                     }
 
                     it("doesn't show itself if an error occurred") {
+                        mediaControlVisible()
                         mediaControlHidden()
 
                         coreStub.activePlayback?.trigger(Event.error.rawValue)
                         coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
-                        expect(mediaControl.isHidden).to(beTrue())
-                        expect(mediaControl.alpha).to(equal(0))
+                        expect(mediaControl.isHidden).toEventually(beTrue())
+                        expect(mediaControl.alpha).toEventually(equal(0))
                     }
                 }
 
@@ -315,6 +316,7 @@ class MediaControlTests: QuickSpec {
                     let mediaControl = MediaControl()
                     var eventTriggered = false
                     var viewIsVisible: Bool?
+                    mediaControl.isHidden = true
                     
                     mediaControl.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
