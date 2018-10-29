@@ -191,7 +191,7 @@ class MediaControlTests: QuickSpec {
                     it("shows itself when hidden") {
                         mediaControlHidden()
 
-                        coreStub.trigger(Event.willShowMediaControl.rawValue)
+                        coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
                         expect(mediaControl.isHidden).to(beFalse())
                         expect(mediaControl.alpha).to(equal(1))
@@ -201,7 +201,7 @@ class MediaControlTests: QuickSpec {
                         mediaControlHidden()
 
                         coreStub.activePlayback?.trigger(Event.error.rawValue)
-                        coreStub.trigger(Event.willShowMediaControl.rawValue)
+                        coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
                         expect(mediaControl.isHidden).to(beTrue())
                         expect(mediaControl.alpha).to(equal(0))
@@ -289,7 +289,7 @@ class MediaControlTests: QuickSpec {
                 }
 
                 func mediaControlVisible() {
-                    coreStub.trigger(Event.willShowMediaControl.rawValue)
+                    coreStub.trigger(InternalEvent.didTappedCore.rawValue)
                 }
             }
 
