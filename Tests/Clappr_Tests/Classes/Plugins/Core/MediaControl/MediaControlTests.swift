@@ -295,13 +295,15 @@ class MediaControlTests: QuickSpec {
             
             describe("show") {
                 it("triggers willShowMediaControl before showing the view") {
-                    let mediaControl = MediaControl()
+                    let core = CoreStub()
+                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
+                    mediaControl.render()
                     mediaControl.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = mediaControl.isHidden
+                        viewIsVisible = !mediaControl.isHidden
                     }
                     mediaControl.show()
                     
@@ -316,9 +318,41 @@ class MediaControlTests: QuickSpec {
                     
                     mediaControl.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = mediaControl.isHidden
+                        viewIsVisible = !mediaControl.isHidden
                     }
                     mediaControl.show()
+                    
+                    expect(eventTriggered).toEventually(beTrue())
+                    expect(viewIsVisible).to(beTrue())
+                }
+            }
+            
+            describe("hide") {
+                it("triggers willHideMediaControl before hiding the view") {
+                    let mediaControl = MediaControl()
+                    var eventTriggered = false
+                    var viewIsVisible: Bool?
+                    
+                    mediaControl.on(Event.willHideMediaControl.rawValue) { _ in
+                        eventTriggered = true
+                        viewIsVisible = !mediaControl.isHidden
+                    }
+                    mediaControl.hide()
+                    
+                    expect(eventTriggered).toEventually(beTrue())
+                    expect(viewIsVisible).to(beTrue())
+                }
+                
+                it("triggers didHideMediaControl after showing the view") {
+                    let mediaControl = MediaControl()
+                    var eventTriggered = false
+                    var viewIsVisible: Bool?
+                    
+                    mediaControl.on(Event.didHideMediaControl.rawValue) { _ in
+                        eventTriggered = true
+                        viewIsVisible = !mediaControl.isHidden
+                    }
+                    mediaControl.hide()
                     
                     expect(eventTriggered).toEventually(beTrue())
                     expect(viewIsVisible).to(beFalse())
