@@ -93,10 +93,10 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ou5-JO-feR">
-                            <rect key="frame" x="-4" y="-40" width="45" height="20"/>
+                            <rect key="frame" x="0.0" y="-40" width="37" height="20"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-GR-npi" userLabel="Scrubber Label">
-                                    <rect key="frame" x="8" y="4" width="29" height="12"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-GR-npi" userLabel="Time Label">
+                                    <rect key="frame" x="4" y="4" width="29" height="12"/>
                                     <accessibility key="accessibilityConfiguration" label="scrubber time"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -105,8 +105,7 @@
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.84765625" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="d4I-GR-npi" firstAttribute="leading" secondItem="ou5-JO-feR" secondAttribute="leading" constant="8" id="AFN-Gc-tVh"/>
-                                <constraint firstAttribute="trailing" secondItem="d4I-GR-npi" secondAttribute="trailing" constant="8" id="Cbg-44-tdM"/>
+                                <constraint firstItem="d4I-GR-npi" firstAttribute="centerX" secondItem="ou5-JO-feR" secondAttribute="centerX" id="Mrk-2p-Q0Q"/>
                                 <constraint firstAttribute="bottom" secondItem="d4I-GR-npi" secondAttribute="bottom" constant="4" id="olr-g3-56G"/>
                                 <constraint firstItem="d4I-GR-npi" firstAttribute="top" secondItem="ou5-JO-feR" secondAttribute="top" constant="4" id="zgU-e1-C97"/>
                             </constraints>
@@ -132,6 +131,7 @@
             <accessibility key="accessibilityConfiguration" identifier="seekbar"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="ag5-Ow-Xfy" secondAttribute="trailing" id="Svq-dn-eg2"/>
+                <constraint firstItem="ou5-JO-feR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dQQ-0f-dFC"/>
                 <constraint firstItem="ag5-Ow-Xfy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xCB-mY-ujf"/>
                 <constraint firstItem="ag5-Ow-Xfy" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yp7-kb-GYy"/>
             </constraints>
@@ -147,6 +147,8 @@
                 <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
                 <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
                 <outlet property="seekBarContainerView" destination="ag5-Ow-Xfy" id="5re-sz-EGh"/>
+                <outlet property="timeLabel" destination="d4I-GR-npi" id="YGH-uj-NOM"/>
+                <outlet property="timeLabelPosition" destination="dQQ-0f-dFC" id="d78-N2-SxF"/>
                 <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="-335"/>
