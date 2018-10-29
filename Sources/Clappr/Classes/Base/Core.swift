@@ -101,17 +101,26 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     open override func render() {
         containers.forEach(renderContainer)
-        installPlugins()
-        renderMediaControlPlugins()
+        renderPlugins()
 
         addToContainer()
     }
     
-    private func renderMediaControlPlugins() {
-        let mediaControlPlugin = plugins.filter { $0 is MediaControl }.first
-        if let mediaControl = mediaControlPlugin as? MediaControl {
-            mediaControl.renderPlugins(plugins)
+    private func renderPlugins() {
+        plugins.forEach { plugin in
+            if isNotMediaControlPlugin(plugin) {
+                addSubview(plugin)
+                plugin.render()
+            }
+
+            if plugin is MediaControl, let mediaControl = plugin as? MediaControl {
+                mediaControl.renderPlugins(plugins)
+            }
         }
+    }
+
+    private func isNotMediaControlPlugin(_ plugin: UICorePlugin) -> Bool {
+        return !(plugin is MediaControlPlugin)
     }
 
     fileprivate func addToContainer() {
@@ -124,13 +133,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         #else
         renderInContainerView()
         #endif
-    }
-
-    private func installPlugins() {
-        plugins.filter { !($0 is MediaControlPlugin) }.forEach { plugin in
-            addSubview(plugin)
-            plugin.render()
-        }
     }
 
     fileprivate func renderContainer(_ container: Container) {
