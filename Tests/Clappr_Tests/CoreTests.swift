@@ -638,6 +638,7 @@ class CoreTests: QuickSpec {
                     expect(plugin.superview).to(equal(core))
                 }
                 
+                #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlPlugin") {
                     let core = Core()
                     let plugin = MediaControlPluginMock()
@@ -659,6 +660,7 @@ class CoreTests: QuickSpec {
                     
                     expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
                 }
+                #endif
             }
 
             context("core position") {
@@ -688,6 +690,7 @@ class CoreTests: QuickSpec {
     }
 }
 
+#if os(iOS)
 class MediaControlMock: MediaControl {
     var didCallRenderPlugins = false
     
@@ -695,3 +698,4 @@ class MediaControlMock: MediaControl {
         didCallRenderPlugins = true
     }
 }
+#endif
