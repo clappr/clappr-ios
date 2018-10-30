@@ -43,8 +43,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var secondsToHideControlSlow: TimeInterval = 4
 
     private var showControls = true
-
     private var alwaysVisible = false
+    private var currentlyShowing = false
+    private var currentlyHiding = false
 
     required public init(context: UIBaseObject) {
         super.init(context: context)
@@ -134,7 +135,15 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
+        if currentlyShowing {
+            completion?()
+            return
+        }
+
         let duration = animated ? animationDuration : 0
+        
+        currentlyShowing = true
+        currentlyHiding = false
         
         core?.trigger(Event.willShowMediaControl.rawValue)
 
@@ -149,6 +158,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         },
             completion: { [weak self] _ in
                 self?.isHidden = false
+                self?.currentlyShowing = false
                 self?.core?.trigger(Event.didShowMediaControl.rawValue)
                 completion?()
         }
@@ -156,8 +166,16 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func hide(animated: Bool = false, completion: (() -> Void)? = nil) {
+        if currentlyHiding {
+            completion?()
+            return
+        }
+
         if !alwaysVisible {
             core?.trigger(Event.willHideMediaControl.rawValue)
+            
+            currentlyShowing = false
+            currentlyHiding = true
             
             let duration = animated ? animationDuration : 0
 
@@ -167,6 +185,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                     self.alpha = 0
             },
                 completion: { [weak self] _ in
+                    self?.currentlyHiding = false
                     self?.isHidden = true
                     self?.core?.trigger(Event.didHideMediaControl.rawValue)
                     completion?()
