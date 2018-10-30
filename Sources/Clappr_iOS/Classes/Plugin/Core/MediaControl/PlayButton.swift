@@ -56,10 +56,6 @@ open class PlayButton: MediaControlPlugin {
     open func bindCoreEvents() {
         if let core = core {
             listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-            listenTo(core, eventName: Event.didShowMediaControl.rawValue) { _ in print("didShowMediaControl") }
-            listenTo(core, eventName: Event.didHideMediaControl.rawValue) { _ in print("didHideMediaControl") }
-            listenTo(core, eventName: Event.willHideMediaControl.rawValue) { _ in print("willHideMediaControl") }
-            listenTo(core, eventName: Event.willShowMediaControl.rawValue) { _ in print("willShowMediaControl") }
         }
     }
 
