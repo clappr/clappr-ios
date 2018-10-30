@@ -288,7 +288,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            fdescribe("#player states") {
+            describe("#player states") {
                 describe("when player is initialised") {
                     it("starts player with idle state") {
                         let player = Player(options: [:])
@@ -299,25 +299,36 @@ class PlayerTests: QuickSpec {
                 }
                 
                 describe("when play is called") {
-                    it("change state to buffering") {
+                    it("change state to playing") {
                         let player = Player(options: [kSourceUrl: "http://clappr.io/highline.mp4"])
-                        
-                        expect(player.isPlaying).to(beFalse())
-                        expect(player.isPaused).to(beFalse())
-                        expect(player.isBuffering).to(beFalse())
-                        
-                        it("starts player with idle state") {
-                            
-                        }
+
+                        player.play()
+
+                        expect(player.isPlaying).toEventually(beTrue())
                     }
                 }
-                
+
                 describe("when pause is called") {
-                    it("change state to paused then playing") {}
+                    it("change state to paused") {
+                        let player = Player(options: [kSourceUrl: "http://clappr.io/highline.mp4"])
+
+                        player.play()
+                        player.pause()
+
+                        expect(player.isPlaying).to(beFalse())
+                        expect(player.isPaused).to(beTrue())
+                        expect(player.isBuffering).to(beFalse())
+                    }
                 }
-                
+
                 describe("when video is buffering") {
-                    it("change state to stalled") {}
+                    it("change state to stalled") {
+                        let player = Player(options: [kSourceUrl: "http://invalid.clappr.io/highline.mp4"])
+
+                        player.play()
+
+                        expect(player.isBuffering).to(beTrue())
+                    }
                 }
             }
             

@@ -933,6 +933,170 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
             
+            describe("#AVFoundationPlayback states") {
+                describe("#idle") {
+                    context("when ready to play") {
+                        it("current state must be idle") {
+                            let playback = AVFoundationPlayback()
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+
+                    context("when play is called") {
+                        it("changes current state to playing") {
+                            let playback = AVFoundationPlayback()
+
+                            playback.play()
+
+                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).to(equal(.playing))
+                        }
+                    }
+
+                    context("when pause is called") {
+                        it("changes current state to paused") {
+                            let playback = AVFoundationPlayback()
+
+                            playback.pause()
+                            
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
+                    }
+                }
+
+                describe("#playing") {
+                    context("when paused is called") {
+                        it("changes current state to paused") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.pause()
+
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
+                    }
+
+                    context("when seek is called") {
+                        it("keeps state in playing") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.seek(10)
+                            
+                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).to(equal(.playing))
+                        }
+                    }
+
+                    context("when stop is called") {
+                        it("changes state to idle") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.stop()
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+                    
+                    context("when video is over") {
+                        it("changes state to idle") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.seek(Double.infinity)
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+                    
+                    context("when is not likely to keep up") {
+                        it("changes state to buffering") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.currentState).to(equal(.buffering))
+                        }
+                    }
+                }
+
+                describe("#paused") {
+                    context("when playing is called") {
+                        it("changes state to play") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.pause()
+                            playback.play()
+
+                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).to(equal(.playing))
+                        }
+                    }
+
+                    context("when seek is called") {
+                        it("keeps state in paused") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.pause()
+                            playback.seek(10)
+                            
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
+                    }
+
+                    context("when stop is called") {
+                        it("changes state to idle") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.pause()
+                            playback.stop()
+
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+
+                    context("when is not likely to keep up") {
+                        it("changes state to buffering") {
+                            let playback = AVFoundationPlayback()
+
+                            playback.play()
+                            playback.pause()
+                            playback.play()
+
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.currentState).to(equal(.buffering))
+                        }
+                    }
+                }
+
+                describe("#stalled") {
+                    context("when seek is called") {
+                        it("keeps buffering state") {}
+                    }
+
+                    context("when paused is called") {
+                        it("changes state to paused") {}
+                    }
+
+                    context("when stop is called") {
+                        it("changes state to idle") {}
+                    }
+
+                    context("when is likely to keep up") {
+                        it("changes state to ready") {}
+                    }
+                }
+            }
+            
             #if os(tvOS)
             describe("#loadMetadata") {
                 

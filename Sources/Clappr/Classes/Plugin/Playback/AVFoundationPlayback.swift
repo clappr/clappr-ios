@@ -29,7 +29,7 @@ open class AVFoundationPlayback: Playback {
     
     fileprivate var playerLayer: AVPlayerLayer?
     fileprivate var playerStatus: AVPlayerItemStatus = .unknown
-    fileprivate var currentState = PlaybackState.idle {
+    internal var currentState = PlaybackState.idle {
         didSet {
             switch currentState {
             case .buffering:
