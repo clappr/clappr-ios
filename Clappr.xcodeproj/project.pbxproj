@@ -105,6 +105,8 @@
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
 		5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */; };
+		576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */; };
+		576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */; };
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		57B0A1DF1FF40C3600891037 /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0A1DE1FF40C3600891037 /* UIObject.swift */; };
@@ -1692,6 +1694,7 @@
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
 				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
+				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
@@ -1709,6 +1712,7 @@
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
+				576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */,
 				571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */,
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
