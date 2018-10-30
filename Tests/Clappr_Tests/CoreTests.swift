@@ -627,21 +627,40 @@ class CoreTests: QuickSpec {
                 }
             }
 
-            context("when a plugin is added") {
-
-                var plugin: FakeCorePlugin!
-
-                beforeEach {
-                    core = Core()
-                    plugin = FakeCorePlugin()
-                    core.addPlugin(plugin)
-                }
-
+            describe("#render") {
                 it("add plugin as subview after rendered") {
+                    let core = Core()
+                    let plugin = FakeCorePlugin()
+                    
+                    core.addPlugin(plugin)
                     core.render()
 
-                    expect(plugin.superview) == core
+                    expect(plugin.superview).to(equal(core))
                 }
+                
+                #if os(iOS)
+                it("doesnt add plugin as subview if it is a MediaControlPlugin") {
+                    let core = Core()
+                    let plugin = MediaControlPluginMock()
+                    
+                    core.addPlugin(plugin)
+                    core.render()
+                    
+                    expect(plugin.superview).to(beNil())
+                }
+                
+                it("calls the mediacontrol to add the plugins into the panels") {
+                    let core = Core()
+                    let mediaControlMock = MediaControlMock()
+                    let mediaControlPluginMock = MediaControlPluginMock()
+                    
+                    core.addPlugin(mediaControlMock)
+                    core.addPlugin(mediaControlPluginMock)
+                    core.render()
+                    
+                    expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
+                }
+                #endif
             }
 
             context("core position") {
@@ -670,3 +689,13 @@ class CoreTests: QuickSpec {
         #endif
     }
 }
+
+#if os(iOS)
+class MediaControlMock: MediaControl {
+    var didCallRenderPlugins = false
+    
+    override func renderPlugins(_ plugins: [UICorePlugin]) {
+        didCallRenderPlugins = true
+    }
+}
+#endif

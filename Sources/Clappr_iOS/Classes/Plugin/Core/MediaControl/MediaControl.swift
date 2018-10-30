@@ -33,9 +33,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-    public var plugins: [MediaControlPlugin] = []
-    var defaultPlugins: [MediaControlPlugin.Type] = [PlayButton.self, TimeIndicator.self, FullscreenButton.self]
-
     override open var pluginName: String {
         return "MediaControl"
     }
@@ -196,41 +193,18 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view = UIView()
         view.backgroundColor = UIColor.clapprBlack60Color()
 
-        loadPlugins()
-        loadDefaultPlugins()
-        renderPlugins()
         showIfAlwaysVisible()
 
         self.bindFrameToSuperviewBounds()
     }
 
-    private func loadPlugins() {
-        guard let mediaControlPlugins = options?[kMediaControlPlugins] as? [MediaControlPlugin.Type] else {
-            return
-        }
-
-        mediaControlPlugins.forEach { plugin in
-            plugins.append(plugin.init(context: core!))
-        }
-    }
-
-    private func loadDefaultPlugins() {
-        defaultPlugins.forEach { defaultPlugin in
-            addPlugin(defaultPlugin)
-        }
-    }
-
-    private func addPlugin(_ plugin: MediaControlPlugin.Type) {
-        if !plugins.contains(where: { $0.pluginName == plugin.name}) {
-            plugins.append(plugin.init(context: core!))
-        }
-    }
-
-    private func renderPlugins() {
-        plugins.forEach { plugin in
-            container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
-
-            plugin.render()
+    func renderPlugins(_ plugins: [UICorePlugin]) {
+        plugins
+            .filter { $0 is MediaControlPlugin }
+            .map { $0 as! MediaControlPlugin }
+            .forEach { plugin in
+                container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
+                plugin.render()
         }
     }
 
