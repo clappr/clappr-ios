@@ -1,8 +1,5 @@
 protocol SeekbarDelegate: NSObjectProtocol {
     func seek(_: TimeInterval)
-    func willBeginScrubbing()
-    func isScrubbing(scrubberFrame: CGRect, currentSecond: Int)
-    func didFinishScrubbing()
 }
 
 class SeekbarView: UIView {
@@ -112,17 +109,12 @@ class SeekbarView: UIView {
 
     private func seeking(relativeTo scrubberPosition: CGFloat, state: DragDetectorView.State) {
         switch state {
-        case .began:
-            delegate?.willBeginScrubbing()
         case .ended:
             delegate?.seek(seconds(relativeTo: scrubberPosition))
-            delegate?.didFinishScrubbing()
             isSeeking = false
         case .canceled:
-            delegate?.didFinishScrubbing()
             isSeeking = false
         default:
-            delegate?.isScrubbing(scrubberFrame: scrubber.frame, currentSecond: Int(seconds(relativeTo: scrubberPosition)))
             isSeeking = true
         }
     }

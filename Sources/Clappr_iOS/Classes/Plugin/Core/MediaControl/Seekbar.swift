@@ -1,7 +1,5 @@
 class Seekbar: MediaControlPlugin {
 
-    var viewControllerSwipeToBackIsEnabled = true
-
     override var pluginName: String {
         return "Seekbar"
     }
@@ -133,34 +131,5 @@ extension Seekbar: SeekbarDelegate {
 
     private func watchLive() {
         activePlayback?.seekToLivePosition()
-    }
-
-    func willBeginScrubbing() {
-//        core?.trigger(PlayerInternalEvent.willBeginScrubbing.rawValue)
-        toggleIsScrollEnabled(to: false)
-    }
-
-    func isScrubbing(scrubberFrame: CGRect, currentSecond: Int) {
-//        core?.trigger(PlayerInternalEvent.isScrubbing.rawValue, userInfo: ["scrubberFrame": scrubberFrame, "currentSecond": currentSecond])
-    }
-
-    func didFinishScrubbing() {
-//        core?.trigger(PlayerInternalEvent.didFinishScrubbing.rawValue)
-        toggleIsScrollEnabled(to: true)
-        toggleViewControllerSwipeToBack(to: viewControllerSwipeToBackIsEnabled)
-    }
-
-    func preventViewControllerSwipeToBack() {
-        toggleViewControllerSwipeToBack(to: false)
-    }
-
-    private func toggleViewControllerSwipeToBack(to isEnabled: Bool) {
-//        view.parentViewController?.navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
-    }
-
-    private func toggleIsScrollEnabled(to isEnabled: Bool) {
-//        if let scrollView = view.ancestors.first(where: { $0 is UIScrollView }) as? UIScrollView {
-//            scrollView.isScrollEnabled = isEnabled
-//        }
     }
 }
