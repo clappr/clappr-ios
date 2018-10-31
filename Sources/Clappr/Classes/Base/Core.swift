@@ -1,4 +1,4 @@
-open class Core: UIBaseObject, UIGestureRecognizerDelegate {
+open class Core: UIBaseObject {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
@@ -49,18 +49,14 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     @objc open var isFullscreen: Bool = false
 
-    public required init?(coder _: NSCoder) {
-        fatalError("Should be using init(sources:[NSURL]) instead")
-    }
-
     public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
 
-        super.init(frame: CGRect.zero)
+        super.init()
 
-        backgroundColor = UIColor.black
+        view.backgroundColor = UIColor.black
 
         addTapRecognizer()
         bindEventListeners()
@@ -81,9 +77,9 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate func addTapRecognizer() {
         #if os(iOS)
+        view.isUserInteractionEnabled = true
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
-        tapRecognizer.delegate = self
-        addGestureRecognizer(tapRecognizer)
+        view.addGestureRecognizer(tapRecognizer)
         #endif
     }
 
@@ -96,7 +92,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     fileprivate func renderInContainerView() {
         isFullscreen = false
-        parentView?.addSubviewMatchingConstraints(self)
+        parentView?.addSubviewMatchingConstraints(view)
     }
 
     open override func render() {
@@ -113,7 +109,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     #if os(tvOS)
     private func renderPlugins() {
         plugins.forEach { plugin in
-            addSubview(plugin)
+            view.addSubview(plugin.view)
             plugin.render()
         }
     }
@@ -123,7 +119,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     private func renderCoreAndMediaControlPlugins() {
         plugins.forEach { plugin in
             if isNotMediaControlPlugin(plugin) {
-                addSubview(plugin)
+                view.addSubview(plugin.view)
                 plugin.render()
             }
 
@@ -152,7 +148,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func renderContainer(_ container: Container) {
-        addSubviewMatchingConstraints(container)
+        view.addSubviewMatchingConstraints(container.view)
         container.render()
     }
 
@@ -168,10 +164,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
-    }
-
-    open func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view!.isKind(of: Container.self)
     }
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
@@ -204,7 +196,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         fullscreenHandler = nil
         fullscreenController = nil
         #endif
-        removeFromSuperview()
+        view.removeFromSuperview()
     }
 
     @objc func didTappedView() {
