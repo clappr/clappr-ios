@@ -4,7 +4,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     override open var view: UIView {
         didSet {
-            addSubview(view)
             view.addSubview(container)
 
             view.bindFrameToSuperviewBounds()
@@ -147,17 +146,17 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         
         core?.trigger(Event.willShowMediaControl.rawValue)
 
-        if self.alpha == 0 {
-            self.isHidden = false
+        if self.view.alpha == 0 {
+            self.view.isHidden = false
         }
 
         UIView.animate(
             withDuration: duration,
             animations: {
-                self.alpha = 1
+                self.view.alpha = 1
         },
             completion: { [weak self] _ in
-                self?.isHidden = false
+                self?.view.isHidden = false
                 self?.currentlyShowing = false
                 self?.core?.trigger(Event.didShowMediaControl.rawValue)
                 completion?()
@@ -182,11 +181,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             UIView.animate(
                 withDuration: duration,
                 animations: {
-                    self.alpha = 0
+                    self.view.alpha = 0
             },
                 completion: { [weak self] _ in
                     self?.currentlyHiding = false
-                    self?.isHidden = true
+                    self?.view.isHidden = true
                     self?.core?.trigger(Event.didHideMediaControl.rawValue)
                     completion?()
             }
@@ -214,13 +213,20 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     override open func render() {
-        self.isHidden = true
-        view = UIView()
+        view.addSubview(container)
+        container.bindFrameToSuperviewBounds()
+
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        gesture.delegate = self
+        self.view.addGestureRecognizer(gesture)
+        self.gesture = gesture
+        
+        view.isHidden = true
         view.backgroundColor = UIColor.clapprBlack60Color()
 
         showIfAlwaysVisible()
 
-        self.bindFrameToSuperviewBounds()
+        self.view.bindFrameToSuperviewBounds()
     }
 
     func renderPlugins(_ plugins: [UICorePlugin]) {
