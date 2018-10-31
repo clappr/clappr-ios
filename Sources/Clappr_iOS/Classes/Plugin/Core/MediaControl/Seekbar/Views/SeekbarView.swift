@@ -162,14 +162,14 @@ class SeekbarView: UIView {
     }
 
     private func setupStyle() {
-        if !isLive {
-            setupBlueStyle()
+        if isLive {
+            setupLiveStyle()
         } else {
-            setupRedStyle()
+            setupVODStyle()
         }
     }
 
-    private func setupRedStyle() {
+    private func setupLiveStyle() {
         progressBar.backgroundColor = .red
         bufferBar.isHidden = true
         timeLabelView.isHidden = true
@@ -182,7 +182,7 @@ class SeekbarView: UIView {
         scrubberPosition.constant = seekBarContainerView.frame.width - scrubber.frame.width
     }
 
-    private func setupBlueStyle() {
+    private func setupVODStyle() {
         progressBar.backgroundColor = .blue
         timeLabelView.isHidden = false
         timeLabel.isHidden = false

@@ -222,6 +222,7 @@
 		C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B8218265140055A599 /* Seekbar.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
+		E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
@@ -475,6 +476,7 @@
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
 		E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicatorTests.swift; sourceTree = "<group>"; };
+		E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekbarTests.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB0A223D21754C1700D2180F /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
@@ -1098,6 +1100,7 @@
 		C9EDF8462162C93900789E2F /* MediaControl */ = {
 			isa = PBXGroup;
 			children = (
+				E7D0BD15218A382E00F5FDF2 /* Seekbar */,
 				C9EDF85C2163E17F00789E2F /* Layout */,
 				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
 				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
@@ -1164,6 +1167,14 @@
 				96D362F01D41345E00CCB866 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E7D0BD15218A382E00F5FDF2 /* Seekbar */ = {
+			isa = PBXGroup;
+			children = (
+				E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */,
+			);
+			path = Seekbar;
 			sourceTree = "<group>";
 		};
 		FBE6A3E52163EF9C0083C9CC /* Extensions */ = {
@@ -1766,6 +1777,7 @@
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
+				E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */,
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */,
