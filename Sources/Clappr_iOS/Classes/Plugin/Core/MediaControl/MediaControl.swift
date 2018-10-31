@@ -17,12 +17,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-<<<<<<< HEAD
-=======
-    public var plugins: [MediaControlPlugin] = []
-    var defaultPlugins: [MediaControlPlugin.Type] = [PlayButton.self, TimeIndicator.self, FullscreenButton.self, Seekbar.self]
-
->>>>>>> feat: adding seekbar plugin on media control default plugins
     override open var pluginName: String {
         return "MediaControl"
     }
@@ -127,10 +121,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         let duration = animated ? animationDuration : 0
-        
+
         currentlyShowing = true
         currentlyHiding = false
-        
+
         core?.trigger(Event.willShowMediaControl.rawValue)
 
         if self.view.alpha == 0 {
@@ -159,10 +153,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         if !alwaysVisible {
             core?.trigger(Event.willHideMediaControl.rawValue)
-            
+
             currentlyShowing = false
             currentlyHiding = true
-            
+
             let duration = animated ? animationDuration : 0
 
             UIView.animate(
