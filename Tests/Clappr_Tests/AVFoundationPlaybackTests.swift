@@ -954,7 +954,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     context("when pause is called") {
-                        fit("changes current state to paused") {
+                        it("changes current state to paused") {
                             let playback = AVFoundationPlayback()
 
                             playback.pause()
@@ -1081,19 +1081,50 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 describe("#stalled") {
                     context("when seek is called") {
-                        it("keeps buffering state") {}
-                    }
+                        it("keeps buffering state") {
+                            let playback = AVFoundationPlayback()
+                            playback.player = AVPlayerStub()
 
+                            playback.play()
+                            playback.seek(10)
+                            
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.currentState).to(equal(.buffering))
+                        }
+                    }
+                    
                     context("when paused is called") {
-                        it("changes state to paused") {}
+                        it("changes state to paused") {
+                            let playback = AVFoundationPlayback()
+                            
+                            playback.play()
+                            playback.pause()
+                            
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
                     }
-
+                    
                     context("when stop is called") {
-                        it("changes state to idle") {}
-                    }
+                        it("changes state to idle") {
+                            let playback = AVFoundationPlayback()
 
+                            playback.play()
+                            playback.stop()
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+                    
                     context("when is likely to keep up") {
-                        it("changes state to ready") {}
+                        it("has isPlaying as true") {
+                            let playback = AVFoundationPlayback()
+                            playback.player = AVPlayerStub()
+
+                            playback.play()
+                            
+                            expect(playback.isPlaying).to(beTrue())
+                        }
                     }
                 }
             }
