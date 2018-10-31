@@ -1,7 +1,8 @@
 import Foundation
 
-open class UIBaseObject: UIView, EventProtocol {
+open class UIBaseObject: NSObject, EventProtocol {
     fileprivate let baseObject = BaseObject()
+    @objc open var view: UIView = UIView()
 
     @objc @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
