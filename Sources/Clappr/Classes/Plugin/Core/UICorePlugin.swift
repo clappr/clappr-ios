@@ -12,12 +12,12 @@ open class UICorePlugin: UIPlugin, Plugin {
         return ""
     }
 
-    public required init() {
-        super.init(frame: CGRect.zero)
+    public required override init() {
+        super.init()
     }
 
     @objc public required init(context: UIBaseObject) {
-        super.init(frame: CGRect.zero)
+        super.init()
         if let core = context as? Core {
             self.core = core
         } else {
