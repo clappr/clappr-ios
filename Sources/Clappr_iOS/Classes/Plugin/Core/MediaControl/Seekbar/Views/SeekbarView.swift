@@ -71,11 +71,14 @@ class SeekbarView: UIView {
     }
 
     private func moveScrubber(relativeTo horizontalTouchPoint: CGFloat) {
-        var position = horizontalTouchPoint - (scrubber.frame.width / 2)
-        if position <= 0 {
-            position = 0
-        } else if position > seekBarContainerView.frame.width - scrubber.frame.width {
-            position = seekBarContainerView.frame.width - scrubber.frame.width
+        var position = horizontalTouchPoint - scrubberInitialWidth / 2
+        let minBoundPosition = 0 - scrubberInitialWidth / 2
+        let maxBoundPosition = seekBarContainerView.frame.width - scrubberInitialWidth / 2
+
+        if position <= minBoundPosition {
+            position = minBoundPosition
+        } else if position > maxBoundPosition {
+            position = maxBoundPosition
         }
         scrubberPosition.constant = position
         progressBarWidthConstraint?.constant = position + scrubber.frame.width / 2
