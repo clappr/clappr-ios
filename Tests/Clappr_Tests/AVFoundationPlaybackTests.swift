@@ -944,7 +944,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     context("when play is called") {
-                        it("changes current state to playing") {
+                        it("changes isPlaying to true") {
                             let playback = AVFoundationPlayback()
                             playback.player = AVPlayerStub()
                             playback.play()
@@ -979,7 +979,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     context("when seek is called") {
-                        it("keeps state in playing") {
+                        it("keeps playing") {
                             let playback = AVFoundationPlayback()
                             playback.player = AVPlayerStub()
 
@@ -1027,7 +1027,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 describe("#paused") {
                     context("when playing is called") {
-                        it("changes state to play") {
+                        it("changes isPlaying to true") {
                             let playback = AVFoundationPlayback()
                             playback.player = AVPlayerStub()
 
