@@ -1,8 +1,9 @@
 import Foundation
 
 @objcMembers
-open class UIBaseObject: UIView, EventProtocol {
+open class UIBaseObject: NSObject, EventProtocol {
     fileprivate let dispatcher = EventDispatcher()
+    @objc open var view: UIView = UIView()
 
     @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
