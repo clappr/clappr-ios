@@ -78,7 +78,6 @@
 		32E401C41FF42335001C2096 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A31D41339400CCB866 /* UIView+Ext.swift */; };
 		32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A71D41339400CCB866 /* MediaOptionFactory.swift */; };
 		32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362A81D41339400CCB866 /* PlaybackFactory.swift */; };
-		32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AD1D41339400CCB866 /* SpinnerPlugin.swift */; };
 		32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */; };
 		32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B11D41339400CCB866 /* UICorePlugin.swift */; };
 		32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B51D41339400CCB866 /* UIPlugin.swift */; };
@@ -1693,7 +1692,6 @@
 				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				FC7785A92005233D00EC879F /* EventHandler.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
-				32E401C71FF42351001C2096 /* SpinnerPlugin.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
