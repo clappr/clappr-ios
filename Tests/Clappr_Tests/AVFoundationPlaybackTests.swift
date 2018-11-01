@@ -468,6 +468,7 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             if #available(iOS 11.0, *) {
+                #if os(iOS)
                 context("when did change bounds") {
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
@@ -481,6 +482,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(screenSize))
                     }
                 }
+                #endif
 
                 context("when setups avplayer") {
 
