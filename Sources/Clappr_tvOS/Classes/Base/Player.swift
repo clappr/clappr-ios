@@ -4,6 +4,7 @@ open class Player: UIViewController, BaseObject {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) open var core: Core?
+    static var hasAlreadyRegisteredPlugins = false
     fileprivate var viewController: AVPlayerViewController?
 
     override open func viewDidLoad() {
@@ -103,7 +104,7 @@ open class Player: UIViewController, BaseObject {
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
-
+        Player.register(plugins: [])
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -124,6 +125,17 @@ open class Player: UIViewController, BaseObject {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    public static func register(plugins: [Plugin.Type]) {
+        if !hasAlreadyRegisteredPlugins {
+            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
+
+            Loader.shared.register(plugins: builtInPlugins)
+            hasAlreadyRegisteredPlugins = true
+        }
+
+        Loader.shared.register(plugins: plugins)
     }
 
     fileprivate func setCore(_ core: Core) {
