@@ -1,4 +1,4 @@
-open class Core: UIBaseObject {
+open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
@@ -77,8 +77,8 @@ open class Core: UIBaseObject {
 
     fileprivate func addTapRecognizer() {
         #if os(iOS)
-        view.isUserInteractionEnabled = true
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
+        tapRecognizer.delegate = self
         view.addGestureRecognizer(tapRecognizer)
         #endif
     }
@@ -105,7 +105,7 @@ open class Core: UIBaseObject {
 
         addToContainer()
     }
-    
+
     #if os(tvOS)
     private func renderPlugins() {
         plugins.forEach { plugin in
@@ -114,7 +114,7 @@ open class Core: UIBaseObject {
         }
     }
     #endif
-    
+
     #if os(iOS)
     private func renderCoreAndMediaControlPlugins() {
         plugins.forEach { plugin in
@@ -123,7 +123,7 @@ open class Core: UIBaseObject {
                 plugin.render()
             }
 
-            
+
             if plugin is MediaControl, let mediaControl = plugin as? MediaControl {
                 mediaControl.renderPlugins(plugins)
             }
@@ -164,6 +164,10 @@ open class Core: UIBaseObject {
 
     @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
+    }
+
+    open func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view!.accessibilityIdentifier == "Container"
     }
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
