@@ -216,7 +216,10 @@ open class AVFoundationPlayback: Playback {
             return
         }
         playerLayer.frame = view.bounds
+
+        #if os(iOS)
         setupMaxResolution(for: playerLayer.frame.size)
+        #endif
     }
 
     open override func play() {
@@ -247,6 +250,9 @@ open class AVFoundationPlayback: Playback {
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
+            #if os(iOS)
+            setupMaxResolution(for: playerLayer!.frame.size)
+            #endif
 
             addObservers()
             trigger(.ready)
