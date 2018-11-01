@@ -61,23 +61,23 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("set playback as subview") {
-                        expect(container.playback?.superview) == container
+                        expect(container.playback?.view.superview) == container.view
                     }
 
                     it("set playback to front of container") {
-                        expect(container.subviews.first) == container.playback
+                        expect(container.view.subviews.first) == container.playback?.view
                     }
 
                     it("set background color to `clear`") {
-                        expect(container.backgroundColor) == .clear
+                        expect(container.view.backgroundColor) == .clear
                     }
 
                     it("set the frame of container as CGRect.zero") {
-                        expect(container.frame) == CGRect.zero
+                        expect(container.view.frame) == CGRect.zero
                     }
 
                     it("set acessibility indentifier to 'Container'") {
-                        expect(container.accessibilityIdentifier) == "Container"
+                        expect(container.view.accessibilityIdentifier) == "Container"
                     }
 
                     it("save options without mutating") {
@@ -106,11 +106,11 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("set playback as subview") {
-                        expect(container.playback?.superview).to(beNil())
+                        expect(container.playback?.view.superview).to(beNil())
                     }
 
                     it("set playback to front of container") {
-                        expect(container.subviews.first).to(beNil())
+                        expect(container.view.subviews.first).to(beNil())
                     }
                 }
             }
@@ -124,16 +124,16 @@ class ContainerTests: QuickSpec {
 
                 it("remove container from superview") {
                     let wrapperView = UIView()
-                    wrapperView.addSubview(container)
+                    wrapperView.addSubview(container.view)
 
                     container.destroy()
 
-                    expect(container.superview).to(beNil())
+                    expect(container.view.superview).to(beNil())
                 }
 
                 it("destroy playback") {
                     container.destroy()
-                    expect(container.playback?.superview).to(beNil())
+                    expect(container.playback?.view.superview).to(beNil())
                 }
 
                 it("stop listening events") {
@@ -203,14 +203,14 @@ class ContainerTests: QuickSpec {
                         container.load(source)
 
                         expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.superview) == container
+                        expect(container.playback?.view.superview) == container.view
                     }
 
                     it("load a source with mime type") {
                         container.load(source, mimeType: "video/mp4")
 
                         expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.superview) == container
+                        expect(container.playback?.view.superview) == container.view
                     }
                 }
 
@@ -226,24 +226,24 @@ class ContainerTests: QuickSpec {
                         container.load(source)
 
                         expect(container.playback?.pluginName) == NoOpPlayback.name
-                        expect(container.playback?.superview) == container
+                        expect(container.playback?.view.superview) == container.view
                     }
 
                     it("set playback as a 'noop' playback with mimetype") {
                         container.load(source, mimeType: "video/mp4")
 
                         expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.superview) == container
+                        expect(container.playback?.view.superview) == container.view
                     }
                 }
 
                 it("keep just one playback as subview at time") {
                     let container = Container()
                     container.load("anyVideo")
-                    expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
+                    expect(container.view.subviews.count).to(equal(1))
 
                     container.load("anyOtherVideo")
-                    expect(container.subviews.filter({ $0 is Playback }).count).to(equal(1))
+                    expect(container.view.subviews.count).to(equal(1))
                 }
             }
 

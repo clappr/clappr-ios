@@ -20,7 +20,7 @@ class PosterPluginTests: QuickSpec {
 
                     let posterPlugin = self.getPosterPlugin(container)
 
-                    expect(posterPlugin.isHidden).to(beTrue())
+                    expect(posterPlugin.view.isHidden).to(beTrue())
                 }
             }
 
@@ -31,7 +31,7 @@ class PosterPluginTests: QuickSpec {
 
                     let posterPlugin = self.getPosterPlugin(container)
 
-                    expect(posterPlugin.isHidden).to(beTrue())
+                    expect(posterPlugin.view.isHidden).to(beTrue())
                 }
             }
 
@@ -42,7 +42,7 @@ class PosterPluginTests: QuickSpec {
 
                     let posterPlugin = self.getPosterPlugin(container)
 
-                    expect(posterPlugin.superview) == container
+                    expect(posterPlugin.view.superview) == container.view
                 }
             }
 
@@ -62,7 +62,7 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("hides itself") {
-                        expect(posterPlugin.isHidden).toEventually(beTrue())
+                        expect(posterPlugin.view.isHidden).toEventually(beTrue())
                     }
 
                     it("isNoOpPlayback is true") {
@@ -77,7 +77,7 @@ class PosterPluginTests: QuickSpec {
                         }
 
                         it("hides itself") {
-                            expect(posterPlugin.isHidden).toEventually(beTrue())
+                            expect(posterPlugin.view.isHidden).toEventually(beTrue())
                         }
                     }
                 }
@@ -90,7 +90,7 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("reveal itself") {
-                        expect(posterPlugin.isHidden).toEventually(beFalse())
+                        expect(posterPlugin.view.isHidden).toEventually(beFalse())
                     }
 
                     it("isNoOpPlayback is true") {
@@ -110,9 +110,9 @@ class PosterPluginTests: QuickSpec {
 
                 context("when playback trigger a play event") {
                     it("hides itself") {
-                        expect(posterPlugin.isHidden).to(beFalse())
+                        expect(posterPlugin.view.isHidden).to(beFalse())
                         container.playback?.trigger(Event.playing.rawValue)
-                        expect(posterPlugin.isHidden).to(beTrue())
+                        expect(posterPlugin.view.isHidden).to(beTrue())
                     }
                 }
 
@@ -121,7 +121,7 @@ class PosterPluginTests: QuickSpec {
                         container.playback?.trigger(Event.playing.rawValue)
                         container.playback?.trigger(Event.didComplete.rawValue)
 
-                        expect(posterPlugin.isHidden).to(beFalse())
+                        expect(posterPlugin.view.isHidden).to(beFalse())
                     }
                 }
             }

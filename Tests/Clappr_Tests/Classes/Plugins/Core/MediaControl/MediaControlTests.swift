@@ -58,7 +58,7 @@ class MediaControlTests: QuickSpec {
                     mediaControl.tapped()
 
                     expect(mediaControl.hideControlsTimer?.isValid).to(beNil())
-                    expect(mediaControl.isHidden).to(beTrue())
+                    expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
                 context("when a option to keep media control always visible is given") {
@@ -71,7 +71,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.tapped()
 
                         expect(mediaControl.hideControlsTimer?.isValid).to(beNil())
-                        expect(mediaControl.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
                     }
                 }
             }
@@ -88,7 +88,7 @@ class MediaControlTests: QuickSpec {
 
                     mediaControl.render()
 
-                    expect(mediaControl.isHidden).to(beTrue())
+                    expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
                 it("has black background with 60% of opacity") {
@@ -104,7 +104,7 @@ class MediaControlTests: QuickSpec {
                     let superview = UIView(frame: frame)
                     let mediaControl = MediaControl(context: coreStub)
 
-                    superview.addSubview(mediaControl)
+                    superview.addSubview(mediaControl.view)
                     mediaControl.render()
 
                     expect(superview.constraints.count).to(equal(4))
@@ -152,8 +152,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.ready)
 
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                     }
                 }
 
@@ -163,8 +163,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.playing)
 
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                     }
 
                     it("starts the timer to hide itself") {
@@ -182,8 +182,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.didComplete)
 
-                        expect(mediaControl.isHidden).to(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).to(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
                 }
 
@@ -193,8 +193,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                     }
 
                     it("doesn't show itself if an error occurred") {
@@ -204,8 +204,8 @@ class MediaControlTests: QuickSpec {
                         coreStub.activePlayback?.trigger(Event.error.rawValue)
                         coreStub.trigger(InternalEvent.didTappedCore.rawValue)
 
-                        expect(mediaControl.isHidden).toEventually(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
                 }
 
@@ -215,8 +215,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.didPause)
 
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
                     }
                 }
@@ -228,8 +228,8 @@ class MediaControlTests: QuickSpec {
                         coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.isHidden).toEventually(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
 
                     it("doesn't hide the media control after some time if the video is paused") {
@@ -249,8 +249,8 @@ class MediaControlTests: QuickSpec {
                         coreStub.trigger(InternalEvent.didExitFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.isHidden).toEventually(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
 
                     it("doesn't hide the media control after some time if the video is paused") {
@@ -269,8 +269,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activeContainer?.trigger(Event.disableMediaControl.rawValue)
 
-                        expect(mediaControl.isHidden).toEventually(beTrue())
-                        expect(mediaControl.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
                 }
 
@@ -280,8 +280,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activeContainer?.trigger(Event.enableMediaControl.rawValue)
 
-                        expect(mediaControl.isHidden).toEventually(beFalse())
-                        expect(mediaControl.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                     }
                 }
 
@@ -304,7 +304,7 @@ class MediaControlTests: QuickSpec {
                     mediaControl.render()
                     core.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.isHidden
+                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.show()
                     
@@ -317,11 +317,11 @@ class MediaControlTests: QuickSpec {
                     let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
-                    mediaControl.isHidden = true
+                    mediaControl.view.isHidden = true
                     
                     core.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.isHidden
+                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.show()
                     
@@ -339,7 +339,7 @@ class MediaControlTests: QuickSpec {
                     
                     core.on(Event.willHideMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.isHidden
+                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.hide()
                     
@@ -355,7 +355,7 @@ class MediaControlTests: QuickSpec {
                     
                     core.on(Event.didHideMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.isHidden
+                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.hide()
                     
