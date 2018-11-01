@@ -23,7 +23,7 @@ class SpinnerPluginTests: QuickSpec {
             describe("#init") {
 
                 it("sets the accessibilityIdentifier") {
-                    expect(spinnerPlugin.accessibilityIdentifier).to(equal("SpinnerPlugin"))
+                    expect(spinnerPlugin.view.accessibilityIdentifier).to(equal("SpinnerPlugin"))
                 }
 
                 it("sets the pluginName as spinner") {
@@ -35,11 +35,11 @@ class SpinnerPluginTests: QuickSpec {
                 }
 
                 it("sets isUserInteractionEnabled to false") {
-                    expect(spinnerPlugin.isUserInteractionEnabled).to(beFalse())
+                    expect(spinnerPlugin.view.isUserInteractionEnabled).to(beFalse())
                 }
 
                 it("has a UIActivityIndicatorView as subview") {
-                    expect(spinnerPlugin.subviews.contains(where: { $0 is UIActivityIndicatorView})).to(beTrue())
+                    expect(spinnerPlugin.view.subviews.contains(where: { $0 is UIActivityIndicatorView})).to(beTrue())
                 }
             }
 
@@ -47,7 +47,7 @@ class SpinnerPluginTests: QuickSpec {
                 it("removes from itself from superview") {
                     spinnerPlugin.destroy()
 
-                    expect(spinnerPlugin.superview).to(beNil())
+                    expect(spinnerPlugin.view.superview).to(beNil())
                 }
             }
 
@@ -58,7 +58,7 @@ class SpinnerPluginTests: QuickSpec {
                 }
 
                 it("hides the spinner") {
-                    expect(spinnerPlugin.isHidden).toEventually(beTrue())
+                    expect(spinnerPlugin.view.isHidden).toEventually(beTrue())
                 }
 
                 it("sets the isAnimating to false") {
@@ -73,7 +73,7 @@ class SpinnerPluginTests: QuickSpec {
                 }
 
                 it("hides the spinner") {
-                    expect(spinnerPlugin.isHidden).toEventually(beTrue())
+                    expect(spinnerPlugin.view.isHidden).toEventually(beTrue())
                 }
 
                 it("sets the isAnimating to false") {
@@ -88,7 +88,7 @@ class SpinnerPluginTests: QuickSpec {
                 }
 
                 it("hides the spinner") {
-                    expect(spinnerPlugin.isHidden).toEventually(beTrue())
+                    expect(spinnerPlugin.view.isHidden).toEventually(beTrue())
                 }
 
                 it("sets the isAnimating to false") {
@@ -103,7 +103,7 @@ class SpinnerPluginTests: QuickSpec {
                 }
 
                 it("hides the spinner") {
-                    expect(spinnerPlugin.isHidden).toEventually(beFalse())
+                    expect(spinnerPlugin.view.isHidden).toEventually(beFalse())
                 }
 
                 it("sets the isAnimating to false") {

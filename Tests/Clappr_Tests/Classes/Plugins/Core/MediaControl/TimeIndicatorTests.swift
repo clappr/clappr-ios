@@ -169,7 +169,7 @@ class TimeIndicatorTests: QuickSpec {
 
                 context("when user enters in fullscreen") {
                     it("update layout constants for medium screen") {
-                        coreStub.activeContainer?.frame = CGRect(x: 0, y: 0, width: 500, height: 0)
+                        coreStub.activeContainer?.view.frame = CGRect(x: 0, y: 0, width: 500, height: 0)
 
                         coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
 
@@ -180,7 +180,7 @@ class TimeIndicatorTests: QuickSpec {
 
                 context("when user leaves fullscreen") {
                     it("update layout constants for small screen") {
-                        coreStub.activeContainer?.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
+                        coreStub.activeContainer?.view.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
 
                         coreStub.trigger(InternalEvent.didExitFullscreen.rawValue)
 
