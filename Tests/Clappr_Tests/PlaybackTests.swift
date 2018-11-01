@@ -14,15 +14,15 @@ class PlaybackTests: QuickSpec {
             }
 
             it("set frame of Playback to CGRect.zero") {
-                expect(playback.frame) == CGRect.zero
+                expect(playback.view.frame) == CGRect.zero
             }
 
             it("set backgroundColor to clear") {
-                expect(playback.backgroundColor).to(beNil())
+                expect(playback.view.backgroundColor).to(beNil())
             }
 
             it("set isUserInteractionEnabled to false") {
-                expect(playback.isUserInteractionEnabled) == false
+                expect(playback.view.isUserInteractionEnabled) == false
             }
 
             it("have a play method") {
@@ -63,11 +63,11 @@ class PlaybackTests: QuickSpec {
 
             it("removed from superview when destroy is called") {
                 let container = UIView()
-                container.addSubview(playback)
+                container.addSubview(playback.view)
 
-                expect(playback.superview).toNot(beNil())
+                expect(playback.view.superview).toNot(beNil())
                 playback.destroy()
-                expect(playback.superview).to(beNil())
+                expect(playback.view.superview).to(beNil())
             }
 
             it("stop listening events after destroy has been called") {

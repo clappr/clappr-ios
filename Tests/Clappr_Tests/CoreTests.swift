@@ -35,11 +35,11 @@ class CoreTests: QuickSpec {
                 }
                 
                 it("set backgroundColor to black") {
-                    expect(core.backgroundColor) == .black
+                    expect(core.view.backgroundColor) == .black
                 }
 
                 it("set frame Rect to zero") {
-                    expect(core.frame) == CGRect.zero
+                    expect(core.view.frame) == CGRect.zero
                 }
 
                 it("save options passed on parameter") {
@@ -60,7 +60,7 @@ class CoreTests: QuickSpec {
                 #if os(iOS)
 
                 it("add gesture recognizer") {
-                    expect(core.gestureRecognizers?.count) > 0
+                    expect(core.view.gestureRecognizers?.count) > 0
                 }
 
                 #endif
@@ -81,7 +81,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
 
@@ -92,7 +92,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
 
@@ -109,7 +109,7 @@ class CoreTests: QuickSpec {
                         player.setFullscreen(true)
 
                         expect(callbackWasCalled).toEventually(beTrue())
-                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
@@ -128,8 +128,8 @@ class CoreTests: QuickSpec {
                         core.render()
 
                         expect(callbackWasCall).toEventually(beTrue())
-                        expect(core.parentView?.subviews.contains(core)).to(beFalse())
-                        expect(core.fullscreenController?.view.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beFalse())
+                        expect(core.fullscreenController?.view.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beTrue())
                     }
 
@@ -140,7 +140,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
 
@@ -151,7 +151,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
                 }
@@ -173,13 +173,13 @@ class CoreTests: QuickSpec {
                         it("removes core from parentView") {
                             core.setFullscreen(true)
 
-                            expect(core.parentView?.subviews.contains(core)).to(beFalse())
+                            expect(core.parentView?.subviews.contains(core.view)).to(beFalse())
                         }
 
                         it("sets core as subview of fullscreenController") {
                             core.setFullscreen(true)
 
-                            expect(core.fullscreenController?.view.subviews.contains(core)).to(beTrue())
+                            expect(core.fullscreenController?.view.subviews.contains(core.view)).to(beTrue())
                         }
 
                         it("set isFullscreen to true") {
@@ -227,7 +227,7 @@ class CoreTests: QuickSpec {
                             core.setFullscreen(true)
                             core.setFullscreen(true)
 
-                            expect(core.fullscreenController?.view.subviews.filter { $0 == core }.count).to(equal(1))
+                            expect(core.fullscreenController?.view.subviews.filter { $0 == core.view }.count).to(equal(1))
                         }
                     }
 
@@ -268,7 +268,7 @@ class CoreTests: QuickSpec {
                         it("sets core as subview of core.parentView") {
                             core.setFullscreen(false)
 
-                            expect(core.parentView?.subviews).to(contain(core))
+                            expect(core.parentView?.subviews).to(contain(core.view))
                         }
 
                         it("removes core as subview of fullscreenController") {
@@ -281,7 +281,7 @@ class CoreTests: QuickSpec {
                             core.setFullscreen(false)
                             core.setFullscreen(false)
 
-                            expect(core.parentView?.subviews.filter { $0 == core }.count).to(equal(1))
+                            expect(core.parentView?.subviews.filter { $0 == core.view }.count).to(equal(1))
                         }
                     }
                 }
@@ -409,7 +409,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
                 }
@@ -423,7 +423,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(core.parentView?.subviews.contains(core)).to(beTrue())
+                        expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beFalse())
                     }
 
@@ -439,7 +439,7 @@ class CoreTests: QuickSpec {
                         player.setFullscreen(true)
 
                         expect(callbackWasCalled).toEventually(beTrue())
-                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
@@ -458,7 +458,7 @@ class CoreTests: QuickSpec {
                         player.setFullscreen(true)
 
                         expect(callbackWasCalled).toEventually(beTrue())
-                        expect(player.core!.parentView?.subviews.contains(core)).to(beFalse())
+                        expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
@@ -635,7 +635,7 @@ class CoreTests: QuickSpec {
                     core.addPlugin(plugin)
                     core.render()
 
-                    expect(plugin.superview).to(equal(core))
+                    expect(plugin.view.superview).to(equal(core.view))
                 }
                 
                 #if os(iOS)
@@ -646,7 +646,7 @@ class CoreTests: QuickSpec {
                     core.addPlugin(plugin)
                     core.render()
                     
-                    expect(plugin.superview).to(beNil())
+                    expect(plugin.view.superview).to(beNil())
                 }
                 
                 it("calls the mediacontrol to add the plugins into the panels") {
@@ -670,8 +670,9 @@ class CoreTests: QuickSpec {
 
                     core.render()
 
-                    expect(core.subviews.first).to(beAKindOf(Container.self))
-                    expect(core.subviews[1]).to(beAKindOf(FakeCorePlugin.self))
+                    expect(core.view.subviews.count).to(equal(2))
+                    expect(core.view.subviews.first?.accessibilityIdentifier).to(equal("Container"))
+                    expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
             }
         }
