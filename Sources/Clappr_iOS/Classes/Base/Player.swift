@@ -165,11 +165,7 @@ open class Player: BaseObject {
     
     public static func register(plugins: [Plugin.Type]) {
         if !hasAlreadyRegisteredPlugins {
-            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
-
-            #if os (iOS)
-            builtInPlugins.append(contentsOf: [PosterPlugin.self, SpinnerPlugin.self])
-            #endif
+            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self, PosterPlugin.self, SpinnerPlugin.self]
 
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true
