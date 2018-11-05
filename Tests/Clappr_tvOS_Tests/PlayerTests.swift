@@ -13,11 +13,12 @@ class PlayerTests: QuickSpec {
             let options = [kSourceUrl: "http://clappr.com/video.mp4"]
             
             var player: Player!
-            var playback: StubPlayback!
+            var playback: Playback!
             
             beforeEach {
+                Loader.shared.resetPlugins()
                 player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
-                playback = player.activePlayback as! StubPlayback
+                playback = player.activePlayback
             }
             
             it("Should load source on core when initializing") {
@@ -69,6 +70,14 @@ class PlayerTests: QuickSpec {
                 
                 playback.trigger(.audioSelected)
                 expect(callbackWasCalled).to(beTrue())
+            }
+
+            it("contains AVFoundationPlayback") {
+                Loader.shared.resetPlugins()
+                Player.hasAlreadyRegisteredPlugins = false
+                _ = Player(options: options)
+
+                expect(Loader.shared.playbacks.first).to(be(AVFoundationPlayback.self))
             }
         }
     }
