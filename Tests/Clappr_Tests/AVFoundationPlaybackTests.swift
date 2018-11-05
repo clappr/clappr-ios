@@ -982,13 +982,14 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when seek is called") {
                         it("keeps playing") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.seek(10)
 
                             expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
                         }
                     }
 
@@ -1030,14 +1031,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#paused") {
                     context("when playing is called") {
                         it("changes isPlaying to true") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.pause()
                             playback.play()
 
                             expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
                         }
                     }
 
@@ -1120,12 +1122,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when is likely to keep up") {
                         it("has isPlaying as true") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             
                             expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
                         }
                     }
                 }
