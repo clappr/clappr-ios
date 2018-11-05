@@ -1,4 +1,4 @@
-open class Core: UIBaseObject, UIGestureRecognizerDelegate {
+open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }

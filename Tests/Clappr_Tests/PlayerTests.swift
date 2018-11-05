@@ -313,7 +313,7 @@ class PlayerTests: QuickSpec {
     class LoggerPlugin: UICorePlugin {
         override var pluginName: String { return "Logger" }
 
-        required init(context: UIBaseObject) {
+        required init(context: UIObject) {
             super.init(context: context)
             bindEvents()
         }

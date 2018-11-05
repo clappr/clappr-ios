@@ -1,6 +1,6 @@
 import Foundation
 
-open class Container: UIBaseObject {
+open class Container: UIObject {
     @objc internal(set) open var plugins: [UIContainerPlugin] = []
     @objc open var sharedData = SharedData()
     @objc open var options: Options {

@@ -1,6 +1,6 @@
 import AVFoundation
 
-open class Playback: UIBaseObject, Plugin {
+open class Playback: UIObject, Plugin {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {
@@ -76,7 +76,7 @@ open class Playback: UIBaseObject, Plugin {
         view.isUserInteractionEnabled = false
     }
 
-    @objc public required init(context _: UIBaseObject) {
+    @objc public required init(context _: UIObject) {
         fatalError("Use init(url: NSURL) instead")
     }
 
