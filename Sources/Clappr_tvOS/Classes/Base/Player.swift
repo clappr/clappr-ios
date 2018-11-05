@@ -129,7 +129,7 @@ open class Player: UIViewController, BaseObject {
 
     public static func register(plugins: [Plugin.Type]) {
         if !hasAlreadyRegisteredPlugins {
-            var builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
+            let builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
 
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true
