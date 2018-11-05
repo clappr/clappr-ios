@@ -32,7 +32,7 @@ open class PlayButton: MediaControlPlugin {
         }
     }
 
-    required public init(context: UIBaseObject) {
+    required public init(context: UIObject) {
         super.init(context: context)
         bindEvents()
     }
