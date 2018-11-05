@@ -238,6 +238,7 @@ class ContainerTests: QuickSpec {
                 }
 
                 it("keep just one playback as subview at time") {
+                    Loader.shared.resetPlugins()
                     let container = Container()
                     container.load("anyVideo")
                     expect(container.view.subviews.count).to(equal(1))
