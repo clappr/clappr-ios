@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -115,7 +115,6 @@
                     </subviews>
                     <gestureRecognizers/>
                     <constraints>
-                        <constraint firstItem="ou5-JO-feR" firstAttribute="centerX" secondItem="UvE-Ry-POo" secondAttribute="centerX" id="2cK-V4-Aah"/>
                         <constraint firstAttribute="height" constant="37" id="3EJ-3P-xRv"/>
                         <constraint firstItem="PGN-FD-fyI" firstAttribute="centerY" secondItem="miA-SA-EgP" secondAttribute="centerY" id="994-OJ-fo7"/>
                         <constraint firstItem="UvE-Ry-POo" firstAttribute="centerY" secondItem="PGN-FD-fyI" secondAttribute="centerY" id="AHC-ZX-rHb"/>
@@ -127,6 +126,7 @@
                         <constraint firstItem="miA-SA-EgP" firstAttribute="centerY" secondItem="Xya-wK-sAi" secondAttribute="centerY" id="Ok6-eH-y6F"/>
                         <constraint firstItem="Xya-wK-sAi" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="r1g-J7-Fwf"/>
                         <constraint firstItem="UvE-Ry-POo" firstAttribute="leading" secondItem="Xya-wK-sAi" secondAttribute="leading" id="rjc-OF-b6A"/>
+                        <constraint firstItem="ou5-JO-feR" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="waL-kK-ffP"/>
                     </constraints>
                 </view>
             </subviews>
@@ -149,6 +149,7 @@
                 <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
                 <outlet property="seekBarContainerView" destination="ag5-Ow-Xfy" id="5re-sz-EGh"/>
                 <outlet property="timeLabel" destination="d4I-GR-npi" id="YGH-uj-NOM"/>
+                <outlet property="timeLabelPosition" destination="waL-kK-ffP" id="BOp-I9-kcf"/>
                 <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="-335"/>

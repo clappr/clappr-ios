@@ -54,13 +54,14 @@ class SeekbarView: UIView {
         seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
         adjustScrubberConstraints()
         updateTimeLabel(relativeTo: scrubberPosition.constant)
+        moveTimeLabel(relativeTo: touchPoint.x, state: .moved)
     }
 
     func updateScrubber(time: CGFloat) {
         if !isSeeking && videoDuration > 0 {
-            let haltScrubberWidth = scrubberInitialWidth / 2
-            let minBoundPosition =  -haltScrubberWidth
-            let maxBoundPosition = seekBarContainerView.frame.width + haltScrubberWidth
+            let halfScrubberWidth = scrubberInitialWidth / 2
+            let minBoundPosition =  -halfScrubberWidth
+            let maxBoundPosition = seekBarContainerView.frame.width + halfScrubberWidth
 
             var position = (time / videoDuration) * (seekBarContainerView.frame.width)
 
@@ -69,7 +70,7 @@ class SeekbarView: UIView {
             } else if position < minBoundPosition {
                 position = minBoundPosition
             }
-            scrubberPosition.constant = position - haltScrubberWidth
+            scrubberPosition.constant = position - halfScrubberWidth
             progressBarWidthConstraint?.constant = position
 
             timeLabel.text = ClapprDateFormatter.formatSeconds(TimeInterval(time))
@@ -77,11 +78,11 @@ class SeekbarView: UIView {
     }
 
     private func moveScrubber(relativeTo horizontalTouchPoint: CGFloat) {
-        let haltScrubberWidth = scrubberInitialWidth / 2
-        let minBoundPosition =  -haltScrubberWidth
-        let maxBoundPosition = seekBarContainerView.frame.width - haltScrubberWidth
+        let halfScrubberWidth = scrubberInitialWidth / 2
+        let minBoundPosition =  -halfScrubberWidth
+        let maxBoundPosition = seekBarContainerView.frame.width - halfScrubberWidth
 
-        var position = horizontalTouchPoint - haltScrubberWidth
+        var position = horizontalTouchPoint - halfScrubberWidth
 
         if position <= minBoundPosition {
             position = minBoundPosition
@@ -90,16 +91,18 @@ class SeekbarView: UIView {
         }
 
         scrubberPosition.constant = position
-        progressBarWidthConstraint?.constant = position + haltScrubberWidth
+        progressBarWidthConstraint?.constant = position + halfScrubberWidth
+        moveTimeLabel(relativeTo: horizontalTouchPoint, state: .moved)
     }
     
     private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
         if state == .moved {
             timeLabelView.isHidden = false
-            var position = scrubberPosition.constant - timeLabelView.frame.width / 2 + scrubber.frame.width / 2
+            let halfTimeLabelView: CGFloat = timeLabelView.frame.width / 2
+            var position = horizontalTouchPoint - halfTimeLabelView
             if position <= 0 {
                 position = 0
-            } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width {
+            } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width  {
                 position = seekBarContainerView.frame.width - timeLabelView.frame.width
             }
             timeLabelPosition.constant = position
