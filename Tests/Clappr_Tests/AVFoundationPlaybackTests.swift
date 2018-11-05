@@ -945,11 +945,13 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when play is called") {
                         it("changes isPlaying to true") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
                             playback.play()
 
                             expect(playback.isPlaying).to(beTrue())
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
                         }
                     }
 
