@@ -25,10 +25,6 @@ open class UICorePlugin: UIPlugin, Plugin {
         }
     }
 
-    public required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "UICorePlugin")
         Logger.logDebug("destroying listeners", scope: "UICorePlugin")
