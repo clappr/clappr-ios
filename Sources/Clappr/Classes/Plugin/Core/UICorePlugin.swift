@@ -16,7 +16,7 @@ open class UICorePlugin: UIPlugin, Plugin {
         super.init()
     }
 
-    @objc public required init(context: UIBaseObject) {
+    @objc public required init(context: UIObject) {
         super.init()
         if let core = context as? Core {
             self.core = core

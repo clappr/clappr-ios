@@ -1,3 +1,3 @@
-open class UIPlugin: UIBaseObject, UIObject {
+open class UIPlugin: UIObject {
 
 }

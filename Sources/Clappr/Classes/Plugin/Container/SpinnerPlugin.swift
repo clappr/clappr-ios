@@ -14,7 +14,7 @@ open class SpinnerPlugin: UIContainerPlugin {
         return "spinner"
     }
 
-    public required init(context: UIBaseObject) {
+    public required init(context: UIObject) {
         super.init(context: context)
         spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         view.addSubview(spinningWheel)
