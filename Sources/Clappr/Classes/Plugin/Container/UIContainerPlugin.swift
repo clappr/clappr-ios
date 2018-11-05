@@ -16,7 +16,7 @@ open class UIContainerPlugin: UIPlugin, Plugin {
         super.init()
     }
 
-    @objc public required init(context: UIBaseObject) {
+    @objc public required init(context: UIObject) {
         super.init()
         if let container = context as? Container {
             self.container = container

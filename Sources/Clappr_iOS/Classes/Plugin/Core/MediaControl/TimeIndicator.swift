@@ -64,7 +64,7 @@ open class TimeIndicator: MediaControlPlugin {
         return core?.activePlayback
     }
 
-    required public init(context: UIBaseObject) {
+    required public init(context: UIObject) {
         super.init(context: context)
         stopListening()
         bindEvents()

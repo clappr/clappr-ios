@@ -207,7 +207,7 @@ open class AVFoundationPlayback: Playback {
         super.init()
     }
 
-    public required init(context _: UIBaseObject) {
+    public required init(context _: UIObject) {
         fatalError("init(context:) has not been implemented")
     }
 

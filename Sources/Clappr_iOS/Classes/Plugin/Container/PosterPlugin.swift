@@ -12,7 +12,7 @@ open class PosterPlugin: UIContainerPlugin {
         super.init()
     }
 
-    public required init(context: UIBaseObject) {
+    public required init(context: UIObject) {
         super.init(context: context)
         view.translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .scaleAspectFit

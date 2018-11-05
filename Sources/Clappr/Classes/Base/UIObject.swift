@@ -1,3 +1,0 @@
-protocol UIObject {
-    func render()
-}
