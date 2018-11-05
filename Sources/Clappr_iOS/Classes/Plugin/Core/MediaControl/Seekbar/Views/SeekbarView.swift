@@ -72,7 +72,7 @@ class SeekbarView: UIView {
             scrubberPosition.constant = position - haltScrubberWidth
             progressBarWidthConstraint?.constant = position
 
-            updateTimeLabel(relativeTo: scrubberPosition.constant)
+            timeLabel.text = ClapprDateFormatter.formatSeconds(TimeInterval(time))
         }
     }
 
@@ -139,8 +139,8 @@ class SeekbarView: UIView {
     }
     
     private func seconds(relativeTo scrubberPosition: CGFloat) -> Double {
-        let width = seekBarContainerView.frame.width - scrubber.frame.width
-        let positionPercentage = max(0, min(scrubberPosition / width, 1))
+        let width = seekBarContainerView.frame.width
+        let positionPercentage = max(0, min((scrubberPosition + scrubberInitialWidth / 2) / width, 1))
         return Double(videoDuration * positionPercentage)
     }
 
