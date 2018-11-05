@@ -74,10 +74,6 @@ open class TimeIndicator: MediaControlPlugin {
         super.init()
     }
 
-    required public init?(coder argument: NSCoder) {
-        super.init(coder: argument)
-    }
-
     private func bindEvents() {
         bindContainerEvents()
         bindPlaybackEvents()
