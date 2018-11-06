@@ -38,7 +38,7 @@ class SeekbarViewTests: QuickSpec {
                 }
 
                 it("doesn't move the scrubber if it's a live video") {
-                    let scrubberAtTheEnd: CGFloat = 355
+                    let scrubberAtTheEnd: CGFloat = 356.5
                     let seekbarView: SeekbarView = .fromNib()
                     seekbarView.videoDuration = 100
                     seekbarView.scrubberPosition.constant = 0
@@ -56,11 +56,11 @@ class SeekbarViewTests: QuickSpec {
 
                     seekbarView.updateScrubber(time: -50)
 
-                    expect(seekbarView.scrubberPosition.constant).to(equal(0))
+                    expect(seekbarView.scrubberPosition.constant).to(equal(-18.5))
                 }
 
                 it("goes to the end if the end value is bigger than duration") {
-                    let scrubberAtTheEnd: CGFloat = 355
+                    let scrubberAtTheEnd: CGFloat = 356.5
                     let seekbarView: SeekbarView = .fromNib()
                     seekbarView.videoDuration = 100
                     seekbarView.scrubberPosition.constant = 0
@@ -84,14 +84,6 @@ class SeekbarViewTests: QuickSpec {
             }
 
             context("when is live") {
-                it("has the scrubber with red color") {
-                    let seekbarView: SeekbarView = .fromNib()
-
-                    seekbarView.isLive = true
-
-                    expect(seekbarView.scrubber.backgroundColor).to(equal(UIColor.red))
-                }
-
                 it("has the progress bar with red color") {
                     let seekbarView: SeekbarView = .fromNib()
 
@@ -113,25 +105,17 @@ class SeekbarViewTests: QuickSpec {
 
                     seekbarView.isLive = true
 
-                    expect(seekbarView.scrubberPosition.constant).to(equal(355))
+                    expect(seekbarView.scrubberPosition.constant).to(equal(356.5))
                 }
             }
 
             context("when is VOD") {
-                it("has the scrubber with red color") {
-                    let seekbarView: SeekbarView = .fromNib()
-
-                    seekbarView.isLive = false
-
-                    expect(seekbarView.scrubber.backgroundColor).to(equal(UIColor.white))
-                }
-
                 it("has the progress bar with red color") {
                     let seekbarView: SeekbarView = .fromNib()
 
                     seekbarView.isLive = false
 
-                    expect(seekbarView.progressBar.backgroundColor).to(equal(UIColor.white))
+                    expect(seekbarView.progressBar.backgroundColor).to(equal(UIColor.blue))
                 }
 
                 it("doesn't has user interaction enabled") {
@@ -165,7 +149,7 @@ class SeekbarViewTests: QuickSpec {
                         dragDetectorStub.touch(x: seekbarEnd, y: 0)
                         seekbarView.handleSeekbarViewTouch(dragDetectorStub)
 
-                        expect(seekbarView.scrubberPosition.constant).to(equal(355))
+                        expect(seekbarView.scrubberPosition.constant).to(equal(356.5))
                     }
                 }
 
@@ -177,7 +161,7 @@ class SeekbarViewTests: QuickSpec {
                         dragDetectorStub.touch(x: 40, y: 0)
                         seekbarView.handleSeekbarViewTouch(dragDetectorStub)
 
-                        expect(seekbarView.scrubberPosition.constant).to(equal(30))
+                        expect(seekbarView.scrubberPosition.constant).to(equal(21.5))
                     }
                 }
 
@@ -190,19 +174,6 @@ class SeekbarViewTests: QuickSpec {
                         seekbarView.handleSeekbarViewTouch(dragDetectorStub)
 
                         expect(seekbarView.isSeeking).to(beTrue())
-                    }
-
-                    it("calls delegate when begin scrubbing") {
-                        let seekbarView: SeekbarView = .fromNib()
-                        let dragDetectorStub = DragDetectorViewStub()
-                        let seekBarDelegate = SeekbarDelegateMock()
-                        seekbarView.delegate = seekBarDelegate
-
-                        dragDetectorStub.touch(x: 45.5, y: 0)
-                        dragDetectorStub.touch(state: .began)
-                        seekbarView.handleSeekbarViewTouch(dragDetectorStub)
-
-                        expect(seekBarDelegate.didCallWillBeginScrubbing).to(beTrue())
                     }
                 }
 
@@ -259,22 +230,6 @@ class SeekbarViewTests: QuickSpec {
                     seekbarView.layoutSubviews()
 
                     expect(seekbarView.seekBarContainerView.frame.width).to(equal(100))
-                }
-
-                context("when is live") {
-                    context("when dvr is disabled") {
-                        it("puts the scrubber at the end") {
-                            let seekbarView: SeekbarView = .fromNib()
-                            seekbarView.isLive = true
-                            seekbarView.seekBarContainerView.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
-                            seekbarView.scrubber.frame = CGRect(x: 0, y: 0, width: 10, height: 0)
-                            seekbarView.scrubberPosition.constant = 50
-
-                            seekbarView.layoutSubviews()
-
-                            expect(seekbarView.scrubberPosition.constant).to(equal(190))
-                        }
-                    }
                 }
 
                 context("when is vod") {

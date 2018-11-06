@@ -68,7 +68,7 @@ class SeekbarView: UIView {
     }
 
     func updateScrubber(time: CGFloat) {
-        guard videoDuration > 0 else { return }
+        guard videoDuration > 0, !isLive else { return }
 
         let position = (time / videoDuration) * (seekBarContainerView.frame.width)
         moveScrubber(relativeTo: position)
@@ -151,7 +151,7 @@ class SeekbarView: UIView {
     }
 
     private func putScrubberAtTheEnd() {
-        scrubberPosition.constant = seekBarContainerView.frame.width - scrubber.frame.width
+        scrubberPosition.constant = seekBarContainerView.frame.width - scrubber.frame.width / 2
     }
 
     private func setupVODStyle() {
