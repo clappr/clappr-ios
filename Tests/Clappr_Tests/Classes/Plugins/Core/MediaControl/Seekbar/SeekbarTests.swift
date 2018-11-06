@@ -253,17 +253,6 @@ class SeekbarTests: QuickSpec {
                     }
                 }
 
-                context("when a seek is started") {
-                    it("informs seekbarview") {
-                        seekbarViewMock = SeekbarViewMock()
-                        seekbar.seekbarView = seekbarViewMock
-
-                        coreStub.activePlayback?.trigger(Event.willSeek)
-
-                        expect(seekbarViewMock.isSeeking).to(beTrue())
-                    }
-                }
-
                 context("when a seekable time is updated in DVR mode") {
                     it("updates the seekbarview position") {
                         seekbarViewMock = SeekbarViewMock()
@@ -277,17 +266,6 @@ class SeekbarTests: QuickSpec {
                     }
                 }
 
-                context("when a seek is completed") {
-                    it("informs seekbarview") {
-                        seekbarViewMock = SeekbarViewMock()
-                        seekbar.seekbarView = seekbarViewMock
-                        seekbarViewMock.isSeeking = true
-
-                        coreStub.activePlayback?.trigger(Event.didSeek)
-
-                        expect(seekbarViewMock.isSeeking).to(beFalse())
-                    }
-                }
             }
         }
     }
