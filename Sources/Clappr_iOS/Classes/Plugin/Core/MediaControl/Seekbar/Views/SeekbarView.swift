@@ -74,6 +74,7 @@ class SeekbarView: UIView {
             progressBarWidthConstraint?.constant = position
 
             timeLabel.text = ClapprDateFormatter.formatSeconds(TimeInterval(time))
+            moveTimeLabel(relativeTo: position, state: .moved)
         }
     }
 
