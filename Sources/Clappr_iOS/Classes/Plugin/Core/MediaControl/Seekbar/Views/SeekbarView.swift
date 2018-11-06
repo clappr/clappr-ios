@@ -34,78 +34,76 @@ class SeekbarView: UIView {
     
     var isLive = false {
         didSet {
-            setupStyle()
+            isLive ? setupLiveStyle() : setupVODStyle()
         }
     }
 
-    var seekbarWidth: CGFloat = 0
     var videoDuration: CGFloat = 0
     var isSeeking = false
-    var scrubberInitialWidth: CGFloat = 0.0
-    var scrubberInitialHeight: CGFloat = 0.0
-    
+
     weak var delegate: SeekbarDelegate?
 
-    @objc func handleSeekbarViewTouch(_ view: DragDetectorView) {
-        guard let touch = view.currentTouch else { return }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        isLive ? putScrubberAtTheEnd() : repositionUIElements()
+    }
 
-        let touchPoint = touch.location(in: seekBarContainerView)
+    @objc func handleSeekbarViewTouch(_ view: DragDetectorView) {
+        guard let touchPoint = view.currentTouch?.location(in: seekBarContainerView) else { return }
+
         moveScrubber(relativeTo: touchPoint.x)
-        seeking(relativeTo: scrubberPosition.constant, state: view.touchState)
-        adjustScrubberConstraints()
-        updateTimeLabel(relativeTo: scrubberPosition.constant)
-        moveTimeLabel(relativeTo: touchPoint.x, state: .moved)
+
+        switch view.touchState {
+        case .began, .moved, .idle:
+            setOuterScrubberSize(outerCircleSizeFactor: 1.5, outerCircleBorderWidth: 1.0)
+            isSeeking = true
+        case .ended:
+            delegate?.seek(seconds(relativeTo: scrubberPosition.constant))
+            isSeeking = false
+            setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
+        case .canceled:
+            isSeeking = false
+            setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
+        }
     }
 
     func updateScrubber(time: CGFloat) {
-        if !isSeeking && videoDuration > 0 {
-            let halfScrubberWidth = scrubberInitialWidth / 2
-            let minBoundPosition =  -halfScrubberWidth
-            let maxBoundPosition = seekBarContainerView.frame.width + halfScrubberWidth
+        guard videoDuration > 0 else { return }
 
-            var position = (time / videoDuration) * (seekBarContainerView.frame.width)
-
-            if position > maxBoundPosition {
-                position = maxBoundPosition
-            } else if position < minBoundPosition {
-                position = minBoundPosition
-            }
-            scrubberPosition.constant = position - halfScrubberWidth
-            progressBarWidthConstraint?.constant = position
-
-            timeLabel.text = ClapprDateFormatter.formatSeconds(TimeInterval(time))
-            moveTimeLabel(relativeTo: position, state: .moved)
-        }
+        let position = (time / videoDuration) * (seekBarContainerView.frame.width)
+        moveScrubber(relativeTo: position)
     }
 
-    private func moveScrubber(relativeTo horizontalTouchPoint: CGFloat) {
-        let halfScrubberWidth = scrubberInitialWidth / 2
+    private func moveScrubber(relativeTo position: CGFloat) {
+        let halfScrubberWidth = scrubber.frame.width / 2
         let minBoundPosition =  -halfScrubberWidth
         let maxBoundPosition = seekBarContainerView.frame.width - halfScrubberWidth
 
-        var position = horizontalTouchPoint - halfScrubberWidth
-
-        if position <= minBoundPosition {
-            position = minBoundPosition
-        } else if position > maxBoundPosition {
-            position = maxBoundPosition
+        var axisScrubberPosition = position - halfScrubberWidth
+        if axisScrubberPosition <= minBoundPosition {
+            axisScrubberPosition = minBoundPosition
+        } else if axisScrubberPosition > maxBoundPosition {
+            axisScrubberPosition = maxBoundPosition
         }
 
-        scrubberPosition.constant = position
-        progressBarWidthConstraint?.constant = position + halfScrubberWidth
-        moveTimeLabel(relativeTo: horizontalTouchPoint, state: .moved)
+        scrubberPosition.constant = axisScrubberPosition
+        progressBarWidthConstraint?.constant = axisScrubberPosition + halfScrubberWidth
+        updateTimeLabel(relativeTo: scrubberPosition.constant)
+        moveTimeLabel(relativeTo: position, state: .moved)
     }
     
     private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
         if state == .moved {
             timeLabelView.isHidden = false
             let halfTimeLabelView: CGFloat = timeLabelView.frame.width / 2
+
             var position = horizontalTouchPoint - halfTimeLabelView
             if position <= 0 {
                 position = 0
             } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width  {
                 position = seekBarContainerView.frame.width - timeLabelView.frame.width
             }
+
             timeLabelPosition.constant = position
         } else {
             timeLabelView.isHidden = true
@@ -118,65 +116,29 @@ class SeekbarView: UIView {
     }
 
     func updateBuffer(time: CGFloat) {
-        if videoDuration > 0 {
-            bufferWidth.constant = (time / videoDuration) * seekBarContainerView.frame.width
-        }
+        guard videoDuration > 0 else { return }
+        bufferWidth.constant = (time / videoDuration) * seekBarContainerView.frame.width
     }
 
-    private func seeking(relativeTo scrubberPosition: CGFloat, state: DragDetectorView.State) {
-        switch state {
-        case .ended:
-            delegate?.seek(seconds(relativeTo: scrubberPosition))
-            isSeeking = false
-        case .canceled:
-            isSeeking = false
-        default:
-            isSeeking = true
-        }
-    }
-
-    private func adjustScrubberConstraints() {
-        scrubberOuterCircleHeightConstraint?.constant = isSeeking ? scrubberInitialHeight * 1.5 : scrubberInitialHeight
-        scrubberOuterCircleWidthConstraint?.constant = isSeeking ? scrubberInitialWidth * 1.5 : scrubberInitialWidth
-        scrubberOuterCircle?.layer.cornerRadius = isSeeking ? scrubberInitialWidth * 1.5 / 2 : scrubberInitialWidth / 2
-        scrubberOuterCircle?.layer.borderWidth = isSeeking ? 1.0 : 0
+    private func setOuterScrubberSize(outerCircleSizeFactor: CGFloat, outerCircleBorderWidth: CGFloat) {
+        scrubberOuterCircleHeightConstraint?.constant = scrubber.frame.height * outerCircleSizeFactor
+        scrubberOuterCircleWidthConstraint?.constant = scrubber.frame.width * outerCircleSizeFactor
+        scrubberOuterCircle?.layer.cornerRadius = scrubber.frame.width * outerCircleSizeFactor / 2
+        scrubberOuterCircle?.layer.borderWidth = outerCircleBorderWidth
     }
     
     private func seconds(relativeTo scrubberPosition: CGFloat) -> Double {
         let width = seekBarContainerView.frame.width
-        let positionPercentage = max(0, min((scrubberPosition + scrubberInitialWidth / 2) / width, 1))
+        let positionPercentage = max(0, min((scrubberPosition + scrubber.frame.width / 2) / width, 1))
         return Double(videoDuration * positionPercentage)
     }
 
     private func repositionUIElements() {
-        if seekbarWidth > 0 {
-            let halfScrubberWidth = scrubberInitialWidth / 2
-            let previousPercentPosition = scrubberPosition.constant / seekbarWidth
-            let newPercentPosition = previousPercentPosition * seekBarContainerView.frame.width
-            moveScrubber(relativeTo: newPercentPosition)
-        }
-    }
+        guard seekBarContainerView.frame.width > 0 else { return }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if isLive {
-            putScrubberAtTheEnd()
-        } else {
-            repositionUIElements()
-        }
-
-        seekbarWidth = seekBarContainerView.frame.width
-
-        scrubberInitialWidth = scrubberOuterCircleWidthConstraint?.constant ?? 0
-        scrubberInitialHeight = scrubberOuterCircleHeightConstraint?.constant ?? 0
-    }
-
-    private func setupStyle() {
-        if isLive {
-            setupLiveStyle()
-        } else {
-            setupVODStyle()
-        }
+        let previousPercentPosition = scrubberPosition.constant / seekBarContainerView.frame.width
+        let newPercentPosition = previousPercentPosition * seekBarContainerView.frame.width
+        moveScrubber(relativeTo: newPercentPosition)
     }
 
     private func setupLiveStyle() {
