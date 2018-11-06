@@ -70,11 +70,13 @@ class Seekbar: MediaControlPlugin {
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.setVideoProperties() }
-            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] _ in self?.updateElapsedTime() }
+            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] _ in
+                if let isSeeking = self?.seekbarView.isSeeking, !isSeeking {
+                    self?.updateElapsedTime()
+                }
+            }
             listenTo(playback, eventName: Event.seekableUpdate.rawValue) { [weak self] _ in self?.updateElapsedTime() }
             listenTo(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateBuffer(info) }
-            listenTo(playback, eventName: Event.willSeek.rawValue) { [weak self] _ in self?.seekbarView.isSeeking = true }
-            listenTo(playback, eventName: Event.didSeek.rawValue) { [weak self] _ in self?.seekbarView.isSeeking = false }
         }
     }
 
@@ -119,7 +121,7 @@ class Seekbar: MediaControlPlugin {
 extension Seekbar: SeekbarDelegate {
     func seek(_ timeInterval: TimeInterval) {
         if shouldSyncLive(timeInterval) {
-            watchLive()
+            activePlayback?.seekToLivePosition()
         } else {
             activePlayback?.seek(timeInterval)
         }
@@ -127,9 +129,5 @@ extension Seekbar: SeekbarDelegate {
 
     private func shouldSyncLive(_ timeInterval: TimeInterval) -> Bool {
         return timeInterval == activePlayback?.duration
-    }
-
-    private func watchLive() {
-        activePlayback?.seekToLivePosition()
     }
 }
