@@ -108,7 +108,7 @@ open class TimeIndicator: MediaControlPlugin {
     }
 
     private func updateElapsedTime(_ info: EventUserInfo) {
-        guard let position = info!["position"] as? TimeInterval else { return }
+        guard let position = info?["position"] as? TimeInterval else { return }
         elapsedTimeLabel?.text = ClapprDateFormatter.formatSeconds(position)
     }
 
