@@ -445,6 +445,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {

@@ -81,7 +81,7 @@ open class Player: BaseObject {
              Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
              Event.positionUpdate.rawValue, Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
              Event.seek.rawValue, Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
 

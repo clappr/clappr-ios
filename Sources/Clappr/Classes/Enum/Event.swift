@@ -17,7 +17,7 @@ public enum Event: String, CaseIterable {
     case willStop
     case didStop
     case error
-    case airPlayStatusUpdate
+    case didUpdateAirPlayStatus
     case requestFullscreen
     case exitFullscreen
     case requestPosterUpdate
@@ -41,4 +41,6 @@ public enum Event: String, CaseIterable {
     case positionUpdate
     @available(*, deprecated, message: "Update to didUpdateBuffer")
     case bufferUpdate
+    @available(*, deprecated, message: "Update to didUpdateAirPlayStatus")
+    case airPlayStatusUpdate
 }

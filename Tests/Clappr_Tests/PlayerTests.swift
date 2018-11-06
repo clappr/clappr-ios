@@ -97,11 +97,11 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle airPlayStatusUpdate event") {
-                        player.on(.airPlayStatusUpdate) { _ in
+                    it("calls a callback function to handle didUpdateAirPlayStatus event") {
+                        player.on(.didUpdateAirPlayStatus) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.airPlayStatusUpdate)
+                        playback.trigger(.didUpdateAirPlayStatus)
 
                         expect(callbackWasCalled).to(beTrue())
                     }
