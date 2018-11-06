@@ -1,4 +1,4 @@
-public enum Event: String {
+public enum Event: String, CaseIterable {
     case bufferUpdate
     case positionUpdate
     case ready

@@ -1163,7 +1163,30 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-            
+
+            describe("#state machine events") {
+                context("when playback is running") {
+                    it("triggers events following the state machine pattern") {
+                        let expectedEvents: [Event] = [.ready, .willPlay,.stalled, .willPlay, .playing, .willPause, .didPause]
+                        var triggeredEvents = [Event]()
+                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://localhost:8080/sample.m3u8"])
+                        let unwantedEvents: [Event] = [.bufferUpdate, .positionUpdate, .seekableUpdate, .audioAvailable, .subtitleAvailable, .didChangeDvrAvailability]
+                        for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
+                            playback.on(event.rawValue) { _ in
+                                triggeredEvents.append(event)
+                            }
+                        }
+
+                        playback.play()
+                        playback.on(Event.playing.rawValue) { _ in
+                            playback.pause()
+                        }
+
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 15)
+                    }
+                }
+            }
+
             #if os(tvOS)
             describe("#loadMetadata") {
                 
