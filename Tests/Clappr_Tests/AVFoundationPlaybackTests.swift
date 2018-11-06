@@ -949,9 +949,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
-
-                            expect(playback.isPlaying).to(beTrue())
+                            
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
                             expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPlaying).to(beTrue())
                         }
                     }
 
@@ -961,6 +963,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.pause()
                             
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
                             expect(playback.isPaused).to(beTrue())
                             expect(playback.currentState).to(equal(.paused))
                         }
@@ -975,6 +979,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
 
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
                             expect(playback.isPaused).to(beTrue())
                             expect(playback.currentState).to(equal(.paused))
                         }
@@ -987,9 +993,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             playback.seek(10)
-
-                            expect(playback.isPlaying).to(beTrue())
+                            
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
                             expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPlaying).to(beTrue())
                         }
                     }
 
@@ -999,7 +1007,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             playback.stop()
-                            
+
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
                             expect(playback.currentState).to(equal(.idle))
                         }
                     }
@@ -1037,9 +1048,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
                             playback.play()
-
-                            expect(playback.isPlaying).to(beTrue())
+                            
                             expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPlaying).to(beTrue())
                         }
                     }
 
@@ -1070,8 +1081,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when is not likely to keep up") {
                         it("changes state to buffering") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let playback = AVFoundationPlayback(options: [kSourceUrl: "http://localhost:8080/sample.m3u8"])
 
                             playback.play()
                             playback.pause()
@@ -1086,8 +1096,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#stalled") {
                     context("when seek is called") {
                         it("keeps buffering state") {
-                            let playback = AVFoundationPlayback()
-                            playback.player = AVPlayerStub()
+                            let playback = AVFoundationPlayback(options: [kSourceUrl: "http://localhost:8080/sample.m3u8"])
 
                             playback.play()
                             playback.seek(10)
@@ -1117,18 +1126,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.stop()
                             
                             expect(playback.currentState).to(equal(.idle))
-                        }
-                    }
-                    
-                    context("when is likely to keep up") {
-                        it("has isPlaying as true") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
-                            let playback = AVFoundationPlayback(options: options)
-
-                            playback.play()
-                            
-                            expect(playback.isPlaying).to(beTrue())
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
                         }
                     }
                 }
