@@ -99,7 +99,7 @@ class SpinnerPluginTests: QuickSpec {
             context("when the playback trigger a stalled event") {
 
                 beforeEach {
-                    playback.trigger(Event.stalled.rawValue)
+                    playback.trigger(Event.stalling.rawValue)
                 }
 
                 it("hides the spinner") {

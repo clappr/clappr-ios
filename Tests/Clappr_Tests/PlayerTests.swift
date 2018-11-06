@@ -71,10 +71,10 @@ class PlayerTests: QuickSpec {
                     }
 
                     it("calls a callback function to handle stalled event") {
-                        player.on(.stalled) { _ in
+                        player.on(.stalling) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.stalled)
+                        playback.trigger(.stalling)
 
                         expect(callbackWasCalled).to(beTrue())
                     }
@@ -147,15 +147,6 @@ class PlayerTests: QuickSpec {
                             callbackWasCalled = true
                         }
                         playback.trigger(.willSeek)
-
-                        expect(callbackWasCalled).to(beTrue())
-                    }
-
-                    it("calls a callback function to handle seek event") {
-                        player.on(.seek) { _ in
-                            callbackWasCalled = true
-                        }
-                        playback.trigger(.seek)
 
                         expect(callbackWasCalled).to(beTrue())
                     }

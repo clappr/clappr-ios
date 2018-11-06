@@ -421,6 +421,7 @@ open class AVFoundationPlayback: Playback {
         switch newState {
         case .buffering:
             trigger(.stalled)
+            trigger(.stalling)
         case .paused:
             trigger(.didPause)
             triggerDvrStatusIfNeeded()

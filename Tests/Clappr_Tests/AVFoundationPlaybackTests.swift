@@ -1242,7 +1242,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when seek is executed") {
                     it("triggers seek") {
                         waitUntil { done in
-                            avFoundationPlayback.on(Event.seek.rawValue) { _ in
+                            avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
                                 done()
                             }
                             

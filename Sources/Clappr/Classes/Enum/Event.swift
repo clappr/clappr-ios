@@ -2,7 +2,7 @@ public enum Event: String, CaseIterable {
     case bufferUpdate
     case positionUpdate
     case ready
-    case stalled
+    case stalling
     case audioAvailable
     case subtitleAvailable
     case audioSelected
@@ -35,4 +35,6 @@ public enum Event: String, CaseIterable {
     case didHideMediaControl
     @available(*, deprecated, message: "Update to willSeek")
     case seek
+    @available(*, deprecated, message: "Update to stalling")
+    case stalled
 }
