@@ -79,11 +79,11 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle bufferUpdate event") {
-                        player.on(.bufferUpdate) { _ in
+                    it("calls a callback function to handle didUpdateBuffer event") {
+                        player.on(.didUpdateBuffer) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.bufferUpdate)
+                        playback.trigger(.didUpdateBuffer)
 
                         expect(callbackWasCalled).to(beTrue())
                     }

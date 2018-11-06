@@ -547,6 +547,7 @@ open class AVFoundationPlayback: Playback {
             ]
 
         trigger(.bufferUpdate, userInfo: info)
+        trigger(.didUpdateBuffer, userInfo: info)
     }
 
     fileprivate func handleSeekableTimeRangesEvent() {
