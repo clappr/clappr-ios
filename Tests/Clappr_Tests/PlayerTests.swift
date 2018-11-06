@@ -88,11 +88,11 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle positionUpdate event") {
-                        player.on(.positionUpdate) { _ in
+                    it("calls a callback function to handle didUpdatePosition event") {
+                        player.on(.didUpdatePosition) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.positionUpdate)
+                        playback.trigger(.didUpdatePosition)
 
                         expect(callbackWasCalled).to(beTrue())
                     }

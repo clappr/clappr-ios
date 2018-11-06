@@ -1,6 +1,6 @@
 public enum Event: String, CaseIterable {
     case bufferUpdate
-    case positionUpdate
+    case didUpdatePosition
     case ready
     case stalling
     case audioAvailable
@@ -37,4 +37,6 @@ public enum Event: String, CaseIterable {
     case seek
     @available(*, deprecated, message: "Update to stalling")
     case stalled
+    @available(*, deprecated, message: "Update to didUpdatePosition")
+    case positionUpdate
 }

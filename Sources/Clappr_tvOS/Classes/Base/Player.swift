@@ -112,7 +112,7 @@ open class Player: UIViewController, BaseObject {
              Event.playing.rawValue, Event.didComplete.rawValue,
              Event.didPause.rawValue, Event.stalled.rawValue, Event.stalling.rawValue,
              Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue, Event.didUpdatePosition.rawValue
              Event.willPause.rawValue, Event.willStop.rawValue,
              Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
              Event.seek.rawValue,Event.didSeek.rawValue,

@@ -372,6 +372,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+        trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
     open override func seekToLivePosition() {
@@ -530,6 +531,7 @@ open class AVFoundationPlayback: Playback {
         if isPlaying {
             updateState(.playing)
             trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+            trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
     }
 
