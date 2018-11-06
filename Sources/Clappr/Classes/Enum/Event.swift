@@ -23,7 +23,6 @@ public enum Event: String, CaseIterable {
     case requestPosterUpdate
     case willUpdatePoster
     case didUpdatePoster
-    case seek
     case willSeek
     case didSeek
     case didChangeDvrStatus
@@ -34,4 +33,6 @@ public enum Event: String, CaseIterable {
     case didShowMediaControl
     case willHideMediaControl
     case didHideMediaControl
+    @available(*, deprecated, message: "Update to willSeek")
+    case seek
 }
