@@ -148,17 +148,12 @@ class SeekbarView: UIView {
         return Double(videoDuration * positionPercentage)
     }
 
-    private func repositionScrubber() {
+    private func repositionUIElements() {
         if seekbarWidth > 0 {
-            let position = (scrubberPosition.constant * (seekBarContainerView.frame.width - scrubber.frame.width)) / (seekbarWidth - scrubber.frame.width)
-            scrubberPosition.constant = position
-        }
-    }
-
-    private func repositionBuffer() {
-        if seekbarWidth > 0 {
-            let position = (bufferWidth.constant * seekBarContainerView.frame.width) / seekbarWidth
-            bufferWidth.constant = position
+            let halfScrubberWidth = scrubberInitialWidth / 2
+            let previousPercentPosition = scrubberPosition.constant / seekbarWidth
+            let newPercentPosition = previousPercentPosition * seekBarContainerView.frame.width
+            moveScrubber(relativeTo: newPercentPosition)
         }
     }
 
@@ -167,8 +162,7 @@ class SeekbarView: UIView {
         if isLive {
             putScrubberAtTheEnd()
         } else {
-            repositionScrubber()
-            repositionBuffer()
+            repositionUIElements()
         }
 
         seekbarWidth = seekBarContainerView.frame.width
