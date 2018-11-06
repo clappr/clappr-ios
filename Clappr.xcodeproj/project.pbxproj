@@ -222,6 +222,7 @@
 		C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B8218265140055A599 /* Seekbar.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
+		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
 		E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
@@ -476,6 +477,7 @@
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
 		E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicatorTests.swift; sourceTree = "<group>"; };
+		E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekbarViewTests.swift; sourceTree = "<group>"; };
 		E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekbarTests.swift; sourceTree = "<group>"; };
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
@@ -1169,9 +1171,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E7C6E88E2192237B00A74149 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E7D0BD15218A382E00F5FDF2 /* Seekbar */ = {
 			isa = PBXGroup;
 			children = (
+				E7C6E88E2192237B00A74149 /* Views */,
 				E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */,
 			);
 			path = Seekbar;
@@ -1811,6 +1822,7 @@
 				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
 				C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */,
+				E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */,
 				96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

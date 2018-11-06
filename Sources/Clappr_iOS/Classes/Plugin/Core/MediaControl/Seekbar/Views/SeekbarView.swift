@@ -92,7 +92,7 @@ class SeekbarView: UIView {
         moveTimeLabel(relativeTo: position, state: .moved)
     }
     
-    private func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
+    func moveTimeLabel(relativeTo horizontalTouchPoint: CGFloat, state: DragDetectorView.State) {
         if state == .moved {
             timeLabelView.isHidden = false
             let halfTimeLabelView: CGFloat = timeLabelView.frame.width / 2
