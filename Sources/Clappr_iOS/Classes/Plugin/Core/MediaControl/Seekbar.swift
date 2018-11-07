@@ -23,17 +23,13 @@ class Seekbar: MediaControlPlugin {
 
     private var isOfflinePlayback: Bool = false
 
-    required init(context: UIBaseObject) {
+    required init(context: UIObject) {
         super.init(context: context)
         bindEvents()
     }
 
     required init() {
         super.init()
-    }
-
-    required init?(coder argument: NSCoder) {
-        super.init(coder: argument)
     }
 
     private func bindEvents() {
