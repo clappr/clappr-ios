@@ -1,21 +1,6 @@
 import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
-
-    override open var view: UIView {
-        didSet {
-            view.addSubview(container)
-
-            view.bindFrameToSuperviewBounds()
-            container.bindFrameToSuperviewBounds()
-
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-            gesture.delegate = self
-            self.view.addGestureRecognizer(gesture)
-            self.gesture = gesture
-        }
-    }
-
     public var gesture: UITapGestureRecognizer?
 
     var container: MediaControlView = .fromNib()
