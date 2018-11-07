@@ -16,7 +16,7 @@ class AVPlayerItemStub: AVPlayerItem {
 
     var _currentDate: Date = Date()
 
-    override func seek(to time: CMTime, completionHandler: ((Bool) -> Void)?) {
+    override func seek(to time: CMTime, toleranceBefore: CMTime, toleranceAfter: CMTime, completionHandler: ((Bool) -> Void)?) {
         didCallSeekWithCompletionHandler = true
         didCallSeekWithTime = time
         completionHandler!(true)
