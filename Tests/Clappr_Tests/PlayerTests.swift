@@ -6,7 +6,7 @@ import AVFoundation
 
 class PlayerTests: QuickSpec {
     static let specialSource = "specialSource"
-    
+
     override func spec() {
         describe(".Player") {
             let options: Options = [kSourceUrl: "http://clappr.com/video.mp4"]
@@ -234,7 +234,7 @@ class PlayerTests: QuickSpec {
                         Loader.shared.resetPlugins()
                         Player.register(plugins: [SpecialStubPlayback.self])
                         player = Player(options: options)
-                        
+
 
                         player.load(PlayerTests.specialSource)
 
@@ -253,13 +253,13 @@ class PlayerTests: QuickSpec {
                         let loggerPlugin = player.core?.plugins.first { $0 is LoggerPlugin }
                         expect(loggerPlugin).to(beAKindOf(LoggerPlugin.self))
                     }
-                    
+
                     it("pass plugins to Loader") {
                         Loader.shared.resetPlugins()
-                        
+
                         Player.register(plugins: [LoggerPlugin.self])
                         player = Player(options: options)
-                        
+
                         let loggerPlugin = Loader.shared.corePlugins.first { $0.name == "Logger" }
                         expect(loggerPlugin).to(beAKindOf(LoggerPlugin.Type.self))
                     }
@@ -301,12 +301,12 @@ class PlayerTests: QuickSpec {
             return true
         }
     }
-    
+
     class SpecialStubPlayback: Playback {
         override var pluginName: String {
             return "SpecialStubPlayback"
         }
-        
+
         override class func canPlay(_ options: Options) -> Bool {
             return options[kSourceUrl] as! String == PlayerTests.specialSource
         }
