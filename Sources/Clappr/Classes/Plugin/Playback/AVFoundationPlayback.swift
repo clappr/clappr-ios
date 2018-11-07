@@ -357,11 +357,12 @@ open class AVFoundationPlayback: Playback {
         }
 
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
+        let tolerance = CMTime(value: 0, timescale: Int32(NSEC_PER_SEC))
 
-        trigger(.seek)
         trigger(.willSeek)
+        trigger(.seek)
 
-        player?.currentItem?.seek(to: time) { [weak self] success in
+        player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
             if success {
                 self?.trigger(.didSeek)
                 if let triggerEvent = triggerEvent {
