@@ -322,10 +322,6 @@ class PlayerTests: QuickSpec {
             super.init()
         }
 
-        required init?(coder argument: NSCoder) {
-            super.init(coder: argument)
-        }
-
         private func bindEvents() {
             stopListening()
             bindPlaybackEvents()
