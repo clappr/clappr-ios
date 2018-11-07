@@ -40,12 +40,14 @@ class SeekbarView: UIView {
 
     var videoDuration: CGFloat = 0
     var isSeeking = false
+    var previousSeekbarWidth: CGFloat = 0
 
     weak var delegate: SeekbarDelegate?
 
     override func layoutSubviews() {
         super.layoutSubviews()
         isLive ? putScrubberAtTheEnd() : repositionUIElements()
+        previousSeekbarWidth = seekBarContainerView.frame.width
     }
 
     @objc func handleSeekbarViewTouch(_ view: DragDetectorView) {
@@ -133,12 +135,24 @@ class SeekbarView: UIView {
         return Double(videoDuration * positionPercentage)
     }
 
-    private func repositionUIElements() {
-        guard seekBarContainerView.frame.width > 0 else { return }
-
-        let previousPercentPosition = scrubberPosition.constant / seekBarContainerView.frame.width
+    fileprivate func repositionScrubber() {
+        let halfScrubber = scrubber.frame.width / 2
+        let previousPercentPosition = (scrubberPosition.constant + halfScrubber) / previousSeekbarWidth
         let newPercentPosition = previousPercentPosition * seekBarContainerView.frame.width
         moveScrubber(relativeTo: newPercentPosition)
+    }
+
+    fileprivate func redimentionBufferBar() {
+        let previousPercentPosition = bufferWidth.constant / previousSeekbarWidth
+        let newPercentPosition = previousPercentPosition * seekBarContainerView.frame.width
+        bufferWidth.constant = newPercentPosition
+    }
+
+    private func repositionUIElements() {
+        guard previousSeekbarWidth > 0 else { return }
+
+        repositionScrubber()
+        redimentionBufferBar()
     }
 
     private func setupLiveStyle() {
