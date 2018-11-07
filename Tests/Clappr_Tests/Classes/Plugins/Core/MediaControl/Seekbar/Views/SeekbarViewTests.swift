@@ -136,7 +136,7 @@ class SeekbarViewTests: QuickSpec {
                         dragDetectorStub.touch(x: 5, y: 0)
                         seekbarView.handleSeekbarViewTouch(dragDetectorStub)
 
-                        expect(seekbarView.scrubberPosition.constant).to(equal(0))
+                        expect(seekbarView.scrubberPosition.constant).to(equal(-13.5))
                     }
                 }
 
@@ -197,7 +197,7 @@ class SeekbarViewTests: QuickSpec {
                             seekbarView.videoDuration = 100
                             seekbarView.delegate = seekBarDelegate
 
-                            dragDetectorStub.touch(x: 45.5, y: 0)
+                            dragDetectorStub.touch(x: 37.5, y: 0)
                             dragDetectorStub.touch(state: .ended)
                             seekbarView.handleSeekbarViewTouch(dragDetectorStub)
 
@@ -244,7 +244,7 @@ class SeekbarViewTests: QuickSpec {
                         seekbarView.seekBarContainerView.frame = CGRect.init(x: 0, y: 0, width: 150, height: 0)
                         seekbarView.layoutSubviews()
 
-                        expect(seekbarView.scrubberPosition.constant).to(equal(65))
+                        expect(seekbarView.scrubberPosition.constant).to(equal(56.5))
                     }
 
                     it("updates the position of the buffer") {
