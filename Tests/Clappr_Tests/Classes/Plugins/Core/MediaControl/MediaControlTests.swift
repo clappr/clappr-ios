@@ -221,6 +221,40 @@ class MediaControlTests: QuickSpec {
                     }
                 }
 
+                context("when willBeginScrubbing") {
+                    it("keeps itself on the screen and visible") {
+                        mediaControlVisible()
+
+                        coreStub.trigger(InternalEvent.willBeginScrubbing.rawValue)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                    }
+                }
+
+                context("when didFinishScrubbing") {
+                    it("hides the media control after some time if the video is playing") {
+                        mediaControlVisible()
+
+                        coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
+
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
+                    }
+
+                    it("doesn't hide the media control after some time if the video is paused") {
+                        mediaControlVisible()
+                        coreStub.activePlayback?.trigger(Event.didPause)
+
+                        coreStub.trigger(InternalEvent.willBeginScrubbing.rawValue)
+                        coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+
+                    }
+                }
                 context("when didEnterFullscreen") {
                     it("hides the media control after some time if the video is playing") {
                         mediaControlVisible()
