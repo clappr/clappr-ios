@@ -71,6 +71,14 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
                 self?.toggleVisibility()
             }
+
+            listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
+                self?.keepVisible()
+            }
+
+            listenTo(core, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
+                self?.disappearAfterSomeTime()
+            }
         }
     }
 

@@ -115,6 +115,14 @@ class Seekbar: MediaControlPlugin {
 }
 
 extension Seekbar: SeekbarDelegate {
+    func willBeginScrubbing() {
+        core?.trigger(InternalEvent.willBeginScrubbing.rawValue)
+    }
+
+    func didFinishScrubbing() {
+        core?.trigger(InternalEvent.didFinishScrubbing.rawValue)
+    }
+
     func seek(_ timeInterval: TimeInterval) {
         if shouldSyncLive(timeInterval) {
             activePlayback?.seekToLivePosition()
