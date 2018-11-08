@@ -77,6 +77,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(core, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
+                guard self?.activePlayback?.isPlaying ?? true else { return }
                 self?.disappearAfterSomeTime()
             }
         }
