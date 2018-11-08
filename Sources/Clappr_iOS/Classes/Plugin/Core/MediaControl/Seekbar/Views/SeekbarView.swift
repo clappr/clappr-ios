@@ -1,5 +1,8 @@
 protocol SeekbarDelegate: NSObjectProtocol {
     func seek(_: TimeInterval)
+    func willBeginScrubbing()
+    func didFinishScrubbing()
+
 }
 
 class SeekbarView: UIView {
@@ -59,11 +62,14 @@ class SeekbarView: UIView {
         case .began, .moved, .idle:
             setOuterScrubberSize(outerCircleSizeFactor: 1.5, outerCircleBorderWidth: 1.0)
             isSeeking = true
+            delegate?.willBeginScrubbing()
         case .ended:
             delegate?.seek(seconds(relativeTo: scrubberPosition.constant))
+            delegate?.didFinishScrubbing()
             isSeeking = false
             setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
         case .canceled:
+            delegate?.didFinishScrubbing()
             isSeeking = false
             setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
         }
