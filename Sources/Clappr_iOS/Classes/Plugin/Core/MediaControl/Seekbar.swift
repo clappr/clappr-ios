@@ -39,8 +39,6 @@ class Seekbar: MediaControlPlugin {
         bindContainerEvents()
         bindPlaybackEvents()
         bindOfflinePlaybackEvents()
-
-        seekbarView.isLive = activePlayback?.playbackType == .live && (activePlayback?.isDvrAvailable ?? false)
     }
 
     private var activeContainer: Container? {
@@ -63,9 +61,16 @@ class Seekbar: MediaControlPlugin {
         }
     }
 
+    fileprivate func setSeekbarViewLive() {
+        seekbarView.isLive = activePlayback?.playbackType == .live
+    }
+
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.setVideoProperties() }
+            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in
+                self?.setVideoProperties()
+                self?.setSeekbarViewLive()
+            }
             listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] _ in
                 if let isSeeking = self?.seekbarView.isSeeking, !isSeeking {
                     self?.updateElapsedTime()
