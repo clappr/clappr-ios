@@ -60,15 +60,11 @@ class SeekbarView: UIView {
 
         switch view.touchState {
         case .began, .moved, .idle:
-            setOuterScrubberSize(outerCircleSizeFactor: 1.5, outerCircleBorderWidth: 1.0)
-            isSeeking = true
             delegate?.willBeginScrubbing()
-        case .ended:
+            isSeeking = true
+            setOuterScrubberSize(outerCircleSizeFactor: 1.5, outerCircleBorderWidth: 1.0)
+        case .ended, .canceled:
             delegate?.seek(seconds(relativeTo: scrubberPosition.constant))
-            delegate?.didFinishScrubbing()
-            isSeeking = false
-            setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
-        case .canceled:
             delegate?.didFinishScrubbing()
             isSeeking = false
             setOuterScrubberSize(outerCircleSizeFactor: 1.0, outerCircleBorderWidth: 0.0)
