@@ -937,7 +937,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#idle") {
                     context("when ready to play") {
                         it("current state must be idle") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
                             
                             expect(playback.currentState).to(equal(.idle))
                         }
@@ -959,13 +960,14 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when pause is called") {
                         it("changes current state to paused") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.pause()
                             
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
                             expect(playback.currentState).to(equal(.paused))
                         }
                     }
@@ -974,14 +976,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#playing") {
                     context("when paused is called") {
                         it("changes current state to paused") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
                             playback.pause()
 
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
                             expect(playback.currentState).to(equal(.paused))
                         }
                     }
@@ -995,34 +998,36 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.seek(10)
                             
                             expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.currentState).to(equal(.playing))
                             expect(playback.isPlaying).to(beTrue())
                         }
                     }
 
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
                             playback.stop()
 
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPlaying).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
-                            expect(playback.currentState).to(equal(.idle))
+                            expect(playback.currentState).toEventually(equal(.idle), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.isPaused).to(beFalse())
                         }
                     }
                     
                     context("when video is over") {
                         it("changes state to idle") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
-                            playback.seek(Double.infinity)
+                            playback.seek(playback.duration)
                             
-                            expect(playback.currentState).to(equal(.idle))
+                            expect(playback.currentState).toEventually(equal(.idle), timeout: 6)
                             expect(playback.isBuffering).to(beFalse())
                             expect(playback.isPlaying).to(beFalse())
                             expect(playback.isPaused).to(beFalse())
@@ -1052,10 +1057,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.pause()
                             playback.play()
                             
+                            
                             expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
-                            expect(playback.isBuffering).toEventually(beFalse())
-                            expect(playback.isPaused).toEventually(beFalse())
                             expect(playback.isPlaying).to(beTrue())
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPaused).to(beFalse())
                         }
                     }
 
@@ -1077,7 +1083,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.pause()
@@ -1098,11 +1105,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
                             playback.play()
-
                             
                             expect(playback.currentState).toEventually(equal(.buffering), timeout: 3)
                             expect(playback.isBuffering).to(beTrue())
                             expect(playback.isPaused).to(beFalse())
+                            expect(playback.isPlaying).to(beTrue())
                         }
                     }
                 }
@@ -1119,12 +1126,14 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.currentState).to(equal(.buffering))
                             expect(playback.isBuffering).to(beTrue())
                             expect(playback.isPaused).to(beFalse())
+                            expect(playback.isPlaying).to(beTrue())
                         }
                     }
                     
                     context("when paused is called") {
                         it("changes state to paused") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
                             playback.pause()
@@ -1138,7 +1147,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let playback = AVFoundationPlayback()
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.stop()
