@@ -68,6 +68,7 @@ open class AVFoundationPlayback: Playback {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectSubtitle)
         }
     }
 
@@ -81,6 +82,7 @@ open class AVFoundationPlayback: Playback {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectAudio)
         }
     }
 
@@ -504,8 +506,10 @@ open class AVFoundationPlayback: Playback {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
+            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         } else {
             trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
+            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         }
     }
 
@@ -517,8 +521,10 @@ open class AVFoundationPlayback: Playback {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
+            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
         } else {
             trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
+            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
     }
 

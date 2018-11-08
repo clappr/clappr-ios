@@ -160,20 +160,20 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle subtitleSelected event") {
-                        player.on(.subtitleSelected) { _ in
+                    it("calls a callback function to handle didSelectSubtitle event") {
+                        player.on(.didSelectSubtitle) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.subtitleSelected)
+                        playback.trigger(.didSelectSubtitle)
 
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle audioSelected event") {
-                        player.on(.audioSelected) { _ in
+                    it("calls a callback function to handle didSelectAudio event") {
+                        player.on(.didSelectAudio) { _ in
                             callbackWasCalled = true
                         }
-                        playback.trigger(.audioSelected)
+                        playback.trigger(.didSelectAudio)
 
                         expect(callbackWasCalled).to(beTrue())
                     }

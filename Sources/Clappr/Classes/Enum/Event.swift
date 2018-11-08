@@ -3,10 +3,10 @@ public enum Event: String, CaseIterable {
     case didUpdatePosition
     case ready
     case stalling
-    case audioAvailable
-    case subtitleAvailable
-    case audioSelected
-    case subtitleSelected
+    case didFindAudio
+    case didFindSubtitle
+    case didSelectAudio
+    case didSelectSubtitle
     case disableMediaControl
     case enableMediaControl
     case didComplete
@@ -43,4 +43,12 @@ public enum Event: String, CaseIterable {
     case bufferUpdate
     @available(*, deprecated, message: "Update to didUpdateAirPlayStatus")
     case airPlayStatusUpdate
+    @available(*, deprecated, message: "Update to didFindSubtitle")
+    case subtitleAvailable
+    @available(*, deprecated, message: "Update to didFindAudio")
+    case audioAvailable
+    @available(*, deprecated, message: "Update to didSelectSubtitle")
+    case subtitleSelected
+    @available(*, deprecated, message: "Update to didSelectAudio")
+    case audioSelected
 }
