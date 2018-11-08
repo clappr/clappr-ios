@@ -933,6 +933,235 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
             
+            describe("#AVFoundationPlayback states") {
+                describe("#idle") {
+                    context("when ready to play") {
+                        it("current state must be idle") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                        }
+                    }
+
+                    context("when play is called") {
+                        it("changes isPlaying to true") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPlaying).to(beTrue())
+                        }
+                    }
+
+                    context("when pause is called") {
+                        it("changes current state to paused") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.pause()
+                            
+                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
+                    }
+                }
+
+                describe("#playing") {
+                    context("when paused is called") {
+                        it("changes current state to paused") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            playback.play()
+                            playback.pause()
+
+                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.currentState).to(equal(.paused))
+                        }
+                    }
+
+                    context("when seek is called") {
+                        it("keeps playing") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.seek(10)
+                            
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.currentState).to(equal(.playing))
+                            expect(playback.isPlaying).to(beTrue())
+                        }
+                    }
+
+                    context("when stop is called") {
+                        it("changes state to idle") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            playback.play()
+                            playback.stop()
+
+                            expect(playback.currentState).toEventually(equal(.idle), timeout: 3)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.isPaused).to(beFalse())
+                        }
+                    }
+                    
+                    context("when video is over") {
+                        it("changes state to idle") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            playback.play()
+                            playback.seek(playback.duration)
+                            
+                            expect(playback.currentState).toEventually(equal(.idle), timeout: 6)
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.isPaused).to(beFalse())
+                        }
+                    }
+                    
+                    context("when is not likely to keep up") {
+                        it("changes state to buffering") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.currentState).to(equal(.buffering))
+                        }
+                    }
+                }
+
+                describe("#paused") {
+                    context("when playing is called") {
+                        it("changes isPlaying to true") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.pause()
+                            playback.play()
+                            
+                            
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPaused).to(beFalse())
+                        }
+                    }
+
+                    context("when seek is called") {
+                        it("keeps state in paused") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.pause()
+                            playback.seek(10)
+
+                            expect(playback.currentState).to(equal(.paused))
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                        }
+                    }
+
+                    context("when stop is called") {
+                        it("changes state to idle") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.pause()
+                            playback.stop()
+
+                            expect(playback.currentState).to(equal(.idle))
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                        }
+                    }
+
+                    context("when is not likely to keep up") {
+                        it("changes state to buffering") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.pause()
+                            playback.play()
+                            
+                            expect(playback.currentState).toEventually(equal(.buffering), timeout: 3)
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.isPlaying).to(beTrue())
+                        }
+                    }
+                }
+
+                describe("#stalled") {
+                    context("when seek is called") {
+                        it("keeps buffering state") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.seek(10)
+                            
+                            expect(playback.currentState).to(equal(.buffering))
+                            expect(playback.isBuffering).to(beTrue())
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.isPlaying).to(beTrue())
+                        }
+                    }
+                    
+                    context("when paused is called") {
+                        it("changes state to paused") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            playback.play()
+                            playback.pause()
+                            
+                            expect(playback.currentState).to(equal(.paused))
+                            expect(playback.isPaused).to(beTrue())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.isBuffering).to(beFalse())
+                        }
+                    }
+                    
+                    context("when stop is called") {
+                        it("changes state to idle") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.stop()
+                            
+                            expect(playback.currentState).to(equal(.idle))
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.isBuffering).to(beFalse())
+                        }
+                    }
+                }
+            }
+            
             #if os(tvOS)
             describe("#loadMetadata") {
                 
