@@ -168,6 +168,7 @@ class SeekbarView: UIView {
 
     private func putScrubberAtTheEnd() {
         scrubberPosition.constant = seekBarContainerView.frame.width - scrubber.frame.width / 2
+        progressBarWidthConstraint?.constant = seekBarContainerView.frame.width
     }
 
     private func setupVODStyle() {
