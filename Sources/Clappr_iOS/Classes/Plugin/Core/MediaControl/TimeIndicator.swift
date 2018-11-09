@@ -15,7 +15,6 @@ open class TimeIndicator: MediaControlPlugin {
         didSet {
             view.addSubview(indicator)
             indicator.accessibilityIdentifier = "timeIndicator"
-            indicator.isHidden = true
         }
     }
 
@@ -24,6 +23,7 @@ open class TimeIndicator: MediaControlPlugin {
         didSet {
             indicator.addArrangedSubview(leftMargin)
             leftMarginSize = leftMargin.widthAnchor.constraint(equalToConstant: 0)
+            leftMarginSize?.priority = UILayoutPriority.defaultLow
             leftMarginSize?.isActive = true
             leftMarginSize?.identifier = "$leftMarginSize$"
         }
@@ -104,7 +104,7 @@ open class TimeIndicator: MediaControlPlugin {
 
     open func displayVideoDuration() {
         durationTimeLabel?.text = ClapprDateFormatter.formatSeconds(activePlayback?.duration ?? 0.0)
-        indicator.isHidden = false
+        view.isHidden = false
     }
 
     private func updateElapsedTime(_ info: EventUserInfo) {
@@ -113,6 +113,7 @@ open class TimeIndicator: MediaControlPlugin {
     }
 
     override open func render() {
+        view.isHidden = true
         indicator = UIStackView()
         leftMargin = UIView()
         elapsedTimeLabel = UILabel()
