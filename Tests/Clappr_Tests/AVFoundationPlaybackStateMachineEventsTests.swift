@@ -84,7 +84,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 }
 
                 context("when pause, play and stop") {
-                    it("triggers events following the state machine pattern") {
+                    xit("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
@@ -107,7 +107,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 }
 
                 context("when pause, play, pause and stop") {
-                    it("triggers events following the state machine pattern") {
+                    xit("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
