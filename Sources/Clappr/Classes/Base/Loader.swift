@@ -16,10 +16,6 @@ open class Loader {
     }
 
     private init() {
-        Logger.logInfo("plugins:" +
-            "\n - playback: \(playbacks.map({ $0.name }))" +
-            "\n - container: \(containerPlugins.map({ $0.name }))" +
-            "\n - core: \(corePlugins.map({ $0.name }))")
     }
 
     open func register(plugins: [Plugin.Type]) {
