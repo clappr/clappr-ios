@@ -1,3 +1,3 @@
-open class UIPlugin: UIBaseObject, UIObject {
-    @objc var view: UIView?
+open class UIPlugin: UIObject {
+
 }

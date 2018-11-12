@@ -16,6 +16,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var kvoBufferingContext = 0
     fileprivate var kvoExternalPlaybackActiveContext = 0
     fileprivate var kvoPlayerRateContext = 0
+    fileprivate var kvoViewBounds = 0
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
@@ -33,13 +34,13 @@ open class AVFoundationPlayback: Playback {
         didSet {
             switch currentState {
             case .buffering:
-                accessibilityIdentifier = "AVFoundationPlaybackBuffering"
+                view.accessibilityIdentifier = "AVFoundationPlaybackBuffering"
             case .paused:
-                accessibilityIdentifier = "AVFoundationPlaybackPaused"
+                view.accessibilityIdentifier = "AVFoundationPlaybackPaused"
             case .playing:
-                accessibilityIdentifier = "AVFoundationPlaybackPlaying"
+                view.accessibilityIdentifier = "AVFoundationPlaybackPlaying"
             case .idle:
-                accessibilityIdentifier = "AVFoundationPlaybackIdle"
+                view.accessibilityIdentifier = "AVFoundationPlaybackIdle"
             }
         }
     }
@@ -125,12 +126,6 @@ open class AVFoundationPlayback: Playback {
         return currentState == .buffering
     }
 
-    open override var bounds: CGRect {
-        didSet {
-            setupMaxResolution(for: bounds.size)
-        }
-    }
-
     open override var duration: Double {
         guard let item = player?.currentItem else {
             return 0
@@ -212,14 +207,16 @@ open class AVFoundationPlayback: Playback {
         super.init()
     }
 
-    public required init(context _: UIBaseObject) {
+    public required init(context _: UIObject) {
         fatalError("init(context:) has not been implemented")
     }
 
-    open override func layoutSubviews() {
-        if let playerLayer = playerLayer {
-            playerLayer.frame = self.bounds
+    open func handleViewBoundsChanged() {
+        guard let playerLayer = playerLayer else {
+            return
         }
+        playerLayer.frame = view.bounds
+        setupMaxResolution(for: playerLayer.frame.size)
     }
 
     open override func play() {
@@ -248,12 +245,10 @@ open class AVFoundationPlayback: Playback {
             selectDefaultAudioIfNeeded()
 
             playerLayer = AVPlayerLayer(player: player)
-            layer.addSublayer(playerLayer!)
-            
-            #if os(iOS)
-            setupMaxResolution(for: bounds.size)
-            #endif
-            
+            view.layer.addSublayer(playerLayer!)
+            playerLayer?.frame = view.bounds
+            setupMaxResolution(for: playerLayer!.frame.size)
+
             addObservers()
             trigger(.ready)
         } else {
@@ -271,6 +266,9 @@ open class AVFoundationPlayback: Playback {
     #endif
 
     @objc internal func addObservers() {
+        view.addObserver(self, forKeyPath: "bounds",
+                         options: .new, context: &kvoViewBounds)
+
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
         player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
@@ -359,11 +357,12 @@ open class AVFoundationPlayback: Playback {
         }
 
         let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
+        let tolerance = CMTime(value: 0, timescale: Int32(NSEC_PER_SEC))
 
-        trigger(.seek)
         trigger(.willSeek)
+        trigger(.seek)
 
-        player?.currentItem?.seek(to: time) { [weak self] success in
+        player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
             if success {
                 self?.trigger(.didSeek)
                 if let triggerEvent = triggerEvent {
@@ -408,6 +407,8 @@ open class AVFoundationPlayback: Playback {
             handleExternalPlaybackActiveEvent()
         case &kvoPlayerRateContext:
             handlePlayerRateChanged()
+        case &kvoViewBounds:
+            handleViewBoundsChanged()
         default:
             break
         }
@@ -617,7 +618,7 @@ open class AVFoundationPlayback: Playback {
                 player?.removeTimeObserver(timeObserver)
             }
         }
-
+        view.removeObserver(self, forKeyPath: "bounds")
         NotificationCenter.default.removeObserver(self)
     }
 

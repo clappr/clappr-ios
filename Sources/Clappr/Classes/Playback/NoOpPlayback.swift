@@ -18,7 +18,7 @@ open class NoOpPlayback: Playback {
         super.init()
     }
 
-    public required init(context _: UIBaseObject) {
+    public required init(context _: UIObject) {
         fatalError("init(context:) has not been implemented")
     }
 
@@ -27,7 +27,7 @@ open class NoOpPlayback: Playback {
     }
 
     open override func render() {
-        addSubviewMatchingConstraints(errorLabel)
+        view.addSubviewMatchingConstraints(errorLabel)
     }
 
     fileprivate func setupLabel() {

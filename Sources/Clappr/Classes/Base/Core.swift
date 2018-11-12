@@ -1,4 +1,4 @@
-open class Core: UIBaseObject, UIGestureRecognizerDelegate {
+open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
@@ -7,7 +7,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         }
     }
     @objc fileprivate(set) open var containers: [Container] = []
-    @objc fileprivate(set) open var mediaControl: MediaControl?
     @objc fileprivate(set) open var plugins: [UICorePlugin] = []
 
     @objc open weak var parentController: UIViewController?
@@ -50,30 +49,16 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
     @objc open var isFullscreen: Bool = false
 
-    public required init?(coder _: NSCoder) {
-        fatalError("Should be using init(sources:[NSURL]) instead")
-    }
-
     public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
 
-        super.init(frame: CGRect.zero)
+        super.init()
 
-        backgroundColor = UIColor.black
+        view.backgroundColor = UIColor.black
 
-        #if os(iOS)
-        if let externalMediaControl = options[kMediaControl] as? MediaControl.Type {
-            mediaControl = externalMediaControl.create()
-        } else {
-            mediaControl = MediaControl.create()
-        }
-        mediaControl?.core = self
-        
         addTapRecognizer()
-        #endif
-
         bindEventListeners()
         Loader.shared.loadPlugins(in: self)
 
@@ -81,7 +66,6 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
 
         if let container = containers.first {
             setActive(container: container)
-            mediaControl?.setup(container)
         }
     }
 
@@ -92,37 +76,64 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     fileprivate func addTapRecognizer() {
-        let tapRecognizer = UITapGestureRecognizer(target: mediaControl, action: #selector(MediaControl.toggleVisibility))
+        #if os(iOS)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
         tapRecognizer.delegate = self
-        addGestureRecognizer(tapRecognizer)
+        view.addGestureRecognizer(tapRecognizer)
+        #endif
     }
 
     fileprivate func bindEventListeners() {
-        guard let mediaControl = self.mediaControl else {
-            return
-        }
-
         #if os(iOS)
-        listenTo(mediaControl, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
-        listenTo(mediaControl, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
+        listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
+        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
         #endif
     }
 
     fileprivate func renderInContainerView() {
         isFullscreen = false
-        parentView?.addSubviewMatchingConstraints(self)
+        parentView?.addSubviewMatchingConstraints(view)
     }
 
     open override func render() {
         containers.forEach(renderContainer)
-        plugins.forEach(installPlugin)
+        #if os(iOS)
+        renderCoreAndMediaControlPlugins()
+        #elseif os(tvOS)
+        renderPlugins()
+        #endif
 
-        if let mediaControl = self.mediaControl {
-            addSubviewMatchingConstraints(mediaControl)
-            mediaControl.render()
-        }
         addToContainer()
     }
+
+    #if os(tvOS)
+    private func renderPlugins() {
+        plugins.forEach { plugin in
+            view.addSubview(plugin.view)
+            plugin.render()
+        }
+    }
+    #endif
+
+    #if os(iOS)
+    private func renderCoreAndMediaControlPlugins() {
+        plugins.forEach { plugin in
+            if isNotMediaControlPlugin(plugin) {
+                view.addSubview(plugin.view)
+                plugin.render()
+            }
+
+
+            if plugin is MediaControl, let mediaControl = plugin as? MediaControl {
+                mediaControl.renderPlugins(plugins)
+            }
+        }
+    }
+
+    private func isNotMediaControlPlugin(_ plugin: UICorePlugin) -> Bool {
+        return !(plugin is MediaControlPlugin)
+    }
+    #endif
 
     fileprivate func addToContainer() {
         #if os(iOS)
@@ -136,13 +147,8 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    fileprivate func installPlugin(_ plugin: UICorePlugin) {
-        addSubview(plugin)
-        plugin.render()
-    }
-
     fileprivate func renderContainer(_ container: Container) {
-        addSubviewMatchingConstraints(container)
+        view.addSubviewMatchingConstraints(container.view)
         container.render()
     }
 
@@ -161,7 +167,7 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
     }
 
     open func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view!.isKind(of: Container.self) || touch.view == mediaControl
+        return touch.view!.accessibilityIdentifier == "Container"
     }
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
@@ -186,19 +192,18 @@ open class Core: UIBaseObject, UIGestureRecognizerDelegate {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        Logger.logDebug("destroying mediaControl", scope: "Core")
-        mediaControl?.destroy()
-
         trigger(InternalEvent.didDestroy.rawValue)
 
         Logger.logDebug("destroyed", scope: "Core")
-        mediaControl?.removeFromSuperview()
-        mediaControl = nil
         #if os(iOS)
         fullscreenHandler?.destroy()
         fullscreenHandler = nil
         fullscreenController = nil
         #endif
-        removeFromSuperview()
+        view.removeFromSuperview()
+    }
+
+    @objc func didTappedView() {
+        trigger(InternalEvent.didTappedCore.rawValue)
     }
 }

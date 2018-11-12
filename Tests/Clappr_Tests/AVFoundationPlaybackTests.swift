@@ -468,19 +468,21 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             if #available(iOS 11.0, *) {
+                #if os(iOS)
                 context("when did change bounds") {
                     it("sets preferredMaximumResolution according to playback bounds size") {
-                        let playback = AVFoundationPlayback()
-                        playback.player = AVPlayerStub()
+                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
 
-                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
-                        let playerSize = playback.bounds.size
+                        playback.play()
+                        playback.view.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+                        let playerSize = playback.view.bounds.size
                         let mainScale = UIScreen.main.scale
                         let screenSize = CGSize(width: playerSize.width * mainScale, height: playerSize.height * mainScale)
 
                         expect(playback.player?.currentItem?.preferredMaximumResolution).to(equal(screenSize))
                     }
                 }
+                #endif
 
                 context("when setups avplayer") {
 
@@ -494,8 +496,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     #if os(iOS)
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
-                        playback.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
-                        let playerSize = playback.bounds.size
+                        playback.view.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
+                        let playerSize = playback.view.bounds.size
                         let mainScale = UIScreen.main.scale
                         let screenSize = CGSize(width: playerSize.width * mainScale, height: playerSize.height * mainScale)
 

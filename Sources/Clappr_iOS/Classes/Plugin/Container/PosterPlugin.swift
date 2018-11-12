@@ -4,10 +4,6 @@ open class PosterPlugin: UIContainerPlugin {
     internal(set) var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
 
-    public required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     open override var pluginName: String {
         return "poster"
     }
@@ -16,9 +12,9 @@ open class PosterPlugin: UIContainerPlugin {
         super.init()
     }
 
-    public required init(context: UIBaseObject) {
+    public required init(context: UIObject) {
         super.init(context: context)
-        translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
         poster.contentMode = .scaleAspectFit
         bindContainerEvents()
     }
@@ -28,7 +24,7 @@ open class PosterPlugin: UIContainerPlugin {
         if let urlString = container.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
-            isHidden = true
+            view.isHidden = true
             container.mediaControlEnabled = false
         }
 
@@ -59,18 +55,18 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     fileprivate func configureViews() {
-        container?.addMatchingConstraints(self)
-        addSubviewMatchingConstraints(poster)
+        container?.view.addMatchingConstraints(view)
+        view.addSubviewMatchingConstraints(poster)
 
-        addSubview(playButton)
+        view.addSubview(playButton)
 
         let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerX,
-                                                   relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
-        addConstraint(xCenterConstraint)
+                                                   relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        view.addConstraint(xCenterConstraint)
 
         let yCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerY,
-                                                   relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-        addConstraint(yCenterConstraint)
+                                                   relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
+        view.addConstraint(yCenterConstraint)
     }
 
     private func bindPlaybackEvents() {
@@ -97,7 +93,7 @@ open class PosterPlugin: UIContainerPlugin {
         bindPlaybackEvents()
         bindContainerEvents()
         if isNoOpPlayback {
-            isHidden = true
+            view.isHidden = true
         }
     }
 
@@ -106,14 +102,14 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     fileprivate func playbackStarted() {
-        isHidden = true
+        view.isHidden = true
         container?.mediaControlEnabled = true
     }
 
     fileprivate func playbackEnded() {
         container?.mediaControlEnabled = false
         playButton.isHidden = false
-        isHidden = false
+        view.isHidden = false
     }
 
     fileprivate func updatePoster(_ info: EventUserInfo) {

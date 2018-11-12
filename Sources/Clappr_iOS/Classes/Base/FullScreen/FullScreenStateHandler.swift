@@ -1,5 +1,4 @@
 protocol FullscreenStateHandler {
-
     var core: Core { get }
 
     init(core: Core)
@@ -10,8 +9,13 @@ protocol FullscreenStateHandler {
     func destroy()
 }
 
-struct FullscreenByApp: FullscreenStateHandler {
+extension FullscreenStateHandler {
+    func enterInFullscreen() { }
+    func exitFullscreen() { }
+    func destroy() { }
+}
 
+struct FullscreenByApp: FullscreenStateHandler {
     var core: Core
 
     func set(fullscreen: Bool) {
@@ -25,22 +29,9 @@ struct FullscreenByApp: FullscreenStateHandler {
             core.trigger(InternalEvent.didExitFullscreen.rawValue)
         }
     }
-
-    func enterInFullscreen() {
-        guard !core.isFullscreen else { return }
-        core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
-    }
-
-    func exitFullscreen() {
-        guard core.isFullscreen else { return }
-        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
-    }
-
-    func destroy() { }
 }
 
 struct FullscreenByPlayer: FullscreenStateHandler {
-
     var core: Core
 
     func set(fullscreen: Bool) {
@@ -56,7 +47,7 @@ struct FullscreenByPlayer: FullscreenStateHandler {
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
         core.parentController?.present(fullscreenController, animated: false, completion: nil)
-        fullscreenController.view.addSubviewMatchingConstraints(core)
+        fullscreenController.view.addSubviewMatchingConstraints(core.view)
         core.trigger(InternalEvent.didEnterFullscreen.rawValue)
         core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
     }
@@ -71,7 +62,7 @@ struct FullscreenByPlayer: FullscreenStateHandler {
     }
 
     private func handleExit() {
-        core.parentView?.addSubviewMatchingConstraints(core)
+        core.parentView?.addSubviewMatchingConstraints(core.view)
         core.fullscreenController?.dismiss(animated: false, completion: nil)
     }
 

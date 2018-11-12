@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         present(fullscreenController, animated: false) {
             self.player.setFullscreen(true)
         }
-        fullscreenController.view.addSubviewMatchingConstraints(player.core!)
+        fullscreenController.view.addSubviewMatchingConstraints(player.core!.view)
     }
 
     @objc func onExitFullscreen() {
@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         fullscreenController.dismiss(animated: false) {
             self.player.setFullscreen(false)
         }
-        core.parentView?.addSubviewMatchingConstraints(core)
+        core.parentView?.addSubviewMatchingConstraints(core.view)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

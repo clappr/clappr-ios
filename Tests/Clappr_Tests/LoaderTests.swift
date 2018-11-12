@@ -39,7 +39,7 @@ class LoaderTests: QuickSpec {
                     expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins))
                 }
             }
-            
+
             context("when adds core plugins") {
                 it("adds only core to the correct array in Loader") {
                     let numberOfInitialPlaybacks = Loader.shared.playbacks.count
@@ -53,7 +53,7 @@ class LoaderTests: QuickSpec {
                     expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins + 1))
                 }
             }
-            
+
             context("when adds plugin with same name") {
                 it("has one previous plugin with the same name") {
                     Loader.shared.register(plugins: [StubSpinnerPlugin.self])
@@ -76,11 +76,6 @@ class LoaderTests: QuickSpec {
 
     class StubMediaControl: MediaControl {
 
-        override class func loadNib() -> UINib? {
-            let nib = UINib()
-            nib.accessibilityHint = "StubMediaControl"
-            return nib
-        }
     }
 
     class StubPlayback: Playback {

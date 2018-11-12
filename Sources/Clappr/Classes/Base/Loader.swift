@@ -1,18 +1,18 @@
 open class Loader {
 
     public static let shared = Loader()
-    public var plugins: [String: Plugin.Type] = [:]
+    public var plugins: [Plugin.Type] = []
 
     var playbacks: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .playback }.map { return $0.value }
+        return plugins.filter { $0.type == .playback }.map { return $0 }
     }
 
     var containerPlugins: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .container }.map { return $0.value }
+        return plugins.filter { $0.type == .container }.map { return $0 }
     }
 
     var corePlugins: [Plugin.Type] {
-        return plugins.filter { $0.value.type == .core }.map { return $0.value }
+        return plugins.filter { $0.type == .core }.map { return $0 }
     }
 
     private init() {
@@ -21,13 +21,11 @@ open class Loader {
             "\n - container: \(containerPlugins.map({ $0.name }))" +
             "\n - core: \(corePlugins.map({ $0.name }))")
     }
-    
+
     open func register(plugins: [Plugin.Type]) {
-        plugins.forEach { plugin in
-            self.plugins[plugin.name] = plugin
-        }
+        self.plugins.appendOrReplace(contentsOf: plugins)
     }
-    
+
     open func loadPlugins(in core: Core) {
         for plugin in Loader.shared.corePlugins {
             if let corePlugin = plugin.init(context: core) as? UICorePlugin {
@@ -35,7 +33,7 @@ open class Loader {
             }
         }
     }
-    
+
     open func loadPlugins(in container: Container) {
         for plugin in Loader.shared.containerPlugins {
             if let containerPlugin = plugin.init(context: container) as? UIContainerPlugin {

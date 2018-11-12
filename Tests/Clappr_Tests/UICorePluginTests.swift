@@ -19,7 +19,7 @@ class UICorePluginTests: QuickSpec {
             }
 
             it("Should not be initializaed with wrong context") {
-                let context = UIBaseObject()
+                let context = UIObject()
                 expect(StubCorePlugin(context: context)).to(raiseException(named: "WrongContextType"))
 
                 let container = Container()

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SeekbarView" customModule="Clappr">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="242"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ag5-Ow-Xfy" userLabel="Seek Bar Container" customClass="DragDetectorView" customModule="Clappr" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="102.5" width="375" height="37"/>
+                    <subviews>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xya-wK-sAi" userLabel="Seek Bar">
+                            <rect key="frame" x="0.0" y="18" width="375" height="1"/>
+                            <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="WjV-95-zSN"/>
+                                <constraint firstAttribute="height" constant="1" id="YFD-Ll-4FO"/>
+                            </constraints>
+                        </view>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miA-SA-EgP" userLabel="Buffer Bar">
+                            <rect key="frame" x="0.0" y="18" width="0.0" height="1"/>
+                            <color key="backgroundColor" red="0.75559091570000003" green="0.75556838510000002" blue="0.75558114050000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="02v-DB-lpk"/>
+                                <constraint firstAttribute="height" constant="1" id="gnY-im-kM9"/>
+                            </constraints>
+                        </view>
+                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PGN-FD-fyI" userLabel="Progress Bar">
+                            <rect key="frame" x="0.0" y="18" width="0.0" height="1"/>
+                            <color key="backgroundColor" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <accessibility key="accessibilityConfiguration" label="seek bar"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="8LN-fb-yw9"/>
+                                <constraint firstAttribute="height" constant="1" id="9lZ-R3-oqx"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvE-Ry-POo" userLabel="Scrubber">
+                            <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                            <subviews>
+                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwm-i4-HST" userLabel="Scrubber Outer Circle" customClass="BorderView" customModule="Clappr" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                                    <subviews>
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iAO-Mn-1uP" userLabel="Scrubber Inner Circle" customClass="BorderView" customModule="Clappr" customModuleProvider="target">
+                                            <rect key="frame" x="13.5" y="13.5" width="10" height="10"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="10" id="uag-x9-lEA"/>
+                                                <constraint firstAttribute="height" constant="10" id="ufg-iF-7p3"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="iAO-Mn-1uP" secondAttribute="centerY" id="H9S-nj-ut5"/>
+                                        <constraint firstAttribute="centerX" secondItem="iAO-Mn-1uP" secondAttribute="centerX" id="PhG-sh-M7Z"/>
+                                        <constraint firstAttribute="width" constant="37" id="mMS-Z9-d0E"/>
+                                        <constraint firstAttribute="height" constant="37" id="xwe-66-vor"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="18.5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" red="0.74895596499999995" green="0.74895596499999995" blue="0.74895596499999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                            <accessibility key="accessibilityConfiguration" label="scrubber"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="vwm-i4-HST" secondAttribute="centerX" id="0eA-FC-0Jd"/>
+                                <constraint firstAttribute="centerY" secondItem="vwm-i4-HST" secondAttribute="centerY" id="QWj-Pm-OBG"/>
+                                <constraint firstAttribute="width" constant="37" id="ftB-vl-J9H"/>
+                                <constraint firstAttribute="height" constant="37" id="mPL-kT-Szu"/>
+                            </constraints>
+                        </view>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ou5-JO-feR">
+                            <rect key="frame" x="0.0" y="-40" width="37" height="20"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-GR-npi" userLabel="Time Label">
+                                    <rect key="frame" x="4" y="4" width="29" height="12"/>
+                                    <accessibility key="accessibilityConfiguration" label="scrubber time"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.84765625" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="d4I-GR-npi" secondAttribute="trailing" constant="4" id="6ak-xU-foW"/>
+                                <constraint firstItem="d4I-GR-npi" firstAttribute="centerX" secondItem="ou5-JO-feR" secondAttribute="centerX" id="Mrk-2p-Q0Q"/>
+                                <constraint firstItem="d4I-GR-npi" firstAttribute="leading" secondItem="ou5-JO-feR" secondAttribute="leading" constant="4" id="VlE-Ib-Uvh"/>
+                                <constraint firstAttribute="bottom" secondItem="d4I-GR-npi" secondAttribute="bottom" constant="4" id="olr-g3-56G"/>
+                                <constraint firstItem="d4I-GR-npi" firstAttribute="top" secondItem="ou5-JO-feR" secondAttribute="top" constant="4" id="zgU-e1-C97"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="3EJ-3P-xRv"/>
+                        <constraint firstItem="PGN-FD-fyI" firstAttribute="centerY" secondItem="miA-SA-EgP" secondAttribute="centerY" id="994-OJ-fo7"/>
+                        <constraint firstItem="UvE-Ry-POo" firstAttribute="centerY" secondItem="PGN-FD-fyI" secondAttribute="centerY" id="AHC-ZX-rHb"/>
+                        <constraint firstItem="Xya-wK-sAi" firstAttribute="centerY" secondItem="ag5-Ow-Xfy" secondAttribute="centerY" id="Dd4-Nh-Uo3"/>
+                        <constraint firstItem="PGN-FD-fyI" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="E8I-qe-P5G"/>
+                        <constraint firstItem="UvE-Ry-POo" firstAttribute="top" secondItem="ou5-JO-feR" secondAttribute="bottom" constant="20" id="Idh-uq-GuB"/>
+                        <constraint firstItem="miA-SA-EgP" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="LwG-AI-wcq"/>
+                        <constraint firstAttribute="trailing" secondItem="Xya-wK-sAi" secondAttribute="trailing" id="Nuz-8q-60m"/>
+                        <constraint firstItem="miA-SA-EgP" firstAttribute="centerY" secondItem="Xya-wK-sAi" secondAttribute="centerY" id="Ok6-eH-y6F"/>
+                        <constraint firstItem="Xya-wK-sAi" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="r1g-J7-Fwf"/>
+                        <constraint firstItem="UvE-Ry-POo" firstAttribute="leading" secondItem="Xya-wK-sAi" secondAttribute="leading" id="rjc-OF-b6A"/>
+                        <constraint firstItem="ou5-JO-feR" firstAttribute="leading" secondItem="ag5-Ow-Xfy" secondAttribute="leading" id="waL-kK-ffP"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <accessibility key="accessibilityConfiguration" identifier="seekbar"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ag5-Ow-Xfy" secondAttribute="trailing" id="Svq-dn-eg2"/>
+                <constraint firstItem="ag5-Ow-Xfy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xCB-mY-ujf"/>
+                <constraint firstItem="ag5-Ow-Xfy" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yp7-kb-GYy"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bufferBar" destination="miA-SA-EgP" id="k9j-dl-IuL"/>
+                <outlet property="bufferWidth" destination="02v-DB-lpk" id="cxc-Yg-qFs"/>
+                <outlet property="progressBar" destination="PGN-FD-fyI" id="na8-8y-h27"/>
+                <outlet property="progressBarWidthConstraint" destination="8LN-fb-yw9" id="dyA-to-5Vs"/>
+                <outlet property="scrubber" destination="UvE-Ry-POo" id="LRD-lt-ErZ"/>
+                <outlet property="scrubberOuterCircle" destination="vwm-i4-HST" id="S9I-Lg-xUB"/>
+                <outlet property="scrubberOuterCircleHeightConstraint" destination="xwe-66-vor" id="xhC-vY-Zt3"/>
+                <outlet property="scrubberOuterCircleWidthConstraint" destination="mMS-Z9-d0E" id="MdO-7H-r74"/>
+                <outlet property="scrubberPosition" destination="rjc-OF-b6A" id="OTo-DH-d0d"/>
+                <outlet property="seekBarContainerView" destination="ag5-Ow-Xfy" id="5re-sz-EGh"/>
+                <outlet property="timeLabel" destination="d4I-GR-npi" id="YGH-uj-NOM"/>
+                <outlet property="timeLabelPosition" destination="waL-kK-ffP" id="BOp-I9-kcf"/>
+                <outlet property="timeLabelView" destination="ou5-JO-feR" id="oKr-ck-B6v"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="-335"/>
+        </view>
+    </objects>
+</document>

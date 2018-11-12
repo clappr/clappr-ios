@@ -1,53 +1,53 @@
 import Foundation
 
-@objcMembers
-open class UIBaseObject: UIView, EventProtocol {
-    fileprivate let dispatcher = EventDispatcher()
+open class UIObject: NSObject, EventProtocol {
+    fileprivate let baseObject = BaseObject()
+    @objc open var view: UIView = UIView()
 
-    @discardableResult
+    @objc @discardableResult
     open func on(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return dispatcher.on(eventName, callback: callback)
+        return baseObject.on(eventName, callback: callback)
     }
 
-    @discardableResult
+    @objc @discardableResult
     open func once(_ eventName: String, callback: @escaping EventCallback) -> String {
-        return dispatcher.once(eventName, callback: callback)
+        return baseObject.once(eventName, callback: callback)
     }
 
-    open func off(_ listenId: String) {
-        dispatcher.off(listenId)
+    @objc open func off(_ listenId: String) {
+        baseObject.off(listenId)
     }
 
-    open func trigger(_ eventName: String) {
-        dispatcher.trigger(eventName)
+    @objc open func trigger(_ eventName: String) {
+        baseObject.trigger(eventName)
         Logger.logDebug("[\(eventName)] triggered", scope: logIdentifier())
     }
 
-    open func trigger(_ eventName: String, userInfo: EventUserInfo) {
-        dispatcher.trigger(eventName, userInfo: userInfo)
+    @objc open func trigger(_ eventName: String, userInfo: EventUserInfo) {
+        baseObject.trigger(eventName, userInfo: userInfo)
         Logger.logDebug("[\(eventName)] triggered with \(String(describing: userInfo))", scope: logIdentifier())
     }
 
     @discardableResult
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return dispatcher.listenTo(contextObject, eventName: eventName, callback: callback)
+        return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
     @discardableResult
     open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
-        return dispatcher.listenToOnce(contextObject, eventName: eventName, callback: callback)
+        return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
     }
 
-    open func stopListening() {
-        dispatcher.stopListening()
+    @objc open func stopListening() {
+        baseObject.stopListening()
     }
 
-    open func stopListening(_ listenId: String) {
-        dispatcher.stopListening(listenId)
+    @objc open func stopListening(_ listenId: String) {
+        baseObject.stopListening(listenId)
     }
 
-    open func getEventDispatcher() -> EventDispatcher {
-        return dispatcher
+    @objc open func getEventContextObject() -> BaseObject {
+        return baseObject
     }
 
     fileprivate func logIdentifier() -> String {
@@ -57,14 +57,15 @@ open class UIBaseObject: UIView, EventProtocol {
         return "\(type(of: self))"
     }
 
-    open func render() {}
+    @objc open func render() {}
+    
 
     deinit {
         Logger.logDebug("deinit", scope: NSStringFromClass(type(of: self)))
     }
 }
 
-public extension UIBaseObject {
+public extension UIObject {
     public func trigger(_ event: Event) {
         trigger(event.rawValue)
     }

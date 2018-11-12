@@ -162,10 +162,18 @@ open class Player: BaseObject {
 
         playbackEventsListenIds.removeAll()
     }
-    
+
     open class func register(plugins: [Plugin.Type]) {
         if !hasAlreadyRegisteredPlugins {
-            let builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self, PosterPlugin.self, SpinnerPlugin.self]
+            let builtInPlugins: [Plugin.Type] = [
+                AVFoundationPlayback.self,
+                MediaControl.self,
+                PosterPlugin.self,
+                SpinnerPlugin.self,
+                PlayButton.self,
+                TimeIndicator.self,
+                FullscreenButton.self,
+                Seekbar.self]
 
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true

@@ -1,6 +1,6 @@
 import AVFoundation
 
-open class Playback: UIBaseObject, Plugin {
+open class Playback: UIObject, Plugin {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {
@@ -63,24 +63,20 @@ open class Playback: UIBaseObject, Plugin {
         return false
     }
 
-    public required init() {
+    public required override init() {
         options = [:]
-        super.init(frame: CGRect.zero)
-        backgroundColor = UIColor.clear
+        super.init()
+        view.backgroundColor = UIColor.clear
     }
 
     @objc public required init(options: Options) {
         Logger.logDebug("loading with \(options)", scope: "\(Swift.type(of: self))")
         self.options = options
-        super.init(frame: CGRect.zero)
-        isUserInteractionEnabled = false
+        super.init()
+        view.isUserInteractionEnabled = false
     }
 
-    public required init?(coder _: NSCoder) {
-        fatalError("Use init(url: NSURL) instead")
-    }
-
-    @objc public required init(context _: UIBaseObject) {
+    @objc public required init(context _: UIObject) {
         fatalError("Use init(url: NSURL) instead")
     }
 
@@ -112,7 +108,7 @@ open class Playback: UIBaseObject, Plugin {
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
         Logger.logDebug("destroying ui elements", scope: "Playback")
-        removeFromSuperview()
+        view.removeFromSuperview()
         Logger.logDebug("destroying listeners", scope: "Playback")
         stopListening()
         Logger.logDebug("destroyed", scope: "Playback")

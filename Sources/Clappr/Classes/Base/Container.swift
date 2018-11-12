@@ -1,6 +1,6 @@
 import Foundation
 
-open class Container: UIBaseObject {
+open class Container: UIObject {
     @objc internal(set) open var plugins: [UIContainerPlugin] = []
     @objc open var sharedData = SharedData()
     @objc open var options: Options {
@@ -24,7 +24,7 @@ open class Container: UIBaseObject {
         }
         didSet {
             if self.playback != oldValue {
-                self.playback?.removeFromSuperview()
+                self.playback?.view.removeFromSuperview()
                 self.playback?.once(Event.playing.rawValue) { [weak self] _ in self?.options[kStartAt] = 0.0 }
                 trigger(InternalEvent.didChangePlayback.rawValue)
             }
@@ -34,18 +34,16 @@ open class Container: UIBaseObject {
     public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
-        super.init(frame: CGRect.zero)
+
+        super.init()
+
         self.sharedData.container = self
-        backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.clear
         Loader.shared.loadPlugins(in: self)
-        accessibilityIdentifier = "Container"
+        view.accessibilityIdentifier = "Container"
         if let source = options[kSourceUrl] as? String {
             load(source, mimeType: options[kMimeType] as? String)
         }
-    }
-
-    public required init?(coder _: NSCoder) {
-        fatalError("Use init(playback: Playback) instead")
     }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
@@ -79,13 +77,13 @@ open class Container: UIBaseObject {
             return
         }
 
-        addSubviewMatchingConstraints(playback)
+        view.addSubviewMatchingConstraints(playback.view)
         playback.render()
-        sendSubview(toBack: playback)
+        view.sendSubview(toBack: playback.view)
     }
 
     fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {
-        addSubview(plugin)
+        view.addSubview(plugin.view)
         plugin.render()
     }
 
@@ -109,7 +107,7 @@ open class Container: UIBaseObject {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        removeFromSuperview()
+        view.removeFromSuperview()
 
         trigger(InternalEvent.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
