@@ -163,7 +163,7 @@ open class Player: BaseObject {
         playbackEventsListenIds.removeAll()
     }
 
-    public static func register(plugins: [Plugin.Type]) {
+    open class func register(plugins: [Plugin.Type]) {
         if !hasAlreadyRegisteredPlugins {
             let builtInPlugins: [Plugin.Type] = [
                 AVFoundationPlayback.self,
