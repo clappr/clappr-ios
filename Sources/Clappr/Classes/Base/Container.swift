@@ -49,13 +49,12 @@ open class Container: UIObject {
     @objc open func load(_ source: String, mimeType: String? = nil) {
         trigger(InternalEvent.willLoadSource.rawValue)
 
-        var playbackOptions = options
-        playbackOptions[kSourceUrl] = source
-        playbackOptions[kMimeType] = mimeType
+        options[kSourceUrl] = source
+        options[kMimeType] = mimeType
 
         self.playback?.destroy()
 
-        let playbackFactory = PlaybackFactory(options: playbackOptions)
+        let playbackFactory = PlaybackFactory(options: options)
         self.playback = playbackFactory.createPlayback()
 
         if playback is NoOpPlayback {
