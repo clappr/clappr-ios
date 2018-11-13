@@ -1,4 +1,4 @@
-public enum Event: String, CaseIterable {
+public enum Event: String {
     case didUpdateBuffer
     case didUpdatePosition
     case ready
@@ -51,4 +51,8 @@ public enum Event: String, CaseIterable {
     case subtitleSelected
     @available(*, deprecated, message: "Update to didSelectAudio")
     case audioSelected
+    
+    public static var allCases: [Event] {
+        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl]
+    }
 }
