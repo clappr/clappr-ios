@@ -12,7 +12,11 @@ class HTTPStub {
 
     func start() {
         setupInitialStubs()
-        try! server.start()
+        do {
+            try server.start()
+        } catch {
+            print("Error while starting server: \(error)")
+        }
     }
 
     func stop() {

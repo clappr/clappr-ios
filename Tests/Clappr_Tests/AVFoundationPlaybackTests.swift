@@ -38,6 +38,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                 playback = AVFoundationPlayback()
                 playback.player = player
             }
+            
+            afterEach {
+                playback.stop()
+            }
 
             describe("AVFoundationPlaybackExtension") {
                 describe("#minDvrSize") {
@@ -1163,7 +1167,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-            
+
             #if os(tvOS)
             describe("#loadMetadata") {
                 
