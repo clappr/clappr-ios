@@ -70,7 +70,7 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle stalled event") {
+                    it("calls a callback function to handle stalling event") {
                         player.on(.stalling) { _ in
                             callbackWasCalled = true
                         }

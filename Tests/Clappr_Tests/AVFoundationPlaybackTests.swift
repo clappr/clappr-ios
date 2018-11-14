@@ -1105,7 +1105,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#stalled") {
+                describe("#stalling") {
                     context("when seek is called") {
                         it("keeps buffering state") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
