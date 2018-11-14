@@ -71,13 +71,13 @@ class Seekbar: MediaControlPlugin {
                 self?.setVideoProperties()
                 self?.setSeekbarViewLive()
             }
-            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] _ in
+            listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] _ in
                 if let isSeeking = self?.seekbarView.isSeeking, !isSeeking {
                     self?.updateElapsedTime()
                 }
             }
             listenTo(playback, eventName: Event.seekableUpdate.rawValue) { [weak self] _ in self?.updateElapsedTime() }
-            listenTo(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateBuffer(info) }
+            listenTo(playback, eventName: Event.didUpdateBuffer.rawValue) { [weak self] (info: EventUserInfo) in self?.updateBuffer(info) }
         }
     }
 

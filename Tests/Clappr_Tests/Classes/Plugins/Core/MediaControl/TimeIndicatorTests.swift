@@ -149,7 +149,7 @@ class TimeIndicatorTests: QuickSpec {
                     timeIndicator.render()
                     let userInfo: EventUserInfo = ["position": TimeInterval(50)]
 
-                    coreStub.activePlayback?.trigger(Event.positionUpdate, userInfo: userInfo)
+                    coreStub.activePlayback?.trigger(Event.didUpdatePosition, userInfo: userInfo)
 
                     expect(timeIndicator.elapsedTimeLabel.text).to(equal("00:50"))
                 }
