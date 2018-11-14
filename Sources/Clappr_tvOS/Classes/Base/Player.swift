@@ -117,6 +117,7 @@ open class Player: UIViewController, BaseObject {
              Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
              Event.seek.rawValue,Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
+             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
 
         Loader.shared.register(plugins: externalPlugins)
@@ -124,7 +125,7 @@ open class Player: UIViewController, BaseObject {
         setCore(Core(options: options))
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {s
         fatalError("init(coder:) has not been implemented")
     }
 
