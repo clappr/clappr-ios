@@ -67,6 +67,16 @@ let player = Player(options: options)
 player.attachTo(yourView, controller: self)
 ```
 
+#### Media Control
+
+It controls all the user interaction between UI and the playback, it relies only on playback abstraction, therefore, this component should work in playback.
+
+It's a set of `Stack Views` divided into panels (`Top`, `Center` and `Bottom`) and can be used to organize the components on the screen.
+
+#### Media Control Plugins
+
+Allow providing controls for the `Player`. There are default plugins available with basic user interactions like: `Play/Pause`, `TimeIndicator`, `Seekbar` and `Fullscreen`.
+
 ### tvOS
 
 #### Create
