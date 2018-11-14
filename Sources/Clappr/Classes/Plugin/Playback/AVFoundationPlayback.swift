@@ -509,7 +509,7 @@ open class AVFoundationPlayback: Playback {
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         } else {
             trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
-            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
+            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
     }
 

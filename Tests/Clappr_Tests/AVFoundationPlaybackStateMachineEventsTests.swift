@@ -10,10 +10,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
         describe("AVFoundationPlayback Tests") {
             let server = HTTPStub()
             let unwantedEvents: [Event] = [
-                .bufferUpdate, .positionUpdate,
-                .seekableUpdate, .audioAvailable,
-                .subtitleAvailable, .didChangeDvrAvailability,
-                .seek
+                .didUpdateBuffer, .didUpdatePosition,
+                .seekableUpdate, .didFindAudio,
+                .didFindSubtitle, .didChangeDvrAvailability
             ]
 
             beforeSuite {
@@ -30,7 +29,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalled, .willPlay, .playing,
+                            .ready, .willPlay, .stalling, .willPlay, .playing,
                             .willPause, .didPause, .willSeek, .didSeek,
                             .willPlay, .playing, .willStop, .didPause, .didStop
                         ]
@@ -54,7 +53,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                             }
                         }
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 10)
                     }
                 }
 
@@ -63,8 +62,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalled, .willPlay, .playing,
-                            .willSeek, .stalled, .playing, .didSeek, .stalled,
+                            .ready, .willPlay, .stalling, .willPlay, .playing,
+                            .willSeek, .stalling, .playing, .didSeek, .stalling,
                             .playing, .didComplete
                         ]
                         var triggeredEvents: [Event] = []
@@ -79,7 +78,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                             playback.seek(playback.duration)
                         }
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 10)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 12)
                     }
                 }
 
@@ -89,7 +88,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
                             .ready, .willPause, .didPause,
-                            .willPlay, .stalled, .willStop, .didStop
+                            .willPlay, .stalling, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
@@ -112,7 +111,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
                             .ready, .willPause, .didPause,
-                            .willPlay, .stalled, .willPause,
+                            .willPlay, .stalling, .willPause,
                             .didPause, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
@@ -146,7 +145,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalled, .error, .didPause
+                            .ready, .willPlay, .stalling, .error, .didPause
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {

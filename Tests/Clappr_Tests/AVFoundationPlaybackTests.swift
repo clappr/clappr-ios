@@ -698,21 +698,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(didTriggerWillSeek).to(beTrue())
                 }
 
-                it("triggers seek event") {
-                    let playback = AVFoundationPlayback()
-                    let player = AVPlayerStub()
-                    playback.player = player
-                    player.setStatus(to: .readyToPlay)
-                    var didTriggerSeek = false
-                    playback.on(Event.seek.rawValue) { _ in
-                        didTriggerSeek = true
-                    }
-
-                    playback.seek(5)
-
-                    expect(didTriggerSeek).to(beTrue())
-                }
-
                 it("triggers didSeek when a seek is completed") {
                     let playback = AVFoundationPlayback()
                     let player = AVPlayerStub()
@@ -1235,18 +1220,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
                             
                             _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
-                        }
-                    }
-                }
-                
-                context("when seek is executed") {
-                    it("triggers seek") {
-                        waitUntil { done in
-                            avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
-                                done()
-                            }
-                            
-                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
                         }
                     }
                     
