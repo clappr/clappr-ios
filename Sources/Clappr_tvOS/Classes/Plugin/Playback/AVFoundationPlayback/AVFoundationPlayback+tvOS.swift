@@ -8,7 +8,6 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
     }
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
-        trigger(.seek)
         trigger(.didSeek)
     }
 

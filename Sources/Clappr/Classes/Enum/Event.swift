@@ -33,8 +33,6 @@ public enum Event: String {
     case didShowMediaControl
     case willHideMediaControl
     case didHideMediaControl
-    @available(*, deprecated, message: "Update to willSeek")
-    case seek
     @available(*, deprecated, message: "Update to stalling")
     case stalled
     @available(*, deprecated, message: "Update to didUpdatePosition")
