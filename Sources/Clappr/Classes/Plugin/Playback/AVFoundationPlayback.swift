@@ -446,8 +446,8 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession()
         }
 
-        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
-        self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
+        self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {
