@@ -51,14 +51,14 @@ open class PlayButton: MediaControlPlugin {
 
     open func bindCoreEvents() {
         if let core = core {
-            listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
+            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
         }
     }
 
     open func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container,
-                     eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+                     eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 

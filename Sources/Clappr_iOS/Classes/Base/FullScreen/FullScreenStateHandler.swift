@@ -22,11 +22,11 @@ struct FullscreenByApp: FullscreenStateHandler {
         guard core.isFullscreen != fullscreen else { return }
         core.isFullscreen = fullscreen
         if fullscreen {
-            core.trigger(InternalEvent.willEnterFullscreen.rawValue)
-            core.trigger(InternalEvent.didEnterFullscreen.rawValue)
+            core.trigger(Event.willEnterFullscreen.rawValue)
+            core.trigger(Event.didEnterFullscreen.rawValue)
         } else {
-            core.trigger(InternalEvent.willExitFullscreen.rawValue)
-            core.trigger(InternalEvent.didExitFullscreen.rawValue)
+            core.trigger(Event.willExitFullscreen.rawValue)
+            core.trigger(Event.didExitFullscreen.rawValue)
         }
     }
 }
@@ -42,22 +42,22 @@ struct FullscreenByPlayer: FullscreenStateHandler {
     func enterInFullscreen() {
         guard let fullscreenController = core.fullscreenController else { return }
         guard !core.isFullscreen else { return }
-        core.trigger(InternalEvent.willEnterFullscreen.rawValue)
+        core.trigger(Event.willEnterFullscreen.rawValue)
         core.isFullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
         core.parentController?.present(fullscreenController, animated: false, completion: nil)
         fullscreenController.view.addSubviewMatchingConstraints(core.view)
-        core.trigger(InternalEvent.didEnterFullscreen.rawValue)
+        core.trigger(Event.didEnterFullscreen.rawValue)
         core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
     }
 
     func exitFullscreen() {
         guard core.isFullscreen else { return }
-        core.trigger(InternalEvent.willExitFullscreen.rawValue)
+        core.trigger(Event.willExitFullscreen.rawValue)
         core.isFullscreen = false
         handleExit()
-        core.trigger(InternalEvent.didExitFullscreen.rawValue)
+        core.trigger(Event.didExitFullscreen.rawValue)
         core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
     }
 

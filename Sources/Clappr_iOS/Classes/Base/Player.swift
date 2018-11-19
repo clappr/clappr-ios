@@ -85,7 +85,13 @@ open class Player: BaseObject {
              Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
-             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,
+             Event.willDestroy.rawValue, Event.didDestroy.rawValue, Event.willLoadSource.rawValue,
+             Event.didLoadSource.rawValue, Event.willChangePlayback.rawValue, Event.didChangePlayback.rawValue,
+             Event.willChangeActiveContainer.rawValue, Event.didChangeActiveContainer.rawValue,
+             Event.willChangeActivePlayback.rawValue, Event.didChangeActivePlayback.rawValue,
+             Event.willEnterFullscreen.rawValue, Event.didEnterFullscreen.rawValue,
+             Event.willExitFullscreen.rawValue, Event.didExitFullscreen.rawValue])
 
         setCore(Core(options: options))
 
@@ -97,8 +103,8 @@ open class Player: BaseObject {
 
         self.core = core
 
-        self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
         self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }

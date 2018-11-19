@@ -25,7 +25,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     private func bindDidChangePlayback() {
         if let container = self.container {
-            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
+            listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
         }
     }
 

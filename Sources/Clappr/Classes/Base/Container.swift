@@ -19,14 +19,14 @@ open class Container: UIObject {
     @objc internal(set) open var playback: Playback? {
         willSet {
             if self.playback != newValue {
-                trigger(InternalEvent.willChangePlayback.rawValue)
+                trigger(Event.willChangePlayback.rawValue)
             }
         }
         didSet {
             if self.playback != oldValue {
                 self.playback?.view.removeFromSuperview()
                 self.playback?.once(Event.playing.rawValue) { [weak self] _ in self?.options[kStartAt] = 0.0 }
-                trigger(InternalEvent.didChangePlayback.rawValue)
+                trigger(Event.didChangePlayback.rawValue)
             }
         }
     }
@@ -47,7 +47,7 @@ open class Container: UIObject {
     }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
-        trigger(InternalEvent.willLoadSource.rawValue)
+        trigger(Event.willLoadSource.rawValue)
 
         options[kSourceUrl] = source
         options[kMimeType] = mimeType
@@ -59,10 +59,10 @@ open class Container: UIObject {
 
         if playback is NoOpPlayback {
             render()
-            trigger(InternalEvent.didNotLoadSource.rawValue)
+            trigger(Event.error.rawValue)
         } else {
             renderPlayback()
-            trigger(InternalEvent.didLoadSource.rawValue)
+            trigger(Event.didLoadSource.rawValue)
         }
     }
 
@@ -97,7 +97,7 @@ open class Container: UIObject {
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
 
-        trigger(InternalEvent.willDestroy.rawValue)
+        trigger(Event.willDestroy.rawValue)
 
         Logger.logDebug("destroying playback", scope: "Container")
         playback?.destroy()
@@ -108,7 +108,7 @@ open class Container: UIObject {
 
         view.removeFromSuperview()
 
-        trigger(InternalEvent.didDestroy.rawValue)
+        trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
         Logger.logDebug("destroyed", scope: "Container")
