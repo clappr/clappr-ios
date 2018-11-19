@@ -118,7 +118,7 @@ open class Player: UIViewController, BaseObject {
              Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
-             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,
              Event.willDestroy.rawValue, Event.didDestroy.rawValue, Event.willLoadSource.rawValue,
              Event.didLoadSource.rawValue, Event.willChangePlayback.rawValue, Event.didChangePlayback.rawValue,
              Event.willChangeActiveContainer.rawValue, Event.didChangeActiveContainer.rawValue,
@@ -151,10 +151,10 @@ open class Player: UIViewController, BaseObject {
 
         self.core = core
 
-        self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(InternalEvent.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(InternalEvent.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
+        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        self.core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
         bindPlaybackEvents()
 
