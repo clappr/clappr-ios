@@ -171,7 +171,7 @@ class TimeIndicatorTests: QuickSpec {
                     it("update layout constants for medium screen") {
                         coreStub.activeContainer?.view.frame = CGRect(x: 0, y: 0, width: 500, height: 0)
 
-                        coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
+                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
 
                         expect(timeIndicator.leftMarginSize?.constant).to(equal(16))
                         expect(timeIndicator.marginBottom).to(equal(10))
@@ -182,7 +182,7 @@ class TimeIndicatorTests: QuickSpec {
                     it("update layout constants for small screen") {
                         coreStub.activeContainer?.view.frame = CGRect(x: 0, y: 0, width: 200, height: 0)
 
-                        coreStub.trigger(InternalEvent.didExitFullscreen.rawValue)
+                        coreStub.trigger(Event.didExitFullscreen.rawValue)
 
                         expect(timeIndicator.leftMarginSize?.constant).to(equal(16))
                         expect(timeIndicator.marginBottom).to(equal(10))

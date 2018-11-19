@@ -322,7 +322,7 @@ class PlayerTests: QuickSpec {
 
         private func bindPlaybackEvents() {
             if let core = self.core {
-                listenTo(core, eventName: InternalEvent.didChangeActivePlayback.rawValue) {  (_: EventUserInfo) in
+                listenTo(core, eventName: Event.didChangeActivePlayback.rawValue) {  (_: EventUserInfo) in
                     print("Log didChangeActivePlayback!!!!")
                 }
             }
