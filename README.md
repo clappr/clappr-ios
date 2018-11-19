@@ -51,9 +51,9 @@ github "clappr/clappr-ios"  ~> 0.9.0
 
 Run `carthage update` to build the framework and drag the built `Clappr.framework` into your Xcode project.
 
-## Usage
+# Usage
 
-### iOS
+## iOS
 
 #### Create
 ```swift
@@ -69,15 +69,36 @@ player.attachTo(yourView, controller: self)
 
 #### Media Control
 
-It controls all the user interaction between UI and the playback, it relies only on playback abstraction, therefore, this component should work in playback.
+It's a built-in plugin (i.e..: it can be replaced by your own plugin) that can display media control components, eg.: play/pause button, seekbar, video information such as title and/or description, etc.
 
-It's a set of `Stack Views` divided into panels (`Top`, `Center` and `Bottom`) and can be used to organize the components on the screen.
+Under the hood is a set of stack views divided into panels and position, that can be used to organize the components on the screen.
+
+* **Panels**: defines in which part of the screen the plugin will be rendered.  The options are `top`, `center`, `bottom` and `modal`.
+
+* **Position**: defines in which part of the _panel_ the plugin will be rendered. The options are `left`, `center`, `right` and `none`.
+
+Clappr comes with four default components: play/pause button, seekbar, fullscreen button, and time indicator. With them, the user can fully interact with the playback. You can customize it with your own plugins, see below:
 
 #### Media Control Plugins
 
-Allow providing controls for the `Player`. There are default plugins available with basic user interactions like: `Play/Pause`, `TimeIndicator`, `Seekbar` and `Fullscreen`.
+You can add your own components into the `MediaControl` by creating your own Media Control Plugin.
 
-### tvOS
+To do so, you must:
+
+* Inherit from `MediaControlPlugin`;
+* Define in which `panel` and `position` the plugin will be rendered;
+* Have a unique name;
+
+If you provide the same name that an existing plugin (built-in), the plugin will override the existent plugin.
+
+You can see some examples:
+
+* [PlayButton.swift](https://github.com/clappr/clappr-ios/blob/master/Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/PlayButton.swift)
+* [Seekbar.swift](https://github.com/clappr/clappr-ios/blob/master/Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/Seekbar.swift)
+* [TimeIndicator.swift](https://github.com/clappr/clappr-ios/blob/master/Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/FullscreenButton.swift)
+* [FullscreenButton.swift](https://github.com/clappr/clappr-ios/blob/master/Sources/Clappr_iOS/Classes/Plugin/Core/MediaControl/TimeIndicator.swift)
+
+## tvOS
 
 #### Create
 ```swift
