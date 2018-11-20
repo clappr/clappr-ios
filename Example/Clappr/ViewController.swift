@@ -41,12 +41,12 @@ class ViewController: UIViewController {
         player.on(Event.didSeek) { _ in print("on didSeek") }
 
         player.on(Event.requestFullscreen) { _ in
-            Logger.logInfo("Entrar em modo fullscreen")
+            print("on requestFullscreen")
             self.onRequestFullscreen()
         }
 
         player.on(Event.exitFullscreen) { _ in
-            Logger.logInfo("Sair do modo fullscreen")
+            print("on exitFullscreen")
             self.onExitFullscreen()
         }
     }
