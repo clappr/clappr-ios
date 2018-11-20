@@ -85,13 +85,7 @@ open class Player: BaseObject {
              Event.didSeek.rawValue,
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
-             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,
-             Event.willDestroy.rawValue, Event.didDestroy.rawValue, Event.willLoadSource.rawValue,
-             Event.didLoadSource.rawValue, Event.willChangePlayback.rawValue, Event.didChangePlayback.rawValue,
-             Event.willChangeActiveContainer.rawValue, Event.didChangeActiveContainer.rawValue,
-             Event.willChangeActivePlayback.rawValue, Event.didChangeActivePlayback.rawValue,
-             Event.willEnterFullscreen.rawValue, Event.didEnterFullscreen.rawValue,
-             Event.willExitFullscreen.rawValue, Event.didExitFullscreen.rawValue])
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
 
         setCore(Core(options: options))
 
