@@ -37,6 +37,7 @@ public enum Event: String {
     case didDestroy
     case willLoadSource
     case didLoadSource
+    case didNotLoadSource
     case willChangePlayback
     case didChangePlayback
     case willChangeActiveContainer
@@ -66,6 +67,6 @@ public enum Event: String {
     case audioSelected
     
     public static var allCases: [Event] {
-        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl, .willDestroy, .didDestroy, .willLoadSource, .didLoadSource, .willChangePlayback, .didChangePlayback, .willChangeActivePlayback, .didChangeActivePlayback, .willChangeActiveContainer, .didChangeActiveContainer, .willEnterFullscreen, .didEnterFullscreen, .willExitFullscreen, .didExitFullscreen]
+        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl, .willDestroy, .didDestroy, .willLoadSource, .didLoadSource, .didNotLoadSource, .willChangePlayback, .didChangePlayback, .willChangeActivePlayback, .didChangeActivePlayback, .willChangeActiveContainer, .didChangeActiveContainer, .willEnterFullscreen, .didEnterFullscreen, .willExitFullscreen, .didExitFullscreen]
     }
 }

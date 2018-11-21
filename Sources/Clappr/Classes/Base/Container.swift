@@ -59,7 +59,7 @@ open class Container: UIObject {
 
         if playback is NoOpPlayback {
             render()
-            trigger(Event.error.rawValue)
+            trigger(Event.didNotLoadSource.rawValue)
         } else {
             renderPlayback()
             trigger(Event.didLoadSource.rawValue)
