@@ -150,7 +150,7 @@ class ContainerTests: QuickSpec {
 
                 it("trigger willDestroy") {
                     var didCallEvent = false
-                    container.on(InternalEvent.willDestroy.rawValue) { _ in
+                    container.on(Event.willDestroy.rawValue) { _ in
                         didCallEvent = true
                     }
 
@@ -161,7 +161,7 @@ class ContainerTests: QuickSpec {
 
                 it("trigger didDestroy") {
                     var didCallEvent = false
-                    container.on(InternalEvent.didDestroy.rawValue) { _ in
+                    container.on(Event.didDestroy.rawValue) { _ in
                         didCallEvent = true
                     }
 
@@ -176,7 +176,7 @@ class ContainerTests: QuickSpec {
                     var countOfDestroyedPlugins = 0
 
                     container.plugins.forEach { plugin in
-                        plugin.on(InternalEvent.didDestroy.rawValue) { _ in
+                        plugin.on(Event.didDestroy.rawValue) { _ in
                             countOfDestroyedPlugins += 1
                         }
                     }
@@ -322,7 +322,7 @@ class ContainerTests: QuickSpec {
         }
 
         override func destroy() {
-            trigger(InternalEvent.didDestroy.rawValue)
+            trigger(Event.didDestroy.rawValue)
         }
     }
 

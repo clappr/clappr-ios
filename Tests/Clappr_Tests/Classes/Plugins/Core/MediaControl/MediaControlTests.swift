@@ -259,7 +259,7 @@ class MediaControlTests: QuickSpec {
                     it("hides the media control after some time if the video is playing") {
                         mediaControlVisible()
 
-                        coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
+                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
                         expect(mediaControl.view.isHidden).toEventually(beTrue())
@@ -270,7 +270,7 @@ class MediaControlTests: QuickSpec {
                         mediaControlVisible()
                         coreStub.activePlayback?.trigger(Event.didPause)
 
-                        coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
+                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
                     }
@@ -280,7 +280,7 @@ class MediaControlTests: QuickSpec {
                     it("hides the media control after some time if the video is playing") {
                         mediaControlVisible()
 
-                        coreStub.trigger(InternalEvent.didExitFullscreen.rawValue)
+                        coreStub.trigger(Event.didExitFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
                         expect(mediaControl.view.isHidden).toEventually(beTrue())
@@ -291,7 +291,7 @@ class MediaControlTests: QuickSpec {
                         mediaControlVisible()
                         coreStub.activePlayback?.trigger(Event.didPause)
 
-                        coreStub.trigger(InternalEvent.didEnterFullscreen.rawValue)
+                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
 
                         expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
                     }

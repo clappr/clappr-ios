@@ -72,14 +72,14 @@ open class PosterPlugin: UIContainerPlugin {
     private func bindPlaybackEvents() {
         if let playback = container?.playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
-            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.playbackStalled() }
+            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
         }
     }
 
     private func bindContainerEvents() {
         guard let container = container else { return }
-        listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
+        listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
         listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] info in self?.updatePoster(container.options) }
     }

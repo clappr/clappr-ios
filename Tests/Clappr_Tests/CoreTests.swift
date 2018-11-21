@@ -121,7 +121,7 @@ class CoreTests: QuickSpec {
                         let core = Core(options: options)
                         core.parentView = UIView()
                         var callbackWasCall = false
-                        core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                        core.on(Event.didEnterFullscreen.rawValue) { _ in
                             callbackWasCall = true
                         }
 
@@ -203,7 +203,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.didEnterFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                            core.on(Event.didEnterFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -214,7 +214,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.willEnterFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.willEnterFullscreen.rawValue) { _ in
+                            core.on(Event.willEnterFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -245,7 +245,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.willExitFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.willExitFullscreen.rawValue) { _ in
+                            core.on(Event.willExitFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -256,7 +256,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.didExitFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.didExitFullscreen.rawValue) { _ in
+                            core.on(Event.didExitFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -345,7 +345,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.didEnterFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.didEnterFullscreen.rawValue) { _ in
+                            core.on(Event.didEnterFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -356,7 +356,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.willEnterFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.willEnterFullscreen.rawValue) { _ in
+                            core.on(Event.willEnterFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -380,7 +380,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.willExitFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.willExitFullscreen.rawValue) { _ in
+                            core.on(Event.willExitFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -391,7 +391,7 @@ class CoreTests: QuickSpec {
 
                         it("triggers InternalEvent.didExitFullscreen") {
                             var didTriggerEvent = false
-                            core.on(InternalEvent.didExitFullscreen.rawValue) { _ in
+                            core.on(Event.didExitFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
 
@@ -490,7 +490,7 @@ class CoreTests: QuickSpec {
                 it("trigger willDestroy event") {
                     var didCallWillDestroy = false
 
-                    core.on(InternalEvent.willDestroy.rawValue) { _ in
+                    core.on(Event.willDestroy.rawValue) { _ in
                         didCallWillDestroy = true
                     }
                     core.destroy()
@@ -501,7 +501,7 @@ class CoreTests: QuickSpec {
                 it("trigger didDestroy event") {
                     var didCallDidDestroy = false
 
-                    core.on(InternalEvent.willDestroy.rawValue) { _ in
+                    core.on(Event.willDestroy.rawValue) { _ in
                         didCallDidDestroy = true
                     }
                     core.destroy()
@@ -526,7 +526,7 @@ class CoreTests: QuickSpec {
                 it("remove all containers") {
                     var countOfDestroyedContainers = 0
                     core.containers.forEach { container in
-                        container.on(InternalEvent.didDestroy.rawValue) { _ in
+                        container.on(Event.didDestroy.rawValue) { _ in
                             countOfDestroyedContainers += 1
                         }
                     }
@@ -559,7 +559,7 @@ class CoreTests: QuickSpec {
                     let container = Container()
                     var didCallEvent = false
 
-                    core.on(InternalEvent.willChangeActivePlayback.rawValue)   { userInfo in
+                    core.on(Event.willChangeActivePlayback.rawValue)   { userInfo in
                         didCallEvent = true
                     }
 
@@ -573,7 +573,7 @@ class CoreTests: QuickSpec {
                     let container = Container()
                     var didCallEvent = false
 
-                    container.on(InternalEvent.willChangePlayback.rawValue)   { userInfo in
+                    container.on(Event.willChangePlayback.rawValue)   { userInfo in
                         didCallEvent = true
                     }
 
@@ -589,7 +589,7 @@ class CoreTests: QuickSpec {
                     let core = Core()
                     var didCallEvent = false
 
-                    core.on(InternalEvent.willChangeActiveContainer.rawValue)   { userInfo in
+                    core.on(Event.willChangeActiveContainer.rawValue)   { userInfo in
                         didCallEvent = true
                     }
                     core.activeContainer = Container()
@@ -601,7 +601,7 @@ class CoreTests: QuickSpec {
                     let core = Core()
                     var didCallEvent = false
 
-                    core.on(InternalEvent.didChangeActiveContainer.rawValue)   { userInfo in
+                    core.on(Event.didChangeActiveContainer.rawValue)   { userInfo in
                         didCallEvent = true
                     }
                     core.activeContainer = Container()
@@ -616,7 +616,7 @@ class CoreTests: QuickSpec {
 
                     core.activeContainer = container
                     core.activeContainer?.playback = AVFoundationPlayback()
-                    container.on(InternalEvent.didChangeActivePlayback.rawValue)   { userInfo in
+                    container.on(Event.didChangeActivePlayback.rawValue)   { userInfo in
                         didCallEvent = true
                     }
 

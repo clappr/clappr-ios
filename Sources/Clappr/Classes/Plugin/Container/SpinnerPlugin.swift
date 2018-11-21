@@ -25,7 +25,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     private func bindDidChangePlayback() {
         if let container = self.container {
-            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
+            listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
         }
     }
 
@@ -62,7 +62,7 @@ open class SpinnerPlugin: UIContainerPlugin {
     private func bindPlaybackEvents() {
         guard let playback = container?.playback else { return }
         listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-        listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+        listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
         listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
         listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
 

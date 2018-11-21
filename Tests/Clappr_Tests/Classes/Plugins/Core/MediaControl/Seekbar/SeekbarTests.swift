@@ -192,7 +192,7 @@ class SeekbarTests: QuickSpec {
                             seekbar.seekbarView = seekbarViewMock
                             coreStub.playbackMock?.videoPosition = 50
 
-                            coreStub.activePlayback?.trigger(Event.positionUpdate, userInfo: nil)
+                            coreStub.activePlayback?.trigger(Event.didUpdatePosition, userInfo: nil)
 
                             expect(seekbarViewMock.didCallUpdateScrubberWithValue).to(equal(50))
                         }
@@ -205,7 +205,7 @@ class SeekbarTests: QuickSpec {
                             coreStub.playbackMock?.set(position: 100)
                             coreStub.playbackMock?.set(isDvrInUse: true)
 
-                            coreStub.activePlayback?.trigger(Event.positionUpdate, userInfo: nil)
+                            coreStub.activePlayback?.trigger(Event.didUpdatePosition, userInfo: nil)
 
                             expect(seekbarViewMock.didCallUpdateScrubberWithValue).to(equal(100))
                         }
@@ -220,7 +220,7 @@ class SeekbarTests: QuickSpec {
                         let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, Int32(NSEC_PER_SEC)))
                         let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
-                        coreStub.activePlayback?.trigger(Event.bufferUpdate, userInfo: userInfo)
+                        coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)
 
                         expect(seekbarViewMock.didCallUpdateBufferWithValue).to(equal(CGFloat(bufferEndTime)))
                     }
@@ -233,7 +233,7 @@ class SeekbarTests: QuickSpec {
                             let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(150, Int32(NSEC_PER_SEC)))
                             let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
-                            coreStub.activePlayback?.trigger(Event.bufferUpdate, userInfo: userInfo)
+                            coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)
 
                             expect(seekbarViewMock.didCallUpdateBufferWithValue).to(equal(seekbar.seekbarView.videoDuration))
                         }
@@ -247,7 +247,7 @@ class SeekbarTests: QuickSpec {
                         let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, Int32(NSEC_PER_SEC))) + Float64.nan
                         let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
-                        coreStub.activePlayback?.trigger(Event.bufferUpdate, userInfo: userInfo)
+                        coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)
 
                         expect(seekbarViewMock.didCallUpdateBufferWithValue).to(beNil())
                     }

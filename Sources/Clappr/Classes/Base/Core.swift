@@ -26,20 +26,20 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         willSet {
             activeContainer?.stopListening()
-            trigger(InternalEvent.willChangeActiveContainer.rawValue)
+            trigger(Event.willChangeActiveContainer.rawValue)
         }
 
         didSet {
             activeContainer?.on(
-            InternalEvent.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(InternalEvent.willChangeActivePlayback.rawValue, userInfo: info)
+            Event.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                self?.trigger(Event.willChangeActivePlayback.rawValue, userInfo: info)
             }
 
             activeContainer?.on(
-            InternalEvent.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(InternalEvent.didChangeActivePlayback.rawValue, userInfo: info)
+            Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+                self?.trigger(Event.didChangeActivePlayback.rawValue, userInfo: info)
             }
-            trigger(InternalEvent.didChangeActiveContainer.rawValue)
+            trigger(Event.didChangeActiveContainer.rawValue)
         }
     }
 
@@ -179,7 +179,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
-        trigger(InternalEvent.willDestroy.rawValue)
+        trigger(Event.willDestroy.rawValue)
 
         Logger.logDebug("destroying listeners", scope: "Core")
         stopListening()
@@ -192,7 +192,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        trigger(InternalEvent.didDestroy.rawValue)
+        trigger(Event.didDestroy.rawValue)
 
         Logger.logDebug("destroyed", scope: "Core")
         #if os(iOS)

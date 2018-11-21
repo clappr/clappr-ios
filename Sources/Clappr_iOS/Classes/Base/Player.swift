@@ -76,14 +76,16 @@ open class Player: BaseObject {
         self.playbackEventsToListen.append(contentsOf:
             [Event.ready.rawValue, Event.error.rawValue,
              Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
+             Event.didPause.rawValue, Event.stalled.rawValue, Event.stalling.rawValue,
+             Event.didStop.rawValue, Event.bufferUpdate.rawValue, Event.didUpdateBuffer.rawValue,
              Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue, Event.didSeek.rawValue,
-             Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
+             Event.didSeek.rawValue,
+             Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
+             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
 
         setCore(Core(options: options))
 
@@ -95,8 +97,8 @@ open class Player: BaseObject {
 
         self.core = core
 
-        self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
         self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }

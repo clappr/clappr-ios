@@ -698,21 +698,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(didTriggerWillSeek).to(beTrue())
                 }
 
-                it("triggers seek event") {
-                    let playback = AVFoundationPlayback()
-                    let player = AVPlayerStub()
-                    playback.player = player
-                    player.setStatus(to: .readyToPlay)
-                    var didTriggerSeek = false
-                    playback.on(Event.seek.rawValue) { _ in
-                        didTriggerSeek = true
-                    }
-
-                    playback.seek(5)
-
-                    expect(didTriggerSeek).to(beTrue())
-                }
-
                 it("triggers didSeek when a seek is completed") {
                     let playback = AVFoundationPlayback()
                     let player = AVPlayerStub()
@@ -728,13 +713,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(didTriggerDidSeek).to(beTrue())
                 }
 
-                it("triggers positionUpdate for the desired position") {
+                it("triggers didUpdatePosition for the desired position") {
                     let playback = AVFoundationPlayback()
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var updatedPosition: Float64? = nil
-                    playback.on(Event.positionUpdate.rawValue) { (userInfo: EventUserInfo) in
+                    playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
                         updatedPosition = userInfo!["position"] as? Float64
                     }
 
@@ -770,9 +755,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(didTriggerDidSeek).toEventually(beTrue())
                 }
 
-                it("triggers positionUpdate for the desired position") {
+                it("triggers didUpdatePosition for the desired position") {
                     var updatedPosition: Float64? = nil
-                    playback.on(Event.positionUpdate.rawValue) { (userInfo: EventUserInfo) in
+                    playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
                         updatedPosition = userInfo!["position"] as? Float64
                     }
 
@@ -819,15 +804,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
             
-            describe("#audioAvailable") {
+            describe("#didFindAudio") {
                 
                 context("when video is ready") {
                     context("and has no default audio from options") {
-                        it("triggers audioAvailable event with hasDefaultFromOption false") {
+                        it("triggers didFindAudio event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
-                            playback.on(Event.audioAvailable.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
                                 guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = audio.hasDefaultSelected
                             }
@@ -840,15 +825,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
             
-            describe("#subtitleAvailable") {
+            describe("#didFindSubtitle") {
                 
                 context("when video is ready") {
                     context("and has default subtitle from options") {
-                        it("triggers subtitleAvailable event with hasDefaultFromOption true") {
+                        it("triggers didFindSubtitle event with hasDefaultFromOption true") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8", kDefaultSubtitle: "pt"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = false
-                            playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
@@ -860,11 +845,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     
                     context("and has no default subtitle from options") {
-                        it("triggers subtitleAvailable event with hasDefaultFromOption false") {
+                        it("triggers didFindSubtitle event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
-                            playback.on(Event.subtitleAvailable.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
@@ -877,7 +862,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            describe("#subtitleSelected") {
+            describe("#didSelectSubtitle") {
 
                 var avFoundationPlayback: AVFoundationPlayback!
 
@@ -905,9 +890,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 context("when subtitle is selected") {
-                    it("triggers subtitleSelected event") {
+                    it("triggers didSelectSubtitle event") {
                         var subtitleOption: MediaOption?
-                        avFoundationPlayback.on(Event.subtitleSelected.rawValue) { (userInfo: EventUserInfo) in
+                        avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { (userInfo: EventUserInfo) in
                             subtitleOption = userInfo?["mediaOption"] as? MediaOption
                         }
 
@@ -925,9 +910,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 context("when audio is selected") {
-                    it("triggers audioSelected event") {
+                    it("triggers didSelectAudio event") {
                         var audioSelected: MediaOption?
-                        playback.on(Event.audioSelected.rawValue) { (userInfo: EventUserInfo) in
+                        playback.on(Event.didSelectAudio.rawValue) { (userInfo: EventUserInfo) in
                             audioSelected = userInfo?["mediaOption"] as? MediaOption
                         }
 
@@ -1120,7 +1105,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                describe("#stalled") {
+                describe("#stalling") {
                     context("when seek is called") {
                         it("keeps buffering state") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
@@ -1237,18 +1222,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                             _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
                         }
                     }
-                }
-                
-                context("when seek is executed") {
-                    it("triggers seek") {
-                        waitUntil { done in
-                            avFoundationPlayback.on(Event.seek.rawValue) { _ in
-                                done()
-                            }
-                            
-                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
-                        }
-                    }
                     
                     it("triggers didSeek") {
                         waitUntil { done in
@@ -1264,7 +1237,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when subtitle is selected") {
                     it("triggers subtitle selected event") {
                         waitUntil { done in
-                            avFoundationPlayback.on(Event.subtitleSelected.rawValue) { _ in
+                            avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { _ in
                                 done()
                             }
                             

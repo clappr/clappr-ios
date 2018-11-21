@@ -110,13 +110,15 @@ open class Player: UIViewController, BaseObject {
         self.playbackEventsToListen.append(contentsOf:
             [Event.ready.rawValue, Event.error.rawValue,
              Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue,
+             Event.didPause.rawValue, Event.stalled.rawValue, Event.stalling.rawValue,
+             Event.didStop.rawValue, Event.bufferUpdate.rawValue, Event.didUpdateBuffer.rawValue,
+             Event.positionUpdate.rawValue, Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue,
-             Event.seek.rawValue,Event.didSeek.rawValue,
-             Event.subtitleSelected.rawValue, Event.audioSelected.rawValue])
+             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
+             Event.didSeek.rawValue,
+             Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
+             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,])
 
         Loader.shared.register(plugins: externalPlugins)
         
@@ -143,10 +145,10 @@ open class Player: UIViewController, BaseObject {
 
         self.core = core
 
-        self.core?.on(InternalEvent.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(InternalEvent.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(InternalEvent.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(InternalEvent.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
+        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        self.core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
         bindPlaybackEvents()
 

@@ -51,13 +51,13 @@ class Seekbar: MediaControlPlugin {
 
     private func bindCoreEvents() {
         guard let core = core else { return }
-        listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
+        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
     }
 
     private func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container,
-                     eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+                     eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 
@@ -71,13 +71,13 @@ class Seekbar: MediaControlPlugin {
                 self?.setVideoProperties()
                 self?.setSeekbarViewLive()
             }
-            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] _ in
+            listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] _ in
                 if let isSeeking = self?.seekbarView.isSeeking, !isSeeking {
                     self?.updateElapsedTime()
                 }
             }
             listenTo(playback, eventName: Event.seekableUpdate.rawValue) { [weak self] _ in self?.updateElapsedTime() }
-            listenTo(playback, eventName: Event.bufferUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateBuffer(info) }
+            listenTo(playback, eventName: Event.didUpdateBuffer.rawValue) { [weak self] (info: EventUserInfo) in self?.updateBuffer(info) }
         }
     }
 

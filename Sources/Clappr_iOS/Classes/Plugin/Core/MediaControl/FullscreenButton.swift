@@ -53,9 +53,9 @@ open class FullscreenButton: MediaControlPlugin {
     private func bindCoreEvents() {
         guard let core = core else { return }
         listenTo(core,
-                 eventName: InternalEvent.didEnterFullscreen.rawValue) { [weak self] (_: EventUserInfo) in self?.isOnFullscreen = true }
+                 eventName: Event.didEnterFullscreen.rawValue) { [weak self] (_: EventUserInfo) in self?.isOnFullscreen = true }
         listenTo(core,
-                 eventName: InternalEvent.didExitFullscreen.rawValue) { [weak self] (_: EventUserInfo) in self?.isOnFullscreen = false }
+                 eventName: Event.didExitFullscreen.rawValue) { [weak self] (_: EventUserInfo) in self?.isOnFullscreen = false }
     }
     
     override open func render() {

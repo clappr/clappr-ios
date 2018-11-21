@@ -51,14 +51,14 @@ open class PlayButton: MediaControlPlugin {
 
     open func bindCoreEvents() {
         if let core = core {
-            listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
+            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
         }
     }
 
     open func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container,
-                     eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+                     eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 
@@ -66,7 +66,7 @@ open class PlayButton: MediaControlPlugin {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
-            listenTo(playback, eventName: Event.stalled.rawValue) { [weak self] _ in self?.hide() }
+            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
         }
     }
 

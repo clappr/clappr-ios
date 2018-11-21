@@ -118,7 +118,7 @@ class FullscreenButtonTests: QuickSpec {
                     core = Core()
                     fullscreenButton = FullscreenButton(context: core)
                     fullscreenButton.render()
-                    core.trigger(InternalEvent.didEnterFullscreen.rawValue)
+                    core.trigger(Event.didEnterFullscreen.rawValue)
                 }
                 
                 context("and user taps on button") {
@@ -140,7 +140,7 @@ class FullscreenButtonTests: QuickSpec {
                     core = Core()
                     fullscreenButton = FullscreenButton(context: core)
                     fullscreenButton.render()
-                    core.trigger(InternalEvent.didExitFullscreen.rawValue)
+                    core.trigger(Event.didExitFullscreen.rawValue)
                 }
                 
                 context("and user taps on button") {

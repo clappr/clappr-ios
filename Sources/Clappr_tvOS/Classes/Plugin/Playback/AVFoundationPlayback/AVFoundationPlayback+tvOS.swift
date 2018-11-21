@@ -8,7 +8,6 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
     }
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, willResumePlaybackAfterUserNavigatedFrom oldTime: CMTime, to targetTime: CMTime) {
-        trigger(.seek)
         trigger(.didSeek)
     }
 
@@ -16,10 +15,12 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
         guard let mediaType = mediaSelectionGroup.options.first?.mediaType else { return }
         if mediaType == AVMediaType.subtitle.rawValue {
             triggerMediaOptionSelectedEvent(option: selectedSubtitle, event: Event.subtitleSelected)
+            triggerMediaOptionSelectedEvent(option: selectedSubtitle, event: Event.didSelectSubtitle)
         }
 
         if mediaType == AVMediaType.audio.rawValue {
             triggerMediaOptionSelectedEvent(option: selectedAudioSource, event: Event.audioSelected)
+            triggerMediaOptionSelectedEvent(option: selectedAudioSource, event: Event.didSelectAudio)
         }
     }
 }

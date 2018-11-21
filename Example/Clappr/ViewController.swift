@@ -34,21 +34,19 @@ class ViewController: UIViewController {
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
-        player.on(Event.stalled) { _ in print("on Stalled") }
+        player.on(Event.stalling) { _ in print("on Stalling") }
 
         player.on(Event.willSeek) { _ in print("on willSeek") }
-
-        player.on(Event.seek) { _ in print("on seek") }
 
         player.on(Event.didSeek) { _ in print("on didSeek") }
 
         player.on(Event.requestFullscreen) { _ in
-            Logger.logInfo("Entrar em modo fullscreen")
+            print("on requestFullscreen")
             self.onRequestFullscreen()
         }
 
         player.on(Event.exitFullscreen) { _ in
-            Logger.logInfo("Sair do modo fullscreen")
+            print("on exitFullscreen")
             self.onExitFullscreen()
         }
     }

@@ -68,6 +68,7 @@ open class AVFoundationPlayback: Playback {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectSubtitle)
         }
     }
 
@@ -81,6 +82,7 @@ open class AVFoundationPlayback: Playback {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
+            triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectAudio)
         }
     }
 
@@ -360,7 +362,6 @@ open class AVFoundationPlayback: Playback {
         let tolerance = CMTime(value: 0, timescale: Int32(NSEC_PER_SEC))
 
         trigger(.willSeek)
-        trigger(.seek)
 
         player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
             if success {
@@ -372,6 +373,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+        trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
     open override func seekToLivePosition() {
@@ -421,6 +423,7 @@ open class AVFoundationPlayback: Playback {
         switch newState {
         case .buffering:
             trigger(.stalled)
+            trigger(.stalling)
         case .paused:
             trigger(.didPause)
             triggerDvrStatusIfNeeded()
@@ -442,7 +445,8 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession()
         }
 
-        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": player!.isExternalPlaybackActive])
+        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
+        self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
     }
 
     private func enableBackgroundSession() {
@@ -501,8 +505,10 @@ open class AVFoundationPlayback: Playback {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
+            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         } else {
             trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
+            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
     }
 
@@ -514,8 +520,10 @@ open class AVFoundationPlayback: Playback {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
+            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
         } else {
             trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
+            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
     }
 
@@ -529,6 +537,7 @@ open class AVFoundationPlayback: Playback {
         if isPlaying {
             updateState(.playing)
             trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+            trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
     }
 
@@ -544,6 +553,7 @@ open class AVFoundationPlayback: Playback {
             ]
 
         trigger(.bufferUpdate, userInfo: info)
+        trigger(.didUpdateBuffer, userInfo: info)
     }
 
     fileprivate func handleSeekableTimeRangesEvent() {

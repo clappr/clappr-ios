@@ -83,22 +83,22 @@ open class TimeIndicator: MediaControlPlugin {
 
     private func bindContainerEvents() {
         if let container = activeContainer {
-            listenTo(container, eventName: InternalEvent.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+            listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.displayVideoDuration() }
-            listenTo(playback, eventName: Event.positionUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateElapsedTime(info) }
+            listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] (info: EventUserInfo) in self?.updateElapsedTime(info) }
         }
     }
 
     private func bindCoreEvents() {
         if let core = self.core {
-            listenTo(core, eventName: InternalEvent.didEnterFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
-            listenTo(core, eventName: InternalEvent.didExitFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
-            listenTo(core, eventName: InternalEvent.didChangeActiveContainer.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
+            listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
+            listenTo(core, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
+            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 

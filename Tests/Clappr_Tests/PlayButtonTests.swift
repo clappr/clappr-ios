@@ -53,7 +53,7 @@ class PlayButtonTests: QuickSpec {
                     it("shows button") {
                         playButton.render()
 
-                        coreStub.activeContainer?.trigger(Event.stalled.rawValue)
+                        coreStub.activeContainer?.trigger(Event.stalling.rawValue)
 
                         expect(playButton.view.isHidden).to(beFalse())
                     }
@@ -210,12 +210,12 @@ class PlayButtonTests: QuickSpec {
 
             }
 
-            context("when stalled") {
+            context("when stalling") {
                 it("hides the plugin") {
                     let coreStub = CoreStub()
                     let playButton = PlayButton(context: coreStub)
 
-                    coreStub.activePlayback?.trigger(Event.stalled.rawValue)
+                    coreStub.activePlayback?.trigger(Event.stalling.rawValue)
 
                     expect(playButton.view.isHidden).to(beTrue())
                 }
