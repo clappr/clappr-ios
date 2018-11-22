@@ -128,6 +128,8 @@ open class AVFoundationPlayback: Playback {
         return currentState == .buffering
     }
 
+    private var isStopped = false
+
     open override var duration: Double {
         guard let item = player?.currentItem else {
             return 0
@@ -313,6 +315,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func stop() {
+        isStopped = true
         trigger(.willStop)
         player?.pause()
         updateState(.idle)
@@ -425,7 +428,12 @@ open class AVFoundationPlayback: Playback {
             trigger(.stalled)
             trigger(.stalling)
         case .paused:
-            trigger(.didPause)
+            if isStopped {
+                isStopped = false
+            } else {
+                trigger(.didPause)
+            }
+
             triggerDvrStatusIfNeeded()
         case .playing:
             trigger(.playing)
