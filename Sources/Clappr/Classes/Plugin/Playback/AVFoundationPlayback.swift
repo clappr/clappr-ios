@@ -188,7 +188,12 @@ open class AVFoundationPlayback: Playback {
 
     public required init(options: Options) {
         super.init(options: options)
+
         self.asset = createAsset(from: options[kSourceUrl] as? String)
+        setupPlayer()
+        addObservers()
+        selectDefaultAudioIfNeeded()
+        setupPlayerLayer()
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
@@ -197,6 +202,52 @@ open class AVFoundationPlayback: Playback {
         }
 
         return AVURLAssetWithCookiesBuilder(url: url).asset
+    }
+    
+    fileprivate func setupPlayer() {
+        if let asset = self.asset {
+            let item: AVPlayerItem = AVPlayerItem(asset: asset)
+            player = AVPlayer(playerItem: item)
+            
+            player?.allowsExternalPlayback = true
+            player?.appliesMediaSelectionCriteriaAutomatically = false
+        } else {
+            trigger(.error)
+            Logger.logError("could not setup player", scope: pluginName)
+        }
+    }
+    
+    fileprivate func setupPlayerLayer() {
+        playerLayer = AVPlayerLayer(player: player)
+        view.layer.addSublayer(playerLayer!)
+        playerLayer?.frame = view.bounds
+        setupMaxResolution(for: playerLayer!.frame.size)
+    }
+    
+    @objc func addObservers() {        
+        view.addObserver(self, forKeyPath: "bounds",
+                         options: .new, context: &kvoViewBounds)
+
+        player?.addObserver(self, forKeyPath: "currentItem.status",
+                            options: .new, context: &kvoStatusDidChangeContext)
+        player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
+                            options: .new, context: &kvoLoadedTimeRangesContext)
+        player?.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
+                            options: .new, context: &kvoSeekableTimeRangesContext)
+        player?.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
+                            options: .new, context: &kvoBufferingContext)
+        player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
+                            options: .new, context: &kvoBufferingContext)
+        player?.addObserver(self, forKeyPath: "externalPlaybackActive",
+                            options: .new, context: &kvoExternalPlaybackActiveContext)
+        player?.addObserver(self, forKeyPath: "rate",
+                            options: .new, context: &kvoPlayerRateContext)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(AVFoundationPlayback.playbackDidEnd),
+            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem)
     }
 
     @objc public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
@@ -222,44 +273,6 @@ open class AVFoundationPlayback: Playback {
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
     }
-
-    open override func play() {
-        if player == nil {
-            setupPlayer()
-        }
-
-        trigger(.willPlay)
-        player?.play()
-
-        if let currentItem = player?.currentItem {
-            if !currentItem.isPlaybackLikelyToKeepUp {
-                updateState(.buffering)
-            }
-        }
-    }
-
-    fileprivate func setupPlayer() {
-        if let asset = self.asset {
-            let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            player = AVPlayer(playerItem: item)
-            
-            player?.allowsExternalPlayback = true
-            player?.appliesMediaSelectionCriteriaAutomatically = false
-
-            selectDefaultAudioIfNeeded()
-
-            playerLayer = AVPlayerLayer(player: player)
-            view.layer.addSublayer(playerLayer!)
-            playerLayer?.frame = view.bounds
-            setupMaxResolution(for: playerLayer!.frame.size)
-
-            addObservers()
-            trigger(.ready)
-        } else {
-            trigger(.error)
-            Logger.logError("could not setup player", scope: pluginName)
-        }
-    }
     
     #if os(tvOS)
     internal func loadMetadata() {
@@ -268,32 +281,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
     #endif
-
-    @objc internal func addObservers() {
-        view.addObserver(self, forKeyPath: "bounds",
-                         options: .new, context: &kvoViewBounds)
-
-        player?.addObserver(self, forKeyPath: "currentItem.status",
-                            options: .new, context: &kvoStatusDidChangeContext)
-        player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
-                            options: .new, context: &kvoLoadedTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
-                            options: .new, context: &kvoSeekableTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
-                            options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
-                            options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "externalPlaybackActive",
-                            options: .new, context: &kvoExternalPlaybackActiveContext)
-        player?.addObserver(self, forKeyPath: "rate",
-                            options: .new, context: &kvoPlayerRateContext)
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(AVFoundationPlayback.playbackDidEnd),
-            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem)
-    }
 
     @objc func playbackDidEnd(notification: NSNotification? = nil) {
         if let object = notification?.object as? AVPlayerItem, let item = self.player?.currentItem {
@@ -304,6 +291,17 @@ open class AVFoundationPlayback: Playback {
                     trigger(.didComplete)
                     updateState(.idle)
                 }
+            }
+        }
+    }
+
+    open override func play() {
+        trigger(.willPlay)
+        player?.play()
+        
+        if let currentItem = player?.currentItem {
+            if !currentItem.isPlaybackLikelyToKeepUp {
+                updateState(.buffering)
             }
         }
     }
