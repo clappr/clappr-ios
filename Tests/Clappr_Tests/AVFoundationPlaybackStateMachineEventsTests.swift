@@ -39,6 +39,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
                         playback.once(Event.playing.rawValue) { _ in
@@ -72,6 +73,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
                         playback.once(Event.playing.rawValue) { _ in
@@ -96,6 +98,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
@@ -120,6 +123,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
@@ -153,6 +157,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
 

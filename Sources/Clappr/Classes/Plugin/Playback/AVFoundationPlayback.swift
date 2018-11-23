@@ -189,12 +189,8 @@ open class AVFoundationPlayback: Playback {
     public required init(options: Options) {
         super.init(options: options)
 
-        self.asset = createAsset(from: options[kSourceUrl] as? String)
-        setupPlayer()
-        addObservers()
-        selectDefaultAudioIfNeeded()
-        setupPlayerLayer()
-        trigger(Event.ready.rawValue)
+        asset = createAsset(from: options[kSourceUrl] as? String)
+        setupPlayback()
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
@@ -205,7 +201,14 @@ open class AVFoundationPlayback: Playback {
         return AVURLAssetWithCookiesBuilder(url: url).asset
     }
     
-    fileprivate func setupPlayer() {
+    private func setupPlayback() {
+        setupPlayer()
+        addObservers()
+        selectDefaultAudioIfNeeded()
+        setupPlayerLayer()
+    }
+    
+    private func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
             player = AVPlayer(playerItem: item)
@@ -218,7 +221,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
     
-    fileprivate func setupPlayerLayer() {
+    private func setupPlayerLayer() {
         playerLayer = AVPlayerLayer(player: player)
         view.layer.addSublayer(playerLayer!)
         playerLayer?.frame = view.bounds
@@ -296,6 +299,20 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    open override func render() {
+        if self.startAt != 0.0 && self.playbackType == .vod {
+            self.seek(self.startAt)
+        }
+
+        trigger(Event.ready.rawValue)
+
+        #if os(tvOS)
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            self?.play()
+        }
+        #endif
+    }
+    
     open override func play() {
         trigger(.willPlay)
         player?.play()

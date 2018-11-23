@@ -84,20 +84,7 @@ open class Playback: UIObject, Plugin {
         return false
     }
 
-    open override func render() {
-        once(Event.ready.rawValue) { [unowned self] _ in
-            if self.startAt != 0.0 && self.playbackType == .vod {
-                self.seek(self.startAt)
-            }
-        }
-
-        #if os(tvOS)
-        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
-            self?.play()
-        }
-        #endif
-    }
-
+    open override func render() {}
     @objc open func play() {}
     @objc open func pause() {}
     @objc open func stop() {}
