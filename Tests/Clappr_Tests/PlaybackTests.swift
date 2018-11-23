@@ -170,5 +170,11 @@ class PlaybackTests: QuickSpec {
         override var playbackType: PlaybackType {
             return type
         }
+        
+        override func render() {
+            if self.startAt != 0.0 && self.playbackType == .vod {
+                self.seek(self.startAt)
+            }
+        }
     }
 }

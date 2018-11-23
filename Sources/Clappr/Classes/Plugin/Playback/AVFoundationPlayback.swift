@@ -305,12 +305,6 @@ open class AVFoundationPlayback: Playback {
         }
 
         trigger(Event.ready.rawValue)
-
-        #if os(tvOS)
-        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
-            self?.play()
-        }
-        #endif
     }
     
     open override func play() {
