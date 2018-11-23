@@ -63,7 +63,6 @@ open class Container: UIObject {
         } else {
             renderPlayback()
             trigger(Event.didLoadSource.rawValue)
-            trigger(Event.ready.rawValue)
         }
     }
 

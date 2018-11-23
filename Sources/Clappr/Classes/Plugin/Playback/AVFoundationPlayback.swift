@@ -194,6 +194,7 @@ open class AVFoundationPlayback: Playback {
         addObservers()
         selectDefaultAudioIfNeeded()
         setupPlayerLayer()
+        trigger(Event.ready.rawValue)
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
