@@ -98,19 +98,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in
                 self?.showControls = true
-                self?.show { [weak self] in
-                    self?.disappearAfterSomeTime()
-                }
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
                 self?.hide()
-            }
-
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in
-                self?.show { [weak self] in
-                    self?.disappearAfterSomeTime()
-                }
             }
 
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in
