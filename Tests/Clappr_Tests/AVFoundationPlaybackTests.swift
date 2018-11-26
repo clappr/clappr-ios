@@ -554,19 +554,10 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             context("when sets a kvo on player") {
-
                 class KVOStub: NSObject {
-
                     var didObserveValue = false
                     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
                         didObserveValue = true
-                    }
-                }
-
-                beforeEach {
-                    stub(condition: isHost("clappr.io")) { _ in
-                        let stubPath = OHPathForFile("video.mp4", type(of: self))
-                        return fixture(filePath: stubPath!, headers: ["Content-Type":"video/mp4"])
                     }
                 }
 
@@ -575,7 +566,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
 
                     playback.addObserver(observer, forKeyPath: "player", options: [.old, .new], context: nil)
-                    playback.play()
+
+                    playback.player = AVPlayerStub()
 
                     expect(observer.didObserveValue).toEventually(beTrue())
                 }
