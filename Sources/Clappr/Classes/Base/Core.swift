@@ -60,7 +60,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         addTapRecognizer()
         bindEventListeners()
-        Loader.shared.loadPlugins(in: self)
 
         containers.append(Container(options: options))
 

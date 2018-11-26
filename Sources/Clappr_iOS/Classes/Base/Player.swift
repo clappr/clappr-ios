@@ -87,15 +87,18 @@ open class Player: BaseObject {
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
 
-        setCore(Core(options: options))
+        setCore(with: options)
 
         bindPlaybackEvents()
     }
+    
+    private func setCore(with options: Options) {
+        self.core = CoreFactory.create(with: options)
+        bindCoreEvents()
+    }
 
-    private func setCore(_ core: Core) {
+    private func bindCoreEvents() {
         self.core?.stopListening()
-
-        self.core = core
 
         self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
