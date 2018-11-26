@@ -807,6 +807,22 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#didFindAudio") {
                 
                 context("when video is ready") {
+                    context("and has default audio from options") {
+                        it("triggers didFindAudio event with hasDefaultFromOption true") {
+                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8", kDefaultAudioSource: "en"]
+                            let playback = AVFoundationPlayback(options: options)
+                            var hasDefaultFromOption = false
+                            playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
+                                guard let audios = userInfo?["audios"] as? AvailableMediaOptions else { return }
+                                hasDefaultFromOption = audios.hasDefaultSelected
+                            }
+
+                            playback.render()
+
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
+                        }
+                    }
+
                     context("and has no default audio from options") {
                         it("triggers didFindAudio event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
@@ -817,7 +833,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 hasDefaultFromOption = audio.hasDefaultSelected
                             }
 
-                            playback.play()
+                            playback.render()
 
                             expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
                         }
@@ -838,7 +854,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
                             
-                            playback.play()
+                            playback.render()
                             
                             expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
                         }
@@ -854,7 +870,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
                             
-                            playback.play()
+                            playback.render()
                             
                             expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 4)
                         }

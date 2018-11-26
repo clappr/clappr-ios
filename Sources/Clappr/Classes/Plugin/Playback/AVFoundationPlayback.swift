@@ -204,7 +204,6 @@ open class AVFoundationPlayback: Playback {
     private func setupPlayback() {
         setupPlayer()
         addObservers()
-        selectDefaultAudioIfNeeded()
         setupPlayerLayer()
     }
     
@@ -305,6 +304,7 @@ open class AVFoundationPlayback: Playback {
         }
 
         trigger(Event.ready.rawValue)
+        selectDefaultAudioIfNeeded()
     }
     
     open override func play() {
