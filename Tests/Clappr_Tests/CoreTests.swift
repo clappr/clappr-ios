@@ -650,7 +650,7 @@ class CoreTests: QuickSpec {
                 }
                 
                 it("calls the mediacontrol to add the plugins into the panels") {
-                    let core = Core()
+                    let core = CoreFactory.create(with: [:])
                     let mediaControlMock = MediaControlMock()
                     let mediaControlPluginMock = MediaControlPluginMock()
                     
@@ -666,7 +666,7 @@ class CoreTests: QuickSpec {
             context("core position") {
                 it("is positioned in front of Container view") {
                     Loader.shared.register(plugins: [FakeCorePlugin.self])
-                    let core = Core(options: options as Options)
+                    let core = CoreFactory.create(with: options as Options)
 
                     core.render()
 
