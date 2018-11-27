@@ -556,15 +556,25 @@ class AVFoundationPlaybackTests: QuickSpec {
             context("when sets a kvo on player") {
                 class KVOStub: NSObject {
                     var didObserveValue = false
+
                     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
                         didObserveValue = true
                     }
                 }
 
-                it("works properly") {
-                    let observer = KVOStub()
-                    let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                var observer: KVOStub!
+                var playback: AVFoundationPlayback!
 
+                beforeEach {
+                    observer = KVOStub()
+                    playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                }
+
+                afterEach {
+                    playback.removeObserver(observer, forKeyPath: "player")
+                }
+
+                it("works properly") {
                     playback.addObserver(observer, forKeyPath: "player", options: [.old, .new], context: nil)
 
                     playback.player = AVPlayerStub()
