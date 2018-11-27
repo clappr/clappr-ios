@@ -20,7 +20,7 @@ class ContainerTests: QuickSpec {
                 context("with a invalid resource") {
 
                     beforeEach {
-                        container = Container(options: Resource.invalid)
+                        container = ContainerFactory.create(with: Resource.invalid)
                         Loader.shared.resetPlugins()
                     }
 
@@ -33,7 +33,7 @@ class ContainerTests: QuickSpec {
 
                     beforeEach {
                         Loader.shared.register(plugins: [AVFoundationPlayback.self])
-                        container = Container(options: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid)
                     }
 
                     it("creates a container with valid playback") {
@@ -44,14 +44,14 @@ class ContainerTests: QuickSpec {
                 context("when resource is not empty") {
 
                     beforeEach {
-                        container = Container(options: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid)
                     }
 
                     context("and add container plugins from loader") {
 
                         beforeEach {
                             Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                            container = Container(options: [:])
+                            container = ContainerFactory.create(with: [:])
                         }
 
                         it("saves plugins on container") {
@@ -81,12 +81,12 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("save options without mutating") {
-                        let options = ["aOption": "option"]
-                        let container = Container(options: options)
-                        let option = container.options["aOption"] as! String
                         let plugins: [Plugin.Type] = [AVFoundationPlayback.self, SpinnerPlugin.self]
-
                         Loader.shared.register(plugins: plugins)
+
+                        let options = ["aOption": "option"]
+                        let container = ContainerFactory.create(with: options)
+                        let option = container.options["aOption"] as! String
 
                         expect(option) == "option"
                     }
@@ -102,7 +102,7 @@ class ContainerTests: QuickSpec {
                 context("when resource is empty") {
 
                     beforeEach {
-                        container = Container(options: [:])
+                        container = ContainerFactory.create(with: [:])
                     }
 
                     it("set playback as subview") {
@@ -118,7 +118,7 @@ class ContainerTests: QuickSpec {
             describe("#Destroy") {
 
                 beforeEach {
-                    container = Container(options: [:])
+                    container = ContainerFactory.create(with: [:])
                     Loader.shared.resetPlugins()
                 }
 
@@ -172,7 +172,7 @@ class ContainerTests: QuickSpec {
 
                 it("destroy all plugins and clear plugins list") {
                     Loader.shared.register(plugins: [FakeContainerPlugin.self])
-                    let container = Container(options: [:])
+                    let container = ContainerFactory.create(with: [:])
                     var countOfDestroyedPlugins = 0
 
                     container.plugins.forEach { plugin in
@@ -196,7 +196,7 @@ class ContainerTests: QuickSpec {
 
                     beforeEach {
                         Loader.shared.register(plugins: [AVFoundationPlayback.self])
-                        container = Container(options: [:])
+                        container = ContainerFactory.create(with: [:])
                     }
 
                     it("loads a valid playback") {
@@ -219,7 +219,7 @@ class ContainerTests: QuickSpec {
                     let source: String = Resource.invalid[kSourceUrl]!
 
                     beforeEach {
-                        container = Container(options: [:])
+                        container = ContainerFactory.create(with: [:])
                     }
 
                     it("set playback as a 'noop' playback") {
@@ -239,7 +239,7 @@ class ContainerTests: QuickSpec {
 
                 it("keep just one playback as subview at time") {
                     Loader.shared.resetPlugins()
-                    let container = Container()
+                    let container = ContainerFactory.create(with: [:])
                     container.load("anyVideo")
                     expect(container.view.subviews.count).to(equal(1))
 
@@ -253,13 +253,13 @@ class ContainerTests: QuickSpec {
                 beforeEach {
                     Loader.shared.resetPlugins()
                     Loader.shared.register(plugins: [StubPlayback.self])
-                    container = Container(options: [kSourceUrl: "http://clappr.com/video.mp4"])
+                    container = ContainerFactory.create(with: [kSourceUrl: "http://clappr.com/video.mp4"])
                 }
 
                 it("reset startAt after first play event") {
 
                     let options = [kSourceUrl: "someUrl", kStartAt: 15.0] as Options
-                    let container = Container(options: options)
+                    let container = ContainerFactory.create(with: options)
 
                     expect(container.options[kStartAt] as? TimeInterval) == 15.0
                     expect(container.playback?.startAt) == 15.0
@@ -290,7 +290,7 @@ class ContainerTests: QuickSpec {
                 context("when stores a value on sharedData") {
 
                     beforeEach {
-                        container = Container(options: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid)
                         container.sharedData.storeDictionary["testKey"] = "testValue"
                     }
 
