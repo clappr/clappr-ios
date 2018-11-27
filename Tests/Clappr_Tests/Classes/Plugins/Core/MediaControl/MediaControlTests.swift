@@ -152,8 +152,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.ready)
 
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
                 }
 
@@ -163,8 +163,8 @@ class MediaControlTests: QuickSpec {
 
                         coreStub.activePlayback?.trigger(Event.playing)
 
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
                     }
 
                     it("starts the timer to hide itself") {

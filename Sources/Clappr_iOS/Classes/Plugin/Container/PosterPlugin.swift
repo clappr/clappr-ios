@@ -103,7 +103,6 @@ open class PosterPlugin: UIContainerPlugin {
 
     fileprivate func playbackStarted() {
         view.isHidden = true
-        container?.mediaControlEnabled = true
     }
 
     fileprivate func playbackEnded() {
