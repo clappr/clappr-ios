@@ -5,6 +5,7 @@ open class Player: BaseObject {
     @objc private(set) open var core: Core?
 
     static var hasAlreadyRegisteredPlugins = false
+    static var hasAlreadyRegisteredPlaybacks = false
 
     @objc open var activeContainer: Container? {
         return core?.activeContainer
@@ -70,6 +71,7 @@ open class Player: BaseObject {
 
     public init(options: Options = [:]) {
         super.init()
+        Player.register(playbacks: [])
         Player.register(plugins: [])
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
@@ -168,10 +170,17 @@ open class Player: BaseObject {
         playbackEventsListenIds.removeAll()
     }
 
+    open class func register(playbacks: [Playback.Type]) {
+        if !hasAlreadyRegisteredPlaybacks {
+            Loader.shared.register(playbacks: [AVFoundationPlayback.self])
+            hasAlreadyRegisteredPlaybacks = true
+        }
+        Loader.shared.register(playbacks: playbacks)
+    }
+    
     open class func register(plugins: [Plugin.Type]) {
         if !hasAlreadyRegisteredPlugins {
             let builtInPlugins: [Plugin.Type] = [
-                AVFoundationPlayback.self,
                 MediaControl.self,
                 PosterPlugin.self,
                 SpinnerPlugin.self,

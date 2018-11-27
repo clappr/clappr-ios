@@ -2,10 +2,7 @@ open class Loader {
 
     public static let shared = Loader()
     public var plugins: [Plugin.Type] = []
-
-    var playbacks: [Plugin.Type] {
-        return plugins.filter { $0.type == .playback }.map { return $0 }
-    }
+    public var playbacks: [Playback.Type] = []
 
     var containerPlugins: [Plugin.Type] {
         return plugins.filter { $0.type == .container }.map { return $0 }
@@ -20,5 +17,9 @@ open class Loader {
 
     open func register(plugins: [Plugin.Type]) {
         self.plugins.appendOrReplace(contentsOf: plugins)
+    }
+    
+    open func register(playbacks: [Playback.Type]) {
+        self.playbacks.appendOrReplace(contentsOf: playbacks)
     }
 }
