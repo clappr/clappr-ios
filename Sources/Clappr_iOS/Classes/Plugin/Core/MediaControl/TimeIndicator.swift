@@ -67,7 +67,7 @@ open class TimeIndicator: MediaControlPlugin {
 
     required public init(context: UIObject) {
         super.init(context: context)
-        stopListening()
+
         bindEvents()
     }
 
@@ -76,6 +76,7 @@ open class TimeIndicator: MediaControlPlugin {
     }
 
     private func bindEvents() {
+        stopListening()
         bindContainerEvents()
         bindPlaybackEvents()
         bindCoreEvents()
@@ -89,7 +90,7 @@ open class TimeIndicator: MediaControlPlugin {
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.displayVideoDuration() }
+            listenTo(playback, eventName: Event.willPlay.rawValue) { [weak self] _ in self?.displayVideoDuration() }
             listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] (info: EventUserInfo) in self?.updateElapsedTime(info) }
         }
     }

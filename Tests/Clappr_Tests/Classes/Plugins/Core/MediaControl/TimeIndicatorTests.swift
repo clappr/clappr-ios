@@ -136,7 +136,7 @@ class TimeIndicatorTests: QuickSpec {
                 it("updates the duration time of the video label") {
                     coreStub.playbackMock?.videoDuration = 138.505
 
-                    coreStub.activePlayback?.trigger(Event.ready)
+                    coreStub.activePlayback?.trigger(Event.willPlay)
 
                     expect(timeIndicator.durationTimeLabel.text).to(equal("02:18"))
                 }
