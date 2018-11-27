@@ -9,7 +9,11 @@ struct ContainerFactory {
                 container.addPlugin(containerPlugin)
             }
         }
-        
+
+        if let source = options[kSourceUrl] as? String {
+            container.load(source)
+        }
+
         return container
     }
 }

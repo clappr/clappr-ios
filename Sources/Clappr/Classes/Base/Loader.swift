@@ -21,12 +21,4 @@ open class Loader {
     open func register(plugins: [Plugin.Type]) {
         self.plugins.appendOrReplace(contentsOf: plugins)
     }
-
-    open func loadPlugins(in container: Container) {
-        for plugin in Loader.shared.containerPlugins {
-            if let containerPlugin = plugin.init(context: container) as? UIContainerPlugin {
-                container.addPlugin(containerPlugin)
-            }
-        }
-    }
 }

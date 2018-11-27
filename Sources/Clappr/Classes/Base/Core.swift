@@ -61,11 +61,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         addTapRecognizer()
         bindEventListeners()
 
-        containers.append(Container(options: options))
+        let container = ContainerFactory.create(with: options)
 
-        if let container = containers.first {
-            setActive(container: container)
-        }
+        containers.append(container)
+        setActive(container: container)
     }
 
     fileprivate func setActive(container: Container) {
