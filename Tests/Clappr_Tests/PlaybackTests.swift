@@ -141,7 +141,7 @@ class PlaybackTests: QuickSpec {
 
                     playback.options = [:]
 
-                    expect(didUpdateOptionsTriggered).to(beTrue())
+                    expect(didUpdateOptionsTriggered).toEventually(beTrue())
                 }
             }
         }
