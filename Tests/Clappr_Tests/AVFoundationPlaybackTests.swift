@@ -821,7 +821,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.render()
 
-                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
                         }
                     }
 
@@ -858,7 +858,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.render()
                             
-                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
                         }
                     }
                     
@@ -874,7 +874,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.render()
                             
-                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 4)
+                            expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 5)
                         }
                     }
                 }
@@ -960,9 +960,9 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 5)
+                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.currentState).to(equal(.playing))
                             expect(playback.isPlaying).to(beTrue())
                         }
                     }
@@ -1005,7 +1005,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             playback.seek(10)
-                            
+
                             expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
                             expect(playback.isPaused).to(beFalse())
                             expect(playback.currentState).to(equal(.playing))
@@ -1067,7 +1067,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             
                             
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
+                            expect(playback.currentState).toEventually(equal(.playing), timeout: 5)
                             expect(playback.isPlaying).to(beTrue())
                             expect(playback.isBuffering).to(beFalse())
                             expect(playback.isPaused).to(beFalse())
