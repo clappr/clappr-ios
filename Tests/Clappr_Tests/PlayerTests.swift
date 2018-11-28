@@ -211,25 +211,20 @@ class PlayerTests: QuickSpec {
 
                 context("external playbacks") {
                     it("sets external playback as active") {
-                        Loader.shared.resetPlugins()
-                        Player.register(plugins: [StubPlayback.self])
-
-                        player = Player(options: [kSourceUrl: "video"])
-
-                        playback = player.activePlayback
+                        Loader.shared.resetPlaybacks()
+                        Player.register(playbacks: [StubPlayback.self])
+                        let player = Player(options: [kSourceUrl: "video"])
 
                         expect(player.activePlayback).to(beAKindOf(StubPlayback.self))
                     }
 
                     it("changes external playback based on source") {
-                        Loader.shared.resetPlugins()
-                        Player.register(plugins: [SpecialStubPlayback.self])
-                        player = Player(options: options)
-
+                        Loader.shared.resetPlaybacks()
+                        Player.register(playbacks: [SpecialStubPlayback.self])
+                        let player = Player(options: options)
 
                         player.load(PlayerTests.specialSource)
-
-                        playback = player.activePlayback
+                        
                         expect(player.activePlayback).to(beAKindOf(SpecialStubPlayback.self))
                     }
                 }

@@ -18,7 +18,7 @@ class LoaderTests: QuickSpec {
                     let numberOfContainerPlugins = Loader.shared.containerPlugins.count
                     let numberOfCorePlugins = Loader.shared.corePlugins.count
 
-                    Loader.shared.register(plugins: [StubPlayback.self])
+                    Loader.shared.register(playbacks: [StubPlayback.self])
 
                     expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks + 1))
                     expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins))

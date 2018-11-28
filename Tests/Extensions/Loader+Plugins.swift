@@ -8,4 +8,11 @@ extension Loader {
             Player.hasAlreadyRegisteredPlugins = false
         #endif
     }
+    
+    func resetPlaybacks() {
+        Loader.shared.playbacks = []
+        #if os(iOS)
+        Player.hasAlreadyRegisteredPlaybacks = false
+        #endif
+    }
 }

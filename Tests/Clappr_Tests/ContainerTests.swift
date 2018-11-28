@@ -32,7 +32,7 @@ class ContainerTests: QuickSpec {
                 context("with a valid resource") {
 
                     beforeEach {
-                        Loader.shared.register(plugins: [AVFoundationPlayback.self])
+                        Loader.shared.register(playbacks: [AVFoundationPlayback.self])
                         container = ContainerFactory.create(with: Resource.valid)
                     }
 
@@ -81,8 +81,8 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("save options without mutating") {
-                        let plugins: [Plugin.Type] = [AVFoundationPlayback.self, SpinnerPlugin.self]
-                        Loader.shared.register(plugins: plugins)
+                        Loader.shared.register(playbacks: [AVFoundationPlayback.self])
+                        Loader.shared.register(plugins: [SpinnerPlugin.self])
 
                         let options = ["aOption": "option"]
                         let container = ContainerFactory.create(with: options)
@@ -195,7 +195,7 @@ class ContainerTests: QuickSpec {
                     let source: String = Resource.valid[kSourceUrl]!
 
                     beforeEach {
-                        Loader.shared.register(plugins: [AVFoundationPlayback.self])
+                        Loader.shared.register(playbacks: [AVFoundationPlayback.self])
                         container = ContainerFactory.create(with: [:])
                     }
 
@@ -252,7 +252,7 @@ class ContainerTests: QuickSpec {
 
                 beforeEach {
                     Loader.shared.resetPlugins()
-                    Loader.shared.register(plugins: [StubPlayback.self])
+                    Loader.shared.register(playbacks: [StubPlayback.self])
                     container = ContainerFactory.create(with: [kSourceUrl: "http://clappr.com/video.mp4"])
                 }
 
