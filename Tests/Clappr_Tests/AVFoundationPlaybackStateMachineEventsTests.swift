@@ -29,7 +29,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalling, .willPlay, .playing,
+                            .ready, .willPlay, .stalling, .playing,
                             .willPause, .didPause, .willSeek, .didSeek,
                             .willPlay, .playing, .willStop, .didStop
                         ]
@@ -63,9 +63,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalling, .willPlay, .playing,
-                            .willSeek, .stalling, .playing, .didSeek, .stalling,
-                            .playing, .didComplete
+                            .ready, .willPlay, .stalling, .playing,
+                            .willSeek, .stalling, .playing, .didSeek,
+                            .stalling, .playing, .didComplete
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
