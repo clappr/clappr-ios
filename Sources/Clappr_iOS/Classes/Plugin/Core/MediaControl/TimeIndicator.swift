@@ -18,7 +18,7 @@ open class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    var leftMarginSize: NSLayoutConstraint?
+    open var leftMarginSize: NSLayoutConstraint?
     var leftMargin: UIView! {
         didSet {
             indicator.addArrangedSubview(leftMargin)
@@ -122,7 +122,7 @@ open class TimeIndicator: MediaControlPlugin {
         updateLayoutConstants()
     }
 
-    var marginBottom: CGFloat = 0 {
+    open var marginBottom: CGFloat = 0 {
         didSet {
             indicator.bindFrameToSuperviewBounds(with: UIEdgeInsets(top: 0,
                                                                     left: 0,
@@ -132,7 +132,7 @@ open class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    private func updateLayoutConstants() {
+    open func updateLayoutConstants() {
         guard let marginBottomConstant = layoutConstants["marginBottom"] else { return }
         guard let marginLeftConstant = layoutConstants["leftMargin"] else { return }
 
