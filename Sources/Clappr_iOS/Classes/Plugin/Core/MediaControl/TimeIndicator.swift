@@ -89,7 +89,7 @@ open class TimeIndicator: MediaControlPlugin {
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.willPlay.rawValue) { [weak self] _ in self?.displayVideoDuration() }
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.displayVideoDuration() }
             listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] (info: EventUserInfo) in self?.updateElapsedTime(info) }
         }
     }
