@@ -591,7 +591,7 @@ open class AVFoundationPlayback: Playback {
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
             if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
                 #if os(tvOS)
-                play()
+                player?.play()
                 #endif
                 selectDefaultSubtitleIfNeeded()
             } else {
