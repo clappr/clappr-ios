@@ -41,7 +41,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         }
                         playback.render()
 
+                        #if os(iOS)
                         playback.play()
+                        #endif
                         playback.once(Event.playing.rawValue) { _ in
                             playback.pause()
                             playback.seek(2)
@@ -75,7 +77,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         }
                         playback.render()
 
+                        #if os(iOS)
                         playback.play()
+                        #endif
                         playback.once(Event.playing.rawValue) { _ in
                             playback.seek(playback.duration)
                         }
@@ -103,6 +107,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         playback.pause()
                         playback.play()
                         playback.stop()
+                        playback.destroy()
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
@@ -129,6 +134,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         playback.play()
                         playback.pause()
                         playback.stop()
+                        playback.destroy()
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
@@ -157,9 +163,12 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+
                         playback.render()
 
+                        #if os(iOS)
                         playback.play()
+                        #endif
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
