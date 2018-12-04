@@ -647,8 +647,10 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func render() {
+        if asset != nil {
+            trigger(.ready)
+        }
         super.render()
-        trigger(.ready)
     }
 }
 
