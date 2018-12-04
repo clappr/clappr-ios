@@ -20,7 +20,11 @@ open class AVFoundationPlayback: Playback {
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
-    @objc internal dynamic var player: AVPlayer?
+    @objc internal dynamic var player: AVPlayer? {
+        didSet {
+            addObservers()
+        }
+    }
     
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
@@ -203,7 +207,6 @@ open class AVFoundationPlayback: Playback {
     
     private func setupPlayback() {
         setupPlayer()
-        addObservers()
         setupPlayerLayer()
     }
     
@@ -302,7 +305,7 @@ open class AVFoundationPlayback: Playback {
         trigger(Event.ready.rawValue)
         selectDefaultAudioIfNeeded()
     }
-    
+
     open override func play() {
         trigger(.willPlay)
         player?.play()

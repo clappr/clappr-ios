@@ -30,10 +30,7 @@ class ViewController: UIViewController {
 
         player.on(Event.didComplete) { _ in print("on Complete") }
 
-        player.on(Event.ready) { [weak self] _ in
-            print("on Ready")
-            self?.player.play()
-        }
+        player.on(Event.ready) { _ in print("on Ready") }
 
         player.on(Event.error) { userInfo in print("on Error: \(String(describing: userInfo))") }
 
