@@ -254,7 +254,6 @@ open class AVFoundationPlayback: Playback {
             setupMaxResolution(for: playerLayer!.frame.size)
 
             addObservers()
-            trigger(.ready)
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
@@ -645,6 +644,11 @@ open class AVFoundationPlayback: Playback {
         Logger.logDebug("destroying", scope: "AVFoundationPlayback")
         releaseResources()
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
+    }
+
+    open override func render() {
+        super.render()
+        trigger(.ready)
     }
 }
 

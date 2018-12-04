@@ -39,6 +39,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
                         playback.once(Event.playing.rawValue) { _ in
@@ -72,6 +73,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
                         playback.once(Event.playing.rawValue) { _ in
@@ -83,7 +85,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 }
 
                 context("when pause, play and stop") {
-                    xit("triggers events following the state machine pattern") {
+                    it("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
@@ -96,6 +98,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
@@ -106,7 +109,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 }
 
                 context("when pause, play, pause and stop") {
-                    xit("triggers events following the state machine pattern") {
+                    it("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
@@ -120,6 +123,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
@@ -153,6 +157,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.play()
 
