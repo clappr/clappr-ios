@@ -12,7 +12,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
             let unwantedEvents: [Event] = [
                 .didUpdateBuffer, .didUpdatePosition,
                 .seekableUpdate, .didFindAudio,
-                .didFindSubtitle, .didChangeDvrAvailability
+                .didFindSubtitle, .didChangeDvrAvailability,
+                .didUpdateDuration
             ]
 
             beforeSuite {
