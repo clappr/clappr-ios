@@ -4,7 +4,7 @@ open class Player: UIViewController, BaseObject {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) open var core: Core?
-    static var hasAlreadyRegisteredPlugins = false
+    static var hasAlreadyRegisteredPlaybacks = false
     fileprivate var viewController: AVPlayerViewController?
 
     override open func viewDidLoad() {
@@ -104,7 +104,7 @@ open class Player: UIViewController, BaseObject {
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
-        Player.register(plugins: [])
+        Player.register(playbacks: [])
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -119,38 +119,28 @@ open class Player: UIViewController, BaseObject {
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,])
-
-        Loader.shared.register(plugins: externalPlugins)
         
-        setCore(Core(options: options))
+        setCore(with: options)
+        
+        bindPlaybackEvents()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public static func register(plugins: [Plugin.Type]) {
-        if !hasAlreadyRegisteredPlugins {
-            let builtInPlugins: [Plugin.Type] = [AVFoundationPlayback.self]
-
-            Loader.shared.register(plugins: builtInPlugins)
-            hasAlreadyRegisteredPlugins = true
-        }
-
-        Loader.shared.register(plugins: plugins)
+    private func setCore(with options: Options) {
+        self.core = CoreFactory.create(with: options)
+        bindCoreEvents()
     }
-
-    fileprivate func setCore(_ core: Core) {
+    
+    fileprivate func bindCoreEvents() {
         self.core?.stopListening()
-
-        self.core = core
 
         self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         self.core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-
-        bindPlaybackEvents()
 
         self.core?.render()
     }
@@ -223,6 +213,14 @@ open class Player: UIViewController, BaseObject {
         }
 
         playbackEventsListenIds.removeAll()
+    }
+    
+    open class func register(playbacks: [Playback.Type]) {
+        if !hasAlreadyRegisteredPlaybacks {
+            Loader.shared.register(playbacks: [AVFoundationPlayback.self])
+            hasAlreadyRegisteredPlaybacks = true
+        }
+        Loader.shared.register(playbacks: playbacks)
     }
 
     fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {

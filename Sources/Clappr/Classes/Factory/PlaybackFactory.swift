@@ -6,11 +6,11 @@ open class PlaybackFactory {
     }
 
     open func createPlayback() -> Playback {
-        let availablePlaybacks = Loader.shared.playbacks.first { playback in canPlay(playback) }
-        if let playback = availablePlaybacks as? Playback.Type {
-            return playback.init(options: options)
+        let availablePlayback = Loader.shared.playbacks.first { playback in canPlay(playback) }
+        guard let playback = availablePlayback, playback.type == .playback else {
+            return NoOpPlayback(options: options)
         }
-        return NoOpPlayback(options: options)
+        return playback.init(options: options)
     }
 
     fileprivate func canPlay(_ type: Plugin.Type) -> Bool {

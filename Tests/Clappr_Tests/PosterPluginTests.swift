@@ -15,7 +15,7 @@ class PosterPluginTests: QuickSpec {
 
             context("when container has no options") {
                 it("hides itself") {
-                    container = Container()
+                    container = ContainerFactory.create(with: [:])
                     container.render()
 
                     let posterPlugin = self.getPosterPlugin(container)
@@ -26,7 +26,7 @@ class PosterPluginTests: QuickSpec {
 
             context("when container doesnt have posterUrl option") {
                 it("hides itself") {
-                    container = Container(options: ["anotherOption": true])
+                    container = ContainerFactory.create(with: ["anotherOption": true])
                     container.render()
 
                     let posterPlugin = self.getPosterPlugin(container)
@@ -37,7 +37,7 @@ class PosterPluginTests: QuickSpec {
 
             context("when container has posterUrl option") {
                 it("it renders itself") {
-                    container = Container(options: options)
+                    container = ContainerFactory.create(with: options)
                     container.render()
 
                     let posterPlugin = self.getPosterPlugin(container)
@@ -51,7 +51,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    container = Container()
+                    container = ContainerFactory.create(with: [:])
                 }
 
                 context("to NoOpPlayback") {
@@ -103,7 +103,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    container = Container(options: options)
+                    container = ContainerFactory.create(with: options)
                     container.render()
                     posterPlugin = self.getPosterPlugin(container)
                 }
@@ -130,7 +130,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    container = Container(options: options)
+                    container = ContainerFactory.create(with: options)
                     container.render()
                     posterPlugin = self.getPosterPlugin(container)
                 }

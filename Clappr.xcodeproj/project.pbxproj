@@ -206,6 +206,8 @@
 		C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */; };
 		C98C014C2166B50E009DFE0A /* FullscreenButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */; };
+		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
+		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */; };
 		C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */; };
 		C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8492162CCB700789E2F /* MediaControlTests.swift */; };
@@ -224,13 +226,15 @@
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
 		E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */; };
-		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
-		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652231D46829100627C48 /* UIContainerPluginTests.swift */; };
 		FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
 		FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0A223D21754C1700D2180F /* PlayerTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
+		FB46260121AC8D2B008D9A25 /* CoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46260021AC8D2B008D9A25 /* CoreFactory.swift */; };
+		FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46260021AC8D2B008D9A25 /* CoreFactory.swift */; };
+		FBD47AAF21AD6856003265AF /* ContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD47AAE21AD6856003265AF /* ContainerFactory.swift */; };
+		FBD47AB021AD6856003265AF /* ContainerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD47AAE21AD6856003265AF /* ContainerFactory.swift */; };
 		FBE6A3E42163EEAE0083C9CC /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
 		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
@@ -462,6 +466,7 @@
 		C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
+		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
 		C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPluginTests.swift; sourceTree = "<group>"; };
 		C9EDF8492162CCB700789E2F /* MediaControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
@@ -475,7 +480,6 @@
 		C9F6D7B42182650A0055A599 /* SeekbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekbarView.swift; sourceTree = "<group>"; };
 		C9F6D7B52182650A0055A599 /* SeekbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeekbarView.xib; sourceTree = "<group>"; };
 		C9F6D7B8218265140055A599 /* Seekbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seekbar.swift; sourceTree = "<group>"; };
-		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
@@ -485,7 +489,9 @@
 		EDF652211D467CCA00627C48 /* UICorePluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICorePluginTests.swift; sourceTree = "<group>"; };
 		EDF652231D46829100627C48 /* UIContainerPluginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIContainerPluginTests.swift; sourceTree = "<group>"; };
 		FB0A223D21754C1700D2180F /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
+		FB46260021AC8D2B008D9A25 /* CoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreFactory.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
+		FBD47AAE21AD6856003265AF /* ContainerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFactory.swift; sourceTree = "<group>"; };
 		FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loader+Plugins.swift"; sourceTree = "<group>"; };
 		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
 		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
@@ -822,6 +828,7 @@
 		96D3628B1D41339400CCB866 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				FB4625FF21AC8D11008D9A25 /* Factories */,
 				96D362941D41339400CCB866 /* Options.swift */,
 				96D3628E1D41339400CCB866 /* Core.swift */,
 				96D3628D1D41339400CCB866 /* Container.swift */,
@@ -1190,6 +1197,15 @@
 				E7D0BD16218A389B00F5FDF2 /* SeekbarTests.swift */,
 			);
 			path = Seekbar;
+			sourceTree = "<group>";
+		};
+		FB4625FF21AC8D11008D9A25 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				FB46260021AC8D2B008D9A25 /* CoreFactory.swift */,
+				FBD47AAE21AD6856003265AF /* ContainerFactory.swift */,
+			);
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		FBE6A3E52163EF9C0083C9CC /* Extensions */ = {
@@ -1731,6 +1747,7 @@
 				FC7785AF2005233D00EC879F /* UIObject.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
+				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
 				32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */,
@@ -1741,6 +1758,7 @@
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
+				FBD47AB021AD6856003265AF /* ContainerFactory.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
@@ -1858,8 +1876,10 @@
 				C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */,
 				968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */,
 				57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */,
+				FB46260121AC8D2B008D9A25 /* CoreFactory.swift in Sources */,
 				96D362C61D41339400CCB866 /* Core.swift in Sources */,
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
+				FBD47AAF21AD6856003265AF /* ContainerFactory.swift in Sources */,
 				AB163517215ACA0C00635233 /* MediaControl.swift in Sources */,
 				9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,

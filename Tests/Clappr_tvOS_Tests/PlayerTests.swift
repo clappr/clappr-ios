@@ -74,7 +74,7 @@ class PlayerTests: QuickSpec {
 
             it("contains AVFoundationPlayback") {
                 Loader.shared.resetPlugins()
-                Player.hasAlreadyRegisteredPlugins = false
+                Player.hasAlreadyRegisteredPlaybacks = false
                 _ = Player(options: options)
 
                 expect(Loader.shared.playbacks.first).to(be(AVFoundationPlayback.self))

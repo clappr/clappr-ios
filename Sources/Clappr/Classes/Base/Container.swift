@@ -39,11 +39,8 @@ open class Container: UIObject {
 
         self.sharedData.container = self
         view.backgroundColor = UIColor.clear
-        Loader.shared.loadPlugins(in: self)
+
         view.accessibilityIdentifier = "Container"
-        if let source = options[kSourceUrl] as? String {
-            load(source, mimeType: options[kMimeType] as? String)
-        }
     }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {

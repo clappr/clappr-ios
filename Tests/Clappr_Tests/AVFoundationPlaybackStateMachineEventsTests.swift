@@ -53,7 +53,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                             }
                         }
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 10)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 15)
                     }
                 }
 
