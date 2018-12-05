@@ -253,6 +253,10 @@ open class AVFoundationPlayback: Playback {
             playerLayer?.frame = view.bounds
             setupMaxResolution(for: playerLayer!.frame.size)
 
+            if self.startAt != 0.0 && self.playbackType == .vod {
+                self.seek(self.startAt)
+            }
+
             addObservers()
         } else {
             trigger(.error)
@@ -646,10 +650,10 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func render() {
+        super.render()
         if asset != nil {
             trigger(.ready)
         }
-        super.render()
     }
 }
 

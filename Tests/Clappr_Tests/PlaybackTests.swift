@@ -99,16 +99,6 @@ class PlaybackTests: QuickSpec {
                     expect(playback.startAt) == 0.0
                 }
 
-                context("when video is vod") {
-                    it("seek video when rendering if startAt is set") {
-                        let playback = StubPlayback(options: [kStartAt: 15.0])
-                        playback.type = .vod
-                        playback.render()
-                        playback.play()
-                        expect(playback.seekWasCalledWithValue) == 15.0
-                    }
-                }
-
                 context("when video is live") {
                     it("doesn't seek video when rendering if startAt is set") {
                         let playback = StubPlayback(options: [kStartAt: 15.0])
