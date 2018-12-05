@@ -497,6 +497,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
 
+                    afterEach {
+                        OHHTTPStubs.removeAllStubs()
+                    }
+
                     #if os(iOS)
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
@@ -510,6 +514,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.player?.currentItem?.preferredMaximumResolution).toEventually(equal(screenSize))
                     }
                     #endif
+
+                    it("trigger didUpdateDuration") {
+                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                        var callDidUpdateDuration = false
+                        playback.render()
+
+                        playback.on(Event.didUpdateDuration.rawValue) { userInfo in
+                            callDidUpdateDuration = true
+                        }
+
+                        playback.play()
+
+                        expect(callDidUpdateDuration).to(beTrue())
+                    }
                 }
             }
 

@@ -89,7 +89,7 @@ open class TimeIndicator: MediaControlPlugin {
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in self?.displayVideoDuration() }
+            listenTo(playback, eventName: Event.didUpdateDuration.rawValue) { [weak self] (info: EventUserInfo) in self?.displayVideoDuration(info) }
             listenTo(playback, eventName: Event.didUpdatePosition.rawValue) { [weak self] (info: EventUserInfo) in self?.updateElapsedTime(info) }
         }
     }
@@ -102,8 +102,9 @@ open class TimeIndicator: MediaControlPlugin {
         }
     }
 
-    open func displayVideoDuration() {
-        durationTimeLabel?.text = ClapprDateFormatter.formatSeconds(activePlayback?.duration ?? 0.0)
+    open func displayVideoDuration(_ info: EventUserInfo) {
+        guard let duration = info?["duration"] as? Double else { return }
+        durationTimeLabel?.text = ClapprDateFormatter.formatSeconds(duration)
         view.isHidden = false
     }
 
