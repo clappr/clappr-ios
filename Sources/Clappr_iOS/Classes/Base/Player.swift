@@ -197,10 +197,10 @@ open class Player: BaseObject {
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Player")
-        stopListening()
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
         self.core = nil
+        stopListening()
         Logger.logDebug("destroyed", scope: "Player")
     }
 }
