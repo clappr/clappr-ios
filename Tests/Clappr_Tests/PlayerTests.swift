@@ -275,6 +275,24 @@ class PlayerTests: QuickSpec {
                     expect(playerOptionValue).to(equal("bar"))
                 }
             }
+            
+            fdescribe("#lifecycle") {
+                it("triggers events of destruction correctly") {
+                    var triggeredEvents = [String]()
+                    player = Player(options: options)
+                    player.listenTo(player.core!, eventName: Event.didDestroy.rawValue) { _ in
+                        triggeredEvents.append("core")
+                    }
+                    player.listenTo(player.activeContainer!, eventName: Event.didDestroy.rawValue) { _ in
+                        triggeredEvents.append("container")
+                    }
+                    player.destroy()
+
+                    expect(triggeredEvents).toEventually(equal(["container", "core"]))
+                    expect(player.core).to(beNil())
+                    expect(player.activeContainer).to(beNil())
+                }
+            }
         }
     }
 
