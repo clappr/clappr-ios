@@ -195,8 +195,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        trigger(Event.didDestroy.rawValue)
-
         Logger.logDebug("destroyed", scope: "Core")
         #if os(iOS)
         fullscreenHandler?.destroy()
@@ -204,6 +202,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         fullscreenController = nil
         #endif
         view.removeFromSuperview()
+
+        trigger(Event.didDestroy.rawValue)
     }
 
     @objc func didTappedView() {
