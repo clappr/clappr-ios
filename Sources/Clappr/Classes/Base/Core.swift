@@ -60,14 +60,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         addTapRecognizer()
         bindEventListeners()
-
-        let container = ContainerFactory.create(with: options)
-
+        
+        Loader.shared.corePlugins.forEach { plugin in
+            if let corePlugin = plugin.init(context: self) as? UICorePlugin {
+                self.addPlugin(corePlugin)
+            }
+        }
+    }
+    
+    public func add(container: Container) {
         containers.append(container)
-        setActive(container: container)
     }
 
-    fileprivate func setActive(container: Container) {
+    public func setActive(container: Container) {
         if activeContainer != container {
             activeContainer = container
         }
