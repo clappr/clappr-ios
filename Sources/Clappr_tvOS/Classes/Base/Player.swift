@@ -137,8 +137,6 @@ open class Player: UIViewController, BaseObject {
     }
     
     fileprivate func bindCoreEvents() {
-        self.core?.stopListening()
-
         self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
