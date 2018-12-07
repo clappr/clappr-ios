@@ -105,6 +105,7 @@ open class Player: UIViewController, BaseObject {
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
         Player.register(playbacks: [])
+        Player.register(plugins: externalPlugins)
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -221,6 +222,10 @@ open class Player: UIViewController, BaseObject {
             hasAlreadyRegisteredPlaybacks = true
         }
         Loader.shared.register(playbacks: playbacks)
+    }
+
+    open class func register(plugins: [Plugin.Type]) {
+        Loader.shared.register(plugins: plugins)
     }
 
     fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
