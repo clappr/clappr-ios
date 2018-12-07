@@ -119,6 +119,8 @@ open class Player: UIViewController, BaseObject {
              Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,])
+
+        Loader.shared.register(plugins: externalPlugins)
         
         setCore(with: options)
         
