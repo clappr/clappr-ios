@@ -95,13 +95,12 @@ open class Player: BaseObject {
     }
     
     private func setCore(with options: Options) {
+        self.core?.stopListening()
         self.core = CoreFactory.create(with: options)
         bindCoreEvents()
     }
 
     private func bindCoreEvents() {
-        self.core?.stopListening()
-
         self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
