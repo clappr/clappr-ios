@@ -67,7 +67,6 @@ open class AVFoundationPlayback: Playback {
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
-            triggerMediaOptionSelectedEvent(option: newValue, event: Event.subtitleSelected)
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectSubtitle)
         }
     }
@@ -81,7 +80,6 @@ open class AVFoundationPlayback: Playback {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             }
-            triggerMediaOptionSelectedEvent(option: newValue, event: Event.audioSelected)
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectAudio)
         }
     }
@@ -371,7 +369,6 @@ open class AVFoundationPlayback: Playback {
 
         player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
             if success {
-                self?.trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
                 self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
                 self?.trigger(.didSeek)
                 if let triggerEvent = triggerEvent {
@@ -427,7 +424,6 @@ open class AVFoundationPlayback: Playback {
 
         switch newState {
         case .buffering:
-            trigger(.stalled)
             trigger(.stalling)
         case .paused:
             if isStopped {
@@ -455,7 +451,6 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession()
         }
 
-        self.trigger(.airPlayStatusUpdate, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
         self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
     }
 
@@ -514,10 +509,8 @@ open class AVFoundationPlayback: Playback {
             let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
-            trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
         } else {
-            trigger(.subtitleAvailable, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
     }
@@ -529,10 +522,8 @@ open class AVFoundationPlayback: Playback {
             let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
-            trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
             trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
         } else {
-            trigger(.audioAvailable, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
             trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
     }
@@ -546,7 +537,6 @@ open class AVFoundationPlayback: Playback {
     fileprivate func timeUpdated(_ time: CMTime) {
         if isPlaying {
             updateState(.playing)
-            trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
             trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
     }
@@ -562,7 +552,6 @@ open class AVFoundationPlayback: Playback {
             "duration": CMTimeGetSeconds(timeRange.duration),
             ]
 
-        trigger(.bufferUpdate, userInfo: info)
         trigger(.didUpdateBuffer, userInfo: info)
     }
 
