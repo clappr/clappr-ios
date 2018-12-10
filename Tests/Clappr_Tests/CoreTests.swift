@@ -587,24 +587,26 @@ class CoreTests: QuickSpec {
 
                 it("trigger willChangeActiveContainer event") {
                     let core = Core()
+                    let container = Container()
                     var didCallEvent = false
 
                     core.on(Event.willChangeActiveContainer.rawValue)   { userInfo in
                         didCallEvent = true
                     }
-                    core.activeContainer = Container()
+                    core.activeContainer = container
 
                     expect(didCallEvent).toEventually(beTrue())
                 }
 
                 it("trigger didChangeActiveContainer event") {
                     let core = Core()
+                    let container = Container()
                     var didCallEvent = false
 
                     core.on(Event.didChangeActiveContainer.rawValue)   { userInfo in
                         didCallEvent = true
                     }
-                    core.activeContainer = Container()
+                    core.activeContainer = container
 
                     expect(didCallEvent).toEventually(beTrue())
                 }
@@ -620,7 +622,7 @@ class CoreTests: QuickSpec {
                         didCallEvent = true
                     }
 
-                    core.activeContainer = Container()
+                    core.activeContainer = container
                     container.playback = AVFoundationPlayback()
 
                     expect(didCallEvent).toEventually(beFalse())
