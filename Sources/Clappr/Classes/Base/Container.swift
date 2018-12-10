@@ -75,7 +75,7 @@ open class Container: UIObject {
 
         view.addSubviewMatchingConstraints(playback.view)
         playback.render()
-        view.sendSubview(toBack: playback.view)
+        view.sendSubviewToBack(playback.view)
     }
 
     fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {

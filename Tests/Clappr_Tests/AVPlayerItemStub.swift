@@ -12,7 +12,7 @@ class AVPlayerItemStub: AVPlayerItem {
     var didCallSeekWithCompletionHandler = false
     var didCallSeekWithTime: CMTime?
 
-    var _status: AVPlayerItemStatus = AVPlayerItemStatus.unknown
+    var _status: AVPlayerItem.Status = AVPlayerItem.Status.unknown
 
     var _currentDate: Date = Date()
 
@@ -30,7 +30,7 @@ class AVPlayerItemStub: AVPlayerItem {
         return _loadedTimeRanges
     }
 
-    override var status: AVPlayerItemStatus {
+    override var status: AVPlayerItem.Status {
         return _status
     }
 

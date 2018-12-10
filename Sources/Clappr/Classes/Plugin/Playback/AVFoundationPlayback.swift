@@ -29,7 +29,7 @@ open class AVFoundationPlayback: Playback {
     #endif
     
     fileprivate var playerLayer: AVPlayerLayer?
-    fileprivate var playerStatus: AVPlayerItemStatus = .unknown
+    fileprivate var playerStatus: AVPlayerItem.Status = .unknown
     var currentState = PlaybackState.idle {
         didSet {
             switch currentState {
@@ -48,7 +48,7 @@ open class AVFoundationPlayback: Playback {
     fileprivate var asset: AVURLAsset?
     var lastDvrAvailability: Bool?
 
-    private var backgroundSessionBackup: String?
+    private var backgroundSessionBackup: AVAudioSession.Category?
 
     @objc open var url: URL? {
         return asset?.url
@@ -163,7 +163,7 @@ open class AVFoundationPlayback: Playback {
             return .unknown
         }
 
-        return duration == kCMTimeIndefinite ? .live : .vod
+        return duration == CMTime.indefinite ? .live : .vod
     }
 
     open override class func canPlay(_ options: Options) -> Bool {
@@ -362,7 +362,7 @@ open class AVFoundationPlayback: Playback {
             return
         }
 
-        let time = CMTimeMakeWithSeconds(timeInterval, Int32(NSEC_PER_SEC))
+        let time = CMTimeMakeWithSeconds(timeInterval, preferredTimescale: Int32(NSEC_PER_SEC))
         let tolerance = CMTime(value: 0, timescale: Int32(NSEC_PER_SEC))
 
         trigger(.willSeek)
@@ -456,21 +456,21 @@ open class AVFoundationPlayback: Playback {
 
     private func enableBackgroundSession() {
         backgroundSessionBackup = AVAudioSession.sharedInstance().category
-        changeBackgroundSession(to: AVAudioSessionCategoryPlayback)
+        changeBackgroundSession(to: AVAudioSession.Category.playback)
     }
 
     private func restoreBackgroundSession() {
-        if let concreteBackgroundSession = backgroundSessionBackup {
-            changeBackgroundSession(to: concreteBackgroundSession)
+        if let backgroundSessionBackup = backgroundSessionBackup {
+            changeBackgroundSession(to: backgroundSessionBackup)
         }
     }
 
-    private func changeBackgroundSession(to category: String) {
+    private func changeBackgroundSession(to category: AVAudioSession.Category) {
         do {
-            if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(category, with: .allowAirPlay)
-            } else {
-                try AVAudioSession.sharedInstance().setCategory(category)
+            if #available(iOS 11.0, *) {
+                try AVAudioSession.sharedInstance().setCategory(category, mode: .default, policy: .default, options: .allowAirPlay)
+            } else if #available(iOS 10.0, *) {
+                try AVAudioSession.sharedInstance().setCategory(category, mode: .default)
             }
         } catch {
             print("It was not possible to set the audio session category")
@@ -529,7 +529,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     fileprivate func addTimeElapsedCallback() {
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, 600), queue: nil) { [weak self] time in
+        timeObserver = player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, preferredTimescale: 600), queue: nil) { [weak self] time in
             self?.timeUpdated(time)
         }
     }

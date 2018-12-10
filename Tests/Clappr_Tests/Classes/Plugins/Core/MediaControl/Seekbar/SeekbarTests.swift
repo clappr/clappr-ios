@@ -76,7 +76,7 @@ class SeekbarTests: QuickSpec {
             }
 
             it("sets height constraint in view") {
-                let heightConstraint = seekbar.view.constraints.first(where: { $0.firstAttribute == NSLayoutAttribute.height })
+                let heightConstraint = seekbar.view.constraints.first(where: { $0.firstAttribute == NSLayoutConstraint.Attribute.height })
                 expect(heightConstraint?.constant).to(equal(38))
             }
 
@@ -217,7 +217,7 @@ class SeekbarTests: QuickSpec {
                         seekbarViewMock = SeekbarViewMock()
                         seekbar.seekbarView = seekbarViewMock
                         seekbar.seekbarView.videoDuration = 100
-                        let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, Int32(NSEC_PER_SEC)))
+                        let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, preferredTimescale: Int32(NSEC_PER_SEC)))
                         let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
                         coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)
@@ -230,7 +230,7 @@ class SeekbarTests: QuickSpec {
                             seekbarViewMock = SeekbarViewMock()
                             seekbar.seekbarView = seekbarViewMock
                             seekbar.seekbarView.videoDuration = 100
-                            let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(150, Int32(NSEC_PER_SEC)))
+                            let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(150, preferredTimescale: Int32(NSEC_PER_SEC)))
                             let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
                             coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)
@@ -244,7 +244,7 @@ class SeekbarTests: QuickSpec {
                     it("doesn't inform the duration to seekbarview") {
                         seekbarViewMock = SeekbarViewMock()
                         seekbar.seekbarView = seekbarViewMock
-                        let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, Int32(NSEC_PER_SEC))) + Float64.nan
+                        let bufferEndTime = CMTimeGetSeconds(CMTimeMakeWithSeconds(50, preferredTimescale: Int32(NSEC_PER_SEC))) + Float64.nan
                         let userInfo: EventUserInfo = ["end_position": bufferEndTime]
 
                         coreStub.activePlayback?.trigger(Event.didUpdateBuffer, userInfo: userInfo)

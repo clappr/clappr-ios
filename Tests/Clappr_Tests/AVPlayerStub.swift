@@ -13,7 +13,7 @@ class AVPlayerStub: AVPlayer {
         return _item.duration
     }
 
-    func setStatus(to newStatus: AVPlayerItemStatus) {
+    func setStatus(to newStatus: AVPlayerItem.Status) {
         _item._status = newStatus
     }
     
