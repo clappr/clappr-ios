@@ -171,7 +171,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         playback.play()
                         #endif
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 30)
                     }
                 }
             }
