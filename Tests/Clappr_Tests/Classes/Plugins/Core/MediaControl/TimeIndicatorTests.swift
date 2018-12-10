@@ -122,7 +122,7 @@ class TimeIndicatorTests: QuickSpec {
                 }
             }
 
-            describe("when player is ready") {
+            describe("when playback receives didUpdateDuration event") {
                 var coreStub: CoreStub!
                 var timeIndicator: TimeIndicator!
 
@@ -133,12 +133,23 @@ class TimeIndicatorTests: QuickSpec {
                     timeIndicator.render()
                 }
 
-                it("updates the duration time of the video label") {
-                    coreStub.playbackMock?.videoDuration = 138.505
+                context("duration time of video") {
+                    it("updates the video label when event is triggered") {
+                        coreStub.playbackMock?.videoDuration = 138.505
 
-                    coreStub.activePlayback?.trigger(Event.ready)
+                        coreStub.activePlayback?.trigger(.didUpdateDuration, userInfo: ["duration": 138.505])
 
-                    expect(timeIndicator.durationTimeLabel.text).to(equal("02:18"))
+                        expect(timeIndicator.durationTimeLabel.text).to(equal("02:18"))
+                    }
+
+                    it("doesnt update the video label when there is no userInfo on event") {
+                        coreStub.playbackMock?.videoDuration = 138.505
+
+                        coreStub.activePlayback?.trigger(.didUpdateDuration, userInfo: [:])
+
+                        expect(timeIndicator.durationTimeLabel.text).to(equal("00:00"))
+                        expect(timeIndicator.view.isHidden).to(beTrue())
+                    }
                 }
             }
 

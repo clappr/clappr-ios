@@ -48,7 +48,8 @@ public enum Event: String {
     case didEnterFullscreen
     case willExitFullscreen
     case didExitFullscreen
-    
+    case didUpdateDuration
+
     @available(*, deprecated, message: "Update to stalling")
     case stalled
     @available(*, deprecated, message: "Update to didUpdatePosition")
@@ -67,6 +68,6 @@ public enum Event: String {
     case audioSelected
     
     public static var allCases: [Event] {
-        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl, .willDestroy, .didDestroy, .willLoadSource, .didLoadSource, .didNotLoadSource, .willChangePlayback, .didChangePlayback, .willChangeActivePlayback, .didChangeActivePlayback, .willChangeActiveContainer, .didChangeActiveContainer, .willEnterFullscreen, .didEnterFullscreen, .willExitFullscreen, .didExitFullscreen]
+        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl, .willDestroy, .didDestroy, .willLoadSource, .didLoadSource, .didNotLoadSource, .willChangePlayback, .didChangePlayback, .willChangeActivePlayback, .didChangeActivePlayback, .willChangeActiveContainer, .didChangeActiveContainer, .willEnterFullscreen, .didEnterFullscreen, .willExitFullscreen, .didExitFullscreen, .didUpdateDuration]
     }
 }

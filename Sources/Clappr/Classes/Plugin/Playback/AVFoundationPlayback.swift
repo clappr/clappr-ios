@@ -135,19 +135,17 @@ open class AVFoundationPlayback: Playback {
             return 0
         }
 
+        var durationTime: Double = 0
+
         if playbackType == .vod {
-            return CMTimeGetSeconds(item.asset.duration)
-        }
-        
-        if playbackType == .live {
-            let liveDuration = seekableTimeRanges.reduce(0.0, { previous, current in
-                return previous + current.timeRangeValue.duration.seconds
+            durationTime = CMTimeGetSeconds(item.asset.duration)
+        } else if playbackType == .live {
+            durationTime = seekableTimeRanges.reduce(0.0, { previous, current in
+                previous + current.timeRangeValue.duration.seconds
             })
-
-            return liveDuration
         }
 
-        return 0
+        return durationTime
     }
 
     open override var position: Double {
@@ -248,13 +246,18 @@ open class AVFoundationPlayback: Playback {
 
             selectDefaultAudioIfNeeded()
 
+            trigger(.didUpdateDuration, userInfo: ["duration": duration])
+
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
             setupMaxResolution(for: playerLayer!.frame.size)
 
+            if startAt != 0.0 && playbackType == .vod {
+                seek(startAt)
+            }
+
             addObservers()
-            trigger(.ready)
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
@@ -644,6 +647,13 @@ open class AVFoundationPlayback: Playback {
         Logger.logDebug("destroying", scope: "AVFoundationPlayback")
         releaseResources()
         Logger.logDebug("destroyed", scope: "AVFoundationPlayback")
+    }
+
+    open override func render() {
+        super.render()
+        if asset != nil {
+            trigger(.ready)
+        }
     }
 }
 

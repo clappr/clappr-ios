@@ -12,7 +12,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
             let unwantedEvents: [Event] = [
                 .didUpdateBuffer, .didUpdatePosition,
                 .seekableUpdate, .didFindAudio,
-                .didFindSubtitle, .didChangeDvrAvailability
+                .didFindSubtitle, .didChangeDvrAvailability,
+                .didUpdateDuration
             ]
 
             beforeSuite {
@@ -39,8 +40,11 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
+                        #if os(iOS)
                         playback.play()
+                        #endif
                         playback.once(Event.playing.rawValue) { _ in
                             playback.pause()
                             playback.seek(2)
@@ -72,8 +76,11 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
+                        #if os(iOS)
                         playback.play()
+                        #endif
                         playback.once(Event.playing.rawValue) { _ in
                             playback.seek(playback.duration)
                         }
@@ -83,7 +90,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 }
 
                 context("when pause, play and stop") {
-                    xit("triggers events following the state machine pattern") {
+                    it("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
@@ -96,17 +103,19 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
                         playback.stop()
+                        playback.destroy()
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
                 }
 
                 context("when pause, play, pause and stop") {
-                    xit("triggers events following the state machine pattern") {
+                    it("triggers events following the state machine pattern") {
                         let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
@@ -120,11 +129,13 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
+                        playback.render()
 
                         playback.pause()
                         playback.play()
                         playback.pause()
                         playback.stop()
+                        playback.destroy()
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
@@ -154,9 +165,13 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                             }
                         }
 
-                        playback.play()
+                        playback.render()
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
+                        #if os(iOS)
+                        playback.play()
+                        #endif
+
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 30)
                     }
                 }
             }
