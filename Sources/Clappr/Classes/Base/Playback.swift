@@ -28,7 +28,7 @@ open class Playback: UIObject, Plugin {
     }
 
     @objc open var startAt: TimeInterval {
-        return options[kStartAt] as? TimeInterval ?? 0.0
+        return options.startAt ?? 0.0
     }
 
     @objc open var isPlaying: Bool {
