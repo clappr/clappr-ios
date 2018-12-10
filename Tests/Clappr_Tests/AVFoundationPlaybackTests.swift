@@ -1240,8 +1240,8 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#playerViewController") {
                 var avFoundationPlayback: AVFoundationPlayback!
                 var controller: AVPlayerViewController!
-                let fromTime = CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC))
-                let toTime = CMTimeMakeWithSeconds(10, Int32(NSEC_PER_SEC))
+                let fromTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
+                let toTime = CMTimeMakeWithSeconds(10, preferredTimescale: Int32(NSEC_PER_SEC))
                 
                 beforeEach {
                     controller = AVPlayerViewController()
