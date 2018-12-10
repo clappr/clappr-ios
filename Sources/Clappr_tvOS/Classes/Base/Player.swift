@@ -104,8 +104,10 @@ open class Player: UIViewController, BaseObject {
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
+
         Player.register(playbacks: [])
         Player.register(plugins: externalPlugins)
+
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         self.playbackEventsToListen.append(contentsOf:
@@ -121,8 +123,6 @@ open class Player: UIViewController, BaseObject {
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,])
 
-        Loader.shared.register(plugins: externalPlugins)
-        
         setCore(with: options)
         
         bindPlaybackEvents()
@@ -224,7 +224,7 @@ open class Player: UIViewController, BaseObject {
         Loader.shared.register(playbacks: playbacks)
     }
 
-    open class func register(plugins: [Plugin.Type]) {
+    private class func register(plugins: [Plugin.Type]) {
         Loader.shared.register(plugins: plugins)
     }
 
