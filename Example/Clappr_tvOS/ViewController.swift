@@ -18,10 +18,10 @@ class ViewController: UIViewController {
 
         listenToPlayerEvents()
 
-        addChildViewController(player)
+        addChild(player)
         player.view.frame = view.bounds
         view.addSubview(player.view)
-        player.didMove(toParentViewController: self)
+        player.didMove(toParent: self)
     }
 
     func listenToPlayerEvents() {

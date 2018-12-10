@@ -467,9 +467,9 @@ open class AVFoundationPlayback: Playback {
 
     private func changeBackgroundSession(to category: AVAudioSession.Category) {
         do {
-            if #available(iOS 11.0, *) {
+            if #available(iOS 11.0, tvOS 11.0, *) {
                 try AVAudioSession.sharedInstance().setCategory(category, mode: .default, policy: .default, options: .allowAirPlay)
-            } else if #available(iOS 10.0, *) {
+            } else if #available(iOS 10.0, tvOS 10.0, *) {
                 try AVAudioSession.sharedInstance().setCategory(category, mode: .default)
             }
         } catch {
