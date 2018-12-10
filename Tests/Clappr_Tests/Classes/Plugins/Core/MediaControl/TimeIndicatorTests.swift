@@ -122,7 +122,7 @@ class TimeIndicatorTests: QuickSpec {
                 }
             }
 
-            describe("when playback is ready") {
+            describe("when playback receives didUpdateDuration event") {
                 var coreStub: CoreStub!
                 var timeIndicator: TimeIndicator!
 
