@@ -727,6 +727,31 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     expect(updatedPosition).to(equal(5))
                 }
+                
+                it("triggers didUpdatePosition before didSeek event") {
+                    let playback = AVFoundationPlayback()
+                    let player = AVPlayerStub()
+                    playback.player = player
+                    player.setStatus(to: .readyToPlay)
+                    var updatedPosition: Float64? = nil
+                    var didSeek = false
+                    var didTriggerDidSeekBefore = false
+                    
+                    playback.on(Event.didSeek.rawValue) { _ in
+                        didSeek = true
+                    }
+                    playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
+                        updatedPosition = userInfo!["position"] as? Float64
+                        if didSeek {
+                            didTriggerDidSeekBefore = true
+                        }
+                    }
+                    
+                    playback.seek(5)
+                    
+                    expect(updatedPosition).to(equal(5))
+                    expect(didTriggerDidSeekBefore).to(beFalse())
+                }
             }
 
             describe("#seekToLivePosition") {
