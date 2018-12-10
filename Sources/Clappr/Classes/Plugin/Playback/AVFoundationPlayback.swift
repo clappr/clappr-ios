@@ -368,15 +368,14 @@ open class AVFoundationPlayback: Playback {
 
         player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
             if success {
+                self?.trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
+                self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
                 self?.trigger(.didSeek)
                 if let triggerEvent = triggerEvent {
                     triggerEvent()
                 }
             }
         }
-
-        trigger(.positionUpdate, userInfo: ["position": CMTimeGetSeconds(time)])
-        trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
     }
 
     open override func seekToLivePosition() {
