@@ -224,7 +224,7 @@ class PlayerTests: QuickSpec {
                         let player = Player(options: options)
 
                         player.load(PlayerTests.specialSource)
-                        
+
                         expect(player.activePlayback).to(beAKindOf(SpecialStubPlayback.self))
                     }
                 }
@@ -275,8 +275,8 @@ class PlayerTests: QuickSpec {
                     expect(playerOptionValue).to(equal("bar"))
                 }
             }
-            
-            fdescribe("#lifecycle") {
+
+            describe("#lifecycle") {
                 it("triggers events of destruction correctly") {
                     var triggeredEvents = [String]()
                     player = Player(options: options)
