@@ -31,7 +31,7 @@ class CoreTests: QuickSpec {
             describe("#init") {
 
                 beforeEach {
-                    core = Core(options: options as Options)
+                    core = CoreFactory.create(with: options as Options)
                 }
                 
                 it("set backgroundColor to black") {

@@ -60,14 +60,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         addTapRecognizer()
         bindEventListeners()
-
-        let container = ContainerFactory.create(with: options)
-
+        
+        Loader.shared.corePlugins.forEach { plugin in
+            if let corePlugin = plugin.init(context: self) as? UICorePlugin {
+                self.addPlugin(corePlugin)
+            }
+        }
+    }
+    
+    public func add(container: Container) {
         containers.append(container)
-        setActive(container: container)
     }
 
-    fileprivate func setActive(container: Container) {
+    public func setActive(container: Container) {
         if activeContainer != container {
             activeContainer = container
         }
@@ -190,8 +195,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins.forEach { plugin in plugin.destroy() }
         plugins.removeAll()
 
-        trigger(Event.didDestroy.rawValue)
-
         Logger.logDebug("destroyed", scope: "Core")
         #if os(iOS)
         fullscreenHandler?.destroy()
@@ -199,6 +202,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         fullscreenController = nil
         #endif
         view.removeFromSuperview()
+
+        trigger(Event.didDestroy.rawValue)
     }
 
     @objc func didTappedView() {
