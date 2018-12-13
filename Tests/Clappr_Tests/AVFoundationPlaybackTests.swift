@@ -1,7 +1,6 @@
 import Quick
 import Nimble
 import AVFoundation
-import Swifter
 import OHHTTPStubs
 #if os(tvOS)
 import AVKit
@@ -14,21 +13,13 @@ class AVFoundationPlaybackTests: QuickSpec {
     override func spec() {
         describe("AVFoundationPlayback Tests") {
 
-            let server = HTTPStub()
             var asset: AVURLAssetStub!
             var item: AVPlayerItemStub!
             var player: AVPlayerStub!
             var playback: AVFoundationPlayback!
 
-            beforeSuite {
-                server.start()
-            }
-
-            afterSuite {
-                server.stop()
-            }
-
             beforeEach {
+                OHHTTPStubs.removeAllStubs()
                 asset = AVURLAssetStub(url: URL(string: "https://www.google.com")!, options: nil)
                 item = AVPlayerItemStub(asset: asset)
 
@@ -37,6 +28,19 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 playback = AVFoundationPlayback()
                 playback.player = player
+                
+                stub(condition: isHost("clappr.sample")) { result in
+                    if result.url?.path == "/master.m3u8" {
+                        let stubPath = OHPathForFile("master.m3u8", type(of: self))
+                        return fixture(filePath: stubPath!, headers: [:])
+                    } else if result.url!.path.contains(".ts") {
+                        let stubPath = OHPathForFile(result.url!.path.replacingOccurrences(of: "/", with: ""), type(of: self))
+                        return fixture(filePath: stubPath!, headers: [:])
+                    }
+
+                    let stubPath = OHPathForFile("sample.m3u8", type(of: self))
+                    return fixture(filePath: stubPath!, headers: [:])
+                }
             }
             
             afterEach {
@@ -180,7 +184,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     var playerItem: AVPlayerItemStub?
                     var available: Bool?
                     var didCallChangeDvrAvailability: Bool?
-                    let playerAsset = AVURLAssetStub(url: URL(string: "http://localhost:8080/sample.m3u8")!)
+                    let playerAsset = AVURLAssetStub(url: URL(string: "http://clappr.sample/master.m3u8")!)
                     
                     func setupTest(minDvrSize: Double, seekableTimeRange: Double) {
                         playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
@@ -604,7 +608,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 var avFoundationPlayback: AVFoundationPlayback!
 
                 beforeEach {
-                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "http://localhost:8080/sample.m3u8"])
+                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.sample/master.m3u8"])
                     avFoundationPlayback.play()
                 }
 
@@ -778,7 +782,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 
                 beforeEach {
                     playback = AVFoundationPlayback()
-                    let url = URL(string: "http://localhost:8080/sample.m3u8")!
+                    let url = URL(string: "http://clappr.sample/master.m3u8")!
                     let playerAsset = AVURLAssetStub(url: url)
                     playerItem = AVPlayerItemStub(asset: playerAsset)
                     playerItem.setSeekableTimeRange(with: 45)
@@ -852,7 +856,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when video is ready") {
                     context("and has no default audio from options") {
                         it("triggers didFindAudio event with hasDefaultFromOption false") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
                             playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
@@ -870,10 +874,10 @@ class AVFoundationPlaybackTests: QuickSpec {
             
             describe("#didFindSubtitle") {
                 
-                context("when video is ready") {
+                context("when video is ready and has subtitle available") {
                     context("and has default subtitle from options") {
                         it("triggers didFindSubtitle event with hasDefaultFromOption true") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8", kDefaultSubtitle: "pt"]
+                            let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = false
                             playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
@@ -883,13 +887,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
                             
-                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 4)
+                            expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
                         }
                     }
                     
                     context("and has no default subtitle from options") {
                         it("triggers didFindSubtitle event with hasDefaultFromOption false") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
                             playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
@@ -971,7 +975,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#idle") {
                     context("when ready to play") {
                         it("current state must be idle") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
                             expect(playback.currentState).to(equal(.idle))
@@ -980,7 +984,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when play is called") {
                         it("changes isPlaying to true") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -994,7 +998,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when pause is called") {
                         it("changes current state to paused") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.pause()
@@ -1010,7 +1014,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#playing") {
                     context("when paused is called") {
                         it("changes current state to paused") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
@@ -1025,7 +1029,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when seek is called") {
                         it("keeps playing") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1040,7 +1044,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
@@ -1055,7 +1059,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when video is over") {
                         it("changes state to idle") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
@@ -1070,7 +1074,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when is not likely to keep up") {
                         it("changes state to buffering") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1084,7 +1088,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#paused") {
                     context("when playing is called") {
                         it("changes isPlaying to true") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1101,7 +1105,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when seek is called") {
                         it("keeps state in paused") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1117,7 +1121,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1133,7 +1137,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when is not likely to keep up") {
                         it("changes state to buffering") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1151,7 +1155,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#stalling") {
                     context("when seek is called") {
                         it("keeps buffering state") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
@@ -1166,7 +1170,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when paused is called") {
                         it("changes state to paused") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
                             playback.play()
@@ -1181,7 +1185,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("when stop is called") {
                         it("changes state to idle") {
-                            let options = [kSourceUrl: "http://localhost:8080/sample.m3u8"]
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
