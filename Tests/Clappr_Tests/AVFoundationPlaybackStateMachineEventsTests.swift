@@ -26,7 +26,6 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         return fixture(filePath: stubPath!, headers: [:])
                     }
                     
-                    print("ERRO STUB")
                     let stubPath = OHPathForFile("master.m3u8", type(of: self))
                     return fixture(filePath: stubPath!, headers: [:])
                 }
