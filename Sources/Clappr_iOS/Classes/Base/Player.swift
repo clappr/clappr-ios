@@ -78,14 +78,13 @@ open class Player: BaseObject {
         self.playbackEventsToListen.append(contentsOf:
             [Event.ready.rawValue, Event.error.rawValue,
              Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalled.rawValue, Event.stalling.rawValue,
-             Event.didStop.rawValue, Event.bufferUpdate.rawValue, Event.didUpdateBuffer.rawValue,
+             Event.didPause.rawValue, Event.stalling.rawValue,
+             Event.didStop.rawValue, Event.didUpdateBuffer.rawValue,
              Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
-             Event.positionUpdate.rawValue, Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
+             Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.airPlayStatusUpdate.rawValue, Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
+             Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
              Event.didSeek.rawValue,
-             Event.subtitleSelected.rawValue, Event.audioSelected.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
              Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue])
 

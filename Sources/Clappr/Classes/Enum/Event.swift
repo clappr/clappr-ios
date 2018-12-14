@@ -1,4 +1,4 @@
-public enum Event: String {
+public enum Event: String, CaseIterable {
     case didUpdateBuffer
     case didUpdatePosition
     case ready
@@ -49,25 +49,4 @@ public enum Event: String {
     case willExitFullscreen
     case didExitFullscreen
     case didUpdateDuration
-
-    @available(*, deprecated, message: "Update to stalling")
-    case stalled
-    @available(*, deprecated, message: "Update to didUpdatePosition")
-    case positionUpdate
-    @available(*, deprecated, message: "Update to didUpdateBuffer")
-    case bufferUpdate
-    @available(*, deprecated, message: "Update to didUpdateAirPlayStatus")
-    case airPlayStatusUpdate
-    @available(*, deprecated, message: "Update to didFindSubtitle")
-    case subtitleAvailable
-    @available(*, deprecated, message: "Update to didFindAudio")
-    case audioAvailable
-    @available(*, deprecated, message: "Update to didSelectSubtitle")
-    case subtitleSelected
-    @available(*, deprecated, message: "Update to didSelectAudio")
-    case audioSelected
-    
-    public static var allCases: [Event] {
-        return [.didUpdateBuffer, .didUpdatePosition, .ready, .stalling, .didFindAudio, .didFindSubtitle, .didSelectAudio, .didSelectSubtitle, .disableMediaControl, .enableMediaControl, .didComplete, .willPlay, .playing, .willPause, .didPause, .willStop, .didStop, .error, .didUpdateAirPlayStatus, .requestFullscreen, .exitFullscreen, .requestPosterUpdate, .willUpdatePoster, .didUpdatePoster, .willSeek, .didSeek, .didChangeDvrStatus, .seekableUpdate, .didChangeDvrAvailability, .didUpdateOptions, .willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl, .willDestroy, .didDestroy, .willLoadSource, .didLoadSource, .didNotLoadSource, .willChangePlayback, .didChangePlayback, .willChangeActivePlayback, .didChangeActivePlayback, .willChangeActiveContainer, .didChangeActiveContainer, .willEnterFullscreen, .didEnterFullscreen, .willExitFullscreen, .didExitFullscreen, .didUpdateDuration]
-    }
 }
