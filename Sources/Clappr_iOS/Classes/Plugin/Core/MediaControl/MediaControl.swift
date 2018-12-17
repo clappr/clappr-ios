@@ -208,8 +208,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         self.gesture = gesture
         
         view.isHidden = true
-        view.backgroundColor = UIColor.clapprBlack60Color()
-
+        view.backgroundColor = UIColor.clear
+        
         showIfAlwaysVisible()
 
         self.view.bindFrameToSuperviewBounds()
