@@ -210,7 +210,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view.isHidden = true
         view.backgroundColor = UIColor.clear
 
-        mediaControlView.contrastView.backgroundColor = UIColor.clapprBlack60Color()
+        if let contrastView = mediaControlView.contrastView {
+            contrastView.backgroundColor = UIColor.clapprBlack60Color()
+        }
 
         showIfAlwaysVisible()
 
