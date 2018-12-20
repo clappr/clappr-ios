@@ -91,14 +91,22 @@ class MediaControlTests: QuickSpec {
                     expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
-                it("has black background with 60% of opacity") {
+                it("has clear background") {
                     let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
-                    expect(mediaControl.view.backgroundColor).to(equal(UIColor.clapprBlack60Color()))
+                    expect(mediaControl.view.backgroundColor).to(equal(UIColor.clear))
                 }
 
+                it("has constrastView with black background with 60% of opacity") {
+                    let mediaControl = MediaControl(context: coreStub)
+
+                    mediaControl.render()
+
+                    expect(mediaControl.mediaControlView.contrastView.backgroundColor).to(equal(UIColor.clapprBlack60Color()))
+                }
+                
                 it("fills the superview") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
