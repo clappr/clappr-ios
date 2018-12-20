@@ -16,9 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CcQ-Ia-esB">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIS-1U-Okn">
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
-                    <viewLayoutGuide key="safeArea" id="TIH-xK-gtj"/>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VEM-5Y-Fai">
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
@@ -106,14 +105,14 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="CcQ-Ia-esB" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="GtA-2O-pVI"/>
+                <constraint firstItem="UIS-1U-Okn" firstAttribute="leading" secondItem="78G-Xh-tuQ" secondAttribute="leading" id="Ack-5m-2MD"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="centerX" secondItem="78G-Xh-tuQ" secondAttribute="centerX" id="HWf-a8-cX5"/>
-                <constraint firstItem="CcQ-Ia-esB" firstAttribute="bottom" secondItem="78G-Xh-tuQ" secondAttribute="bottom" id="Mh7-kH-2wQ"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="height" secondItem="78G-Xh-tuQ" secondAttribute="height" id="SFP-sh-sdP"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="width" secondItem="78G-Xh-tuQ" secondAttribute="width" id="Tp4-MK-2wr"/>
-                <constraint firstItem="CcQ-Ia-esB" firstAttribute="trailing" secondItem="78G-Xh-tuQ" secondAttribute="trailing" id="VMz-Mh-Gie"/>
+                <constraint firstItem="UIS-1U-Okn" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="XKW-eS-PsQ"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="centerY" secondItem="78G-Xh-tuQ" secondAttribute="centerY" id="Zc3-AZ-Of8"/>
-                <constraint firstItem="CcQ-Ia-esB" firstAttribute="leading" secondItem="78G-Xh-tuQ" secondAttribute="leading" id="inO-Zn-0AL"/>
+                <constraint firstItem="78G-Xh-tuQ" firstAttribute="trailing" secondItem="UIS-1U-Okn" secondAttribute="trailing" id="czW-J9-7B1"/>
+                <constraint firstItem="78G-Xh-tuQ" firstAttribute="bottom" secondItem="UIS-1U-Okn" secondAttribute="bottom" id="nnb-UH-HhM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="78G-Xh-tuQ"/>
@@ -126,7 +125,7 @@
                 <outlet property="centerNone" destination="Kzy-cD-bwl" id="Scs-CQ-W4u"/>
                 <outlet property="centerPanel" destination="yqq-a6-mcp" id="cUg-Mz-eaN"/>
                 <outlet property="centerRight" destination="vQx-QC-GJR" id="O1i-px-VbO"/>
-                <outlet property="contrastView" destination="CcQ-Ia-esB" id="Vht-p1-C3o"/>
+                <outlet property="contrastView" destination="UIS-1U-Okn" id="sWd-mT-Uaf"/>
                 <outlet property="modalPanel" destination="rxJ-bk-Ll1" id="Va8-jx-4vD"/>
                 <outlet property="topLeft" destination="rno-A4-BKN" id="sjY-8o-1Fm"/>
                 <outlet property="topNone" destination="hkH-N8-H1F" id="IRF-S9-cQT"/>
