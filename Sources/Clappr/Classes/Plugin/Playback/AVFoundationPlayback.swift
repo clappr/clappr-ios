@@ -697,3 +697,23 @@ extension AVFoundationPlayback {
         return 5
     }
 }
+
+// MARK: - Metrics
+extension AVFoundationPlayback {
+    public func getBitrate() -> Double? {
+        guard let logEvent = player?.currentItem?.accessLog()?.events.last as? AVPlayerItemAccessLogEvent else { return nil }
+        if (logEvent.segmentsDownloadedDuration ?? 0.0) > 0 {
+            return logEvent.indicatedBitrate
+        }
+        return logEvent.observedBitrate
+    }
+
+    public func getAvgBitrate() -> Double? {
+        guard let logEvent = player?.currentItem?.accessLog()?.events.last as? AVPlayerItemAccessLogEvent else { return nil }
+        if #available(iOS 10.0, *) {
+            return logEvent.averageVideoBitrate
+        } else {
+            return nil
+        }
+    }
+}
