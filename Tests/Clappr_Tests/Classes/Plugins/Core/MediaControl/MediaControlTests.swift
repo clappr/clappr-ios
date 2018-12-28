@@ -91,14 +91,22 @@ class MediaControlTests: QuickSpec {
                     expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
-                it("has black background with 60% of opacity") {
+                it("has clear background") {
                     let mediaControl = MediaControl(context: coreStub)
 
                     mediaControl.render()
 
-                    expect(mediaControl.view.backgroundColor).to(equal(UIColor.clapprBlack60Color()))
+                    expect(mediaControl.view.backgroundColor).to(equal(UIColor.clear))
                 }
 
+                it("has constrastView with black background with 60% of opacity") {
+                    let mediaControl = MediaControl(context: coreStub)
+
+                    mediaControl.render()
+
+                    expect(mediaControl.mediaControlView.contrastView.backgroundColor).to(equal(UIColor.clapprBlack60Color()))
+                }
+                
                 it("fills the superview") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
@@ -115,8 +123,8 @@ class MediaControlTests: QuickSpec {
 
                     mediaControl.render()
 
-                    expect(mediaControl.container).to(beAKindOf(MediaControlView.self))
-                    expect(mediaControl.view.subviews).to(contain(mediaControl.container))
+                    expect(mediaControl.mediaControlView).to(beAKindOf(MediaControlView.self))
+                    expect(mediaControl.view.subviews).to(contain(mediaControl.mediaControlView))
                 }
             }
 
@@ -414,7 +422,7 @@ class MediaControlTests: QuickSpec {
                 context("for any plugin configuration") {
                     it("always calls the MediaControlView to position the view") {
                         let mediaControl = MediaControl(context: core)
-                        mediaControl.container = mediaControlViewMock
+                        mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
                         mediaControl.renderPlugins(plugins)
@@ -424,7 +432,7 @@ class MediaControlTests: QuickSpec {
 
                     it("always calls the MediaControlView passing the plugin's view") {
                         let mediaControl = MediaControl(context: core)
-                        mediaControl.container = mediaControlViewMock
+                        mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
                         mediaControl.renderPlugins(plugins)
@@ -435,7 +443,7 @@ class MediaControlTests: QuickSpec {
                     it("always calls the MediaControlView passing the plugin's panel") {
                         MediaControlPluginMock._panel = .center
                         let mediaControl = MediaControl(context: core)
-                        mediaControl.container = mediaControlViewMock
+                        mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
                         mediaControl.renderPlugins(plugins)
@@ -446,7 +454,7 @@ class MediaControlTests: QuickSpec {
                     it("always calls the MediaControlView passing the plugin's position") {
                         MediaControlPluginMock._position = .left
                         let mediaControl = MediaControl(context: core)
-                        mediaControl.container = mediaControlViewMock
+                        mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
                         mediaControl.renderPlugins(plugins)
@@ -469,7 +477,7 @@ class MediaControlTests: QuickSpec {
                     it("does not add it to the view") {
                         let plugins = [MediaControlPluginMock(), UICorePlugin()]
                         let mediaControl = MediaControl(context: core)
-                        mediaControl.container = mediaControlViewMock
+                        mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
                         

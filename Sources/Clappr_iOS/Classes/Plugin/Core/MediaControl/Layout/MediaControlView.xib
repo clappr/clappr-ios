@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +16,10 @@
             <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d79-k6-8Eh">
+                    <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VEM-5Y-Fai">
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
                     <subviews>
@@ -29,7 +33,7 @@
                                     <rect key="frame" x="509" y="0.0" width="22" height="20.5"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="531" placeholderIntrinsicHeight="20.5" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hkH-N8-H1F">
-                                    <rect key="frame" x="0.0" y="21" width="531" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="20.5" width="531" height="20.5"/>
                                 </stackView>
                             </subviews>
                             <constraints>
@@ -49,13 +53,13 @@
                             <rect key="frame" x="0.0" y="113.5" width="531" height="114"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="22" placeholderIntrinsicHeight="20.5" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wgm-7U-aXc">
-                                    <rect key="frame" x="0.0" y="47.5" width="22" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="47" width="22" height="20.5"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" placeholderIntrinsicWidth="22" placeholderIntrinsicHeight="20.5" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vQx-QC-GJR">
                                     <rect key="frame" x="509" y="47" width="22" height="20.5"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="531" placeholderIntrinsicHeight="20.5" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Kzy-cD-bwl">
-                                    <rect key="frame" x="0.0" y="27" width="531" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="26.5" width="531" height="20.5"/>
                                 </stackView>
                             </subviews>
                             <constraints>
@@ -72,14 +76,14 @@
                             <rect key="frame" x="0.0" y="227.5" width="531" height="113.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1d2-PC-Gjs">
-                                    <rect key="frame" x="0.0" y="93.5" width="20" height="20"/>
+                                    <rect key="frame" x="0.0" y="93" width="20" height="20.5"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" placeholderIntrinsicWidth="78.5" placeholderIntrinsicHeight="20.5" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3u-YP-Zws">
-                                    <rect key="frame" x="452.5" y="93.5" width="78.5" height="20.5"/>
+                                    <rect key="frame" x="452.5" y="93" width="78.5" height="20.5"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="531" placeholderIntrinsicHeight="20.5" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5Gc-7D-dUG">
-                                    <rect key="frame" x="0.0" y="73" width="531" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="72.5" width="531" height="20.5"/>
                                 </stackView>
                             </subviews>
                             <constraints>
@@ -106,8 +110,12 @@
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="height" secondItem="78G-Xh-tuQ" secondAttribute="height" id="SFP-sh-sdP"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="width" secondItem="78G-Xh-tuQ" secondAttribute="width" id="Tp4-MK-2wr"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="leading" secondItem="78G-Xh-tuQ" secondAttribute="leading" id="XAn-Ez-HXf"/>
+                <constraint firstAttribute="bottom" secondItem="d79-k6-8Eh" secondAttribute="bottom" id="YHT-bZ-01n"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="centerY" secondItem="78G-Xh-tuQ" secondAttribute="centerY" id="Zc3-AZ-Of8"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="trailing" secondItem="78G-Xh-tuQ" secondAttribute="trailing" id="foI-fv-LJa"/>
+                <constraint firstAttribute="trailing" secondItem="d79-k6-8Eh" secondAttribute="trailing" id="iLR-wJ-GIF"/>
+                <constraint firstItem="d79-k6-8Eh" firstAttribute="leading" secondItem="uHp-RA-FbO" secondAttribute="leading" id="kwE-kS-eiy"/>
+                <constraint firstItem="d79-k6-8Eh" firstAttribute="top" secondItem="uHp-RA-FbO" secondAttribute="top" id="mXT-ov-IOh"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="vva-aS-DZd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -121,6 +129,7 @@
                 <outlet property="centerNone" destination="Kzy-cD-bwl" id="Scs-CQ-W4u"/>
                 <outlet property="centerPanel" destination="yqq-a6-mcp" id="cUg-Mz-eaN"/>
                 <outlet property="centerRight" destination="vQx-QC-GJR" id="O1i-px-VbO"/>
+                <outlet property="contrastView" destination="d79-k6-8Eh" id="nkC-lU-9N7"/>
                 <outlet property="modalPanel" destination="rxJ-bk-Ll1" id="Va8-jx-4vD"/>
                 <outlet property="topLeft" destination="rno-A4-BKN" id="sjY-8o-1Fm"/>
                 <outlet property="topNone" destination="hkH-N8-H1F" id="IRF-S9-cQT"/>

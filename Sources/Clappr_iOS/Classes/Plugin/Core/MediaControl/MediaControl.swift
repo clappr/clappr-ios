@@ -3,7 +3,7 @@ import Foundation
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var gesture: UITapGestureRecognizer?
 
-    var container: MediaControlView = .fromNib()
+    var mediaControlView: MediaControlView = .fromNib()
 
     var options: Options? {
         return core?.options
@@ -199,8 +199,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     override open func render() {
-        view.addSubview(container)
-        container.bindFrameToSuperviewBounds()
+        view.addSubview(mediaControlView)
+        mediaControlView.bindFrameToSuperviewBounds()
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
         gesture.delegate = self
@@ -208,7 +208,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         self.gesture = gesture
         
         view.isHidden = true
-        view.backgroundColor = UIColor.clapprBlack60Color()
+        view.backgroundColor = UIColor.clear
+        if let constrastView = mediaControlView.contrastView {
+            constrastView.backgroundColor = UIColor.clapprBlack60Color()
+        }
 
         showIfAlwaysVisible()
 
@@ -220,7 +223,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             .filter { $0 is MediaControlPlugin }
             .map { $0 as! MediaControlPlugin }
             .forEach { plugin in
-                container.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
+                mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
                 plugin.render()
         }
     }
