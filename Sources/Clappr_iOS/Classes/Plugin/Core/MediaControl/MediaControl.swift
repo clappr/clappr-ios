@@ -218,10 +218,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         self.view.bindFrameToSuperviewBounds()
     }
 
-    func renderPlugins(_ plugins: [UICorePlugin]) {
+    func renderPlugins(_ plugins: [MediaControlPlugin]) {
         plugins
-            .filter { $0 is MediaControlPlugin }
-            .map { $0 as! MediaControlPlugin }
             .forEach { plugin in
                 mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
                 plugin.render()

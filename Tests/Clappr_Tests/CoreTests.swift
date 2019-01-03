@@ -697,7 +697,7 @@ class CoreTests: QuickSpec {
 class MediaControlMock: MediaControl {
     var didCallRenderPlugins = false
     
-    override func renderPlugins(_ plugins: [UICorePlugin]) {
+    override func renderPlugins(_ plugins: [MediaControlPlugin]) {
         didCallRenderPlugins = true
     }
 }

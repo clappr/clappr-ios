@@ -472,21 +472,6 @@ class MediaControlTests: QuickSpec {
                         expect(MediaControlPluginMock.didCallRender).to(beTrue())
                     }
                 }
-                
-                context("when passing a plugin that is not MediaControlPlugin") {
-                    it("does not add it to the view") {
-                        let plugins = [MediaControlPluginMock(), UICorePlugin()]
-                        let mediaControl = MediaControl(context: core)
-                        mediaControl.mediaControlView = mediaControlViewMock
-                        mediaControl.render()
-
-                        
-                        mediaControl.renderPlugins(plugins)
-                        
-                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugins.first?.view))
-
-                    }
-                }
             }
 
             class MediaControlViewMock: MediaControlView {
