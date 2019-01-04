@@ -16,6 +16,8 @@ public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
 
 // List of MediaControl Plugins
 public let kMediaControlPlugins = "mediaControlPlugins"
+// Order of MediaControlPlugins
+public let kMediaControlPluginsOrder = "mediaControlPluginsOrder"
 
 public let kLoop = "loop"
 public let kMetaData = "metadata"

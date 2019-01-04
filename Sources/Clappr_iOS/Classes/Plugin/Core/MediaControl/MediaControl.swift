@@ -219,10 +219,23 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {
-        plugins
-            .forEach { plugin in
+        if let mediaControlPluginOrderOption = core?.options[kMediaControlPluginsOrder] as? String {
+            let pluginsOrder = mediaControlPluginOrderOption
+                .replacingOccurrences(of: " ", with: "")
+                .components(separatedBy: ",")
+
+            var orderedPlugins: Array<MediaControlPlugin> = plugins.filter { pluginsOrder.contains($0.pluginName)}
+            orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName)})
+
+            orderedPlugins.forEach { plugin in
                 mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
                 plugin.render()
+            }
+        } else {
+            plugins.forEach { plugin in
+                mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
+                plugin.render()
+            }
         }
     }
 
