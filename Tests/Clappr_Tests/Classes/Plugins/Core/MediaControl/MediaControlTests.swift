@@ -472,6 +472,22 @@ class MediaControlTests: QuickSpec {
                         expect(MediaControlPluginMock.didCallRender).to(beTrue())
                     }
                 }
+
+                context("when kMediaControlPluginsOrder is passed") {
+                    it("renders the plugins following the kMediaControlPluginsOrder order") {
+                        core.options[kMediaControlPluginsOrder] = "FullscreenButton"
+                        let plugins = [TimeIndicatorPluginMock(context: core), FullscreenButton(context: core)]
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.render()
+
+                        mediaControl.renderPlugins(plugins)
+
+                        let bottomRightView = mediaControl.mediaControlView.bottomRight
+                        let pluginView = bottomRightView?.subviews[0]
+                        let expectedView = pluginView?.subviews.first?.accessibilityIdentifier == "FullscreenButton"
+                        expect(expectedView).to(beTrue())
+                    }
+                }
             }
 
             class MediaControlViewMock: MediaControlView {
@@ -514,5 +530,19 @@ class MediaControlPluginMock: MediaControlPlugin {
     
     static func reset() {
         MediaControlPluginMock.didCallRender = false
+    }
+}
+
+class TimeIndicatorPluginMock: TimeIndicator {
+    override var pluginName: String {
+        return "TimeIndicatorPluginMock"
+    }
+
+    open override var panel: MediaControlPanel {
+        return .bottom
+    }
+
+    open override var position: MediaControlPosition {
+        return .right
     }
 }
