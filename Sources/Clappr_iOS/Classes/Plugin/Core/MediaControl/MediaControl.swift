@@ -219,24 +219,26 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {
+        let orderedPlugins = sortPluginsIfNeeded(plugins)
+        orderedPlugins.forEach { plugin in
+            mediaControlView.addSubview(plugin.view, in: plugin.panel, at: plugin.position)
+            plugin.render()
+        }
+    }
+
+    private func sortPluginsIfNeeded(_ plugins: [MediaControlPlugin]) -> [MediaControlPlugin] {
         if let mediaControlPluginOrderOption = core?.options[kMediaControlPluginsOrder] as? String {
             let pluginsOrder = mediaControlPluginOrderOption
                 .replacingOccurrences(of: " ", with: "")
                 .components(separatedBy: ",")
 
-            var orderedPlugins: Array<MediaControlPlugin> = plugins.filter { pluginsOrder.contains($0.pluginName)}
+            var orderedPlugins: [MediaControlPlugin] = plugins.filter { pluginsOrder.contains($0.pluginName)}
             orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName)})
 
-            orderedPlugins.forEach { plugin in
-                mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
-                plugin.render()
-            }
-        } else {
-            plugins.forEach { plugin in
-                mediaControlView.addSubview(plugin.view, panel: plugin.panel, position: plugin.position)
-                plugin.render()
-            }
+            return orderedPlugins
         }
+
+        return plugins
     }
 
     private func showIfAlwaysVisible() {
