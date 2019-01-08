@@ -135,9 +135,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         let mediaControl = plugins.first { $0 is MediaControl }
 
         if let mediaControl = mediaControl as? MediaControl {
-            let mediaControlPlugins = plugins
-                .filter { $0 is MediaControlPlugin }
-                .map { $0 as! MediaControlPlugin }
+            let mediaControlPlugins = plugins.compactMap { $0 as? MediaControlPlugin }
             mediaControl.renderPlugins(mediaControlPlugins)
         }
     }
