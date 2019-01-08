@@ -484,7 +484,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.renderPlugins(plugins)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
-                        let pluginView = bottomRightView?.subviews[0]
+                        let pluginView = bottomRightView?.subviews.first
                         let expectedView = pluginView?.subviews.first?.accessibilityIdentifier == pluginName
                         expect(expectedView).to(beTrue())
                     }
