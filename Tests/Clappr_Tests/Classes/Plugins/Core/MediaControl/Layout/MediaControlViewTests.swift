@@ -17,7 +17,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .top, position: .left)
+                        mediaControlView.addSubview(view, in: .top, at: .left)
                         
                         expect(mediaControlView.topLeft.subviews).to(contain(view))
                     }
@@ -26,7 +26,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .top, position: .right)
+                        mediaControlView.addSubview(view, in: .top, at: .right)
                         
                         expect(mediaControlView.topRight.subviews).to(contain(view))
                     }
@@ -35,7 +35,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .top, position: .none)
+                        mediaControlView.addSubview(view, in: .top, at: .none)
                         
                         expect(mediaControlView.topNone.subviews).to(contain(view))
                     }
@@ -44,7 +44,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIViewMock()
                         
-                        mediaControlView.addSubview(view, panel: .top, position: .center)
+                        mediaControlView.addSubview(view, in: .top, at: .center)
                         
                         expect(mediaControlView.topPanel.subviews).to(contain(view))
                         expect(didCallAnchorInCenter).to(beTrue())
@@ -56,7 +56,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .center, position: .left)
+                        mediaControlView.addSubview(view, in: .center, at: .left)
                         
                         expect(mediaControlView.centerLeft.subviews).to(contain(view))
                     }
@@ -65,7 +65,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .center, position: .right)
+                        mediaControlView.addSubview(view, in: .center, at: .right)
                         
                         expect(mediaControlView.centerRight.subviews).to(contain(view))
                     }
@@ -74,7 +74,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .center, position: .none)
+                        mediaControlView.addSubview(view, in: .center, at: .none)
                         
                         expect(mediaControlView.centerNone.subviews).to(contain(view))
                     }
@@ -83,7 +83,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIViewMock()
                         
-                        mediaControlView.addSubview(view, panel: .center, position: .center)
+                        mediaControlView.addSubview(view, in: .center, at: .center)
                         
                         expect(mediaControlView.centerPanel.subviews).to(contain(view))
                         expect(didCallAnchorInCenter).to(beTrue())
@@ -95,7 +95,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .bottom, position: .left)
+                        mediaControlView.addSubview(view, in: .bottom, at: .left)
                         
                         expect(mediaControlView.bottomLeft.subviews).to(contain(view))
                     }
@@ -104,7 +104,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .bottom, position: .right)
+                        mediaControlView.addSubview(view, in: .bottom, at: .right)
                         
                         expect(mediaControlView.bottomRight.subviews).to(contain(view))
                     }
@@ -113,7 +113,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .bottom, position: .none)
+                        mediaControlView.addSubview(view, in: .bottom, at: .none)
                         
                         expect(mediaControlView.bottomNone.subviews).to(contain(view))
                     }
@@ -122,7 +122,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIViewMock()
                         
-                        mediaControlView.addSubview(view, panel: .bottom, position: .center)
+                        mediaControlView.addSubview(view, in: .bottom, at: .center)
                         
                         expect(mediaControlView.bottomPanel.subviews).to(contain(view))
                         expect(didCallAnchorInCenter).to(beTrue())
@@ -134,7 +134,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIView()
                         
-                        mediaControlView.addSubview(view, panel: .modal, position: .left)
+                        mediaControlView.addSubview(view, in: .modal, at: .left)
                         
                         expect(mediaControlView.modalPanel.subviews).to(contain(view))
                     }
@@ -143,7 +143,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let view = UIViewMock()
                         
-                        mediaControlView.addSubview(view, panel: .modal, position: .center)
+                        mediaControlView.addSubview(view, in: .modal, at: .center)
                         
                         expect(mediaControlView.modalPanel.subviews).to(contain(view))
                         expect(didCallAnchorInCenter).to(beTrue())
