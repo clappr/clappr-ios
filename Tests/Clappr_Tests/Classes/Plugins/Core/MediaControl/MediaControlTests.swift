@@ -475,7 +475,8 @@ class MediaControlTests: QuickSpec {
 
                 context("when kMediaControlPluginsOrder is passed") {
                     it("renders the plugins following the kMediaControlPluginsOrder order") {
-                        core.options[kMediaControlPluginsOrder] = "FullscreenButton"
+                        let pluginName = "FullscreenButton"
+                        core.options[kMediaControlPluginsOrder] = pluginName
                         let plugins = [TimeIndicatorPluginMock(context: core), FullscreenButton(context: core)]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
@@ -484,7 +485,7 @@ class MediaControlTests: QuickSpec {
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
                         let pluginView = bottomRightView?.subviews[0]
-                        let expectedView = pluginView?.subviews.first?.accessibilityIdentifier == "FullscreenButton"
+                        let expectedView = pluginView?.subviews.first?.accessibilityIdentifier == pluginName
                         expect(expectedView).to(beTrue())
                     }
                 }
@@ -496,7 +497,7 @@ class MediaControlTests: QuickSpec {
                 var didCallAddSubviewWithPanel: MediaControlPanel?
                 var didCallAddSubviewWithPosition: MediaControlPosition?
 
-                override func addSubview(_ view: UIView, panel: MediaControlPanel, position: MediaControlPosition) {
+                override func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
                     didCallAddSubviewWithView = view
                     didCallAddSubviewWithPanel = panel
                     didCallAddSubviewWithPosition = position
