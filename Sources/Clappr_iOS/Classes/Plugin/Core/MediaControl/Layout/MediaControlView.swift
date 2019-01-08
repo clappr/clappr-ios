@@ -43,7 +43,7 @@ class MediaControlView: UIView {
         ]
     }
 
-    func addSubview(_ view: UIView, panel: MediaControlPanel, position: MediaControlPosition) {
+    func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
         if position == .center {
             addSubviewAndCenter(view, in: panel)
         } else {

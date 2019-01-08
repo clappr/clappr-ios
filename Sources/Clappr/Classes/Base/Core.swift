@@ -120,16 +120,23 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #if os(iOS)
     private func renderCoreAndMediaControlPlugins() {
-        plugins.forEach { plugin in
-            if isNotMediaControlPlugin(plugin) {
-                view.addSubview(plugin.view)
-                plugin.render()
-            }
+        renderCorePlugins()
+        renderMediaControlPlugins()
+    }
 
+    private func renderCorePlugins() {
+        plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
+            view.addSubview(plugin.view)
+            plugin.render()
+        }
+    }
 
-            if plugin is MediaControl, let mediaControl = plugin as? MediaControl {
-                mediaControl.renderPlugins(plugins)
-            }
+    private func renderMediaControlPlugins() {
+        let mediaControl = plugins.first { $0 is MediaControl }
+
+        if let mediaControl = mediaControl as? MediaControl {
+            let mediaControlPlugins = plugins.compactMap { $0 as? MediaControlPlugin }
+            mediaControl.renderPlugins(mediaControlPlugins)
         }
     }
 
