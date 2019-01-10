@@ -34,6 +34,6 @@ struct AVURLAssetWithCookiesBuilder: AVURLAssetWithCookies {
     }
 
     private func getCookies() -> [HTTPCookie]? {
-        return HTTPCookieStorage.shared.cookies?.filter { self.url.host == $0.domain }
+        return HTTPCookieStorage.shared.cookies
     }
 }
