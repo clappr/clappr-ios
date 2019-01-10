@@ -474,19 +474,34 @@ class MediaControlTests: QuickSpec {
                 }
 
                 context("when kMediaControlPluginsOrder is passed") {
-                    it("renders the plugins following the kMediaControlPluginsOrder order") {
-                        let pluginName = "FullscreenButton"
-                        core.options[kMediaControlPluginsOrder] = [pluginName]
-                        let plugins = [TimeIndicatorPluginMock(context: core), FullscreenButton(context: core)]
+                    it("renders the plugins following the kMediaControlPluginsOrder with all plugins specified in the option") {
+                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondPlugin", "FirstPlugin"]
+                        let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
                         mediaControl.renderPlugins(plugins)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
-                        let pluginView = bottomRightView?.subviews.first
-                        let expectedView = pluginView?.subviews.first?.accessibilityIdentifier == pluginName
-                        expect(expectedView).to(beTrue())
+                        expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
+                        expect(bottomRightView?.subviews[1].subviews.first?.accessibilityIdentifier).to(equal("timeIndicator"))
+                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("SecondPlugin"))
+                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("FirstPlugin"))
+                    }
+
+                    it("renders the plugins following the kMediaControlPluginsOrder with only two plugins specified in the option") {
+                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
+                        let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.render()
+
+                        mediaControl.renderPlugins(plugins)
+
+                        let bottomRightView = mediaControl.mediaControlView.bottomRight
+                        expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
+                        expect(bottomRightView?.subviews[1].subviews.first?.accessibilityIdentifier).to(equal("timeIndicator"))
+                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("FirstPlugin"))
+                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("SecondPlugin"))
                     }
                 }
             }
@@ -537,6 +552,56 @@ class MediaControlPluginMock: MediaControlPlugin {
 class TimeIndicatorPluginMock: TimeIndicator {
     override var pluginName: String {
         return "TimeIndicatorPluginMock"
+    }
+
+    open override var panel: MediaControlPanel {
+        return .bottom
+    }
+
+    open override var position: MediaControlPosition {
+        return .right
+    }
+}
+
+class FirstPlugin: MediaControlPlugin {
+    override var pluginName: String {
+        return "FirstPlugin"
+    }
+    
+    var button: UIButton! {
+        didSet {
+            button.accessibilityIdentifier = pluginName
+            view.addSubview(button)
+        }
+    }
+
+    override open func render() {
+        button = UIButton(type: .custom)
+    }
+
+    open override var panel: MediaControlPanel {
+        return .bottom
+    }
+
+    open override var position: MediaControlPosition {
+        return .right
+    }
+}
+
+class SecondPlugin: MediaControlPlugin {
+    override var pluginName: String {
+        return "SecondPlugin"
+    }
+
+    var button: UIButton! {
+        didSet {
+            button.accessibilityIdentifier = pluginName
+            view.addSubview(button)
+        }
+    }
+
+    override open func render() {
+        button = UIButton(type: .custom)
     }
 
     open override var panel: MediaControlPanel {
