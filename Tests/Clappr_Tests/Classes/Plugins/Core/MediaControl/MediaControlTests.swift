@@ -476,7 +476,7 @@ class MediaControlTests: QuickSpec {
                 context("when kMediaControlPluginsOrder is passed") {
                     it("renders the plugins following the kMediaControlPluginsOrder order") {
                         let pluginName = "FullscreenButton"
-                        core.options[kMediaControlPluginsOrder] = pluginName
+                        core.options[kMediaControlPluginsOrder] = [pluginName]
                         let plugins = [TimeIndicatorPluginMock(context: core), FullscreenButton(context: core)]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
