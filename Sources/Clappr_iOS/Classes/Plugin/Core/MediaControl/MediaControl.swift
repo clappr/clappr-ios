@@ -232,9 +232,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             pluginsOrder.forEach { pluginName in
                 if let selectedPlugin = plugins.first(where: { $0.pluginName == pluginName }) {
                     orderedPlugins.append(selectedPlugin)
+                } else {
+                    Logger.logInfo("Plugin \(pluginName) not found.")
                 }
             }
-            orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName)})
+            orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName) })
 
             return orderedPlugins
         }
