@@ -228,7 +228,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private func sortPluginsIfNeeded(_ plugins: [MediaControlPlugin]) -> [MediaControlPlugin] {
         if let pluginsOrder = core?.options[kMediaControlPluginsOrder] as? [String] {
-            var orderedPlugins: [MediaControlPlugin] = plugins.filter { pluginsOrder.contains($0.pluginName)}
+            var orderedPlugins = [MediaControlPlugin]()
+            pluginsOrder.forEach { pluginName in
+                if let selectedPlugin = plugins.first(where: { $0.pluginName == pluginName }) {
+                    orderedPlugins.append(selectedPlugin)
+                }
+            }
             orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName)})
 
             return orderedPlugins
