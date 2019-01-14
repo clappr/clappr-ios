@@ -100,13 +100,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     open override func render() {
         containers.forEach(renderContainer)
+        addToContainer()
+        
         #if os(iOS)
         renderCoreAndMediaControlPlugins()
         #elseif os(tvOS)
         renderPlugins()
         #endif
-
-        addToContainer()
     }
 
     #if os(tvOS)
