@@ -199,7 +199,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach { plugin in plugin.destroy() }
+        plugins.forEach { plugin in
+            do {
+                try ObjC.catchException {
+                    plugin.destroy()
+                }
+            } catch {
+                Logger.logError(error.localizedDescription, scope: "Destroying Core plugin")
+            }
+        }
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")
