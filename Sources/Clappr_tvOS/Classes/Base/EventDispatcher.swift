@@ -33,7 +33,13 @@ open class EventDispatcher: NSObject, EventProtocol {
 
     fileprivate func wrapEventCallback(_ listenId: String, callback: @escaping EventCallback) -> EventCallback {
         return { userInfo in
-            callback(userInfo)
+            do {
+                try ObjC.catchException {
+                    callback(userInfo)
+                }
+            } catch {
+                Logger.logError(error.localizedDescription, scope: "Calling callback")
+            }
             self.removeListenerIfOnce(listenId, callback: callback)
         }
     }
