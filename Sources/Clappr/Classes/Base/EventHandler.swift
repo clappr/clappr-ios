@@ -8,11 +8,17 @@ open class EventHandler: NSObject {
 
     fileprivate var callback: EventCallback?
 
-    public init(callback: @escaping EventCallback) {
+    @objc public init(callback: @escaping EventCallback) {
         self.callback = callback
     }
 
     @objc open func handleEvent(_ notification: Notification) {
-        callback?(notification.userInfo)
+        do {
+            try ObjC.catchException { [weak self] in
+                self?.callback?(notification.userInfo)
+            }
+        } catch {
+            Logger.logError(error.localizedDescription, scope: "Rendering MediaControl plugin")
+        }
     }
 }
