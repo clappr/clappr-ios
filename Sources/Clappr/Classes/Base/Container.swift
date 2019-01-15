@@ -80,7 +80,13 @@ open class Container: UIObject {
 
     fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {
         view.addSubview(plugin.view)
-        plugin.render()
+        do {
+            try ObjC.catchException {
+                plugin.render()
+            }
+        } catch {
+            Logger.logError(error.localizedDescription, scope: "Rendering Container Plugin")
+        }
     }
 
     func addPlugin(_ plugin: UIContainerPlugin) {
