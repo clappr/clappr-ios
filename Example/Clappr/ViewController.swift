@@ -106,19 +106,11 @@ class BrokenPlugin: MediaControlPlugin {
         stopListening()
 
         bindCoreEvents()
-        bindContainerEvents()
     }
 
     open func bindCoreEvents() {
         if let core = core {
-            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-        }
-    }
-
-    open func bindContainerEvents() {
-        if let container = core?.activeContainer {
-            listenTo(container,
-                     eventName: Event.didChangePlayback.rawValue) { _ in self.iWillCrash() }
+            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.iWillCrash() }
         }
     }
 
