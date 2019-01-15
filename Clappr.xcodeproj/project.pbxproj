@@ -108,6 +108,8 @@
 		5733D1C021BAA6EE002107D2 /* Dictionary+startAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
+		5744C05621EE1E000087D9FB /* ObjC.h in Sources */ = {isa = PBXBuildFile; fileRef = 5744C05321EE14390087D9FB /* ObjC.h */; };
+		5744C05721EE1E040087D9FB /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5744C05421EE144F0087D9FB /* ObjC.m */; };
 		5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */; };
 		576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */; };
 		576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */; };
@@ -376,6 +378,8 @@
 		5733D1BD21BAA6E4002107D2 /* Dictionary+startAtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAtTests.swift"; sourceTree = "<group>"; };
 		57351C6720248D78007DEBBE /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		57351C6920248F08007DEBBE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		5744C05321EE14390087D9FB /* ObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjC.h; sourceTree = "<group>"; };
+		5744C05421EE144F0087D9FB /* ObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjC.m; sourceTree = "<group>"; };
 		57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+appendOrReplaceTests.swift"; sourceTree = "<group>"; };
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
 		57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesTests.swift; sourceTree = "<group>"; };
@@ -606,6 +610,8 @@
 				96D3627D1D41337600CCB866 /* Clappr */,
 				9E26CFEB201612B800AE92B7 /* Clappr_iOS */,
 				321781A91FED90CC00EDD678 /* Clappr_tvOS */,
+				5744C05321EE14390087D9FB /* ObjC.h */,
+				5744C05421EE144F0087D9FB /* ObjC.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1924,6 +1930,8 @@
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
 				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,
+				5744C05621EE1E000087D9FB /* ObjC.h in Sources */,
+				5744C05721EE1E040087D9FB /* ObjC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2012,6 +2020,7 @@
 		321781AD1FED90CC00EDD678 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2041,6 +2050,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
@@ -2052,6 +2062,7 @@
 		321781AE1FED90CC00EDD678 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2079,6 +2090,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
@@ -2343,6 +2355,7 @@
 		96D362861D41337600CCB866 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 0.11.17;
@@ -2363,6 +2376,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
 				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2373,6 +2387,7 @@
 		96D362871D41337600CCB866 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 0.11.17;
@@ -2391,6 +2406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
 				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
