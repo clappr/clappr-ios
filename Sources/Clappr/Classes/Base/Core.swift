@@ -113,7 +113,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderPlugins() {
         plugins.forEach { plugin in
             view.addSubview(plugin.view)
-            plugin.render()
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError(error.localizedDescription, scope: "Rendering Core Plugins")
+            }
         }
     }
     #endif
@@ -127,7 +133,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderCorePlugins() {
         plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
             view.addSubview(plugin.view)
-            plugin.render()
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError(error.localizedDescription, scope: "Rendering Core Plugins")
+            }
         }
     }
 
