@@ -108,7 +108,9 @@
 		5733D1C021BAA6EE002107D2 /* Dictionary+startAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
-		5744C05621EE1E000087D9FB /* ObjC.h in Sources */ = {isa = PBXBuildFile; fileRef = 5744C05321EE14390087D9FB /* ObjC.h */; };
+		5737E19421EF8D2A00538D1C /* ObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5744C05321EE14390087D9FB /* ObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5737E19521EF8D8000538D1C /* ObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5744C05321EE14390087D9FB /* ObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5737E19721EF8D9600538D1C /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5744C05421EE144F0087D9FB /* ObjC.m */; };
 		5744C05721EE1E040087D9FB /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5744C05421EE144F0087D9FB /* ObjC.m */; };
 		5744C05821EE37270087D9FB /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628F1D41339400CCB866 /* EventHandler.swift */; };
 		5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */; };
@@ -1320,6 +1322,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5737E19421EF8D2A00538D1C /* ObjC.h in Headers */,
 				321781B21FED97D100EDD678 /* Clappr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1329,6 +1332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D362C21D41339400CCB866 /* Clappr.h in Headers */,
+				5737E19521EF8D8000538D1C /* ObjC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1660,7 +1664,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "#if which swiftlint >/dev/null; then\n#    swiftlint\n#else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n";
 		};
 		32E402151FF43277001C2096 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1779,6 +1783,7 @@
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */,
+				5737E19721EF8D9600538D1C /* ObjC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,7 +1933,6 @@
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
 				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,
-				5744C05621EE1E000087D9FB /* ObjC.h in Sources */,
 				5744C05721EE1E040087D9FB /* ObjC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2018,7 +2022,6 @@
 		321781AD1FED90CC00EDD678 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2060,7 +2063,6 @@
 		321781AE1FED90CC00EDD678 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2353,7 +2355,6 @@
 		96D362861D41337600CCB866 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 0.11.17;
@@ -2385,7 +2386,6 @@
 		96D362871D41337600CCB866 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 0.11.17;
