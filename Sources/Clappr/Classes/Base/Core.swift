@@ -146,8 +146,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
+            renderCoreAndMediaControlPlugins()
         }
-        renderCoreAndMediaControlPlugins()
         #else
         renderInContainerView()
         renderPlugins()
