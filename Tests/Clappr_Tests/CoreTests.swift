@@ -663,6 +663,17 @@ class CoreTests: QuickSpec {
                     expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
                 }
                 #endif
+
+                it("protect the main thread when plugin crashes in render") {
+                    CorePluginMock.crashOnRender = true
+                    let core = Core()
+                    let plugin = CorePluginMock()
+                    core.addPlugin(plugin)
+
+                    core.render()
+
+                    expect(core).to(beAKindOf(Core.self))
+                }
             }
 
             context("core position") {
@@ -690,6 +701,31 @@ class CoreTests: QuickSpec {
         controller.view.addSubview(player.view)
         player.didMove(toParentViewController: controller)
         #endif
+    }
+}
+
+class CorePluginMock: UICorePlugin {
+    static var didCallRender = false
+    static var crashOnRender = false
+
+    override var pluginName: String {
+        return "CorePluginMock"
+    }
+
+    override func render() {
+        CorePluginMock.didCallRender = true
+
+        if CorePluginMock.crashOnRender {
+            codeThatCrashes()
+        }
+    }
+
+    static func reset() {
+        CorePluginMock.didCallRender = false
+    }
+
+    private func codeThatCrashes() {
+        NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
     }
 }
 
