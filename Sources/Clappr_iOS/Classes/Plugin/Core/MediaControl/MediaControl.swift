@@ -222,12 +222,13 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         let orderedPlugins = sortPluginsIfNeeded(plugins)
         orderedPlugins.forEach { plugin in
             mediaControlView.addSubview(plugin.view, in: plugin.panel, at: plugin.position)
+
             do {
                 try ObjC.catchException {
                     plugin.render()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Rendering MediaControl plugin")
+                Logger.logError(error.localizedDescription, scope: "MediaControl: \((plugin as Plugin).pluginName) crashed during render")
             }
         }
     }

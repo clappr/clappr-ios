@@ -471,6 +471,16 @@ class MediaControlTests: QuickSpec {
 
                         expect(MediaControlPluginMock.didCallRender).to(beTrue())
                     }
+
+                    it("protect the main thread when plugin crashes in render") {
+                        MediaControlPluginMock.crashOnRender = true
+                        let mediaControl = MediaControl(context: core)
+                        mediaControl.render()
+
+                        mediaControl.renderPlugins(plugins)
+
+                        expect(mediaControl).to(beAKindOf(MediaControl.self))
+                    }
                 }
 
                 context("when kMediaControlPluginsOrder is passed") {
@@ -527,6 +537,7 @@ class MediaControlPluginMock: MediaControlPlugin {
     static var _panel: MediaControlPanel = .top
     static var _position: MediaControlPosition = .left
     static var didCallRender = false
+    static var crashOnRender = false
     
     override var pluginName: String {
         return "MediaControlPluginMock"
@@ -542,10 +553,19 @@ class MediaControlPluginMock: MediaControlPlugin {
     
     override func render() {
         MediaControlPluginMock.didCallRender = true
+
+        if MediaControlPluginMock.crashOnRender {
+            codeThatCrashes()
+        }
     }
     
     static func reset() {
         MediaControlPluginMock.didCallRender = false
+    }
+
+    private func codeThatCrashes() {
+        let crash = UIView()
+        crash.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     }
 }
 
