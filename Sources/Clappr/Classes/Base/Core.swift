@@ -141,8 +141,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     fileprivate func addToContainer() {
         #if os(iOS)
-        let isFullScreen = optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
-        if isFullScreen {
+        if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
             renderCoreAndMediaControlPlugins()
             fullscreenHandler?.enterInFullscreen()
         } else {
