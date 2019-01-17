@@ -202,6 +202,17 @@ class ContainerTests: QuickSpec {
                     expect(countOfDestroyedPlugins) == 1
                     expect(container.plugins.count) == 0
                 }
+
+                it("protect the main thread when plugin crashes in destroy") {
+                    AnotherFakeContainerPlugin.crashOnDestroy = true
+                    let container = Container()
+                    let plugin = AnotherFakeContainerPlugin()
+                    container.addPlugin(plugin)
+
+                    container.destroy()
+
+                    expect(container).to(beAKindOf(Container.self))
+                }
             }
 
             describe("#load") {
