@@ -552,6 +552,7 @@ class CoreTests: QuickSpec {
                 #endif
 
                 it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     CorePluginMock.crashOnDestroy = true
                     let core = Core()
                     let plugin = CorePluginMock()
@@ -559,7 +560,8 @@ class CoreTests: QuickSpec {
 
                     core.destroy()
 
-                    expect(core).to(beAKindOf(Core.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
             }
 
@@ -676,6 +678,7 @@ class CoreTests: QuickSpec {
                 #endif
 
                 it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     CorePluginMock.crashOnRender = true
                     let core = Core()
                     let plugin = CorePluginMock()
@@ -683,7 +686,8 @@ class CoreTests: QuickSpec {
 
                     core.render()
 
-                    expect(core).to(beAKindOf(Core.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
             }
 
