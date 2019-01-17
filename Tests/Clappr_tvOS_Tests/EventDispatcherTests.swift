@@ -42,12 +42,14 @@ class EventDispatcherTests: QuickSpec {
                 }
 
                 it("protects the main thread") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     eventDispatcher.on(eventName) { _ in
                         NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
                     }
                     eventDispatcher.trigger(eventName)
 
-                    expect(eventDispatcher).to(beAKindOf(EventDispatcher.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
 
                 it("executes multiple callback functions") {
