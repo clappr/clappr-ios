@@ -92,6 +92,9 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("add a container context to all plugins") {
+                        Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+                        let container = ContainerFactory.create(with: [:])
+
                         expect(container.plugins).toNot(beEmpty())
                         container.plugins.forEach { plugin in
                             expect(plugin.container) == container
@@ -112,6 +115,19 @@ class ContainerTests: QuickSpec {
                     it("set playback to front of container") {
                         expect(container.view.subviews.first).to(beNil())
                     }
+                }
+            }
+
+            describe("#render") {
+                it("protect the main thread when plugin crashes in render") {
+                    AnotherFakeContainerPlugin.crashOnRender = true
+                    let container = Container()
+                    let plugin = AnotherFakeContainerPlugin()
+                    container.addPlugin(plugin)
+
+                    container.render()
+
+                    expect(container).to(beAKindOf(Container.self))
                 }
             }
 
@@ -327,8 +343,37 @@ class ContainerTests: QuickSpec {
     }
 
     class AnotherFakeContainerPlugin: UIContainerPlugin {
+        static var didCallRender = false
+        static var crashOnRender = false
+        static var didCallDestroy = false
+        static var crashOnDestroy = false
+
         override var pluginName: String {
             return "AnotherFakeContainerPlugin"
+        }
+
+        override func render() {
+            AnotherFakeContainerPlugin.didCallRender = true
+
+            if AnotherFakeContainerPlugin.crashOnRender {
+                codeThatCrashes()
+            }
+        }
+
+        override func destroy() {
+            AnotherFakeContainerPlugin.didCallDestroy = true
+
+            if AnotherFakeContainerPlugin.crashOnDestroy {
+                codeThatCrashes()
+            }
+        }
+
+        static func reset() {
+            AnotherFakeContainerPlugin.didCallRender = false
+        }
+
+        private func codeThatCrashes() {
+            NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
         }
     }
 }
