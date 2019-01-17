@@ -120,6 +120,7 @@ class ContainerTests: QuickSpec {
 
             describe("#render") {
                 it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     AnotherFakeContainerPlugin.crashOnRender = true
                     let container = Container()
                     let plugin = AnotherFakeContainerPlugin()
@@ -127,7 +128,8 @@ class ContainerTests: QuickSpec {
 
                     container.render()
 
-                    expect(container).to(beAKindOf(Container.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
             }
 
@@ -204,6 +206,7 @@ class ContainerTests: QuickSpec {
                 }
 
                 it("protect the main thread when plugin crashes in destroy") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     AnotherFakeContainerPlugin.crashOnDestroy = true
                     let container = Container()
                     let plugin = AnotherFakeContainerPlugin()
@@ -211,7 +214,8 @@ class ContainerTests: QuickSpec {
 
                     container.destroy()
 
-                    expect(container).to(beAKindOf(Container.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
             }
 
