@@ -21,13 +21,15 @@ class EventHandlerSpec: QuickSpec {
             }
 
             it("protect the main thread") {
+                let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                 let eventHandler = EventHandler(callback: { (userInfo) -> Void in
                     NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
                 })
 
                 eventHandler.handleEvent(Notification(name: Notification.Name(rawValue: ""), object: self, userInfo: nil))
 
-                expect(eventHandler).to(beAKindOf(EventHandler.self))
+                expectation.fulfill()
+                QuickSpec.current.waitForExpectations(timeout: 1)
             }
         }
     }
