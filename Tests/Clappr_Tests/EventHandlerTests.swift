@@ -19,6 +19,16 @@ class EventHandlerSpec: QuickSpec {
 
                 expect(control) == info
             }
+
+            it("protect the main thread") {
+                let eventHandler = EventHandler(callback: { (userInfo) -> Void in
+                    NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
+                })
+
+                eventHandler.handleEvent(Notification(name: Notification.Name(rawValue: ""), object: self, userInfo: nil))
+
+                expect(eventHandler).to(beAKindOf(EventHandler.self))
+            }
         }
     }
 }
