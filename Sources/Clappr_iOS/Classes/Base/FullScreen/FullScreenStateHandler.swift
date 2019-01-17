@@ -46,10 +46,11 @@ struct FullscreenByPlayer: FullscreenStateHandler {
         core.isFullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
         fullscreenController.modalPresentationStyle = .overFullScreen
-        core.parentController?.present(fullscreenController, animated: false, completion: nil)
-        fullscreenController.view.addSubviewMatchingConstraints(core.view)
-        core.trigger(Event.didEnterFullscreen.rawValue)
-        core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+        core.parentController?.present(fullscreenController, animated: false) {
+            fullscreenController.view.addSubviewMatchingConstraints(self.core.view)
+            self.core.trigger(Event.didEnterFullscreen.rawValue)
+            self.core.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+        }
     }
 
     func exitFullscreen() {

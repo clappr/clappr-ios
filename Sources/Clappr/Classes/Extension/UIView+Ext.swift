@@ -3,6 +3,7 @@ extension UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         addMatchingConstraints(view)
+        view.layoutIfNeeded()
     }
 
     @objc func addMatchingConstraints(_ view: UIView) {

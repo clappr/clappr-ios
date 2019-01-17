@@ -120,6 +120,7 @@ class CoreTests: QuickSpec {
                         let options: Options = [kFullscreen: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
+                        core.parentController = self.rootViewController()
                         var callbackWasCall = false
                         core.on(Event.didEnterFullscreen.rawValue) { _ in
                             callbackWasCall = true
@@ -167,19 +168,20 @@ class CoreTests: QuickSpec {
                     context("and setFullscreen(true) is called") {
 
                         beforeEach {
+                            core.parentController = self.rootViewController()
                             core.setFullscreen(false)
                         }
 
                         it("removes core from parentView") {
                             core.setFullscreen(true)
 
-                            expect(core.parentView?.subviews.contains(core.view)).to(beFalse())
+                            expect(core.parentView?.subviews.contains(core.view)).toEventually(beFalse())
                         }
 
                         it("sets core as subview of fullscreenController") {
                             core.setFullscreen(true)
 
-                            expect(core.fullscreenController?.view.subviews.contains(core.view)).to(beTrue())
+                            expect(core.fullscreenController?.view.subviews.contains(core.view)).toEventually(beTrue())
                         }
 
                         it("set isFullscreen to true") {
@@ -209,7 +211,7 @@ class CoreTests: QuickSpec {
 
                             core.setFullscreen(true)
 
-                            expect(didTriggerEvent).to(beTrue())
+                            expect(didTriggerEvent).toEventually(beTrue())
                         }
 
                         it("triggers InternalEvent.willEnterFullscreen") {
@@ -227,7 +229,7 @@ class CoreTests: QuickSpec {
                             core.setFullscreen(true)
                             core.setFullscreen(true)
 
-                            expect(core.fullscreenController?.view.subviews.filter { $0 == core.view }.count).to(equal(1))
+                            expect(core.fullscreenController?.view.subviews.filter { $0 == core.view }.count).toEventually(equal(1))
                         }
                     }
 
@@ -334,6 +336,7 @@ class CoreTests: QuickSpec {
                     context("and setFullscreen(true) is called") {
 
                         beforeEach {
+                            core.parentController = self.rootViewController()
                             core.setFullscreen(false)
                         }
 
@@ -348,10 +351,10 @@ class CoreTests: QuickSpec {
                             core.on(Event.didEnterFullscreen.rawValue) { _ in
                                 didTriggerEvent = true
                             }
-
+                            
                             core.setFullscreen(true)
 
-                            expect(didTriggerEvent).to(beTrue())
+                            expect(didTriggerEvent).toEventually(beTrue())
                         }
 
                         it("triggers InternalEvent.willEnterFullscreen") {
@@ -406,7 +409,7 @@ class CoreTests: QuickSpec {
                     it("start as embed video") {
                         let core = Core()
                         core.parentView = UIView()
-
+                        
                         core.render()
 
                         expect(core.parentView?.subviews.contains(core.view)).to(beTrue())
@@ -680,9 +683,9 @@ class CoreTests: QuickSpec {
         }
     }
 
-    func playerSetup(player: Player) {
+    private func playerSetup(player: Player) {
         #if os(iOS)
-        player.attachTo(UIView(), controller: UIViewController())
+        player.attachTo(UIView(), controller: rootViewController())
         #else
         let controller = UIViewController()
         controller.addChildViewController(player)
@@ -691,10 +694,16 @@ class CoreTests: QuickSpec {
         player.didMove(toParentViewController: controller)
         #endif
     }
+    
+    private func rootViewController() -> UIViewController {
+        let viewController = UIViewController()
+        UIApplication.shared.keyWindow?.rootViewController = viewController
+        return viewController
+    }
 }
 
 #if os(iOS)
-class MediaControlMock: MediaControl {
+private class MediaControlMock: MediaControl {
     var didCallRenderPlugins = false
     
     override func renderPlugins(_ plugins: [MediaControlPlugin]) {

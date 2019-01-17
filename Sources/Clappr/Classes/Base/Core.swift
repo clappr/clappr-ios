@@ -100,12 +100,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     open override func render() {
         containers.forEach(renderContainer)
-        #if os(iOS)
-        renderCoreAndMediaControlPlugins()
-        #elseif os(tvOS)
-        renderPlugins()
-        #endif
-
         addToContainer()
     }
 
@@ -148,12 +142,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     fileprivate func addToContainer() {
         #if os(iOS)
         if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
+            renderCoreAndMediaControlPlugins()
             fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
+            renderCoreAndMediaControlPlugins()
         }
         #else
         renderInContainerView()
+        renderPlugins()
         #endif
     }
 
