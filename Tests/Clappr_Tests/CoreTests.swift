@@ -550,6 +550,17 @@ class CoreTests: QuickSpec {
                     expect(core.fullscreenHandler).toEventually(beNil())
                 }
                 #endif
+
+                it("protect the main thread when plugin crashes in render") {
+                    CorePluginMock.crashOnDestroy = true
+                    let core = Core()
+                    let plugin = CorePluginMock()
+                    core.addPlugin(plugin)
+
+                    core.destroy()
+
+                    expect(core).to(beAKindOf(Core.self))
+                }
             }
 
             context("when changes a activePlayback") {
@@ -707,6 +718,8 @@ class CoreTests: QuickSpec {
 class CorePluginMock: UICorePlugin {
     static var didCallRender = false
     static var crashOnRender = false
+    static var didCallDestroy = false
+    static var crashOnDestroy = false
 
     override var pluginName: String {
         return "CorePluginMock"
@@ -716,6 +729,15 @@ class CorePluginMock: UICorePlugin {
         CorePluginMock.didCallRender = true
 
         if CorePluginMock.crashOnRender {
+            codeThatCrashes()
+        }
+    }
+
+
+    override func destroy() {
+        CorePluginMock.didCallDestroy = true
+
+        if CorePluginMock.crashOnDestroy {
             codeThatCrashes()
         }
     }
