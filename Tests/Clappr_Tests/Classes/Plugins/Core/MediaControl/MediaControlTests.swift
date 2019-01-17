@@ -564,8 +564,7 @@ class MediaControlPluginMock: MediaControlPlugin {
     }
 
     private func codeThatCrashes() {
-        let crash = UIView()
-        crash.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
     }
 }
 
