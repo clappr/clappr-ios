@@ -3,7 +3,7 @@ import AVKit
 open class Player: UIViewController, BaseObject {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
-    fileprivate(set) open var core: Core?
+    fileprivate(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
     fileprivate var viewController: AVPlayerViewController?
 
@@ -176,6 +176,10 @@ open class Player: UIViewController, BaseObject {
 
     open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
+    }
+    
+    open var options: Options? {
+        return core?.options
     }
 
     @discardableResult
