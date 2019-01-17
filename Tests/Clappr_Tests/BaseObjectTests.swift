@@ -70,6 +70,17 @@ class BaseObjectTests: QuickSpec {
 
                     expect(callbackWasCalled) == false
                 }
+
+                it("protect the main thread when plugin crashes in render") {
+                    let baseObject = BaseObject()
+
+                    baseObject.on(eventName) { _ in
+                        NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
+                    }
+                    baseObject.trigger(eventName)
+
+                    expect(baseObject).to(beAKindOf(BaseObject.self))
+                }
             }
 
             describe("once") {
