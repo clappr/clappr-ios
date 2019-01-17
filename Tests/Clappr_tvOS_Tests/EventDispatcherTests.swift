@@ -41,6 +41,15 @@ class EventDispatcherTests: QuickSpec {
                     }
                 }
 
+                it("protects the main thread") {
+                    eventDispatcher.on(eventName) { _ in
+                        NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
+                    }
+                    eventDispatcher.trigger(eventName)
+
+                    expect(eventDispatcher).to(beAKindOf(EventDispatcher.self))
+                }
+
                 it("executes multiple callback functions") {
                     eventDispatcher.on(eventName, callback: callback)
 
