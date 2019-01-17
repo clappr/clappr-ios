@@ -72,6 +72,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     let baseObject = BaseObject()
 
                     baseObject.on(eventName) { _ in
@@ -79,7 +80,8 @@ class BaseObjectTests: QuickSpec {
                     }
                     baseObject.trigger(eventName)
 
-                    expect(baseObject).to(beAKindOf(BaseObject.self))
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
                 }
             }
 
