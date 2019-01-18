@@ -74,10 +74,10 @@ class BaseObjectTests: QuickSpec {
                 it("protect the main thread when plugin crashes in render") {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     let baseObject = BaseObject()
-
                     baseObject.on(eventName) { _ in
                         NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
                     }
+                    
                     baseObject.trigger(eventName)
 
                     expectation.fulfill()
