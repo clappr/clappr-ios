@@ -85,7 +85,7 @@ open class Container: UIObject {
                 plugin.render()
             }
         } catch {
-            Logger.logError(error.localizedDescription, scope: "Rendering Container Plugin")
+            Logger.logError(error.localizedDescription, scope: "Container: \((plugin as Plugin).pluginName) crashed during render")
         }
     }
 
@@ -112,7 +112,7 @@ open class Container: UIObject {
                     plugin.destroy()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Destroying Container plugin")
+                Logger.logError(error.localizedDescription, scope: "Container: \((plugin as Plugin).pluginName) crashed during destroy")
             }
         }
         plugins.removeAll()

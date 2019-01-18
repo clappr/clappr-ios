@@ -118,7 +118,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
                     plugin.render()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Rendering Core Plugins")
+                Logger.logError(error.localizedDescription, scope: "Core: \((plugin as Plugin).pluginName) crashed during render")
             }
         }
     }
@@ -138,7 +138,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
                     plugin.render()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Rendering Core Plugins")
+                Logger.logError(error.localizedDescription, scope: "Core: \((plugin as Plugin).pluginName) crashed during render")
             }
         }
     }
@@ -217,7 +217,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
                     plugin.destroy()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Destroying Core plugin")
+                Logger.logError(error.localizedDescription, scope: "Core: \((plugin as Plugin).pluginName) crashed during destroy")
             }
         }
         plugins.removeAll()

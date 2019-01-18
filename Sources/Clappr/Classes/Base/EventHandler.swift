@@ -18,7 +18,7 @@ open class EventHandler: NSObject {
                 self?.callback?(notification.userInfo)
             }
         } catch {
-            Logger.logError(error.localizedDescription, scope: "Rendering MediaControl plugin")
+            Logger.logError(error.localizedDescription, scope: "A plugin crashed during invocation of an event")
         }
     }
 }

@@ -38,7 +38,7 @@ open class EventDispatcher: NSObject, EventProtocol {
                     callback(userInfo)
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "Calling callback")
+                Logger.logError(error.localizedDescription, scope: "A plugin crashed during invocation of an event")
             }
             self.removeListenerIfOnce(listenId, callback: callback)
         }
