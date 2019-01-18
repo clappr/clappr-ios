@@ -14,7 +14,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Player.register(plugins: [BrokenPlugin.self])
         player = Player(options: options)
 
         listenToPlayerEvents()
@@ -85,46 +84,5 @@ class ViewController: UIViewController {
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
         self.navigationController?.present(alertViewController, animated: true, completion: nil)
-    }
-}
-
-class BrokenPlugin: MediaControlPlugin {
-    override var pluginName: String {
-        return "broken"
-    }
-
-    required public init(context: UIObject) {
-        super.init(context: context)
-        bindEvents()
-    }
-
-    required public init() {
-        super.init()
-    }
-
-    private func bindEvents() {
-        stopListening()
-
-        bindCoreEvents()
-    }
-
-    open func bindCoreEvents() {
-        if let core = core {
-            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.iWillCrash() }
-        }
-    }
-
-    override func destroy() {
-        iWillCrash()
-    }
-
-    override func render() {
-        iWillCrash()
-    }
-
-    func iWillCrash() {
-        let viewCrash = UIView()
-        viewCrash.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        view.addSubview(viewCrash)
     }
 }
