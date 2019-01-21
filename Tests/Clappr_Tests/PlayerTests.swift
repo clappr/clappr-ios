@@ -239,6 +239,16 @@ class PlayerTests: QuickSpec {
                         let loggerPlugin = player.getPlugin(name: LoggerPlugin.name)
                         expect(loggerPlugin).to(beAKindOf(LoggerPlugin.self))
                     }
+                    
+                    it("pass plugins to container") {
+                        Loader.shared.resetPlugins()
+                        
+                        Player.register(plugins: [FakeContainerPlugin.self])
+                        player = Player(options: options)
+                        
+                        let fakeContainerPlugin = player.getPlugin(name: FakeContainerPlugin.name)
+                        expect(fakeContainerPlugin).to(beAKindOf(FakeContainerPlugin.self))
+                    }
 
                     it("pass plugins to Loader") {
                         Loader.shared.resetPlugins()
@@ -339,6 +349,12 @@ class PlayerTests: QuickSpec {
                     print("Log didChangeActivePlayback!!!!")
                 }
             }
+        }
+    }
+    
+    class FakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "FakeContainerPlugin"
         }
     }
 }
