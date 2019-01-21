@@ -611,8 +611,6 @@
 				96D3627D1D41337600CCB866 /* Clappr */,
 				9E26CFEB201612B800AE92B7 /* Clappr_iOS */,
 				321781A91FED90CC00EDD678 /* Clappr_tvOS */,
-				5744C05321EE14390087D9FB /* ObjC.h */,
-				5744C05421EE144F0087D9FB /* ObjC.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -825,6 +823,8 @@
 		96D362891D41339400CCB866 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5744C05321EE14390087D9FB /* ObjC.h */,
+				5744C05421EE144F0087D9FB /* ObjC.m */,
 				32FC971D20B733B300ABA0C2 /* Helper */,
 				968E5BD71D6CBF970092F372 /* Log */,
 				96D3628B1D41339400CCB866 /* Base */,
