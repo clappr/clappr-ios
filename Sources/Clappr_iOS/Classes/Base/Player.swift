@@ -2,7 +2,7 @@ open class Player: BaseObject {
 
     @objc open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
-    @objc private(set) open var core: Core?
+    @objc private(set) var core: Core?
 
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
@@ -94,18 +94,28 @@ open class Player: BaseObject {
     }
     
     private func setCore(with options: Options) {
-        self.core?.stopListening()
-        self.core = CoreFactory.create(with: options)
+        core?.stopListening()
+        core = CoreFactory.create(with: options)
         bindCoreEvents()
     }
 
     private func bindCoreEvents() {
-        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
-        self.core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
+        core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
+        core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }
-
+    
+    @objc open func presentFullscreenIn(_ controller: UIViewController) {
+        guard let coreView = core?.view else { return }
+        controller.view.addSubviewMatchingConstraints(coreView)
+    }
+    
+    @objc open func fitParentView() {
+        guard let coreView = core?.view else { return }
+        core?.parentView?.addSubviewMatchingConstraints(coreView)
+    }
+    
     @objc open func attachTo(_ view: UIView, controller: UIViewController) {
         core?.parentController = controller
         core?.parentView = view
@@ -139,6 +149,19 @@ open class Player: BaseObject {
 
     @objc open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
+    }
+    
+    open var options: Options? {
+        return core?.options
+    }
+    
+    open func getPlugin(name: String) -> Plugin? {
+        var plugins: [Plugin] = core?.plugins ?? []
+        let containerPlugins: [Plugin] = activeContainer?.plugins ?? []
+        
+        plugins.append(contentsOf: containerPlugins)
+        
+        return plugins.first(where: { $0.pluginName == name })
     }
 
     @discardableResult

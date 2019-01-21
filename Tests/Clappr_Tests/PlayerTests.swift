@@ -236,8 +236,18 @@ class PlayerTests: QuickSpec {
                         Player.register(plugins: [LoggerPlugin.self])
                         player = Player(options: options)
 
-                        let loggerPlugin = player.core?.plugins.first { $0 is LoggerPlugin }
+                        let loggerPlugin = player.getPlugin(name: LoggerPlugin.name)
                         expect(loggerPlugin).to(beAKindOf(LoggerPlugin.self))
+                    }
+                    
+                    it("pass plugins to container") {
+                        Loader.shared.resetPlugins()
+                        
+                        Player.register(plugins: [FakeContainerPlugin.self])
+                        player = Player(options: options)
+                        
+                        let fakeContainerPlugin = player.getPlugin(name: FakeContainerPlugin.name)
+                        expect(fakeContainerPlugin).to(beAKindOf(FakeContainerPlugin.self))
                     }
 
                     it("pass plugins to Loader") {
@@ -246,7 +256,7 @@ class PlayerTests: QuickSpec {
                         Player.register(plugins: [LoggerPlugin.self])
                         player = Player(options: options)
 
-                        let loggerPlugin = Loader.shared.corePlugins.first { $0.name == "Logger" }
+                        let loggerPlugin = Loader.shared.corePlugins.first { $0.name == LoggerPlugin.name }
                         expect(loggerPlugin).to(beAKindOf(LoggerPlugin.Type.self))
                     }
 
@@ -257,7 +267,7 @@ class PlayerTests: QuickSpec {
 
                         Player.register(plugins: [LoggerPlugin.self])
 
-                        let loggerPlugin = player.core?.plugins.first { $0 is LoggerPlugin }
+                        let loggerPlugin = player.getPlugin(name: LoggerPlugin.name)
                         expect(loggerPlugin).to(beNil())
                     }
                 }
@@ -339,6 +349,12 @@ class PlayerTests: QuickSpec {
                     print("Log didChangeActivePlayback!!!!")
                 }
             }
+        }
+    }
+    
+    class FakeContainerPlugin: UIContainerPlugin {
+        override var pluginName: String {
+            return "FakeContainerPlugin"
         }
     }
 }
