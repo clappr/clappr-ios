@@ -185,7 +185,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
     }
 
-    open func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return touch.view!.accessibilityIdentifier == "Container"
     }
 
