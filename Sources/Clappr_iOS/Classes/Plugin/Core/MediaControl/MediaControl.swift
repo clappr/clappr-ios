@@ -228,7 +228,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                     plugin.render()
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "MediaControl: \((plugin as Plugin).pluginName) crashed during render")
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "MediaControl")
             }
         }
     }

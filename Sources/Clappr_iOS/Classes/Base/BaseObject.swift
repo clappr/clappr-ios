@@ -33,7 +33,7 @@ open class BaseObject: NSObject, EventProtocol {
                     callback(userInfo)
                 }
             } catch {
-                Logger.logError(error.localizedDescription, scope: "A plugin crashed during invocation of an event")
+                Logger.logError("A plugin crashed during invocation of an event (\(error.localizedDescription))", scope: "BaseObject")
             }
             self.removeListenerIfOnce(listenId, callback: callback)
         }
