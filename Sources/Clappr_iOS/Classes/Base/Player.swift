@@ -155,8 +155,13 @@ open class Player: BaseObject {
         return core?.options
     }
     
-    open var corePlugins: [UICorePlugin]? {
-        return core?.plugins
+    open func getPlugin(name: String) -> Plugin? {
+        var plugins: [Plugin] = core?.plugins ?? []
+        let containerPlugins: [Plugin] = activeContainer?.plugins ?? []
+        
+        plugins.append(contentsOf: containerPlugins)
+        
+        return plugins.first(where: { $0.pluginName == name })
     }
 
     @discardableResult

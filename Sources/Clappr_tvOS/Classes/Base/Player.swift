@@ -181,6 +181,15 @@ open class Player: UIViewController, BaseObject {
     open var options: Options? {
         return core?.options
     }
+    
+    open func getPlugin(name: String) -> Plugin? {
+        var plugins: [Plugin] = core?.plugins ?? []
+        let containerPlugins: [Plugin] = activeContainer?.plugins ?? []
+        
+        plugins.append(contentsOf: containerPlugins)
+        
+        return plugins.first(where: { $0.pluginName == name })
+    }
 
     @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
