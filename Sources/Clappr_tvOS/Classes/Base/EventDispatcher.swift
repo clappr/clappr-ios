@@ -33,7 +33,13 @@ open class EventDispatcher: NSObject, EventProtocol {
 
     fileprivate func wrapEventCallback(_ listenId: String, callback: @escaping EventCallback) -> EventCallback {
         return { userInfo in
-            callback(userInfo)
+            do {
+                try ObjC.catchException {
+                    callback(userInfo)
+                }
+            } catch {
+                Logger.logError("A plugin crashed during invocation of an event (\(error.localizedDescription))", scope: "EventDispatcher")
+            }
             self.removeListenerIfOnce(listenId, callback: callback)
         }
     }

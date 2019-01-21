@@ -553,6 +553,19 @@ class CoreTests: QuickSpec {
                     expect(core.fullscreenHandler).toEventually(beNil())
                 }
                 #endif
+
+                it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
+                    CorePluginMock.crashOnDestroy = true
+                    let core = Core()
+                    let plugin = CorePluginMock()
+                    core.addPlugin(plugin)
+
+                    core.destroy()
+
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
+                }
             }
 
             context("when changes a activePlayback") {
@@ -666,6 +679,19 @@ class CoreTests: QuickSpec {
                     expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
                 }
                 #endif
+
+                it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
+                    CorePluginMock.crashOnRender = true
+                    let core = Core()
+                    let plugin = CorePluginMock()
+                    core.addPlugin(plugin)
+
+                    core.render()
+
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
+                }
             }
 
             context("core position") {
@@ -699,6 +725,42 @@ class CoreTests: QuickSpec {
         let viewController = UIViewController()
         UIApplication.shared.keyWindow?.rootViewController = viewController
         return viewController
+    }
+}
+
+class CorePluginMock: UICorePlugin {
+    static var didCallRender = false
+    static var crashOnRender = false
+    static var didCallDestroy = false
+    static var crashOnDestroy = false
+
+    override var pluginName: String {
+        return "CorePluginMock"
+    }
+
+    override func render() {
+        CorePluginMock.didCallRender = true
+
+        if CorePluginMock.crashOnRender {
+            codeThatCrashes()
+        }
+    }
+
+
+    override func destroy() {
+        CorePluginMock.didCallDestroy = true
+
+        if CorePluginMock.crashOnDestroy {
+            codeThatCrashes()
+        }
+    }
+
+    static func reset() {
+        CorePluginMock.didCallRender = false
+    }
+
+    private func codeThatCrashes() {
+        NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
     }
 }
 

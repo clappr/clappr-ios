@@ -107,7 +107,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderPlugins() {
         plugins.forEach { plugin in
             view.addSubview(plugin.view)
-            plugin.render()
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
+            }
         }
     }
     #endif
@@ -121,7 +127,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderCorePlugins() {
         plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
             view.addSubview(plugin.view)
-            plugin.render()
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
+            }
         }
     }
 
@@ -196,7 +208,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach { plugin in plugin.destroy() }
+        plugins.forEach { plugin in
+            do {
+                try ObjC.catchException {
+                    plugin.destroy()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+            }
+        }
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")

@@ -80,7 +80,13 @@ open class Container: UIObject {
 
     fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {
         view.addSubview(plugin.view)
-        plugin.render()
+        do {
+            try ObjC.catchException {
+                plugin.render()
+            }
+        } catch {
+            Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Container")
+        }
     }
 
     func addPlugin(_ plugin: UIContainerPlugin) {
@@ -100,7 +106,15 @@ open class Container: UIObject {
         playback?.destroy()
 
         Logger.logDebug("destroying plugins", scope: "Container")
-        plugins.forEach { plugin in plugin.destroy() }
+        plugins.forEach { plugin in
+            do {
+                try ObjC.catchException {
+                    plugin.destroy()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Container")
+            }
+        }
         plugins.removeAll()
 
         view.removeFromSuperview()

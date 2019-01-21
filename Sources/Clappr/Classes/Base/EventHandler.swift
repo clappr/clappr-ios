@@ -13,6 +13,12 @@ open class EventHandler: NSObject {
     }
 
     @objc open func handleEvent(_ notification: Notification) {
-        callback?(notification.userInfo)
+        do {
+            try ObjC.catchException { [weak self] in
+                self?.callback?(notification.userInfo)
+            }
+        } catch {
+            Logger.logError("A plugin crashed during invocation of an event (\(error.localizedDescription))", scope: "EventHandler")
+        }
     }
 }
