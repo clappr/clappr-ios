@@ -50,10 +50,6 @@ open class AVFoundationPlayback: Playback {
 
     private var backgroundSessionBackup: String?
 
-    @objc open var url: URL? {
-        return asset?.url
-    }
-
     open override var pluginName: String {
         return "AVPlayback"
     }
@@ -211,14 +207,6 @@ open class AVFoundationPlayback: Playback {
         fatalError("init(context:) has not been implemented")
     }
 
-    open func handleViewBoundsChanged() {
-        guard let playerLayer = playerLayer else {
-            return
-        }
-        playerLayer.frame = view.bounds
-        setupMaxResolution(for: playerLayer.frame.size)
-    }
-
     open override func play() {
         if player == nil {
             setupPlayer()
@@ -296,7 +284,7 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    @objc func playbackDidEnd(notification: NSNotification? = nil) {
+    @objc fileprivate func playbackDidEnd(notification: NSNotification? = nil) {
         if let object = notification?.object as? AVPlayerItem, let item = self.player?.currentItem {
             if object == item {
                 let duration = item.duration
@@ -453,6 +441,77 @@ open class AVFoundationPlayback: Playback {
 
         self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
     }
+    
+    fileprivate func handleStatusChangedEvent() {
+        guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        playerStatus = currentItem.status
+        
+        if playerStatus == .readyToPlay && currentState != .paused {
+            readyToPlay()
+        } else if playerStatus == .failed {
+            let error = player.currentItem!.error!
+            self.trigger(.error, userInfo: ["error": error])
+            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
+        }
+    }
+    
+    fileprivate func handleLoadedTimeRangesEvent() {
+        guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else {
+            return
+        }
+        
+        let info = [
+            "start_position": CMTimeGetSeconds(timeRange.start),
+            "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
+            "duration": CMTimeGetSeconds(timeRange.duration),
+            ]
+        
+        trigger(.didUpdateBuffer, userInfo: info)
+    }
+    
+    fileprivate func handleSeekableTimeRangesEvent() {
+        guard !seekableTimeRanges.isEmpty else { return }
+        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+        handleDvrAvailabilityChange()
+    }
+    
+    func handleDvrAvailabilityChange() {
+        if lastDvrAvailability != isDvrAvailable {
+            trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
+            lastDvrAvailability = isDvrAvailable
+        }
+    }
+    
+    fileprivate func handleBufferingEvent(_ keyPath: String?) {
+        guard let keyPath = keyPath, currentState != .paused else {
+            return
+        }
+        
+        if keyPath == "currentItem.playbackLikelyToKeepUp" {
+            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
+                play()
+                selectDefaultSubtitleIfNeeded()
+            } else {
+                updateState(.buffering)
+            }
+        } else if keyPath == "currentItem.playbackBufferEmpty" {
+            updateState(.buffering)
+        }
+    }
+    
+    fileprivate func handleViewBoundsChanged() {
+        guard let playerLayer = playerLayer else {
+            return
+        }
+        playerLayer.frame = view.bounds
+        setupMaxResolution(for: playerLayer.frame.size)
+    }
+    
+    fileprivate func handlePlayerRateChanged() {
+        if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
+            updateState(.paused)
+        }
+    }
 
     private func enableBackgroundSession() {
         backgroundSessionBackup = AVAudioSession.sharedInstance().category
@@ -474,19 +533,6 @@ open class AVFoundationPlayback: Playback {
             }
         } catch {
             print("It was not possible to set the audio session category")
-        }
-    }
-
-    fileprivate func handleStatusChangedEvent() {
-        guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
-        playerStatus = currentItem.status
-
-        if playerStatus == .readyToPlay && currentState != .paused {
-            readyToPlay()
-        } else if playerStatus == .failed {
-            let error = player.currentItem!.error!
-            self.trigger(.error, userInfo: ["error": error])
-            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
 
@@ -541,55 +587,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    fileprivate func handleLoadedTimeRangesEvent() {
-        guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else {
-            return
-        }
-
-        let info = [
-            "start_position": CMTimeGetSeconds(timeRange.start),
-            "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-            "duration": CMTimeGetSeconds(timeRange.duration),
-            ]
-
-        trigger(.didUpdateBuffer, userInfo: info)
-    }
-
-    fileprivate func handleSeekableTimeRangesEvent() {
-        guard !seekableTimeRanges.isEmpty else { return }
-        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
-        handleDvrAvailabilityChange()
-    }
-
-    func handleDvrAvailabilityChange() {
-        if lastDvrAvailability != isDvrAvailable {
-            trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
-            lastDvrAvailability = isDvrAvailable
-        }
-    }
-
-    fileprivate func handleBufferingEvent(_ keyPath: String?) {
-        guard let keyPath = keyPath, currentState != .paused else {
-            return
-        }
-
-        if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
-                play()
-                selectDefaultSubtitleIfNeeded()
-            } else {
-                updateState(.buffering)
-            }
-        } else if keyPath == "currentItem.playbackBufferEmpty" {
-            updateState(.buffering)
-        }
-    }
-
-    fileprivate func handlePlayerRateChanged() {
-        if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
-            updateState(.paused)
-        }
-    }
 
     fileprivate func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: String) {
         if let group = mediaSelectionGroup(characteristic) {
