@@ -98,7 +98,7 @@ open class Container: UIObject {
     }
 
     @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
-        return findPlugin(pluginClass).count > 0
+        return !findPlugin(pluginClass).isEmpty
     }
     
     open func getPlugin(_ pluginClass: AnyClass) -> UIContainerPlugin? {
