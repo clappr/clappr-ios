@@ -1,7 +1,7 @@
 import Foundation
 
 open class Container: UIObject {
-    var plugins: [UIContainerPlugin] = []
+    private(set) var plugins: [UIContainerPlugin] = []
     @objc open var sharedData = SharedData()
     @objc open var options: Options {
         didSet {
