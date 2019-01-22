@@ -42,8 +42,8 @@ class SeekbarView: UIView {
     }
 
     var videoDuration: CGFloat = 0
-    var isSeeking = false
-    var previousSeekbarWidth: CGFloat = 0
+    private(set) var isSeeking = false
+    private(set) var previousSeekbarWidth: CGFloat = 0
 
     weak var delegate: SeekbarDelegate?
 
