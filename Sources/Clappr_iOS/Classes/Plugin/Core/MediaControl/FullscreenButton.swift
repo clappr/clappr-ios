@@ -1,6 +1,6 @@
 open class FullscreenButton: MediaControlPlugin {
-    private var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
-    private var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
+    open var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
+    open var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
     
     var button: UIButton! {
         didSet {
