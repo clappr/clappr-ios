@@ -56,9 +56,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         super.init()
 
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = .black
 
-        addTapRecognizer()
+        addTapGestures()
+        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { plugin in

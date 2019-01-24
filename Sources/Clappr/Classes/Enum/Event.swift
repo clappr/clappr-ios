@@ -53,4 +53,5 @@ public enum Event: String, CaseIterable {
     case didHideModal = "Clappr:didHideModal"
     case willShowModal = "Clappr:willShowModal"
     case willHideModal = "Clappr:willHideModal"
+    case didTappedCore = "Clappr:didTappedCore"
 }
