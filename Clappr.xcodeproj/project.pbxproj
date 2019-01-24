@@ -94,6 +94,7 @@
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		48368F7521F9E36E00A0974B /* Core+GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48368F7421F9E36E00A0974B /* Core+GestureHandler.swift */; };
 		48D81F1D21F9F41200B2D52E /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */; };
+		48D81F1F21FA31FA00B2D52E /* DoubleTapPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
@@ -379,6 +380,7 @@
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		48368F7421F9E36E00A0974B /* Core+GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+GestureHandler.swift"; sourceTree = "<group>"; };
 		48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
+		48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPluginTests.swift; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAt.swift"; sourceTree = "<group>"; };
@@ -1141,6 +1143,7 @@
 			isa = PBXGroup;
 			children = (
 				C9EDF8462162C93900789E2F /* MediaControl */,
+				48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1869,6 +1872,7 @@
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
 				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
+				48D81F1F21FA31FA00B2D52E /* DoubleTapPluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
