@@ -14,9 +14,12 @@ class DoubleTapPlugin: UICorePlugin {
         return core?.activeContainer
     }
     
+    private var animatonHandler: DoubleTapAnimation?
+    
     required init(context: UIObject) {
         super.init(context: context)
         bindEvents()
+        animatonHandler = DoubleTapAnimation(core)
     }
     
     required init() {
@@ -49,10 +52,20 @@ class DoubleTapPlugin: UICorePlugin {
             let coreViewWidth = core?.view.frame.width else { return }
         
         let viewCenterPosition = coreViewWidth / 2
+        impactFeedback()
         if xPosition < viewCenterPosition {
             activePlayback?.seek(position - 10)
+            animatonHandler?.animateBackward()
         } else {
             activePlayback?.seek(position + 10)
+            animatonHandler?.animateForward()
+        }
+    }
+    
+    private func impactFeedback() {
+        if #available(iOS 10.0, *) {
+            let impact = UIImpactFeedbackGenerator()
+            impact.impactOccurred()
         }
     }
 }

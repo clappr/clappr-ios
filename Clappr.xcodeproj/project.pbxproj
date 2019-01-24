@@ -202,6 +202,7 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
+		AB0A58DF21FA2F520075729E /* DoubleTapAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
 		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
@@ -473,6 +474,7 @@
 		9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackViewPortTests.swift; sourceTree = "<group>"; };
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
+		AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPlugin.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
 		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
@@ -829,6 +831,7 @@
 			children = (
 				5744C05321EE14390087D9FB /* ObjC.h */,
 				5744C05421EE144F0087D9FB /* ObjC.m */,
+				AB0A58DD21FA2F380075729E /* Animation */,
 				32FC971D20B733B300ABA0C2 /* Helper */,
 				968E5BD71D6CBF970092F372 /* Log */,
 				96D3628B1D41339400CCB866 /* Base */,
@@ -1063,6 +1066,14 @@
 				9E692E131F9F8A54006510BE /* PlayerViewInteractor.swift */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		AB0A58DD21FA2F380075729E /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		AB163504215AB93300635233 /* MediaControl */ = {
@@ -1923,6 +1934,7 @@
 				320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
+				AB0A58DF21FA2F520075729E /* DoubleTapAnimation.swift in Sources */,
 				48D81F1D21F9F41200B2D52E /* DoubleTapPlugin.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,
