@@ -5,29 +5,35 @@ class DoubleTapAnimation {
     private var fowardLabel = UILabel()
     private var core: Core?
     
-    private var left1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var left2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var left3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var backIcon1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var backIcon2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var backIcon3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
     
-    private var right1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var right2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var right3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var fowardIcon1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var fowardIcon2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private var fowardIcon3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
     
     init(_ core: Core?) {
         self.core = core
-        setupLabels(core)
+        setup(core)
     }
     
     func animateBackward() {
         guard let playback = core?.activePlayback,
             playback.position - 10 > 0.0 else { return }
-        animateLeft()
+        animate(backLabel)
+        animate(backIcon3, delay: 0)
+        animate(backIcon2, delay: 0.2)
+        animate(backIcon1, delay: 0.4)
     }
     
     func animateForward() {
         guard let playback = core?.activePlayback,
             playback.position + 10 < playback.duration else { return }
-        animateRight()
+        animate(fowardLabel)
+        animate(fowardIcon1, delay: 0)
+        animate(fowardIcon2, delay: 0.2)
+        animate(fowardIcon3, delay: 0.4)
     }
     
     private func animate(_ label: UILabel) {
@@ -36,57 +42,43 @@ class DoubleTapAnimation {
             label.alpha = 1.0
             self.core?.view.layoutSubviews()
         }, completion: { _ in
-            UIView.animate(withDuration: 0.2, delay: 0.6, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0.5, animations: {
                 label.alpha = 0.0
                 self.core?.view.layoutSubviews()
             })
         })
     }
-    
-    private func animateRight() {
-        animate(fowardLabel)
-        animate(right1, delay: 0)
-        animate(right2, delay: 0.2)
-        animate(right3, delay: 0.4)
-    }
-    
-    private func animateLeft() {
-        animate(backLabel)
-        animate(left3, delay: 0)
-        animate(left2, delay: 0.2)
-        animate(left1, delay: 0.4)
-    }
-    
+
     private func animate(_ image: UIImageView, delay: TimeInterval) {
         core?.view.bringSubview(toFront: image)
-        UIView.animate(withDuration: 0.2, delay: delay, animations: {
+        UIView.animate(withDuration: 0.15, delay: delay, animations: {
             image.alpha = 1.0
             self.core?.view.layoutSubviews()
         }, completion: { _ in
-            UIView.animate(withDuration: 0.2, delay: 0.15, animations: {
+            UIView.animate(withDuration: 0.15, delay: 0.15, animations: {
                 image.alpha = 0.0
                 self.core?.view.layoutSubviews()
             })
         })
     }
     
-    private func setupLabels(_ core: Core?) {
+    private func setup(_ core: Core?) {
         guard let view = core?.view else { return }
         
         setupLabel(view, label: fowardLabel, position: 1.5)
         setupLabel(view, label: backLabel, position: 0.5)
         
-        left1.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
-        left2.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
-        left3.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        backIcon1.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        backIcon2.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        backIcon3.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
         
-        setupImage(view, image: right1, label: fowardLabel, constX: -14)
-        setupImage(view, image: right2, label: fowardLabel, constX: 0)
-        setupImage(view, image: right3, label: fowardLabel, constX: 14)
+        setupImage(view, image: fowardIcon1, label: fowardLabel, constX: -14)
+        setupImage(view, image: fowardIcon2, label: fowardLabel, constX: 0)
+        setupImage(view, image: fowardIcon3, label: fowardLabel, constX: 14)
         
-        setupImage(view, image: left1, label: backLabel, constX: -14)
-        setupImage(view, image: left2, label: backLabel, constX: 0)
-        setupImage(view, image: left3, label: backLabel, constX: 14)
+        setupImage(view, image: backIcon1, label: backLabel, constX: -14)
+        setupImage(view, image: backIcon2, label: backLabel, constX: 0)
+        setupImage(view, image: backIcon3, label: backLabel, constX: 14)
     }
     
     private func setupLabel(_ view: UIView, label: UILabel, position: CGFloat) {
