@@ -78,14 +78,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func addTapRecognizer() {
-        #if os(iOS)
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
-        tapRecognizer.delegate = self
-        view.addGestureRecognizer(tapRecognizer)
-        #endif
-    }
-
     fileprivate func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
@@ -228,9 +220,5 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         view.removeFromSuperview()
 
         trigger(Event.didDestroy.rawValue)
-    }
-
-    @objc func didTappedView() {
-        trigger(InternalEvent.didTappedCore.rawValue)
     }
 }
