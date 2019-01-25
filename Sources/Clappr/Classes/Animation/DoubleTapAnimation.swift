@@ -13,6 +13,15 @@ class DoubleTapAnimation {
     private var fowardIcon2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
     private var fowardIcon3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
     
+    private var leftBubbleView = UIView()
+    private var rightBubbleView = UIView()
+    
+    private var leftBubbleHeight = NSLayoutConstraint()
+    private var leftBubbleWidth = NSLayoutConstraint()
+    
+    private var rightBubbleHeight = NSLayoutConstraint()
+    private var rightBubbleWidth = NSLayoutConstraint()
+    
     init(_ core: Core?) {
         self.core = core
         setup(core)
@@ -20,7 +29,8 @@ class DoubleTapAnimation {
     
     func animateBackward() {
         guard let playback = core?.activePlayback,
-            playback.position - 10 > 0.0 else { return }
+            playback.position - 10 > 0.0, let view = core?.view else { return }
+        animate(leftBubbleView, parentView: view, widthConstraint: leftBubbleWidth, heightConstraint: leftBubbleHeight)
         animate(backLabel)
         animate(backIcon3, delay: 0)
         animate(backIcon2, delay: 0.2)
@@ -29,11 +39,35 @@ class DoubleTapAnimation {
     
     func animateForward() {
         guard let playback = core?.activePlayback,
-            playback.position + 10 < playback.duration else { return }
+            playback.position + 10 < playback.duration,
+            let view = core?.view else { return }
+        animate(rightBubbleView, parentView: view, widthConstraint: rightBubbleWidth, heightConstraint: rightBubbleHeight)
         animate(fowardLabel)
         animate(fowardIcon1, delay: 0)
         animate(fowardIcon2, delay: 0.2)
         animate(fowardIcon3, delay: 0.4)
+    }
+    
+    private func animate(_ bubbleView: UIView, parentView: UIView, widthConstraint: NSLayoutConstraint, heightConstraint: NSLayoutConstraint) {
+        core?.view.bringSubview(toFront: bubbleView)
+        
+        widthConstraint.constant = parentView.frame.width
+        heightConstraint.constant = parentView.frame.height
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            bubbleView.alpha = 1.0
+            bubbleView.addRoundedBorder(with: heightConstraint.constant / 2)
+            self.core?.view.layoutSubviews()
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.2, delay: 0.3, animations: {
+                bubbleView.alpha = 0.0
+                self.core?.view.layoutSubviews()
+            }, completion: { _ in
+                heightConstraint.constant = 0
+                widthConstraint.constant = 0
+                self.core?.view.layoutSubviews()
+            })
+        })
     }
     
     private func animate(_ label: UILabel) {
@@ -48,7 +82,7 @@ class DoubleTapAnimation {
             })
         })
     }
-
+    
     private func animate(_ image: UIImageView, delay: TimeInterval) {
         core?.view.bringSubview(toFront: image)
         UIView.animate(withDuration: 0.15, delay: delay, animations: {
@@ -64,6 +98,9 @@ class DoubleTapAnimation {
     
     private func setup(_ core: Core?) {
         guard let view = core?.view else { return }
+        
+        setupBubble(leftBubbleView, within: view, heightConstraint: &leftBubbleHeight, widthConstraint: &leftBubbleWidth, position: .leading)
+        setupBubble(rightBubbleView, within: view, heightConstraint: &rightBubbleHeight, widthConstraint: &rightBubbleWidth, position: .trailing)
         
         setupLabel(view, label: fowardLabel, position: 1.5)
         setupLabel(view, label: backLabel, position: 0.5)
@@ -81,10 +118,51 @@ class DoubleTapAnimation {
         setupImage(view, image: backIcon3, label: backLabel, constX: 14)
     }
     
+    private func setupBubble(_ bubble: UIView, within view: UIView, heightConstraint: inout NSLayoutConstraint, widthConstraint: inout NSLayoutConstraint, position: NSLayoutAttribute) {
+        
+        bubble.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        view.addSubview(bubble)
+        bubble.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addConstraint(NSLayoutConstraint(item: bubble,
+                                              attribute: .centerY,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: .centerY,
+                                              multiplier: 1,
+                                              constant: 0))
+        
+        view.addConstraint(NSLayoutConstraint(item: bubble,
+                                              attribute: .centerX,
+                                              relatedBy: .equal,
+                                              toItem: view,
+                                              attribute: position,
+                                              multiplier: 1,
+                                              constant: 0))
+        
+        widthConstraint = NSLayoutConstraint(item: bubble,
+                                             attribute: .width,
+                                             relatedBy: .equal,
+                                             toItem: nil,
+                                             attribute: .width,
+                                             multiplier: 1,
+                                             constant: 0)
+        
+        heightConstraint = NSLayoutConstraint(item: bubble,
+                                              attribute: .height,
+                                              relatedBy: .equal,
+                                              toItem: nil,
+                                              attribute: .height,
+                                              multiplier: 1,
+                                              constant: 0)
+        
+        let constraints = [widthConstraint, heightConstraint]
+        constraints.forEach { $0.isActive = true }
+        bubble.addConstraints(constraints)
+    }
+    
     private func setupLabel(_ view: UIView, label: UILabel, position: CGFloat) {
-        label.backgroundColor = UIColor(white: 0, alpha: 0.2)
         label.text = "10 segundos"
-        label.addRoundedBorder(with: 4)
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 13)
