@@ -52,7 +52,7 @@ class DoubleTapAnimation {
         core?.view.bringSubview(toFront: bubbleView)
         
         widthConstraint.constant = parentView.frame.width
-        heightConstraint.constant = parentView.frame.height
+        heightConstraint.constant = parentView.frame.height * 1.8
         
         UIView.animate(withDuration: 0.4, animations: {
             bubbleView.alpha = 1.0
@@ -98,6 +98,8 @@ class DoubleTapAnimation {
     
     private func setup(_ core: Core?) {
         guard let view = core?.view else { return }
+        
+        view.clipsToBounds = true
         
         setupBubble(leftBubbleView, within: view, heightConstraint: &leftBubbleHeight, widthConstraint: &leftBubbleWidth, position: .leading)
         setupBubble(rightBubbleView, within: view, heightConstraint: &rightBubbleHeight, widthConstraint: &rightBubbleWidth, position: .trailing)
