@@ -1,7 +1,7 @@
 import Foundation
 
 open class Container: UIObject {
-    @objc internal(set) open var plugins: [UIContainerPlugin] = []
+    private(set) var plugins: [UIContainerPlugin] = []
     @objc open var sharedData = SharedData()
     @objc open var options: Options {
         didSet {
@@ -38,7 +38,7 @@ open class Container: UIObject {
         super.init()
 
         self.sharedData.container = self
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = .clear
 
         view.accessibilityIdentifier = "Container"
     }
@@ -49,10 +49,10 @@ open class Container: UIObject {
         options[kSourceUrl] = source
         options[kMimeType] = mimeType
 
-        self.playback?.destroy()
+        playback?.destroy()
 
         let playbackFactory = PlaybackFactory(options: options)
-        self.playback = playbackFactory.createPlayback()
+        playback = playbackFactory.createPlayback()
 
         if playback is NoOpPlayback {
             render()
@@ -92,9 +92,17 @@ open class Container: UIObject {
     func addPlugin(_ plugin: UIContainerPlugin) {
         plugins.append(plugin)
     }
+    
+    private func findPlugin(_ pluginClass: AnyClass) -> UIContainerPlugin? {
+        return plugins.first(where: { $0.isKind(of: pluginClass) })
+    }
 
     @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
-        return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
+        return findPlugin(pluginClass) != nil
+    }
+    
+    open func getPlugin(_ pluginClass: AnyClass) -> UIContainerPlugin? {
+        return findPlugin(pluginClass)
     }
 
     @objc open func destroy() {
