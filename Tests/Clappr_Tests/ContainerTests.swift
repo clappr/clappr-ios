@@ -55,8 +55,8 @@ class ContainerTests: QuickSpec {
                         }
 
                         it("saves plugins on container") {
-                            expect(container.hasPlugin(FakeContainerPlugin.self)).to(beTrue())
-                            expect(container.hasPlugin(AnotherFakeContainerPlugin.self)).to(beTrue())
+                            expect(container.hasPlugin(FakeContainerPlugin.name)).to(beTrue())
+                            expect(container.hasPlugin(AnotherFakeContainerPlugin.name)).to(beTrue())
                         }
                     }
 

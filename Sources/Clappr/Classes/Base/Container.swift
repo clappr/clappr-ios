@@ -93,16 +93,16 @@ open class Container: UIObject {
         plugins.append(plugin)
     }
     
-    private func findPlugin(_ pluginClass: AnyClass) -> UIContainerPlugin? {
-        return plugins.first(where: { $0.isKind(of: pluginClass) })
+    private func findPlugin(_ name: String) -> UIContainerPlugin? {
+        return plugins.first(where: { $0.pluginName == name })
     }
 
-    @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
-        return findPlugin(pluginClass) != nil
+    @objc open func hasPlugin(_ name: String) -> Bool {
+        return findPlugin(name) != nil
     }
     
-    open func getPlugin(_ pluginClass: AnyClass) -> UIContainerPlugin? {
-        return findPlugin(pluginClass)
+    open func getPlugin(_ name: String) -> UIContainerPlugin? {
+        return findPlugin(name)
     }
 
     @objc open func destroy() {
