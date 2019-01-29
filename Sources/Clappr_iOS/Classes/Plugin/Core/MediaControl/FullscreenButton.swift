@@ -1,8 +1,8 @@
 open class FullscreenButton: MediaControlPlugin {
-    open var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
-    open var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
+    public var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
+    public var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
     
-    open var button: UIButton! {
+    public var button: UIButton! {
         didSet {
             button.accessibilityIdentifier = "FullscreenButton"
             
