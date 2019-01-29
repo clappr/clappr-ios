@@ -49,4 +49,8 @@ public enum Event: String, CaseIterable {
     case willExitFullscreen
     case didExitFullscreen
     case didUpdateDuration
+    case willShowModal
+    case didShowModal
+    case willHideModal
+    case didHideModal
 }
