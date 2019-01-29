@@ -1,7 +1,7 @@
 public enum InternalEvent: String {
-    case userRequestEnterInFullscreen
-    case userRequestExitFullscreen
-    case didTappedCore
-    case willBeginScrubbing
-    case didFinishScrubbing
+    case userRequestEnterInFullscreen = "Clappr:userRequestEnterInFullscreen"
+    case userRequestExitFullscreen = "Clappr:userRequestExitFullscreen"
+    case didTappedCore = "Clappr:didTappedCore"
+    case willBeginScrubbing = "Clappr:willBeginScrubbing"
+    case didFinishScrubbing = "Clappr:didFinishScrubbing"
 }
