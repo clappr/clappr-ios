@@ -132,8 +132,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         core?.trigger(Event.willShowMediaControl.rawValue)
 
-        if self.view.alpha == 0 {
-            self.view.isHidden = false
+        if view.alpha == 0 {
+            view.isHidden = false
         }
 
         UIView.animate(
@@ -146,7 +146,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 self?.currentlyShowing = false
                 self?.core?.trigger(Event.didShowMediaControl.rawValue)
                 completion?()
-        }
+            }
         )
     }
 
@@ -174,7 +174,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                     self?.view.isHidden = true
                     self?.core?.trigger(Event.didHideMediaControl.rawValue)
                     completion?()
-            }
+                }
             )
         }
     }
@@ -204,7 +204,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
         gesture.delegate = self
-        self.view.addGestureRecognizer(gesture)
+        view.addGestureRecognizer(gesture)
         self.gesture = gesture
         
         view.isHidden = true
@@ -215,7 +215,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         showIfAlwaysVisible()
 
-        self.view.bindFrameToSuperviewBounds()
+        view.bindFrameToSuperviewBounds()
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {

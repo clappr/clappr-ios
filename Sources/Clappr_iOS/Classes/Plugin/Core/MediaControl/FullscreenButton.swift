@@ -1,8 +1,8 @@
 open class FullscreenButton: MediaControlPlugin {
-    private var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
-    private var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
+    public var fullscreenIcon = UIImage.fromName("fullscreen", for: FullscreenButton.self)
+    public var windowedIcon = UIImage.fromName("fullscreen_exit", for: FullscreenButton.self)
     
-    var button: UIButton! {
+    public var button: UIButton! {
         didSet {
             button.accessibilityIdentifier = "FullscreenButton"
             
@@ -17,7 +17,7 @@ open class FullscreenButton: MediaControlPlugin {
         }
     }
     
-    private var isOnFullscreen = false {
+    open var isOnFullscreen = false {
         didSet {
             let icon = isOnFullscreen ? windowedIcon : fullscreenIcon
             button.setImage(icon, for: .normal)
@@ -68,10 +68,7 @@ open class FullscreenButton: MediaControlPlugin {
     }
     
     @objc open func toggleFullscreenButton() {
-        if isOnFullscreen {
-            core?.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
-        } else {
-            core?.trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
-        }
+        let event: InternalEvent = isOnFullscreen ? .userRequestExitFullscreen : .userRequestEnterInFullscreen
+        core?.trigger(event.rawValue)
     }
 }
