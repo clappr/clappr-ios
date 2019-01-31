@@ -49,4 +49,8 @@ public enum Event: String, CaseIterable {
     case willExitFullscreen = "Clappr:willExitFullscreen"
     case didExitFullscreen = "Clappr:didExitFullscreen"
     case didUpdateDuration = "Clappr:didUpdateDuration"
+    case didShowModal = "Clappr:didShowModal"
+    case didHideModal = "Clappr:didHideModal"
+    case willShowModal = "Clappr:willShowModal"
+    case willHideModal = "Clappr:willHideModal"
 }
