@@ -1,7 +1,8 @@
 import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
-    public var gesture: UITapGestureRecognizer?
+    public var tapGesture: UITapGestureRecognizer?
+    public var doubleTapGesture: UITapGestureRecognizer?
 
     var mediaControlView: MediaControlView = .fromNib()
 
@@ -198,14 +199,33 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         hideAndStopTimer()
     }
 
+    @objc func didTap() {
+        trigger(InternalEvent.didTappedCore.rawValue)
+    }
+    
+    @objc func didDoubleTap(gestureRecognizer: UITapGestureRecognizer) {
+        if gestureRecognizer.state == .recognized {
+            
+            let mediaControlElements = core?.plugins.filter({ $0 is MediaControlPlugin })
+            let pluginsThatColideWithGesture = mediaControlElements?.first(where: touchColidesWithPlugin)
+            
+            if let location = doubleTapGesture?.location(in: view),
+                pluginsThatColideWithGesture == nil {
+                tapped()
+                core?.trigger(InternalEvent.didDoubleTappedCore.rawValue, userInfo: ["viewLocation": location.x])
+            }
+        }
+    }
+    
+    private func touchColidesWithPlugin(_ plugin: UICorePlugin) -> Bool {
+        guard let location = doubleTapGesture?.location(in: plugin.view.superview) else { return false }
+        return plugin.view.frame.contains(location)
+    }
+    
     override open func render() {
         view.addSubview(mediaControlView)
         mediaControlView.bindFrameToSuperviewBounds()
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        gesture.delegate = self
-        view.addGestureRecognizer(gesture)
-        self.gesture = gesture
+        setupGestures()
         
         view.isHidden = true
         view.backgroundColor = UIColor.clear
@@ -214,8 +234,21 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         showIfAlwaysVisible()
-
         view.bindFrameToSuperviewBounds()
+    }
+    
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tapGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
+        
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
+        doubleTapGesture.numberOfTapsRequired = 2
+        tapGesture.require(toFail: doubleTapGesture)
+        self.doubleTapGesture = doubleTapGesture
+        
+        view.addGestureRecognizer(doubleTapGesture)
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {
