@@ -56,14 +56,6 @@ class CoreTests: QuickSpec {
                 it("containers list is not empty") {
                     expect(core.containers).toNot(beEmpty())
                 }
-
-                #if os(iOS)
-
-                it("add gesture recognizer") {
-                    expect(core.view.gestureRecognizers?.count) > 0
-                }
-
-                #endif
             }
 
             #if os(iOS)

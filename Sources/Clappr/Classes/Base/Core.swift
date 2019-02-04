@@ -1,4 +1,4 @@
-open class Core: UIObject, UIGestureRecognizerDelegate {
+open class Core: UIObject {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
@@ -57,8 +57,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         super.init()
 
         view.backgroundColor = .black
-
-        addTapGestures()
         
         bindEventListeners()
         
@@ -176,10 +174,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     @objc open func hasPlugin(_ pluginClass: AnyClass) -> Bool {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
-    }
-
-    public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view!.accessibilityIdentifier == "Container"
     }
 
     @objc open func setFullscreen(_ fullscreen: Bool) {

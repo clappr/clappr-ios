@@ -2,7 +2,6 @@ import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var tapGesture: UITapGestureRecognizer?
-    public var doubleTapGesture: UITapGestureRecognizer?
 
     var mediaControlView: MediaControlView = .fromNib()
 
@@ -70,7 +69,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
-                self?.toggleVisibility()
+                if self?.view.isHidden ?? false {
+                    self?.toggleVisibility()
+                } else {
+                    self?.hide(animated: true)
+                }
+                
             }
 
             listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
@@ -198,29 +202,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     @objc func tapped() {
         hideAndStopTimer()
     }
-
-    @objc func didTap() {
-        trigger(InternalEvent.didTappedCore.rawValue)
-    }
-    
-    @objc func didDoubleTap(gestureRecognizer: UITapGestureRecognizer) {
-        if gestureRecognizer.state == .recognized {
-            
-            let mediaControlElements = core?.plugins.filter({ $0 is MediaControlPlugin })
-            let pluginsThatColideWithGesture = mediaControlElements?.first(where: touchColidesWithPlugin)
-            
-            if let location = doubleTapGesture?.location(in: view),
-                pluginsThatColideWithGesture == nil {
-                tapped()
-                core?.trigger(InternalEvent.didDoubleTappedCore.rawValue, userInfo: ["viewLocation": location.x])
-            }
-        }
-    }
-    
-    private func touchColidesWithPlugin(_ plugin: UICorePlugin) -> Bool {
-        guard let location = doubleTapGesture?.location(in: plugin.view.superview) else { return false }
-        return plugin.view.frame.contains(location)
-    }
     
     override open func render() {
         view.addSubview(mediaControlView)
@@ -242,13 +223,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         self.tapGesture = tapGesture
-        
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
-        doubleTapGesture.numberOfTapsRequired = 2
-        tapGesture.require(toFail: doubleTapGesture)
-        self.doubleTapGesture = doubleTapGesture
-        
-        view.addGestureRecognizer(doubleTapGesture)
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {
