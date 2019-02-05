@@ -5,13 +5,15 @@ class DoubleTapAnimation {
     private var fowardLabel = UILabel()
     private var core: Core?
     
-    private var backIcon1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var backIcon2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var backIcon3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private let playImage = UIImage.fromName("play", for: PlayButton.self)
     
-    private var fowardIcon1 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var fowardIcon2 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
-    private var fowardIcon3 = UIImageView(image: UIImage.fromName("play", for: PlayButton.self))
+    private lazy var backIcon1 = mirrorImage(UIImageView(image: playImage))
+    private lazy var backIcon2 = mirrorImage(UIImageView(image: playImage))
+    private lazy var backIcon3 = mirrorImage(UIImageView(image: playImage))
+    
+    private lazy var fowardIcon1 = UIImageView(image: playImage)
+    private lazy var fowardIcon2 = UIImageView(image: playImage)
+    private lazy var fowardIcon3 = UIImageView(image: playImage)
     
     private var leftBubbleView = UIView()
     private var rightBubbleView = UIView()
@@ -111,12 +113,12 @@ class DoubleTapAnimation {
         setupImage(view, image: fowardIcon2, label: fowardLabel, constX: 0)
         setupImage(view, image: fowardIcon3, label: fowardLabel, constX: 14)
         
-        setupImage(view, image: mirrorImage(backIcon1), label: backLabel, constX: -14)
-        setupImage(view, image: mirrorImage(backIcon2), label: backLabel, constX: 0)
-        setupImage(view, image: mirrorImage(backIcon3), label: backLabel, constX: 14)
+        setupImage(view, image: backIcon1, label: backLabel, constX: -14)
+        setupImage(view, image: backIcon2, label: backLabel, constX: 0)
+        setupImage(view, image: backIcon3, label: backLabel, constX: 14)
     }
     
-    func mirrorImage(_ view: UIImageView) -> UIImageView {
+    private func mirrorImage(_ view: UIImageView) -> UIImageView {
         view.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
         return view
     }
