@@ -107,17 +107,18 @@ class DoubleTapAnimation {
         setupLabel(view, label: fowardLabel, position: 1.5)
         setupLabel(view, label: backLabel, position: 0.5)
         
-        backIcon1.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
-        backIcon2.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
-        backIcon3.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
-        
         setupImage(view, image: fowardIcon1, label: fowardLabel, constX: -14)
         setupImage(view, image: fowardIcon2, label: fowardLabel, constX: 0)
         setupImage(view, image: fowardIcon3, label: fowardLabel, constX: 14)
         
-        setupImage(view, image: backIcon1, label: backLabel, constX: -14)
-        setupImage(view, image: backIcon2, label: backLabel, constX: 0)
-        setupImage(view, image: backIcon3, label: backLabel, constX: 14)
+        setupImage(view, image: mirrorImage(backIcon1), label: backLabel, constX: -14)
+        setupImage(view, image: mirrorImage(backIcon2), label: backLabel, constX: 0)
+        setupImage(view, image: mirrorImage(backIcon3), label: backLabel, constX: 14)
+    }
+    
+    func mirrorImage(_ view: UIImageView) -> UIImageView {
+        view.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        return view
     }
     
     private func setupBubble(_ bubble: UIView, within view: UIView, heightConstraint: inout NSLayoutConstraint, widthConstraint: inout NSLayoutConstraint, position: NSLayoutAttribute) {
