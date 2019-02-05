@@ -104,6 +104,23 @@ class DoubleTapPluginTests: QuickSpec {
                         expect(colisionTest).to(beFalse())
                     }
                 }
+                
+                context("and the mediaControl is being presented") {
+                    it("should dismiss the mediaControl") {
+                        addPosterPlugin()
+                        playButton.view.layoutIfNeeded()
+                        mediaControl.view.layoutIfNeeded()
+                        mediaControl.view.isHidden = false
+                        var didCallToggleMediaControl = false
+                        core.on(InternalEvent.didTappedCore.rawValue) { _ in
+                            didCallToggleMediaControl = true
+                        }
+                        
+                        doubleTapPlugin.doubleTapSeek(xPosition: 0)
+                        
+                        expect(didCallToggleMediaControl).to(beTrue())
+                    }
+                }
             }
             
             func addPosterPlugin(isHidden: Bool = true) {
