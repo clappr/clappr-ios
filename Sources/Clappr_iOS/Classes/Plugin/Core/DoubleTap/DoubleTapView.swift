@@ -10,9 +10,10 @@ class DoubleTapView: UIView {
     var delegate: DoubleTapViewDelegate?
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if delegate?.shouldIgnoreTap() ?? true {
+        guard let delegate = delegate else { return false }
+        if delegate.shouldIgnoreTap() {
             return false
         }
-        return delegate?.mediaControlPluginsColideWithTouch(point: point, event: event, view: self) ?? true
+        return delegate.mediaControlPluginsColideWithTouch(point: point, event: event, view: self)
     }
 }

@@ -40,6 +40,12 @@ class DoubleTapPluginTests: QuickSpec {
                 }
             }
             
+            describe("doubleTapView delegate") {
+                it("should not be nil") {
+                    expect(doubleTapPlugin.doubleTapView.delegate).toNot(beNil())
+                }
+            }
+            
             describe("when double tap is triggered") {
                 context("and its position is less than half of the view (left)") {
                     it("seeks back 10 seconds") {
