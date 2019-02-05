@@ -41,7 +41,7 @@ public class DoubleTapPlugin: UICorePlugin {
     }
     
     override public func render() {
-        doubleTapView.core = core
+        doubleTapView.delegate = self
         doubleTapView.backgroundColor = .clear
         core?.view.addSubview(doubleTapView)
         doubleTapView.bindFrameToSuperviewBounds()
@@ -97,5 +97,30 @@ public class DoubleTapPlugin: UICorePlugin {
         if #available(iOS 10.0, *) {
             UIImpactFeedbackGenerator().impactOccurred()
         }
+    }
+}
+
+extension DoubleTapPlugin: DoubleTapViewDelegate {
+    func shouldIgnoreTap() -> Bool {
+        let posterPlugin = core?.activeContainer?.plugins.first(where: { $0.pluginName == PosterPlugin.name })
+        return !(posterPlugin?.view.isHidden ?? false)
+    }
+    
+    func mediaControlPluginsColideWithTouch(point: CGPoint, event: UIEvent?, view: UIView) -> Bool {
+        guard let mediaControlPlugin = core?.plugins.first(where: { $0.pluginName == MediaControl.name }) else { return false }
+        let pluginColidingWithGesture = filteredOutModalPlugins()?.first(where: {
+            pluginColideWithTouch($0, point: point, event: event, view: view)
+        })
+        
+        return pluginColidingWithGesture == nil || mediaControlPlugin.view.isHidden
+    }
+    
+    private func filteredOutModalPlugins() -> [UICorePlugin]? {
+        let pluginsWithoutMediaControl = core?.plugins.filter({ $0.pluginName != MediaControl.name })
+        return pluginsWithoutMediaControl?.filter({ ($0 as? MediaControlPlugin)?.panel != .modal })
+    }
+    
+    private func pluginColideWithTouch(_ plugin: UICorePlugin, point: CGPoint, event: UIEvent?, view: UIView) -> Bool {
+        return plugin.view.point(inside: view.convert(point, to: plugin.view), with: event)
     }
 }
