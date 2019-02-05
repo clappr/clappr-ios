@@ -12,10 +12,6 @@ public class DoubleTapPlugin: UICorePlugin {
         return core?.activePlayback
     }
     
-    private var activeContainer: Container? {
-        return core?.activeContainer
-    }
-    
     private var animatonHandler: DoubleTapAnimation?
     
     required init(context: UIObject) {
