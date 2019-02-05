@@ -13,11 +13,11 @@ class PassthroughView: UIView {
     
     private func isPosterPluginVisible() -> Bool {
         let posterPlugin = core?.activeContainer?.plugins.first(where: { $0 is PosterPlugin })
-        return !(posterPlugin?.view.isHidden ?? false)
+        return !(posterPlugin?.view.isHidden ?? true)
     }
     
     private func mediaControlPluginsColidesWithTouch(point: CGPoint, event: UIEvent?) -> Bool {
-        guard let mediaControlPlugin = core?.plugins.first(where: { $0 is MediaControl }) else { return false }
+        guard let mediaControlPlugin = core?.plugins.first(where: { $0.pluginName == MediaControl.name }) else { return false }
         
         let pluginColidingWithGesture = filteredOutModalPlugins()?.first(where: {
             pluginColideWithTouch($0, point: point, event: event)

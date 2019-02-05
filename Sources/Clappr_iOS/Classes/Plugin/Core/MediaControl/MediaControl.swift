@@ -74,7 +74,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 } else {
                     self?.hide(animated: true)
                 }
-                
             }
 
             listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in

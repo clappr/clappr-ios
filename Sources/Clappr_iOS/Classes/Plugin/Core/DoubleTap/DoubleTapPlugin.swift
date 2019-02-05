@@ -81,7 +81,7 @@ public class DoubleTapPlugin: UICorePlugin {
     @objc func doubleTapSeek(xPosition: CGFloat) {
         guard let position = activePlayback?.position,
             let coreViewWidth = core?.view.frame.width,
-            let mediaControl = core?.plugins.first(where: { $0 is MediaControl }) else { return }
+            let mediaControl = core?.plugins.first(where: { $0.pluginName == MediaControl.name }) else { return }
         
         if !mediaControl.view.isHidden {
             toggleMediaControl()
