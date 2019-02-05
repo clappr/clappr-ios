@@ -1,6 +1,6 @@
 import UIKit
 
-class PassthroughView: UIView {
+class DoubleTapView: UIView {
     
     var core: Core?
     
@@ -12,7 +12,7 @@ class PassthroughView: UIView {
     }
     
     private func isPosterPluginVisible() -> Bool {
-        let posterPlugin = core?.activeContainer?.plugins.first(where: { $0 is PosterPlugin })
+        let posterPlugin = core?.activeContainer?.plugins.first(where: { $0.pluginName == PosterPlugin.name })
         return !(posterPlugin?.view.isHidden ?? false)
     }
     

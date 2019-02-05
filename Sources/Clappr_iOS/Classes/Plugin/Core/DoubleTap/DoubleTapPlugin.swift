@@ -6,7 +6,7 @@ public class DoubleTapPlugin: UICorePlugin {
         return String(describing: DoubleTapPlugin.self)
     }
     
-    var doubleTapView = PassthroughView()
+    var doubleTapView = DoubleTapView()
     
     private var activePlayback: Playback? {
         return core?.activePlayback
