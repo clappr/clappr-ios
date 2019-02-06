@@ -1,4 +1,4 @@
-open class Core: UIObject {
+open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
@@ -58,6 +58,8 @@ open class Core: UIObject {
 
         view.backgroundColor = .black
         
+        addTapGestures()
+        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { plugin in
@@ -65,6 +67,10 @@ open class Core: UIObject {
                 self.addPlugin(corePlugin)
             }
         }
+    }
+    
+    public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view!.accessibilityIdentifier == "Container"
     }
     
     public func add(container: Container) {

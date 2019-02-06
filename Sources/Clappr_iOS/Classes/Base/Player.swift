@@ -209,7 +209,8 @@ open class Player: BaseObject {
                 TimeIndicator.self,
                 FullscreenButton.self,
                 Seekbar.self,
-                DoubleTapPlugin.self]
+                DoubleTapCorePlugin.self,
+                DoubleTapMediaControlPlugin.self]
 
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true

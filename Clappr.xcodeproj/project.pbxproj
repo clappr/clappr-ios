@@ -92,9 +92,12 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
-		48D81F1D21F9F41200B2D52E /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */; };
-		48D81F1F21FA31FA00B2D52E /* DoubleTapPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */; };
-		48DBD1332209B3A200D4E656 /* DoubleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DBD1322209B3A200D4E656 /* DoubleTapView.swift */; };
+		48563229220B47B10096CDAE /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
+		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
+		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
+		487747D5220B5BFB000167CE /* DoubleTapMediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */; };
+		48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */; };
+		48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
@@ -378,9 +381,12 @@
 		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
-		48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
-		48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPluginTests.swift; sourceTree = "<group>"; };
-		48DBD1322209B3A200D4E656 /* DoubleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapView.swift; sourceTree = "<group>"; };
+		48563228220B47B10096CDAE /* Core+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Ext.swift"; sourceTree = "<group>"; };
+		4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPlugin.swift; sourceTree = "<group>"; };
+		4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
+		487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPluginTests.swift; sourceTree = "<group>"; };
+		48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePlugin.swift; sourceTree = "<group>"; };
+		48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePluginTests.swift; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAt.swift"; sourceTree = "<group>"; };
@@ -674,14 +680,12 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		48DBD1312209B38F00D4E656 /* DoubleTap */ = {
+		4856322C220B54A70096CDAE /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				AB0A58DD21FA2F380075729E /* Animation */,
-				48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */,
-				48DBD1322209B3A200D4E656 /* DoubleTapView.swift */,
+				4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */,
 			);
-			path = DoubleTap;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		571B7B2F21750398005C0942 /* Stub */ = {
@@ -898,6 +902,7 @@
 				57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */,
 				5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */,
 				55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */,
+				48563228220B47B10096CDAE /* Core+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -993,6 +998,7 @@
 		9E26CFEC201612D000AE92B7 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AB0A58DD21FA2F380075729E /* Animation */,
 				9E26CFEF2016136300AE92B7 /* Base */,
 				9E26CFF52016150A00AE92B7 /* Plugin */,
 				9E26CFEE2016134000AE92B7 /* Protocol */,
@@ -1031,6 +1037,7 @@
 		9E26CFF52016150A00AE92B7 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				4856322C220B54A70096CDAE /* Base */,
 				C92F1C97216F80B80059D860 /* Core */,
 				9E26CFF62016151800AE92B7 /* Container */,
 			);
@@ -1096,6 +1103,7 @@
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
 				320A7A14216FBF89006D2B24 /* PlayButton.swift */,
+				4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1112,7 +1120,7 @@
 		C92F1C97216F80B80059D860 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				48DBD1312209B38F00D4E656 /* DoubleTap */,
+				48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */,
 				AB163504215AB93300635233 /* MediaControl */,
 			);
 			path = Core;
@@ -1151,7 +1159,7 @@
 			isa = PBXGroup;
 			children = (
 				C9EDF8462162C93900789E2F /* MediaControl */,
-				48D81F1E21FA31FA00B2D52E /* DoubleTapPluginTests.swift */,
+				48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1165,6 +1173,7 @@
 				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
 				C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */,
 				E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */,
+				487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1880,7 +1889,7 @@
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
 				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
-				48D81F1F21FA31FA00B2D52E /* DoubleTapPluginTests.swift in Sources */,
+				48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
@@ -1897,6 +1906,7 @@
 				57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */,
 				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
+				487747D5220B5BFB000167CE /* DoubleTapMediaControlPluginTests.swift in Sources */,
 				C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */,
 				E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */,
 				96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */,
@@ -1912,7 +1922,6 @@
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
-				48DBD1332209B3A200D4E656 /* DoubleTapView.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIView+Ext.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
@@ -1948,18 +1957,21 @@
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
 				AB0A58DF21FA2F520075729E /* DoubleTapAnimation.swift in Sources */,
-				48D81F1D21F9F41200B2D52E /* DoubleTapPlugin.swift in Sources */,
+				48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,
 				9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
+				48563229220B47B10096CDAE /* Core+Ext.swift in Sources */,
 				9EED97012088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
 				96D362C41D41339400CCB866 /* BaseObject.swift in Sources */,
 				96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */,
 				C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				ABE7D3EE212C36200049773A /* SharedData.swift in Sources */,
+				4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */,
 				96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */,
 				96D362CF1D41339400CCB866 /* UIObject.swift in Sources */,
+				4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
