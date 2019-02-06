@@ -69,11 +69,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
-                if self?.view.isHidden ?? false {
-                    self?.toggleVisibility()
-                } else {
-                    self?.hide(animated: true)
-                }
+                self?.toggleVisibility()
             }
 
             listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
@@ -205,7 +201,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     override open func render() {
         view.addSubview(mediaControlView)
         mediaControlView.bindFrameToSuperviewBounds()
-        setupGestures()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tapGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
         
         view.isHidden = true
         view.backgroundColor = UIColor.clear
@@ -215,13 +215,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         showIfAlwaysVisible()
         view.bindFrameToSuperviewBounds()
-    }
-    
-    private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        tapGesture.delegate = self
-        view.addGestureRecognizer(tapGesture)
-        self.tapGesture = tapGesture
     }
 
     func renderPlugins(_ plugins: [MediaControlPlugin]) {
