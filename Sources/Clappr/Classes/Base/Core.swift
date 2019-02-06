@@ -57,7 +57,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         super.init()
 
         view.backgroundColor = .black
-        
+
         addTapGestures()
         
         bindEventListeners()

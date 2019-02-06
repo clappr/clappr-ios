@@ -92,6 +92,7 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		48563229220B47B10096CDAE /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
 		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
@@ -1820,6 +1821,7 @@
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */,
+				4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */,
 				5737E19721EF8D9600538D1C /* ObjC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
