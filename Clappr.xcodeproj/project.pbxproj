@@ -677,6 +677,7 @@
 		48DBD1312209B38F00D4E656 /* DoubleTap */ = {
 			isa = PBXGroup;
 			children = (
+				AB0A58DD21FA2F380075729E /* Animation */,
 				48D81F1C21F9F41200B2D52E /* DoubleTapPlugin.swift */,
 				48DBD1322209B3A200D4E656 /* DoubleTapView.swift */,
 			);
@@ -842,7 +843,6 @@
 			children = (
 				5744C05321EE14390087D9FB /* ObjC.h */,
 				5744C05421EE144F0087D9FB /* ObjC.m */,
-				AB0A58DD21FA2F380075729E /* Animation */,
 				32FC971D20B733B300ABA0C2 /* Helper */,
 				968E5BD71D6CBF970092F372 /* Log */,
 				96D3628B1D41339400CCB866 /* Base */,
