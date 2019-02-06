@@ -31,7 +31,8 @@ class DoubleTapAnimation {
     
     func animateBackward() {
         guard let playback = core?.activePlayback,
-            playback.position - 10 > 0.0, let view = core?.view else { return }
+            playback.position - 10 > 0.0,
+            let view = core?.view else { return }
         animate(leftBubbleView, parentView: view, widthConstraint: leftBubbleWidth, heightConstraint: leftBubbleHeight)
         animate(backLabel)
         animate(backIcon3, delay: 0)
