@@ -58,11 +58,9 @@ class CoreTests: QuickSpec {
                 }
                 
                 #if os(iOS)
-
                 it("add gesture recognizer") {
                     expect(core.view.gestureRecognizers?.count) > 0
                 }
-                
                 #endif
             }
 
