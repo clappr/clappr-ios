@@ -37,11 +37,11 @@ public class DoubleTapPlugin: UICorePlugin {
     }
     
     func removeDoubleTapGesture() {
-        Logger.logInfo(#function)
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "DoubleTapPlugin should implement removeDoubleTapGesture method", userInfo: nil).raise()
     }
     
     func addDoubleTapGesture() {
-        Logger.logInfo(#function)
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "DoubleTapPlugin should implement addDoubleTapGesture method", userInfo: nil).raise()
     }
     
     public override func render() {
