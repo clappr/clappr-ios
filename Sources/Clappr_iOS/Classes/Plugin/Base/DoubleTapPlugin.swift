@@ -49,15 +49,18 @@ public class DoubleTapPlugin: UICorePlugin {
     }
 
     @objc func doubleTapSeek(xPosition: CGFloat) {
-        guard let position = activePlayback?.position,
+        guard let activePlayback = core?.activePlayback,
             let coreViewWidth = core?.view.frame.width else { return }
         
+        let playBackPosition = activePlayback.position
         impactFeedback()
         if xPosition < coreViewWidth / 2 {
-            activePlayback?.seek(position - 10)
+            guard playBackPosition - 10 > 0.0 else { return }
+            activePlayback.seek(playBackPosition - 10)
             animatonHandler?.animateBackward()
         } else {
-            activePlayback?.seek(position + 10)
+            guard playBackPosition + 10 < activePlayback.duration else { return }
+            activePlayback.seek(playBackPosition + 10)
             animatonHandler?.animateForward()
         }
     }
