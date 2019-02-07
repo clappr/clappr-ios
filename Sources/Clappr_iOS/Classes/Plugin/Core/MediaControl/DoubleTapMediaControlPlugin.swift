@@ -38,7 +38,7 @@ public class DoubleTapMediaControlPlugin: DoubleTapPlugin {
     }
     
     func shouldSeek(point: CGPoint) -> Bool {
-        guard let mediaControlView = self.mediaControl?.mediaControlView else { return false }
+        guard let mediaControlView = mediaControl?.mediaControlView else { return false }
         
         let pluginColidingWithGesture = filteredOutModalPlugins()?.first(where: {
             $0.view.point(inside: mediaControlView.convert(point, to: $0.view), with: nil)
