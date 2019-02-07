@@ -93,6 +93,8 @@
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
+		4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6AE220C72AE00D1C134 /* SeekBubble.swift */; };
+		4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */; };
 		48563229220B47B10096CDAE /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
 		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
@@ -382,6 +384,8 @@
 		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
+		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		48563228220B47B10096CDAE /* Core+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Ext.swift"; sourceTree = "<group>"; };
 		4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPlugin.swift; sourceTree = "<group>"; };
 		4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
@@ -679,6 +683,15 @@
 				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		4822B6B2220C72E300D1C134 /* SeekBubble */ = {
+			isa = PBXGroup;
+			children = (
+				4822B6AE220C72AE00D1C134 /* SeekBubble.swift */,
+				4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */,
+			);
+			path = SeekBubble;
 			sourceTree = "<group>";
 		};
 		4856322C220B54A70096CDAE /* Base */ = {
@@ -1089,6 +1102,7 @@
 			isa = PBXGroup;
 			children = (
 				AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */,
+				4822B6B2220C72E300D1C134 /* SeekBubble */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -1920,6 +1934,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
+				4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */,
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
@@ -1931,6 +1946,7 @@
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */,
 				C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
+				4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
 				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,
