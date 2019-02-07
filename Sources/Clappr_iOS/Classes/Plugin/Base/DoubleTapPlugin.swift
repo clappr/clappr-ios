@@ -2,6 +2,8 @@ import UIKit
 
 public class DoubleTapPlugin: UICorePlugin {
     
+    var doubleTapGesture: UITapGestureRecognizer!
+    
     override open var pluginName: String {
         return String(describing: DoubleTapPlugin.self)
     }
@@ -15,10 +17,35 @@ public class DoubleTapPlugin: UICorePlugin {
     required init(context: UIObject) {
         super.init(context: context)
         animatonHandler = DoubleTapAnimation(core)
+        bindEvents()
     }
     
     required init() {
         super.init()
+    }
+  
+    private func bindEvents() {
+        stopListening()
+        bindCoreEvents()
+    }
+    
+    private func bindCoreEvents() {
+        guard let core = core else { return }
+        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
+        listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeDoubleTapGesture() }
+        listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addDoubleTapGesture() }
+    }
+    
+    func removeDoubleTapGesture() {
+        Logger.logInfo(#function)
+    }
+    
+    func addDoubleTapGesture() {
+        Logger.logInfo(#function)
+    }
+    
+    public override func render() {
+        addDoubleTapGesture()
     }
 
     @objc func doubleTapSeek(xPosition: CGFloat) {

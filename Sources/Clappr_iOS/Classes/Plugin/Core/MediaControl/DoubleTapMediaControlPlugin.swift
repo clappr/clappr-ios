@@ -6,22 +6,20 @@ public class DoubleTapMediaControlPlugin: DoubleTapPlugin {
         return String(describing: DoubleTapMediaControlPlugin.self)
     }
     
-    override public func render() {
-        addGestures()
-    }
-    
     private var mediaControl: MediaControl? {
         return core?.plugins.first(where: { $0.pluginName == MediaControl.name }) as? MediaControl
     }
     
-    private func addGestures() {
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+    override func removeDoubleTapGesture() {
+        mediaControl?.mediaControlView.removeGestureRecognizer(doubleTapGesture)
+    }
+    
+    override func addDoubleTapGesture() {
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         
-        if let mediaControl = self.mediaControl {
-            mediaControl.tapGesture?.require(toFail: doubleTapGesture)
-            mediaControl.mediaControlView.addGestureRecognizer(doubleTapGesture)
-        }
+        mediaControl?.tapGesture?.require(toFail: doubleTapGesture)
+        mediaControl?.mediaControlView.addGestureRecognizer(doubleTapGesture)
     }
     
     @objc private func doubleTap(gestureRecognizer: UITapGestureRecognizer) {
