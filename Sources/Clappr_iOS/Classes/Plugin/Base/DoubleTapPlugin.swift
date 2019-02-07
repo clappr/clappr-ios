@@ -5,7 +5,7 @@ public class DoubleTapPlugin: UICorePlugin {
     var doubleTapGesture: UITapGestureRecognizer!
     
     override open var pluginName: String {
-        return String(describing: DoubleTapPlugin.self)
+        return String(describing: "DoubleTapPlugin")
     }
     
     private var activePlayback: Playback? {

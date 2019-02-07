@@ -3,7 +3,7 @@ import UIKit
 public class DoubleTapMediaControlPlugin: DoubleTapPlugin {
     
     override open var pluginName: String {
-        return String(describing: DoubleTapMediaControlPlugin.self)
+        return String(describing: "DoubleTapMediaControlPlugin")
     }
     
     private var mediaControl: MediaControl? {

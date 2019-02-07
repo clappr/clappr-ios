@@ -3,7 +3,7 @@ import UIKit
 public class DoubleTapCorePlugin: DoubleTapPlugin {
     
     override open var pluginName: String {
-        return String(describing: DoubleTapCorePlugin.self)
+        return String(describing: "DoubleTapCorePlugin")
     }
     
     override func removeDoubleTapGesture() {
