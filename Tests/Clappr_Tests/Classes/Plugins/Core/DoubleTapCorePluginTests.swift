@@ -21,8 +21,7 @@ class DoubleTapCorePluginTests: QuickSpec {
             
             describe("pluginName") {
                 it("has a name") {
-                    let pluginName = String(describing: DoubleTapCorePlugin.self)
-                    expect(doubleTapPlugin.pluginName).to(equal(pluginName))
+                    expect(doubleTapPlugin.pluginName).to(equal("DoubleTapCorePlugin"))
                 }
             }
             

@@ -32,8 +32,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
             
             describe("pluginName") {
                 it("has a name") {
-                    let pluginName = String(describing: DoubleTapMediaControlPlugin.self)
-                    expect(doubleTapPlugin.pluginName).to(equal(pluginName))
+                    expect(doubleTapPlugin.pluginName).to(equal("DoubleTapMediaControlPlugin"))
                 }
             }
             
