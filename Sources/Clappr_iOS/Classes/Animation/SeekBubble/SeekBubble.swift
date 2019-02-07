@@ -1,5 +1,4 @@
 class SeekBubble: UIView {
-    private let playImage = UIImage.fromName("play", for: PlayButton.self)
     private var label = UILabel()
     private var images: [UIImageView] = []
     private var text: String!
