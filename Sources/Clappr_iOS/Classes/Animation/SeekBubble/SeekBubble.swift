@@ -2,6 +2,7 @@ class SeekBubble: UIView {
     private let playImage = UIImage.fromName("play", for: PlayButton.self)
     private var label = UILabel()
     private var images: [UIImageView] = []
+    private var text: String!
     
     private var parentView: UIView!
     
@@ -9,20 +10,21 @@ class SeekBubble: UIView {
     var bubbleWidth = NSLayoutConstraint()
     var bubbleSide: SeekBubbleSide!
     
+    func setup(within parentView: UIView, bubbleSide: SeekBubbleSide, text: String = "10 segundos", numberOfIndicators: Int = 3) {
+        self.parentView = parentView
+        self.bubbleSide = bubbleSide
+        self.text = text
+        parentView.clipsToBounds = true
+        
+        setupBubble(within: parentView, heightConstraint: &bubbleHeight, widthConstraint: &bubbleWidth, position: bubbleSide.position())
+        setupLabel(parentView, position: bubbleSide.positionConstant())
+        setupImages(numberOfIndicators)
+    }
+    
     func animate() {
         animateBubble()
         animateLabel()
         animateImages()
-    }
-    
-    private func animateImages() {
-        var delay: TimeInterval = 0
-        let orderedImages = bubbleSide == .left ? images.reversed() : images
-        for index in 0..<orderedImages.count {
-            let image = orderedImages[index]
-            animate(image, delay: delay)
-            delay = delay + 0.2
-        }
     }
     
     private func animateBubble() {
@@ -59,6 +61,16 @@ class SeekBubble: UIView {
         })
     }
     
+    private func animateImages() {
+        var delay: TimeInterval = 0
+        let orderedImages = bubbleSide == .left ? images.reversed() : images
+        for index in 0..<orderedImages.count {
+            let image = orderedImages[index]
+            animate(image, delay: delay)
+            delay = delay + 0.2
+        }
+    }
+    
     private func animate(_ image: UIImageView, delay: TimeInterval) {
         parentView.bringSubview(toFront: image)
         UIView.animate(withDuration: 0.15, delay: delay, animations: {
@@ -70,16 +82,6 @@ class SeekBubble: UIView {
                 self.parentView.layoutSubviews()
             })
         })
-    }
-    
-    func setup(within parentView: UIView, bubbleSide: SeekBubbleSide, numberOfIndicators: Int = 3) {
-        self.parentView = parentView
-        self.bubbleSide = bubbleSide
-        parentView.clipsToBounds = true
-        
-        setupBubble(within: parentView, heightConstraint: &bubbleHeight, widthConstraint: &bubbleWidth, position: bubbleSide.position())
-        setupLabel(parentView, position: bubbleSide.positionConstant())
-        setupImages(numberOfIndicators)
     }
     
     private func setupImages(_ numberOfIndicators: Int) {
@@ -137,7 +139,7 @@ class SeekBubble: UIView {
     }
     
     private func setupLabel(_ view: UIView, position: CGFloat) {
-        label.text = "10 segundos"
+        label.text = text
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 13)
