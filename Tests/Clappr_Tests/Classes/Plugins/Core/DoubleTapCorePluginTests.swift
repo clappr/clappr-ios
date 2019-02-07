@@ -11,7 +11,8 @@ class DoubleTapCorePluginTests: QuickSpec {
             var core: CoreStub!
             
             beforeEach {
-                core = CoreStub.init(options: [:])
+                core = CoreStub()
+                core.playbackMock?.videoDuration = 60.0
                 doubleTapPlugin = DoubleTapCorePlugin(context: core)
                 core.addPlugin(doubleTapPlugin)
                 core.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)

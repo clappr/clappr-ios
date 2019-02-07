@@ -13,7 +13,8 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
             var playButton: PlayButton!
             
             beforeEach {
-                core = CoreStub.init(options: [:])
+                core = CoreStub()
+                core.playbackMock?.videoDuration = 60.0
                 doubleTapPlugin = DoubleTapMediaControlPlugin(context: core)
                 mediaControl = MediaControl(context: core)
                 playButton = PlayButton(context: core)
@@ -69,7 +70,6 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                 
                 context("and it colides with another UICorePlugin") {
                     it("should not seek") {
-                        mediaControl.renderPlugins([playButton])
                         playButton.view.layoutIfNeeded()
                         mediaControl.view.layoutIfNeeded()
                         
