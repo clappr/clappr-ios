@@ -55,12 +55,12 @@ public class DoubleTapPlugin: UICorePlugin {
         let playBackPosition = activePlayback.position
         impactFeedback()
         if xPosition < coreViewWidth / 2 {
-            guard playBackPosition - 10 > 0.0 else { return }
             activePlayback.seek(playBackPosition - 10)
+            guard playBackPosition - 10 > 0.0 else { return }
             animatonHandler?.animateBackward()
         } else {
-            guard playBackPosition + 10 < activePlayback.duration else { return }
             activePlayback.seek(playBackPosition + 10)
+            guard playBackPosition + 10 < activePlayback.duration else { return }
             animatonHandler?.animateForward()
         }
     }
