@@ -1,6 +1,8 @@
 public extension UIImageView {
     func download(url: URL) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
