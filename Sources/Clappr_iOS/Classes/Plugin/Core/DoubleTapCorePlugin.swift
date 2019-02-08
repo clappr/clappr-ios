@@ -20,10 +20,19 @@ public class DoubleTapCorePlugin: DoubleTapPlugin {
         }
     }
     
+    override func shouldSeek(point: CGPoint) -> Bool {
+        let pluginColidingWithGesture = core?.activeContainer?.plugins.first(where: {
+            !$0.view.isHidden && $0.view.point(inside: core!.view.convert(point, to: $0.view), with: nil)
+        })
+        return pluginColidingWithGesture == nil
+    }
+    
     @objc private func doubleTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
-            let xPosition = gestureRecognizer.location(in: view).x
-            doubleTapSeek(xPosition: xPosition)
+            if shouldSeek(point: gestureRecognizer.location(in: view)) {
+                let xPosition = gestureRecognizer.location(in: view).x
+                doubleTapSeek(xPosition: xPosition)
+            }
         }
     }
 }

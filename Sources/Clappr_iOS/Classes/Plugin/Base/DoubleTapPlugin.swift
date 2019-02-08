@@ -47,6 +47,10 @@ public class DoubleTapPlugin: UICorePlugin {
     public override func render() {
         addDoubleTapGesture()
     }
+    
+    func shouldSeek(point: CGPoint) -> Bool {
+        return true
+    }
 
     @objc func doubleTapSeek(xPosition: CGFloat) {
         guard let activePlayback = core?.activePlayback,

@@ -37,7 +37,7 @@ public class DoubleTapMediaControlPlugin: DoubleTapPlugin {
         return pluginsWithoutMediaControl?.filter({ ($0 as? MediaControlPlugin)?.panel != .modal })
     }
     
-    func shouldSeek(point: CGPoint) -> Bool {
+    override func shouldSeek(point: CGPoint) -> Bool {
         guard let mediaControlView = mediaControl?.mediaControlView else { return false }
         
         let pluginColidingWithGesture = filteredOutModalPlugins()?.first(where: {
