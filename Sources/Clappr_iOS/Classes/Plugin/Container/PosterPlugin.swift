@@ -1,5 +1,3 @@
-import Kingfisher
-
 open class PosterPlugin: UIContainerPlugin {
     internal(set) var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
@@ -35,7 +33,7 @@ open class PosterPlugin: UIContainerPlugin {
     fileprivate typealias PosterUrl = String
     fileprivate func setPosterImage(with urlString: PosterUrl) {
         if let url = URL(string: urlString) {
-            poster.kf.setImage(with: url)
+            poster.download(url: url)
         } else {
             Logger.logWarn("invalid URL.", scope: pluginName)
         }
