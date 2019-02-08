@@ -15,7 +15,7 @@ class SeekBubble: UIView {
         self.text = text
         parentView.clipsToBounds = true
         
-        setupBubble(within: parentView, heightConstraint: &bubbleHeight, widthConstraint: &bubbleWidth, position: bubbleSide.position())
+        setupBubble(within: parentView, position: bubbleSide.position())
         setupLabel(parentView, position: bubbleSide.positionConstant())
         setupImages(numberOfIndicators)
     }
@@ -94,7 +94,7 @@ class SeekBubble: UIView {
         }
     }
     
-    private func setupBubble(within view: UIView, heightConstraint: inout NSLayoutConstraint, widthConstraint: inout NSLayoutConstraint, position: NSLayoutAttribute) {
+    private func setupBubble(within view: UIView, position: NSLayoutAttribute) {
         
         backgroundColor = UIColor(white: 0, alpha: 0.2)
         view.addSubview(self)
@@ -116,7 +116,7 @@ class SeekBubble: UIView {
                                               multiplier: 1,
                                               constant: 0))
         
-        widthConstraint = NSLayoutConstraint(item: self,
+        bubbleWidth = NSLayoutConstraint(item: self,
                                              attribute: .width,
                                              relatedBy: .equal,
                                              toItem: nil,
@@ -124,7 +124,7 @@ class SeekBubble: UIView {
                                              multiplier: 1,
                                              constant: 0)
         
-        heightConstraint = NSLayoutConstraint(item: self,
+        bubbleHeight = NSLayoutConstraint(item: self,
                                               attribute: .height,
                                               relatedBy: .equal,
                                               toItem: nil,
@@ -132,7 +132,7 @@ class SeekBubble: UIView {
                                               multiplier: 1,
                                               constant: 0)
         
-        let constraints = [widthConstraint, heightConstraint]
+        let constraints = [bubbleWidth, bubbleHeight]
         constraints.forEach { $0.isActive = true }
         self.addConstraints(constraints)
     }
