@@ -56,9 +56,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         super.init()
 
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = .black
 
-        addTapRecognizer()
+        addTapGestures()
+        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { plugin in
@@ -66,6 +67,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
                 self.addPlugin(corePlugin)
             }
         }
+    }
+    
+    public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view!.accessibilityIdentifier == "Container"
     }
     
     public func add(container: Container) {
@@ -76,14 +81,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         if activeContainer != container {
             activeContainer = container
         }
-    }
-
-    fileprivate func addTapRecognizer() {
-        #if os(iOS)
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTappedView))
-        tapRecognizer.delegate = self
-        view.addGestureRecognizer(tapRecognizer)
-        #endif
     }
 
     fileprivate func bindEventListeners() {
@@ -185,10 +182,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return plugins.filter({ $0.isKind(of: pluginClass) }).count > 0
     }
 
-    public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view!.accessibilityIdentifier == "Container"
-    }
-
     @objc open func setFullscreen(_ fullscreen: Bool) {
         #if os(iOS)
         fullscreenHandler?.set(fullscreen: fullscreen)
@@ -228,9 +221,5 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         view.removeFromSuperview()
 
         trigger(Event.didDestroy.rawValue)
-    }
-
-    @objc func didTappedView() {
-        trigger(InternalEvent.didTappedCore.rawValue)
     }
 }

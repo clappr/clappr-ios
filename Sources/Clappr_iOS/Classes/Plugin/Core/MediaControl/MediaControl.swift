@@ -1,7 +1,7 @@
 import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
-    public var gesture: UITapGestureRecognizer?
+    public var tapGesture: UITapGestureRecognizer?
 
     var mediaControlView: MediaControlView = .fromNib()
 
@@ -197,15 +197,15 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     @objc func tapped() {
         hideAndStopTimer()
     }
-
+    
     override open func render() {
         view.addSubview(mediaControlView)
         mediaControlView.bindFrameToSuperviewBounds()
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        gesture.delegate = self
-        view.addGestureRecognizer(gesture)
-        self.gesture = gesture
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tapGesture.delegate = self
+        view.addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
         
         view.isHidden = true
         view.backgroundColor = UIColor.clear
@@ -214,7 +214,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         showIfAlwaysVisible()
-
         view.bindFrameToSuperviewBounds()
     }
 

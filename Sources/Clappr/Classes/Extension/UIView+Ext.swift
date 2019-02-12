@@ -71,4 +71,9 @@ extension UIView {
         let nib = UINib(nibName: String(describing: T.self), bundle: Bundle(for: T.self))
         return (nib.instantiate(withOwner: nil, options: nil).last as? T)!
     }
+    
+    func addRoundedBorder(with radius: CGFloat) {
+        layer.cornerRadius = radius
+        clipsToBounds = true
+    }
 }
