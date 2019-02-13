@@ -77,6 +77,25 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                         expect(shouldSeek).to(beFalse())
                     }
                 }
+                
+                context("and it is a live video") {
+                    it("should not seek forward") {
+                        core.playbackMock?.set(playbackType: .live)
+                        
+                        doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                        
+                        expect(core.playbackMock?.didCallSeek).to(beFalse())
+                    }
+                    
+                    it("should not seek backward if dvr is disabled") {
+                        core.playbackMock?.set(playbackType: .live)
+                        core.playbackMock?.set(isDvrAvailable: false)
+                        
+                        doubleTapPlugin.doubleTapSeek(xPosition: 0)
+                        
+                        expect(core.playbackMock?.didCallSeek).to(beFalse())
+                    }
+                }
             }
         }
     }

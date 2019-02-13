@@ -16,6 +16,7 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     var videoPosition: Double = 0
     var _isDvrInUse = false
     var didCallSeekToLivePosition = false
+    var _playbackType: PlaybackType = .vod
     
     override var duration: Double {
         return videoDuration
@@ -27,6 +28,10 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     
     override var isDvrInUse: Bool {
         return _isDvrInUse
+    }
+    
+    override var playbackType: PlaybackType {
+        return _playbackType
     }
     
     func set(isPlaying: Bool) {
@@ -45,6 +50,10 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     
     func set(isDvrAvailable: Bool) {
         _isDvrAvailable = isDvrAvailable
+    }
+    
+    func set(playbackType: PlaybackType) {
+        _playbackType = playbackType
     }
     
     func set(position: Double) {
