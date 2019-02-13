@@ -25,7 +25,7 @@ class UIImageViewTests: QuickSpec {
                         let url = URL(string: "https://clappr.io/poster.png")
                         let imageView = UIImageView()
 
-                        imageView.getImage(from: url!)
+                        imageView.setImage(from: url!)
 
                         expect(imageView.image).toEventuallyNot(beNil())
                     }
@@ -42,7 +42,7 @@ class UIImageViewTests: QuickSpec {
                         let url = URL(string: "https://clappr.io/poster.png")
                         let imageView = UIImageView()
 
-                        imageView.getImage(from: url!)
+                        imageView.setImage(from: url!)
 
                         expect(imageView.image).toEventually(beNil())
                     }

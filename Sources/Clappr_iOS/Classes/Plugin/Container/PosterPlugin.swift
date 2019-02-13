@@ -33,7 +33,7 @@ open class PosterPlugin: UIContainerPlugin {
     fileprivate typealias PosterUrl = String
     fileprivate func setPosterImage(with urlString: PosterUrl) {
         if let url = URL(string: urlString) {
-            poster.getImage(from: url)
+            poster.setImage(from: url)
         } else {
             Logger.logWarn("invalid URL.", scope: pluginName)
         }

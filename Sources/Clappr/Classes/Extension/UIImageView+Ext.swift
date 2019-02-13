@@ -1,5 +1,5 @@
 public extension UIImageView {
-    func getImage(from url: URL) {
+    func setImage(from url: URL) {
         let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
 
         URLSession.shared.dataTask(with: request) { data, response, error in
