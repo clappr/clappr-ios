@@ -66,7 +66,6 @@ public class DoubleTapPlugin: UICorePlugin {
     }
     
     private func seekBackward(_ playback: Playback) {
-        guard playback.playbackType != .live else { return }
         playback.seek(playback.position - 10)
         guard playback.position - 10 > 0.0 else { return }
         animatonHandler?.animateBackward()
