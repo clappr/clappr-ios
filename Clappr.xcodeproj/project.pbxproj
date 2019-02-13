@@ -222,10 +222,12 @@
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		B4D817701E8ADCE600DC07AE /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; };
 		B4D817711E8ADCE600DC07AE /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 96D362F01D41345E00CCB866 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C905869322132046009D2FA0 /* poster.png in Resources */ = {isa = PBXBuildFile; fileRef = C905869222132046009D2FA0 /* poster.png */; };
 		C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C92747E7220DD4E0009465A7 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */; };
 		C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */; };
+		C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93212462212013700F0C47B /* UIImageViewTests.swift */; };
 		C98C014C2166B50E009DFE0A /* FullscreenButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */; };
 		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
@@ -497,9 +499,11 @@
 		ABE7D3ED212C36200049773A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		C905869222132046009D2FA0 /* poster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poster.png; sourceTree = "<group>"; };
 		C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
+		C93212462212013700F0C47B /* UIImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewTests.swift; sourceTree = "<group>"; };
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
 		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
@@ -715,6 +719,7 @@
 		57351C6620248D66007DEBBE /* Stub */ = {
 			isa = PBXGroup;
 			children = (
+				C905869222132046009D2FA0 /* poster.png */,
 				32624C94212C773D004C26ED /* master.m3u8 */,
 				9E1613F62051CD4B006E95F2 /* sample.m3u8 */,
 				9E1613F72051CD4B006E95F2 /* sample0.ts */,
@@ -1285,6 +1290,7 @@
 			isa = PBXGroup;
 			children = (
 				FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */,
+				C93212462212013700F0C47B /* UIImageViewTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1656,6 +1662,7 @@
 				9E1613F82051CD4B006E95F2 /* sample1.ts in Resources */,
 				32624CAC212C7741004C26ED /* sample13.ts in Resources */,
 				9E1613FA2051CD4B006E95F2 /* sample0.ts in Resources */,
+				C905869322132046009D2FA0 /* poster.png in Resources */,
 				32624CAD212C7741004C26ED /* sub0.webvtt in Resources */,
 				32624CB4212C7741004C26ED /* sample6.ts in Resources */,
 				32624CAE212C7741004C26ED /* sub-por.m3u8 in Resources */,
@@ -1898,6 +1905,7 @@
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				FBE6A3E42163EEAE0083C9CC /* Loader+Plugins.swift in Sources */,
 				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
+				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,

@@ -1,5 +1,5 @@
 public extension UIImageView {
-    func download(url: URL) {
+    func getImage(from url: URL) {
         let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
 
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -14,11 +14,5 @@ public extension UIImageView {
                 self.image = image
             }
         }.resume()
-    }
-
-    func download(string: String) {
-        guard let url = URL(string: string) else { return }
-
-        download(url: url)
     }
 }
