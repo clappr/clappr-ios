@@ -56,7 +56,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                 
                 describe("live video") {
                     context("with DVR") {
-                        it("should seek forward") {
+                        it("seeks forward") {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: true)
                             core.playbackMock?.set(isDvrInUse: true)
@@ -67,7 +67,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
                         
-                        it("should seek backward") {
+                        it("seeks backward") {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: true)
                             
@@ -77,7 +77,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                         }
                         
                         context("with DVR not in use") {
-                            it("should not seek forward") {
+                            it("does not seek forward") {
                                 core.playbackMock?.set(playbackType: .live)
                                 core.playbackMock?.set(isDvrAvailable: true)
                                 core.playbackMock?.set(isDvrInUse: false)
@@ -90,7 +90,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                     }
                     
                     context("without DVR") {
-                        it("should not seek forward") {
+                        it("does not seek forward") {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
@@ -99,7 +99,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
                         
-                        it("should not seek backward") {
+                        it("does not seek backward") {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
