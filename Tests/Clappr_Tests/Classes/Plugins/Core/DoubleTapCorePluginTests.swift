@@ -77,7 +77,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                         }
                     }
                     
-                    context("widhout DVR") {
+                    context("without DVR") {
                         it("should not seek forward") {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
