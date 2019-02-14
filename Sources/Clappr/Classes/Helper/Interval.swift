@@ -1,6 +1,6 @@
 import Foundation
 
-class Interval {
+public class Interval {
     
     static let seekBubbleShowAnimation: TimeInterval = 4.0
     static let seekBubbleDismissAnimation: TimeInterval = 2.0
