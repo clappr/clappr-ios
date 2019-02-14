@@ -2,18 +2,18 @@ import Foundation
 
 public class Interval {
     
-    static let seekBubbleShowAnimation: TimeInterval = 4.0
-    static let seekBubbleDismissAnimation: TimeInterval = 2.0
-    static let seekBubbleVisibility: TimeInterval =  0.3
+    public static let seekBubbleShowAnimation: TimeInterval = 4.0
+    public static let seekBubbleDismissAnimation: TimeInterval = 2.0
+    public static let seekBubbleVisibility: TimeInterval =  0.3
     
-    static let seekLabelShowAnimation: TimeInterval = 2.0
-    static let seekLabelHideAnimation: TimeInterval = 2.0
-    static let seekLabelVisibility: TimeInterval =  0.5
+    public static let seekLabelShowAnimation: TimeInterval = 2.0
+    public static let seekLabelHideAnimation: TimeInterval = 2.0
+    public static let seekLabelVisibility: TimeInterval =  0.5
     
-    static let seekImageAnimation: TimeInterval = 0.15
-    static let seekImageVisibility: TimeInterval = 0.15
+    public static let seekImageAnimation: TimeInterval = 0.15
+    public static let seekImageVisibility: TimeInterval = 0.15
     
-    static let mediaControlAnimation: TimeInterval = 0.3
-    static let mediaControlSlowVisibility: TimeInterval = 4.0
-    static let mediaControlVisibility: TimeInterval = 0.4
+    public static let mediaControlAnimation: TimeInterval = 0.3
+    public static let mediaControlSlowVisibility: TimeInterval = 4.0
+    public static let mediaControlVisibility: TimeInterval = 0.4
 }
