@@ -56,17 +56,28 @@ public class DoubleTapPlugin: UICorePlugin {
         guard let activePlayback = core?.activePlayback,
             let coreViewWidth = core?.view.frame.width else { return }
         
-        let playBackPosition = activePlayback.position
-        impactFeedback()
-        if xPosition < coreViewWidth / 2 {
-            activePlayback.seek(playBackPosition - 10)
-            guard playBackPosition - 10 > 0.0 else { return }
-            animatonHandler?.animateBackward()
+        let didTapLeftSide = xPosition < coreViewWidth / 2
+        if didTapLeftSide {
+            seekBackward(activePlayback)
         } else {
-            activePlayback.seek(playBackPosition + 10)
-            guard playBackPosition + 10 < activePlayback.duration else { return }
-            animatonHandler?.animateForward()
+            seekForward(activePlayback)
         }
+    }
+    
+    private func seekBackward(_ playback: Playback) {
+        guard playback.playbackType == .vod || playback.isDvrAvailable else { return }
+        impactFeedback()
+        playback.seek(playback.position - 10)
+        guard playback.position - 10 > 0.0 else { return }
+        animatonHandler?.animateBackward()
+    }
+    
+    private func seekForward(_ playback: Playback) {
+        guard playback.playbackType == .vod || playback.isDvrAvailable && playback.isDvrInUse else { return }
+        impactFeedback()
+        playback.seek(playback.position + 10)
+        guard playback.position + 10 < playback.duration else { return }
+        animatonHandler?.animateForward()
     }
     
     private func impactFeedback() {
