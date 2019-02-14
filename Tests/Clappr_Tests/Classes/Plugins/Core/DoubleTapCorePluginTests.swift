@@ -75,6 +75,18 @@ class DoubleTapCorePluginTests: QuickSpec {
                             
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
+                        
+                        context("with DVR not in use") {
+                            it("should not seek forward") {
+                                core.playbackMock?.set(playbackType: .live)
+                                core.playbackMock?.set(isDvrAvailable: true)
+                                core.playbackMock?.set(isDvrInUse: false)
+                                
+                                doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                                
+                                expect(core.playbackMock?.didCallSeek).to(beFalse())
+                            }
+                        }
                     }
                     
                     context("without DVR") {
