@@ -1,5 +1,12 @@
+private let imageCache = NSCache<AnyObject, AnyObject>()
+
 public extension UIImageView {
     func setImage(from url: URL) {
+        if let imageFromCache = imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
+            self.image = imageFromCache
+            return
+        }
+
         let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
 
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -11,6 +18,7 @@ public extension UIImageView {
                 else { return }
 
             DispatchQueue.main.async() {
+                imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
                 self.image = image
             }
         }.resume()
