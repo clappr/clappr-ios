@@ -56,9 +56,9 @@ public class DoubleTapPlugin: UICorePlugin {
         guard let activePlayback = core?.activePlayback,
             let coreViewWidth = core?.view.frame.width else { return }
         
-        let tapIsOnTheLeftSide = xPosition < coreViewWidth / 2
+        let didTapLeftSide = xPosition < coreViewWidth / 2
         impactFeedback()
-        if (tapIsOnTheLeftSide) {
+        if didTapLeftSide {
             seekBackward(activePlayback)
         } else {
             seekForward(activePlayback)
