@@ -54,7 +54,7 @@ class DoubleTapCorePluginTests: QuickSpec {
                     }
                 }
                 
-                describe("and it is a live video") {
+                describe("live video") {
                     context("with DVR") {
                         it("should seek forward") {
                             core.playbackMock?.set(playbackType: .live)
