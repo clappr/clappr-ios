@@ -65,6 +65,7 @@ public class DoubleTapPlugin: UICorePlugin {
     }
     
     private func seekBackward(_ playback: Playback) {
+        guard playback.playbackType == .vod || playback.isDvrAvailable else { return }
         impactFeedback()
         playback.seek(playback.position - 10)
         guard playback.position - 10 > 0.0 else { return }
@@ -72,7 +73,7 @@ public class DoubleTapPlugin: UICorePlugin {
     }
     
     private func seekForward(_ playback: Playback) {
-        guard playback.playbackType == .vod || playback.isDvrInUse else { return }
+        guard playback.playbackType == .vod || playback.isDvrAvailable && playback.isDvrInUse else { return }
         impactFeedback()
         playback.seek(playback.position + 10)
         guard playback.position + 10 < playback.duration else { return }
