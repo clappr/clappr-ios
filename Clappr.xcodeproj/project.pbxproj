@@ -95,8 +95,8 @@
 		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6AE220C72AE00D1C134 /* SeekBubble.swift */; };
 		4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */; };
-		4822B6B42214961900D1C134 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* Interval.swift */; };
-		4822B6B522158FA300D1C134 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* Interval.swift */; };
+		4822B6B42214961900D1C134 /* AnimationDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* AnimationDuration.swift */; };
+		4822B6B522158FA300D1C134 /* AnimationDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* AnimationDuration.swift */; };
 		48563229220B47B10096CDAE /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
 		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
@@ -388,7 +388,7 @@
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
-		4822B6B32214961900D1C134 /* Interval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
+		4822B6B32214961900D1C134 /* AnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationDuration.swift; sourceTree = "<group>"; };
 		48563228220B47B10096CDAE /* Core+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Ext.swift"; sourceTree = "<group>"; };
 		4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPlugin.swift; sourceTree = "<group>"; };
 		4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
@@ -683,7 +683,7 @@
 		32FC971D20B733B300ABA0C2 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4822B6B32214961900D1C134 /* Interval.swift */,
+				4822B6B32214961900D1C134 /* AnimationDuration.swift */,
 				57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */,
 			);
 			path = Helper;
@@ -1814,7 +1814,7 @@
 				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
-				4822B6B522158FA300D1C134 /* Interval.swift in Sources */,
+				4822B6B522158FA300D1C134 /* AnimationDuration.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
 				32755E22215038CB0088724E /* Playback.swift in Sources */,
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
@@ -1962,7 +1962,7 @@
 				C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */,
 				968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */,
 				57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */,
-				4822B6B42214961900D1C134 /* Interval.swift in Sources */,
+				4822B6B42214961900D1C134 /* AnimationDuration.swift in Sources */,
 				FB46260121AC8D2B008D9A25 /* CoreFactory.swift in Sources */,
 				96D362C61D41339400CCB866 /* Core.swift in Sources */,
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,

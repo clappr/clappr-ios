@@ -22,9 +22,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     public var hideControlsTimer: Timer?
-    public var animationDuration = Interval.mediaControlAnimation
-    public var secondsToHideControlFast = Interval.mediaControlVisibility
-    public var secondsToHideControlSlow = Interval.mediaControlSlowVisibility
+    public var animationDuration = AnimationDuration.mediaControlShow
+    public var secondsToHideControlFast = AnimationDuration.mediaControlVisibility
+    public var secondsToHideControlSlow = AnimationDuration.mediaControlSlowVisibility
 
     private var showControls = true
     private var alwaysVisible = false
