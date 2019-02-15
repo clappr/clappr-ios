@@ -520,7 +520,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     #endif
 
                     it("trigger didUpdateDuration") {
-                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                        let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.sample/master.m3u8"])
                         var callDidUpdateDuration = false
                         playback.render()
 
@@ -529,8 +529,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
 
                         playback.play()
-
-                        expect(callDidUpdateDuration).to(beTrue())
+                        expect(callDidUpdateDuration).toEventually(beTrue(), timeout: 3)
                     }
                 }
             }
