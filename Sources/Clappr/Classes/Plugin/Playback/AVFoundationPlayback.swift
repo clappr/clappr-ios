@@ -380,8 +380,8 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
-                                    change _: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 
         guard let concreteContext = context else {
             return
