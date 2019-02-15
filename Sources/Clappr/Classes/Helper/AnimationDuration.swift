@@ -16,6 +16,4 @@ public class AnimationDuration {
     
     public static let mediaControlShow: TimeInterval = 0.3
     public static let mediaControlHide: TimeInterval = 0.3
-    public static let mediaControlSlowVisibility: TimeInterval = 4.0
-    public static let mediaControlVisibility: TimeInterval = 0.4
 }
