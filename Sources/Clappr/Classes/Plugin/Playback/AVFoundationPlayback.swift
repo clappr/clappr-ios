@@ -17,6 +17,7 @@ open class AVFoundationPlayback: Playback {
     private var kvoExternalPlaybackActiveContext = 0
     private var kvoPlayerRateContext = 0
     private var kvoViewBounds = 0
+    private var kvoDurationDidChangeContext = 0
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
@@ -232,8 +233,6 @@ open class AVFoundationPlayback: Playback {
 
             selectDefaultAudioIfNeeded()
 
-            trigger(.didUpdateDuration, userInfo: ["duration": duration])
-
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
@@ -276,6 +275,8 @@ open class AVFoundationPlayback: Playback {
                             options: .new, context: &kvoExternalPlaybackActiveContext)
         player?.addObserver(self, forKeyPath: "rate",
                             options: .new, context: &kvoPlayerRateContext)
+        player?.addObserver(self, forKeyPath: "currentItem.duration",
+                            options: .new, context: &kvoDurationDidChangeContext)
 
         NotificationCenter.default.addObserver(
             self,
@@ -401,6 +402,8 @@ open class AVFoundationPlayback: Playback {
             handlePlayerRateChanged()
         case &kvoViewBounds:
             handleViewBoundsChanged()
+        case &kvoDurationDidChangeContext:
+            handleDurationChanged()
         default:
             break
         }
@@ -505,6 +508,12 @@ open class AVFoundationPlayback: Playback {
         }
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
+    }
+
+    private func handleDurationChanged() {
+        if playerStatus == .readyToPlay {
+            trigger(.didUpdateDuration, userInfo: ["duration": duration])
+        }
     }
     
     private func handlePlayerRateChanged() {
@@ -619,6 +628,7 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
             player?.removeObserver(self, forKeyPath: "rate")
+            player?.removeObserver(self, forKeyPath: "currentItem.duration")
 
             if let timeObserver = self.timeObserver {
                 player?.removeTimeObserver(timeObserver)
