@@ -24,6 +24,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var hideControlsTimer: Timer?
     public var shortTimeToHideMediaControl = 0.4
     public var longTimeToHideMediaControl = 4.0
+    public var mediaControlShow = AnimationDuration.mediaControlShow
+    public var mediaControlHide = AnimationDuration.mediaControlHide
 
     private var showControls = true
     private var alwaysVisible = false
@@ -124,7 +126,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             return
         }
 
-        let duration = animated ? AnimationDuration.mediaControlShow : 0
+        let duration = animated ? mediaControlShow : 0
 
         currentlyShowing = true
         currentlyHiding = false
@@ -161,7 +163,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             currentlyShowing = false
             currentlyHiding = true
 
-            let duration = animated ? AnimationDuration.mediaControlHide : 0
+            let duration = animated ? mediaControlHide : 0
 
             UIView.animate(
                 withDuration: duration,
