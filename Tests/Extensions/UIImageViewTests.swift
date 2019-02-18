@@ -6,7 +6,7 @@ import OHHTTPStubs
 
 class UIImageViewTests: QuickSpec {
     override func spec() {
-        describe("#UIImageViewTests") {
+        describe(".UIImageViewTests") {
             describe("get image from url") {
                 beforeEach {
                     OHHTTPStubs.removeAllStubs()
