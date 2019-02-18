@@ -47,6 +47,32 @@ class UIImageViewTests: QuickSpec {
                         expect(imageView.image).toEventually(beNil())
                     }
                 }
+
+                context("when repeat the same request") {
+                    var requestCount: Int!
+
+                    beforeEach {
+                        requestCount = 0
+
+                        stub(condition: isExtension("png") && isHost("test.io")) { _ in
+                            requestCount += 1
+                            let image = UIImage(named: "poster", in: Bundle(for: UIImageViewTests.self), compatibleWith: nil)!
+                            let data = UIImagePNGRepresentation(image)
+                            return OHHTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type":"image/jpeg"])
+                        }
+                    }
+
+                    it("uses image from cache") {
+                        let url = URL(string: "https://test.io/poster.png")
+                        let imageView = UIImageView()
+
+                        imageView.setImage(from: url!)
+                        expect(imageView.image).toEventuallyNot(beNil())
+                        imageView.setImage(from: url!)
+
+                        expect(requestCount).to(equal(1))
+                    }
+                }
             }
         }
     }
