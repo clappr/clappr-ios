@@ -226,6 +226,10 @@
 		C92747E7220DD4E0009465A7 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */; };
 		C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */; };
 		C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93212462212013700F0C47B /* UIImageViewTests.swift */; };
+		C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */; };
+		C94D8CEE221B1E5400C7855D /* ContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */; };
+		C94D8CF0221B22C300C7855D /* ContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */; };
+		C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */; };
 		C98C014C2166B50E009DFE0A /* FullscreenButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */; };
 		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
@@ -501,6 +505,8 @@
 		C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensionTests.swift; sourceTree = "<group>"; };
 		C93212462212013700F0C47B /* UIImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewTests.swift; sourceTree = "<group>"; };
+		C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPluginTests.swift; sourceTree = "<group>"; };
+		C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPlugin.swift; sourceTree = "<group>"; };
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
 		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
@@ -798,7 +804,6 @@
 				96664E551BF0CBD100095E6E /* UIObjectTests.swift */,
 				96B465691BF6027F0025975A /* UIPluginTests.swift */,
 				EDF652211D467CCA00627C48 /* UICorePluginTests.swift */,
-				EDF652231D46829100627C48 /* UIContainerPluginTests.swift */,
 				57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */,
 				9E3AE5331FB330C000DFBBEB /* OptionsUnboxerTests.swift */,
 				9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */,
@@ -957,6 +962,7 @@
 			children = (
 				96D362AD1D41339400CCB866 /* SpinnerPlugin.swift */,
 				96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */,
+				C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -1154,6 +1160,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C94D8CEB221B1DA900C7855D /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */,
+				EDF652231D46829100627C48 /* UIContainerPluginTests.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
 		C9EDF8432162C8DF00789E2F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1168,6 +1183,7 @@
 		C9EDF8442162C8F200789E2F /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				C94D8CEB221B1DA900C7855D /* Container */,
 				C9EDF8452162C8FF00789E2F /* Core */,
 			);
 			path = Plugins;
@@ -1822,6 +1838,7 @@
 				FC7785AF2005233D00EC879F /* UIObject.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
+				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
@@ -1865,6 +1882,7 @@
 				571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */,
 				FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */,
+				C94D8CEE221B1E5400C7855D /* ContainerPluginTests.swift in Sources */,
 				FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1912,6 +1930,7 @@
 				48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
+				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
@@ -1939,6 +1958,7 @@
 			files = (
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
 				4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */,
+				C94D8CF0221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
