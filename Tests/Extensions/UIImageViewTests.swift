@@ -17,7 +17,7 @@ class UIImageViewTests: QuickSpec {
                         stub(condition: isExtension("png") && isHost("test200")) { _ in
                             let image = UIImage(named: "poster", in: Bundle(for: UIImageViewTests.self), compatibleWith: nil)!
                             let data = UIImagePNGRepresentation(image)
-                            return OHHTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type":"image/jpeg"])
+                            return OHHTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type":"image/png"])
                         }
                     }
 
@@ -58,7 +58,7 @@ class UIImageViewTests: QuickSpec {
                             requestCount += 1
                             let image = UIImage(named: "poster", in: Bundle(for: UIImageViewTests.self), compatibleWith: nil)!
                             let data = UIImagePNGRepresentation(image)
-                            return OHHTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type":"image/jpeg"])
+                            return OHHTTPStubsResponse(data: data!, statusCode: 200, headers: ["Content-Type":"image/png"])
                         }
                     }
 
