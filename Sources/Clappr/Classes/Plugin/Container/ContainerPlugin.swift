@@ -1,4 +1,5 @@
-open class ContainerPlugin: NSObject {
+open class ContainerPlugin: NSObject, Plugin {
+    
     @objc open weak var container: Container?
 
     open class var type: PluginType { return .container }
@@ -15,7 +16,7 @@ open class ContainerPlugin: NSObject {
     public required override init() {
         super.init()
     }
-
+    
     @objc public required init(context: UIObject) {
         super.init()
 
@@ -24,5 +25,9 @@ open class ContainerPlugin: NSObject {
         } else {
             NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
         }
+    }
+    
+    public func destroy() {
+
     }
 }
