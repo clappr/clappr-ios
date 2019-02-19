@@ -18,7 +18,7 @@ class MediaControlTests: QuickSpec {
                 it("is 0.3 seconds") {
                     let mediaControl = MediaControl()
 
-                    expect(mediaControl.animationDuration).to(equal(0.3))
+                    expect(ClapprAnimationDuration.mediaControlShow).to(equal(0.3))
                 }
             }
 
@@ -26,7 +26,7 @@ class MediaControlTests: QuickSpec {
                 it("is 0.4 seconds") {
                     let mediaControl = MediaControl()
 
-                    expect(mediaControl.secondsToHideControlFast).to(equal(0.4))
+                    expect(mediaControl.shortTimeToHideMediaControl).to(equal(0.4))
                 }
             }
 
@@ -34,7 +34,7 @@ class MediaControlTests: QuickSpec {
                 it("is 4 seconds") {
                     let mediaControl = MediaControl()
 
-                    expect(mediaControl.secondsToHideControlSlow).to(equal(4))
+                    expect(mediaControl.longTimeToHideMediaControl).to(equal(4))
                 }
             }
 
@@ -148,9 +148,10 @@ class MediaControlTests: QuickSpec {
                     coreStub = CoreStub()
 
                     mediaControl = MediaControl(context: coreStub)
-                    mediaControl.animationDuration = 0.1
-                    mediaControl.secondsToHideControlFast = 0.1
-                    mediaControl.secondsToHideControlSlow = 0.1
+                    mediaControl.mediaControlShow = 0.1
+                    mediaControl.mediaControlHide = 0.1
+                    mediaControl.shortTimeToHideMediaControl = 0.1
+                    mediaControl.longTimeToHideMediaControl = 0.1
                     mediaControl.render()
                 }
                 

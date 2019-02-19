@@ -22,9 +22,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     public var hideControlsTimer: Timer?
-    public var animationDuration = 0.3
-    public var secondsToHideControlFast: TimeInterval = 0.4
-    public var secondsToHideControlSlow: TimeInterval = 4
+    public var shortTimeToHideMediaControl = 0.4
+    public var longTimeToHideMediaControl = 4.0
+    public var mediaControlShow = ClapprAnimationDuration.mediaControlShow
+    public var mediaControlHide = ClapprAnimationDuration.mediaControlHide
 
     private var showControls = true
     private var alwaysVisible = false
@@ -125,7 +126,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             return
         }
 
-        let duration = animated ? animationDuration : 0
+        let duration = animated ? mediaControlShow : 0
 
         currentlyShowing = true
         currentlyHiding = false
@@ -162,7 +163,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             currentlyShowing = false
             currentlyHiding = true
 
-            let duration = animated ? animationDuration : 0
+            let duration = animated ? mediaControlHide : 0
 
             UIView.animate(
                 withDuration: duration,
@@ -181,8 +182,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     public func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
         hideControlsTimer?.invalidate()
-        hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? secondsToHideControlFast,
-                                                 target: self, selector: #selector(MediaControl.hideAndStopTimer), userInfo: nil, repeats: false)
+        hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? shortTimeToHideMediaControl,
+                                                 target: self, selector: #selector(hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
     public func keepVisible() {
@@ -259,7 +260,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     fileprivate func toggleVisibility() {
         if showControls {
             show(animated: true) { [weak self] in
-                self?.disappearAfterSomeTime(self?.secondsToHideControlSlow)
+                self?.disappearAfterSomeTime(self?.longTimeToHideMediaControl)
             }
         }
     }
