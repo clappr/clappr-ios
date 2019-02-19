@@ -101,6 +101,9 @@
 		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
 		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
 		487747D5220B5BFB000167CE /* DoubleTapMediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */; };
+		48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8552162D10B00789E2F /* ContainerStub.swift */; };
+		48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */; };
+		48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8512162D07D00789E2F /* CoreStub.swift */; };
 		48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */; };
 		48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
@@ -1870,7 +1873,10 @@
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
+				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
+				48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */,
 				576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */,
+				48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */,
 				571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */,
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
