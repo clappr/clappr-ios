@@ -31,12 +31,12 @@ class SeekBubble: UIView {
         bubbleWidth.constant = parentView.frame.width
         bubbleHeight.constant = parentView.frame.height * 1.8
         
-        UIView.animate(withDuration: AnimationDuration.seekBubbleShow, animations: {
+        UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleShow, animations: {
             self.alpha = 1.0
             self.addRoundedBorder(with: self.bubbleHeight.constant / 2)
             self.parentView.layoutSubviews()
         }, completion: { _ in
-            UIView.animate(withDuration: AnimationDuration.seekBubbleHide, delay: AnimationDuration.seekBubbleVisibility, animations: {
+            UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleHide, delay: ClapprAnimationDuration.seekBubbleVisibility, animations: {
                 self.alpha = 0.0
                 self.parentView.layoutSubviews()
             }, completion: { _ in
@@ -49,11 +49,11 @@ class SeekBubble: UIView {
     
     private func animateLabel() {
         parentView.bringSubview(toFront: label)
-        UIView.animate(withDuration: AnimationDuration.seekLabelShow, animations: {
+        UIView.animate(withDuration: ClapprAnimationDuration.seekLabelShow, animations: {
             self.label.alpha = 1.0
             self.parentView.layoutSubviews()
         }, completion: { _ in
-            UIView.animate(withDuration: AnimationDuration.seekLabelHide, delay: AnimationDuration.seekLabelVisibility, animations: {
+            UIView.animate(withDuration: ClapprAnimationDuration.seekLabelHide, delay: ClapprAnimationDuration.seekLabelVisibility, animations: {
                 self.label.alpha = 0.0
                 self.parentView.layoutSubviews()
             })
@@ -72,11 +72,11 @@ class SeekBubble: UIView {
     
     private func animate(_ image: UIImageView, delay: TimeInterval) {
         parentView.bringSubview(toFront: image)
-        UIView.animate(withDuration: AnimationDuration.seekImageShow, delay: delay, animations: {
+        UIView.animate(withDuration: ClapprAnimationDuration.seekImageShow, delay: delay, animations: {
             image.alpha = 1.0
             self.parentView.layoutSubviews()
         }, completion: { _ in
-            UIView.animate(withDuration: AnimationDuration.seekImageHide, delay: AnimationDuration.seekImageVisibility, animations: {
+            UIView.animate(withDuration: ClapprAnimationDuration.seekImageHide, delay: ClapprAnimationDuration.seekImageVisibility, animations: {
                 image.alpha = 0.0
                 self.parentView.layoutSubviews()
             })

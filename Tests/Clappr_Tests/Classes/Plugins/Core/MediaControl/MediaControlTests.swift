@@ -18,7 +18,7 @@ class MediaControlTests: QuickSpec {
                 it("is 0.3 seconds") {
                     let mediaControl = MediaControl()
 
-                    expect(AnimationDuration.mediaControlShow).to(equal(0.3))
+                    expect(ClapprAnimationDuration.mediaControlShow).to(equal(0.3))
                 }
             }
 

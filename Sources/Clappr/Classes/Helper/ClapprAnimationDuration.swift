@@ -1,6 +1,6 @@
 import Foundation
 
-public class AnimationDuration {
+public class ClapprAnimationDuration {
     
     public static let seekBubbleShow: TimeInterval = 0.4
     public static let seekBubbleHide: TimeInterval = 0.2
