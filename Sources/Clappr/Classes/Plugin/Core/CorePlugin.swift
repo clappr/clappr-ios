@@ -24,7 +24,7 @@ open class CorePlugin: BaseObject, Plugin {
         }
     }
     
-    public func destroy() {
+    open func destroy() {
         Logger.logDebug("destroying", scope: "CorePlugin")
         Logger.logDebug("destroying listeners", scope: "CorePlugin")
         stopListening()
