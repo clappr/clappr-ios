@@ -25,9 +25,9 @@ open class ContainerPlugin: BaseObject, Plugin {
     }
     
     public func destroy() {
-        Logger.logDebug("destroying", scope: "UICorePlugin")
-        Logger.logDebug("destroying listeners", scope: "UICorePlugin")
+        Logger.logDebug("destroying", scope: "ContainerPlugin")
+        Logger.logDebug("destroying listeners", scope: "ContainerPlugin")
         stopListening()
-        Logger.logDebug("destroyed", scope: "UICorePlugin")
+        Logger.logDebug("destroyed", scope: "ContainerPlugin")
     }
 }
