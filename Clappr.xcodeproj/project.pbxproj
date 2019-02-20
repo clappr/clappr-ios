@@ -106,6 +106,8 @@
 		48A29BFD221D81910004AD3B /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628C1D41339400CCB866 /* BaseObject.swift */; };
 		48A29C00221D81B90004AD3B /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B71D41339400CCB866 /* EventProtocol.swift */; };
 		48A29C01221D82700004AD3B /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362971D41339400CCB866 /* UIObject.swift */; };
+		48A29C03221DBE740004AD3B /* ContainerPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A29C02221DBE740004AD3B /* ContainerPluginStub.swift */; };
+		48A29C04221DBE740004AD3B /* ContainerPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A29C02221DBE740004AD3B /* ContainerPluginStub.swift */; };
 		48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */; };
 		48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
@@ -395,6 +397,7 @@
 		4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPlugin.swift; sourceTree = "<group>"; };
 		4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
 		487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPluginTests.swift; sourceTree = "<group>"; };
+		48A29C02221DBE740004AD3B /* ContainerPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPluginStub.swift; sourceTree = "<group>"; };
 		48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePluginTests.swift; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
@@ -1223,6 +1226,7 @@
 			children = (
 				C9EDF8512162D07D00789E2F /* CoreStub.swift */,
 				C9EDF8552162D10B00789E2F /* ContainerStub.swift */,
+				48A29C02221DBE740004AD3B /* ContainerPluginStub.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -1873,6 +1877,7 @@
 				3251114821359C48001FEEBA /* CoreTests.swift in Sources */,
 				C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */,
 				571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */,
+				48A29C04221DBE740004AD3B /* ContainerPluginStub.swift in Sources */,
 				571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */,
 				FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */,
@@ -1916,6 +1921,7 @@
 				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
 				329624A82051ECFF0062AE32 /* MediaOptionTests.swift in Sources */,
+				48A29C03221DBE740004AD3B /* ContainerPluginStub.swift in Sources */,
 				C98C014C2166B50E009DFE0A /* FullscreenButtonTests.swift in Sources */,
 				9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */,
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,

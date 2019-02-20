@@ -50,12 +50,12 @@ class ContainerPluginTests: QuickSpec {
             describe("#destroy") {
                 it("stops listening to container events") {
                     let container = ContainerStub()
-                    let containerPlugin = ContainerPlugin(context: container)
+                    let containerPlugin = ContainerPluginStub(context: container)
                     var callbackWasCalled = false
-                    containerPlugin.on("some-event") { _ in
+                    containerPlugin.listenTo(container, eventName: "some-event") { _ in
                         callbackWasCalled = true
                     }
-//                    containerPlugin.destroy()
+                    containerPlugin.destroy()
                     container.trigger("some-event")
                     expect(callbackWasCalled).toEventually(beFalse())
                 }
