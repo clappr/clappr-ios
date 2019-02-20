@@ -197,6 +197,14 @@ open class Player: UIViewController {
         return baseObject.on(event.rawValue, callback: callback)
     }
 
+    open func trigger(_ eventName: String) {
+        baseObject.trigger(eventName)
+    }
+
+    open func trigger(_ eventName: String, userInfo: EventUserInfo) {
+        baseObject.trigger(eventName, userInfo: userInfo)
+    }
+
     @discardableResult
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
