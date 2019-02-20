@@ -197,6 +197,11 @@ open class Player: UIViewController {
         return baseObject.on(event.rawValue, callback: callback)
     }
 
+    @discardableResult
+    public func on(_ eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.on(eventName, callback: callback)
+    }
+
     open func trigger(_ eventName: String) {
         baseObject.trigger(eventName)
     }
