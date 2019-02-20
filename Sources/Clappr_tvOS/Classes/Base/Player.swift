@@ -197,6 +197,11 @@ open class Player: UIViewController {
         return baseObject.on(event.rawValue, callback: callback)
     }
 
+    @discardableResult
+    open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
+    }
+
     fileprivate func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
