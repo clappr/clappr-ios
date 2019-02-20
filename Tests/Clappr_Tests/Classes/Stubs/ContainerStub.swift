@@ -10,5 +10,9 @@ class ContainerStub: Container {
         }
     }
     
+    override func trigger(_ eventName: String) {
+        super.trigger(eventName)
+    }
+    
     var _playback: Playback? = AVFoundationPlaybackMock()
 }

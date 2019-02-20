@@ -1,7 +1,5 @@
-open class ContainerPlugin: NSObject, Plugin {
-    
+open class ContainerPlugin: BaseObject, Plugin {
     @objc open weak var container: Container?
-
     open class var type: PluginType { return .container }
 
     @objc open class var name: String {
@@ -19,7 +17,6 @@ open class ContainerPlugin: NSObject, Plugin {
     
     @objc public required init(context: UIObject) {
         super.init()
-
         if let container = context as? Container {
             self.container = container
         } else {
@@ -28,6 +25,9 @@ open class ContainerPlugin: NSObject, Plugin {
     }
     
     public func destroy() {
-
+        Logger.logDebug("destroying", scope: "UICorePlugin")
+        Logger.logDebug("destroying listeners", scope: "UICorePlugin")
+        stopListening()
+        Logger.logDebug("destroyed", scope: "UICorePlugin")
     }
 }

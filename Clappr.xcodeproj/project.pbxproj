@@ -86,7 +86,6 @@
 		32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BB1D41339400CCB866 /* DragDetectorView.swift */; };
 		32E401CE1FF42386001C2096 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362BC1D41339400CCB866 /* GradientView.swift */; };
 		32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; };
-		32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402161FF433FA001C2096 /* EventDispatcherTests.swift */; };
 		32E4021A1FF433FB001C2096 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E402171FF433FA001C2096 /* BaseObjectTests.swift */; };
 		32E4021E1FF43534001C2096 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021C1FF43533001C2096 /* Quick.framework */; };
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
@@ -104,6 +103,9 @@
 		48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8552162D10B00789E2F /* ContainerStub.swift */; };
 		48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */; };
 		48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8512162D07D00789E2F /* CoreStub.swift */; };
+		48A29BFD221D81910004AD3B /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D3628C1D41339400CCB866 /* BaseObject.swift */; };
+		48A29C00221D81B90004AD3B /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B71D41339400CCB866 /* EventProtocol.swift */; };
+		48A29C01221D82700004AD3B /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362971D41339400CCB866 /* UIObject.swift */; };
 		48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */; };
 		48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
@@ -266,11 +268,7 @@
 		FBE6A3E42163EEAE0083C9CC /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
 		FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */; };
 		FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */; };
-		FC7785A62005233D00EC879F /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785962005233D00EC879F /* BaseObject.swift */; };
-		FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785982005233D00EC879F /* EventDispatcher.swift */; };
 		FC7785AE2005233D00EC879F /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859E2005233D00EC879F /* Player.swift */; };
-		FC7785AF2005233D00EC879F /* UIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC77859F2005233D00EC879F /* UIObject.swift */; };
-		FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785A52005233D00EC879F /* EventProtocol.swift */; };
 		FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */; };
 		FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */; };
 		FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */; };
@@ -387,7 +385,6 @@
 		32D18C8D20484CA10097653C /* SpinnerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerPluginTests.swift; sourceTree = "<group>"; };
 		32E4020A1FF43262001C2096 /* Clappr_tvOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_tvOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32E402161FF433FA001C2096 /* EventDispatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcherTests.swift; sourceTree = "<group>"; };
 		32E402171FF433FA001C2096 /* BaseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectTests.swift; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
@@ -540,10 +537,7 @@
 		FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loader+Plugins.swift"; sourceTree = "<group>"; };
 		FC6418DB2007DA6200E81B7C /* ClapprDateFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatterTests.swift; sourceTree = "<group>"; };
 		FC6418DD2007DB9100E81B7C /* ClapprDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClapprDateFormatter.swift; sourceTree = "<group>"; };
-		FC7785962005233D00EC879F /* BaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
-		FC7785982005233D00EC879F /* EventDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDispatcher.swift; sourceTree = "<group>"; };
 		FC77859E2005233D00EC879F /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		FC77859F2005233D00EC879F /* UIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIObject.swift; sourceTree = "<group>"; };
 		FC7785A52005233D00EC879F /* EventProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
 		FC7785B4200523E400EC879F /* AVFoundationNowPlayingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingBuilder.swift; sourceTree = "<group>"; };
 		FC7785B5200523E400EC879F /* AVFoundationNowPlayingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingService.swift; sourceTree = "<group>"; };
@@ -679,7 +673,6 @@
 				FC7785BC2005251800EC879F /* AVFoundationNowPlayingBuilderTests.swift */,
 				FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */,
 				32E402171FF433FA001C2096 /* BaseObjectTests.swift */,
-				32E402161FF433FA001C2096 /* EventDispatcherTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
 				FB0A223D21754C1700D2180F /* PlayerTests.swift */,
 			);
@@ -889,6 +882,8 @@
 		96D3628B1D41339400CCB866 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				96D3628C1D41339400CCB866 /* BaseObject.swift */,
+				96D362971D41339400CCB866 /* UIObject.swift */,
 				96D3628F1D41339400CCB866 /* EventHandler.swift */,
 				FB4625FF21AC8D11008D9A25 /* Factories */,
 				96D362941D41339400CCB866 /* Options.swift */,
@@ -1044,9 +1039,7 @@
 			isa = PBXGroup;
 			children = (
 				9E26CFF02016148400AE92B7 /* FullScreen */,
-				96D3628C1D41339400CCB866 /* BaseObject.swift */,
 				96D362961D41339400CCB866 /* Player.swift */,
-				96D362971D41339400CCB866 /* UIObject.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1321,10 +1314,7 @@
 		FC7785952005233D00EC879F /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				FC7785962005233D00EC879F /* BaseObject.swift */,
-				FC7785982005233D00EC879F /* EventDispatcher.swift */,
 				FC77859E2005233D00EC879F /* Player.swift */,
-				FC77859F2005233D00EC879F /* UIObject.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1816,7 +1806,6 @@
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
-				FC7785A62005233D00EC879F /* BaseObject.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				5733D1C021BAA6EE002107D2 /* Dictionary+startAt.swift in Sources */,
@@ -1825,7 +1814,9 @@
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
+				48A29C01221D82700004AD3B /* UIObject.swift in Sources */,
 				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
+				48A29C00221D81B90004AD3B /* EventProtocol.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
@@ -1837,19 +1828,17 @@
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
-				FC7785B22005233D00EC879F /* EventProtocol.swift in Sources */,
-				FC7785AF2005233D00EC879F /* UIObject.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
+				48A29BFD221D81910004AD3B /* BaseObject.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
 				5744C05821EE37270087D9FB /* EventHandler.swift in Sources */,
 				32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				32E401C41FF42335001C2096 /* UIView+Ext.swift in Sources */,
 				325111452134827F001FEEBA /* Options.swift in Sources */,
-				FC7785A82005233D00EC879F /* EventDispatcher.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
@@ -1869,7 +1858,6 @@
 			files = (
 				5733D1BF21BAA6E4002107D2 /* Dictionary+startAtTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
-				32E402191FF433FB001C2096 /* EventDispatcherTests.swift in Sources */,
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,

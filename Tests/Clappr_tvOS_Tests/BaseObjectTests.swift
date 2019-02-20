@@ -4,12 +4,10 @@ import Nimble
 
 class BaseObjectTests: QuickSpec {
 
-    class ConcreteBaseObject: BaseObject { }
-
     override func spec() {
         describe(".BaseObject") {
 
-            var baseObject: ConcreteBaseObject!
+            var baseObject: BaseObject!
             var callbackWasCalled: Bool!
 
             let eventName = "some-event"
@@ -18,16 +16,9 @@ class BaseObjectTests: QuickSpec {
             }
 
             beforeEach {
-                baseObject = ConcreteBaseObject()
+                baseObject = BaseObject()
                 callbackWasCalled = false
             }
-
-            context("when initializes") {
-                it("doesn't initialize EventDispatcher twice") {
-                    expect(baseObject.eventDispatcher) == baseObject.eventDispatcher
-                }
-            }
-
 
             describe("#on") {
                 it("executes callback function") {
@@ -73,7 +64,7 @@ class BaseObjectTests: QuickSpec {
                 }
 
                 it("doesn't executes callback for another context object") {
-                    let anotherBaseObject = ConcreteBaseObject()
+                    let anotherBaseObject = BaseObject()
 
                     baseObject.on(eventName, callback: callback)
                     anotherBaseObject.trigger(eventName)
@@ -113,7 +104,7 @@ class BaseObjectTests: QuickSpec {
 
             describe("#listenTo") {
                 it("executes callback function for an event on a given context object") {
-                    let anotherBaseObject = ConcreteBaseObject()
+                    let anotherBaseObject = BaseObject()
 
                     baseObject.listenTo(anotherBaseObject, eventName: eventName, callback: callback)
                     anotherBaseObject.trigger(eventName)
@@ -124,7 +115,7 @@ class BaseObjectTests: QuickSpec {
 
             describe("#listenToOnce") {
                 it("executes callback function just one time for an event on a given context object") {
-                    let anotherBaseObject = ConcreteBaseObject()
+                    let anotherBaseObject = BaseObject()
 
                     baseObject.listenToOnce(anotherBaseObject, eventName: eventName, callback: callback)
                     anotherBaseObject.trigger(eventName)
@@ -181,7 +172,7 @@ class BaseObjectTests: QuickSpec {
 
                 context("when stops listening only one event") {
                     it("doesn't execute callback") {
-                        let anotherBaseObject = ConcreteBaseObject()
+                        let anotherBaseObject = BaseObject()
                         var anotherCallbackWasCalled = false
 
                         anotherBaseObject.on(eventName) { _ in
@@ -197,7 +188,7 @@ class BaseObjectTests: QuickSpec {
                     }
 
                     it("cancels a specific callback") {
-                        let anotherBaseObject = ConcreteBaseObject()
+                        let anotherBaseObject = BaseObject()
 
                         let listenId = baseObject.listenTo(anotherBaseObject, eventName: eventName, callback: callback)
                         baseObject.stopListening(listenId)
