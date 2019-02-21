@@ -232,8 +232,6 @@ open class AVFoundationPlayback: Playback {
 
             selectDefaultAudioIfNeeded()
 
-            trigger(.didUpdateDuration, userInfo: ["duration": duration])
-
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
@@ -546,6 +544,7 @@ open class AVFoundationPlayback: Playback {
     private func readyToPlay() {
         seekOnReadyIfNeeded()
         addTimeElapsedCallback()
+        trigger(.didUpdateDuration, userInfo: ["duration": duration])
     }
 
     private func selectDefaultSubtitleIfNeeded() {
