@@ -17,8 +17,8 @@ open class CorePlugin: BaseObject, Plugin {
     
     @objc public required init(context: UIObject) {
         super.init()
-        if let container = context as? Core {
-            self.core = container
+        if let core = context as? Core {
+            self.core = core
         } else {
             NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
         }

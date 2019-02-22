@@ -115,9 +115,8 @@ open class PosterPlugin: UIContainerPlugin {
             Logger.logWarn("Unable to update poster, no url was found", scope: pluginName)
             return
         }
-        trigger(Event.willUpdatePoster)
+        trigger(Event.willUpdatePoster.rawValue)
         setPosterImage(with: posterUrl)
-        trigger(Event.didUpdatePoster)
-
+        trigger(Event.didUpdatePoster.rawValue)
     }
 }
