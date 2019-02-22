@@ -1,6 +1,6 @@
 protocol UIPlugin: Plugin {
     var uiObject: UIObject { get }
-    var view: UIView { get }
+    var view: UIView { get set }
     func render()
 }
 

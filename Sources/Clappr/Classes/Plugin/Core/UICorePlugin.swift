@@ -1,7 +1,10 @@
 open class UICorePlugin: CorePlugin, UIPlugin {
+
     var uiObject = UIObject()
     
-    func render() {
+    var view: UIView = UIView()
+    
+    open func render() {
         uiObject.render()
     }
 }

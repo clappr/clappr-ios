@@ -1,6 +1,8 @@
 class UIPluginStub: UIPlugin {
     var uiObject: UIObject = UIObject()
     
+    var view: UIView = UIView()
+    
     static var type: PluginType = .core
     
     static var name: String = "UIPluginStub"

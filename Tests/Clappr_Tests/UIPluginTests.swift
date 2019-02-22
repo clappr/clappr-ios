@@ -13,10 +13,12 @@ class UIPluginTests: QuickSpec {
             }
 
             describe("#view") {
-                it("has a view") {
+                it("stores a view") {
+                    let view = UIView()
                     let uiPlugin = UIPluginStub()
-
-                    expect(uiPlugin.view).toNot(beNil())
+                    uiPlugin.view = view
+                    
+                    expect(uiPlugin.view).to(equal(view))
                 }
             }
         }
