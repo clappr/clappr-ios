@@ -13,5 +13,7 @@ class UIPluginStub: UIPlugin {
     
     required init(context: UIObject) { }
     
+    func render() { }
+    
     func destroy() { }
 }

@@ -6,6 +6,6 @@ open class UIContainerPlugin: ContainerPlugin, UIPlugin {
     }
     
     open func render() {
-        uiObject.render()
+        NSException(name: NSExceptionName("RenderNotOverriden"), reason: "UIContainerPlugins should always override the render method").raise()
     }
 }
