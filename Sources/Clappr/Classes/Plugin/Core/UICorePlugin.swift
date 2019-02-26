@@ -2,7 +2,11 @@ open class UICorePlugin: CorePlugin, UIPlugin {
     var uiObject = UIObject()
     
     public var view: UIView {
-        return uiObject.view
+        get {
+            return uiObject.view
+        } set(newValue) {
+            return uiObject.view = newValue
+        }
     }
     
     open func render() {
