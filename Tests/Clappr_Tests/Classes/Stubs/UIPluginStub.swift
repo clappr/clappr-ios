@@ -1,4 +1,5 @@
-class UIPluginStub: UIPlugin {
+class UIPluginStub: BaseObject, UIPlugin {
+    
     var uiObject: UIObject = UIObject()
     
     var view: UIView = UIView()
@@ -9,7 +10,7 @@ class UIPluginStub: UIPlugin {
     
     var pluginName: String = "UIPluginStub"
     
-    required init() { }
+    required override init() { }
     
     required init(context: UIObject) { }
     
