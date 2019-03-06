@@ -3,27 +3,33 @@ import Nimble
 @testable import Clappr
 
 class UICorePluginTests: QuickSpec {
-
     override func spec() {
-        it("Should have a name") {
-            expect(NoNameCorePlugin.name).to(raiseException(named: "MissingPluginName"))
-            expect(StubCorePlugin.name) == "StubCorePlugin"
-        }
+        describe(".UICorePluginTests") {
+            describe("#init") {
+                it("has a name") {
+                    expect(NoNameCorePlugin.name).to(raiseException(named: "MissingPluginName"))
+                    expect(StubCorePlugin.name) == "StubCorePlugin"
+                }
 
-        describe("Instantiation") {
-            it("Should be initializaed with a Core") {
-                let core = Core()
-                let plugin = StubCorePlugin(context: core)
+                it("has a view") {
+                    let core = Core()
+                    let plugin = StubCorePlugin(context: core)
 
-                expect(plugin.core) == core
-            }
+                    expect(plugin.view).toNot(beNil())
+                }
 
-            it("Should not be initializaed with wrong context") {
-                let context = UIObject()
-                expect(StubCorePlugin(context: context)).to(raiseException(named: "WrongContextType"))
+                it("is initialized with a Core") {
+                    let core = Core()
+                    let plugin = StubCorePlugin(context: core)
 
-                let container = Container()
-                expect(StubCorePlugin(context: container)).to(raiseException(named: "WrongContextType"))
+                    expect(plugin.core).to(equal(core))
+                }
+
+                it("cannot be initialized with wrong context") {
+                    let context = UIObject()
+
+                    expect(StubCorePlugin(context: context)).to(raiseException(named: "WrongContextType"))
+                }
             }
         }
     }

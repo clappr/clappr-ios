@@ -118,6 +118,5 @@ open class PosterPlugin: UIContainerPlugin {
         trigger(Event.willUpdatePoster)
         setPosterImage(with: posterUrl)
         trigger(Event.didUpdatePoster)
-
     }
 }

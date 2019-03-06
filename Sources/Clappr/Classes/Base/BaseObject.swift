@@ -127,3 +127,13 @@ open class BaseObject: NSObject, EventProtocol {
         self.stopListening()
     }
 }
+
+public extension BaseObject {
+    public func trigger(_ event: Event) {
+        trigger(event.rawValue)
+    }
+
+    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+        trigger(event.rawValue, userInfo: userInfo)
+    }
+}

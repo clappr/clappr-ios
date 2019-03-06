@@ -1,11 +1,12 @@
 import AVKit
 
-open class Player: UIViewController, BaseObject {
+open class Player: UIViewController {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
     fileprivate var viewController: AVPlayerViewController?
+    private let baseObject = BaseObject()
 
     override open func viewDidLoad() {
         core?.parentView = view
@@ -193,22 +194,40 @@ open class Player: UIViewController, BaseObject {
 
     @discardableResult
     open func on(_ event: Event, callback: @escaping EventCallback) -> String {
-        return on(event.rawValue, callback: callback)
+        return baseObject.on(event.rawValue, callback: callback)
+    }
+
+    @discardableResult
+    public func on(_ eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.on(eventName, callback: callback)
+    }
+
+    open func trigger(_ eventName: String) {
+        baseObject.trigger(eventName)
+    }
+
+    open func trigger(_ eventName: String, userInfo: EventUserInfo) {
+        baseObject.trigger(eventName, userInfo: userInfo)
+    }
+
+    @discardableResult
+    open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
     fileprivate func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
-                let listenId = listenTo(
+                let listenId = baseObject.listenTo(
                     playback, eventName: event,
                     callback: { [weak self] (info: EventUserInfo) in
-                        self?.trigger(event, userInfo: info)
+                        self?.baseObject.trigger(event, userInfo: info)
                 })
 
                 playbackEventsListenIds.append(listenId)
             }
 
-            let listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+            let listenId = baseObject.listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
             playbackEventsListenIds.append(listenId)
         }
     }
@@ -222,7 +241,7 @@ open class Player: UIViewController, BaseObject {
 
     fileprivate func unbindPlaybackEvents() {
         for id in playbackEventsListenIds {
-            stopListening(id)
+            baseObject.stopListening(id)
         }
 
         playbackEventsListenIds.removeAll()
@@ -241,12 +260,12 @@ open class Player: UIViewController, BaseObject {
     }
 
     fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
-        trigger(event.rawValue, userInfo: userInfo)
+        baseObject.trigger(event.rawValue, userInfo: userInfo)
     }
 
     open func destroy() {
         Logger.logDebug("destroying", scope: "Player")
-        stopListening()
+        baseObject.stopListening()
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
         Logger.logDebug("destroying viewController", scope: "Player")

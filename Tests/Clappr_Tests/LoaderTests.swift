@@ -32,7 +32,7 @@ class LoaderTests: QuickSpec {
                     let numberOfContainerPlugins = Loader.shared.containerPlugins.count
                     let numberOfCorePlugins = Loader.shared.corePlugins.count
 
-                    Loader.shared.register(plugins: [StubContainerPlugin.self])
+                    Loader.shared.register(plugins: [StubUIContainerPlugin.self])
 
                     expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks))
                     expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins + 1))
@@ -46,11 +46,20 @@ class LoaderTests: QuickSpec {
                     let numberOfContainerPlugins = Loader.shared.containerPlugins.count
                     let numberOfCorePlugins = Loader.shared.corePlugins.count
 
-                    Loader.shared.register(plugins: [StubCorePlugin.self])
+                    Loader.shared.register(plugins: [StubUICorePlugin.self])
 
                     expect(Loader.shared.playbacks.count).to(equal(numberOfInitialPlaybacks))
                     expect(Loader.shared.containerPlugins.count).to(equal(numberOfContainerPlugins))
                     expect(Loader.shared.corePlugins.count).to(equal(numberOfCorePlugins + 1))
+                }
+            }
+            
+            context("when adds both uiplugin and plugin") {
+                it("loads both plugins") {
+                    Loader.shared.register(plugins: [StubUICorePlugin.self, StubCorePlugin.self])
+                    let plugins = Loader.shared.corePlugins
+                    
+                    expect(plugins.count).to(equal(2))
                 }
             }
 
@@ -84,21 +93,27 @@ class LoaderTests: QuickSpec {
         }
     }
 
-    class StubContainerPlugin: UIContainerPlugin {
+    class StubUIContainerPlugin: UIContainerPlugin {
         override var pluginName: String {
-            return "container"
+            return "uicontainer"
         }
     }
 
-    class StubCorePlugin: UICorePlugin {
+    class StubUICorePlugin: UICorePlugin {
         override var pluginName: String {
-            return "core"
+            return "uicore"
         }
     }
 
     class StubSpinnerPlugin: UIContainerPlugin {
         override var pluginName: String {
             return "spinner"
+        }
+    }
+    
+    class StubCorePlugin: CorePlugin {
+        override var pluginName: String {
+            return "core"
         }
     }
 }

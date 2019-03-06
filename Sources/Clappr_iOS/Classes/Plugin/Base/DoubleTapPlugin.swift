@@ -44,7 +44,7 @@ public class DoubleTapPlugin: UICorePlugin {
         NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "DoubleTapPlugin should implement addDoubleTapGesture method", userInfo: nil).raise()
     }
     
-    public override func render() {
+    override public func render() {
         addDoubleTapGesture()
     }
     

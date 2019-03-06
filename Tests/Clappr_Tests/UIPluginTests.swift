@@ -7,18 +7,17 @@ class UIPluginTests: QuickSpec {
     override func spec() {
         describe("UIPlugin") {
             it("conforms with UIObject protocol") {
-                let uiPlugin = UIPlugin()
+                let uiPlugin = UIPluginStub(context: CoreStub())
 
-                expect(uiPlugin as UIObject).toNot(beNil())
+                expect(uiPlugin as UIPlugin).toNot(beNil())
             }
 
             describe("#view") {
                 it("stores a view") {
                     let view = UIView()
-                    let uiPlugin = UIPlugin()
-
+                    let uiPlugin = UIPluginStub()
                     uiPlugin.view = view
-
+                    
                     expect(uiPlugin.view).to(equal(view))
                 }
             }
