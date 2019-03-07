@@ -31,6 +31,17 @@ class UIContainerPluginTests: QuickSpec {
                     expect(StubContainerPlugin(context: context)).to(raiseException(named: "WrongContextType"))
                 }
             }
+
+            describe("#render") {
+                it("crashes if render is not overriden") {
+                    let container = Container()
+                    let plugin = StubContainerPlugin(context: container)
+                    let expectedExceptionName = "RenderNotOverriden"
+                    let expectedExceptionReason = "UIContainerPlugins should always override the render method"
+
+                    expect(plugin.render()).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
+                }
+            }
         }
     }
     
