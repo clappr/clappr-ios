@@ -9,5 +9,7 @@ open class UICorePlugin: CorePlugin, UIPlugin {
         }
     }
     
-    open func render() {}
+    open func render() {
+        NSException(name: NSExceptionName("RenderNotOverriden"), reason: "UICorePlugins should always override the render method").raise()
+    }
 }
