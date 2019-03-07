@@ -1,22 +1,22 @@
 import UIKit
 
-public class DoubleTapPlugin: UICorePlugin {
+public class JumpPlugin: UICorePlugin {
     
-    var doubleTapGesture: UITapGestureRecognizer!
+    var jumpGesture: UITapGestureRecognizer!
     
     override open var pluginName: String {
-        return "DoubleTapPlugin"
+        return "JumpPlugin"
     }
     
     private var activePlayback: Playback? {
         return core?.activePlayback
     }
     
-    private var animatonHandler: DoubleTapAnimation?
+    private var animatonHandler: JumpAnimation?
     
     required init(context: UIObject) {
         super.init(context: context)
-        animatonHandler = DoubleTapAnimation(core)
+        animatonHandler = JumpAnimation(core)
         bindEvents()
     }
     
@@ -32,27 +32,27 @@ public class DoubleTapPlugin: UICorePlugin {
     private func bindCoreEvents() {
         guard let core = core else { return }
         listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-        listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeDoubleTapGesture() }
-        listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addDoubleTapGesture() }
+        listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeJumpGesture() }
+        listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addJumpGesture() }
     }
     
-    func removeDoubleTapGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "DoubleTapPlugin should implement removeDoubleTapGesture method", userInfo: nil).raise()
+    func removeJumpGesture() {
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement removeJumpGesture method", userInfo: nil).raise()
     }
     
-    func addDoubleTapGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "DoubleTapPlugin should implement addDoubleTapGesture method", userInfo: nil).raise()
+    func addJumpGesture() {
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement addJumpGesture method", userInfo: nil).raise()
     }
     
     override public func render() {
-        addDoubleTapGesture()
+        addJumpGesture()
     }
     
     func shouldSeek(point: CGPoint) -> Bool {
         return true
     }
 
-    @objc func doubleTapSeek(xPosition: CGFloat) {
+    @objc func jumpSeek(xPosition: CGFloat) {
         guard let activePlayback = core?.activePlayback,
             let coreViewWidth = core?.view.frame.width else { return }
         

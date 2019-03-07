@@ -3,11 +3,11 @@ import Nimble
 
 @testable import Clappr
 
-class DoubleTapMediaControlPluginTests: QuickSpec {
+class JumpMediaControlPluginTests: QuickSpec {
     
     override func spec() {
-        describe(".DoubleTapMediaControlPluginTests") {
-            var doubleTapPlugin: DoubleTapMediaControlPlugin!
+        describe(".JumpMediaControlPluginTests") {
+            var jumpPlugin: JumpMediaControlPlugin!
             var core: CoreStub!
             var mediaControl: MediaControl!
             var playButton: PlayButton!
@@ -15,24 +15,24 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
             beforeEach {
                 core = CoreStub()
                 core.playbackMock?.videoDuration = 60.0
-                doubleTapPlugin = DoubleTapMediaControlPlugin(context: core)
+                jumpPlugin = JumpMediaControlPlugin(context: core)
                 mediaControl = MediaControl(context: core)
                 playButton = PlayButton(context: core)
                 
                 core.addPlugin(mediaControl)
-                core.addPlugin(doubleTapPlugin)
+                core.addPlugin(jumpPlugin)
                 core.addPlugin(playButton)
                 
                 core.view.frame = CGRect(x: 0, y: 0, width: 320, height: 200)
                 
                 core.render()
                 mediaControl.render()
-                doubleTapPlugin.render()
+                jumpPlugin.render()
             }
             
             describe("pluginName") {
                 it("has a name") {
-                    expect(doubleTapPlugin.pluginName).to(equal("DoubleTapMediaControlPlugin"))
+                    expect(jumpPlugin.pluginName).to(equal("JumpMediaControlPlugin"))
                 }
             }
             
@@ -42,13 +42,13 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                 }
             }
             
-            describe("when double tap is triggered") {
+            describe("when jump is triggered") {
                 context("and its position is less than half of the view (left)") {
                     it("seeks back 10 seconds") {
                         mediaControl.show()
                         core.playbackMock?.set(position: 20.0)
                         
-                        doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.origin.x)
+                        jumpPlugin.jumpSeek(xPosition: core.view.frame.origin.x)
                         
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(10))
@@ -60,7 +60,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                         mediaControl.show()
                         core.playbackMock?.set(position: 20.0)
                         
-                        doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                        jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
                         
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(30))
@@ -72,7 +72,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                         playButton.view.layoutIfNeeded()
                         mediaControl.view.layoutIfNeeded()
                         
-                        let shouldSeek = doubleTapPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
+                        let shouldSeek = jumpPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
                         
                         expect(shouldSeek).to(beFalse())
                     }
@@ -86,7 +86,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                             core.playbackMock?.set(isDvrInUse: true)
                             core.playbackMock?.set(position: 0)
                             
-                            doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                            jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
                             
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
@@ -95,7 +95,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: true)
                             
-                            doubleTapPlugin.doubleTapSeek(xPosition: 0)
+                            jumpPlugin.jumpSeek(xPosition: 0)
                             
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
@@ -107,7 +107,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                             core.playbackMock?.set(isDvrAvailable: true)
                             core.playbackMock?.set(isDvrInUse: false)
                             
-                            doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                            jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
                             
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
@@ -118,7 +118,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
-                            doubleTapPlugin.doubleTapSeek(xPosition: core.view.frame.width)
+                            jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
                             
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
@@ -127,7 +127,7 @@ class DoubleTapMediaControlPluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
-                            doubleTapPlugin.doubleTapSeek(xPosition: 0)
+                            jumpPlugin.jumpSeek(xPosition: 0)
                             
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
