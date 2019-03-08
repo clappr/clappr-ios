@@ -1,4 +1,5 @@
 source "https://rubygems.org"
 
-gem "fastlane", "~> 2.107.0"
-gem "xcov", "~> 1.5.0"
+gem 'cocoapods', '~> 1.6.1'
+gem 'fastlane', '~> 2.116.1'
+gem 'xcov', '~> 1.5.0'
