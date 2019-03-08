@@ -101,14 +101,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #if os(tvOS)
     private func renderPlugins() {
         plugins.forEach { plugin in
-            view.addSubview(plugin.view)
-            do {
-                try ObjC.catchException {
-                    plugin.render()
-                }
-            } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
-            }
+            render(plugin)
         }
     }
     #endif
@@ -121,16 +114,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     private func renderCorePlugins() {
         plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
-            if let plugin = plugin as? UICorePlugin {
-                view.addSubview(plugin.view)
-                do {
-                    try ObjC.catchException {
-                        plugin.render()
-                    }
-                } catch {
-                    Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
-                }
-            }
+            render(plugin)
         }
     }
 
@@ -147,6 +131,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return !(plugin is MediaControlPlugin)
     }
     #endif
+
+    private func render(_ plugin: Plugin) {
+        if let plugin = plugin as? UICorePlugin {
+            view.addSubview(plugin.view)
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
+            }
+        }
+    }
 
     fileprivate func addToContainer() {
         #if os(iOS)
