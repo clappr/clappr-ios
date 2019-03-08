@@ -1,4 +1,4 @@
-class DoubleTapAnimation {
+class JumpAnimation {
     private var core: Core?
     private var seekLeftBubble = SeekBubble()
     private var seekRightBubble = SeekBubble()

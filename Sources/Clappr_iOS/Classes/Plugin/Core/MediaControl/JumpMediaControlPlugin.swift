@@ -1,33 +1,33 @@
 import UIKit
 
-public class DoubleTapMediaControlPlugin: DoubleTapPlugin {
+public class JumpMediaControlPlugin: JumpPlugin {
     
     override open var pluginName: String {
-        return "DoubleTapMediaControlPlugin"
+        return "JumpMediaControlPlugin"
     }
     
     private var mediaControl: MediaControl? {
         return core?.plugins.first(where: { $0.pluginName == MediaControl.name }) as? MediaControl
     }
     
-    override func removeDoubleTapGesture() {
+    override func removeGesture() {
         mediaControl?.mediaControlView.removeGestureRecognizer(doubleTapGesture)
     }
     
-    override func addDoubleTapGesture() {
-        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+    override func addGesture() {
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
         doubleTapGesture.numberOfTapsRequired = 2
         
         mediaControl?.tapGesture?.require(toFail: doubleTapGesture)
         mediaControl?.mediaControlView.addGestureRecognizer(doubleTapGesture)
     }
     
-    @objc private func doubleTap(gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             let point = gestureRecognizer.location(in: view)
             if shouldSeek(point: point) {
                 mediaControl?.hide()
-                doubleTapSeek(xPosition: point.x)
+                jumpSeek(xPosition: point.x)
             }
         }
     }

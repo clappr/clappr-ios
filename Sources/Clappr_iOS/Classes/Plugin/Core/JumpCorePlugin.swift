@@ -1,17 +1,17 @@
 import UIKit
 
-public class DoubleTapCorePlugin: DoubleTapPlugin {
+public class JumpCorePlugin: JumpPlugin {
     
     override open var pluginName: String {
-        return "DoubleTapCorePlugin"
+        return "JumpCorePlugin"
     }
     
-    override func removeDoubleTapGesture() {
+    override func removeGesture() {
         core?.view.removeGestureRecognizer(doubleTapGesture)
     }
     
-    override func addDoubleTapGesture() {
-        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+    override func addGesture() {
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
         doubleTapGesture.numberOfTapsRequired = 2
         
         if let coreGesture = core?.view.gestureRecognizers?.first as? UITapGestureRecognizer {
@@ -27,11 +27,11 @@ public class DoubleTapCorePlugin: DoubleTapPlugin {
         return pluginColidingWithGesture == nil
     }
     
-    @objc private func doubleTap(gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             if shouldSeek(point: gestureRecognizer.location(in: view)) {
                 let xPosition = gestureRecognizer.location(in: view).x
-                doubleTapSeek(xPosition: xPosition)
+                jumpSeek(xPosition: xPosition)
             }
         }
     }

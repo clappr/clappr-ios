@@ -96,9 +96,9 @@
 		4822B6B42214961900D1C134 /* ClapprAnimationDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */; };
 		4822B6B522158FA300D1C134 /* ClapprAnimationDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */; };
 		48563229220B47B10096CDAE /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
-		4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */; };
-		4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */; };
-		487747D5220B5BFB000167CE /* DoubleTapMediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */; };
+		4856322B220B4C9C0096CDAE /* JumpMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* JumpMediaControlPlugin.swift */; };
+		4856322E220B54B90096CDAE /* JumpPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* JumpPlugin.swift */; };
+		487747D5220B5BFB000167CE /* JumpMediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487747D3220B5BCD000167CE /* JumpMediaControlPluginTests.swift */; };
 		48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8552162D10B00789E2F /* ContainerStub.swift */; };
 		48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */; };
 		48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8512162D07D00789E2F /* CoreStub.swift */; };
@@ -115,8 +115,8 @@
 		48A29C12221DF8CD0004AD3B /* CorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A29C0A221DEFC10004AD3B /* CorePlugin.swift */; };
 		48A995182220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
 		48A995192220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
-		48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */; };
-		48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */; };
+		48D81F1D21F9F41200B2D52E /* JumpCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* JumpCorePlugin.swift */; };
+		48D81F1F21FA31FA00B2D52E /* JumpCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* JumpCorePluginTests.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
@@ -223,7 +223,7 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
-		AB0A58DF21FA2F520075729E /* DoubleTapAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */; };
+		AB0A58DF21FA2F520075729E /* JumpAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* JumpAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlPlugin.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
 		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
@@ -401,16 +401,16 @@
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClapprAnimationDuration.swift; sourceTree = "<group>"; };
 		48563228220B47B10096CDAE /* Core+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Ext.swift"; sourceTree = "<group>"; };
-		4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPlugin.swift; sourceTree = "<group>"; };
-		4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapPlugin.swift; sourceTree = "<group>"; };
-		487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapMediaControlPluginTests.swift; sourceTree = "<group>"; };
+		4856322A220B4C9C0096CDAE /* JumpMediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpMediaControlPlugin.swift; sourceTree = "<group>"; };
+		4856322D220B54B90096CDAE /* JumpPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpPlugin.swift; sourceTree = "<group>"; };
+		487747D3220B5BCD000167CE /* JumpMediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpMediaControlPluginTests.swift; sourceTree = "<group>"; };
 		48A29C02221DBE740004AD3B /* ContainerPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPluginStub.swift; sourceTree = "<group>"; };
 		48A29C06221DEF640004AD3B /* CorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePluginTests.swift; sourceTree = "<group>"; };
 		48A29C0A221DEFC10004AD3B /* CorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePlugin.swift; sourceTree = "<group>"; };
 		48A29C0D221DF3950004AD3B /* CorePluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePluginStub.swift; sourceTree = "<group>"; };
 		48A995172220842000042C0E /* UIPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPluginStub.swift; sourceTree = "<group>"; };
-		48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePlugin.swift; sourceTree = "<group>"; };
-		48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapCorePluginTests.swift; sourceTree = "<group>"; };
+		48D81F1C21F9F41200B2D52E /* JumpCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpCorePlugin.swift; sourceTree = "<group>"; };
+		48D81F1E21FA31FA00B2D52E /* JumpCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpCorePluginTests.swift; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAt.swift"; sourceTree = "<group>"; };
@@ -505,7 +505,7 @@
 		9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackViewPortTests.swift; sourceTree = "<group>"; };
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
-		AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapAnimation.swift; sourceTree = "<group>"; };
+		AB0A58DE21FA2F520075729E /* JumpAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPlugin.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
 		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
@@ -712,7 +712,7 @@
 		4856322C220B54A70096CDAE /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				4856322D220B54B90096CDAE /* DoubleTapPlugin.swift */,
+				4856322D220B54B90096CDAE /* JumpPlugin.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1111,7 +1111,7 @@
 		AB0A58DD21FA2F380075729E /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				AB0A58DE21FA2F520075729E /* DoubleTapAnimation.swift */,
+				AB0A58DE21FA2F520075729E /* JumpAnimation.swift */,
 				4822B6B2220C72E300D1C134 /* SeekBubble */,
 			);
 			path = Animation;
@@ -1128,7 +1128,7 @@
 				AB163514215ACA0C00635233 /* MediaControl.swift */,
 				AB163505215AB97800635233 /* MediaControlPlugin.swift */,
 				320A7A14216FBF89006D2B24 /* PlayButton.swift */,
-				4856322A220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift */,
+				4856322A220B4C9C0096CDAE /* JumpMediaControlPlugin.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1145,7 +1145,7 @@
 		C92F1C97216F80B80059D860 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				48D81F1C21F9F41200B2D52E /* DoubleTapCorePlugin.swift */,
+				48D81F1C21F9F41200B2D52E /* JumpCorePlugin.swift */,
 				AB163504215AB93300635233 /* MediaControl */,
 			);
 			path = Core;
@@ -1194,7 +1194,7 @@
 			isa = PBXGroup;
 			children = (
 				C9EDF8462162C93900789E2F /* MediaControl */,
-				48D81F1E21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift */,
+				48D81F1E21FA31FA00B2D52E /* JumpCorePluginTests.swift */,
 				48A29C06221DEF640004AD3B /* CorePluginTests.swift */,
 			);
 			path = Core;
@@ -1209,7 +1209,7 @@
 				C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */,
 				C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */,
 				E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */,
-				487747D3220B5BCD000167CE /* DoubleTapMediaControlPluginTests.swift */,
+				487747D3220B5BCD000167CE /* JumpMediaControlPluginTests.swift */,
 			);
 			path = MediaControl;
 			sourceTree = "<group>";
@@ -1928,7 +1928,7 @@
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
 				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
-				48D81F1F21FA31FA00B2D52E /* DoubleTapCorePluginTests.swift in Sources */,
+				48D81F1F21FA31FA00B2D52E /* JumpCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
@@ -1947,7 +1947,7 @@
 				57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */,
 				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
-				487747D5220B5BFB000167CE /* DoubleTapMediaControlPluginTests.swift in Sources */,
+				487747D5220B5BFB000167CE /* JumpMediaControlPluginTests.swift in Sources */,
 				C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */,
 				E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */,
 				96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */,
@@ -2003,8 +2003,8 @@
 				320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */,
 				96D362D61D41339400CCB866 /* PlaybackType.swift in Sources */,
 				96D362E91D41339400CCB866 /* DragDetectorView.swift in Sources */,
-				AB0A58DF21FA2F520075729E /* DoubleTapAnimation.swift in Sources */,
-				48D81F1D21F9F41200B2D52E /* DoubleTapCorePlugin.swift in Sources */,
+				AB0A58DF21FA2F520075729E /* JumpAnimation.swift in Sources */,
+				48D81F1D21F9F41200B2D52E /* JumpCorePlugin.swift in Sources */,
 				96D362D41D41339400CCB866 /* MediaOptionType.swift in Sources */,
 				FC6418DE2007DB9100E81B7C /* ClapprDateFormatter.swift in Sources */,
 				9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */,
@@ -2016,10 +2016,10 @@
 				96D362CB1D41339400CCB866 /* MediaOption.swift in Sources */,
 				C9EDF8582163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				ABE7D3EE212C36200049773A /* SharedData.swift in Sources */,
-				4856322B220B4C9C0096CDAE /* DoubleTapMediaControlPlugin.swift in Sources */,
+				4856322B220B4C9C0096CDAE /* JumpMediaControlPlugin.swift in Sources */,
 				96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */,
 				96D362CF1D41339400CCB866 /* UIObject.swift in Sources */,
-				4856322E220B54B90096CDAE /* DoubleTapPlugin.swift in Sources */,
+				4856322E220B54B90096CDAE /* JumpPlugin.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
