@@ -11,15 +11,15 @@ public class JumpMediaControlPlugin: JumpPlugin {
     }
     
     override func removeJumpGesture() {
-        mediaControl?.mediaControlView.removeGestureRecognizer(jumpGesture)
+        mediaControl?.mediaControlView.removeGestureRecognizer(doubleTapGesture)
     }
     
     override func addJumpGesture() {
-        jumpGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
-        jumpGesture.numberOfTapsRequired = 2
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
+        doubleTapGesture.numberOfTapsRequired = 2
         
-        mediaControl?.tapGesture?.require(toFail: jumpGesture)
-        mediaControl?.mediaControlView.addGestureRecognizer(jumpGesture)
+        mediaControl?.tapGesture?.require(toFail: doubleTapGesture)
+        mediaControl?.mediaControlView.addGestureRecognizer(doubleTapGesture)
     }
     
     @objc private func jump(gestureRecognizer: UITapGestureRecognizer) {

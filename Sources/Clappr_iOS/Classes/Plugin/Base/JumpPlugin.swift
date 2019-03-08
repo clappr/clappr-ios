@@ -2,7 +2,7 @@ import UIKit
 
 public class JumpPlugin: UICorePlugin {
     
-    var jumpGesture: UITapGestureRecognizer!
+    var doubleTapGesture: UITapGestureRecognizer!
     
     override open var pluginName: String {
         return "JumpPlugin"
