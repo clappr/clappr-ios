@@ -10,11 +10,11 @@ public class JumpMediaControlPlugin: JumpPlugin {
         return core?.plugins.first(where: { $0.pluginName == MediaControl.name }) as? MediaControl
     }
     
-    override func removeJumpGesture() {
+    override func removeGesture() {
         mediaControl?.mediaControlView.removeGestureRecognizer(doubleTapGesture)
     }
     
-    override func addJumpGesture() {
+    override func addGesture() {
         doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
         doubleTapGesture.numberOfTapsRequired = 2
         

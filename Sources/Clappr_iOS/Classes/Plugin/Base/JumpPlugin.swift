@@ -32,20 +32,20 @@ public class JumpPlugin: UICorePlugin {
     private func bindCoreEvents() {
         guard let core = core else { return }
         listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-        listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeJumpGesture() }
-        listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addJumpGesture() }
+        listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeGesture() }
+        listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addGesture() }
     }
     
-    func removeJumpGesture() {
+    func removeGesture() {
         NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement removeJumpGesture method", userInfo: nil).raise()
     }
     
-    func addJumpGesture() {
+    func addGesture() {
         NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement addJumpGesture method", userInfo: nil).raise()
     }
     
     override public func render() {
-        addJumpGesture()
+        addGesture()
     }
     
     func shouldSeek(point: CGPoint) -> Bool {

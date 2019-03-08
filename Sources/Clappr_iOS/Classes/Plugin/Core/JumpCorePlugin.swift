@@ -6,11 +6,11 @@ public class JumpCorePlugin: JumpPlugin {
         return "JumpCorePlugin"
     }
     
-    override func removeJumpGesture() {
+    override func removeGesture() {
         core?.view.removeGestureRecognizer(doubleTapGesture)
     }
     
-    override func addJumpGesture() {
+    override func addGesture() {
         doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
         doubleTapGesture.numberOfTapsRequired = 2
         
