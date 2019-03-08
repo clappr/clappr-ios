@@ -15,14 +15,14 @@ public class JumpMediaControlPlugin: JumpPlugin {
     }
     
     override func addGesture() {
-        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
         doubleTapGesture.numberOfTapsRequired = 2
         
         mediaControl?.tapGesture?.require(toFail: doubleTapGesture)
         mediaControl?.mediaControlView.addGestureRecognizer(doubleTapGesture)
     }
     
-    @objc private func jump(gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             let point = gestureRecognizer.location(in: view)
             if shouldSeek(point: point) {

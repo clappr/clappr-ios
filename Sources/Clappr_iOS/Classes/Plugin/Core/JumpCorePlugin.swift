@@ -11,7 +11,7 @@ public class JumpCorePlugin: JumpPlugin {
     }
     
     override func addGesture() {
-        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(jump))
+        doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
         doubleTapGesture.numberOfTapsRequired = 2
         
         if let coreGesture = core?.view.gestureRecognizers?.first as? UITapGestureRecognizer {
@@ -27,7 +27,7 @@ public class JumpCorePlugin: JumpPlugin {
         return pluginColidingWithGesture == nil
     }
     
-    @objc private func jump(gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             if shouldSeek(point: gestureRecognizer.location(in: view)) {
                 let xPosition = gestureRecognizer.location(in: view).x
