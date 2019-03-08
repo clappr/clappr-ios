@@ -37,11 +37,11 @@ public class JumpPlugin: UICorePlugin {
     }
     
     func removeGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement removeJumpGesture method", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement removeGesture method", userInfo: nil).raise()
     }
     
     func addGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement addJumpGesture method", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement addGesture method", userInfo: nil).raise()
     }
     
     override public func render() {
