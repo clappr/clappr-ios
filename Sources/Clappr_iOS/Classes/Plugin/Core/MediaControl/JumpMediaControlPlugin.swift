@@ -34,7 +34,9 @@ public class JumpMediaControlPlugin: JumpPlugin {
     
     private func filteredOutModalPlugins() -> [UICorePlugin]? {
         let pluginsWithoutMediaControl = core?.plugins.filter({ $0.pluginName != MediaControl.name })
-        return pluginsWithoutMediaControl?.filter({ ($0 as? MediaControlPlugin)?.panel != .modal })
+        return pluginsWithoutMediaControl?
+            .filter({ ($0 as? MediaControlPlugin)?.panel != .modal })
+            .compactMap({ $0 as? UICorePlugin })
     }
     
     override func shouldSeek(point: CGPoint) -> Bool {
