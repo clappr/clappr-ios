@@ -56,6 +56,16 @@ class CoreTests: QuickSpec {
                 it("containers list is not empty") {
                     expect(core.containers).toNot(beEmpty())
                 }
+
+                it("stores plugin instances") {
+                    Loader.shared.register(plugins: [UICorePluginMock.self, CorePluginMock.self])
+
+                    let core = CoreFactory.create(with: options as Options)
+
+                    expect(core.plugins.count).to(equal(2))
+                    expect(core.plugins.compactMap({ $0 as? UICorePluginMock })).toNot(beNil())
+                    expect(core.plugins.compactMap({ $0 as? CorePluginMock })).toNot(beNil())
+                }
                 
                 #if os(iOS)
                 it("add gesture recognizer") {
@@ -554,9 +564,9 @@ class CoreTests: QuickSpec {
 
                 it("protect the main thread when plugin crashes in render") {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
-                    CorePluginMock.crashOnDestroy = true
+                    UICorePluginMock.crashOnDestroy = true
                     let core = Core()
-                    let plugin = CorePluginMock()
+                    let plugin = UICorePluginMock()
                     core.addPlugin(plugin)
 
                     core.destroy()
@@ -680,9 +690,9 @@ class CoreTests: QuickSpec {
 
                 it("protect the main thread when plugin crashes in render") {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
-                    CorePluginMock.crashOnRender = true
+                    UICorePluginMock.crashOnRender = true
                     let core = Core()
-                    let plugin = CorePluginMock()
+                    let plugin = UICorePluginMock()
                     core.addPlugin(plugin)
 
                     core.render()
@@ -726,39 +736,45 @@ class CoreTests: QuickSpec {
     }
 }
 
-class CorePluginMock: UICorePlugin {
+class UICorePluginMock: UICorePlugin {
     static var didCallRender = false
     static var crashOnRender = false
     static var didCallDestroy = false
     static var crashOnDestroy = false
 
     override var pluginName: String {
-        return "CorePluginMock"
+        return "UICorePluginMock"
     }
 
     override func render() {
-        CorePluginMock.didCallRender = true
+        UICorePluginMock.didCallRender = true
 
-        if CorePluginMock.crashOnRender {
+        if UICorePluginMock.crashOnRender {
             codeThatCrashes()
         }
     }
 
 
     override func destroy() {
-        CorePluginMock.didCallDestroy = true
+        UICorePluginMock.didCallDestroy = true
 
-        if CorePluginMock.crashOnDestroy {
+        if UICorePluginMock.crashOnDestroy {
             codeThatCrashes()
         }
     }
 
     static func reset() {
-        CorePluginMock.didCallRender = false
+        UICorePluginMock.didCallRender = false
     }
 
     private func codeThatCrashes() {
         NSException(name:NSExceptionName(rawValue: "TestError"), reason:"Test Error", userInfo:nil).raise()
+    }
+}
+
+class CorePluginMock: CorePlugin {
+    override var pluginName: String {
+        return "CorePluginMock"
     }
 }
 

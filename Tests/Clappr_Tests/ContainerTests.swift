@@ -91,12 +91,32 @@ class ContainerTests: QuickSpec {
                         expect(option) == "option"
                     }
 
-                    it("add a container context to all plugins") {
+                    it("stores all plugin instances") {
+                        Loader.shared.resetPlugins()
+                        Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+                        let container = ContainerFactory.create(with: [:])
+
+                        expect(container.plugins.count).to(equal(2))
+                        expect(container.plugins.compactMap({ $0 as? FakeContainerPlugin })).toNot(beNil())
+                        expect(container.plugins.compactMap({ $0 as? AnotherFakeContainerPlugin })).toNot(beNil())
+                    }
+
+                    it("add a container context to all UIContainerPlugin") {
                         Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
                         let container = ContainerFactory.create(with: [:])
 
                         expect(container.plugins).toNot(beEmpty())
-                        container.plugins.forEach { plugin in
+                        container.plugins.compactMap({ $0 as? UIContainerPlugin }).forEach { plugin in
+                            expect(plugin.container) == container
+                        }
+                    }
+
+                    it("add a container context to all ContainerPlugin") {
+                        Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
+                        let container = ContainerFactory.create(with: [:])
+
+                        expect(container.plugins).toNot(beEmpty())
+                        container.plugins.compactMap({ $0 as? ContainerPlugin }).forEach { plugin in
                             expect(plugin.container) == container
                         }
                     }
@@ -347,7 +367,7 @@ class ContainerTests: QuickSpec {
         }
     }
 
-    class FakeContainerPlugin: UIContainerPlugin {
+    class FakeContainerPlugin: ContainerPlugin {
         override var pluginName: String {
             return "FakeContainerPlugin"
         }

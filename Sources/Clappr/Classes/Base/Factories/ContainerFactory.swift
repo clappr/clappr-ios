@@ -5,9 +5,7 @@ struct ContainerFactory {
         let container = Container(options: options)
 
         Loader.shared.containerPlugins.forEach { plugin in
-            if let containerPlugin = plugin.init(context: container) as? UIContainerPlugin {
-                container.addPlugin(containerPlugin)
-            }
+            container.addPlugin(plugin.init(context: container))
         }
 
         if let source = options[kSourceUrl] as? String {

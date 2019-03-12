@@ -129,6 +129,6 @@ class PosterPluginTests: QuickSpec {
     }
 
     private func getPosterPlugin(_ container: Container) -> PosterPlugin {
-        return container.plugins.filter({ $0.isKind(of: PosterPlugin.self) }).first as! PosterPlugin
+        return container.plugins.filter({ $0.pluginName == PosterPlugin.name }).first as! PosterPlugin
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 open class Container: UIObject {
-    private(set) var plugins: [UIContainerPlugin] = []
+    private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
     @objc open var options: Options {
         didSet {
@@ -78,22 +78,24 @@ open class Container: UIObject {
         view.sendSubview(toBack: playback.view)
     }
 
-    fileprivate func renderPlugin(_ plugin: UIContainerPlugin) {
-        view.addSubview(plugin.view)
-        do {
-            try ObjC.catchException {
-                plugin.render()
+    fileprivate func renderPlugin(_ plugin: Plugin) {
+        if let plugin = plugin as? UIContainerPlugin {
+            view.addSubview(plugin.view)
+            do {
+                try ObjC.catchException {
+                    plugin.render()
+                }
+            } catch {
+                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Container")
             }
-        } catch {
-            Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Container")
         }
     }
 
-    func addPlugin(_ plugin: UIContainerPlugin) {
+    func addPlugin(_ plugin: Plugin) {
         plugins.append(plugin)
     }
     
-    private func findPlugin(_ name: String) -> UIContainerPlugin? {
+    private func findPlugin(_ name: String) -> Plugin? {
         return plugins.first(where: { $0.pluginName == name })
     }
 
@@ -101,7 +103,7 @@ open class Container: UIObject {
         return findPlugin(name) != nil
     }
     
-    open func getPlugin(_ name: String) -> UIContainerPlugin? {
+    open func getPlugin(_ name: String) -> Plugin? {
         return findPlugin(name)
     }
 
