@@ -8,14 +8,14 @@ open class Container: UIObject {
             trigger(Event.didUpdateOptions)
         }
     }
-    
+
     @objc open var mediaControlEnabled = false {
         didSet {
             let eventToTrigger: Event = mediaControlEnabled ? .enableMediaControl : .disableMediaControl
             trigger(eventToTrigger)
         }
     }
-    
+
     @objc internal(set) open var playback: Playback? {
         willSet {
             if playback != newValue {
@@ -30,35 +30,35 @@ open class Container: UIObject {
             }
         }
     }
-    
+
     public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
-        
+
         super.init()
-        
+
         sharedData.container = self
-        
+
         view.backgroundColor = .clear
         view.accessibilityIdentifier = "Container"
     }
-    
+
     private func updateSource(_ source: String, mimeType: String? = nil) {
         var newOptions = options
-        
+
         newOptions[kSourceUrl] = source
         newOptions[kMimeType] = mimeType
-        
+
         options = newOptions
     }
     
     @objc open func load(_ source: String, mimeType: String? = nil) {
         trigger(Event.willLoadSource.rawValue)
-        
+
         updateSource(source, mimeType: mimeType)
-        
+
         playback?.destroy()
-        
+
         let playbackFactory = PlaybackFactory(options: options)
         playback = playbackFactory.createPlayback()
         
@@ -70,12 +70,12 @@ open class Container: UIObject {
             trigger(Event.didLoadSource.rawValue)
         }
     }
-    
+
     open override func render() {
         plugins.forEach(renderPlugin)
         renderPlayback()
     }
-    
+
     private func renderPlayback() {
         guard let playback = playback else {
             return
@@ -86,7 +86,7 @@ open class Container: UIObject {
         view.sendSubview(toBack: playback.view)
     }
 
-    fileprivate func renderPlugin(_ plugin: Plugin) {
+    private func renderPlugin(_ plugin: Plugin) {
         if let plugin = plugin as? UIContainerPlugin {
             view.addSubview(plugin.view)
             do {
@@ -106,7 +106,7 @@ open class Container: UIObject {
     private func findPlugin(_ name: String) -> Plugin? {
         return plugins.first(where: { $0.pluginName == name })
     }
-    
+
     @objc open func hasPlugin(_ name: String) -> Bool {
         return findPlugin(name) != nil
     }
@@ -114,15 +114,15 @@ open class Container: UIObject {
     open func getPlugin(_ name: String) -> Plugin? {
         return findPlugin(name)
     }
-    
+
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
-        
+
         trigger(Event.willDestroy.rawValue)
-        
+
         Logger.logDebug("destroying playback", scope: "Container")
         playback?.destroy()
-        
+
         Logger.logDebug("destroying plugins", scope: "Container")
         plugins.forEach { plugin in
             do {
@@ -134,9 +134,9 @@ open class Container: UIObject {
             }
         }
         plugins.removeAll()
-        
+
         view.removeFromSuperview()
-        
+
         trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
