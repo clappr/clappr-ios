@@ -204,7 +204,7 @@ class PlayButtonTests: QuickSpec {
 
                         playButton.render()
 
-                        expect(playButton.button.imageView?.contentMode).to(equal(UIViewContentMode.scaleAspectFit))
+                        expect(playButton.button.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
                     }
                 }
 

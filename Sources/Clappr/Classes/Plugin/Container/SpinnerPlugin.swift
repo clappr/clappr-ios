@@ -16,7 +16,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     public required init(context: UIObject) {
         super.init(context: context)
-        spinningWheel = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        spinningWheel = UIActivityIndicatorView(style: .whiteLarge)
         view.addSubview(spinningWheel)
         view.isUserInteractionEnabled = false
         bindDidChangePlayback()

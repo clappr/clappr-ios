@@ -9,7 +9,7 @@ class FullscreenTests: QuickSpec {
         describe("#Fullscreen") {
             it("prefersHomeIndicatorAutoHidden is set as true") {
                 let fullscreenController = FullscreenController()
-                expect(fullscreenController.prefersHomeIndicatorAutoHidden()).to(beTrue())
+                expect(fullscreenController.prefersHomeIndicatorAutoHidden).to(beTrue())
             }
         }
     }

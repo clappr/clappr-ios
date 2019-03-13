@@ -722,10 +722,10 @@ class CoreTests: QuickSpec {
         player.attachTo(UIView(), controller: rootViewController())
         #else
         let controller = UIViewController()
-        controller.addChildViewController(player)
+        controller.addChild(player)
         player.view.frame = controller.view.bounds
         controller.view.addSubview(player.view)
-        player.didMove(toParentViewController: controller)
+        player.didMove(toParent: controller)
         #endif
     }
     

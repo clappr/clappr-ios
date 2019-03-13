@@ -14,7 +14,7 @@ class FullscreenController: UIViewController {
         return UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft ? UIInterfaceOrientation.landscapeLeft : UIInterfaceOrientation.landscapeRight
     }
     
-    override func prefersHomeIndicatorAutoHidden() -> Bool {
+    override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
 }
