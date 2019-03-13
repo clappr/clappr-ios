@@ -1,9 +1,9 @@
 import UIKit
 
-public class JumpMediaControlPlugin: JumpPlugin {
+public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
     
     override open var pluginName: String {
-        return "JumpMediaControlPlugin"
+        return "QuickSeekMediaControlPlugin"
     }
     
     private var mediaControl: MediaControl? {
@@ -27,7 +27,7 @@ public class JumpMediaControlPlugin: JumpPlugin {
             let point = gestureRecognizer.location(in: view)
             if shouldSeek(point: point) {
                 mediaControl?.hide()
-                jumpSeek(xPosition: point.x)
+                quickSeek(xPosition: point.x)
             }
         }
     }
