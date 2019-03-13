@@ -1,9 +1,9 @@
 import UIKit
 
-public class JumpCorePlugin: JumpPlugin {
+public class QuickSeekCorePlugin: QuickSeekPlugin {
     
     override open var pluginName: String {
-        return "JumpCorePlugin"
+        return "QuickSeekCorePlugin"
     }
     
     override func removeGesture() {
@@ -33,7 +33,7 @@ public class JumpCorePlugin: JumpPlugin {
         if gestureRecognizer.state == .recognized {
             if shouldSeek(point: gestureRecognizer.location(in: view)) {
                 let xPosition = gestureRecognizer.location(in: view).x
-                jumpSeek(xPosition: xPosition)
+                quickSeek(xPosition: xPosition)
             }
         }
     }
