@@ -13,6 +13,7 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
             var playButton: PlayButton!
             
             beforeEach {
+                Loader.shared.resetPlugins()
                 core = CoreStub()
                 core.playbackMock?.videoDuration = 60.0
                 quickSeekPlugin = QuickSeekMediaControlPlugin(context: core)
