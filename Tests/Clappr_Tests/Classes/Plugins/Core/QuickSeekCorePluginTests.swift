@@ -3,21 +3,21 @@ import Nimble
 
 @testable import Clappr
 
-class JumpCorePluginTests: QuickSpec {
+class QuickSeekCorePluginTests: QuickSpec {
 
     override func spec() {
-        describe(".JumpCorePluginTests") {
-            var jumpPlugin: JumpCorePlugin!
+        describe(".QuickSeekCorePluginTests") {
+            var quickSeekPlugin: QuickSeekCorePlugin!
             var core: CoreStub!
             var eventTrigger = false
             
             beforeEach {
                 core = CoreStub()
                 core.playbackMock?.videoDuration = 60.0
-                jumpPlugin = JumpCorePlugin(context: core)
-                core.addPlugin(jumpPlugin)
+                quickSeekPlugin = QuickSeekCorePlugin(context: core)
+                core.addPlugin(quickSeekPlugin)
                 core.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-                jumpPlugin.render()
+                quickSeekPlugin.render()
                 core._container?.on(InternalEvent.didTapQuickSeek.rawValue) { _ in
                     eventTrigger = true
                 }
@@ -25,7 +25,7 @@ class JumpCorePluginTests: QuickSpec {
             
             describe("pluginName") {
                 it("has a name") {
-                    expect(jumpPlugin.pluginName).to(equal("JumpCorePlugin"))
+                    expect(quickSeekPlugin.pluginName).to(equal("QuickSeekCorePlugin"))
                 }
             }
             
@@ -35,12 +35,12 @@ class JumpCorePluginTests: QuickSpec {
                 }
             }
             
-            describe("when jump is triggered") {
+            describe("when quickSeek is triggered") {
                 context("and its position is less than half of the view (left)") {
                     it("seeks back 10 seconds") {
                         core.playbackMock?.set(position: 20.0)
 
-                        jumpPlugin.jumpSeek(xPosition: 0)
+                        quickSeekPlugin.quickSeek(xPosition: 0)
                         
                         expect(eventTrigger).toEventually(beTrue())
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
@@ -52,7 +52,7 @@ class JumpCorePluginTests: QuickSpec {
                     it("seeks forward 10 seconds") {
                         core.playbackMock?.set(position: 20.0)
                         
-                        jumpPlugin.jumpSeek(xPosition: 100)
+                        quickSeekPlugin.quickSeek(xPosition: 100)
 
                         expect(eventTrigger).toEventually(beTrue())
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
@@ -68,7 +68,7 @@ class JumpCorePluginTests: QuickSpec {
                             core.playbackMock?.set(isDvrInUse: true)
                             core.playbackMock?.set(position: 0)
                             
-                            jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
+                            quickSeekPlugin.quickSeek(xPosition: core.view.frame.width)
                             
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
@@ -77,7 +77,7 @@ class JumpCorePluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: true)
                             
-                            jumpPlugin.jumpSeek(xPosition: 0)
+                            quickSeekPlugin.quickSeek(xPosition: 0)
                             
                             expect(core.playbackMock?.didCallSeek).to(beTrue())
                         }
@@ -88,7 +88,7 @@ class JumpCorePluginTests: QuickSpec {
                                 core.playbackMock?.set(isDvrAvailable: true)
                                 core.playbackMock?.set(isDvrInUse: false)
                                 
-                                jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
+                                quickSeekPlugin.quickSeek(xPosition: core.view.frame.width)
                                 
                                 expect(core.playbackMock?.didCallSeek).to(beFalse())
                             }
@@ -100,7 +100,7 @@ class JumpCorePluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
-                            jumpPlugin.jumpSeek(xPosition: core.view.frame.width)
+                            quickSeekPlugin.quickSeek(xPosition: core.view.frame.width)
                             
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
@@ -109,7 +109,7 @@ class JumpCorePluginTests: QuickSpec {
                             core.playbackMock?.set(playbackType: .live)
                             core.playbackMock?.set(isDvrAvailable: false)
                             
-                            jumpPlugin.jumpSeek(xPosition: 0)
+                            quickSeekPlugin.quickSeek(xPosition: 0)
                             
                             expect(core.playbackMock?.didCallSeek).to(beFalse())
                         }
