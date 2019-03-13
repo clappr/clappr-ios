@@ -1,4 +1,4 @@
-class JumpAnimation {
+class QuickSeekAnimation {
     private var core: Core?
     private var seekLeftBubble = SeekBubble()
     private var seekRightBubble = SeekBubble()
