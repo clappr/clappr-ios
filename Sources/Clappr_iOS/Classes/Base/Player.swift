@@ -209,8 +209,8 @@ open class Player: BaseObject {
                 TimeIndicator.self,
                 FullscreenButton.self,
                 Seekbar.self,
-                JumpCorePlugin.self,
-                JumpMediaControlPlugin.self]
+                QuickSeekCorePlugin.self,
+                QuickSeekMediaControlPlugin.self]
 
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true
