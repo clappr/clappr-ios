@@ -1,22 +1,22 @@
 import UIKit
 
-public class JumpPlugin: UICorePlugin {
+public class QuickSeekPlugin: UICorePlugin {
     
     var doubleTapGesture: UITapGestureRecognizer!
     
     override open var pluginName: String {
-        return "JumpPlugin"
+        return "QuickSeekPlugin"
     }
     
     private var activePlayback: Playback? {
         return core?.activePlayback
     }
     
-    private var animatonHandler: JumpAnimation?
+    private var animatonHandler: QuickSeekAnimation?
     
     required init(context: UIObject) {
         super.init(context: context)
-        animatonHandler = JumpAnimation(core)
+        animatonHandler = QuickSeekAnimation(core)
         bindEvents()
     }
     
@@ -37,11 +37,11 @@ public class JumpPlugin: UICorePlugin {
     }
     
     func removeGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement removeGesture method", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "QuickSeekPlugin should implement removeGesture method", userInfo: nil).raise()
     }
     
     func addGesture() {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "JumpPlugin should implement addGesture method", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginImplementation"), reason: "QuickSeekPlugin should implement addGesture method", userInfo: nil).raise()
     }
     
     override public func render() {
@@ -52,7 +52,7 @@ public class JumpPlugin: UICorePlugin {
         return true
     }
 
-    @objc func jumpSeek(xPosition: CGFloat) {
+    @objc func quickSeek(xPosition: CGFloat) {
         guard let activePlayback = core?.activePlayback,
             let container = core?.activeContainer,
             let coreViewWidth = core?.view.frame.width else { return }
