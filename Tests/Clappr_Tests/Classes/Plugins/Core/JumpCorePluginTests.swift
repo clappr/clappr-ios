@@ -9,6 +9,7 @@ class JumpCorePluginTests: QuickSpec {
         describe(".JumpCorePluginTests") {
             var jumpPlugin: JumpCorePlugin!
             var core: CoreStub!
+            var eventTrigger = false
             
             beforeEach {
                 core = CoreStub()
@@ -17,6 +18,9 @@ class JumpCorePluginTests: QuickSpec {
                 core.addPlugin(jumpPlugin)
                 core.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                 jumpPlugin.render()
+                core._container?.on(InternalEvent.didTapQuickSeek.rawValue) { _ in
+                    eventTrigger = true
+                }
             }
             
             describe("pluginName") {
@@ -35,9 +39,10 @@ class JumpCorePluginTests: QuickSpec {
                 context("and its position is less than half of the view (left)") {
                     it("seeks back 10 seconds") {
                         core.playbackMock?.set(position: 20.0)
-                        
+
                         jumpPlugin.jumpSeek(xPosition: 0)
-                       
+                        
+                        expect(eventTrigger).toEventually(beTrue())
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(10))
                     }
@@ -48,7 +53,8 @@ class JumpCorePluginTests: QuickSpec {
                         core.playbackMock?.set(position: 20.0)
                         
                         jumpPlugin.jumpSeek(xPosition: 100)
-                        
+
+                        expect(eventTrigger).toEventually(beTrue())
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(30))
                     }
