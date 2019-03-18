@@ -54,8 +54,10 @@ public class JumpPlugin: UICorePlugin {
 
     @objc func jumpSeek(xPosition: CGFloat) {
         guard let activePlayback = core?.activePlayback,
+            let container = core?.activeContainer,
             let coreViewWidth = core?.view.frame.width else { return }
         
+        container.trigger(InternalEvent.didTapQuickSeek.rawValue)
         let didTapLeftSide = xPosition < coreViewWidth / 2
         if didTapLeftSide {
             seekBackward(activePlayback)
