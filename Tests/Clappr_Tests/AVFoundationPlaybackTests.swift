@@ -870,6 +870,42 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
+
+            describe("#selectDefaultSubtitleIfNeeded") {
+                it("changes subtitle just once") {
+                    let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
+                    let playback = AVFoundationPlayback(options: options)
+                    var hasDefaultFromOption = false
+                    playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
+                        guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
+                        hasDefaultFromOption = subtitles.hasDefaultSelected
+                    }
+                    playback.play()
+                    expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
+
+                    playback.selectDefaultSubtitleIfNeeded()
+
+                    expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 5)
+                }
+            }
+
+            describe("#selectDefaultAudioIfNeeded") {
+                it("changes audio just once") {
+                    let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultAudioSource: "pt"]
+                    let playback = AVFoundationPlayback(options: options)
+                    var hasDefaultFromOption = false
+                    playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
+                        guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
+                        hasDefaultFromOption = audio.hasDefaultSelected
+                    }
+                    playback.play()
+                    expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
+
+                    playback.selectDefaultAudioIfNeeded()
+
+                    expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                }
+            }
             
             describe("#didFindSubtitle") {
                 

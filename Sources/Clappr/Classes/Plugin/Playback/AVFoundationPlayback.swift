@@ -54,6 +54,7 @@ open class AVFoundationPlayback: Playback {
         return "AVPlayback"
     }
 
+    private var hasSelectedDefaultSubtitle = false
     open override var selectedSubtitle: MediaOption? {
         get {
             guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
@@ -67,6 +68,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    private var hasSelectedDefaultAudio = false
     open override var selectedAudioSource: MediaOption? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.audible.rawValue)
@@ -547,27 +549,31 @@ open class AVFoundationPlayback: Playback {
         trigger(.didUpdateDuration, userInfo: ["duration": duration])
     }
 
-    private func selectDefaultSubtitleIfNeeded() {
+    internal func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = self.subtitles else { return }
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
             let defaultSubtitle = subtitles.filter({ $0.language == defaultSubtitleLanguage }).first,
-            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption {
+            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption,
+            !hasSelectedDefaultSubtitle {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
+            hasSelectedDefaultSubtitle = true
         } else {
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
     }
 
-    private func selectDefaultAudioIfNeeded() {
+    internal func selectDefaultAudioIfNeeded() {
         guard let audioSources = self.audioSources else { return }
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
             let defaultAudioSource = audioSources.filter({ $0.language == defaultAudioLanguage }).first,
-            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption {
+            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption,
+            !hasSelectedDefaultAudio {
 
             setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
             trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
+            hasSelectedDefaultAudio = true
         } else {
             trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
