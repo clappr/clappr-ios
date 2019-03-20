@@ -67,7 +67,6 @@ open class TimeIndicator: MediaControlPlugin {
 
     required public init(context: UIObject) {
         super.init(context: context)
-        stopListening()
         bindEvents()
     }
 
@@ -76,12 +75,13 @@ open class TimeIndicator: MediaControlPlugin {
     }
 
     private func bindEvents() {
+        stopListening()
         bindContainerEvents()
         bindPlaybackEvents()
         bindCoreEvents()
     }
 
-    private func bindContainerEvents() {
+    open func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }

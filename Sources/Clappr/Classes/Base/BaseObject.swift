@@ -2,7 +2,7 @@ import Foundation
 
 private struct EventHolder {
     var eventHandler: EventHandler
-    var contextObject: BaseObject
+    weak var contextObject: BaseObject?
     var name: String
 }
 
