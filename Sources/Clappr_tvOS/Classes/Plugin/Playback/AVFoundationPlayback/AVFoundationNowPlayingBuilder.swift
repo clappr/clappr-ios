@@ -74,7 +74,7 @@ struct AVFoundationNowPlayingBuilder {
     }
 
     func getArtwork(with image: UIImage) -> AVMutableMetadataItem? {
-        guard let data = UIImageJPEGRepresentation(image, 1) as (NSCopying & NSObjectProtocol)? else { return nil }
+        guard let data = image.jpegData(compressionQuality: 1) as (NSCopying & NSObjectProtocol)? else { return nil }
         let item = generateItem(for: AVMetadataIdentifier.commonIdentifierArtwork.rawValue, with: data)
         item.dataType = kCMMetadataBaseDataType_JPEG as String
         return item

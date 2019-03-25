@@ -42,7 +42,7 @@ open class PosterPlugin: UIContainerPlugin {
     fileprivate func configurePlayButton() {
         let image = UIImage(named: "poster-play", in: Bundle(for: PosterPlugin.self),
                             compatibleWith: nil)
-        playButton.setBackgroundImage(image, for: UIControlState())
+        playButton.setBackgroundImage(image, for: UIControl.State())
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), for: .touchUpInside)
     }

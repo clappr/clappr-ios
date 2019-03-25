@@ -52,15 +52,15 @@ class FullscreenButtonTests: QuickSpec {
                     }
                     
                     it("has scaleAspectFit content mode") {
-                        expect(fullscreenButton.button.imageView?.contentMode).to(equal(UIViewContentMode.scaleAspectFit))
+                        expect(fullscreenButton.button.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
                     }
                     
                     it("has .fill on contentVerticalAlignment") {
-                        expect(fullscreenButton.button.contentVerticalAlignment).to(equal(UIControlContentVerticalAlignment.fill))
+                        expect(fullscreenButton.button.contentVerticalAlignment).to(equal(UIControl.ContentVerticalAlignment.fill))
                     }
                     
                     it("has .fill on contentHorizontalAlignment") {
-                        expect(fullscreenButton.button.contentHorizontalAlignment).to(equal(UIControlContentHorizontalAlignment.fill))
+                        expect(fullscreenButton.button.contentHorizontalAlignment).to(equal(UIControl.ContentHorizontalAlignment.fill))
                     }
                 }
                 

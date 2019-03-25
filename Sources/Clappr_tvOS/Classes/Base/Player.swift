@@ -16,16 +16,16 @@ open class Player: UIViewController {
             core?.parentView = viewController?.contentOverlayView
             core?.parentController = self
             if let vc = viewController {
-                addChildViewController(vc)
+                addChild(vc)
                 vc.view.frame = view.bounds
                 vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 view.addSubview(vc.view)
-                vc.didMove(toParentViewController: self)
+                vc.didMove(toParent: self)
             }
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
-            Notification.Name.UIApplicationWillEnterForeground, object: nil)
+            UIApplication.willEnterForegroundNotification, object: nil)
 
         core?.render()
     }
@@ -276,14 +276,14 @@ open class Player: UIViewController {
     fileprivate func destroyViewController() {
         if let viewController = viewController {
             viewController.player = nil
-            viewController.willMove(toParentViewController: nil)
+            viewController.willMove(toParent: nil)
             viewController.view.removeFromSuperview()
-            viewController.removeFromParentViewController()
+            viewController.removeFromParent()
         }
 
-        willMove(toParentViewController: nil)
+        willMove(toParent: nil)
         view.removeFromSuperview()
-        removeFromParentViewController()
+        removeFromParent()
     }
 
     override open func viewWillDisappear(_ animated: Bool) {

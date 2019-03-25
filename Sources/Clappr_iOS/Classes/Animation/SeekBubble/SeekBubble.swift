@@ -27,7 +27,7 @@ class SeekBubble: UIView {
     }
     
     private func animateBubble() {
-        parentView.bringSubview(toFront: self)
+        parentView.bringSubviewToFront(self)
         bubbleWidth.constant = parentView.frame.width
         bubbleHeight.constant = parentView.frame.height * 1.8
         
@@ -48,7 +48,7 @@ class SeekBubble: UIView {
     }
     
     private func animateLabel() {
-        parentView.bringSubview(toFront: label)
+        parentView.bringSubviewToFront(label)
         UIView.animate(withDuration: ClapprAnimationDuration.seekLabelShow, animations: {
             self.label.alpha = 1.0
             self.parentView.layoutSubviews()
@@ -71,7 +71,7 @@ class SeekBubble: UIView {
     }
     
     private func animate(_ image: UIImageView, delay: TimeInterval) {
-        parentView.bringSubview(toFront: image)
+        parentView.bringSubviewToFront(image)
         UIView.animate(withDuration: ClapprAnimationDuration.seekImageShow, delay: delay, animations: {
             image.alpha = 1.0
             self.parentView.layoutSubviews()
@@ -94,7 +94,7 @@ class SeekBubble: UIView {
         }
     }
     
-    private func setupBubble(within view: UIView, position: NSLayoutAttribute) {
+    private func setupBubble(within view: UIView, position: NSLayoutConstraint.Attribute) {
         
         backgroundColor = UIColor(white: 0, alpha: 0.2)
         view.addSubview(self)

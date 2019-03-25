@@ -84,7 +84,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video is live") {
 
                         beforeEach {
-                            asset.set(duration: kCMTimeIndefinite)
+                            asset.set(duration: CMTime.indefinite)
                         }
 
                         context("video has dvr") {
@@ -146,7 +146,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 describe("#pause") {
                     beforeEach {
-                        asset.set(duration: kCMTimeIndefinite)
+                        asset.set(duration: CMTime.indefinite)
                     }
 
                     context("video has dvr") {
@@ -188,7 +188,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     func setupTest(minDvrSize: Double, seekableTimeRange: Double) {
                         playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
-                        playerAsset.set(duration: kCMTimeIndefinite)
+                        playerAsset.set(duration: CMTime.indefinite)
                         playerItem = AVPlayerItemStub(asset: playerAsset)
                         playerItem!.setSeekableTimeRange(with: seekableTimeRange)
                         let player = AVPlayerStub()
@@ -344,7 +344,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when video is live") {
                         it("returns true") {
-                            asset.set(duration: kCMTimeIndefinite)
+                            asset.set(duration: CMTime.indefinite)
                             item.setSeekableTimeRange(with: 60)
 
                             expect(playback.isDvrAvailable).to(beTrue())
@@ -356,7 +356,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when live") {
                         context("and DVR is available") {
                             it("returns the position inside the DVR window") {
-                                asset.set(duration: kCMTimeIndefinite)
+                                asset.set(duration: CMTime.indefinite)
                                 item.setSeekableTimeRange(with: 200)
                                 item.setWindow(start: 100, end: 160)
                                 item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
@@ -366,7 +366,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                         context("and dvr is not available") {
                             it("returns 0") {
-                                asset.set(duration: kCMTimeIndefinite)
+                                asset.set(duration: CMTime.indefinite)
                                 item.setSeekableTimeRange(with: 0)
                                 
                                 expect(playback.position).to(equal(0))
@@ -424,7 +424,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when video is live") {
                     context("when has dvr enabled") {
                         it("returns different from zero") {
-                            asset.set(duration: kCMTimeIndefinite)
+                            asset.set(duration: CMTime.indefinite)
                             item.setSeekableTimeRange(with: 60)
 
                             player.setStatus(to: .readyToPlay)
@@ -434,7 +434,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     context("when doesn't have dvr enabled") {
                         it("returns zero") {
-                            asset.set(duration: kCMTimeIndefinite)
+                            asset.set(duration: CMTime.indefinite)
                             player.setStatus(to: .readyToPlay)
 
                             expect(playback.duration) == 0
@@ -660,7 +660,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when DVR is available") {
                     it("seeks to the correct time inside the DVR window") {
-                        asset.set(duration: kCMTimeIndefinite)
+                        asset.set(duration: CMTime.indefinite)
                         item.setSeekableTimeRange(with: 60)
                         item.setWindow(start: 60, end: 120)
 
@@ -816,7 +816,7 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#isDvrInUse") {
                 context("when video is paused") {
                     it("returns true") {
-                        asset.set(duration: kCMTimeIndefinite)
+                        asset.set(duration: CMTime.indefinite)
                         item.setSeekableTimeRange(with: 160)
 
                         playback.pause()
@@ -827,7 +827,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 
                 context("when currentTime is lower then dvrWindowEnd - liveHeadTolerance") {
                     it("returns true") {
-                        asset.set(duration: kCMTimeIndefinite)
+                        asset.set(duration: CMTime.indefinite)
                         item.setSeekableTimeRange(with: 160)
                         player.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
                         
@@ -839,7 +839,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 
                 context("when currentTime is higher or equal then dvrWindowEnd - liveHeadTolerance") {
                     it("returns false") {
-                        asset.set(duration: kCMTimeIndefinite)
+                        asset.set(duration: CMTime.indefinite)
                         item.setSeekableTimeRange(with: 160)
                         player.set(currentTime: CMTime(seconds: 156, preferredTimescale: 1))
                         
@@ -1279,8 +1279,8 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#playerViewController") {
                 var avFoundationPlayback: AVFoundationPlayback!
                 var controller: AVPlayerViewController!
-                let fromTime = CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC))
-                let toTime = CMTimeMakeWithSeconds(10, Int32(NSEC_PER_SEC))
+                let fromTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
+                let toTime = CMTimeMakeWithSeconds(10, preferredTimescale: Int32(NSEC_PER_SEC))
                 
                 beforeEach {
                     controller = AVPlayerViewController()

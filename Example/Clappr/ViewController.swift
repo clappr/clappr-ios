@@ -82,7 +82,7 @@ class ViewController: UIViewController {
 
     @objc func showAlert(with title: String, message: String) {
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+        alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler: nil))
         self.navigationController?.present(alertViewController, animated: true, completion: nil)
     }
 }

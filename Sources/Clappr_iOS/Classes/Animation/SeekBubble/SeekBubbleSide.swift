@@ -4,7 +4,7 @@ enum SeekBubbleSide {
     case left
     case right
     
-    func position() -> NSLayoutAttribute {
+    func position() -> NSLayoutConstraint.Attribute {
         switch self {
         case .left: return .leading
         case .right: return .trailing
