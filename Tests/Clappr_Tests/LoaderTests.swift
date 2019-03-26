@@ -74,10 +74,9 @@ class LoaderTests: QuickSpec {
                 it("gives priority to external plugin") {
                     Loader.shared.register(plugins: [StubSpinnerPlugin.self])
                     let spinnerPlugins = Loader.shared.containerPlugins.filter({ $0.name == "spinner" })
-                    let spinner = spinnerPlugins.first?.init() as? StubSpinnerPlugin
 
                     expect(spinnerPlugins.count).to(equal(1))
-                    expect(spinner).to(beAKindOf(StubSpinnerPlugin.self))
+                    expect(String(describing: spinnerPlugins.first!)).to(equal("StubSpinnerPlugin"))
                 }
             }
         }
