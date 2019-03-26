@@ -1274,6 +1274,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(0))
                     }
                 }
+
+                context("when avplayer has playerItem and is ready to play") {
+
+                    it("calls loadMetadata when the player is ready to play") {
+                        let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                        let nowPlayingService = NowPlayingServiceStub()
+                        playback = AVFoundationPlayback(options: options)
+                        playback.nowPlayingService = nowPlayingService
+
+                        playback.play()
+
+                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
+                    }
+                }
             }
             
             describe("#playerViewController") {
