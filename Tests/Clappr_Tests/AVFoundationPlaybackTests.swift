@@ -1277,7 +1277,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when avplayer has playerItem and is ready to play") {
 
-                    it("calls loadMetadata when the player is ready to play") {
+                    it("calls loadMetadata") {
                         let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                         let nowPlayingService = NowPlayingServiceStub()
                         playback = AVFoundationPlayback(options: options)
