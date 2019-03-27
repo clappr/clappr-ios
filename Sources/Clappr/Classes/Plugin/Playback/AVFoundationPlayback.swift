@@ -545,6 +545,9 @@ open class AVFoundationPlayback: Playback {
         seekOnReadyIfNeeded()
         addTimeElapsedCallback()
         trigger(.didUpdateDuration, userInfo: ["duration": duration])
+        #if os(tvOS)
+            loadMetadata()
+        #endif
     }
 
     internal func selectDefaultSubtitleIfNeeded() {
