@@ -17,6 +17,8 @@ open class Playback: UIObject, Plugin {
     fileprivate(set) open var subtitles: [MediaOption]?
     fileprivate(set) open var audioSources: [MediaOption]?
 
+    @objc open var mediaStartTime: NSDate?
+
     @objc internal(set) open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)

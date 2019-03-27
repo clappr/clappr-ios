@@ -422,9 +422,16 @@ open class AVFoundationPlayback: Playback {
 
             triggerDvrStatusIfNeeded()
         case .playing:
+            initializeMediaStartTime()
             trigger(.playing)
         default:
             break
+        }
+    }
+
+    private func initializeMediaStartTime() {
+        if mediaStartTime == nil {
+            mediaStartTime = NSDate()
         }
     }
 
