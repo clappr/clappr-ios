@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */; };
+		23EDF918224D83FD00FB0D96 /* Clappr.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D8810057D2C05E1F7A2759D7 /* Clappr.podspec */; };
+		23EDF91B224E8EB900FB0D96 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 23EDF91A224E8EB800FB0D96 /* .swift-version */; };
+		23EDF91E224EAF9A00FB0D96 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */; };
 		320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */; };
 		320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A14216FBF89006D2B24 /* PlayButton.swift */; };
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -366,6 +370,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVersionTests.swift; sourceTree = "<group>"; };
+		23EDF91A224E8EB800FB0D96 /* .swift-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".swift-version"; sourceTree = SOURCE_ROOT; };
+		23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonTests.swift; sourceTree = "<group>"; };
 		320A7A14216FBF89006D2B24 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -653,6 +660,7 @@
 		323DF27A1FF4399600ECA3F3 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				23EDF91A224E8EB800FB0D96 /* .swift-version */,
 				FBE6A3E52163EF9C0083C9CC /* Extensions */,
 				57351C6620248D66007DEBBE /* Stub */,
 				607FACE81AFB9204008FA782 /* Clappr_Tests */,
@@ -823,6 +831,7 @@
 				FB61A3F2209F885800BDF267 /* FullscreenTests.swift */,
 				322EA4C920F941300018973A /* AVURLAssetStub.swift */,
 				320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */,
+				23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */,
 			);
 			path = Clappr_Tests;
 			sourceTree = "<group>";
@@ -1157,6 +1166,7 @@
 				C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */,
 				57535919218747C300A88BE2 /* Array+appendOrReplaceTests.swift */,
 				5733D1BD21BAA6E4002107D2 /* Dictionary+startAtTests.swift */,
+				23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1666,6 +1676,7 @@
 				32624CAC212C7741004C26ED /* sample13.ts in Resources */,
 				9E1613FA2051CD4B006E95F2 /* sample0.ts in Resources */,
 				C905869322132046009D2FA0 /* poster.png in Resources */,
+				23EDF918224D83FD00FB0D96 /* Clappr.podspec in Resources */,
 				32624CAD212C7741004C26ED /* sub0.webvtt in Resources */,
 				32624CB4212C7741004C26ED /* sample6.ts in Resources */,
 				32624CAE212C7741004C26ED /* sub-por.m3u8 in Resources */,
@@ -1675,6 +1686,7 @@
 				57351C6820248D78007DEBBE /* video.mp4 in Resources */,
 				9E1613F92051CD4B006E95F2 /* sample.m3u8 in Resources */,
 				32624CB1212C7741004C26ED /* sample5.ts in Resources */,
+				23EDF91B224E8EB900FB0D96 /* .swift-version in Resources */,
 				32624CA4212C7741004C26ED /* sample4.ts in Resources */,
 				32624CA9212C7741004C26ED /* master.m3u8 in Resources */,
 				32624CAB212C7741004C26ED /* sample9.ts in Resources */,
@@ -1908,6 +1920,7 @@
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
 				48A29C08221DEF690004AD3B /* CorePluginTests.swift in Sources */,
+				23EDF91E224EAF9A00FB0D96 /* String+Ext.swift in Sources */,
 				E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */,
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
@@ -1916,6 +1929,7 @@
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				FBE6A3E42163EEAE0083C9CC /* Loader+Plugins.swift in Sources */,
 				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
+				23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */,
 				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
