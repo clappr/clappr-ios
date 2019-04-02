@@ -1118,6 +1118,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.currentState).to(equal(.buffering))
                         }
                     }
+                    
+                    context("when video has playing state") {
+                        it("initializes mediaStartTime property") {
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            
+                            expect(playback.mediaStartTime).to(beNil())
+                            
+                            playback.play()
+                            
+                            expect(playback.mediaStartTime).toEventuallyNot(beNil())
+                        }
+                    }
                 }
 
                 describe("#paused") {
