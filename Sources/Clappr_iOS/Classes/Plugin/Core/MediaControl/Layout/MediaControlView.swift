@@ -1,5 +1,7 @@
 class MediaControlView: UIView {
     @IBOutlet weak var contrastView: UIView!
+    
+    @IBOutlet weak var frontLayer: UIView!
 
     @IBOutlet weak var topPanel: UIView!
     @IBOutlet weak var centerPanel: UIView!
@@ -46,6 +48,8 @@ class MediaControlView: UIView {
     func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
         if position == .center {
             addSubviewAndCenter(view, in: panel)
+        } else if panel == .front {
+            frontLayer.addSubview(view)
         } else {
             panels[panel]![position]?.addArrangedSubview(view)
         }
@@ -61,6 +65,8 @@ class MediaControlView: UIView {
             bottomPanel.addSubview(view)
         case .modal:
             modalPanel.addArrangedSubview(view)
+        case .front:
+            frontLayer.addSubview(view)
         }
         view.anchorInCenter()
     }

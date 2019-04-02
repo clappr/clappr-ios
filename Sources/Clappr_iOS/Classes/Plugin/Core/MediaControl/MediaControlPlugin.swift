@@ -8,6 +8,7 @@ public enum MediaControlPanel {
     case center
     case bottom
     case modal
+    case front
 }
 
 public enum MediaControlPosition {
