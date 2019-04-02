@@ -100,7 +100,7 @@
                         </view>
                     </subviews>
                 </stackView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qX-Y6-Q33">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qX-Y6-Q33" customClass="PassthroughView" customModule="Clappr" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
                 </view>
                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rxJ-bk-Ll1">
