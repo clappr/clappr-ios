@@ -149,27 +149,6 @@ class MediaControlViewTests: QuickSpec {
                         expect(didCallAnchorInCenter).to(beTrue())
                     }
                 }
-                
-                context("front layer") {
-                    it("adds to the front layer regardless of position") {
-                        let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIView()
-                        
-                        mediaControlView.addSubview(view, in: .front, at: .none)
-                        
-                        expect(mediaControlView.frontLayer.subviews).to(contain(view))
-                    }
-                    
-                    it("centers the view (adding constraints) in the front layer when position is center") {
-                        let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIViewMock()
-                        
-                        mediaControlView.addSubview(view, in: .front, at: .center)
-                        
-                        expect(mediaControlView.frontLayer.subviews).to(contain(view))
-                        expect(didCallAnchorInCenter).to(beTrue())
-                    }
-                }
             }
         }
     }

@@ -133,11 +133,10 @@
                 <outlet property="bottomPanel" destination="jko-PF-nXe" id="pBM-gX-Vc9"/>
                 <outlet property="bottomRight" destination="g3u-YP-Zws" id="bTW-Q3-SrV"/>
                 <outlet property="centerLeft" destination="Wgm-7U-aXc" id="ilr-yv-oUj"/>
-                <outlet property="centerNone" destination="Kzy-cD-bwl" id="Scs-CQ-W4u"/>
+                <outlet property="centerNone" destination="7qX-Y6-Q33" id="2pU-Wz-3vq"/>
                 <outlet property="centerPanel" destination="yqq-a6-mcp" id="cUg-Mz-eaN"/>
                 <outlet property="centerRight" destination="vQx-QC-GJR" id="O1i-px-VbO"/>
                 <outlet property="contrastView" destination="d79-k6-8Eh" id="nkC-lU-9N7"/>
-                <outlet property="frontLayer" destination="7qX-Y6-Q33" id="jYI-co-pF3"/>
                 <outlet property="modalPanel" destination="rxJ-bk-Ll1" id="Va8-jx-4vD"/>
                 <outlet property="topLeft" destination="rno-A4-BKN" id="sjY-8o-1Fm"/>
                 <outlet property="topNone" destination="hkH-N8-H1F" id="IRF-S9-cQT"/>
