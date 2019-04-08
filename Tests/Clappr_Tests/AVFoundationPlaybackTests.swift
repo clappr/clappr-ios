@@ -309,6 +309,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
                 }
+                
+                describe("#epochDvrWindowStart") {
+                    it("returns the epoch time corresponding to the DVR start") {
+                        let now = Date()
+                        asset.set(duration: CMTime.indefinite)
+                        item.setSeekableTimeRange(with: 200)
+                        item.setWindow(start: 100, end: 160)
+                        item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
+                        item.set(currentDate: now)
+                        
+                        let dvrStart = now.addingTimeInterval(-25).timeIntervalSince1970
+                        expect(playback.epochDvrWindowStart).to(equal(dvrStart))
+                    }
+                }
 
                 describe("#loadedTimeRanges") {
                     context("when player is nil") {

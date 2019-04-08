@@ -681,6 +681,11 @@ extension AVFoundationPlayback {
         guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
         return ranges
     }
+    
+    open var epochDvrWindowStart: TimeInterval? {
+        guard let currentDate = currentDate else { return nil }
+        return currentDate.timeIntervalSince1970 - position
+    }
 
     private var dvrWindowStart: Double? {
         guard let end = dvrWindowEnd, isDvrAvailable, playbackType == .live else {
