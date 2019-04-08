@@ -682,8 +682,8 @@ extension AVFoundationPlayback {
         return ranges
     }
     
-    open var epochDvrWindowStart: TimeInterval? {
-        guard let currentDate = currentDate else { return nil }
+    open override var epochDvrWindowStart: TimeInterval {
+        guard let currentDate = currentDate else { return 0 }
         return currentDate.timeIntervalSince1970 - position
     }
 

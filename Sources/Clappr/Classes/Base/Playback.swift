@@ -134,4 +134,8 @@ extension Playback {
     @objc open var loadedTimeRanges: [NSValue] {
         return []
     }
+    
+    @objc open var epochDvrWindowStart: TimeInterval {
+        return 0
+    }
 }
