@@ -213,7 +213,7 @@ open class AVFoundationPlayback: Playback {
         if player == nil {
             setupPlayer()
 
-            let queue = DispatchQueue(label: "audioSelectionQueue", qos: .background)
+            let queue = DispatchQueue(label: "audioSelectionQueue", qos: .utility)
             queue.async {
                 self.selectDefaultAudioIfNeeded()
             }
