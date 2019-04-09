@@ -58,12 +58,12 @@ open class AVFoundationPlayback: Playback {
     open override var selectedSubtitle: MediaOption? {
         get {
             guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible.rawValue)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.legible)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
-            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.legible)
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectSubtitle)
         }
     }
@@ -71,12 +71,12 @@ open class AVFoundationPlayback: Playback {
     private var hasSelectedDefaultAudio = false
     open override var selectedAudioSource: MediaOption? {
         get {
-            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.audible.rawValue)
+            let option = getSelectedMediaOptionWithCharacteristic(AVMediaCharacteristic.audible)
             return MediaOptionFactory.fromAVMediaOption(option, type: .audioSource)
         }
         set {
             if let newOption = newValue?.raw as? AVMediaSelectionOption {
-                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible.rawValue)
+                setMediaSelectionOption(newOption, characteristic: AVMediaCharacteristic.audible)
             }
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectAudio)
         }
@@ -93,7 +93,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var subtitles: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.legible.rawValue) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.legible) else {
             return []
         }
 
@@ -102,7 +102,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var audioSources: [MediaOption]? {
-        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible.rawValue) else {
+        guard let mediaGroup = mediaSelectionGroup(AVMediaCharacteristic.audible) else {
             return []
         }
         return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
@@ -551,13 +551,13 @@ open class AVFoundationPlayback: Playback {
     }
 
     internal func selectDefaultSubtitleIfNeeded() {
-        guard let subtitles = self.subtitles else { return }
+        guard let subtitles = subtitles else { return }
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
             let defaultSubtitle = subtitles.filter({ $0.language == defaultSubtitleLanguage }).first,
             let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption,
             !hasSelectedDefaultSubtitle {
 
-            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible.rawValue)
+            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.legible)
             trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
             hasSelectedDefaultSubtitle = true
         } else {
@@ -566,13 +566,13 @@ open class AVFoundationPlayback: Playback {
     }
 
     internal func selectDefaultAudioIfNeeded() {
-        guard let audioSources = self.audioSources else { return }
+        guard let audioSources = audioSources else { return }
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
             let defaultAudioSource = audioSources.filter({ $0.language == defaultAudioLanguage }).first,
             let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption,
             !hasSelectedDefaultAudio {
 
-            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible.rawValue)
+            setMediaSelectionOption(selectedOption, characteristic: AVMediaCharacteristic.audible)
             trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
             hasSelectedDefaultAudio = true
         } else {
@@ -594,21 +594,21 @@ open class AVFoundationPlayback: Playback {
     }
 
 
-    private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: String) {
+    private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: AVMediaCharacteristic) {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.select(option, in: group)
         }
     }
 
-    private func getSelectedMediaOptionWithCharacteristic(_ characteristic: String) -> AVMediaSelectionOption? {
+    private func getSelectedMediaOptionWithCharacteristic(_ characteristic: AVMediaCharacteristic) -> AVMediaSelectionOption? {
         if let group = mediaSelectionGroup(characteristic) {
             return player?.currentItem?.selectedMediaOption(in: group)
         }
         return nil
     }
 
-    private func mediaSelectionGroup(_ characteristic: String) -> AVMediaSelectionGroup? {
-        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: characteristic))
+    private func mediaSelectionGroup(_ characteristic: AVMediaCharacteristic) -> AVMediaSelectionGroup? {
+        return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
     }
 
     deinit {
