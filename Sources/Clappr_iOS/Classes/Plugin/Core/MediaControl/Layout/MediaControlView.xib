@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -100,6 +100,9 @@
                         </view>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qX-Y6-Q33" customClass="PassthroughView" customModule="Clappr" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
+                </view>
                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rxJ-bk-Ll1">
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
                 </stackView>
@@ -109,11 +112,15 @@
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="centerX" secondItem="78G-Xh-tuQ" secondAttribute="centerX" id="HWf-a8-cX5"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="height" secondItem="78G-Xh-tuQ" secondAttribute="height" id="SFP-sh-sdP"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="width" secondItem="78G-Xh-tuQ" secondAttribute="width" id="Tp4-MK-2wr"/>
+                <constraint firstItem="7qX-Y6-Q33" firstAttribute="leading" secondItem="78G-Xh-tuQ" secondAttribute="leading" id="V7n-vp-Ty8"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="leading" secondItem="78G-Xh-tuQ" secondAttribute="leading" id="XAn-Ez-HXf"/>
+                <constraint firstItem="78G-Xh-tuQ" firstAttribute="bottom" secondItem="7qX-Y6-Q33" secondAttribute="bottom" id="XkV-9P-Evi"/>
+                <constraint firstItem="7qX-Y6-Q33" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="Xxk-kb-VQN"/>
                 <constraint firstAttribute="bottom" secondItem="d79-k6-8Eh" secondAttribute="bottom" id="YHT-bZ-01n"/>
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="centerY" secondItem="78G-Xh-tuQ" secondAttribute="centerY" id="Zc3-AZ-Of8"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="trailing" secondItem="78G-Xh-tuQ" secondAttribute="trailing" id="foI-fv-LJa"/>
                 <constraint firstAttribute="trailing" secondItem="d79-k6-8Eh" secondAttribute="trailing" id="iLR-wJ-GIF"/>
+                <constraint firstItem="78G-Xh-tuQ" firstAttribute="trailing" secondItem="7qX-Y6-Q33" secondAttribute="trailing" id="jaM-vc-NOE"/>
                 <constraint firstItem="d79-k6-8Eh" firstAttribute="leading" secondItem="uHp-RA-FbO" secondAttribute="leading" id="kwE-kS-eiy"/>
                 <constraint firstItem="d79-k6-8Eh" firstAttribute="top" secondItem="uHp-RA-FbO" secondAttribute="top" id="mXT-ov-IOh"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="vva-aS-DZd"/>
@@ -126,7 +133,7 @@
                 <outlet property="bottomPanel" destination="jko-PF-nXe" id="pBM-gX-Vc9"/>
                 <outlet property="bottomRight" destination="g3u-YP-Zws" id="bTW-Q3-SrV"/>
                 <outlet property="centerLeft" destination="Wgm-7U-aXc" id="ilr-yv-oUj"/>
-                <outlet property="centerNone" destination="Kzy-cD-bwl" id="Scs-CQ-W4u"/>
+                <outlet property="centerNone" destination="7qX-Y6-Q33" id="2pU-Wz-3vq"/>
                 <outlet property="centerPanel" destination="yqq-a6-mcp" id="cUg-Mz-eaN"/>
                 <outlet property="centerRight" destination="vQx-QC-GJR" id="O1i-px-VbO"/>
                 <outlet property="contrastView" destination="d79-k6-8Eh" id="nkC-lU-9N7"/>

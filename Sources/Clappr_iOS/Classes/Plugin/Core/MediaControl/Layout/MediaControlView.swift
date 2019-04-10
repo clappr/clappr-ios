@@ -12,7 +12,7 @@ class MediaControlView: UIView {
 
     @IBOutlet weak var centerLeft: UIStackView!
     @IBOutlet weak var centerRight: UIStackView!
-    @IBOutlet weak var centerNone: UIStackView!
+    @IBOutlet weak var centerNone: UIView!
 
     @IBOutlet weak var bottomLeft: UIStackView!
     @IBOutlet weak var bottomRight: UIStackView!
@@ -27,8 +27,7 @@ class MediaControlView: UIView {
             ],
             .center: [
                 .left: centerLeft,
-                .right: centerRight,
-                .none: centerNone
+                .right: centerRight
             ],
             .bottom: [
                 .left: bottomLeft,
@@ -46,6 +45,8 @@ class MediaControlView: UIView {
     func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
         if position == .center {
             addSubviewAndCenter(view, in: panel)
+        } else if panel == .center && position == .none {
+            centerNone.addSubview(view)
         } else {
             panels[panel]![position]?.addArrangedSubview(view)
         }
