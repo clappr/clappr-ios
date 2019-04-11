@@ -12,6 +12,13 @@ setup:
 	rbenv rehash
 	$(BUNDLE) install
 
+wipe:
+	killall "Simulator" || true
+	rm -rf ~/Library/Developer/Xcode/{DerivedData,Archives,Products}
+	osascript -e 'tell application "iOS Simulator" to quit'
+	osascript -e 'tell application "Simulator" to quit'
+	xcrun simctl shutdown all
+
 test:
 	$(FASTLANE) test
 
