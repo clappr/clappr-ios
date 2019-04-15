@@ -337,7 +337,6 @@ class ContainerTests: QuickSpec {
             }
 
             describe("Container sharedData") {
-
                 context("when stores a value on sharedData") {
 
                     beforeEach {
@@ -348,6 +347,24 @@ class ContainerTests: QuickSpec {
                     it("retrieves stored value") {
                         expect(container.sharedData.storeDictionary["testKey"] as? String) == "testValue"
                     }
+                }
+            }
+
+            context("when resized") {
+                it("triggers didResize event") {
+                    let container = Container()
+                    container.render()
+                    container.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+                    var didResizeTriggered = false
+
+                    container.on(Event.didResize.rawValue) { _ in
+                        didResizeTriggered = true
+                    }
+
+                    container.view.setWidthAndHeight(with: CGSize(width: 10, height: 10))
+                    container.view.layoutIfNeeded()
+
+                    expect(didResizeTriggered).toEventually(beTrue())
                 }
             }
         }

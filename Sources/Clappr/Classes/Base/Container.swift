@@ -31,6 +31,8 @@ open class Container: UIObject {
         }
     }
 
+    private var boundsObservation: NSKeyValueObservation?
+
     public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
@@ -65,7 +67,10 @@ open class Container: UIObject {
 
     open override func render() {
         plugins.forEach(renderPlugin)
+
         renderPlayback()
+
+        observeWhenViewChangeBounds()
     }
 
     fileprivate func renderPlayback() {
@@ -107,6 +112,12 @@ open class Container: UIObject {
         return findPlugin(name)
     }
 
+    private func observeWhenViewChangeBounds() {
+        boundsObservation = view.observe(\.bounds) { [weak self] (_, _) in
+            self?.trigger(Event.didResize)
+        }
+    }
+
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
 
@@ -128,6 +139,8 @@ open class Container: UIObject {
         plugins.removeAll()
 
         view.removeFromSuperview()
+
+        boundsObservation?.invalidate()
 
         trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
