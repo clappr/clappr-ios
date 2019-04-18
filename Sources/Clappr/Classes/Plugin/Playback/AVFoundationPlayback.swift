@@ -21,6 +21,8 @@ open class AVFoundationPlayback: Playback {
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
+    private var playerLooper: AVPlayerLooper?
+
     
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
@@ -223,11 +225,24 @@ open class AVFoundationPlayback: Playback {
             }
         }
     }
+    
+    private var shouldLoop: Bool {
+        return options[kLoop] as? Bool ?? false
+    }
+    
 
     private func setupPlayer() {
         if let asset = self.asset {
             let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            player = AVPlayer(playerItem: item)
+            
+            if (shouldLoop) {
+                player = AVQueuePlayer(items: [item])
+                if let player = player as? AVQueuePlayer {
+                    playerLooper = AVPlayerLooper(player: player, templateItem: item)
+                }
+            } else {
+                player = AVPlayer(playerItem: item)
+            }
             
             player?.allowsExternalPlayback = true
             player?.appliesMediaSelectionCriteriaAutomatically = false

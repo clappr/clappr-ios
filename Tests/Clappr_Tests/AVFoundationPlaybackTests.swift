@@ -46,6 +46,30 @@ class AVFoundationPlaybackTests: QuickSpec {
             afterEach {
                 playback.stop()
             }
+            
+            describe("#init") {
+                context("without kLoop option") {
+                    it("instantiates player as an instance of AVPlayer") {
+                        let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
+                        let playback = AVFoundationPlayback(options: options)
+                        
+                        playback.play()
+                        
+                        expect(playback.player).to(beAKindOf(AVPlayer.self))
+                    }
+                }
+                
+                context("with kLoop option") {
+                    it("instantiates player as an instance of AVQueuePlayer") {
+                        let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
+                        let playback = AVFoundationPlayback(options: options)
+                        
+                        playback.play()
+                        
+                        expect(playback.player).to(beAKindOf(AVQueuePlayer.self))
+                    }
+                }
+            }
 
             describe("AVFoundationPlaybackExtension") {
                 describe("#minDvrSize") {
@@ -1118,6 +1142,21 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.isBuffering).to(beFalse())
                             expect(playback.isPlaying).to(beFalse())
                             expect(playback.isPaused).to(beFalse())
+                        }
+                        
+                        context("and option kLoop is set to true") {
+                            it("plays the video again") {
+                                let options: Options = [kSourceUrl: "http://clappr.sample/master.m3u8", kLoop: true]
+                                let playback = AVFoundationPlayback(options: options)
+                                
+                                playback.play()
+                                playback.seek(playback.duration - 5)
+                                
+                                expect(playback.currentState).toEventually(equal(.playing), timeout: 10)
+                                expect(playback.isBuffering).to(beFalse())
+                                expect(playback.isPlaying).to(beTrue())
+                                expect(playback.isPaused).to(beFalse())
+                            }
                         }
                     }
                     
