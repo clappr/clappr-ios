@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.resources = 'Sources/Clappr_iOS/Resources/*.{xib,ttf,png,xcassets}'
 
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   s.ios.source_files = ['Sources/Clappr/Classes/**/*', 'Sources/Clappr_iOS/Classes/**/*']
 
   s.tvos.deployment_target = "10.0"
