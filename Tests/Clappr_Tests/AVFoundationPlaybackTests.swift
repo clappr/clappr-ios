@@ -1150,10 +1150,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 let playback = AVFoundationPlayback(options: options)
                                 
                                 playback.play()
-                                playback.seek(playback.duration - 5)
-                                
-                                expect(playback.currentState).toEventually(equal(.playing), timeout: 10)
-                                expect(playback.isBuffering).to(beFalse())
+                                playback.trigger(.didComplete)
+
                                 expect(playback.isPlaying).to(beTrue())
                                 expect(playback.isPaused).to(beFalse())
                             }
