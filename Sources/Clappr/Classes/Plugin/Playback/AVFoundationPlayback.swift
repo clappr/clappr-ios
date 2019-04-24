@@ -230,13 +230,14 @@ open class AVFoundationPlayback: Playback {
         return options[kLoop] as? Bool ?? false
     }
     
+    private func newAVQueuePlayer(with item: AVPlayerItem) -> AVQueuePlayer {
+        let player = AVQueuePlayer(items: [item])
+        playerLooper = AVPlayerLooper(player: player, templateItem: item)
+        return player
+    }
+    
     private func createPlayerInstance(with item: AVPlayerItem) {
-        player = shouldLoop ? AVQueuePlayer(items: [item]): AVPlayer(playerItem: item)
-        
-        if let player = player as? AVQueuePlayer {
-            playerLooper = AVPlayerLooper(player: player, templateItem: item)
-        }
-        
+        player = shouldLoop ? newAVQueuePlayer(with: item) : AVPlayer(playerItem: item)
         player?.allowsExternalPlayback = true
         player?.appliesMediaSelectionCriteriaAutomatically = false
     }
