@@ -3,9 +3,9 @@ import Nimble
 
 @testable import Clappr
 
-class DictionaryStartAtTests: QuickSpec {
+class DictionaryExtensionTests: QuickSpec {
     override func spec() {
-        describe("Dictionary+startAt") {
+        describe("Dictionary+Ext") {
             describe("#startAt") {
                 it("returns a Double value if it's a Double") {
                     let dict: Options = [kStartAt: Double(10)]
@@ -32,6 +32,30 @@ class DictionaryStartAtTests: QuickSpec {
                     let dict: Options = [kStartAt: []]
 
                     expect(dict.startAt).to(beNil())
+                }
+            }
+            
+            describe("#bool") {
+                context("when has a bool option in dictionary") {
+                    it("returns true") {
+                        let options: Options = ["foo": true]
+                        
+                        expect(options.bool("foo")).to(beTrue())
+                    }
+                    
+                    it("returns false") {
+                        let options: Options = ["foo": false]
+                        
+                        expect(options.bool("foo")).to(beFalse())
+                    }
+                }
+                
+                context("when doesn't have the bool option in dictionary") {
+                    it("returns false") {
+                        let options: Options = [:]
+                        
+                        expect(options.bool("foo")).to(beFalse())
+                    }
                 }
             }
         }

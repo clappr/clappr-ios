@@ -131,10 +131,10 @@
 		571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
 		571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */; };
-		5733D1BC21BAA3C8002107D2 /* Dictionary+startAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */; };
+		5733D1BC21BAA3C8002107D2 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */; };
 		5733D1BE21BAA6E4002107D2 /* Dictionary+startAtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BD21BAA6E4002107D2 /* Dictionary+startAtTests.swift */; };
 		5733D1BF21BAA6E4002107D2 /* Dictionary+startAtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BD21BAA6E4002107D2 /* Dictionary+startAtTests.swift */; };
-		5733D1C021BAA6EE002107D2 /* Dictionary+startAt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */; };
+		5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */; };
 		57351C6820248D78007DEBBE /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 57351C6720248D78007DEBBE /* video.mp4 */; };
 		57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57351C6920248F08007DEBBE /* OHHTTPStubs.framework */; };
 		5737E19421EF8D2A00538D1C /* ObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5744C05321EE14390087D9FB /* ObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -421,7 +421,7 @@
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
-		5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAt.swift"; sourceTree = "<group>"; };
+		5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		5733D1BD21BAA6E4002107D2 /* Dictionary+startAtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+startAtTests.swift"; sourceTree = "<group>"; };
 		57351C6720248D78007DEBBE /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		57351C6920248F08007DEBBE /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
@@ -942,7 +942,7 @@
 				C9EDF8572163A9A900789E2F /* UIColor+ClapprAdditions.swift */,
 				C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */,
 				57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */,
-				5733D1BB21BAA3C8002107D2 /* Dictionary+startAt.swift */,
+				5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */,
 				55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */,
 				48563228220B47B10096CDAE /* Core+Ext.swift */,
 				C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */,
@@ -1824,7 +1824,7 @@
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
-				5733D1C021BAA6EE002107D2 /* Dictionary+startAt.swift in Sources */,
+				5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
@@ -2014,7 +2014,7 @@
 				96D362D81D41339400CCB866 /* PluginType.swift in Sources */,
 				96D362C91D41339400CCB866 /* Loader.swift in Sources */,
 				968E5BD91D6CBFA50092F372 /* Logger.swift in Sources */,
-				5733D1BC21BAA3C8002107D2 /* Dictionary+startAt.swift in Sources */,
+				5733D1BC21BAA3C8002107D2 /* Dictionary+Ext.swift in Sources */,
 				96D362EA1D41339400CCB866 /* GradientView.swift in Sources */,
 				96D362E51D41339400CCB866 /* UIPlugin.swift in Sources */,
 				ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */,

@@ -14,3 +14,12 @@ extension Dictionary where Key == String, Value == Any {
         }
     }
 }
+
+public extension Dictionary where Key == String, Value == Any {
+    func bool(_ option: String) -> Bool {
+        if let value = self[option] as? Bool {
+            return value
+        }
+        return false
+    }
+}
