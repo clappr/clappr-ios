@@ -51,10 +51,11 @@ class DictionaryExtensionTests: QuickSpec {
                 }
                 
                 context("when doesn't have the bool option in dictionary") {
-                    it("returns false") {
+                    it("returns whichever boolean value we choose") {
                         let options: Options = [:]
                         
-                        expect(options.bool("foo")).to(beFalse())
+                        expect(options.bool("foo", or: true)).to(beTrue())
+                        expect(options.bool("foo", or: false)).to(beFalse())
                     }
                 }
             }
