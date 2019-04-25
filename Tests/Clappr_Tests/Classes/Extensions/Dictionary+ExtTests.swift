@@ -54,8 +54,8 @@ class DictionaryExtensionTests: QuickSpec {
                     it("returns whichever boolean value we choose") {
                         let options: Options = [:]
                         
-                        expect(options.bool("foo", or: true)).to(beTrue())
-                        expect(options.bool("foo", or: false)).to(beFalse())
+                        expect(options.bool("foo", orElse: true)).to(beTrue())
+                        expect(options.bool("foo", orElse: false)).to(beFalse())
                     }
                 }
             }
