@@ -227,7 +227,7 @@ open class AVFoundationPlayback: Playback {
     }
     
     private var shouldLoop: Bool {
-        return options[kLoop] as? Bool ?? false
+        return options.bool(kLoop)
     }
     
     private func newAVQueuePlayer(with item: AVPlayerItem) -> AVQueuePlayer {
