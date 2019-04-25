@@ -538,9 +538,7 @@ open class AVFoundationPlayback: Playback {
 
     private func changeBackgroundSession(to category: AVAudioSession.Category) {
         do {
-            if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
-            }
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
         } catch {
             print("It was not possible to set the audio session category")
         }

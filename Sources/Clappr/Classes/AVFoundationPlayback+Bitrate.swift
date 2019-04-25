@@ -11,10 +11,7 @@ extension AVFoundationPlayback {
 
     public func getAvgBitrate() -> Double? {
         guard let logEvent = lastLogEvent() else { return nil }
-        if #available(iOS 10.0, *) {
-            return logEvent.averageVideoBitrate
-        }
-        return nil
+        return logEvent.averageVideoBitrate
     }
 
     private func lastLogEvent() -> AVPlayerItemAccessLogEvent? {
