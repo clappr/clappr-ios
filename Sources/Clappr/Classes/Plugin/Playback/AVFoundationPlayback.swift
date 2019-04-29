@@ -590,7 +590,9 @@ open class AVFoundationPlayback: Playback {
 
             hasSelectedDefaultAudio = true
         } else {
-            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
+            DispatchQueue.main.async {
+                self.trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
+            }
         }
     }
 
