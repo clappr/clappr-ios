@@ -83,8 +83,6 @@ public class QuickSeekPlugin: UICorePlugin {
     }
     
     private func impactFeedback() {
-        if #available(iOS 10.0, *) {
-            UIImpactFeedbackGenerator().impactOccurred()
-        }
+        UIImpactFeedbackGenerator().impactOccurred()
     }
 }

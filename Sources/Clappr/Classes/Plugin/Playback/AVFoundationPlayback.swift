@@ -8,7 +8,7 @@ open class AVFoundationPlayback: Playback {
     private static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
-        ]
+    ]
 
     private var kvoStatusDidChangeContext = 0
     private var kvoLoadedTimeRangesContext = 0
@@ -21,13 +21,14 @@ open class AVFoundationPlayback: Playback {
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
-    
+    private var playerLooper: AVPlayerLooper?
+
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
         return AVFoundationNowPlayingService()
     }()
     #endif
-    
+
     private var playerLayer: AVPlayerLayer?
     private var playerStatus: AVPlayerItem.Status = .unknown
     private(set) var currentState = PlaybackState.idle {
@@ -149,7 +150,7 @@ open class AVFoundationPlayback: Playback {
             let position = player?.currentItem?.currentTime().seconds {
             return position - start
         }
-        
+
         guard playbackType == .vod, let player = self.player else {
             return 0
         }
@@ -224,16 +225,23 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    private var shouldLoop: Bool {
+        return options[kLoop] as? Bool ?? false
+    }
+
+    private func createPlayerInstance(with item: AVPlayerItem) {
+        player = shouldLoop ? AVQueuePlayer(playerItem: item): AVPlayer(playerItem: item)
+        if let player = player as? AVQueuePlayer {
+            playerLooper = AVPlayerLooper(player: player, templateItem: item)
+        }
+        player?.allowsExternalPlayback = true
+        player?.appliesMediaSelectionCriteriaAutomatically = false
+    }
+
     private func setupPlayer() {
         if let asset = self.asset {
-            let item: AVPlayerItem = AVPlayerItem(asset: asset)
-            player = AVPlayer(playerItem: item)
-            
-            player?.allowsExternalPlayback = true
-            player?.appliesMediaSelectionCriteriaAutomatically = false
-
+            createPlayerInstance(with: AVPlayerItem(asset: asset))
             selectDefaultAudioIfNeeded()
-
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
@@ -249,7 +257,7 @@ open class AVFoundationPlayback: Playback {
             Logger.logError("could not setup player", scope: pluginName)
         }
     }
-    
+
     #if os(tvOS)
     internal func loadMetadata() {
         if let playerItem = player?.currentItem {
@@ -370,7 +378,7 @@ open class AVFoundationPlayback: Playback {
         play()
         seek(Double.infinity)
     }
-    
+
     open override func mute(_ enabled: Bool) {
         if enabled {
             player?.volume = 0.0
@@ -441,11 +449,11 @@ open class AVFoundationPlayback: Playback {
 
         self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
     }
-    
+
     private func handleStatusChangedEvent() {
         guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
         playerStatus = currentItem.status
-        
+
         if playerStatus == .readyToPlay && currentState != .paused {
             readyToPlay()
         } else if playerStatus == .failed {
@@ -454,39 +462,39 @@ open class AVFoundationPlayback: Playback {
             Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
-    
+
     private func handleLoadedTimeRangesEvent() {
         guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else {
             return
         }
-        
+
         let info = [
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
             "duration": CMTimeGetSeconds(timeRange.duration),
             ]
-        
+
         trigger(.didUpdateBuffer, userInfo: info)
     }
-    
+
     private func handleSeekableTimeRangesEvent() {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
         handleDvrAvailabilityChange()
     }
-    
+
     func handleDvrAvailabilityChange() {
         if lastDvrAvailability != isDvrAvailable {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
         }
     }
-    
+
     private func handleBufferingEvent(_ keyPath: String?) {
         guard let keyPath = keyPath, currentState != .paused else {
             return
         }
-        
+
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
             if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
                 play()
@@ -498,7 +506,7 @@ open class AVFoundationPlayback: Playback {
             updateState(.buffering)
         }
     }
-    
+
     private func handleViewBoundsChanged() {
         guard let playerLayer = playerLayer else {
             return
@@ -506,7 +514,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
     }
-    
+
     private func handlePlayerRateChanged() {
         if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
             updateState(.paused)
@@ -526,9 +534,7 @@ open class AVFoundationPlayback: Playback {
 
     private func changeBackgroundSession(to category: AVAudioSession.Category) {
         do {
-            if #available(iOS 10.0, *) {
-                try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
-            }
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
         } catch {
             print("It was not possible to set the audio session category")
         }
@@ -546,7 +552,7 @@ open class AVFoundationPlayback: Playback {
         addTimeElapsedCallback()
         trigger(.didUpdateDuration, userInfo: ["duration": duration])
         #if os(tvOS)
-            loadMetadata()
+        loadMetadata()
         #endif
     }
 
@@ -664,7 +670,7 @@ extension AVFoundationPlayback {
 
     open override var isDvrAvailable: Bool {
         guard playbackType == .live else { return false }
-        
+
         return duration >= minDvrSize
     }
 
@@ -681,7 +687,7 @@ extension AVFoundationPlayback {
         guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
         return ranges
     }
-    
+
     open override var epochDvrWindowStart: TimeInterval {
         guard let currentDate = currentDate else { return 0 }
         return currentDate.timeIntervalSince1970 - position
