@@ -79,6 +79,36 @@ class PlayerTests: QuickSpec {
 
                 expect(Loader.shared.playbacks.first).to(be(AVFoundationPlayback.self))
             }
+            
+            context("when handleTvRemoteGesture is called") {
+                context("and media is playing") {
+                    it("pauses the playback") {
+                        var callbackWasCalled = false
+                        playback.play()
+                        player.on(.willPause) { _ in
+                            callbackWasCalled = true
+                        }
+                        
+                        player.handleTvRemoteGesture()
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                }
+                
+                context("and media is paused") {
+                    it("plays the playback") {
+                        var callbackWasCalled = false
+                        playback.pause()
+                        player.on(.willPlay) { _ in
+                            callbackWasCalled = true
+                        }
+                        
+                        player.handleTvRemoteGesture()
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                }
+            }
         }
     }
     
