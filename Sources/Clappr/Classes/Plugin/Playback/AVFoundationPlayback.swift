@@ -239,8 +239,8 @@ open class AVFoundationPlayback: Playback {
             createPlayerInstance(with: AVPlayerItem(asset: asset))
 
             let queue = DispatchQueue(label: "audioSelectionQueue", qos: .utility)
-            queue.async {
-                self.selectDefaultAudioIfNeeded()
+            queue.async { [weak self] in
+                self?.selectDefaultAudioIfNeeded()
             }
 
             playerLayer = AVPlayerLayer(player: player)
