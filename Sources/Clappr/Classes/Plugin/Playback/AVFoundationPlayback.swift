@@ -209,14 +209,6 @@ open class AVFoundationPlayback: Playback {
     open override func play() {
         if player == nil {
             setupPlayer()
-
-            let queue = DispatchQueue(label: "audioSelectionQueue", qos: .utility)
-            queue.async {
-                self.selectDefaultAudioIfNeeded()
-            }
-
-            seekIfNeeded()
-            addObservers()
         }
 
         trigger(.willPlay)
@@ -246,19 +238,24 @@ open class AVFoundationPlayback: Playback {
         if let asset = self.asset {
             createPlayerInstance(with: AVPlayerItem(asset: asset))
 
+            let queue = DispatchQueue(label: "audioSelectionQueue", qos: .utility)
+            queue.async {
+                self.selectDefaultAudioIfNeeded()
+            }
+
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
             setupMaxResolution(for: playerLayer!.frame.size)
+
+            if startAt != 0.0 && playbackType == .vod {
+                seek(startAt)
+            }
+
+            addObservers()
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
-        }
-    }
-
-    private func seekIfNeeded() {
-        if startAt != 0.0 && playbackType == .vod {
-            seek(startAt)
         }
     }
 
