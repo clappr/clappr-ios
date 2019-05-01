@@ -25,8 +25,12 @@ class ViewController: UIViewController {
     }
 
     func listenToPlayerEvents() {
+        player.on(Event.willPlay) { _ in print("on willPlay") }
+
         player.on(Event.playing) { _ in print("on Play") }
 
+        player.on(Event.willPause) { _ in print("on willPause") }
+        
         player.on(Event.didPause) { _ in print("on Pause") }
 
         player.on(Event.didStop) { _ in print("on Stop") }
