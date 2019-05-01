@@ -121,6 +121,16 @@ class BaseObjectTests: QuickSpec {
 
                     expect(callbackWasCalled) == true
                 }
+
+                it("Should fire callback for an event on a given context by passing the Event itself") {
+                    callbackWasCalled = false
+                    let contextObject = BaseObject()
+
+                    baseObject.listenTo(contextObject, event: .ready, callback: callback)
+                    contextObject.trigger(.ready)
+
+                    expect(callbackWasCalled) == true
+                }
             }
 
             describe("listenToOnce") {
