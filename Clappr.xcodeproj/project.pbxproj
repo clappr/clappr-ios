@@ -148,6 +148,8 @@
 		57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
 		57AB0E882253CAB70096BCA4 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AB0E872253CAB70096BCA4 /* PassthroughView.swift */; };
+		57D80BAC2279E1D2003F72CD /* TVRemoteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D80BAA2279E1BA003F72CD /* TVRemoteHandler.swift */; };
+		57D80BAF2279E1F6003F72CD /* TVRemoteHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D80BAD2279E1F2003F72CD /* TVRemoteHandlerTests.swift */; };
 		57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
@@ -431,6 +433,8 @@
 		57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesBuilder.swift; sourceTree = "<group>"; };
 		57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVURLAssetWithCookiesTests.swift; sourceTree = "<group>"; };
 		57AB0E872253CAB70096BCA4 /* PassthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughView.swift; sourceTree = "<group>"; };
+		57D80BAA2279E1BA003F72CD /* TVRemoteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVRemoteHandler.swift; sourceTree = "<group>"; };
+		57D80BAD2279E1F2003F72CD /* TVRemoteHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVRemoteHandlerTests.swift; sourceTree = "<group>"; };
 		57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+appendOrReplace.swift"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Clappr_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -697,6 +701,7 @@
 				FC7785BB2005251800EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift */,
 				32E4020E1FF43262001C2096 /* Info.plist */,
 				FB0A223D21754C1700D2180F /* PlayerTests.swift */,
+				57D80BAD2279E1F2003F72CD /* TVRemoteHandlerTests.swift */,
 			);
 			path = Clappr_tvOS_Tests;
 			sourceTree = "<group>";
@@ -1336,6 +1341,7 @@
 			isa = PBXGroup;
 			children = (
 				FC77859E2005233D00EC879F /* Player.swift */,
+				57D80BAA2279E1BA003F72CD /* TVRemoteHandler.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1852,6 +1858,7 @@
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				48A29BFD221D81910004AD3B /* BaseObject.swift in Sources */,
+				57D80BAC2279E1D2003F72CD /* TVRemoteHandler.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
 				5744C05821EE37270087D9FB /* EventHandler.swift in Sources */,
 				32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */,
@@ -1876,6 +1883,7 @@
 			files = (
 				5733D1BF21BAA6E4002107D2 /* Dictionary+ExtTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
+				57D80BAF2279E1F6003F72CD /* TVRemoteHandlerTests.swift in Sources */,
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,

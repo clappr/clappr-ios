@@ -5,9 +5,10 @@ open class Player: UIViewController {
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
-    fileprivate var viewController: AVPlayerViewController?
+    fileprivate var viewController: AVPlayerViewController!
     private let baseObject = BaseObject()
     private var tvRemoteGesture: UITapGestureRecognizer?
+    private var tvRemoteHandler: TVRemoteHandler?
 
     override open func viewDidLoad() {
         core?.parentView = view
@@ -16,45 +17,19 @@ open class Player: UIViewController {
             viewController = AVPlayerViewController()
             core?.parentView = viewController?.contentOverlayView
             core?.parentController = self
-            if let vc = viewController {
-                addChild(vc)
-                vc.view.frame = view.bounds
-                vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                view.addSubview(vc.view)
-                vc.didMove(toParent: self)
-                
-                addTvRemoveGestureIfNeeded(vc)
-            }
+            addChild(viewController)
+            viewController.view.frame = view.bounds
+            viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.addSubview(viewController.view)
+            viewController.didMove(toParent: self)
+
+            tvRemoteHandler = TVRemoteHandler(playerViewController: viewController, player: self)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             UIApplication.willEnterForegroundNotification, object: nil)
 
         core?.render()
-    }
-    
-    func addTvRemoveGestureIfNeeded(_ viewController: AVPlayerViewController) {
-        if let tvRemoteGesture = tvRemoteGesture,
-            let viewGestures = viewController.view.gestureRecognizers,
-            viewGestures.contains(tvRemoteGesture) {
-            return
-        }
-        
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTvRemoteGesture))
-        gestureRecognizer.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue),
-                                               NSNumber(value: UIPress.PressType.select.rawValue)]
-        
-        viewController.view.addGestureRecognizer(gestureRecognizer)
-        self.tvRemoteGesture = gestureRecognizer
-    }
-
-    @objc func handleTvRemoteGesture() {
-        guard let playback = activePlayback as? AVFoundationPlayback else { return }
-        if playback.isPaused {
-            playback.play()
-        } else {
-            playback.pause()
-        }
     }
 
     open var isMediaControlEnabled: Bool {
