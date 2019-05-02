@@ -129,11 +129,15 @@ open class BaseObject: NSObject, EventProtocol {
 }
 
 public extension BaseObject {
-    public func trigger(_ event: Event) {
+    func trigger(_ event: Event) {
         trigger(event.rawValue)
     }
 
-    public func trigger(_ event: Event, userInfo: EventUserInfo) {
+    func trigger(_ event: Event, userInfo: EventUserInfo) {
         trigger(event.rawValue, userInfo: userInfo)
+    }
+
+    func listenTo<T: EventProtocol>(_ contextObject: T, event: Event, callback: @escaping EventCallback) {
+        listenTo(contextObject, eventName: event.rawValue, callback: callback)
     }
 }
