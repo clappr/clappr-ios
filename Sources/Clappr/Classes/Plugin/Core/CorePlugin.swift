@@ -7,11 +7,6 @@ open class CorePlugin: BaseObject, Plugin {
         return ""
     }
     
-    @objc open var pluginName: String {
-        guard let selfType = theType(of: self) else { return "" }
-        return selfType.name
-    }
-    
     public required override init() {
         super.init()
     }

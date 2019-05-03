@@ -8,11 +8,6 @@ open class Playback: UIObject, Plugin {
         return ""
     }
 
-    @objc open var pluginName: String {
-        guard let selfType = theType(of: self) else { return "" }
-        return selfType.name
-    }
-
     open var selectedSubtitle: MediaOption?
     open var selectedAudioSource: MediaOption?
     fileprivate(set) open var subtitles: [MediaOption]?
