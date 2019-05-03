@@ -12,7 +12,7 @@ public func theType<T>(of value: T) -> Plugin.Type? {
 
 extension Plugin {
 
-    var pluginName: String {
+    public var pluginName: String {
         guard let selfType = theType(of: self) else { return "" }
         return selfType.name
     }
