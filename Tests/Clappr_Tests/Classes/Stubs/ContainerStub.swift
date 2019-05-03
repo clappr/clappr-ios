@@ -14,5 +14,5 @@ class ContainerStub: Container {
         super.trigger(eventName)
     }
     
-    var _playback: Playback? = AVFoundationPlaybackMock()
+    var _playback: Playback? = AVFoundationPlaybackMock(options:[:])
 }

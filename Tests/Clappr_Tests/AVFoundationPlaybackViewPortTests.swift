@@ -10,7 +10,7 @@ class AVFoundationPlaybackViewPortTests: QuickSpec {
             if #available(iOS 11.0, *) {
                 context("#setupMaxResolution") {
                     it("sets preferredMaximumResolution according to the size") {
-                        let playback = AVFoundationPlayback()
+                        let playback = AVFoundationPlayback(options: [:])
                         playback.player = AVPlayerStub()
                         var expectedSize = CGSize(width: 200, height: 200)
 

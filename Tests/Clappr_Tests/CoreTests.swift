@@ -588,7 +588,7 @@ class CoreTests: QuickSpec {
                     }
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     expect(didCallEvent).toEventually(beTrue())
                 }
 
@@ -602,7 +602,7 @@ class CoreTests: QuickSpec {
                     }
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     expect(didCallEvent).toEventually(beTrue())
                 }
             }
@@ -641,13 +641,13 @@ class CoreTests: QuickSpec {
                     var didCallEvent = false
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     container.on(Event.didChangeActivePlayback.rawValue)   { userInfo in
                         didCallEvent = true
                     }
 
                     core.activeContainer = container
-                    container.playback = AVFoundationPlayback()
+                    container.playback = AVFoundationPlayback(options: [:])
 
                     expect(didCallEvent).toEventually(beFalse())
                 }

@@ -59,12 +59,6 @@ open class Playback: UIObject, Plugin {
         return false
     }
 
-    public required override init() {
-        options = [:]
-        super.init()
-        view.backgroundColor = UIColor.clear
-    }
-
     @objc public required init(options: Options) {
         Logger.logDebug("loading with \(options)", scope: "\(Swift.type(of: self))")
         self.options = options

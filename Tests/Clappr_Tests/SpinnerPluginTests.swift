@@ -14,7 +14,7 @@ class SpinnerPluginTests: QuickSpec {
         beforeEach {
             container = Container()
             spinnerPlugin = SpinnerPlugin(context: container)
-            playback = AVFoundationPlayback()
+            playback = AVFoundationPlayback(options: [:])
             container.playback = playback
         }
 

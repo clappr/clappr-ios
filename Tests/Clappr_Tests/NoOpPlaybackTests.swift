@@ -11,7 +11,7 @@ class NoOpPlaybackTests: QuickSpec {
         describe(".NoOpPlayback") {
             describe("#render") {
                 it("doesn't trigger ready event") {
-                    let playback = NoOpPlayback()
+                    let playback = NoOpPlayback(options: [:])
                     var didCallEvent = false
                     playback.on(Event.ready.rawValue) { _ in
                         didCallEvent = true

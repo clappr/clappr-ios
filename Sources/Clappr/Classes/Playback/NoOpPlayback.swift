@@ -14,10 +14,6 @@ open class NoOpPlayback: Playback {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public required init() {
-        super.init()
-    }
-
     public required init(context _: UIObject) {
         fatalError("init(context:) has not been implemented")
     }
