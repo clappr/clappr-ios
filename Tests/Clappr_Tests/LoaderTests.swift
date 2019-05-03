@@ -87,31 +87,31 @@ class LoaderTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "stupPlayback"
         }
     }
 
     class StubUIContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "uicontainer"
         }
     }
 
     class StubUICorePlugin: UICorePlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "uicore"
         }
     }
 
     class StubSpinnerPlugin: UIContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "spinner"
         }
     }
     
     class StubCorePlugin: CorePlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "core"
         }
     }

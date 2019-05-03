@@ -46,7 +46,7 @@ class UIContainerPluginTests: QuickSpec {
     }
     
     class StubContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "StubContainerPlugin"
         }
     }

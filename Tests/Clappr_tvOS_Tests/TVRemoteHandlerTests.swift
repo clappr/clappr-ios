@@ -68,7 +68,7 @@ class TVRemoteHandlerTests: QuickSpec {
         }
 
         class StubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "StubPlayback"
             }
 
@@ -78,7 +78,7 @@ class TVRemoteHandlerTests: QuickSpec {
         }
 
         class SpecialStubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "SpecialStubPlayback"
             }
 

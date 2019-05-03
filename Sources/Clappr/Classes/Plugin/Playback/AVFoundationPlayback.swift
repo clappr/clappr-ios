@@ -51,7 +51,7 @@ open class AVFoundationPlayback: Playback {
 
     private var backgroundSessionBackup: AVAudioSession.Category?
 
-    open override var pluginName: String {
+    open class override var name: String {
         return "AVPlayback"
     }
 

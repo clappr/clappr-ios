@@ -540,7 +540,7 @@ class MediaControlPluginMock: MediaControlPlugin {
     static var didCallRender = false
     static var crashOnRender = false
     
-    override var pluginName: String {
+    override class var name: String {
         return "MediaControlPluginMock"
     }
     
@@ -570,7 +570,7 @@ class MediaControlPluginMock: MediaControlPlugin {
 }
 
 class TimeIndicatorPluginMock: TimeIndicator {
-    override var pluginName: String {
+    override class var name: String {
         return "TimeIndicatorPluginMock"
     }
 
@@ -584,7 +584,7 @@ class TimeIndicatorPluginMock: TimeIndicator {
 }
 
 class FirstPlugin: MediaControlPlugin {
-    override var pluginName: String {
+    override class var name: String {
         return "FirstPlugin"
     }
     
@@ -609,7 +609,7 @@ class FirstPlugin: MediaControlPlugin {
 }
 
 class SecondPlugin: MediaControlPlugin {
-    override var pluginName: String {
+    override class var name: String {
         return "SecondPlugin"
     }
 

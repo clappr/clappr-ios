@@ -114,6 +114,6 @@ class SpinnerPluginTests: QuickSpec {
     }
 
     class PlaybackStub: Playback {
-        override var pluginName: String { return "playbackstub" }
+        override class var name: String { return "playbackstub" }
     }
 }

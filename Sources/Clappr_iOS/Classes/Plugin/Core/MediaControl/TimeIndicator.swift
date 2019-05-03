@@ -1,5 +1,5 @@
 open class TimeIndicator: MediaControlPlugin {
-    override open var pluginName: String {
+    open class override var name: String {
         return "TimeIndicator"
     }
 

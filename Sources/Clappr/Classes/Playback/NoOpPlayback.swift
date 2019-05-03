@@ -1,7 +1,7 @@
 open class NoOpPlayback: Playback {
     fileprivate var errorLabel = UILabel(frame: CGRect.zero)
 
-    open override var pluginName: String {
+    open class override var name: String {
         return "NoOp"
     }
 

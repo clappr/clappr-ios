@@ -2,7 +2,7 @@ import UIKit
 
 public class QuickSeekCorePlugin: QuickSeekPlugin {
     
-    override open var pluginName: String {
+    open class override var name: String {
         return "QuickSeekCorePlugin"
     }
     

@@ -6,13 +6,13 @@ class CoreTests: QuickSpec {
     override func spec() {
 
         class StubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "stupPlayback"
             }
         }
 
         class FakeCorePlugin: UICorePlugin {
-            override var pluginName: String {
+            override class var name: String {
                 return "FakeCorePLugin"
             }
         }
@@ -742,7 +742,7 @@ class UICorePluginMock: UICorePlugin {
     static var didCallDestroy = false
     static var crashOnDestroy = false
 
-    override var pluginName: String {
+    override class var name: String {
         return "UICorePluginMock"
     }
 
@@ -773,7 +773,7 @@ class UICorePluginMock: UICorePlugin {
 }
 
 class CorePluginMock: CorePlugin {
-    override var pluginName: String {
+    override class var name: String {
         return "CorePluginMock"
     }
 }

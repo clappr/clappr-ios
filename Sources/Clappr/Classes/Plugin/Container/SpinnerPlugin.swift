@@ -10,7 +10,7 @@ open class SpinnerPlugin: UIContainerPlugin {
         super.init()
     }
 
-    open override var pluginName: String {
+    open class override var name: String {
         return "spinner"
     }
 

@@ -4,12 +4,13 @@ open class Playback: UIObject, Plugin {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {
-        return self.init().pluginName
+        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
+        return ""
     }
 
     @objc open var pluginName: String {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
-        return ""
+        guard let selfType = theType(of: self) else { return "" }
+        return selfType.name
     }
 
     open var selectedSubtitle: MediaOption?

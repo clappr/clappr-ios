@@ -33,7 +33,7 @@ class PlaybackFactoryTests: QuickSpec {
             return options[kSourceUrl] as! String != "invalid"
         }
 
-        override var pluginName: String {
+        override class var name: String {
             return "AVPlayback"
         }
     }

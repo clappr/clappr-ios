@@ -371,7 +371,7 @@ class ContainerTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "AVPlayback"
         }
 
@@ -385,7 +385,7 @@ class ContainerTests: QuickSpec {
     }
 
     class FakeContainerPlugin: ContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "FakeContainerPlugin"
         }
 
@@ -400,7 +400,7 @@ class ContainerTests: QuickSpec {
         static var didCallDestroy = false
         static var crashOnDestroy = false
 
-        override var pluginName: String {
+         override class var name: String {
             return "AnotherFakeContainerPlugin"
         }
 

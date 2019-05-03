@@ -307,7 +307,7 @@ class PlayerTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "StubPlayback"
         }
 
@@ -317,7 +317,7 @@ class PlayerTests: QuickSpec {
     }
 
     class SpecialStubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "SpecialStubPlayback"
         }
 
@@ -327,7 +327,7 @@ class PlayerTests: QuickSpec {
     }
 
     class LoggerPlugin: UICorePlugin {
-        override var pluginName: String { return "Logger" }
+        override class var name: String { return "Logger" }
 
         required init(context: UIObject) {
             super.init(context: context)
@@ -353,7 +353,7 @@ class PlayerTests: QuickSpec {
     }
     
     class FakeContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "FakeContainerPlugin"
         }
     }

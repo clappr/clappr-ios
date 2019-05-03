@@ -46,7 +46,7 @@ class UICorePluginTests: QuickSpec {
     }
 
     class StubCorePlugin: UICorePlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "StubCorePlugin"
         }
     }

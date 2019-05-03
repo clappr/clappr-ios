@@ -1,6 +1,6 @@
 class Seekbar: MediaControlPlugin {
 
-    override var pluginName: String {
+    open override class var name: String {
         return "Seekbar"
     }
 

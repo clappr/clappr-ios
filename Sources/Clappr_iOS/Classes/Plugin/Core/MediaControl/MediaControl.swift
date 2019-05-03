@@ -17,7 +17,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-    override open var pluginName: String {
+    open class override var name: String {
         return "MediaControl"
     }
 

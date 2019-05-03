@@ -52,37 +52,37 @@ class ArrayAppendOrReplaceTests: QuickSpec {
 }
 
 class PluginA: UIContainerPlugin {
-    override static var name: String {
+    override class var name: String {
         return "pluginA"
     }
 }
 
 class PluginB: UIContainerPlugin {
-    override static var name: String {
+    override class var name: String {
         return "pluginB"
     }
 }
 
 class PluginAReplace: UIContainerPlugin {
-    override static var name: String {
+    override class var name: String {
         return "pluginA"
     }
 }
 
 class PlaybackA: Playback {
-    override static var name: String {
+    override class var name: String {
         return "playbackA"
     }
 }
 
 class PlaybackB: Playback {
-    override static var name: String {
+    override class var name: String {
         return "playbackB"
     }
 }
 
 class PlaybackAReplace: Playback {
-    override static var name: String {
+    override class var name: String {
         return "playbackA"
     }
 }
