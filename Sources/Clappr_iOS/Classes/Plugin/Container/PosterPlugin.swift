@@ -6,10 +6,6 @@ open class PosterPlugin: UIContainerPlugin {
         return "poster"
     }
 
-    public required init() {
-        super.init()
-    }
-
     public required init(context: UIObject) {
         super.init(context: context)
         view.translatesAutoresizingMaskIntoConstraints = false

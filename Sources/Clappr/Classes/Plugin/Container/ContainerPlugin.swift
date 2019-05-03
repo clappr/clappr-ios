@@ -6,10 +6,6 @@ open class ContainerPlugin: BaseObject, Plugin {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Container Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
-
-    public required override init() {
-        super.init()
-    }
     
     @objc public required init(context: UIObject) {
         super.init()
