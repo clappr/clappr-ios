@@ -13,11 +13,7 @@ open class PlaybackFactory {
         return playback.init(options: options)
     }
 
-    fileprivate func canPlay(_ type: Plugin.Type) -> Bool {
-        guard let type = type as? Playback.Type else {
-            return false
-        }
-
+    fileprivate func canPlay(_ type: Playback.Type) -> Bool {
         return type.canPlay(options)
     }
 }

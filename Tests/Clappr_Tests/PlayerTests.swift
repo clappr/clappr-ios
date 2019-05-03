@@ -19,7 +19,7 @@ class PlayerTests: QuickSpec {
 
                     beforeEach {
                         Loader.shared.resetPlugins()
-                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
                         playback = player.activePlayback
                         callbackWasCalled = false
@@ -262,7 +262,7 @@ class PlayerTests: QuickSpec {
 
                     it("ignore plugins registered after player initialization") {
                         Loader.shared.resetPlugins()
-                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
 
                         Player.register(plugins: [LoggerPlugin.self])
@@ -276,7 +276,7 @@ class PlayerTests: QuickSpec {
             describe("#configure") {
                 it("changes Core options") {
                     Loader.shared.resetPlugins()
-                    Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                    Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                     player = Player(options: options)
                     player.configure(options: ["foo": "bar"])
 

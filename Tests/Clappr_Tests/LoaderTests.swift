@@ -10,6 +10,7 @@ class LoaderTests: QuickSpec {
 
             beforeEach {
                 Loader.shared.resetPlugins()
+                Loader.shared.resetPlaybacks()
             }
 
             context("when adds external playbacks") {

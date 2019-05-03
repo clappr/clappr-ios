@@ -1,18 +1,15 @@
-public protocol Plugin: EventProtocol {
+public protocol Plugin: EventProtocol, Nameable {
     static var type: PluginType { get }
-    static var name: String { get }
     init(context: UIObject)
     func destroy()
 }
 
-public func theType<T>(of value: T) -> Plugin.Type? {
-    return type(of: value) as? Plugin.Type
+public protocol Nameable {
+    static var name: String { get }
 }
 
-extension Plugin {
-
+extension Nameable {
     public var pluginName: String {
-        guard let selfType = theType(of: self) else { return "" }
-        return selfType.name
+        return type(of: self).name
     }
 }

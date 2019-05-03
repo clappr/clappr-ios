@@ -1,6 +1,6 @@
 import AVFoundation
 
-open class Playback: UIObject, Plugin {
+open class Playback: UIObject, Nameable {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {

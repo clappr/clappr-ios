@@ -23,7 +23,7 @@ class CoreTests: QuickSpec {
         beforeEach {
             core = Core(options: options as Options)
             Loader.shared.resetPlugins()
-            Loader.shared.register(plugins: [StubPlayback.self])
+            Loader.shared.register(playbacks: [StubPlayback.self])
         }
 
         describe(".Core") {
