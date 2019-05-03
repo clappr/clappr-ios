@@ -28,10 +28,6 @@ class Seekbar: MediaControlPlugin {
         bindEvents()
     }
 
-    required init() {
-        super.init()
-    }
-
     private func bindEvents() {
         stopListening()
 

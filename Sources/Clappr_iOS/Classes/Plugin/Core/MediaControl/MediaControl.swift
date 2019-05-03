@@ -38,10 +38,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         bindEvents()
     }
 
-    required public init() {
-        super.init()
-    }
-
     private func bindEvents() {
         stopListening()
 

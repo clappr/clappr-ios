@@ -70,10 +70,6 @@ open class TimeIndicator: MediaControlPlugin {
         bindEvents()
     }
 
-    required public init() {
-        super.init()
-    }
-
     private func bindEvents() {
         stopListening()
         bindContainerEvents()

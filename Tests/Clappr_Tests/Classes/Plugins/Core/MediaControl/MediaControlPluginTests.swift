@@ -5,16 +5,20 @@ import Nimble
 
 class MediaControlPluginTests: QuickSpec {
     override func spec() {
+        var mediaControlPlugin: MediaControlPlugin!
+        var core: Core!
+
+        beforeEach {
+            core = CoreStub()
+            mediaControlPlugin = MediaControlPlugin(context: core)
+        }
+
         describe("MediaControlPlugin") {
             it("is a UICorePlugin") {
-                let mediaControlPlugin = MediaControlPlugin()
-
                 expect(mediaControlPlugin).to(beAKindOf(UICorePlugin.self))
             }
 
             it("has a view") {
-                let mediaControlPlugin = MediaControlPlugin()
-
                 expect(mediaControlPlugin.view).to(beAKindOf(UIView.self))
                 expect(mediaControlPlugin.view).toNot(beNil())
             }
@@ -22,8 +26,6 @@ class MediaControlPluginTests: QuickSpec {
 
         describe("panel") {
             it("is a MediaControlPanel type") {
-                let mediaControlPlugin = MediaControlPlugin()
-
                 expect(mediaControlPlugin.panel).to(beAKindOf(MediaControlPanel.self))
             }
 
@@ -37,8 +39,6 @@ class MediaControlPluginTests: QuickSpec {
 
         describe("position") {
             it("is a MediaControlPosition type") {
-                let mediaControlPlugin = MediaControlPlugin()
-
                 expect(mediaControlPlugin.position).to(beAKindOf(MediaControlPosition.self))
             }
 

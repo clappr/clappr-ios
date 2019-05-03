@@ -6,14 +6,15 @@ import Nimble
 class PlayButtonTests: QuickSpec {
     override func spec() {
         describe(".PlayButton") {
+            var coreStub: CoreStub!
+            var playButton: PlayButton!
+
+            beforeEach {
+                coreStub = CoreStub()
+                playButton = PlayButton(context: coreStub)
+            }
 
             describe("Plugin structure") {
-                var playButton: PlayButton!
-
-                beforeEach {
-                    playButton = PlayButton()
-                }
-
                 context("#init") {
                     it("is an MediaControlPlugin type") {
                         expect(playButton).to(beAKindOf(MediaControlPlugin.self))
@@ -40,15 +41,6 @@ class PlayButtonTests: QuickSpec {
             }
 
             describe("when a video is loaded") {
-
-                var coreStub: CoreStub!
-                var playButton: PlayButton!
-
-                beforeEach {
-                    coreStub = CoreStub()
-                    playButton = PlayButton(context: coreStub)
-                }
-
                 context("and video is vod") {
                     it("shows button") {
                         playButton.render()
@@ -61,13 +53,7 @@ class PlayButtonTests: QuickSpec {
             }
 
             context("when click on button") {
-
-                var coreStub: CoreStub!
-                var playButton: PlayButton!
-
                 beforeEach {
-                    coreStub = CoreStub()
-                    playButton = PlayButton(context: coreStub)
                     playButton.render()
                 }
 
@@ -99,13 +85,7 @@ class PlayButtonTests: QuickSpec {
             }
 
             context("when click on button during playback") {
-
-                var coreStub: CoreStub!
-                var playButton: PlayButton!
-
                 beforeEach {
-                    coreStub = CoreStub()
-                    playButton = PlayButton(context: coreStub)
                     playButton.render()
                 }
 
@@ -183,8 +163,6 @@ class PlayButtonTests: QuickSpec {
             describe("render") {
 
                 it("set's acessibilityIdentifier to button") {
-                    let playButton = PlayButton()
-
                     playButton.render()
 
                     expect(playButton.button.accessibilityIdentifier).to(equal("PlayPauseButton"))
@@ -192,7 +170,6 @@ class PlayButtonTests: QuickSpec {
 
                 describe("button") {
                     it("adds it in the view") {
-                        let playButton = PlayButton()
 
                         playButton.render()
 
@@ -200,7 +177,6 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("has scaleAspectFit content mode") {
-                        let playButton = PlayButton()
 
                         playButton.render()
 
@@ -212,8 +188,6 @@ class PlayButtonTests: QuickSpec {
 
             context("when stalling") {
                 it("hides the plugin") {
-                    let coreStub = CoreStub()
-                    let playButton = PlayButton(context: coreStub)
 
                     coreStub.activePlayback?.trigger(Event.stalling.rawValue)
 
@@ -221,8 +195,6 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 it("hides the plugin") {
-                    let coreStub = CoreStub()
-                    let playButton = PlayButton(context: coreStub)
 
                     coreStub.activePlayback?.trigger(Event.playing.rawValue)
 

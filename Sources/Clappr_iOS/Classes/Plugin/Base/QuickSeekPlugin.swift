@@ -20,10 +20,6 @@ public class QuickSeekPlugin: UICorePlugin {
         bindEvents()
     }
     
-    required init() {
-        super.init()
-    }
-  
     private func bindEvents() {
         stopListening()
         bindCoreEvents()

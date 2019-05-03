@@ -6,43 +6,40 @@ import Nimble
 class MediaControlTests: QuickSpec {
     override func spec() {
         describe(".MediaControl") {
+            var coreStub: CoreStub!
+            var mediaControl: MediaControl!
+
+            beforeEach {
+                coreStub = CoreStub()
+                mediaControl = MediaControl(context: coreStub)
+            }
+
             describe("pluginName") {
                 it("returns the pluginName") {
-                    let mediaControl = MediaControl()
-
                     expect(mediaControl.pluginName).to(equal("MediaControl"))
                 }
             }
 
             describe("#animationDuration") {
                 it("is 0.3 seconds") {
-                    let mediaControl = MediaControl()
-
                     expect(ClapprAnimationDuration.mediaControlShow).to(equal(0.3))
                 }
             }
 
             describe("#secondsToHideControlFast") {
                 it("is 0.4 seconds") {
-                    let mediaControl = MediaControl()
-
                     expect(mediaControl.shortTimeToHideMediaControl).to(equal(0.4))
                 }
             }
 
             describe("#secondsToHideControlSlow") {
                 it("is 4 seconds") {
-                    let mediaControl = MediaControl()
-
                     expect(mediaControl.longTimeToHideMediaControl).to(equal(4))
                 }
             }
 
             describe("#view") {
                 it("has 1 gesture recognizer") {
-                    let coreStub = CoreStub()
-                    let mediaControl = MediaControl(context: coreStub)
-
                     mediaControl.render()
 
                     expect(mediaControl.view.gestureRecognizers?.count).to(equal(1))
@@ -51,8 +48,6 @@ class MediaControlTests: QuickSpec {
 
             describe("#tapped") {
                 it("hides the mediacontrol and stop timer") {
-                    let coreStub = CoreStub()
-                    let mediaControl = MediaControl(context: coreStub)
                     mediaControl.render()
 
                     mediaControl.tapped()
@@ -77,31 +72,19 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("#render") {
-                var coreStub: CoreStub!
-
-                beforeEach {
-                    coreStub = CoreStub()
-                }
-
                 it("starts hidden") {
-                    let mediaControl = MediaControl(context: coreStub)
-
                     mediaControl.render()
 
                     expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
                 it("has clear background") {
-                    let mediaControl = MediaControl(context: coreStub)
-
                     mediaControl.render()
 
                     expect(mediaControl.view.backgroundColor).to(equal(UIColor.clear))
                 }
 
                 it("has constrastView with black background with 60% of opacity") {
-                    let mediaControl = MediaControl(context: coreStub)
-
                     mediaControl.render()
 
                     expect(mediaControl.mediaControlView.contrastView.backgroundColor).to(equal(UIColor.clapprBlack60Color()))
@@ -110,17 +93,14 @@ class MediaControlTests: QuickSpec {
                 it("fills the superview") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
-                    let mediaControl = MediaControl(context: coreStub)
-
                     superview.addSubview(mediaControl.view)
+
                     mediaControl.render()
 
                     expect(superview.constraints.count).to(equal(4))
                 }
 
                 it("inflates the MediaControl xib in the view") {
-                    let mediaControl = MediaControl(context: coreStub)
-
                     mediaControl.render()
 
                     expect(mediaControl.mediaControlView).to(beAKindOf(MediaControlView.self))
@@ -141,13 +121,7 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("Events") {
-                var coreStub: CoreStub!
-                var mediaControl: MediaControl!
-
                 beforeEach {
-                    coreStub = CoreStub()
-
-                    mediaControl = MediaControl(context: coreStub)
                     mediaControl.mediaControlShow = 0.1
                     mediaControl.mediaControlHide = 0.1
                     mediaControl.shortTimeToHideMediaControl = 0.1
@@ -339,13 +313,11 @@ class MediaControlTests: QuickSpec {
             
             describe("show") {
                 it("triggers willShowMediaControl before showing the view") {
-                    let core = CoreStub()
-                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
                     mediaControl.render()
-                    core.on(Event.willShowMediaControl.rawValue) { _ in
+                    coreStub.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.view.isHidden
                     }
@@ -356,13 +328,11 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("triggers didShowMediaControl after showing the view") {
-                    let core = CoreStub()
-                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     mediaControl.view.isHidden = true
                     
-                    core.on(Event.didShowMediaControl.rawValue) { _ in
+                    coreStub.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.view.isHidden
                     }
@@ -375,12 +345,10 @@ class MediaControlTests: QuickSpec {
             
             describe("hide") {
                 it("triggers willHideMediaControl before hiding the view") {
-                    let core = CoreStub()
-                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
-                    core.on(Event.willHideMediaControl.rawValue) { _ in
+                    coreStub.on(Event.willHideMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.view.isHidden
                     }
@@ -391,12 +359,10 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("triggers didHideMediaControl after showing the view") {
-                    let core = CoreStub()
-                    let mediaControl = MediaControl(context: core)
                     var eventTriggered = false
                     var viewIsVisible: Bool?
                     
-                    core.on(Event.didHideMediaControl.rawValue) { _ in
+                    coreStub.on(Event.didHideMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewIsVisible = !mediaControl.view.isHidden
                     }
@@ -409,20 +375,17 @@ class MediaControlTests: QuickSpec {
 
             describe("renderPlugins") {
                 var plugins: [MediaControlPlugin]!
-                var core: Core!
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-                    plugins = [MediaControlPluginMock()]
-
-                    core = Core(options: [:])
+                    plugins = [MediaControlPluginMock(context: coreStub)]
                     mediaControlViewMock = MediaControlViewMock()
                     MediaControlPluginMock.reset()
                 }
 
                 context("for any plugin configuration") {
                     it("always calls the MediaControlView to position the view") {
-                        let mediaControl = MediaControl(context: core)
+                        let mediaControl = MediaControl(context: coreStub)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
@@ -432,7 +395,6 @@ class MediaControlTests: QuickSpec {
                     }
 
                     it("always calls the MediaControlView passing the plugin's view") {
-                        let mediaControl = MediaControl(context: core)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
@@ -443,7 +405,6 @@ class MediaControlTests: QuickSpec {
 
                     it("always calls the MediaControlView passing the plugin's panel") {
                         MediaControlPluginMock._panel = .center
-                        let mediaControl = MediaControl(context: core)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
@@ -454,7 +415,6 @@ class MediaControlTests: QuickSpec {
 
                     it("always calls the MediaControlView passing the plugin's position") {
                         MediaControlPluginMock._position = .left
-                        let mediaControl = MediaControl(context: core)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
@@ -465,7 +425,6 @@ class MediaControlTests: QuickSpec {
 
                     it("always calls the method render") {
                         MediaControlPluginMock._panel = .top
-                        let mediaControl = MediaControl(context: core)
                         mediaControl.render()
                         
                         mediaControl.renderPlugins(plugins)
@@ -475,7 +434,6 @@ class MediaControlTests: QuickSpec {
 
                     it("protect the main thread when plugin crashes in render") {
                         MediaControlPluginMock.crashOnRender = true
-                        let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
                         mediaControl.renderPlugins(plugins)
@@ -486,6 +444,7 @@ class MediaControlTests: QuickSpec {
 
                 context("when kMediaControlPluginsOrder is passed") {
                     it("renders the plugins following the kMediaControlPluginsOrder with all plugins specified in the option") {
+                        let core = Core()
                         core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondPlugin", "FirstPlugin"]
                         let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
@@ -501,6 +460,7 @@ class MediaControlTests: QuickSpec {
                     }
 
                     it("renders the plugins following the kMediaControlPluginsOrder with only two plugins specified in the option") {
+                        let core = Core()
                         core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
                         let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)

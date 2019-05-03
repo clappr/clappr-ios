@@ -566,7 +566,7 @@ class CoreTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     UICorePluginMock.crashOnDestroy = true
                     let core = Core()
-                    let plugin = UICorePluginMock()
+                    let plugin = UICorePluginMock(context: core)
                     core.addPlugin(plugin)
 
                     core.destroy()
@@ -656,7 +656,7 @@ class CoreTests: QuickSpec {
             describe("#render") {
                 it("add plugin as subview after rendered") {
                     let core = Core()
-                    let plugin = FakeCorePlugin()
+                    let plugin = FakeCorePlugin(context: core)
                     
                     core.addPlugin(plugin)
                     core.render()
@@ -667,7 +667,7 @@ class CoreTests: QuickSpec {
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlPlugin") {
                     let core = Core()
-                    let plugin = MediaControlPluginMock()
+                    let plugin = MediaControlPluginMock(context: core)
                     
                     core.addPlugin(plugin)
                     core.render()
@@ -677,8 +677,8 @@ class CoreTests: QuickSpec {
                 
                 it("calls the mediacontrol to add the plugins into the panels") {
                     let core = CoreFactory.create(with: [:])
-                    let mediaControlMock = MediaControlMock()
-                    let mediaControlPluginMock = MediaControlPluginMock()
+                    let mediaControlMock = MediaControlMock(context: core)
+                    let mediaControlPluginMock = MediaControlPluginMock(context: core)
                     
                     core.addPlugin(mediaControlMock)
                     core.addPlugin(mediaControlPluginMock)
@@ -692,7 +692,7 @@ class CoreTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     UICorePluginMock.crashOnRender = true
                     let core = Core()
-                    let plugin = UICorePluginMock()
+                    let plugin = UICorePluginMock(context: core)
                     core.addPlugin(plugin)
 
                     core.render()

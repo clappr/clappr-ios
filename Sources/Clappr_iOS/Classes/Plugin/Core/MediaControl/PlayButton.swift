@@ -37,10 +37,6 @@ open class PlayButton: MediaControlPlugin {
         bindEvents()
     }
 
-    required public init() {
-        super.init()
-    }
-
     private func bindEvents() {
         stopListening()
 

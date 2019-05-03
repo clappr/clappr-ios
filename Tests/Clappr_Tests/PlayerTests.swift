@@ -334,10 +334,6 @@ class PlayerTests: QuickSpec {
             bindEvents()
         }
 
-        required init() {
-            super.init()
-        }
-
         private func bindEvents() {
             stopListening()
             bindPlaybackEvents()

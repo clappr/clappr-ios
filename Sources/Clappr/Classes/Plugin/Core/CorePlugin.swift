@@ -7,10 +7,6 @@ open class CorePlugin: BaseObject, Plugin {
         return ""
     }
     
-    public required override init() {
-        super.init()
-    }
-    
     @objc public required init(context: UIObject) {
         super.init()
         if let core = context as? Core {
