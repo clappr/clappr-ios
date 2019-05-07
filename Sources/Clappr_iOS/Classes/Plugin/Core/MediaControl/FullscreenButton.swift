@@ -24,7 +24,7 @@ open class FullscreenButton: MediaControlPlugin {
         }
     }
 
-    override open var pluginName: String {
+    open class override var name: String {
         return "FullscreenButton"
     }
     
@@ -39,10 +39,6 @@ open class FullscreenButton: MediaControlPlugin {
     required public init(context: UIObject) {
         super.init(context: context)
         bindEvents()
-    }
-    
-    required public init() {
-        super.init()
     }
     
     private func bindEvents() {

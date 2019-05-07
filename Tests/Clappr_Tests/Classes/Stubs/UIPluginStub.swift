@@ -8,8 +8,6 @@ class UIPluginStub: BaseObject, UIPlugin {
     
     static var name: String = "UIPluginStub"
     
-    var pluginName: String = "UIPluginStub"
-    
     required override init() { }
     
     required init(context: UIObject) { }

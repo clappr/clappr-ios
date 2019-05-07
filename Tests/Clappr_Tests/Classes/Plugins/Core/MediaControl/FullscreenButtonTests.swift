@@ -8,12 +8,13 @@ class FullscreenButtonTests: QuickSpec {
         describe(".FullscreenButton") {
             var fullscreenButton: FullscreenButton!
             var core: Core!
-            
+
+            beforeEach {
+                core = CoreStub()
+                fullscreenButton = FullscreenButton(context: core)
+            }
+
             describe("properties") {
-                beforeEach {
-                    fullscreenButton = FullscreenButton()
-                }
-                
                 describe("pluginName") {
                     it("has a name") {
                         expect(fullscreenButton.pluginName).to(equal("FullscreenButton"))
@@ -115,8 +116,6 @@ class FullscreenButtonTests: QuickSpec {
             
             context("when the player is on fullscreen mode") {
                 beforeEach {
-                    core = Core()
-                    fullscreenButton = FullscreenButton(context: core)
                     fullscreenButton.render()
                     core.trigger(Event.didEnterFullscreen.rawValue)
                 }
@@ -137,8 +136,6 @@ class FullscreenButtonTests: QuickSpec {
             
             context("when the player is on embed mode") {
                 beforeEach {
-                    core = Core()
-                    fullscreenButton = FullscreenButton(context: core)
                     fullscreenButton.render()
                     core.trigger(Event.didExitFullscreen.rawValue)
                 }

@@ -1,5 +1,5 @@
 open class PlayButton: MediaControlPlugin {
-    override open var pluginName: String {
+    open class override var name: String {
         return "PlayButton"
     }
 
@@ -35,10 +35,6 @@ open class PlayButton: MediaControlPlugin {
     required public init(context: UIObject) {
         super.init(context: context)
         bindEvents()
-    }
-
-    required public init() {
-        super.init()
     }
 
     private func bindEvents() {

@@ -3,8 +3,8 @@ import UIKit
 public class QuickSeekPlugin: UICorePlugin {
     
     var doubleTapGesture: UITapGestureRecognizer!
-    
-    override open var pluginName: String {
+
+    open class override var name: String {
         return "QuickSeekPlugin"
     }
     
@@ -20,10 +20,6 @@ public class QuickSeekPlugin: UICorePlugin {
         bindEvents()
     }
     
-    required init() {
-        super.init()
-    }
-  
     private func bindEvents() {
         stopListening()
         bindCoreEvents()

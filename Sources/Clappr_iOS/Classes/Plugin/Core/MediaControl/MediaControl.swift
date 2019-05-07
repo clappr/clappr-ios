@@ -17,7 +17,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.activePlayback
     }
 
-    override open var pluginName: String {
+    open class override var name: String {
         return "MediaControl"
     }
 
@@ -36,10 +36,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         super.init(context: context)
         alwaysVisible = (core?.options[kMediaControlAlwaysVisible] as? Bool) ?? false
         bindEvents()
-    }
-
-    required public init() {
-        super.init()
     }
 
     private func bindEvents() {

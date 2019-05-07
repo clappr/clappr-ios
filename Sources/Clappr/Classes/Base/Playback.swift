@@ -1,13 +1,9 @@
 import AVFoundation
 
-open class Playback: UIObject, Plugin {
+open class Playback: UIObject, NamedType {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {
-        return self.init().pluginName
-    }
-
-    @objc open var pluginName: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
         return ""
     }
@@ -61,12 +57,6 @@ open class Playback: UIObject, Plugin {
 
     @objc open var isHighDefinitionInUse: Bool {
         return false
-    }
-
-    public required override init() {
-        options = [:]
-        super.init()
-        view.backgroundColor = UIColor.clear
     }
 
     @objc public required init(options: Options) {

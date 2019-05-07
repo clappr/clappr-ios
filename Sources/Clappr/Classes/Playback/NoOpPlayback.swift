@@ -1,7 +1,7 @@
 open class NoOpPlayback: Playback {
     fileprivate var errorLabel = UILabel(frame: CGRect.zero)
 
-    open override var pluginName: String {
+    open class override var name: String {
         return "NoOp"
     }
 
@@ -12,10 +12,6 @@ open class NoOpPlayback: Playback {
 
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    public required init() {
-        super.init()
     }
 
     public required init(context _: UIObject) {

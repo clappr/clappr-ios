@@ -19,7 +19,7 @@ class PlayerTests: QuickSpec {
 
                     beforeEach {
                         Loader.shared.resetPlugins()
-                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
                         playback = player.activePlayback
                         callbackWasCalled = false
@@ -262,7 +262,7 @@ class PlayerTests: QuickSpec {
 
                     it("ignore plugins registered after player initialization") {
                         Loader.shared.resetPlugins()
-                        Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                        Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                         player = Player(options: options)
 
                         Player.register(plugins: [LoggerPlugin.self])
@@ -276,7 +276,7 @@ class PlayerTests: QuickSpec {
             describe("#configure") {
                 it("changes Core options") {
                     Loader.shared.resetPlugins()
-                    Player.register(plugins: [SpecialStubPlayback.self, StubPlayback.self])
+                    Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                     player = Player(options: options)
                     player.configure(options: ["foo": "bar"])
 
@@ -307,7 +307,7 @@ class PlayerTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "StubPlayback"
         }
 
@@ -317,7 +317,7 @@ class PlayerTests: QuickSpec {
     }
 
     class SpecialStubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "SpecialStubPlayback"
         }
 
@@ -327,15 +327,11 @@ class PlayerTests: QuickSpec {
     }
 
     class LoggerPlugin: UICorePlugin {
-        override var pluginName: String { return "Logger" }
+        override class var name: String { return "Logger" }
 
         required init(context: UIObject) {
             super.init(context: context)
             bindEvents()
-        }
-
-        required init() {
-            super.init()
         }
 
         private func bindEvents() {
@@ -353,7 +349,7 @@ class PlayerTests: QuickSpec {
     }
     
     class FakeContainerPlugin: UIContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "FakeContainerPlugin"
         }
     }

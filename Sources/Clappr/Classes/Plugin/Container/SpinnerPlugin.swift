@@ -6,11 +6,7 @@ open class SpinnerPlugin: UIContainerPlugin {
         return spinningWheel.isAnimating
     }
 
-    public required init() {
-        super.init()
-    }
-
-    open override var pluginName: String {
+    open class override var name: String {
         return "spinner"
     }
 

@@ -14,7 +14,7 @@ class SpinnerPluginTests: QuickSpec {
         beforeEach {
             container = Container()
             spinnerPlugin = SpinnerPlugin(context: container)
-            playback = AVFoundationPlayback()
+            playback = AVFoundationPlayback(options: [:])
             container.playback = playback
         }
 
@@ -114,6 +114,6 @@ class SpinnerPluginTests: QuickSpec {
     }
 
     class PlaybackStub: Playback {
-        override var pluginName: String { return "playbackstub" }
+        override class var name: String { return "playbackstub" }
     }
 }

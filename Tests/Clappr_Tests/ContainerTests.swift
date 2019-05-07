@@ -143,7 +143,7 @@ class ContainerTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     AnotherFakeContainerPlugin.crashOnRender = true
                     let container = Container()
-                    let plugin = AnotherFakeContainerPlugin()
+                    let plugin = AnotherFakeContainerPlugin(context: container)
                     container.addPlugin(plugin)
 
                     container.render()
@@ -214,7 +214,7 @@ class ContainerTests: QuickSpec {
                     var countOfDestroyedPlugins = 0
 
                     container.plugins.forEach { plugin in
-                        plugin.on(Event.didDestroy.rawValue) { _ in
+                        _ = plugin.on(Event.didDestroy.rawValue) { _ in
                             countOfDestroyedPlugins += 1
                         }
                     }
@@ -229,7 +229,7 @@ class ContainerTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     AnotherFakeContainerPlugin.crashOnDestroy = true
                     let container = Container()
-                    let plugin = AnotherFakeContainerPlugin()
+                    let plugin = AnotherFakeContainerPlugin(context: container)
                     container.addPlugin(plugin)
 
                     container.destroy()
@@ -371,7 +371,7 @@ class ContainerTests: QuickSpec {
     }
 
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "AVPlayback"
         }
 
@@ -385,7 +385,7 @@ class ContainerTests: QuickSpec {
     }
 
     class FakeContainerPlugin: ContainerPlugin {
-        override var pluginName: String {
+        override class var name: String {
             return "FakeContainerPlugin"
         }
 
@@ -400,7 +400,7 @@ class ContainerTests: QuickSpec {
         static var didCallDestroy = false
         static var crashOnDestroy = false
 
-        override var pluginName: String {
+         override class var name: String {
             return "AnotherFakeContainerPlugin"
         }
 

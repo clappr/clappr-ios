@@ -6,34 +6,34 @@ import CoreMedia
 
 class SeekbarTests: QuickSpec {
     override func spec() {
+        var coreStub: CoreStub!
+        var seekbar: Seekbar!
+
+        beforeEach {
+            coreStub = CoreStub()
+            seekbar = Seekbar(context: coreStub)
+        }
+
         describe("Seekbar") {
             it("is a MediaControlPlugin") {
-                let seekbar = Seekbar()
-
                 expect(seekbar).to(beAKindOf(MediaControlPlugin.self))
             }
         }
 
         describe("#pluginName") {
             it("is Seekbar") {
-                let seekbar = Seekbar()
-
                 expect(seekbar.pluginName).to(equal("Seekbar"))
             }
         }
 
         describe("#panel") {
             it("is positioned in the bottom panel") {
-                let seekbar = Seekbar()
-
                 expect(seekbar.panel).to(equal(MediaControlPanel.bottom))
             }
         }
 
         describe("#position") {
             it("is positioned in the left side") {
-                let seekbar = Seekbar()
-
                 expect(seekbar.position).to(equal(MediaControlPosition.none))
             }
         }
@@ -41,9 +41,6 @@ class SeekbarTests: QuickSpec {
         describe("#seek") {
             context("when VOD") {
                 it("calls activePlayback seek with the correct value") {
-                    let coreStub = CoreStub()
-                    let seekbar = Seekbar(context: coreStub)
-
                     seekbar.seek(10)
 
                     expect(coreStub.playbackMock?.didCallSeek).to(beTrue())
@@ -53,8 +50,6 @@ class SeekbarTests: QuickSpec {
 
             context("when LIVE and the user seeks to the end") {
                 it("seeks to infinity to resync live broadcast") {
-                    let coreStub = CoreStub()
-                    let seekbar = Seekbar(context: coreStub)
                     coreStub.playbackMock?.videoDuration = 10
                     coreStub.playbackMock?.set(isDvrInUse: true)
 
@@ -67,11 +62,7 @@ class SeekbarTests: QuickSpec {
 
         describe("#render") {
 
-            var seekbar: Seekbar!
-
             beforeEach {
-                seekbar = Seekbar()
-
                 seekbar.render()
             }
 
@@ -97,8 +88,6 @@ class SeekbarTests: QuickSpec {
             describe("when a video is playing") {
 
                 it("sets the SeekbarView to live") {
-                    let coreStub = CoreStub()
-                    let seekbar = Seekbar(context: coreStub)
                     seekbar.seekbarView.isLive = true
 
                     seekbar.render()
@@ -111,8 +100,6 @@ class SeekbarTests: QuickSpec {
                 }
 
                 it("sets the SeekbarView to VOD") {
-                    let coreStub = CoreStub()
-                    let seekbar = Seekbar(context: coreStub)
                     seekbar.seekbarView.isLive = false
 
                     seekbar.render()
@@ -127,14 +114,9 @@ class SeekbarTests: QuickSpec {
             }
 
             describe("Events") {
-                var coreStub: CoreStub!
-                var seekbar: Seekbar!
                 var seekbarViewMock: SeekbarViewMock!
 
                 beforeEach {
-                    coreStub = CoreStub()
-                    seekbar = Seekbar(context: coreStub)
-
                     seekbar.render()
                 }
 

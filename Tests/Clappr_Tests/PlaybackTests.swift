@@ -143,7 +143,7 @@ class PlaybackTests: QuickSpec {
         var seekWasCalledWithValue: TimeInterval = -1
         var type: PlaybackType = .unknown
 
-        override var pluginName: String {
+        override class var name: String {
             return "stupPlayback"
         }
 

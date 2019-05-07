@@ -6,13 +6,13 @@ class CoreTests: QuickSpec {
     override func spec() {
 
         class StubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "stupPlayback"
             }
         }
 
         class FakeCorePlugin: UICorePlugin {
-            override var pluginName: String {
+            override class var name: String {
                 return "FakeCorePLugin"
             }
         }
@@ -23,7 +23,7 @@ class CoreTests: QuickSpec {
         beforeEach {
             core = Core(options: options as Options)
             Loader.shared.resetPlugins()
-            Loader.shared.register(plugins: [StubPlayback.self])
+            Loader.shared.register(playbacks: [StubPlayback.self])
         }
 
         describe(".Core") {
@@ -566,7 +566,7 @@ class CoreTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     UICorePluginMock.crashOnDestroy = true
                     let core = Core()
-                    let plugin = UICorePluginMock()
+                    let plugin = UICorePluginMock(context: core)
                     core.addPlugin(plugin)
 
                     core.destroy()
@@ -588,7 +588,7 @@ class CoreTests: QuickSpec {
                     }
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     expect(didCallEvent).toEventually(beTrue())
                 }
 
@@ -602,7 +602,7 @@ class CoreTests: QuickSpec {
                     }
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     expect(didCallEvent).toEventually(beTrue())
                 }
             }
@@ -641,13 +641,13 @@ class CoreTests: QuickSpec {
                     var didCallEvent = false
 
                     core.activeContainer = container
-                    core.activeContainer?.playback = AVFoundationPlayback()
+                    core.activeContainer?.playback = AVFoundationPlayback(options: [:])
                     container.on(Event.didChangeActivePlayback.rawValue)   { userInfo in
                         didCallEvent = true
                     }
 
                     core.activeContainer = container
-                    container.playback = AVFoundationPlayback()
+                    container.playback = AVFoundationPlayback(options: [:])
 
                     expect(didCallEvent).toEventually(beFalse())
                 }
@@ -656,7 +656,7 @@ class CoreTests: QuickSpec {
             describe("#render") {
                 it("add plugin as subview after rendered") {
                     let core = Core()
-                    let plugin = FakeCorePlugin()
+                    let plugin = FakeCorePlugin(context: core)
                     
                     core.addPlugin(plugin)
                     core.render()
@@ -667,7 +667,7 @@ class CoreTests: QuickSpec {
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlPlugin") {
                     let core = Core()
-                    let plugin = MediaControlPluginMock()
+                    let plugin = MediaControlPluginMock(context: core)
                     
                     core.addPlugin(plugin)
                     core.render()
@@ -677,8 +677,8 @@ class CoreTests: QuickSpec {
                 
                 it("calls the mediacontrol to add the plugins into the panels") {
                     let core = CoreFactory.create(with: [:])
-                    let mediaControlMock = MediaControlMock()
-                    let mediaControlPluginMock = MediaControlPluginMock()
+                    let mediaControlMock = MediaControlMock(context: core)
+                    let mediaControlPluginMock = MediaControlPluginMock(context: core)
                     
                     core.addPlugin(mediaControlMock)
                     core.addPlugin(mediaControlPluginMock)
@@ -692,7 +692,7 @@ class CoreTests: QuickSpec {
                     let expectation = QuickSpec.current.expectation(description: "doesn't crash")
                     UICorePluginMock.crashOnRender = true
                     let core = Core()
-                    let plugin = UICorePluginMock()
+                    let plugin = UICorePluginMock(context: core)
                     core.addPlugin(plugin)
 
                     core.render()
@@ -742,7 +742,7 @@ class UICorePluginMock: UICorePlugin {
     static var didCallDestroy = false
     static var crashOnDestroy = false
 
-    override var pluginName: String {
+    override class var name: String {
         return "UICorePluginMock"
     }
 
@@ -773,7 +773,7 @@ class UICorePluginMock: UICorePlugin {
 }
 
 class CorePluginMock: CorePlugin {
-    override var pluginName: String {
+    override class var name: String {
         return "CorePluginMock"
     }
 }

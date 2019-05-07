@@ -1,6 +1,6 @@
 class Seekbar: MediaControlPlugin {
 
-    override var pluginName: String {
+    open override class var name: String {
         return "Seekbar"
     }
 
@@ -26,10 +26,6 @@ class Seekbar: MediaControlPlugin {
     required init(context: UIObject) {
         super.init(context: context)
         bindEvents()
-    }
-
-    required init() {
-        super.init()
     }
 
     private func bindEvents() {

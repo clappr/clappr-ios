@@ -57,7 +57,7 @@ class PosterPluginTests: QuickSpec {
                 context("to NoOpPlayback") {
 
                     beforeEach {
-                        container.playback = NoOpPlayback()
+                        container.playback = NoOpPlayback(options: [:])
                         posterPlugin = self.getPosterPlugin(container)
                     }
 
@@ -72,7 +72,7 @@ class PosterPluginTests: QuickSpec {
                     context("and change again to another playback") {
 
                         beforeEach {
-                            container.playback = AVFoundationPlayback()
+                            container.playback = AVFoundationPlayback(options: [:])
                             posterPlugin = self.getPosterPlugin(container)
                         }
 
@@ -85,7 +85,7 @@ class PosterPluginTests: QuickSpec {
                 context("to another a playback diferent from NoOpPlayback") {
 
                     beforeEach {
-                        container.playback = AVFoundationPlayback()
+                        container.playback = AVFoundationPlayback(options: [:])
                         posterPlugin = self.getPosterPlugin(container)
                     }
 

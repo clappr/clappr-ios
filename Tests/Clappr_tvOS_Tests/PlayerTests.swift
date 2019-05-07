@@ -17,7 +17,7 @@ class PlayerTests: QuickSpec {
             
             beforeEach {
                 Loader.shared.resetPlugins()
-                player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                player = Player(options: options, externalPlugins: [AContainerPlugin.self])
                 playback = player.activePlayback
             }
             
@@ -74,6 +74,7 @@ class PlayerTests: QuickSpec {
 
             it("contains AVFoundationPlayback") {
                 Loader.shared.resetPlugins()
+                Loader.shared.resetPlaybacks()
                 Player.hasAlreadyRegisteredPlaybacks = false
                 _ = Player(options: options)
 
@@ -83,7 +84,7 @@ class PlayerTests: QuickSpec {
     }
     
     class StubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "StubPlayback"
         }
         
@@ -93,12 +94,18 @@ class PlayerTests: QuickSpec {
     }
     
     class SpecialStubPlayback: Playback {
-        override var pluginName: String {
+        override class var name: String {
             return "SpecialStubPlayback"
         }
         
         override class func canPlay(_ options: Options) -> Bool {
             return options[kSourceUrl] as! String == PlayerTests.specialSource
         }
+    }
+}
+
+class AContainerPlugin : ContainerPlugin {
+    override class var name: String {
+        return "AContainerPlugin"
     }
 }

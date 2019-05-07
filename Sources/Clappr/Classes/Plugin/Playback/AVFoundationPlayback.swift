@@ -51,7 +51,7 @@ open class AVFoundationPlayback: Playback {
 
     private var backgroundSessionBackup: AVAudioSession.Category?
 
-    open override var pluginName: String {
+    open class override var name: String {
         return "AVPlayback"
     }
 
@@ -200,10 +200,6 @@ open class AVFoundationPlayback: Playback {
 
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    public required init() {
-        super.init()
     }
 
     public required init(context _: UIObject) {

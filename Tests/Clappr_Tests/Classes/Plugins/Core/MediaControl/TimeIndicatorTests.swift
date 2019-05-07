@@ -5,44 +5,39 @@ import Nimble
 
 class TimeIndicatorTests: QuickSpec {
     override func spec() {
+        var timeIndicator: TimeIndicator!
+        var coreStub: CoreStub!
+
+        beforeEach {
+            coreStub = CoreStub()
+            timeIndicator = TimeIndicator(context: coreStub)
+        }
+
         describe(".TimeIndicatorTests") {
             it("is a MediaControlPlugin") {
-                let timeIndicator = TimeIndicator()
-
                 expect(timeIndicator).to(beAKindOf(MediaControlPlugin.self))
             }
 
             describe("#pluginName") {
                 it("is TimeIndicator") {
-                    let timeIndicator = TimeIndicator()
-
                     expect(timeIndicator.pluginName).to(equal("TimeIndicator"))
                 }
             }
 
             describe("#panel") {
                 it("is positioned in the bottom panel") {
-                    let timeIndicator = TimeIndicator()
-
                     expect(timeIndicator.panel).to(equal(MediaControlPanel.bottom))
                 }
             }
 
             describe("#position") {
                 it("is positioned in the left side") {
-                    let timeIndicator = TimeIndicator()
-
                     expect(timeIndicator.position).to(equal(MediaControlPosition.left))
                 }
             }
 
             describe("#render") {
-
-                var timeIndicator: TimeIndicator!
-
                 beforeEach {
-                    timeIndicator = TimeIndicator()
-
                     timeIndicator.render()
                 }
 
@@ -123,13 +118,7 @@ class TimeIndicatorTests: QuickSpec {
             }
 
             describe("when playback receives didUpdateDuration event") {
-                var coreStub: CoreStub!
-                var timeIndicator: TimeIndicator!
-
                 beforeEach {
-                    coreStub = CoreStub()
-                    timeIndicator = TimeIndicator(context: coreStub)
-
                     timeIndicator.render()
                 }
 
@@ -167,14 +156,8 @@ class TimeIndicatorTests: QuickSpec {
             }
 
             describe("Fullscreen") {
-                var coreStub: CoreStub!
-                var timeIndicator: TimeIndicator!
-
                 beforeEach {
                     Loader.shared.resetPlugins()
-                    coreStub = CoreStub()
-                    timeIndicator = TimeIndicator(context: coreStub)
-
                     timeIndicator.render()
                 }
 

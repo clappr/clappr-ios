@@ -19,7 +19,7 @@ class TVRemoteHandlerTests: QuickSpec {
 
             beforeEach {
                 Loader.shared.resetPlugins()
-                player = Player(options: options, externalPlugins: [SpecialStubPlayback.self, StubPlayback.self])
+                player = Player(options: options, externalPlugins: [AContainerPlugin.self])
                 playback = player.activePlayback
                 playerViewController = AVPlayerViewController()
                 handler = TVRemoteHandler(playerViewController: playerViewController, player: player)
@@ -68,7 +68,7 @@ class TVRemoteHandlerTests: QuickSpec {
         }
 
         class StubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "StubPlayback"
             }
 
@@ -78,7 +78,7 @@ class TVRemoteHandlerTests: QuickSpec {
         }
 
         class SpecialStubPlayback: Playback {
-            override var pluginName: String {
+            override class var name: String {
                 return "SpecialStubPlayback"
             }
 

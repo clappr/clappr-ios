@@ -1,7 +1,7 @@
 @testable import Clappr
 
 class ContainerPluginStub: ContainerPlugin {
-    override var pluginName: String {
+    override class var name: String {
         return "ContainerPluginStub"
     }
 }

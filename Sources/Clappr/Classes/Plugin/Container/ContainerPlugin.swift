@@ -3,16 +3,8 @@ open class ContainerPlugin: BaseObject, Plugin {
     open class var type: PluginType { return .container }
 
     @objc open class var name: String {
-        return self.init().pluginName
-    }
-
-    @objc open var pluginName: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Container Plugins should always declare a name", userInfo: nil).raise()
         return ""
-    }
-
-    public required override init() {
-        super.init()
     }
     
     @objc public required init(context: UIObject) {
