@@ -237,8 +237,7 @@ open class AVFoundationPlayback: Playback {
 
     private func setupPlayer() {
         if let asset = self.asset {
-            let item = AVPlayerItem(asset: asset)
-            createPlayerInstance(with: item)
+            createPlayerInstance(with: AVPlayerItem(asset: asset))
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
