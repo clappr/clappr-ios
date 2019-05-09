@@ -247,9 +247,7 @@ open class AVFoundationPlayback: Playback {
                 seek(startAt)
             }
 
-            asset.async(get: characteristicsKey) { [weak self] (_: Any?) in
-                DispatchQueue.main.async { self?.selectDefaultAudioIfNeeded() }
-            }
+            asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
 
             addObservers()
         } else {
