@@ -18,6 +18,7 @@ open class AVFoundationPlayback: Playback {
     private var kvoPlayerRateContext = 0
     private var kvoViewBounds = 0
 
+    private let characteristicsKey = "availableMediaCharacteristicsWithMediaSelectionOptions"
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
@@ -236,8 +237,8 @@ open class AVFoundationPlayback: Playback {
 
     private func setupPlayer() {
         if let asset = self.asset {
-            createPlayerInstance(with: AVPlayerItem(asset: asset))
-            selectDefaultAudioIfNeeded()
+            let item = AVPlayerItem(asset: asset)
+            createPlayerInstance(with: item)
             playerLayer = AVPlayerLayer(player: player)
             view.layer.addSublayer(playerLayer!)
             playerLayer?.frame = view.bounds
@@ -245,6 +246,12 @@ open class AVFoundationPlayback: Playback {
 
             if startAt != 0.0 && playbackType == .vod {
                 seek(startAt)
+            }
+
+            item.asset.async(get: characteristicsKey) { [weak self] (_: [AVMediaCharacteristic]?) in
+                DispatchQueue.main.async {
+                    self?.selectDefaultAudioIfNeeded()
+                }
             }
 
             addObservers()
@@ -555,7 +562,7 @@ open class AVFoundationPlayback: Playback {
     internal func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = self.subtitles else { return }
         if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
-            let defaultSubtitle = subtitles.filter({ $0.language == defaultSubtitleLanguage }).first,
+            let defaultSubtitle = subtitles.first(where: { $0.language == defaultSubtitleLanguage }),
             let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption,
             !hasSelectedDefaultSubtitle {
 
@@ -570,7 +577,7 @@ open class AVFoundationPlayback: Playback {
     internal func selectDefaultAudioIfNeeded() {
         guard let audioSources = self.audioSources else { return }
         if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
-            let defaultAudioSource = audioSources.filter({ $0.language == defaultAudioLanguage }).first,
+            let defaultAudioSource = audioSources.first(where: { $0.language == defaultAudioLanguage }),
             let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption,
             !hasSelectedDefaultAudio {
 
