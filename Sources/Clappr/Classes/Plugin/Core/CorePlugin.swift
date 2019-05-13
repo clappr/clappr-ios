@@ -19,7 +19,7 @@ open class CorePlugin: BaseObject, Plugin {
 
     func bindAllEvents() {
         stopListening()
-
+        bindEvents()
         guard let core = core else { return }
         listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in
             self?.bindAllEvents()
@@ -31,7 +31,7 @@ open class CorePlugin: BaseObject, Plugin {
             self?.onDidChangePlayback()
         }
 
-        bindEvents()
+
     }
 
     open func bindEvents() { }
