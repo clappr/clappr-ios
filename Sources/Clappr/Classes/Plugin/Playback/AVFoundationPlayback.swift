@@ -208,10 +208,6 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func play() {
-        if player == nil {
-            setupPlayer()
-        }
-
         trigger(.willPlay)
         player?.play()
 
@@ -648,6 +644,9 @@ open class AVFoundationPlayback: Playback {
     open override func render() {
         super.render()
         if asset != nil {
+            if player == nil {
+                setupPlayer()
+            }
             trigger(.ready)
         }
     }
