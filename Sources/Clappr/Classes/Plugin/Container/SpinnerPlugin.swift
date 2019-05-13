@@ -15,20 +15,11 @@ open class SpinnerPlugin: UIContainerPlugin {
         spinningWheel = UIActivityIndicatorView(style: .whiteLarge)
         view.addSubview(spinningWheel)
         view.isUserInteractionEnabled = false
-        bindDidChangePlayback()
         view.accessibilityIdentifier = "SpinnerPlugin"
     }
 
-    private func bindDidChangePlayback() {
-        if let container = self.container {
-            listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in self?.didChangePlayback(info) }
-        }
-    }
-
-    private func didChangePlayback(_: EventUserInfo) {
-        stopListening()
+    override open func bindEvents() {
         bindPlaybackEvents()
-        bindDidChangePlayback()
     }
 
     open override func render() {

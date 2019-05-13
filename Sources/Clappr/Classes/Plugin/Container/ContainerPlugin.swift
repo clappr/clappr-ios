@@ -14,8 +14,25 @@ open class ContainerPlugin: BaseObject, Plugin {
         } else {
             NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
         }
+        bindAllEvents()
     }
-    
+
+    func bindAllEvents() {
+        stopListening()
+
+        guard let container = container else { return }
+        listenTo(container, event: .didChangePlayback) { [weak self] _ in
+            self?.bindAllEvents()
+            self?.onDidChangePlayback()
+        }
+
+        bindEvents()
+    }
+
+    open func bindEvents() {    }
+
+    open func onDidChangePlayback() { }
+
     open func destroy() {
         Logger.logDebug("destroying", scope: "ContainerPlugin")
         Logger.logDebug("destroying listeners", scope: "ContainerPlugin")
