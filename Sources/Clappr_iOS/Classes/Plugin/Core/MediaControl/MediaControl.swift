@@ -35,12 +35,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     required public init(context: UIObject) {
         super.init(context: context)
         alwaysVisible = (core?.options[kMediaControlAlwaysVisible] as? Bool) ?? false
-        bindEvents()
     }
 
-    private func bindEvents() {
-        stopListening()
-
+    override open func bindEvents() {
         bindCoreEvents()
         bindContainerEvents()
         bindPlaybackEvents()
@@ -48,10 +45,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     open func bindCoreEvents() {
         if let core = self.core {
-
-            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in
-                self?.bindEvents()
-            }
 
             listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
                 if self?.hideControlsTimer?.isValid ?? false {
@@ -82,8 +75,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private func bindContainerEvents() {
         if let container = activeContainer {
-            listenTo(container,
-                     eventName: Event.didChangePlayback.rawValue) { [weak self] _ in self?.bindEvents() }
             listenTo(container,
                      eventName: Event.enableMediaControl.rawValue) { [weak self] _ in self?.show() }
             listenTo(container,

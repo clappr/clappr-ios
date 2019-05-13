@@ -65,22 +65,9 @@ open class TimeIndicator: MediaControlPlugin {
         return core?.activePlayback
     }
 
-    required public init(context: UIObject) {
-        super.init(context: context)
-        bindEvents()
-    }
-
-    private func bindEvents() {
-        stopListening()
-        bindContainerEvents()
+    override open func bindEvents() {
         bindPlaybackEvents()
         bindCoreEvents()
-    }
-
-    open func bindContainerEvents() {
-        if let container = activeContainer {
-            listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
-        }
     }
 
     private func bindPlaybackEvents() {
@@ -94,7 +81,6 @@ open class TimeIndicator: MediaControlPlugin {
         if let core = self.core {
             listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
             listenTo(core, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in self?.updateLayoutConstants() }
-            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
         }
     }
 

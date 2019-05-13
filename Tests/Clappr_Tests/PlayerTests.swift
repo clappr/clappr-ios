@@ -331,11 +331,9 @@ class PlayerTests: QuickSpec {
 
         required init(context: UIObject) {
             super.init(context: context)
-            bindEvents()
         }
 
-        private func bindEvents() {
-            stopListening()
+        override public func bindEvents() {
             bindPlaybackEvents()
         }
 

@@ -17,17 +17,14 @@ public class QuickSeekPlugin: UICorePlugin {
     required init(context: UIObject) {
         super.init(context: context)
         animatonHandler = QuickSeekAnimation(core)
-        bindEvents()
     }
     
-    private func bindEvents() {
-        stopListening()
+    override public func bindEvents() {
         bindCoreEvents()
     }
     
     private func bindCoreEvents() {
         guard let core = core else { return }
-        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
         listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeGesture() }
         listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addGesture() }
     }

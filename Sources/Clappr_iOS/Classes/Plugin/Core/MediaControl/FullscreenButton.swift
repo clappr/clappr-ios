@@ -36,13 +36,7 @@ open class FullscreenButton: MediaControlPlugin {
         return .right
     }
     
-    required public init(context: UIObject) {
-        super.init(context: context)
-        bindEvents()
-    }
-    
-    private func bindEvents() {
-        stopListening()
+    override open func bindEvents() {
         bindCoreEvents()
     }
     
