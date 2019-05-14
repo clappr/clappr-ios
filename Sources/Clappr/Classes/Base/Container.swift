@@ -60,8 +60,10 @@ open class Container: UIObject {
             render()
             trigger(Event.didNotLoadSource.rawValue)
         } else {
-            renderPlayback()
-            trigger(Event.didLoadSource.rawValue)
+            (playback as? AVFoundationPlayback)?.setupPlayer() { [weak self] in
+                self?.renderPlayback()
+                self?.trigger(Event.didLoadSource.rawValue)
+            }
         }
     }
 

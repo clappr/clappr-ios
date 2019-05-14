@@ -231,7 +231,16 @@ open class AVFoundationPlayback: Playback {
         player?.appliesMediaSelectionCriteriaAutomatically = false
     }
 
-    private func setupPlayer() {
+    fileprivate func finishStetup() {
+        if startAt != 0.0 && playbackType == .vod {
+            seek(startAt)
+        }
+
+        selectDefaultAudioIfNeeded()
+
+    }
+
+    func setupPlayer(completion: @escaping () -> ()) {
         if let asset = self.asset {
             createPlayerInstance(with: AVPlayerItem(asset: asset))
             playerLayer = AVPlayerLayer(player: player)
@@ -239,13 +248,11 @@ open class AVFoundationPlayback: Playback {
             playerLayer?.frame = view.bounds
             setupMaxResolution(for: playerLayer!.frame.size)
 
-            if startAt != 0.0 && playbackType == .vod {
-                seek(startAt)
-            }
-
-            asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
-
             addObservers()
+            asset.wait(for: ["duration", characteristicsKey]) { [weak self] in
+                self?.finishStetup()
+                completion()
+            }
         } else {
             trigger(.error)
             Logger.logError("could not setup player", scope: pluginName)
@@ -263,7 +270,6 @@ open class AVFoundationPlayback: Playback {
     @objc internal func addObservers() {
         view.addObserver(self, forKeyPath: "bounds",
                          options: .new, context: &kvoViewBounds)
-
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
         player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
@@ -581,7 +587,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func addTimeElapsedCallback() {
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.2, preferredTimescale: 600), queue: nil) { [weak self] time in
+        let twoHundredMilliseconds = CMTimeMakeWithSeconds(0.2, preferredTimescale: 600)
+        timeObserver = player?.addPeriodicTimeObserver(forInterval: twoHundredMilliseconds, queue: nil) { [weak self] time in
             self?.timeUpdated(time)
         }
     }
@@ -643,10 +650,7 @@ open class AVFoundationPlayback: Playback {
 
     open override func render() {
         super.render()
-        if asset != nil {
-            if player == nil {
-                setupPlayer()
-            }
+        if asset != nil && player != nil {
             trigger(.ready)
         }
     }
