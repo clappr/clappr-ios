@@ -55,16 +55,18 @@ open class Container: UIObject {
 
         let playbackFactory = PlaybackFactory(options: options)
         playback = playbackFactory.createPlayback()
+        render()
+        playback?.setupPlayer()
 
-        if playback is NoOpPlayback {
-            render()
-            trigger(Event.didNotLoadSource.rawValue)
-        } else {
-            (playback as? AVFoundationPlayback)?.setupPlayer() { [weak self] in
-                self?.renderPlayback()
-                self?.trigger(Event.didLoadSource.rawValue)
-            }
-        }
+//        if playback is NoOpPlayback {
+//            render()
+//            trigger(Event.didNotLoadSource.rawValue)
+//        } else {
+//            (playback as? AVFoundationPlayback)?.setupPlayer() { [weak self] in
+//                self?.renderPlayback()
+//                self?.trigger(Event.didLoadSource.rawValue)
+//            }
+//        }
     }
 
     open override func render() {
@@ -79,7 +81,6 @@ open class Container: UIObject {
         guard let playback = playback else {
             return
         }
-
         view.addSubviewMatchingConstraints(playback.view)
         playback.render()
         view.sendSubviewToBack(playback.view)

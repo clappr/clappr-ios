@@ -82,6 +82,8 @@ open class Playback: UIObject, NamedType {
         #endif
     }
 
+    open func setupPlayer() { }
+
     @objc open func play() {}
     @objc open func pause() {}
     @objc open func stop() {}

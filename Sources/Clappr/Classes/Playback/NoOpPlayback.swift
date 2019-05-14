@@ -25,6 +25,8 @@ open class NoOpPlayback: Playback {
     open override func render() {
         view.addSubviewMatchingConstraints(errorLabel)
     }
+    
+    open override func setupPlayer() { trigger(.didNotLoadSource) }
 
     fileprivate func setupLabel() {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false

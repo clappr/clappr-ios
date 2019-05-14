@@ -17,8 +17,8 @@ class DashboardViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewController = segue.destination as? ViewController
         let options: Options = [
-            kSourceUrl: "http://clappr.io/highline.mp4",
-            kPosterUrl: "http://clappr.io/poster.png",
+            kSourceUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            kPosterUrl: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
             kFullscreen: switchFullscreen.isOn,
             kFullscreenByApp: switchFullscreenControledByApp.isOn
         ]
