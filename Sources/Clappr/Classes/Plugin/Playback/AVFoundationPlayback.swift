@@ -453,9 +453,9 @@ open class AVFoundationPlayback: Playback {
         playerStatus = currentItem.status
 
         if playerStatus == .readyToPlay && currentState != .paused {
-            trigger(Event.didLoadSource.rawValue)
             finishStetup()
             readyToPlay()
+            trigger(Event.didLoadSource.rawValue)
         } else if playerStatus == .failed {
             let error = player.currentItem!.error!
             self.trigger(.error, userInfo: ["error": error])
@@ -497,7 +497,6 @@ open class AVFoundationPlayback: Playback {
 
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
             if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
-                play()
                 selectDefaultSubtitleIfNeeded()
             } else {
                 updateState(.buffering)
@@ -653,6 +652,9 @@ open class AVFoundationPlayback: Playback {
         if asset != nil && player != nil {
             Logger.logInfo("player Ready")
             trigger(.ready)
+
+            //todo play if kAutoplay
+            play()
         }
     }
 }
