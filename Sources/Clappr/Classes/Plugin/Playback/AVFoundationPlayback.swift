@@ -652,9 +652,6 @@ open class AVFoundationPlayback: Playback {
         if asset != nil && player != nil {
             Logger.logInfo("player Ready")
             trigger(.ready)
-
-            //todo play if kAutoplay
-            play()
         }
     }
 }
