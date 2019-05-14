@@ -20,7 +20,6 @@ open class ContainerPlugin: BaseObject, Plugin {
     func bindAllEvents() {
         stopListening()
         bindEvents()
-
         guard let container = container else { return }
         listenTo(container, event: .didChangePlayback) { [weak self] _ in
             self?.bindAllEvents()

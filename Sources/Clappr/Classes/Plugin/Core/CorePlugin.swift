@@ -30,13 +30,12 @@ open class CorePlugin: BaseObject, Plugin {
             self?.bindAllEvents()
             self?.onDidChangePlayback()
         }
-
-
     }
 
     open func bindEvents() { }
 
     open func onDidChangePlayback() { }
+
     open func onDidChangeActiveContainer() { }
 
     open func destroy() {
