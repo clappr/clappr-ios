@@ -55,8 +55,8 @@ open class Container: UIObject {
 
         let playbackFactory = PlaybackFactory(options: options)
         playback = playbackFactory.createPlayback()
-        render()
         playback?.setupPlayer()
+        render()
 
 //        if playback is NoOpPlayback {
 //            render()
