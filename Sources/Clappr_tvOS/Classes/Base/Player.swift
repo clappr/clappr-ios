@@ -146,7 +146,7 @@ open class Player: UIViewController {
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
-        core?.activeContainer?.load(source, mimeType: mimeType)
+        activeContainer?.load(source, mimeType: mimeType)
         play()
     }
 
@@ -155,23 +155,23 @@ open class Player: UIViewController {
     }
 
     open func play() {
-        core?.activePlayback?.play()
+        activePlayback?.play()
     }
 
     open func pause() {
-        core?.activePlayback?.pause()
+        activePlayback?.pause()
     }
 
     open func stop() {
-        core?.activePlayback?.stop()
+        activePlayback?.stop()
     }
 
     open func seek(_ timeInterval: TimeInterval) {
-        core?.activePlayback?.seek(timeInterval)
+        activePlayback?.seek(timeInterval)
     }
 
     open func mute(enabled: Bool) {
-        core?.activePlayback?.mute(enabled)
+        activePlayback?.mute(enabled)
     }
 
     open func setFullscreen(_ fullscreen: Bool) {
