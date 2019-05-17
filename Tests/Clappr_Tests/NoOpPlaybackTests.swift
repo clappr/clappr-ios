@@ -13,13 +13,23 @@ class NoOpPlaybackTests: QuickSpec {
                 it("doesn't trigger ready event") {
                     let playback = NoOpPlayback(options: [:])
                     var didCallEvent = false
-                    playback.on(Event.ready.rawValue) { _ in
-                        didCallEvent = true
-                    }
+                    playback.on(Event.ready.rawValue) { _ in didCallEvent = true }
 
                     playback.render()
 
-                    expect(didCallEvent) == false
+                    expect(didCallEvent).to(beFalse())
+                }
+            }
+
+            describe("#stop") {
+                it("triggers didStop event") {
+                    let playback = NoOpPlayback(options: [:])
+                    var didCallEvent = false
+                    playback.on(Event.didStop.rawValue) { _ in didCallEvent = true }
+
+                    playback.stop()
+
+                    expect(didCallEvent).to(beTrue())
                 }
             }
         }
