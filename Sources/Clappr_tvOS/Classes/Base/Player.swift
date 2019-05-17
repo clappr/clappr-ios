@@ -8,13 +8,12 @@ open class Player: UIViewController {
     fileprivate var viewController: AVPlayerViewController!
     private let baseObject = BaseObject()
     private var tvRemoteGesture: UITapGestureRecognizer?
-    private var tvRemoteHandler: TVRemoteHandler?
 
     override open func viewDidLoad() {
         core?.parentView = view
 
         if isMediaControlEnabled != false {
-            viewController = AVPlayerViewController()
+            viewController = DecoratedPressAVPlayerViewController(player: self)
             core?.parentView = viewController?.contentOverlayView
             core?.parentController = self
             addChild(viewController)
@@ -22,8 +21,6 @@ open class Player: UIViewController {
             viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(viewController.view)
             viewController.didMove(toParent: self)
-
-            tvRemoteHandler = TVRemoteHandler(playerViewController: viewController, player: self)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:

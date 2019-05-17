@@ -271,6 +271,7 @@
 		C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B42182650A0055A599 /* SeekbarView.swift */; };
 		C9F6D7B72182650B0055A599 /* SeekbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9F6D7B52182650A0055A599 /* SeekbarView.xib */; };
 		C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B8218265140055A599 /* Seekbar.swift */; };
+		CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
@@ -552,6 +553,7 @@
 		C9F6D7B42182650A0055A599 /* SeekbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekbarView.swift; sourceTree = "<group>"; };
 		C9F6D7B52182650A0055A599 /* SeekbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeekbarView.xib; sourceTree = "<group>"; };
 		C9F6D7B8218265140055A599 /* Seekbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seekbar.swift; sourceTree = "<group>"; };
+		CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedPressAVPlayerViewController.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
@@ -1346,6 +1348,7 @@
 			children = (
 				FC77859E2005233D00EC879F /* Player.swift */,
 				57D80BAA2279E1BA003F72CD /* TVRemoteHandler.swift */,
+				CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1605,6 +1608,7 @@
 					};
 					FC7785DD20052CB800EC879F = {
 						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 6MQKNLM9CK;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1870,6 +1874,7 @@
 				32E401C41FF42335001C2096 /* UIView+Ext.swift in Sources */,
 				325111452134827F001FEEBA /* Options.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
+				CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				FBD47AB021AD6856003265AF /* ContainerFactory.swift in Sources */,
@@ -2623,10 +2628,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6MQKNLM9CK;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2652,10 +2658,11 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6MQKNLM9CK;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 4.0;
