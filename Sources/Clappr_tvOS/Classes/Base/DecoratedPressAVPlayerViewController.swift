@@ -16,10 +16,19 @@ class DecoratedPressAVPlayerViewController: AVPlayerViewController {
         return clapprPlayer.activePlayback?.isPaused ?? false
     }
 
+    private var isPlaying: Bool {
+        return clapprPlayer.activePlayback?.isPlaying ?? false
+    }
+
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         if presses.containsAny(pressTypes: [.select, .playPause]) && isPaused {
             clapprPlayer.activePlayback?.trigger(.willPlay)
         }
+
+        if presses.containsAny(pressTypes: [.select, .playPause]) && isPlaying {
+            clapprPlayer.activePlayback?.trigger(.willPause)
+        }
+
         super.pressesBegan(presses, with: event)
     }
 }
