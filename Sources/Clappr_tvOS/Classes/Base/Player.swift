@@ -7,7 +7,6 @@ open class Player: UIViewController {
     static var hasAlreadyRegisteredPlaybacks = false
     fileprivate var viewController: AVPlayerViewController!
     private let baseObject = BaseObject()
-    private var tvRemoteGesture: UITapGestureRecognizer?
 
     override open func viewDidLoad() {
         core?.parentView = view
