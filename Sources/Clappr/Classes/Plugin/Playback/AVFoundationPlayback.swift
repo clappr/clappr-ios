@@ -112,7 +112,7 @@ open class AVFoundationPlayback: Playback {
 
     open override var isPlaying: Bool {
         if let concretePlayer = player {
-            return concretePlayer.rate > 0
+            return concretePlayer.rate == 1.0
         }
 
         return false
