@@ -15,20 +15,19 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
-## iOS
-### ios test
+### test
 ```
-fastlane ios test
+fastlane test
 ```
 Runs all the tests
-### ios version_bump
+### version_bump
 ```
-fastlane ios version_bump
+fastlane version_bump
 ```
 Bump version in Podspec and Info.plist
-### ios release
+### release
 ```
-fastlane ios release
+fastlane release
 ```
 Release a new version of Clappr
 
