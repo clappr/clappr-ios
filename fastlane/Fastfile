@@ -33,6 +33,16 @@ lane :test do
   xcov(scheme: "Clappr", output_directory: "fastlane/xcov_report_ios")
 end
 
+desc "Runs swiftlint producing an html report"
+lane :lint do
+  swiftlint(
+    output_file: "swiftlint-report.html",
+    ignore_exit_status: true,
+    reporter: "html"
+  )
+  UI.success("Swiftlint report available at swiftlint-report.html.")
+end
+
 desc "Bump version in Podspec and Info.plist"
 lane :version_bump do |options|
   version = options[:version]

@@ -20,6 +20,11 @@ or alternatively using `brew cask install fastlane`
 fastlane test
 ```
 Runs all the tests
+### lint
+```
+fastlane lint
+```
+Runs swiftlint producing an html report
 ### version_bump
 ```
 fastlane version_bump

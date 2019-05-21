@@ -48,3 +48,6 @@ fastlane/xcov_report_tvos
 
 # lint output
 fastlane/lint_output
+
+#swiftlint output report
+swiftlint-report.html
