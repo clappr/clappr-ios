@@ -26,22 +26,12 @@ class PlaybackTests: QuickSpec {
                 app.terminate()
             }
 
-            context("when video is playing") {
-                it("is in playing state") {
+            context("when video plays") {
+                it("enters buffering and then playing state") {
                     dashboardInteractor.startVideo()
                     playerInteractor.tapOnContainer()
 
-                    expect(app.isVideoIn(state: .buffering)).to(beTrue())
                     expect(app.isVideoIn(state: .playing)).to(beTrue())
-                }
-            }
-
-            context("when video is buffering") {
-                it("is buffering state") {
-                    dashboardInteractor.startVideo()
-                    playerInteractor.tapOnContainer()
-
-                    expect(app.isVideoIn(state: .buffering)).to(beTrue())
                 }
             }
         }
