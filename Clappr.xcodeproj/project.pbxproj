@@ -272,6 +272,10 @@
 		C9F6D7B72182650B0055A599 /* SeekbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9F6D7B52182650A0055A599 /* SeekbarView.xib */; };
 		C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F6D7B8218265140055A599 /* Seekbar.swift */; };
 		CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */; };
+		CD57FCEF22949B0F00AB24CF /* ActiveCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCEE22949B0F00AB24CF /* ActiveCorePlugin.swift */; };
+		CD57FCF122949BB300AB24CF /* ActiveContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* ActiveContainerPlugin.swift */; };
+		CD57FCF222949BB300AB24CF /* ActiveContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* ActiveContainerPlugin.swift */; };
+		CD57FCF322949BBB00AB24CF /* ActiveCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCEE22949B0F00AB24CF /* ActiveCorePlugin.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
@@ -553,6 +557,8 @@
 		C9F6D7B52182650A0055A599 /* SeekbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeekbarView.xib; sourceTree = "<group>"; };
 		C9F6D7B8218265140055A599 /* Seekbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seekbar.swift; sourceTree = "<group>"; };
 		CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedPressAVPlayerViewController.swift; sourceTree = "<group>"; };
+		CD57FCEE22949B0F00AB24CF /* ActiveCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorePlugin.swift; sourceTree = "<group>"; };
+		CD57FCF022949BB300AB24CF /* ActiveContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveContainerPlugin.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
@@ -994,6 +1000,7 @@
 				96D362AD1D41339400CCB866 /* SpinnerPlugin.swift */,
 				96D362AF1D41339400CCB866 /* UIContainerPlugin.swift */,
 				C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */,
+				CD57FCF022949BB300AB24CF /* ActiveContainerPlugin.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -1003,6 +1010,7 @@
 			children = (
 				96D362B11D41339400CCB866 /* UICorePlugin.swift */,
 				48A29C0A221DEFC10004AD3B /* CorePlugin.swift */,
+				CD57FCEE22949B0F00AB24CF /* ActiveCorePlugin.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1842,6 +1850,7 @@
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				48A29C12221DF8CD0004AD3B /* CorePlugin.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
+				CD57FCF322949BBB00AB24CF /* ActiveCorePlugin.swift in Sources */,
 				48A29C01221D82700004AD3B /* UIObject.swift in Sources */,
 				48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */,
 				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
@@ -1858,6 +1867,7 @@
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
+				CD57FCF222949BB300AB24CF /* ActiveContainerPlugin.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
@@ -2003,6 +2013,7 @@
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
+				CD57FCF122949BB300AB24CF /* ActiveContainerPlugin.swift in Sources */,
 				C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */,
 				C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */,
@@ -2015,6 +2026,7 @@
 				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
 				96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */,
 				C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */,
+				CD57FCEF22949B0F00AB24CF /* ActiveCorePlugin.swift in Sources */,
 				968E5BDB1D6CC0680092F372 /* LogLevel.swift in Sources */,
 				57937C571FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				4822B6B42214961900D1C134 /* ClapprAnimationDuration.swift in Sources */,

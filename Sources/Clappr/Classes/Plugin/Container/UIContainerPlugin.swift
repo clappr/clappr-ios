@@ -1,4 +1,4 @@
-open class UIContainerPlugin: ContainerPlugin, UIPlugin {
+open class UIContainerPlugin: ActiveContainerPlugin, UIPlugin {
     var uiObject = UIObject()
 
     public var view: UIView {
