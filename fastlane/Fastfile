@@ -13,145 +13,134 @@
 # Update this, if you use features of a newer version
 fastlane_version "2.123.0"
 
-default_platform :ios
+before_all do
+  # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+  # cocoapods
+  carthage(
+    platform: 'iOS,tvOS',
+    cache_builds: true
+  )
+end
 
-platform :ios do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    # cocoapods
-    carthage(
-      platform: 'iOS,tvOS',
-      cache_builds: true
-    )
-  end
+desc "Runs all the tests"
+lane :test do
+  scan(scheme: "Clappr_tvOS", output_directory: "fastlane/test_output_tvos")
+  xcov(scheme: "Clappr_tvOS", output_directory: "fastlane/xcov_report_tvos")
 
-  desc "Runs all the tests"
-  lane :test do
-    scan(scheme: "Clappr_tvOS", output_directory: "fastlane/test_output_tvos")
-    xcov(scheme: "Clappr_tvOS", output_directory: "fastlane/xcov_report_tvos")
+  scan(scheme: "Clappr_Example", output_directory: "fastlane/test_example_output_ios")
 
-    scan(scheme: "Clappr_Example", output_directory: "fastlane/test_example_output_ios")
+  scan(scheme: "Clappr", output_directory: "fastlane/test_output_ios")
+  xcov(scheme: "Clappr", output_directory: "fastlane/xcov_report_ios")
+end
 
-    scan(scheme: "Clappr", output_directory: "fastlane/test_output_ios")
-    xcov(scheme: "Clappr", output_directory: "fastlane/xcov_report_ios")
-  end
+desc "Runs swiftlint producing an html report"
+lane :lint do
+  swiftlint(
+    output_file: "swiftlint-report.html",
+    ignore_exit_status: true,
+    reporter: "html"
+  )
+  UI.success("Swiftlint report available at swiftlint-report.html.")
+end
 
-  desc "Bump version in Podspec and Info.plist"
-  lane :version_bump do |options|
-    version = options[:version]
-    version_bump_podspec(path: "Clappr.podspec", version_number: version)
+desc "Bump version in Podspec and Info.plist"
+lane :version_bump do |options|
+  version = options[:version]
+  version_bump_podspec(path: "Clappr.podspec", version_number: version)
 
-    update_info_plist(
-      plist_path: "Sources/Info.plist",
-      block: lambda { |plist|
-        plist["CFBundleShortVersionString"] = version
-      }
-    )
+  update_info_plist(
+    plist_path: "Sources/Info.plist",
+    block: lambda { |plist|
+      plist["CFBundleShortVersionString"] = version
+    }
+  )
 
-    increment_build_number(
-      build_number: version
-    )
-  end
+  increment_build_number(
+    build_number: version
+  )
+end
 
-  desc "Release a new version of Clappr"
-  lane :release do |options|
-    UI.user_error!("You need to provide the new version number like: make release version=X.X.X") if options[:version].to_s.strip.empty?
+desc "Release a new version of Clappr"
+lane :release do |options|
+  UI.user_error!("You need to provide the new version number like: make release version=X.X.X") if options[:version].to_s.strip.empty?
 
-    ensure_environment_vars
+  ensure_environment_vars
 
-    pull_dev_and_master
+  pull_dev_and_master
 
-    ensure_git_status_clean
+  ensure_git_status_clean
 
-    ensure_git_branch(
-     branch: 'dev'
-    )
+  ensure_git_branch(
+    branch: 'dev'
+  )
 
-    test
+  test
 
-    branch_name = "release/#{options[:version]}"
-    create_branch(branch_name)
+  branch_name = "release/#{options[:version]}"
+  create_branch(branch_name)
 
-    version_bump(options)
+  version_bump(options)
 
-    git_add
+  git_add
 
-    commit_version_bump(
-      xcodeproj: "Clappr.xcodeproj",
-      force: true
-    )
+  commit_version_bump(
+    xcodeproj: "Clappr.xcodeproj",
+    force: true
+  )
 
-    push_to_git_remote(
-      local_branch: branch_name,
-      remote_branch: branch_name,
-      tags: false
-    )
+  push_to_git_remote(
+    local_branch: branch_name,
+    remote_branch: branch_name,
+    tags: false
+  )
 
-    merge(
-      branch: branch_name,
-      into: "master"
-    )
+  merge(
+    branch: branch_name,
+    into: "master"
+  )
 
-    push_to_git_remote(
-      local_branch: "master",
-      remote_branch: "master",
-      tags: false
-    )
+  push_to_git_remote(
+    local_branch: "master",
+    remote_branch: "master",
+    tags: false
+  )
 
-    merge(
-      branch: branch_name,
-      into: "dev"
-    )
+  merge(
+    branch: branch_name,
+    into: "dev"
+  )
 
-    push_to_git_remote(
-      local_branch: "dev",
-      remote_branch: "dev",
-      tags: false
-    )
+  push_to_git_remote(
+    local_branch: "dev",
+    remote_branch: "dev",
+    tags: false
+  )
 
-    delete_branch(branch_name)
+  delete_branch(branch_name)
 
-    checkout("master")
+  checkout("master")
 
-    add_git_tag(
-      tag: "#{options[:version]}"
-    )
+  add_git_tag(
+    tag: "#{options[:version]}"
+  )
 
-    push_to_git_remote(
-      local_branch: "master",
-      remote_branch: "master",
-      tags: true
-    )
+  push_to_git_remote(
+    local_branch: "master",
+    remote_branch: "master",
+    tags: true
+  )
 
-    set_github_release(
-      repository_name: "clappr/clappr-ios",
-      api_token: ENV["GITHUB_TOKEN"],
-      name: "",
-      tag_name: options[:version],
-      description: "TODO: write release notes here"
-    )
+  set_github_release(
+    repository_name: "clappr/clappr-ios",
+    api_token: ENV["GITHUB_TOKEN"],
+    name: "",
+    tag_name: options[:version],
+    description: "TODO: write release notes here"
+  )
 
-    pod_push(
-      allow_warnings: true
-    )
-  end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
-  end
+  pod_push(
+    allow_warnings: true
+  )
 end
 
 def create_branch(branch_name)
