@@ -85,7 +85,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
-        var userInfo: EventUserInfo
+        var userInfo: EventUserInfo = nil
 
         if option != nil {
             userInfo = ["mediaOption": option as Any]
