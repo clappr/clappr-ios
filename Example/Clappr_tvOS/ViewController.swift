@@ -14,14 +14,10 @@ class ViewController: UIViewController {
             kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
             kMediaControl: true
             ] as [String: Any]
+        
         player = Player(options: options)
-
         listenToPlayerEvents()
-
-        addChildViewController(player)
-        player.view.frame = view.bounds
-        view.addSubview(player.view)
-        player.didMove(toParentViewController: self)
+        player.attachTo(view, controller: self)
     }
 
     func listenToPlayerEvents() {

@@ -117,10 +117,11 @@ open class Player: BaseObject {
     }
     
     @objc open func attachTo(_ view: UIView, controller: UIViewController) {
-        core?.parentController = controller
         core?.parentView = view
+        core?.parentController = controller
         core?.render()
     }
+
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
         core?.activeContainer?.load(source, mimeType: mimeType)
@@ -184,10 +185,9 @@ open class Player: BaseObject {
     }
 
     private func unbindPlaybackEvents() {
-        for id in playbackEventsListenIds {
-            stopListening(id)
+        for eventId in playbackEventsListenIds {
+            stopListening(eventId)
         }
-
         playbackEventsListenIds.removeAll()
     }
 
@@ -198,8 +198,9 @@ open class Player: BaseObject {
         }
         Loader.shared.register(playbacks: playbacks)
     }
-    
+
     open class func register(plugins: [Plugin.Type]) {
+        #if os(iOS)
         if !hasAlreadyRegisteredPlugins {
             let builtInPlugins: [Plugin.Type] = [
                 MediaControl.self,
@@ -215,7 +216,7 @@ open class Player: BaseObject {
             Loader.shared.register(plugins: builtInPlugins)
             hasAlreadyRegisteredPlugins = true
         }
-
+        #endif
         Loader.shared.register(plugins: plugins)
     }
 
