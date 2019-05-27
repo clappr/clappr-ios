@@ -1,4 +1,4 @@
-open class ActiveCorePlugin: CorePlugin {
+open class SimpleContainerPlugin : ContainerPlugin {
 
     @objc public required init(context: UIObject) {
         super.init(context: context)
@@ -8,12 +8,7 @@ open class ActiveCorePlugin: CorePlugin {
     func bindAllEvents() {
         stopListening()
         bindEvents()
-        guard let core = core else { return }
-        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in
-            self?.bindAllEvents()
-            self?.onDidChangeActiveContainer()
-        }
-        guard let container = core.activeContainer else { return }
+        guard let container = container else { return }
         listenTo(container, event: .didChangePlayback) { [weak self] _ in
             self?.bindAllEvents()
             self?.onDidChangePlayback()
@@ -23,7 +18,5 @@ open class ActiveCorePlugin: CorePlugin {
     open func bindEvents() { }
 
     open func onDidChangePlayback() { }
-
-    open func onDidChangeActiveContainer() { }
 
 }
