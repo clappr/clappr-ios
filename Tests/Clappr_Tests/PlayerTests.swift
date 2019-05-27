@@ -350,5 +350,7 @@ class PlayerTests: QuickSpec {
         override class var name: String {
             return "FakeContainerPlugin"
         }
+
+        override func bindEvents() { }
     }
 }

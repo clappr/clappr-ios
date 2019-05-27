@@ -404,6 +404,8 @@ class ContainerTests: QuickSpec {
             return "AnotherFakeContainerPlugin"
         }
 
+        override func bindEvents() { }
+        
         override func render() {
             AnotherFakeContainerPlugin.didCallRender = true
 

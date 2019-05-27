@@ -1,4 +1,4 @@
-open class SimpleContainerPlugin : ContainerPlugin {
+open class SimpleContainerPlugin: ContainerPlugin {
 
     @objc public required init(context: UIObject) {
         super.init(context: context)
@@ -15,7 +15,9 @@ open class SimpleContainerPlugin : ContainerPlugin {
         }
     }
 
-    open func bindEvents() { }
+    open func bindEvents() {
+        NSException(name: NSExceptionName(rawValue: "MissingBindEvents"), reason: "SimpleContainerPlugins should always override bindEvents with its own binds: \(pluginName) does not implement.", userInfo: nil).raise()
+    }
 
     open func onDidChangePlayback() { }
 

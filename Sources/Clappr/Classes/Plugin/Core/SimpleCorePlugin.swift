@@ -20,7 +20,9 @@ open class SimpleCorePlugin: CorePlugin {
         }
     }
 
-    open func bindEvents() { }
+    open func bindEvents() {
+        NSException(name: NSExceptionName(rawValue: "MissingBindEvents"), reason: "SimpleCorePlugins should always override bindEvents with its own binds: \(pluginName) does not implement.", userInfo: nil).raise()
+    }
 
     open func onDidChangePlayback() { }
 

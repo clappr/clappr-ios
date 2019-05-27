@@ -15,6 +15,8 @@ class CoreTests: QuickSpec {
             override class var name: String {
                 return "FakeCorePLugin"
             }
+
+            override func bindEvents() {  }
         }
 
         let options = [kSourceUrl: "http//test.com"]
@@ -754,6 +756,7 @@ class UICorePluginMock: UICorePlugin {
         }
     }
 
+    override func bindEvents() {  }
 
     override func destroy() {
         UICorePluginMock.didCallDestroy = true
@@ -776,6 +779,7 @@ class CorePluginMock: CorePlugin {
     override class var name: String {
         return "CorePluginMock"
     }
+
 }
 
 #if os(iOS)
