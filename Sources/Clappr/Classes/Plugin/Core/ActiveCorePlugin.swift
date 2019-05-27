@@ -11,7 +11,7 @@ open class ActiveCorePlugin: CorePlugin {
         guard let core = core else { return }
         listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in
             self?.bindAllEvents()
-            self?.onDidChangePlayback()
+            self?.onDidChangeActiveContainer()
         }
         guard let container = core.activeContainer else { return }
         listenTo(container, event: .didChangePlayback) { [weak self] _ in
