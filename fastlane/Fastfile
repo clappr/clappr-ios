@@ -71,17 +71,20 @@ end
 
 desc "Release a new snapshot"
 lane :release_snapshot do |options|
+  version = options[:version].to_s
+  UI.user_error!("You need to provide the new version number like: make release_snapshot version='X.X.X'") if version.strip.empty?
+
   ensure_git_status_clean
 
-  bump(options)
-
   test
+
+  bump(options)
 
   set_github_release(
     repository_name: "clappr/clappr-ios",
     api_token: ENV["GITHUB_TOKEN"],
-    name: "",
-    tag_name: options[:version],
+    name: version,
+    tag_name: version,
     description: "TODO: write release notes here",
     is_prerelease: true
   )
