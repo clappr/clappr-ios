@@ -17,7 +17,7 @@ public extension UIImageView {
                 let image = UIImage(data: data)
                 else { return }
 
-            DispatchQueue.main.async() {
+            DispatchQueue.main.async {
                 imageCache.setObject(image, forKey: url.absoluteString as AnyObject)
                 self.image = image
             }
