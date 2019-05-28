@@ -184,8 +184,8 @@ open class Player: BaseObject {
     }
 
     private func unbindPlaybackEvents() {
-        for id in playbackEventsListenIds {
-            stopListening(id)
+        for eventId in playbackEventsListenIds {
+            stopListening(eventId)
         }
 
         playbackEventsListenIds.removeAll()
