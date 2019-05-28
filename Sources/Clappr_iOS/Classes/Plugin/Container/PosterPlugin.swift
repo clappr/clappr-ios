@@ -1,5 +1,5 @@
 open class PosterPlugin: UIContainerPlugin {
-    internal(set) var poster = UIImageView(frame: CGRect.zero)
+    var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
 
     open override class var name: String {
