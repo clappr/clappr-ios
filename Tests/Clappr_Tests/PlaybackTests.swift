@@ -13,6 +13,15 @@ class PlaybackTests: QuickSpec {
                 playback = StubPlayback(options: options as Options)
             }
 
+            describe("#name") {
+                it("throws an exception because it is an `abstract` class") {
+                    let expectedExceptionName = "MissingPlaybackName"
+                    let expectedExceptionReason = "Playbacks should always declare a name. Playback does not."
+
+                    expect(Playback.name).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
+                }
+            }
+
             it("set frame of Playback to CGRect.zero") {
                 expect(playback.view.frame) == CGRect.zero
             }

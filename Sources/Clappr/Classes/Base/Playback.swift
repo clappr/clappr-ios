@@ -4,7 +4,7 @@ open class Playback: UIObject, NamedType {
     open class var type: PluginType { return .playback }
 
     @objc open class var name: String {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPlaybackName"), reason: "Playbacks should always declare a name. \(self) does not.", userInfo: nil).raise()
         return ""
     }
 
