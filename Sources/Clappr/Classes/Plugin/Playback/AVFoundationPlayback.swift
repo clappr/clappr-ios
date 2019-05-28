@@ -616,6 +616,7 @@ open class AVFoundationPlayback: Playback {
 
     deinit {
         removeObservers()
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func removeObservers() {
@@ -634,7 +635,6 @@ open class AVFoundationPlayback: Playback {
             }
         }
         view.removeObserver(self, forKeyPath: "bounds")
-        NotificationCenter.default.removeObserver(self)
     }
 
     override open func destroy() {
