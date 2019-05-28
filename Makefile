@@ -28,5 +28,9 @@ test: ## Run clappr-ios tests
 release: ## Release clappr-ios to cocoa pods
 	$(FASTLANE) release version:$(version)
 
+release_snapshot:
+	$(FASTLANE) release_snapshot version:$(version)
+
 lint: ## Run swiftlint
 	$(FASTLANE) lint
+
