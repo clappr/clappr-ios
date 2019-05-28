@@ -597,7 +597,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-
     private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: AVMediaCharacteristic) {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.select(option, in: group)
