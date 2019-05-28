@@ -33,7 +33,7 @@ class CorePluginTests: QuickSpec {
                     let core = CoreStub()
                     let corePlugin = CorePlugin(context: core)
                     let expectedExceptionName = "MissingPluginName"
-                    let expectedExceptionReason = "CorePlugin Plugins should always declare a name"
+                    let expectedExceptionReason = "Core Plugins should always declare a name. CorePlugin does not."
                     expect(corePlugin.pluginName).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
                 }
             }
@@ -41,7 +41,7 @@ class CorePluginTests: QuickSpec {
             describe("#name") {
                 it("returns an exception") {
                     let expectedExceptionName = "MissingPluginName"
-                    let expectedExceptionReason = "CorePlugin Plugins should always declare a name"
+                    let expectedExceptionReason = "Core Plugins should always declare a name. CorePlugin does not."
                     
                     expect(CorePlugin.name).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
                 }

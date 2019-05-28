@@ -3,7 +3,7 @@ open class CorePlugin: BaseObject, Plugin {
     open class var type: PluginType { return .core }
     
     @objc open class var name: String {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "CorePlugin Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Core Plugins should always declare a name. \(self) does not.", userInfo: nil).raise()
         return ""
     }
     
