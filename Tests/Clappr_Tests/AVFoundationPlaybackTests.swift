@@ -1005,7 +1005,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when playback has subtitles") {
                     it("returns default subtitle for a playback with subtitles") {
-                        expect(avFoundationPlayback.selectedSubtitle).toEventuallyNot(beNil())
+                        expect(avFoundationPlayback.selectedSubtitle).toEventuallyNot(beNil(), timeout: 2)
                     }
                 }
 
