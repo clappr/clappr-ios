@@ -72,7 +72,7 @@ end
 desc "Release a new snapshot"
 lane :release_snapshot do |options|
   version = options[:version].to_s
-  UI.user_error!("You need to provide the new version number like: make release_snapshot version='X.X.X'") if version.strip.empty?
+  UI.user_error!("You need to provide the new version number like: make release_snapshot version='X.X.X'") if version.strip.empty? || !version.include?("snapshot")
 
   ensure_git_status_clean
 
@@ -92,6 +92,8 @@ lane :release_snapshot do |options|
   pod_push(
     allow_warnings: true
   )
+
+  reset_git_repo
 end
 
 desc "Release a new version of Clappr"
