@@ -119,7 +119,9 @@ open class Player: UIViewController {
              Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
              Event.didSeek.rawValue,
              Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
-             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,])
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue
+            ]
+        )
 
         setCore(with: options)
         
@@ -238,8 +240,8 @@ open class Player: UIViewController {
     }
 
     fileprivate func unbindPlaybackEvents() {
-        for id in playbackEventsListenIds {
-            baseObject.stopListening(id)
+        for eventId in playbackEventsListenIds {
+            baseObject.stopListening(eventId)
         }
 
         playbackEventsListenIds.removeAll()
