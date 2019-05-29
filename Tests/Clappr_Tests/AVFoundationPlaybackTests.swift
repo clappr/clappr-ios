@@ -569,6 +569,24 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback.play()
                         expect(callDidUpdateDuration).toEventually(beTrue(), timeout: 3)
                     }
+
+                    context("with startAt") {
+                        it("triggers didUpdatePosition") {
+                            let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.sample/master.m3u8", kStartAt: 10])
+                            var didCallUpdatePosition = false
+                            var startAtValue: Float64 = 0
+                            playback.render()
+                            playback.on(Event.didUpdatePosition.rawValue) { userInfo in
+                                didCallUpdatePosition = true
+                                startAtValue = userInfo!["position"] as! Float64
+                            }
+
+                            playback.play()
+
+                            expect(didCallUpdatePosition).toEventually(beTrue())
+                            expect(startAtValue).toEventually(equal(10.0))
+                        }
+                    }
                 }
             }
 
