@@ -240,8 +240,8 @@ open class Player: UIViewController {
     }
 
     fileprivate func unbindPlaybackEvents() {
-        for eventID in playbackEventsListenIds {
-            baseObject.stopListening(eventID)
+        for eventId in playbackEventsListenIds {
+            baseObject.stopListening(eventId)
         }
 
         playbackEventsListenIds.removeAll()
