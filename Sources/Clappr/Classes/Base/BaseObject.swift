@@ -40,7 +40,7 @@ open class BaseObject: NSObject, EventProtocol {
     }
 
     fileprivate func removeListenerIfOnce(_ listenId: String, callback _: EventCallback) {
-        if let index = self.onceEventsHashes.index(of: listenId) {
+        if let index = self.onceEventsHashes.firstIndex(of: listenId) {
             onceEventsHashes.remove(at: index)
             off(listenId)
         }

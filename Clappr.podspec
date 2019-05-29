@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
 
   s.tvos.deployment_target = "10.0"
   s.tvos.source_files = ['Sources/Clappr/Classes/**/*', 'Sources/Clappr_tvOS/Classes/**/*']
-  s.swift_version = "4.2"
+  s.swift_version = "5.0"
 end
