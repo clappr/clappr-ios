@@ -30,6 +30,16 @@ Runs swiftlint producing an html report
 fastlane version_bump
 ```
 Bump version in Podspec and Info.plist
+### bump
+```
+fastlane bump
+```
+Bump version in all necessary files
+### release_snapshot
+```
+fastlane release_snapshot
+```
+Release a new snapshot
 ### release
 ```
 fastlane release

@@ -60,6 +60,42 @@ lane :version_bump do |options|
   )
 end
 
+
+desc "Bump version in all necessary files"
+lane :bump do |options|
+  version = options[:version]
+  puts "Version from parameter: " + version
+
+  version_bump_podspec(path: ENV['podspec_file'], version_number: version)
+end
+
+desc "Release a new snapshot"
+lane :release_snapshot do |options|
+  version = options[:version].to_s
+  UI.user_error!("You need to provide the new version number like: make release_snapshot version='X.X.X'") if version.strip.empty? || !version.include?("snapshot")
+
+  ensure_git_status_clean
+
+  test
+
+  bump(options)
+
+  set_github_release(
+    repository_name: "clappr/clappr-ios",
+    api_token: ENV["GITHUB_TOKEN"],
+    name: version,
+    tag_name: version,
+    description: "TODO: write release notes here",
+    is_prerelease: true
+  )
+
+  pod_push(
+    allow_warnings: true
+  )
+
+  reset_git_repo
+end
+
 desc "Release a new version of Clappr"
 lane :release do |options|
   UI.user_error!("You need to provide the new version number like: make release version=X.X.X") if options[:version].to_s.strip.empty?
