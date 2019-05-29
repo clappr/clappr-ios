@@ -1,9 +1,5 @@
 import AVFoundation
 
-enum PlaybackState {
-    case idle, paused, playing, buffering
-}
-
 open class AVFoundationPlayback: Playback {
     private static let mimeTypes = [
         "mp4": "video/mp4",
@@ -32,8 +28,10 @@ open class AVFoundationPlayback: Playback {
 
     private var playerLayer: AVPlayerLayer?
     private var playerStatus: AVPlayerItem.Status = .unknown
-    private(set) var currentState = PlaybackState.idle {
-        didSet {
+    private var currentState: PlaybackState = .idle
+    open override var state: PlaybackState {
+        set {
+            currentState = newValue
             switch currentState {
             case .buffering:
                 view.accessibilityIdentifier = "AVFoundationPlaybackBuffering"
@@ -43,9 +41,17 @@ open class AVFoundationPlayback: Playback {
                 view.accessibilityIdentifier = "AVFoundationPlaybackPlaying"
             case .idle:
                 view.accessibilityIdentifier = "AVFoundationPlaybackIdle"
+            case .none:
+                view.accessibilityIdentifier = "AVFoundationPlaybackNone"
+            case .error:
+                view.accessibilityIdentifier = "AVFoundationPlaybackError"
             }
         }
+        get {
+            return currentState
+        }
     }
+
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     var lastDvrAvailability: Bool?
@@ -108,22 +114,6 @@ open class AVFoundationPlayback: Playback {
             return []
         }
         return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
-    }
-
-    open override var isPlaying: Bool {
-        if let concretePlayer = player {
-            return concretePlayer.rate == 1.0
-        }
-
-        return false
-    }
-
-    open override var isPaused: Bool {
-        return currentState == .paused
-    }
-
-    open override var isBuffering: Bool {
-        return currentState == .buffering
     }
 
     private var isStopped = false
@@ -223,7 +213,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private var shouldLoop: Bool {
-        return options[kLoop] as? Bool ?? false
+        return options.bool(kLoop, orElse: false)
     }
 
     private func createPlayerInstance(with item: AVPlayerItem) {
@@ -413,8 +403,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func updateState(_ newState: PlaybackState) {
-        guard currentState != newState else { return }
-        currentState = newState
+        guard state != newState else { return }
+        state = newState
 
         switch newState {
         case .buffering:
@@ -452,7 +442,7 @@ open class AVFoundationPlayback: Playback {
         guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
         playerStatus = currentItem.status
 
-        if playerStatus == .readyToPlay && currentState != .paused {
+        if playerStatus == .readyToPlay && state != .paused {
             readyToPlay()
         } else if playerStatus == .failed {
             let error = player.currentItem!.error!
@@ -489,12 +479,12 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func handleBufferingEvent(_ keyPath: String?) {
-        guard let keyPath = keyPath, currentState != .paused else {
+        guard let keyPath = keyPath, state != .paused else {
             return
         }
 
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && currentState == .buffering {
+            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .buffering {
                 play()
                 selectDefaultSubtitleIfNeeded()
             } else {
@@ -514,7 +504,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func handlePlayerRateChanged() {
-        if player?.rate == 0 && playerStatus != .unknown && currentState != .idle {
+        if player?.rate == 0 && playerStatus != .unknown && state != .idle {
             updateState(.paused)
         }
     }
@@ -591,7 +581,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func timeUpdated(_ time: CMTime) {
-        if isPlaying {
+        if player?.rate == 1.0 {
             updateState(.playing)
             trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
@@ -659,7 +649,7 @@ extension AVFoundationPlayback {
     }
 
     open override var isDvrInUse: Bool {
-        if isPaused && isDvrAvailable { return true }
+        if state == .paused && isDvrAvailable { return true }
         guard let end = dvrWindowEnd, playbackType == .live else { return false }
         guard let currentTime = player?.currentTime().seconds else { return false }
         return end - liveHeadTolerance > currentTime

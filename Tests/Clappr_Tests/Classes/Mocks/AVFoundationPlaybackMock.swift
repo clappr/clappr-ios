@@ -34,16 +34,6 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
         return _playbackType
     }
     
-    func set(isPlaying: Bool) {
-        _isPlaying = isPlaying
-        _isPaused = !isPlaying
-    }
-    
-    func set(isPaused: Bool) {
-        _isPaused = isPaused
-        _isPlaying = !isPaused
-    }
-    
     func set(isDvrInUse: Bool) {
         _isDvrInUse = isDvrInUse
     }
@@ -60,34 +50,26 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
         videoPosition = position
     }
     
-    override var isPlaying: Bool {
-        return _isPlaying
-    }
-    
-    override var isPaused: Bool {
-        return _isPaused
-    }
-    
     override var position: Double {
         return videoPosition
     }
     
     override func pause() {
         didCallPause = true
-        set(isPaused: true)
+        state = .paused
         super.pause()
     }
     
     override func play() {
         didCallPlay = true
-        set(isPlaying: true)
+        state = .playing
         trigger(Event.playing)
+        super.play()
     }
     
     override func stop() {
         didCallStop = true
-        _isPlaying = false
-        _isPaused = false
+        state = .idle
         super.stop()
     }
     

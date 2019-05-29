@@ -67,7 +67,7 @@ class PlayButtonTests: QuickSpec {
 
                 context("and a video is paused") {
                     beforeEach {
-                        coreStub.playbackMock?.set(isPaused: true)
+                        coreStub.playbackMock?.state = .paused
                     }
 
                     it("calls the playback play") {
@@ -92,7 +92,7 @@ class PlayButtonTests: QuickSpec {
                 context("and a video is playing") {
 
                     beforeEach {
-                        coreStub.playbackMock?.set(isPlaying: true)
+                        coreStub.playbackMock?.state = .playing
                     }
 
                     it("calls the playback pause") {
@@ -127,7 +127,7 @@ class PlayButtonTests: QuickSpec {
                 context("and a video is paused") {
 
                     beforeEach {
-                        coreStub.playbackMock?.set(isPaused: true)
+                        coreStub.playbackMock?.state = .paused
                     }
 
                     it("calls the playback play") {

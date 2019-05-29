@@ -55,16 +55,8 @@ open class Player: UIViewController {
         return core.isFullscreen
     }
 
-    open var isPlaying: Bool {
-        return activePlayback?.isPlaying ?? false
-    }
-
-    open var isPaused: Bool {
-        return activePlayback?.isPaused ?? false
-    }
-
-    open var isBuffering: Bool {
-        return activePlayback?.isBuffering ?? false
+    open var state: PlaybackState {
+        return activePlayback?.state ?? .none
     }
 
     open var duration: Double {

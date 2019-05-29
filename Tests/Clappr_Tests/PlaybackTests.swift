@@ -49,10 +49,6 @@ class PlaybackTests: QuickSpec {
                 expect(playback.duration) == 0
             }
 
-            it("have a isPlaying var with a default value false") {
-                expect(playback.isPlaying).to(beFalse())
-            }
-
             it("have a type var with a default value Unknown") {
                 expect(playback.playbackType).to(equal(PlaybackType.unknown))
             }

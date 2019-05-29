@@ -1,5 +1,14 @@
 import AVFoundation
 
+@objc public enum PlaybackState: Int {
+    case none = 1
+    case idle = 2
+    case playing = 3
+    case paused = 4
+    case buffering = 5
+    case error = 6
+}
+
 open class Playback: UIObject, NamedType {
     open class var type: PluginType { return .playback }
 
@@ -27,18 +36,6 @@ open class Playback: UIObject, NamedType {
         return options.startAt ?? 0.0
     }
 
-    @objc open var isPlaying: Bool {
-        return false
-    }
-
-    @objc open var isPaused: Bool {
-        return false
-    }
-
-    @objc open var isBuffering: Bool {
-        return false
-    }
-
     @objc open var duration: Double {
         return 0.0
     }
@@ -53,6 +50,10 @@ open class Playback: UIObject, NamedType {
 
     open var playbackType: PlaybackType {
         return .unknown
+    }
+
+    @objc open var state: PlaybackState {
+        return .none
     }
 
     @objc open var isHighDefinitionInUse: Bool {
