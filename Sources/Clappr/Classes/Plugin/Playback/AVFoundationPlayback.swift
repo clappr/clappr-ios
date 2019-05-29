@@ -18,8 +18,6 @@ open class AVFoundationPlayback: Playback {
     private var kvoPlayerRateContext = 0
     private var kvoViewBounds = 0
 
-    private let characteristicsKey = "availableMediaCharacteristicsWithMediaSelectionOptions"
-    private let durationKey = "duration"
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
@@ -248,8 +246,8 @@ open class AVFoundationPlayback: Playback {
             playerLayer?.frame = view.bounds
             setupMaxResolution(for: playerLayer!.frame.size)
 
-            asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
-            asset.wait(for: durationKey, then: seekToStartAtIfNeeded)
+            asset.wait(for: .characteristics, then: selectDefaultAudioIfNeeded)
+            asset.wait(for: .duration, then: seekToStartAtIfNeeded)
             addObservers()
         } else {
             trigger(.error)
