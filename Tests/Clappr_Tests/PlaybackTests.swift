@@ -79,9 +79,24 @@ class PlaybackTests: QuickSpec {
                 expect(callbackWasCalled) == false
             }
 
-            it("have a class function to check if a source can be played with default value false") {
+            it("has a class function to check if a source can be played with default value false") {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
+            }
+
+            it("has a canPlay flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canPlay).to(beFalse())
+            }
+
+            it("has a canPause flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canPause).to(beFalse())
+            }
+
+            it("has a canSeek flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canSeek).to(beFalse())
             }
 
             context("StartAt") {

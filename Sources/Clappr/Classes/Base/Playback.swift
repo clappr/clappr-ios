@@ -83,6 +83,10 @@ open class Playback: UIObject, NamedType {
         #endif
     }
 
+    @objc open var canPlay: Bool = false
+    @objc open var canPause: Bool = false
+    @objc open var canSeek: Bool = false
+
     @objc open func play() {}
     @objc open func pause() {}
     @objc open func stop() {}
