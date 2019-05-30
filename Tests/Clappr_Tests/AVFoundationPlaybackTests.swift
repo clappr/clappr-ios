@@ -1240,7 +1240,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.seek(playback.duration)
                             
-                            expect(playback.state).toEventually(equal(.idle), timeout: 6)
+                            expect(playback.state).toEventually(equal(.idle), timeout: 10)
                         }
                     }
                     
