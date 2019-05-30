@@ -52,15 +52,14 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private var timeObserver: Any?
-    private var asset: AVURLAsset?
-    var lastDvrAvailability: Bool?
-
-    private var backgroundSessionBackup: AVAudioSession.Category?
-
     open class override var name: String {
         return "AVPlayback"
     }
+
+    var lastDvrAvailability: Bool?
+    private var timeObserver: Any?
+    private var asset: AVURLAsset?
+    private var backgroundSessionBackup: AVAudioSession.Category?
 
     private var hasSelectedDefaultSubtitle = false
     open override var selectedSubtitle: MediaOption? {
@@ -172,6 +171,17 @@ open class AVFoundationPlayback: Playback {
         return AVURLAsset.isPlayableExtendedMIMEType(mimeType)
     }
 
+    open override var canPlay: Bool {
+        switch state {
+        case .idle, .paused:
+            return true
+        case .buffering:
+            return isReadyToPlay
+        default:
+            return false
+        }
+    }
+
     public required init(options: Options) {
         super.init(options: options)
         self.asset = createAsset(from: options[kSourceUrl] as? String)
@@ -198,6 +208,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func play() {
+        guard canPlay else { return }
+
         if player == nil {
             setupPlayer()
         }
@@ -316,7 +328,7 @@ open class AVFoundationPlayback: Playback {
         player = nil
     }
 
-    @objc var isReadyToSeek: Bool {
+    @objc var isReadyToPlay: Bool {
         return player?.currentItem?.status == .readyToPlay
     }
 
@@ -341,7 +353,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func seek(_ timeInterval: TimeInterval, _ triggerEvent: (() -> Void)?) {
-        if !isReadyToSeek {
+        if !isReadyToPlay {
             seekToTimeWhenReadyToPlay = timeInterval
             return
         }

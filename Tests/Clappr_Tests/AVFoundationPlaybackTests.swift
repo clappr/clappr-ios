@@ -481,7 +481,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            context("canPlay") {
+            context("canPlay media") {
                 it("Should return true for valid url with mp4 path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
                     let canPlay = AVFoundationPlayback.canPlay(options as Options)
@@ -510,6 +510,51 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let options = [kSourceUrl: "http://clappr.io/highline.zip"]
                     let canPlay = AVFoundationPlayback.canPlay(options as Options)
                     expect(canPlay) == false
+                }
+            }
+
+            context("playback state") {
+                context("idle") {
+                    it("canPlay") {
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.state = .idle
+                        expect(playback.canPlay).to(beTrue())
+                    }
+                }
+
+                context("paused") {
+                    it("canPlay") {
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.state = .paused
+                        expect(playback.canPlay).to(beTrue())
+                    }
+                }
+
+                context("buffering") {
+                    context("and asset is ready to play") {
+                        it("canPlay") {
+                            let playback = AVFoundationPlaybackMock(options: [:])
+                            let url = URL(string: "http://clappr.sample/master.m3u8")!
+                            let playerAsset = AVURLAssetStub(url: url)
+                            let playerItem = AVPlayerItemStub(asset: playerAsset)
+                            playerItem._status = .readyToPlay
+                            let player = AVPlayerStub()
+                            player.set(currentItem: playerItem)
+
+                            playback.player = player
+                            playback.state = .buffering
+
+                            expect(playback.canPlay).to(beTrue())
+                        }
+                    }
+                }
+                
+                context("playing") {
+                    it("cannot play") {
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.state = .playing
+                        expect(playback.canPlay).to(beFalse())
+                    }
                 }
             }
 
@@ -572,7 +617,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            describe("#isReadyToSeek") {
+            describe("#isReadyToPlay") {
                 context("when AVPlayer status is readyToPlay") {
                     it("returns true") {
                         let playback = AVFoundationPlayback(options: [:])
@@ -581,12 +626,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .readyToPlay)
 
-                        expect(playback.isReadyToSeek).to(beTrue())
+                        expect(playback.isReadyToPlay).to(beTrue())
                     }
                 }
 
                 context("when AVPlayer status is unknown") {
-
                     it("returns false") {
                         let playback = AVFoundationPlayback(options: [:])
                         let playerStub = AVPlayerStub()
@@ -594,12 +638,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .unknown)
 
-                        expect(playback.isReadyToSeek).to(beFalse())
+                        expect(playback.isReadyToPlay).to(beFalse())
                     }
                 }
 
                 context("when AVPlayer status is failed") {
-
                     it("returns false") {
                         let playback = AVFoundationPlayback(options: [:])
                         let playerStub = AVPlayerStub()
@@ -607,7 +650,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .failed)
 
-                        expect(playback.isReadyToSeek).to(beFalse())
+                        expect(playback.isReadyToPlay).to(beFalse())
                     }
                 }
             }
