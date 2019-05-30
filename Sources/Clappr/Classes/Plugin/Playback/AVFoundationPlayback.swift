@@ -29,7 +29,7 @@ open class AVFoundationPlayback: Playback {
     private var playerLayer: AVPlayerLayer?
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var currentState: PlaybackState = .idle
-    open override var state: PlaybackState {
+    open override private(set) var state: PlaybackState {
         set {
             currentState = newValue
             switch currentState {
@@ -118,11 +118,11 @@ open class AVFoundationPlayback: Playback {
     private var isStopped = false
 
     open override var duration: Double {
-        guard let item = player?.currentItem else {
-            return 0
-        }
-
         var durationTime: Double = 0
+
+        guard let item = player?.currentItem else {
+            return durationTime
+        }
 
         if playbackType == .vod {
             durationTime = CMTimeGetSeconds(item.asset.duration)

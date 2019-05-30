@@ -523,7 +523,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("idle") {
                     beforeEach {
                         playback = AVFoundationPlaybackMock(options: [:])
-                        playback.state = .idle
+                        playback.set(state: .idle)
                     }
 
                     it("canPlay") {
@@ -537,7 +537,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("paused") {
                     beforeEach {
-                        playback.state = .paused
+                        playback.set(state: .paused)
                     }
 
                     it("canPlay") {
@@ -551,7 +551,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("stalling") {
                     beforeEach {
-                        playback.state = .stalling
+                        playback.set(state: .stalling)
                     }
                     context("and asset is ready to play") {
                         it("canPlay") {
@@ -575,7 +575,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("playing") {
                     beforeEach {
-                        playback.state = .playing
+                        playback.set(state: .playing)
                     }
 
                     it("cannot play") {
@@ -616,7 +616,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("error") {
                     beforeEach {
-                        playback.state = .error
+                        playback.set(state: .error)
                     }
 
                     it("cannot Seek") {

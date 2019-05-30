@@ -67,7 +67,7 @@ class PlayButtonTests: QuickSpec {
 
                 context("and a video is paused") {
                     beforeEach {
-                        coreStub.playbackMock?.state = .paused
+                        coreStub.playbackMock?.set(state: .paused)
                     }
 
                     it("calls the playback play") {
@@ -92,7 +92,7 @@ class PlayButtonTests: QuickSpec {
                 context("and a video is playing") {
 
                     beforeEach {
-                        coreStub.playbackMock?.state = .playing
+                        coreStub.playbackMock?.set(state: .playing)
                     }
 
                     it("calls the playback pause") {
@@ -107,7 +107,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqual(playIcon)).to(beTrue())
+                        expect(currentButtonIcon.isEqual(playIcon)).toEventually(beTrue())
                     }
 
                     context("and is vod") {
@@ -125,9 +125,8 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 context("and a video is paused") {
-
                     beforeEach {
-                        coreStub.playbackMock?.state = .paused
+                        coreStub.playbackMock?.set(state: .paused)
                     }
 
                     it("calls the playback play") {
@@ -142,7 +141,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqual(pauseIcon)).to(beTrue())
+                        expect(currentButtonIcon.isEqual(pauseIcon)).toEventually(beTrue())
                     }
 
                     context("and is vod") {
@@ -161,7 +160,6 @@ class PlayButtonTests: QuickSpec {
             }
 
             describe("render") {
-
                 it("set's acessibilityIdentifier to button") {
                     playButton.render()
 
