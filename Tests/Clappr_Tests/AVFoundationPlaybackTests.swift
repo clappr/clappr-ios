@@ -549,9 +549,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                context("buffering") {
+                context("stalling") {
                     beforeEach {
-                        playback.state = .buffering
+                        playback.state = .stalling
                     }
                     context("and asset is ready to play") {
                         it("canPlay") {
@@ -563,7 +563,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                             player.set(currentItem: playerItem)
 
                             playback.player = player
-                            playback.state = .buffering
 
                             expect(playback.canPlay).to(beTrue())
                         }
@@ -1246,13 +1245,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     
                     context("when is not likely to keep up") {
-                        it("changes state to buffering") {
+                        it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
 
-                            expect(playback.state).to(equal(.buffering))
+                            expect(playback.state).to(equal(.stalling))
                         }
                     }
                 }
@@ -1298,7 +1297,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     context("when is not likely to keep up") {
-                        it("changes state to buffering") {
+                        it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
@@ -1306,21 +1305,21 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.pause()
                             playback.play()
                             
-                            expect(playback.state).toEventually(equal(.buffering), timeout: 3)
+                            expect(playback.state).toEventually(equal(.stalling), timeout: 3)
                         }
                     }
                 }
 
                 describe("#stalling") {
                     context("when seek is called") {
-                        it("keeps buffering state") {
+                        it("keeps stalling state") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.seek(10)
                             
-                            expect(playback.state).to(equal(.buffering))
+                            expect(playback.state).to(equal(.stalling))
                         }
                     }
                     

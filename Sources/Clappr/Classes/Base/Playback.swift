@@ -5,7 +5,7 @@ import AVFoundation
     case idle = 2
     case playing = 3
     case paused = 4
-    case buffering = 5
+    case stalling = 5
     case error = 6
 }
 

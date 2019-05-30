@@ -33,8 +33,8 @@ open class AVFoundationPlayback: Playback {
         set {
             currentState = newValue
             switch currentState {
-            case .buffering:
-                view.accessibilityIdentifier = "AVFoundationPlaybackBuffering"
+            case .stalling:
+                view.accessibilityIdentifier = "AVFoundationPlaybackStalling"
             case .paused:
                 view.accessibilityIdentifier = "AVFoundationPlaybackPaused"
             case .playing:
@@ -175,7 +175,7 @@ open class AVFoundationPlayback: Playback {
         switch state {
         case .idle, .paused:
             return true
-        case .buffering:
+        case .stalling:
             return isReadyToPlay
         default:
             return false
@@ -184,7 +184,7 @@ open class AVFoundationPlayback: Playback {
 
     open override var canPause: Bool {
         switch state {
-        case .idle, .playing, .buffering:
+        case .idle, .playing, .stalling:
             if playbackType == .live {
                 return isDvrAvailable
             }
@@ -238,7 +238,7 @@ open class AVFoundationPlayback: Playback {
 
         if let currentItem = player?.currentItem {
             if !currentItem.isPlaybackLikelyToKeepUp {
-                updateState(.buffering)
+                updateState(.stalling)
             }
         }
     }
@@ -441,7 +441,7 @@ open class AVFoundationPlayback: Playback {
         state = newState
 
         switch newState {
-        case .buffering:
+        case .stalling:
             trigger(.stalling)
         case .paused:
             if isStopped {
@@ -518,14 +518,14 @@ open class AVFoundationPlayback: Playback {
         }
 
         if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .buffering {
+            if player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling {
                 play()
                 selectDefaultSubtitleIfNeeded()
             } else {
-                updateState(.buffering)
+                updateState(.stalling)
             }
         } else if keyPath == "currentItem.playbackBufferEmpty" {
-            updateState(.buffering)
+            updateState(.stalling)
         }
     }
 
