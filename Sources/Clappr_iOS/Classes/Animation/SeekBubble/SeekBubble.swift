@@ -66,7 +66,7 @@ class SeekBubble: UIView {
         for index in 0..<orderedImages.count {
             let image = orderedImages[index]
             animate(image, delay: delay)
-            delay = delay + 0.2
+            delay += 0.2
         }
     }
     
@@ -89,7 +89,7 @@ class SeekBubble: UIView {
         for _ in 0..<numberOfIndicators {
             let image = bubbleSide.image()
             setupImage(parentView, image: image, constX: currentPosition)
-            currentPosition = currentPosition - positionModifier
+            currentPosition -= positionModifier
             images.append(image)
         }
     }

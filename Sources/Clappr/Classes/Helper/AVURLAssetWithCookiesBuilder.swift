@@ -11,7 +11,7 @@ protocol AVURLAssetWithCookies {
 struct AVURLAssetWithCookiesBuilder: AVURLAssetWithCookies {
     private var url: URL
 
-    internal(set) var options: [String: Any]
+    var options: [String: Any]
 
     var cookies: [HTTPCookie]? {
         didSet {

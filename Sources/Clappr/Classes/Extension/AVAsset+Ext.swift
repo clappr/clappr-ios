@@ -6,7 +6,7 @@ public enum AVAssetProperty: String {
 }
 
 public extension AVAsset {
-    func wait(for property: AVAssetProperty, then completion: @escaping () -> ()) {
+    func wait(for property: AVAssetProperty, then completion: @escaping () -> Void) {
         self.loadValuesAsynchronously(forKeys: [property.rawValue]) {
             DispatchQueue.main.async {
                 completion()

@@ -84,7 +84,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     func triggerMediaOptionSelectedEvent(option: MediaOption?, event: Event) {
-        var userInfo: EventUserInfo
+        var userInfo: EventUserInfo = nil
 
         if option != nil {
             userInfo = ["mediaOption": option as Any]
@@ -602,7 +602,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-
     private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: AVMediaCharacteristic) {
         if let group = mediaSelectionGroup(characteristic) {
             player?.currentItem?.select(option, in: group)
@@ -622,6 +621,7 @@ open class AVFoundationPlayback: Playback {
 
     deinit {
         removeObservers()
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func removeObservers() {
@@ -640,7 +640,6 @@ open class AVFoundationPlayback: Playback {
             }
         }
         view.removeObserver(self, forKeyPath: "bounds")
-        NotificationCenter.default.removeObserver(self)
     }
 
     override open func destroy() {

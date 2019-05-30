@@ -1,5 +1,5 @@
 open class PosterPlugin: UIContainerPlugin {
-    internal(set) var poster = UIImageView(frame: CGRect.zero)
+    var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
 
     open override class var name: String {
@@ -75,7 +75,7 @@ open class PosterPlugin: UIContainerPlugin {
         guard let container = container else { return }
         listenTo(container, eventName: Event.didChangePlayback.rawValue) { [weak self] _ in self?.didChangePlayback() }
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
-        listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] info in self?.updatePoster(container.options) }
+        listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] _ in self?.updatePoster(container.options) }
     }
 
     @objc var isNoOpPlayback: Bool {

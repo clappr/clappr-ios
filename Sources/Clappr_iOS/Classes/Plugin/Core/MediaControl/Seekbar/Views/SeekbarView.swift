@@ -104,7 +104,7 @@ class SeekbarView: UIView {
             var position = horizontalTouchPoint - halfTimeLabelView
             if position <= 0 {
                 position = 0
-            } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width  {
+            } else if position > seekBarContainerView.frame.width - timeLabelView.frame.width {
                 position = seekBarContainerView.frame.width - timeLabelView.frame.width
             }
 
