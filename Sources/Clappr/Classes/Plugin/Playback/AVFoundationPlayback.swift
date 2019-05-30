@@ -396,6 +396,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seekToLivePosition() {
+        guard canSeek else { return }
         play()
         seek(Double.infinity)
     }
