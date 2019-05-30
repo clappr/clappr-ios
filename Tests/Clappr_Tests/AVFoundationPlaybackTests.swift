@@ -514,26 +514,47 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             context("playback state") {
+                var playback: AVFoundationPlaybackMock!
+
+                beforeEach {
+                    playback = AVFoundationPlaybackMock(options: [:])
+                }
+
                 context("idle") {
-                    it("canPlay") {
-                        let playback = AVFoundationPlaybackMock(options: [:])
+                    beforeEach {
+                        playback = AVFoundationPlaybackMock(options: [:])
                         playback.state = .idle
+                    }
+
+                    it("canPlay") {
                         expect(playback.canPlay).to(beTrue())
+                    }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
                     }
                 }
 
                 context("paused") {
-                    it("canPlay") {
-                        let playback = AVFoundationPlaybackMock(options: [:])
+                    beforeEach {
                         playback.state = .paused
+                    }
+
+                    it("canPlay") {
                         expect(playback.canPlay).to(beTrue())
+                    }
+
+                    it("cannot Pause") {
+                        expect(playback.canPause).to(beFalse())
                     }
                 }
 
                 context("buffering") {
+                    beforeEach {
+                        playback.state = .buffering
+                    }
                     context("and asset is ready to play") {
                         it("canPlay") {
-                            let playback = AVFoundationPlaybackMock(options: [:])
                             let url = URL(string: "http://clappr.sample/master.m3u8")!
                             let playerAsset = AVURLAssetStub(url: url)
                             let playerItem = AVPlayerItemStub(asset: playerAsset)
@@ -547,13 +568,32 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.canPlay).to(beTrue())
                         }
                     }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
+                    }
                 }
-                
+
                 context("playing") {
-                    it("cannot play") {
-                        let playback = AVFoundationPlaybackMock(options: [:])
+                    beforeEach {
                         playback.state = .playing
+                    }
+
+                    it("cannot play") {
                         expect(playback.canPlay).to(beFalse())
+                    }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
+                    }
+
+                    context("live video with no DVR support") {
+                        it("cannot Pause") {
+                            playback._playbackType = .live
+                            playback.set(isDvrAvailable: false)
+                            
+                            expect(playback.canPause).to(beFalse())
+                        }
                     }
                 }
             }

@@ -182,6 +182,18 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    open override var canPause: Bool {
+        switch state {
+        case .idle, .playing, .buffering:
+            if playbackType == .live {
+                return isDvrAvailable
+            }
+            return true
+        default:
+            return false
+        }
+    }
+
     public required init(options: Options) {
         super.init(options: options)
         self.asset = createAsset(from: options[kSourceUrl] as? String)
@@ -306,6 +318,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func pause() {
+        guard canPause else { return }
         trigger(.willPause)
         player?.pause()
         updateState(.paused)
