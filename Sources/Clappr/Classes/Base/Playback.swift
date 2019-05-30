@@ -10,7 +10,9 @@ import AVFoundation
 }
 
 open class Playback: UIObject, NamedType {
-    open class var type: PluginType { return .playback }
+    open class var type: PluginType {
+        return .playback
+    }
 
     @objc open class var name: String {
         NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Playback Plugins should always declare a name", userInfo: nil).raise()
@@ -24,7 +26,7 @@ open class Playback: UIObject, NamedType {
 
     @objc internal(set) open var options: Options {
         didSet {
-            trigger(Event.didUpdateOptions)
+            trigger(.didUpdateOptions)
         }
     }
 
