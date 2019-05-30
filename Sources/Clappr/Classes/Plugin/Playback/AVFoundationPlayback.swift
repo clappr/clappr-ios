@@ -194,6 +194,13 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    open override var canSeek: Bool {
+        if playbackType == .live {
+            return isDvrAvailable
+        }
+        return !duration.isZero
+    }
+
     public required init(options: Options) {
         super.init(options: options)
         self.asset = createAsset(from: options[kSourceUrl] as? String)
@@ -346,6 +353,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
+        guard canSeek else { return }
         seek(relativeTime(to: timeInterval)) { [weak self] in
             self?.triggerDvrStatusIfNeeded()
         }

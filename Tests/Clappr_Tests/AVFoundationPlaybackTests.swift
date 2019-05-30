@@ -595,6 +595,34 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.canPause).to(beFalse())
                         }
                     }
+
+                    context("live video with DVR support") {
+                        it("canSeek") {
+                            playback._playbackType = .live
+                            playback.set(isDvrAvailable: true)
+
+                            expect(playback.canSeek).to(beTrue())
+                        }
+                    }
+
+                    context("video with zero duration") {
+                        it("cannot Seek") {
+                            playback._playbackType = .vod
+                            playback.videoDuration = 0.0
+
+                            expect(playback.canSeek).to(beFalse())
+                        }
+                    }
+                }
+
+                context("error") {
+                    beforeEach {
+                        playback.state = .error
+                    }
+
+                    it("cannot Seek") {
+                        expect(playback.canSeek).to(beFalse())
+                    }
                 }
             }
 
@@ -746,7 +774,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     it("calls seek right away") {
-                        let playback = AVFoundationPlayback(options: [:])
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.videoDuration = 100
                         let player = AVPlayerStub()
                         player.setStatus(to: .readyToPlay)
                         playback.player = player
@@ -760,7 +789,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when AVPlayer status is not readyToPlay") {
 
                     it("stores the desired seek time") {
-                        let playback = AVFoundationPlayback(options: [:])
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.videoDuration = 100
 
                         playback.seek(20)
 
@@ -810,7 +840,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when seekToTimeWhenReadyToPlay is not nil") {
                         it("does perform a seek") {
-                            let playback = AVFoundationPlayback(options: [:])
+                            let playback = AVFoundationPlaybackMock(options: [:])
+                            playback.videoDuration = 100
                             let player = AVPlayerStub()
                             playback.player = player
                             player.setStatus(to: .unknown)
@@ -826,7 +857,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers willSeek event") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -841,7 +873,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didSeek when a seek is completed") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -856,7 +889,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didUpdatePosition for the desired position") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -871,7 +905,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
                 
                 it("triggers didUpdatePosition before didSeek event") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
