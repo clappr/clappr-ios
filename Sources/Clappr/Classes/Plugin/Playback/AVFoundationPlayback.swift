@@ -15,6 +15,7 @@ open class AVFoundationPlayback: Playback {
     private var kvoViewBounds = 0
 
     private let characteristicsKey = "availableMediaCharacteristicsWithMediaSelectionOptions"
+    private var selectedCharacteristics: [AVMediaCharacteristic] = []
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
 
     @objc internal dynamic var player: AVPlayer?
@@ -56,26 +57,25 @@ open class AVFoundationPlayback: Playback {
         return "AVPlayback"
     }
 
+    private var isStopped = false
     var lastDvrAvailability: Bool?
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
 
-    private var hasSelectedDefaultSubtitle = false
     open override var selectedSubtitle: MediaOption? {
         get {
-            guard let subtitles = self.subtitles, subtitles.count > 0 else { return nil }
+            guard let subtitles = subtitles, subtitles.count > 0 else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(.legible)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
             setMediaSelectionOption(newOption, characteristic: .legible)
-            triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectSubtitle)
+            triggerMediaOptionSelectedEvent(option: newValue, event: .didSelectSubtitle)
         }
     }
 
-    private var hasSelectedDefaultAudio = false
     open override var selectedAudioSource: MediaOption? {
         get {
             let option = getSelectedMediaOptionWithCharacteristic(.audible)
@@ -115,17 +115,15 @@ open class AVFoundationPlayback: Playback {
         return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
     }
 
-    private var isStopped = false
-
     open override var duration: Double {
         var durationTime: Double = 0
 
-        guard let item = player?.currentItem else {
+        guard let assetDuration = player?.currentItem?.asset.duration else {
             return durationTime
         }
 
         if playbackType == .vod {
-            durationTime = CMTimeGetSeconds(item.asset.duration)
+            durationTime = CMTimeGetSeconds(assetDuration)
         } else if playbackType == .live {
             durationTime = seekableTimeRanges.reduce(0.0, { previous, current in
                 previous + current.timeRangeValue.duration.seconds
@@ -141,7 +139,7 @@ open class AVFoundationPlayback: Playback {
             return position - start
         }
 
-        guard playbackType == .vod, let player = self.player else {
+        guard playbackType == .vod, let player = player else {
             return 0
         }
         return CMTimeGetSeconds(player.currentTime())
@@ -203,7 +201,7 @@ open class AVFoundationPlayback: Playback {
 
     public required init(options: Options) {
         super.init(options: options)
-        self.asset = createAsset(from: options[kSourceUrl] as? String)
+        asset = createAsset(from: options[kSourceUrl] as? String)
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
@@ -215,7 +213,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     @objc public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
-        self.asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
+        asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
     }
 
     public required init?(coder _: NSCoder) {
@@ -256,25 +254,26 @@ open class AVFoundationPlayback: Playback {
         player?.appliesMediaSelectionCriteriaAutomatically = false
     }
 
+    private func triggerSetupError() {
+        trigger(.error)
+        Logger.logError("could not setup player", scope: pluginName)
+    }
+
     private func setupPlayer() {
-        if let asset = self.asset {
-            createPlayerInstance(with: AVPlayerItem(asset: asset))
-            playerLayer = AVPlayerLayer(player: player)
-            view.layer.addSublayer(playerLayer!)
-            playerLayer?.frame = view.bounds
-            setupMaxResolution(for: playerLayer!.frame.size)
+        guard let asset = asset else { return triggerSetupError() }
 
-            if startAt != 0.0 && playbackType == .vod {
-                seek(startAt)
-            }
+        createPlayerInstance(with: AVPlayerItem(asset: asset))
+        playerLayer = AVPlayerLayer(player: player)
+        view.layer.addSublayer(playerLayer!)
+        playerLayer?.frame = view.bounds
+        setupMaxResolution(for: playerLayer!.frame.size)
 
-            asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
-
-            addObservers()
-        } else {
-            trigger(.error)
-            Logger.logError("could not setup player", scope: pluginName)
+        if startAt != 0.0 && playbackType == .vod {
+            seek(startAt)
         }
+
+        asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
+        addObservers()
     }
 
     #if os(tvOS)
@@ -312,7 +311,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     @objc private func playbackDidEnd(notification: NSNotification? = nil) {
-        if let object = notification?.object as? AVPlayerItem, let item = self.player?.currentItem {
+        if let object = notification?.object as? AVPlayerItem, let item = player?.currentItem {
             if object == item {
                 let duration = item.duration
                 let position = item.currentTime()
@@ -360,11 +359,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func relativeTime(to time: TimeInterval) -> TimeInterval {
-        if isDvrAvailable {
-            return time + (dvrWindowStart ?? 0)
-        } else {
-            return time
-        }
+        return isDvrAvailable ? time + (dvrWindowStart ?? 0) : time
     }
 
     private func triggerDvrStatusIfNeeded() {
@@ -379,8 +374,9 @@ open class AVFoundationPlayback: Playback {
             return
         }
 
-        let time = CMTimeMakeWithSeconds(timeInterval, preferredTimescale: Int32(NSEC_PER_SEC))
-        let tolerance = CMTime(value: 0, timescale: Int32(NSEC_PER_SEC))
+        let timeScale = Int32(NSEC_PER_SEC)
+        let time = CMTimeMakeWithSeconds(timeInterval, preferredTimescale: timeScale)
+        let tolerance = CMTime(value: 0, timescale: timeScale)
 
         trigger(.willSeek)
 
@@ -398,15 +394,11 @@ open class AVFoundationPlayback: Playback {
     open override func seekToLivePosition() {
         guard canSeek else { return }
         play()
-        seek(Double.infinity)
+        seek(.infinity)
     }
 
     open override func mute(_ enabled: Bool) {
-        if enabled {
-            player?.volume = 0.0
-        } else {
-            player?.volume = 1.0
-        }
+        player?.volume = enabled ? .zero : 1.0
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
@@ -449,7 +441,6 @@ open class AVFoundationPlayback: Playback {
             } else {
                 trigger(.didPause)
             }
-
             triggerDvrStatusIfNeeded()
         case .playing:
             trigger(.playing)
@@ -459,28 +450,27 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func handleExternalPlaybackActiveEvent() {
-        guard let concretePlayer = player else {
+        guard let isExternalPlaybackActive = player?.isExternalPlaybackActive else {
             return
         }
 
-        if concretePlayer.isExternalPlaybackActive {
+        if isExternalPlaybackActive {
             enableBackgroundSession()
         } else {
             restoreBackgroundSession()
         }
 
-        self.trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": concretePlayer.isExternalPlaybackActive])
+        trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": isExternalPlaybackActive])
     }
 
     private func handleStatusChangedEvent() {
-        guard let player = player, let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        guard let currentItem = player?.currentItem, playerStatus != currentItem.status else { return }
         playerStatus = currentItem.status
 
-        if playerStatus == .readyToPlay && state != .paused {
+        if isReadyToPlay && state != .paused {
             readyToPlay()
-        } else if playerStatus == .failed {
-            let error = player.currentItem!.error!
-            self.trigger(.error, userInfo: ["error": error])
+        } else if playerStatus == .failed, let error = currentItem.error {
+            trigger(.error, userInfo: ["error": error])
             Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
         }
     }
@@ -545,12 +535,12 @@ open class AVFoundationPlayback: Playback {
 
     private func enableBackgroundSession() {
         backgroundSessionBackup = AVAudioSession.sharedInstance().category
-        changeBackgroundSession(to: AVAudioSession.Category.playback)
+        changeBackgroundSession(to: .playback)
     }
 
     private func restoreBackgroundSession() {
-        if let concreteBackgroundSession = backgroundSessionBackup {
-            changeBackgroundSession(to: concreteBackgroundSession)
+        if let backgroundSession = backgroundSessionBackup {
+            changeBackgroundSession(to: backgroundSession)
         }
     }
 
@@ -565,7 +555,7 @@ open class AVFoundationPlayback: Playback {
     @objc internal func seekOnReadyIfNeeded() {
         if let timeToSeek = seekToTimeWhenReadyToPlay {
             seek(timeToSeek)
-            self.seekToTimeWhenReadyToPlay = nil
+            seekToTimeWhenReadyToPlay = nil
         }
     }
 
@@ -578,34 +568,38 @@ open class AVFoundationPlayback: Playback {
         #endif
     }
 
-    internal func selectDefaultSubtitleIfNeeded() {
-        guard let subtitles = self.subtitles else { return }
-        if let defaultSubtitleLanguage = options[kDefaultSubtitle] as? String,
-            let defaultSubtitle = subtitles.first(where: { $0.language == defaultSubtitleLanguage }),
-            let selectedOption = defaultSubtitle.raw as? AVMediaSelectionOption,
-            !hasSelectedDefaultSubtitle {
+    private var defaultSubtitleLanguage: String? {
+        return options[kDefaultSubtitle] as? String
+    }
 
+    private var defaultAudioSource: String? {
+        return options[kDefaultAudioSource] as? String
+    }
+
+    private func defaultMediaOption(for source: [MediaOption], with language: String?) -> AVMediaSelectionOption? {
+        return source.first(where: { $0.language == language })?.raw as? AVMediaSelectionOption
+    }
+
+    internal func selectDefaultSubtitleIfNeeded() {
+        guard let subtitles = subtitles else { return }
+        var isFirstSelection = false
+        let defaultSubtitle = defaultMediaOption(for: subtitles, with: defaultSubtitleLanguage)
+        if let selectedOption = defaultSubtitle, !selectedCharacteristics.contains(.legible) {
+            isFirstSelection = true
             setMediaSelectionOption(selectedOption, characteristic: .legible)
-            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: true)])
-            hasSelectedDefaultSubtitle = true
-        } else {
-            trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: false)])
         }
+        trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: isFirstSelection)])
     }
 
     internal func selectDefaultAudioIfNeeded() {
-        guard let audioSources = self.audioSources else { return }
-        if let defaultAudioLanguage = options[kDefaultAudioSource] as? String,
-            let defaultAudioSource = audioSources.first(where: { $0.language == defaultAudioLanguage }),
-            let selectedOption = defaultAudioSource.raw as? AVMediaSelectionOption,
-            !hasSelectedDefaultAudio {
-
+        guard let audios = audioSources else { return }
+        var isFirstSelection = false
+        let defaultAudio = defaultMediaOption(for: audios, with: defaultAudioSource)
+        if let selectedOption = defaultAudio, !selectedCharacteristics.contains(.audible) {
+            isFirstSelection = true
             setMediaSelectionOption(selectedOption, characteristic: .audible)
-            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: true)])
-            hasSelectedDefaultAudio = true
-        } else {
-            trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audioSources, hasDefaultSelected: false)])
         }
+        trigger(.didFindAudio, userInfo: ["audios": AvailableMediaOptions(audios, hasDefaultSelected: isFirstSelection)])
     }
 
     private func addTimeElapsedCallback() {
@@ -623,6 +617,7 @@ open class AVFoundationPlayback: Playback {
 
     private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: AVMediaCharacteristic) {
         if let group = mediaSelectionGroup(characteristic) {
+            selectedCharacteristics.append(characteristic)
             player?.currentItem?.select(option, in: group)
         }
     }
@@ -654,7 +649,7 @@ open class AVFoundationPlayback: Playback {
             player?.removeObserver(self, forKeyPath: "externalPlaybackActive")
             player?.removeObserver(self, forKeyPath: "rate")
 
-            if let timeObserver = self.timeObserver {
+            if let timeObserver = timeObserver {
                 player?.removeTimeObserver(timeObserver)
             }
         }
@@ -679,7 +674,7 @@ open class AVFoundationPlayback: Playback {
 // MARK: - DVR
 extension AVFoundationPlayback {
     open override var minDvrSize: Double {
-        return self.options[kMinDvrSize] as? Double ?? 60.0
+        return options[kMinDvrSize] as? Double ?? 60.0
     }
 
     open override var isDvrInUse: Bool {
