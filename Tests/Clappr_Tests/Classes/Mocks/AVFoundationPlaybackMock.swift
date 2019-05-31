@@ -19,8 +19,13 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     var _playbackType: PlaybackType = .vod
     var _state: PlaybackState = .none
 
-    override var state: PlaybackState {
-        return _state
+    override open var state: PlaybackState {
+        get {
+            return _state
+        }
+        set {
+            _state = newValue
+        }
     }
     
     override var duration: Double {

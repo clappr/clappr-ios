@@ -35,7 +35,7 @@ open class AVFoundationPlayback: Playback {
     #endif
 
     private var currentState: PlaybackState = .idle
-    open override private(set) var state: PlaybackState {
+    override open var state: PlaybackState {
         set {
             currentState = newValue
             updateAccesibilityIdentifier()
@@ -276,7 +276,7 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    @objc private func playbackDidEnd(notification: NSNotification? = nil) {
+    @objc func playbackDidEnd(notification: NSNotification? = nil) {
         guard let object = notification?.object as? AVPlayerItem, let item = player?.currentItem, object == item else { return }
         if fabs(CMTimeGetSeconds(item.duration) - CMTimeGetSeconds(item.currentTime())) <= 2.0 {
             trigger(.didComplete)

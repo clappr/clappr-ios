@@ -722,6 +722,95 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("playbackDidEnd") {
+                func generateAssetWith(duration: TimeInterval, currentTime: TimeInterval) -> AVPlayerItemStub {
+                    let url = URL(string: "http://clappr.sample/master.m3u8")!
+                    let playerAsset = AVURLAssetStub(url: url)
+                    let item = AVPlayerItemStub(asset: playerAsset)
+                    item._duration = CMTime(seconds: duration, preferredTimescale: 1)
+                    item._currentTime = CMTime(seconds: currentTime, preferredTimescale: 1)
+                    return item
+                }
+
+                func generatePlayback(withState state: PlaybackState, itemDuration: TimeInterval, currentTime: TimeInterval) -> AVFoundationPlaybackMock {
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    let playerStub = AVPlayerStub()
+                    playback.player = playerStub
+                    playerStub.set(currentItem: generateAssetWith(duration: itemDuration, currentTime: currentTime))
+                    playback.set(state: state)
+                    return playback
+                }
+
+                context("when duration and currentTime are the same") {
+                    it("calls didComplete") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 100, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beTrue())
+                        expect(playback.state).to(equal(.idle))
+                    }
+                }
+
+                context("when duration and currentTime are at most 2 seconds apart") {
+                    it("calls didComplete") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 102, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beTrue())
+                        expect(playback.state).to(equal(.idle))
+                    }
+                }
+
+                context("when duration and currentTime are more than 2 seconds apart") {
+                    it("doesn't call didComplete and keep the same playback state") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 103, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beFalse())
+                        expect(playback.state).to(equal(.playing))
+                    }
+                }
+
+                context("when currentItem is not the same as notification object payload") {
+                    it("doesn't call didComplete and keep the same playback state") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 103, currentTime: 100)
+                        let otherItem = generateAssetWith(duration: 200, currentTime: 200)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: otherItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beFalse())
+                        expect(playback.state).to(equal(.playing))
+                    }
+                }
+            }
+
             context("when sets a kvo on player") {
                 class KVOStub: NSObject {
                     var didObserveValue = false
