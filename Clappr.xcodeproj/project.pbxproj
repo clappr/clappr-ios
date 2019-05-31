@@ -123,6 +123,8 @@
 		48A995192220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
 		48D81F1D21F9F41200B2D52E /* QuickSeekCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */; };
 		48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */; };
+		48EC492022A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
+		48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
 		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
@@ -423,6 +425,7 @@
 		48A995172220842000042C0E /* UIPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPluginStub.swift; sourceTree = "<group>"; };
 		48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
+		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
 		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
@@ -952,6 +955,7 @@
 				55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */,
 				48563228220B47B10096CDAE /* Core+Ext.swift */,
 				C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */,
+				48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1839,6 +1843,7 @@
 				48A29C12221DF8CD0004AD3B /* CorePlugin.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				48A29C01221D82700004AD3B /* UIObject.swift in Sources */,
+				48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */,
 				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				48A29C00221D81B90004AD3B /* EventProtocol.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
@@ -1986,6 +1991,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D362CE1D41339400CCB866 /* Player.swift in Sources */,
+				48EC492022A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */,
 				4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */,
 				C94D8CF0221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
@@ -2156,11 +2162,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0.11.47;
+				CURRENT_PROJECT_VERSION = 0.12.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.11.47;
+				DYLIB_CURRENT_VERSION = 0.12.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -2197,10 +2203,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0.11.47;
+				CURRENT_PROJECT_VERSION = 0.12.0;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.11.47;
+				DYLIB_CURRENT_VERSION = 0.12.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Sources/Info.plist;
@@ -2478,11 +2484,11 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 0.11.47;
+				CURRENT_PROJECT_VERSION = 0.12.0;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.11.47;
+				DYLIB_CURRENT_VERSION = 0.12.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2509,10 +2515,10 @@
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				CURRENT_PROJECT_VERSION = 0.11.47;
+				CURRENT_PROJECT_VERSION = 0.12.0;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 0.11.47;
+				DYLIB_CURRENT_VERSION = 0.12.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
