@@ -3,7 +3,7 @@ open class ContainerPlugin: BaseObject, Plugin {
     open class var type: PluginType { return .container }
 
     @objc open class var name: String {
-        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Container Plugins should always declare a name", userInfo: nil).raise()
+        NSException(name: NSExceptionName(rawValue: "MissingPluginName"), reason: "Container Plugins should always declare a name. \(self) does not.", userInfo: nil).raise()
         return ""
     }
     

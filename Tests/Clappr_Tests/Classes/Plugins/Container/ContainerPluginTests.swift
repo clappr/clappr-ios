@@ -33,7 +33,7 @@ class ContainerPluginTests: QuickSpec {
                     let container = ContainerStub()
                     let containerPlugin = ContainerPlugin(context: container)
                     let expectedExceptionName = "MissingPluginName"
-                    let expectedExceptionReason = "Container Plugins should always declare a name"
+                    let expectedExceptionReason = "Container Plugins should always declare a name. ContainerPlugin does not."
                     expect(containerPlugin.pluginName).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
                 }
             }
@@ -41,7 +41,7 @@ class ContainerPluginTests: QuickSpec {
             describe("#name") {
                 it("returns an exception") {
                     let expectedExceptionName = "MissingPluginName"
-                    let expectedExceptionReason = "Container Plugins should always declare a name"
+                    let expectedExceptionReason = "Container Plugins should always declare a name. ContainerPlugin does not."
                     
                     expect(ContainerPlugin.name).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
                 }
