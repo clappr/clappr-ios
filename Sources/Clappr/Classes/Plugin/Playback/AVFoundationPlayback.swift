@@ -51,7 +51,7 @@ open class AVFoundationPlayback: Playback {
 
     open override var selectedSubtitle: MediaOption? {
         get {
-            guard let subtitles = subtitles, subtitles.count > 0 else { return nil }
+            guard subtitles?.isEmpty == false else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(.legible)
             return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
         }
