@@ -1,12 +1,12 @@
 import AVFoundation
 
 @objc public enum PlaybackState: Int {
-    case none = 1
-    case idle = 2
-    case playing = 3
-    case paused = 4
-    case stalling = 5
-    case error = 6
+    case none = 0
+    case idle = 1
+    case playing = 2
+    case paused = 3
+    case stalling = 4
+    case error = 5
 }
 
 open class Playback: UIObject, NamedType {
