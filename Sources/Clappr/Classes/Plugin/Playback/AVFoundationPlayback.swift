@@ -278,7 +278,7 @@ open class AVFoundationPlayback: Playback {
 
     @objc func playbackDidEnd(notification: NSNotification? = nil) {
         guard let object = notification?.object as? AVPlayerItem, let item = player?.currentItem, object == item else { return }
-        if item.isFinished {
+        if item.isFinished() {
             trigger(.didComplete)
             updateState(.idle)
         }
