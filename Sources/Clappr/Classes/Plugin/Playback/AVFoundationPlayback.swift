@@ -276,12 +276,18 @@ open class AVFoundationPlayback: Playback {
             object: player?.currentItem)
     }
 
-    @objc func playbackDidEnd(notification: NSNotification? = nil) {
-        guard let object = notification?.object as? AVPlayerItem, let item = player?.currentItem, object == item else { return }
-        if item.isFinished() {
-            trigger(.didComplete)
-            updateState(.idle)
-        }
+    private func didFinishedItem(from notification: NSNotification?) -> Bool {
+        guard let object = notification?.object as? AVPlayerItem,
+            let item = player?.currentItem,
+            object == item,
+            item.isFinished() else { return false }
+        return true
+    }
+
+    @objc func playbackDidEnd(notification: NSNotification?) {
+        guard didFinishedItem(from: notification) else { return }
+        trigger(.didComplete)
+        updateState(.idle)
     }
 
     open override func pause() {
