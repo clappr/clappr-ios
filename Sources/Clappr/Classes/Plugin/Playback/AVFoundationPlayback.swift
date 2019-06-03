@@ -14,9 +14,9 @@ open class AVFoundationPlayback: Playback {
     private var kvoPlayerRateContext = 0
     private var kvoViewBounds = 0
 
-    private let characteristicsKey = "availableMediaCharacteristicsWithMediaSelectionOptions"
-    private var selectedCharacteristics: [AVMediaCharacteristic] = []
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
+    
+    private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
     @objc internal dynamic var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
@@ -211,6 +211,10 @@ open class AVFoundationPlayback: Playback {
         return options.bool(kLoop, orElse: false)
     }
 
+    private var canStartAt: Bool {
+        return startAt != 0.0 && playbackType == .vod
+    }
+
     private func createPlayerInstance(with item: AVPlayerItem) {
         player = shouldLoop ? AVQueuePlayer(playerItem: item): AVPlayer(playerItem: item)
         if let player = player as? AVQueuePlayer {
@@ -234,12 +238,15 @@ open class AVFoundationPlayback: Playback {
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer!.frame.size)
 
-        if startAt != 0.0 && playbackType == .vod {
+        asset.wait(for: .characteristics, then: selectDefaultAudioIfNeeded)
+        asset.wait(for: .duration, then: seekToStartAtIfNeeded)
+        addObservers()
+    }
+
+    private func seekToStartAtIfNeeded() {
+        if canStartAt {
             seek(startAt)
         }
-
-        asset.wait(for: characteristicsKey, then: selectDefaultAudioIfNeeded)
-        addObservers()
     }
 
     #if os(tvOS)
@@ -442,7 +449,7 @@ open class AVFoundationPlayback: Playback {
             "start_position": CMTimeGetSeconds(timeRange.start),
             "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
             "duration": CMTimeGetSeconds(timeRange.duration),
-            ]
+        ]
         trigger(.didUpdateBuffer, userInfo: info)
     }
 
