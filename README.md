@@ -161,6 +161,20 @@ kMediaControl: false
 
 You can read more about options [here](https://github.com/clappr/clappr-ios/wiki/Options).
 
+## Playback State
+You can check the playback state by using the state property of `Player` and `Playback`. The states are:
+
+```swift
+@objc public enum PlaybackState: Int {
+    case none = 0
+    case idle = 1
+    case playing = 2
+    case paused = 3
+    case stalling = 4
+    case error = 5
+}
+```
+
 ## Events
 The player throw's a [list of events](https://github.com/clappr/clappr-ios/wiki/Events) that can be useful to your application.
 
