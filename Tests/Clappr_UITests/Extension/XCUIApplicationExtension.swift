@@ -4,7 +4,7 @@ import XCTest
 enum VideoState: String {
     case playing = "AVFoundationPlaybackPlaying"
     case paused = "AVFoundationPlaybackPaused"
-    case buffering = "AVFoundationPlaybackBuffering"
+    case stalling = "AVFoundationPlaybackstalling"
 }
 
 extension XCUIApplication {

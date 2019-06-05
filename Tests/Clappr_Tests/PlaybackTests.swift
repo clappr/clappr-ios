@@ -58,11 +58,7 @@ class PlaybackTests: QuickSpec {
                 expect(playback.duration) == 0
             }
 
-            it("has a isPlaying var with a default value false") {
-                expect(playback.isPlaying).to(beFalse())
-            }
-
-            it("has a type var with a default value Unknown") {
+            it("have a type var with a default value Unknown") {
                 expect(playback.playbackType).to(equal(PlaybackType.unknown))
             }
 
@@ -95,6 +91,21 @@ class PlaybackTests: QuickSpec {
             it("has a class function to check if a source can be played with default value false") {
                 let canPlay = Playback.canPlay([:])
                 expect(canPlay) == false
+            }
+
+            it("has a canPlay flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canPlay).to(beFalse())
+            }
+
+            it("has a canPause flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canPause).to(beFalse())
+            }
+
+            it("has a canSeek flag set to false") {
+                let playback = StubPlayback(options: [:])
+                expect(playback.canSeek).to(beFalse())
             }
 
             context("StartAt") {

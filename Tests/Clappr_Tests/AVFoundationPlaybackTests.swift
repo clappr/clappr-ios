@@ -456,7 +456,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         player.setStatus(to: .readyToPlay)
 
-                        expect(playback.duration) == 60
+                        expect(playback.duration).to(equal(60))
                     }
                 }
                 context("when video is live") {
@@ -467,7 +467,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             player.setStatus(to: .readyToPlay)
 
-                            expect(playback.duration) == 60
+                            expect(playback.duration).to(equal(60))
                         }
                     }
                     context("when doesn't have dvr enabled") {
@@ -475,41 +475,153 @@ class AVFoundationPlaybackTests: QuickSpec {
                             asset.set(duration: CMTime.indefinite)
                             player.setStatus(to: .readyToPlay)
 
-                            expect(playback.duration) == 0
+                            expect(playback.duration).to(equal(0))
                         }
                     }
                 }
             }
 
-            context("canPlay") {
+            context("canPlay media") {
                 it("Should return true for valid url with mp4 path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
-                    let canPlay = AVFoundationPlayback.canPlay(options as Options)
-                    expect(canPlay) == true
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay).to(beTrue())
                 }
 
                 it("Should return true for valid url with m3u8 path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.m3u8"]
-                    let canPlay = AVFoundationPlayback.canPlay(options as Options)
-                    expect(canPlay) == true
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay).to(beTrue())
                 }
 
                 it("Should return true for valid url without path extension with supported mimetype") {
                     let options = [kSourceUrl: "http://clappr.io/highline", kMimeType: "video/avi"]
-                    let canPlay = AVFoundationPlayback.canPlay(options as Options)
-                    expect(canPlay) == true
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay).to(beTrue())
                 }
 
                 it("Should return false for invalid url") {
                     let options = [kSourceUrl: "123123"]
-                    let canPlay = AVFoundationPlayback.canPlay(options as Options)
-                    expect(canPlay) == false
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay).to(beFalse())
                 }
 
                 it("Should return false for url with invalid path extension") {
                     let options = [kSourceUrl: "http://clappr.io/highline.zip"]
-                    let canPlay = AVFoundationPlayback.canPlay(options as Options)
-                    expect(canPlay) == false
+                    let canPlay = AVFoundationPlayback.canPlay(options)
+                    expect(canPlay).to(beFalse())
+                }
+            }
+
+            context("playback state") {
+                var playback: AVFoundationPlaybackMock!
+
+                beforeEach {
+                    playback = AVFoundationPlaybackMock(options: [:])
+                }
+
+                context("idle") {
+                    beforeEach {
+                        playback = AVFoundationPlaybackMock(options: [:])
+                        playback.set(state: .idle)
+                    }
+
+                    it("canPlay") {
+                        expect(playback.canPlay).to(beTrue())
+                    }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
+                    }
+                }
+
+                context("paused") {
+                    beforeEach {
+                        playback.set(state: .paused)
+                    }
+
+                    it("canPlay") {
+                        expect(playback.canPlay).to(beTrue())
+                    }
+
+                    it("cannot Pause") {
+                        expect(playback.canPause).to(beFalse())
+                    }
+                }
+
+                context("stalling") {
+                    beforeEach {
+                        playback.set(state: .stalling)
+                    }
+                    context("and asset is ready to play") {
+                        it("canPlay") {
+                            let url = URL(string: "http://clappr.sample/master.m3u8")!
+                            let playerAsset = AVURLAssetStub(url: url)
+                            let playerItem = AVPlayerItemStub(asset: playerAsset)
+                            playerItem._status = .readyToPlay
+                            let player = AVPlayerStub()
+                            player.set(currentItem: playerItem)
+
+                            playback.player = player
+
+                            expect(playback.canPlay).to(beTrue())
+                        }
+                    }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
+                    }
+                }
+
+                context("playing") {
+                    beforeEach {
+                        playback.set(state: .playing)
+                    }
+
+                    it("cannot play") {
+                        expect(playback.canPlay).to(beFalse())
+                    }
+
+                    it("canPause") {
+                        expect(playback.canPause).to(beTrue())
+                    }
+
+                    context("live video with no DVR support") {
+                        it("cannot Pause") {
+                            playback._playbackType = .live
+                            playback.set(isDvrAvailable: false)
+                            
+                            expect(playback.canPause).to(beFalse())
+                        }
+                    }
+
+                    context("live video with DVR support") {
+                        it("canSeek") {
+                            playback._playbackType = .live
+                            playback.set(isDvrAvailable: true)
+
+                            expect(playback.canSeek).to(beTrue())
+                        }
+                    }
+
+                    context("video with zero duration") {
+                        it("cannot Seek") {
+                            playback._playbackType = .vod
+                            playback.videoDuration = 0.0
+
+                            expect(playback.canSeek).to(beFalse())
+                        }
+                    }
+                }
+
+                context("error") {
+                    beforeEach {
+                        playback.set(state: .error)
+                    }
+
+                    it("cannot Seek") {
+                        expect(playback.canSeek).to(beFalse())
+                    }
                 }
             }
 
@@ -590,7 +702,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
-            describe("#isReadyToSeek") {
+            describe("#isReadyToPlay") {
                 context("when AVPlayer status is readyToPlay") {
                     it("returns true") {
                         let playback = AVFoundationPlayback(options: [:])
@@ -599,12 +711,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .readyToPlay)
 
-                        expect(playback.isReadyToSeek).to(beTrue())
+                        expect(playback.isReadyToPlay).to(beTrue())
                     }
                 }
 
                 context("when AVPlayer status is unknown") {
-
                     it("returns false") {
                         let playback = AVFoundationPlayback(options: [:])
                         let playerStub = AVPlayerStub()
@@ -612,12 +723,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .unknown)
 
-                        expect(playback.isReadyToSeek).to(beFalse())
+                        expect(playback.isReadyToPlay).to(beFalse())
                     }
                 }
 
                 context("when AVPlayer status is failed") {
-
                     it("returns false") {
                         let playback = AVFoundationPlayback(options: [:])
                         let playerStub = AVPlayerStub()
@@ -625,15 +735,102 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                         playerStub.setStatus(to: .failed)
 
-                        expect(playback.isReadyToSeek).to(beFalse())
+                        expect(playback.isReadyToPlay).to(beFalse())
+                    }
+                }
+            }
+
+            describe("playbackDidEnd") {
+                func generateAssetWith(duration: TimeInterval, currentTime: TimeInterval) -> AVPlayerItemStub {
+                    let url = URL(string: "http://clappr.sample/master.m3u8")!
+                    let playerAsset = AVURLAssetStub(url: url)
+                    let item = AVPlayerItemStub(asset: playerAsset)
+                    item._duration = CMTime(seconds: duration, preferredTimescale: 1)
+                    item._currentTime = CMTime(seconds: currentTime, preferredTimescale: 1)
+                    return item
+                }
+
+                func generatePlayback(withState state: PlaybackState, itemDuration: TimeInterval, currentTime: TimeInterval) -> AVFoundationPlaybackMock {
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    let playerStub = AVPlayerStub()
+                    playback.player = playerStub
+                    playerStub.set(currentItem: generateAssetWith(duration: itemDuration, currentTime: currentTime))
+                    playback.set(state: state)
+                    return playback
+                }
+
+                context("when duration and currentTime are the same") {
+                    it("calls didComplete") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 100, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beTrue())
+                        expect(playback.state).to(equal(.idle))
+                    }
+                }
+
+                context("when duration and currentTime are at most 2 seconds apart") {
+                    it("calls didComplete") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 102, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beTrue())
+                        expect(playback.state).to(equal(.idle))
+                    }
+                }
+
+                context("when duration and currentTime are more than 2 seconds apart") {
+                    it("doesn't call didComplete and keep the same playback state") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 103, currentTime: 100)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beFalse())
+                        expect(playback.state).to(equal(.playing))
+                    }
+                }
+
+                context("when currentItem is not the same as notification object payload") {
+                    it("doesn't call didComplete and keep the same playback state") {
+                        let playback = generatePlayback(withState: .playing, itemDuration: 103, currentTime: 100)
+                        let otherItem = generateAssetWith(duration: 200, currentTime: 200)
+                        let notification = NSNotification(name: NSNotification.Name(""), object: otherItem)
+
+                        var didCompleteCalled = false
+                        playback.on(Event.didComplete.rawValue) { _ in
+                            didCompleteCalled = true
+                        }
+
+                        playback.playbackDidEnd(notification: notification)
+
+                        expect(didCompleteCalled).to(beFalse())
+                        expect(playback.state).to(equal(.playing))
                     }
                 }
             }
 
             context("when sets a kvo on player") {
-
                 class KVOStub: NSObject {
-
                     var didObserveValue = false
                     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
                         didObserveValue = true
@@ -659,7 +856,6 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             describe("#seek") {
-
                 var avFoundationPlayback: AVFoundationPlayback!
 
                 beforeEach {
@@ -681,7 +877,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     it("calls seek right away") {
-                        let playback = AVFoundationPlayback(options: [:])
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.videoDuration = 100
                         let player = AVPlayerStub()
                         player.setStatus(to: .readyToPlay)
                         playback.player = player
@@ -693,9 +890,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 context("when AVPlayer status is not readyToPlay") {
-
                     it("stores the desired seek time") {
-                        let playback = AVFoundationPlayback(options: [:])
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.videoDuration = 100
 
                         playback.seek(20)
 
@@ -728,7 +925,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 describe("#seekIfNeeded") {
-
                     context("when seekToTimeWhenReadyToPlay is nil") {
                         it("doesnt perform a seek") {
                             let playback = AVFoundationPlayback(options: [:])
@@ -745,7 +941,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when seekToTimeWhenReadyToPlay is not nil") {
                         it("does perform a seek") {
-                            let playback = AVFoundationPlayback(options: [:])
+                            let playback = AVFoundationPlaybackMock(options: [:])
+                            playback.videoDuration = 100
                             let player = AVPlayerStub()
                             playback.player = player
                             player.setStatus(to: .unknown)
@@ -761,7 +958,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers willSeek event") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -776,7 +974,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didSeek when a seek is completed") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -791,7 +990,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didUpdatePosition for the desired position") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -806,7 +1006,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
                 
                 it("triggers didUpdatePosition before didSeek event") {
-                    let playback = AVFoundationPlayback(options: [:])
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
@@ -846,6 +1047,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                 }
+
                 it("triggers seek event") {
                     var didTriggerDidSeek = false
                     playback.on(Event.didSeek.rawValue) { _ in
@@ -859,8 +1061,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 it("triggers didUpdatePosition for the desired position") {
                     var updatedPosition: Float64? = nil
-                    playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
-                        updatedPosition = userInfo!["position"] as? Float64
+                    playback.on(Event.didUpdatePosition.rawValue) { userInfo in
+                        updatedPosition = userInfo?["position"] as? Float64
                     }
 
                     playback.seekToLivePosition()
@@ -914,7 +1116,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
-                            playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindAudio.rawValue) { userInfo in
                                 guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = audio.hasDefaultSelected
                             }
@@ -932,7 +1134,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
                     let playback = AVFoundationPlayback(options: options)
                     var hasDefaultFromOption = false
-                    playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
+                    playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                         guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                         hasDefaultFromOption = subtitles.hasDefaultSelected
                     }
@@ -950,7 +1152,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultAudioSource: "pt"]
                     let playback = AVFoundationPlayback(options: options)
                     var hasDefaultFromOption = false
-                    playback.on(Event.didFindAudio.rawValue) { (userInfo: EventUserInfo) in
+                    playback.on(Event.didFindAudio.rawValue) { userInfo in
                         guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
                         hasDefaultFromOption = audio.hasDefaultSelected
                     }
@@ -964,14 +1166,13 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
             
             describe("#didFindSubtitle") {
-                
                 context("when video is ready and has subtitle available") {
                     context("and has default subtitle from options") {
                         it("triggers didFindSubtitle event with hasDefaultFromOption true") {
                             let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = false
-                            playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
@@ -987,7 +1188,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             var hasDefaultFromOption = true
-                            playback.on(Event.didFindSubtitle.rawValue) { (userInfo: EventUserInfo) in
+                            playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
@@ -1030,7 +1231,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when subtitle is selected") {
                     it("triggers didSelectSubtitle event") {
                         var subtitleOption: MediaOption?
-                        avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { (userInfo: EventUserInfo) in
+                        avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { userInfo in
                             subtitleOption = userInfo?["mediaOption"] as? MediaOption
                         }
 
@@ -1050,7 +1251,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when audio is selected") {
                     it("triggers didSelectAudio event") {
                         var audioSelected: MediaOption?
-                        playback.on(Event.didSelectAudio.rawValue) { (userInfo: EventUserInfo) in
+                        playback.on(Event.didSelectAudio.rawValue) { userInfo in
                             audioSelected = userInfo?["mediaOption"] as? MediaOption
                         }
 
@@ -1069,7 +1270,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
                             
-                            expect(playback.currentState).to(equal(.idle))
+                            expect(playback.state).toEventually(equal(.idle))
                         }
                     }
 
@@ -1079,11 +1280,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
-                            
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).toEventually(beFalse(), timeout: 3)
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
-                            expect(playback.isPlaying).to(beTrue())
+
+                            expect(playback.state).toEventually(equal(.playing), timeout: 10)
                         }
                     }
 
@@ -1094,10 +1292,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.pause()
                             
-                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.currentState).to(equal(.paused))
+                            expect(playback.state).toEventually(equal(.paused), timeout: 3)
                         }
                     }
                 }
@@ -1111,10 +1306,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
 
-                            expect(playback.isPaused).toEventually(beTrue(), timeout: 3)
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.currentState).to(equal(.paused))
+                            expect(playback.state).toEventually(equal(.paused))
                         }
                     }
 
@@ -1126,10 +1318,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.seek(10)
                             
-                            expect(playback.isBuffering).toEventually(beFalse(), timeout: 3)
-                            expect(playback.isPaused).to(beFalse())
-                            expect(playback.currentState).to(equal(.playing))
-                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.state).toEventually(equal(.playing), timeout: 3)
                         }
                     }
 
@@ -1141,10 +1330,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.stop()
 
-                            expect(playback.currentState).toEventually(equal(.idle), timeout: 3)
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.isPaused).to(beFalse())
+                            expect(playback.state).toEventually(equal(.idle), timeout: 3)
                         }
                     }
                     
@@ -1156,35 +1342,18 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.seek(playback.duration)
                             
-                            expect(playback.currentState).toEventually(equal(.idle), timeout: 6)
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.isPaused).to(beFalse())
-                        }
-                        
-                        context("and option kLoop is set to true") {
-                            it("plays the video again") {
-                                let options: Options = [kSourceUrl: "http://clappr.sample/master.m3u8", kLoop: true]
-                                let playback = AVFoundationPlayback(options: options)
-                                
-                                playback.play()
-                                playback.trigger(.didComplete)
-
-                                expect(playback.isPlaying).to(beTrue())
-                                expect(playback.isPaused).to(beFalse())
-                            }
+                            expect(playback.state).toEventually(equal(.idle), timeout: 10)
                         }
                     }
                     
                     context("when is not likely to keep up") {
-                        it("changes state to buffering") {
+                        it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
-                            
-                            expect(playback.isBuffering).to(beTrue())
-                            expect(playback.currentState).to(equal(.buffering))
+
+                            expect(playback.state).to(equal(.stalling))
                         }
                     }
                 }
@@ -1198,12 +1367,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
                             playback.play()
-                            
-                            
-                            expect(playback.currentState).toEventually(equal(.playing), timeout: 3)
-                            expect(playback.isPlaying).to(beTrue())
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPaused).to(beFalse())
+
+                            expect(playback.state).toEventually(equal(.playing), timeout: 3)
                         }
                     }
 
@@ -1216,10 +1381,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.pause()
                             playback.seek(10)
 
-                            expect(playback.currentState).to(equal(.paused))
-                            expect(playback.isPaused).to(beTrue())
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.state).to(equal(.paused))
                         }
                     }
 
@@ -1232,15 +1394,12 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.pause()
                             playback.stop()
 
-                            expect(playback.currentState).to(equal(.idle))
-                            expect(playback.isPaused).to(beFalse())
-                            expect(playback.isBuffering).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
+                            expect(playback.state).to(equal(.idle))
                         }
                     }
 
                     context("when is not likely to keep up") {
-                        it("changes state to buffering") {
+                        it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
@@ -1248,27 +1407,21 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.pause()
                             playback.play()
                             
-                            expect(playback.currentState).toEventually(equal(.buffering), timeout: 3)
-                            expect(playback.isBuffering).to(beTrue())
-                            expect(playback.isPaused).to(beFalse())
-                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.state).toEventually(equal(.stalling), timeout: 3)
                         }
                     }
                 }
 
                 describe("#stalling") {
                     context("when seek is called") {
-                        it("keeps buffering state") {
+                        it("keeps stalling state") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.play()
                             playback.seek(10)
                             
-                            expect(playback.currentState).to(equal(.buffering))
-                            expect(playback.isBuffering).to(beTrue())
-                            expect(playback.isPaused).to(beFalse())
-                            expect(playback.isPlaying).to(beTrue())
+                            expect(playback.state).to(equal(.stalling))
                         }
                     }
                     
@@ -1280,10 +1433,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
                             
-                            expect(playback.currentState).to(equal(.paused))
-                            expect(playback.isPaused).to(beTrue())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.state).to(equal(.paused))
                         }
                     }
                     
@@ -1295,10 +1445,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.stop()
                             
-                            expect(playback.currentState).to(equal(.idle))
-                            expect(playback.isPaused).to(beFalse())
-                            expect(playback.isPlaying).to(beFalse())
-                            expect(playback.isBuffering).to(beFalse())
+                            expect(playback.state).to(equal(.idle))
                         }
                     }
                 }
@@ -1306,7 +1453,6 @@ class AVFoundationPlaybackTests: QuickSpec {
 
             #if os(tvOS)
             describe("#loadMetadata") {
-                
                 func getPlayback(with source: String) -> AVFoundationPlayback {
                     let asset = AVAsset(url: URL(string: source)!)
                     let playerItem = AVPlayerItem(asset: asset)
@@ -1317,7 +1463,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
                 
                 context("when avplayer has playerItem") {
-                    
                     let playback = getPlayback(with: "https://clappr.io/highline.mp4")
                     
                     it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
@@ -1331,7 +1476,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
                 
                 context("when AVPlayer don't have playerItem") {
-                    
                     let playback = AVFoundationPlayback(options: [:])
                     
                     it("doesn't call setItemsToPlayerItem of AVFoundationNowPlaying") {
@@ -1345,7 +1489,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 context("when avplayer has playerItem and is ready to play") {
-
                     it("calls loadMetadata") {
                         let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                         let nowPlayingService = NowPlayingServiceStub()
@@ -1407,7 +1550,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
                             
                             let group = avFoundationPlayback.player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: AVMediaCharacteristic.legible.rawValue))
-                            
                             
                             let option = avFoundationPlayback.player?.currentItem?.currentMediaSelection.selectedMediaOption(in: group!)
                             

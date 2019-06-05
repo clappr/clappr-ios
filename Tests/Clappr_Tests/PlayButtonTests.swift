@@ -29,13 +29,13 @@ class PlayButtonTests: QuickSpec {
 
                 context("panel") {
                     it("is positioned in the center panel") {
-                        expect(playButton.panel).to(equal(MediaControlPanel.center))
+                        expect(playButton.panel).to(equal(.center))
                     }
                 }
 
                 context("position") {
                     it("is aligned in the center") {
-                        expect(playButton.position).to(equal(MediaControlPosition.center))
+                        expect(playButton.position).to(equal(.center))
                     }
                 }
             }
@@ -45,7 +45,7 @@ class PlayButtonTests: QuickSpec {
                     it("shows button") {
                         playButton.render()
 
-                        coreStub.activeContainer?.trigger(Event.stalling.rawValue)
+                        coreStub.activeContainer?.trigger(.stalling)
 
                         expect(playButton.view.isHidden).to(beFalse())
                     }
@@ -59,7 +59,7 @@ class PlayButtonTests: QuickSpec {
 
                 context("and enters in background and receive a didPause event") {
                     it("shows play button") {
-                        coreStub.activePlayback?.trigger(Event.didPause)
+                        coreStub.activePlayback?.trigger(.didPause)
 
                         expect(playButton.view.isHidden).toEventually(beFalse())
                     }
@@ -67,7 +67,7 @@ class PlayButtonTests: QuickSpec {
 
                 context("and a video is paused") {
                     beforeEach {
-                        coreStub.playbackMock?.set(isPaused: true)
+                        coreStub.playbackMock?.set(state: .paused)
                     }
 
                     it("calls the playback play") {
@@ -92,7 +92,7 @@ class PlayButtonTests: QuickSpec {
                 context("and a video is playing") {
 
                     beforeEach {
-                        coreStub.playbackMock?.set(isPlaying: true)
+                        coreStub.playbackMock?.set(state: .playing)
                     }
 
                     it("calls the playback pause") {
@@ -107,7 +107,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqual(playIcon)).to(beTrue())
+                        expect(currentButtonIcon.isEqual(playIcon)).toEventually(beTrue())
                     }
 
                     context("and is vod") {
@@ -117,7 +117,7 @@ class PlayButtonTests: QuickSpec {
                             playButton.render()
                             playButton.view.isHidden = true
 
-                            coreStub.activePlayback?.trigger(Event.playing.rawValue)
+                            coreStub.activePlayback?.trigger(.playing)
 
                             expect(playButton.view.isHidden).to(beFalse())
                         }
@@ -125,9 +125,8 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 context("and a video is paused") {
-
                     beforeEach {
-                        coreStub.playbackMock?.set(isPaused: true)
+                        coreStub.playbackMock?.set(state: .paused)
                     }
 
                     it("calls the playback play") {
@@ -142,7 +141,7 @@ class PlayButtonTests: QuickSpec {
                         playButton.button.sendActions(for: .touchUpInside)
 
                         let currentButtonIcon = (playButton.button.imageView?.image)!
-                        expect(currentButtonIcon.isEqual(pauseIcon)).to(beTrue())
+                        expect(currentButtonIcon.isEqual(pauseIcon)).toEventually(beTrue())
                     }
 
                     context("and is vod") {
@@ -152,7 +151,7 @@ class PlayButtonTests: QuickSpec {
                             playButton.render()
                             playButton.view.isHidden = true
 
-                            coreStub.activePlayback?.trigger(Event.didPause.rawValue)
+                            coreStub.activePlayback?.trigger(.didPause)
 
                             expect(playButton.view.isHidden).to(beFalse())
                         }
@@ -161,7 +160,6 @@ class PlayButtonTests: QuickSpec {
             }
 
             describe("render") {
-
                 it("set's acessibilityIdentifier to button") {
                     playButton.render()
 
@@ -170,33 +168,28 @@ class PlayButtonTests: QuickSpec {
 
                 describe("button") {
                     it("adds it in the view") {
-
                         playButton.render()
 
                         expect(playButton.view.subviews).to(contain(playButton.button))
                     }
 
                     it("has scaleAspectFit content mode") {
-
                         playButton.render()
 
                         expect(playButton.button.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
                     }
                 }
-
             }
 
             context("when stalling") {
                 it("hides the plugin") {
-
-                    coreStub.activePlayback?.trigger(Event.stalling.rawValue)
+                    coreStub.activePlayback?.trigger(.stalling)
 
                     expect(playButton.view.isHidden).to(beTrue())
                 }
 
                 it("hides the plugin") {
-
-                    coreStub.activePlayback?.trigger(Event.playing.rawValue)
+                    coreStub.activePlayback?.trigger(.playing)
 
                     expect(playButton.view.isHidden).to(beFalse())
                 }

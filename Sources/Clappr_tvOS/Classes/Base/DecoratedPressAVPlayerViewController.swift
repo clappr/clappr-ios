@@ -13,11 +13,11 @@ class DecoratedPressAVPlayerViewController: AVPlayerViewController {
     }
 
     private var isPaused: Bool {
-        return clapprPlayer.activePlayback?.isPaused ?? false
+        return clapprPlayer.activePlayback?.state == .paused
     }
 
     private var isPlaying: Bool {
-        return clapprPlayer.activePlayback?.isPlaying ?? false
+        return clapprPlayer.activePlayback?.state == .playing
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {

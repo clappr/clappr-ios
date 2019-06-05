@@ -1,7 +1,18 @@
 import AVFoundation
 
+@objc public enum PlaybackState: Int {
+    case none = 0
+    case idle = 1
+    case playing = 2
+    case paused = 3
+    case stalling = 4
+    case error = 5
+}
+
 open class Playback: UIObject, NamedType {
-    open class var type: PluginType { return .playback }
+    open class var type: PluginType {
+        return .playback
+    }
 
     @objc open class var name: String {
         NSException(name: NSExceptionName(rawValue: "MissingPlaybackName"), reason: "Playbacks should always declare a name. \(self) does not.", userInfo: nil).raise()
@@ -15,7 +26,7 @@ open class Playback: UIObject, NamedType {
 
     @objc internal(set) open var options: Options {
         didSet {
-            trigger(Event.didUpdateOptions)
+            trigger(.didUpdateOptions)
         }
     }
 
@@ -25,18 +36,6 @@ open class Playback: UIObject, NamedType {
 
     @objc open var startAt: TimeInterval {
         return options.startAt ?? 0.0
-    }
-
-    @objc open var isPlaying: Bool {
-        return false
-    }
-
-    @objc open var isPaused: Bool {
-        return false
-    }
-
-    @objc open var isBuffering: Bool {
-        return false
     }
 
     @objc open var duration: Double {
@@ -53,6 +52,10 @@ open class Playback: UIObject, NamedType {
 
     open var playbackType: PlaybackType {
         return .unknown
+    }
+
+    @objc open var state: PlaybackState {
+        return .none
     }
 
     @objc open var isHighDefinitionInUse: Bool {
@@ -80,6 +83,18 @@ open class Playback: UIObject, NamedType {
             self?.play()
         }
         #endif
+    }
+
+    @objc open var canPlay: Bool {
+        return false
+    }
+
+    @objc open var canPause: Bool {
+        return false
+    }
+    
+    @objc open var canSeek: Bool {
+        return false
     }
 
     @objc open func play() {}

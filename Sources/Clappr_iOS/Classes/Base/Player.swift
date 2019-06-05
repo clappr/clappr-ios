@@ -23,16 +23,8 @@ open class Player: BaseObject {
         return core.isFullscreen
     }
 
-    @objc open var isPlaying: Bool {
-        return activePlayback?.isPlaying ?? false
-    }
-
-    @objc open var isPaused: Bool {
-        return activePlayback?.isPaused ?? false
-    }
-
-    @objc open var isBuffering: Bool {
-        return activePlayback?.isBuffering ?? false
+    @objc open var state: PlaybackState {
+        return activePlayback?.state ?? .none
     }
 
     @objc open var duration: Double {

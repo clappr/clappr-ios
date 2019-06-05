@@ -22,6 +22,16 @@ class NoOpPlaybackTests: QuickSpec {
                     expect(didCallEvent) == false
                 }
             }
+
+            context("playback states") {
+                it("cannot play, pause and seek") {
+                    let playback = NoOpPlayback(options: [:])
+
+                    expect(playback.canPlay).to(beFalse())
+                    expect(playback.canPause).to(beFalse())
+                    expect(playback.canSeek).to(beFalse())
+                }
+            }
         }
     }
 }

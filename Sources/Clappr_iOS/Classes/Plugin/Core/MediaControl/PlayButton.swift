@@ -99,9 +99,9 @@ open class PlayButton: MediaControlPlugin {
             return
         }
 
-        if playback.isPlaying {
+        if playback.state == .playing {
             activePlayback?.pause()
-        } else if playback.isPaused {
+        } else if playback.state == .paused {
             activePlayback?.play()
         }
     }
@@ -111,9 +111,9 @@ open class PlayButton: MediaControlPlugin {
             return
         }
 
-        if playback.isPaused {
+        if playback.state == .paused {
             button.setImage(playIcon, for: .normal)
-        } else if playback.isPlaying {
+        } else if playback.state == .playing {
             button.setImage(pauseIcon, for: .normal)
         }
     }
