@@ -1,4 +1,4 @@
-open class UICorePlugin: CorePlugin, UIPlugin {
+open class UICorePlugin: SimpleCorePlugin, UIPlugin {
     var uiObject = UIObject()
     
     public var view: UIView {

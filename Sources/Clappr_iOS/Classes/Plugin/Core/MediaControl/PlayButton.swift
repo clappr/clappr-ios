@@ -32,30 +32,8 @@ open class PlayButton: MediaControlPlugin {
         }
     }
 
-    required public init(context: UIObject) {
-        super.init(context: context)
-        bindEvents()
-    }
-
-    private func bindEvents() {
-        stopListening()
-
-        bindCoreEvents()
-        bindContainerEvents()
+    override open func bindEvents() {
         bindPlaybackEvents()
-    }
-
-    open func bindCoreEvents() {
-        if let core = core {
-            listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-        }
-    }
-
-    open func bindContainerEvents() {
-        if let container = activeContainer {
-            listenTo(container,
-                     eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
-        }
     }
 
     func bindPlaybackEvents() {

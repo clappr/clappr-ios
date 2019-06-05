@@ -49,8 +49,12 @@ class UIContainerPluginTests: QuickSpec {
         override class var name: String {
             return "StubContainerPlugin"
         }
+
+        override func bindEvents() { }
     }
 
     class NoNameContainerPlugin: UIContainerPlugin {
+
+        override func bindEvents() { }
     }
 }

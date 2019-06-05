@@ -49,8 +49,12 @@ class UICorePluginTests: QuickSpec {
         override class var name: String {
             return "StubCorePlugin"
         }
+
+        override func bindEvents() { }
     }
 
     class NoNameCorePlugin: UICorePlugin {
+
+        override func bindEvents() { }
     }
 }

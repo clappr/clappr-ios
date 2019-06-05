@@ -511,7 +511,9 @@ class MediaControlPluginMock: MediaControlPlugin {
     open override var position: MediaControlPosition {
         return MediaControlPluginMock._position
     }
-    
+
+    override func bindEvents() { }
+
     override func render() {
         MediaControlPluginMock.didCallRender = true
 
@@ -541,6 +543,7 @@ class TimeIndicatorPluginMock: TimeIndicator {
     open override var position: MediaControlPosition {
         return .right
     }
+
 }
 
 class FirstPlugin: MediaControlPlugin {
@@ -554,6 +557,8 @@ class FirstPlugin: MediaControlPlugin {
             view.addSubview(button)
         }
     }
+
+    override func bindEvents() { }
 
     override open func render() {
         button = UIButton(type: .custom)
@@ -579,6 +584,8 @@ class SecondPlugin: MediaControlPlugin {
             view.addSubview(button)
         }
     }
+
+    override func bindEvents() { }
 
     override open func render() {
         button = UIButton(type: .custom)

@@ -15,7 +15,7 @@ open class CorePlugin: BaseObject, Plugin {
             NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Core Plugins should always be initialized with a Core context", userInfo: nil).raise()
         }
     }
-    
+
     open func destroy() {
         Logger.logDebug("destroying", scope: "CorePlugin")
         Logger.logDebug("destroying listeners", scope: "CorePlugin")

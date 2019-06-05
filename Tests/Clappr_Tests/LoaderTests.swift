@@ -97,18 +97,24 @@ class LoaderTests: QuickSpec {
         override class var name: String {
             return "uicontainer"
         }
+
+        override func bindEvents() { }
     }
 
     class StubUICorePlugin: UICorePlugin {
         override class var name: String {
             return "uicore"
         }
+
+        override func bindEvents() { }
     }
 
     class StubSpinnerPlugin: UIContainerPlugin {
         override class var name: String {
             return "spinner"
         }
+
+        override func bindEvents() { }
     }
     
     class StubCorePlugin: CorePlugin {

@@ -23,16 +23,7 @@ class Seekbar: MediaControlPlugin {
 
     private var isOfflinePlayback: Bool = false
 
-    required init(context: UIObject) {
-        super.init(context: context)
-        bindEvents()
-    }
-
-    private func bindEvents() {
-        stopListening()
-
-        bindCoreEvents()
-        bindContainerEvents()
+    override public func bindEvents() {
         bindPlaybackEvents()
         bindOfflinePlaybackEvents()
     }
@@ -43,18 +34,6 @@ class Seekbar: MediaControlPlugin {
 
     fileprivate var activePlayback: Playback? {
         return core?.activePlayback
-    }
-
-    private func bindCoreEvents() {
-        guard let core = core else { return }
-        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in self?.bindEvents() }
-    }
-
-    private func bindContainerEvents() {
-        if let container = activeContainer {
-            listenTo(container,
-                     eventName: Event.didChangePlayback.rawValue) { [weak self] (_: EventUserInfo) in self?.bindEvents() }
-        }
     }
 
     fileprivate func setSeekbarViewLive() {

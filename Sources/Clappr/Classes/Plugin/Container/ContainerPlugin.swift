@@ -15,7 +15,7 @@ open class ContainerPlugin: BaseObject, Plugin {
             NSException(name: NSExceptionName(rawValue: "WrongContextType"), reason: "Container Plugins should always be initialized with a Container context", userInfo: nil).raise()
         }
     }
-    
+
     open func destroy() {
         Logger.logDebug("destroying", scope: "ContainerPlugin")
         Logger.logDebug("destroying listeners", scope: "ContainerPlugin")

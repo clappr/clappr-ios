@@ -10,7 +10,7 @@ class MediaControlPluginTests: QuickSpec {
 
         beforeEach {
             core = CoreStub()
-            mediaControlPlugin = MediaControlPlugin(context: core)
+            mediaControlPlugin = StubMediaControlPlugin(context: core)
         }
 
         describe("MediaControlPlugin") {
@@ -50,4 +50,12 @@ class MediaControlPluginTests: QuickSpec {
             }
         }
     }
+}
+
+class StubMediaControlPlugin: MediaControlPlugin {
+    override class var name: String {
+        return "StubMediaControlPlugin"
+    }
+    
+    override func bindEvents() { }
 }
