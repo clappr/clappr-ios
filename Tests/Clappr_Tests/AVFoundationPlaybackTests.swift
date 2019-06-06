@@ -68,6 +68,24 @@ class AVFoundationPlaybackTests: QuickSpec {
                         
                         expect(playback.player).to(beAKindOf(AVQueuePlayer.self))
                     }
+
+                    context("when video finishes") {
+                        it("triggers didLoop event") {
+                            let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            var didLoopTriggered = false
+
+                            playback.on(Event.didLoop.rawValue) { _ in
+                                didLoopTriggered = true
+                            }
+
+                            playback.play()
+                            playback.seek(playback.duration)
+
+                            expect(didLoopTriggered).toEventually(beTrue(), timeout: 3)
+                        }
+                    }
                 }
             }
 

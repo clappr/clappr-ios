@@ -16,6 +16,7 @@ public enum Event: String, CaseIterable {
     case didPause = "Clappr:didPause"
     case willStop = "Clappr:willStop"
     case didStop = "Clappr:didStop"
+    case didLoop = "Clappr:didLoop"
     case error = "Clappr:error"
     case didUpdateAirPlayStatus = "Clappr:didUpdateAirPlayStatus"
     case requestFullscreen = "Clappr:requestFullscreen"

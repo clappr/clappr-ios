@@ -18,14 +18,21 @@ open class AVFoundationPlayback: Playback {
     
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
-    @objc internal dynamic var player: AVPlayer?
+    @objc dynamic internal var player: AVPlayer?
+    @objc dynamic private var playerLooper: AVPlayerLooper? {
+        didSet {
+            loopObserver = observe(\.playerLooper?.loopCount) { [weak self] _, _ in
+                self?.trigger(.didLoop)
+            }
+        }
+    }
     private var playerLayer: AVPlayerLayer?
-    private var playerLooper: AVPlayerLooper?
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var isStopped = false
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
+    private var loopObserver: NSKeyValueObservation?
 
     var lastDvrAvailability: Bool?
     #if os(tvOS)
@@ -614,6 +621,7 @@ open class AVFoundationPlayback: Playback {
             player.removeTimeObserver(timeObserver)
         }
         view.removeObserver(self, forKeyPath: "bounds")
+        loopObserver = nil
     }
 
     override open func destroy() {
