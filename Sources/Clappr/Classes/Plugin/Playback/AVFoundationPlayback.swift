@@ -32,7 +32,7 @@ open class AVFoundationPlayback: Playback {
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
-    private var loopObserver: NSKeyValueObservation?
+    private(set) var loopObserver: NSKeyValueObservation?
 
     var lastDvrAvailability: Bool?
     #if os(tvOS)

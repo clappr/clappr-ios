@@ -86,6 +86,18 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(didLoopTriggered).toEventually(beTrue(), timeout: 3)
                         }
                     }
+
+                    context("on stop") {
+                        it("stops observing loopCount") {
+                            let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
+                            let playback = AVFoundationPlayback(options: options)
+
+                            playback.play()
+                            playback.stop()
+
+                            expect(playback.loopObserver).to(beNil())
+                        }
+                    }
                 }
             }
 
