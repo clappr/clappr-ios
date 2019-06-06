@@ -18,3 +18,13 @@ extension AVFoundationPlayback {
         return player?.currentItem?.accessLog()?.events.last
     }
 }
+
+public extension Playback {
+    func waitVideoAssetLoad(then completion: @escaping () -> Void) {
+        if let playback = self as? AVFoundationPlayback {
+            playback.player?.currentItem?.asset.wait(for: AVAssetProperty.allCases, then: completion)
+        } else {
+            completion()
+        }
+    }
+}
