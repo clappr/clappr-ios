@@ -125,7 +125,7 @@
 		48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */; };
 		48EC492022A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
 		48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
-		55EA991821DD372A006DE981 /* AVFoundationPlayback+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Ext.swift */; };
+		55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
 		571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
@@ -275,6 +275,8 @@
 		CD57FCF122949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF222949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF322949BBB00AB24CF /* SimpleCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCEE22949B0F00AB24CF /* SimpleCorePlugin.swift */; };
+		CDB6005A22A9BA5B0021D4D6 /* Playback+wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6005922A9BA5B0021D4D6 /* Playback+wait.swift */; };
+		CDB6005B22A9BA5B0021D4D6 /* Playback+wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6005922A9BA5B0021D4D6 /* Playback+wait.swift */; };
 		CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
@@ -430,7 +432,7 @@
 		48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
-		55EA991721DD372A006DE981 /* AVFoundationPlayback+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Ext.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Ext.swift"; sourceTree = SOURCE_ROOT; };
+		55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AVFoundationPlayback+Bitrate.swift"; path = "Sources/Clappr/Classes/AVFoundationPlayback+Bitrate.swift"; sourceTree = SOURCE_ROOT; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		5733D1BD21BAA6E4002107D2 /* Dictionary+ExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+ExtTests.swift"; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 		C9F6D7B8218265140055A599 /* Seekbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seekbar.swift; sourceTree = "<group>"; };
 		CD57FCEE22949B0F00AB24CF /* SimpleCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCorePlugin.swift; sourceTree = "<group>"; };
 		CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleContainerPlugin.swift; sourceTree = "<group>"; };
+		CDB6005922A9BA5B0021D4D6 /* Playback+wait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Playback+wait.swift"; sourceTree = "<group>"; };
 		CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedPressAVPlayerViewController.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
@@ -958,10 +961,11 @@
 				C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */,
 				57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */,
 				5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */,
-				55EA991721DD372A006DE981 /* AVFoundationPlayback+Ext.swift */,
+				55EA991721DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift */,
 				48563228220B47B10096CDAE /* Core+Ext.swift */,
 				C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */,
 				48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */,
+				CDB6005922A9BA5B0021D4D6 /* Playback+wait.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1845,6 +1849,7 @@
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
+				CDB6005B22A9BA5B0021D4D6 /* Playback+wait.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
@@ -2009,6 +2014,7 @@
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
+				CDB6005A22A9BA5B0021D4D6 /* Playback+wait.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIView+Ext.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				AB163506215AB97800635233 /* MediaControlPlugin.swift in Sources */,
@@ -2022,7 +2028,7 @@
 				48A29C0B221DEFC10004AD3B /* CorePlugin.swift in Sources */,
 				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,
 				96D362E31D41339400CCB866 /* AVFoundationPlayback.swift in Sources */,
-				55EA991821DD372A006DE981 /* AVFoundationPlayback+Ext.swift in Sources */,
+				55EA991821DD372A006DE981 /* AVFoundationPlayback+Bitrate.swift in Sources */,
 				96D362E21D41339400CCB866 /* UICorePlugin.swift in Sources */,
 				96D362D31D41339400CCB866 /* MediaControlState.swift in Sources */,
 				C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */,
