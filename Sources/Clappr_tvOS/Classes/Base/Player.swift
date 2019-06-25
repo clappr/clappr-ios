@@ -2,37 +2,28 @@ import AVKit
 
 open class Player: AVPlayerViewController {
     open var playbackEventsToListen: [String] = []
-    fileprivate var playbackEventsListenIds: [String] = []
-    fileprivate(set) var core: Core?
+    private var playbackEventsListenIds: [String] = []
+    private(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
-    fileprivate var viewController: AVPlayerViewController!
     private let baseObject = BaseObject()
 
     override open func viewDidLoad() {
         core?.parentView = view
 
-        if isMediaControlEnabled != false {
-            viewController = DecoratedPressAVPlayerViewController(player: self)
-            core?.parentView = viewController?.contentOverlayView
+        if isMediaControlEnabled {
+            core?.parentView = contentOverlayView
             core?.parentController = self
-            addChild(viewController)
-            viewController.view.frame = view.bounds
-            viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            view.addSubview(viewController.view)
-            viewController.didMove(toParent: self)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             UIApplication.willEnterForegroundNotification, object: nil)
-
-        core?.render()
     }
 
     open var isMediaControlEnabled: Bool {
         return core?.options[kMediaControl] as? Bool ?? false
     }
 
-    @objc fileprivate func willEnterForeground() {
+    @objc private func willEnterForeground() {
         if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled {
             Logger.logDebug("forced play after return from background", scope: "Player")
             playback.play()
@@ -48,7 +39,7 @@ open class Player: AVPlayerViewController {
     }
 
     open var isFullscreen: Bool {
-        guard let core = self.core else {
+        guard let core = core else {
             return false
         }
 
@@ -101,7 +92,7 @@ open class Player: AVPlayerViewController {
 
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
-        self.playbackEventsToListen.append(contentsOf:
+        playbackEventsToListen.append(contentsOf:
             [Event.ready.rawValue, Event.error.rawValue,
              Event.playing.rawValue, Event.didComplete.rawValue,
              Event.didPause.rawValue, Event.stalling.rawValue,
@@ -125,17 +116,17 @@ open class Player: AVPlayerViewController {
     }
 
     private func setCore(with options: Options) {
-        self.core = CoreFactory.create(with: options)
+        core = CoreFactory.create(with: options)
         bindCoreEvents()
     }
     
-    fileprivate func bindCoreEvents() {
-        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
+    private func bindCoreEvents() {
+        core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
-        self.core?.render()
+        core?.render()
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
@@ -207,7 +198,7 @@ open class Player: AVPlayerViewController {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
-    fileprivate func bindPlaybackEvents() {
+    private func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
                 let listenId = baseObject.listenTo(
@@ -224,14 +215,14 @@ open class Player: AVPlayerViewController {
         }
     }
 
-    fileprivate func bindPlayer(playback: Playback?) {
+    private func bindPlayer(playback: Playback?) {
         if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
-            viewController?.player = player
-            viewController?.delegate = avFoundationPlayback
+            self.player = player
+            delegate = avFoundationPlayback
         }
     }
 
-    fileprivate func unbindPlaybackEvents() {
+    private func unbindPlaybackEvents() {
         for eventId in playbackEventsListenIds {
             baseObject.stopListening(eventId)
         }
@@ -251,7 +242,7 @@ open class Player: AVPlayerViewController {
         Loader.shared.register(plugins: plugins)
     }
 
-    fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
+    private func forward(_ event: Event, userInfo: EventUserInfo) {
         baseObject.trigger(event.rawValue, userInfo: userInfo)
     }
 
@@ -259,20 +250,13 @@ open class Player: AVPlayerViewController {
         Logger.logDebug("destroying", scope: "Player")
         baseObject.stopListening()
         Logger.logDebug("destroying core", scope: "Player")
-        self.core?.destroy()
+        core?.destroy()
         Logger.logDebug("destroying viewController", scope: "Player")
         destroyViewController()
         Logger.logDebug("destroyed", scope: "Player")
     }
 
-    fileprivate func destroyViewController() {
-        if let viewController = viewController {
-            viewController.player = nil
-            viewController.willMove(toParent: nil)
-            viewController.view.removeFromSuperview()
-            viewController.removeFromParent()
-        }
-
+    private func destroyViewController() {
         willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
