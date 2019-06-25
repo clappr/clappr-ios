@@ -1,6 +1,6 @@
 import AVKit
 
-open class Player: UIViewController {
+open class Player: AVPlayerViewController {
     open var playbackEventsToListen: [String] = []
     fileprivate var playbackEventsListenIds: [String] = []
     fileprivate(set) var core: Core?

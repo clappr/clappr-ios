@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import AVFoundation
+import AVKit
 
 @testable import Clappr
 
@@ -9,9 +10,7 @@ class PlayerTests: QuickSpec {
     
     override func spec() {
         describe("Player") {
-            
-            let options = [kSourceUrl: "http://clappr.com/video.mp4"]
-            
+            let options: Options = [kSourceUrl: "http://clappr.com/video.mp4"]
             var player: Player!
             var playback: Playback!
             
@@ -20,9 +19,13 @@ class PlayerTests: QuickSpec {
                 player = Player(options: options, externalPlugins: [AContainerPlugin.self])
                 playback = player.activePlayback
             }
+
+            it("is an instance of AVPlayerViewController") {
+                expect(player).to(beAKindOf(AVPlayerViewController.self))
+            }
             
-            it("Should load source on core when initializing") {
-                let player = Player(options: options as Options)
+            it("loads source on core when initializing") {
+                let player = Player(options: options)
                 
                 if let core = player.core {
                     expect(core.activeContainer).toNot(beNil())
@@ -31,7 +34,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("Should listen to playing event") {
+            it("listen to playing event") {
                 var callbackWasCalled = false
                 
                 player.on(.playing) { _ in
@@ -50,7 +53,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("Should listen to didSelectSubtitle event") {
+            it("listen to didSelectSubtitle event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectSubtitle) { _ in
@@ -61,7 +64,7 @@ class PlayerTests: QuickSpec {
                 expect(callbackWasCalled).to(beTrue())
             }
             
-            it("Should listen to didSelectAudio event") {
+            it("listen to didSelectAudio event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectAudio) { _ in
