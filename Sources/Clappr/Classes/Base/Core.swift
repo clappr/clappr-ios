@@ -1,6 +1,6 @@
 open class Core: UIObject, UIGestureRecognizerDelegate {
 
-    @objc public let playerId: String = UUID().uuidString
+    @objc public let environment = Environment()
 
     @objc open var options: Options {
         didSet {
