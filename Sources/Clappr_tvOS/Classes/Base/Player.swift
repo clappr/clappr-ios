@@ -8,6 +8,7 @@ open class Player: AVPlayerViewController {
     private let baseObject = BaseObject()
 
     override open func viewDidLoad() {
+        super.viewDidLoad()
         core?.parentView = view
 
         if isMediaControlEnabled {
@@ -17,6 +18,8 @@ open class Player: AVPlayerViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             UIApplication.willEnterForegroundNotification, object: nil)
+
+        core?.render()
     }
 
     open var isMediaControlEnabled: Bool {
@@ -107,7 +110,7 @@ open class Player: AVPlayerViewController {
         )
 
         setCore(with: options)
-        
+
         bindPlaybackEvents()
     }
 
@@ -119,14 +122,12 @@ open class Player: AVPlayerViewController {
         core = CoreFactory.create(with: options)
         bindCoreEvents()
     }
-    
+
     private func bindCoreEvents() {
         core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-
-        core?.render()
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
@@ -161,17 +162,17 @@ open class Player: AVPlayerViewController {
     open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
     }
-    
+
     open var options: Options? {
         return core?.options
     }
-    
+
     open func getPlugin(name: String) -> Plugin? {
         var plugins: [Plugin] = core?.plugins ?? []
         let containerPlugins: [Plugin] = activeContainer?.plugins ?? []
-        
+
         plugins.append(contentsOf: containerPlugins)
-        
+
         return plugins.first(where: { $0.pluginName == name })
     }
 
@@ -229,7 +230,7 @@ open class Player: AVPlayerViewController {
 
         playbackEventsListenIds.removeAll()
     }
-    
+
     open class func register(playbacks: [Playback.Type]) {
         if !hasAlreadyRegisteredPlaybacks {
             Loader.shared.register(playbacks: [AVFoundationPlayback.self])
