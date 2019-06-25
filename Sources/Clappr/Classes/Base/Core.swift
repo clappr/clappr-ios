@@ -1,4 +1,7 @@
 open class Core: UIObject, UIGestureRecognizerDelegate {
+
+    @objc public let playerId: String = UUID().uuidString
+
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
