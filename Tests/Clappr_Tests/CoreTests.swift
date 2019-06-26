@@ -109,17 +109,13 @@ class CoreTests: QuickSpec {
                     it("start as fullscreen video when `kFullscreenByApp: false` and setFullscreen is called") {
                         options[kFullscreenByApp] = false
                         let player = Player(options: options)
-                        var callbackWasCalled = false
-                        player.on(.requestFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
 
                         self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
-                        expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
+                        expect(player.isFullscreen).to(beTrue())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
                 }
@@ -442,16 +438,11 @@ class CoreTests: QuickSpec {
 
                     it("start as fullscreen video when its false") {
                         let player = Player(options: [kFullscreenByApp: false] as Options)
-                        var callbackWasCalled = false
-                        player.on(.requestFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
 
                         self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
-                        expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
@@ -461,16 +452,11 @@ class CoreTests: QuickSpec {
 
                     it("start as fullscreen video") {
                         let player = Player(options: [kFullscreenByApp: false] as Options)
-                        var callbackWasCalled = false
-                        player.on(.requestFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
 
                         self.playerSetup(player: player)
 
                         player.setFullscreen(true)
 
-                        expect(callbackWasCalled).toEventually(beTrue())
                         expect(player.core!.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(player.core!.isFullscreen).to(beTrue())
                     }
