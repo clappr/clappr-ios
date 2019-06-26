@@ -83,6 +83,13 @@ class PlayerTests: QuickSpec {
 
                 expect(Loader.shared.playbacks.first).to(be(AVFoundationPlayback.self))
             }
+
+            it("contains focusable items") {
+                let button = UIButton(type: .system)
+                button.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                player.contentOverlayView?.addSubview(button)
+                expect(player.focusEnvironments).to(equal([button]))
+            }
         }
     }
     

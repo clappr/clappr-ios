@@ -33,6 +33,10 @@ open class Player: AVPlayerViewController {
         }
     }
 
+    public var focusEnvironments: [UIView] {
+        return contentOverlayView?.subviews ?? []
+    }
+
     open var activeContainer: Container? {
         return core?.activeContainer
     }
