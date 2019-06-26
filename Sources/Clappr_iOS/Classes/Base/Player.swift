@@ -72,7 +72,6 @@ open class Player: BaseObject {
              Event.playing.rawValue, Event.didComplete.rawValue,
              Event.didPause.rawValue, Event.stalling.rawValue,
              Event.didStop.rawValue, Event.didUpdateBuffer.rawValue,
-             Event.requestFullscreen.rawValue, Event.exitFullscreen.rawValue,
              Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
              Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
