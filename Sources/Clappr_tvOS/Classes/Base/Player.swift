@@ -278,3 +278,31 @@ open class Player: AVPlayerViewController {
         NotificationCenter.default.removeObserver(self)
     }
 }
+
+extension Player {
+    private var isPaused: Bool {
+        return activePlayback?.state == .paused
+    }
+
+    private var isPlaying: Bool {
+        return activePlayback?.state == .playing
+    }
+
+    open override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        if presses.containsAny(pressTypes: [.select, .playPause]) && isPaused {
+            activePlayback?.trigger(.willPlay)
+        }
+
+        if presses.containsAny(pressTypes: [.select, .playPause]) && isPlaying {
+            activePlayback?.trigger(.willPause)
+        }
+
+        super.pressesBegan(presses, with: event)
+    }
+}
+
+extension Set where Element == UIPress {
+    func containsAny(pressTypes: [UIPress.PressType]) -> Bool {
+        return self.contains { pressTypes.contains($0.type) }
+    }
+}
