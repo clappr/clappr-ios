@@ -178,23 +178,6 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
 
-                    it("calls a callback function to handle requestFullscreen event") {
-                        player.on(.requestFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
-                        playback.trigger(.requestFullscreen)
-
-                        expect(callbackWasCalled).to(beTrue())
-                    }
-
-                    it("calls a callback function to handle exitFullscreen event") {
-                        player.on(.exitFullscreen) { _ in
-                            callbackWasCalled = true
-                        }
-                        playback.trigger(.exitFullscreen)
-
-                        expect(callbackWasCalled).to(beTrue())
-                    }
                 }
 
                 context("core dependency") {
