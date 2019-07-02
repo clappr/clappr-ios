@@ -10,7 +10,7 @@ open class AVFoundationPlayback: Playback {
     
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
-    @objc dynamic internal var player: AVPlayer?
+    @objc dynamic var player: AVPlayer?
     @objc dynamic private var playerLooper: AVPlayerLooper? {
         didSet {
             loopObserver = observe(\.playerLooper?.loopCount) { [weak self] _, _ in
