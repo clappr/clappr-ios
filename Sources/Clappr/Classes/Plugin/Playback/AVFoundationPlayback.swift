@@ -266,30 +266,31 @@ open class AVFoundationPlayback: Playback {
     #endif
 
     @objc internal func addObservers() {
+        guard let player = player else { return }
         self.observers += [
             view.observe(\UIView.bounds, options: .new, changeHandler: maximizePlayer),
         ]
 
-        player?.addObserver(self, forKeyPath: "currentItem.status",
+        player.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
-        player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
+        player.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
                             options: .new, context: &kvoLoadedTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
+        player.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
                             options: .new, context: &kvoSeekableTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
+        player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
                             options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
+        player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
                             options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "externalPlaybackActive",
+        player.addObserver(self, forKeyPath: "externalPlaybackActive",
                             options: .new, context: &kvoExternalPlaybackActiveContext)
-        player?.addObserver(self, forKeyPath: "rate",
+        player.addObserver(self, forKeyPath: "rate",
                             options: .new, context: &kvoPlayerRateContext)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem)
+            object: player.currentItem)
     }
 
     private func maximizePlayer(view: UIView, changes: NSKeyValueObservedChange<CGRect>) {
