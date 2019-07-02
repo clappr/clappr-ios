@@ -6,7 +6,6 @@ open class AVFoundationPlayback: Playback {
         "m3u8": "application/x-mpegurl",
     ]
 
-    private var kvoStatusDidChangeContext = 0
     private var kvoLoadedTimeRangesContext = 0
     private var kvoSeekableTimeRangesContext = 0
     private var kvoBufferingContext = 0
@@ -268,11 +267,10 @@ open class AVFoundationPlayback: Playback {
     @objc internal func addObservers() {
         guard let player = player else { return }
         self.observers += [
-            view.observe(\UIView.bounds, options: .new, changeHandler: maximizePlayer),
+            view.observe(\.bounds, options: .new, changeHandler: maximizePlayer),
+            player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
         ]
 
-        player.addObserver(self, forKeyPath: "currentItem.status",
-                            options: .new, context: &kvoStatusDidChangeContext)
         player.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
                             options: .new, context: &kvoLoadedTimeRangesContext)
         player.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
@@ -297,6 +295,18 @@ open class AVFoundationPlayback: Playback {
         guard let playerLayer = playerLayer else { return }
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
+    }
+
+    private func handleStatusChangedEvent(player: AVPlayer, changes: Any) {
+        guard let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        playerStatus = currentItem.status
+
+        if isReadyToPlay && state != .paused {
+            readyToPlay()
+        } else if playerStatus == .failed, let error = currentItem.error {
+            trigger(.error, userInfo: ["error": error])
+            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
+        }
     }
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
@@ -396,8 +406,6 @@ open class AVFoundationPlayback: Playback {
         guard let context = context else { return }
 
         switch context {
-        case &kvoStatusDidChangeContext:
-            handleStatusChangedEvent()
         case &kvoLoadedTimeRangesContext:
             handleLoadedTimeRangesEvent()
         case &kvoSeekableTimeRangesContext:
@@ -445,18 +453,6 @@ open class AVFoundationPlayback: Playback {
         trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": isExternalPlaybackActive])
     }
 
-    private func handleStatusChangedEvent() {
-        guard let currentItem = player?.currentItem, playerStatus != currentItem.status else { return }
-        playerStatus = currentItem.status
-
-        if isReadyToPlay && state != .paused {
-            readyToPlay()
-        } else if playerStatus == .failed, let error = currentItem.error {
-            trigger(.error, userInfo: ["error": error])
-            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
-        }
-    }
-
     private func handleLoadedTimeRangesEvent() {
         guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else { return }
         let info = [
@@ -498,7 +494,6 @@ open class AVFoundationPlayback: Playback {
             updateState(.stalling)
         }
     }
-
 
     private func handlePlayerRateChanged() {
         if player?.rate == 0 && playerStatus != .unknown && state != .idle {
@@ -612,7 +607,6 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        player.removeObserver(self, forKeyPath: "currentItem.status")
         player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
         player.removeObserver(self, forKeyPath: "currentItem.seekableTimeRanges")
         player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
