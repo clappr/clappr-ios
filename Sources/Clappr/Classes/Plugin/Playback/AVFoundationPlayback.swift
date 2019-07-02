@@ -7,7 +7,6 @@ open class AVFoundationPlayback: Playback {
     ]
 
     private var kvoBufferingContext = 0
-    private var kvoPlayerRateContext = 0
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     
@@ -269,14 +268,13 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
             player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
             player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
+            player.observe(\.rate, options: .new, changeHandler: handlePlayerRateChanged),
         ]
 
         player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
                             options: .new, context: &kvoBufferingContext)
         player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
                             options: .new, context: &kvoBufferingContext)
-        player.addObserver(self, forKeyPath: "rate",
-                            options: .new, context: &kvoPlayerRateContext)
 
         NotificationCenter.default.addObserver(
             self,
@@ -452,8 +450,6 @@ open class AVFoundationPlayback: Playback {
         switch context {
         case &kvoBufferingContext:
             handleBufferingEvent(keyPath)
-        case &kvoPlayerRateContext:
-            handlePlayerRateChanged()
         default:
             break
         }
@@ -601,7 +597,6 @@ open class AVFoundationPlayback: Playback {
         guard let player = player, player.observationInfo != nil else { return }
         player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
         player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
-        player.removeObserver(self, forKeyPath: "rate")
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
         }
