@@ -46,7 +46,7 @@ open class Player: AVPlayerViewController {
     }
 
     open var isFullscreen: Bool {
-        guard let core = core else {
+        core?.isFullscreen ?? false
             return false
         }
 
