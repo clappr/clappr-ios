@@ -6,8 +6,6 @@ open class AVFoundationPlayback: Playback {
         "m3u8": "application/x-mpegurl",
     ]
 
-    private var kvoBufferingContext = 0
-
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
@@ -267,20 +265,37 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
             player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
             player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
+            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp, options: .new, changeHandler: handlePlaybackLikelyToKeepUp),
+            player.observe(\.currentItem?.isPlaybackBufferEmpty, options: .new, changeHandler: handlePlaybackBufferEmpty),
             player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
             player.observe(\.rate, options: .new, changeHandler: handlePlayerRateChanged),
         ]
-
-        player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
-                            options: .new, context: &kvoBufferingContext)
-        player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
-                            options: .new, context: &kvoBufferingContext)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
+    }
+
+    private var hasEnoughBufferToPlay: Bool {
+        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    }
+
+    private func handlePlaybackLikelyToKeepUp(player: AVPlayer, changes: Any) {
+        guard state != .paused else { return }
+
+        if hasEnoughBufferToPlay {
+            play()
+            selectDefaultSubtitleIfNeeded()
+        } else {
+            updateState(.stalling)
+        }
+    }
+
+    private func handlePlaybackBufferEmpty(player: AVPlayer, changes: Any) {
+        guard state != .paused else { return }
+        updateState(.stalling)
     }
 
     private func maximizePlayer(view: UIView, changes: NSKeyValueObservedChange<CGRect>) {
@@ -443,18 +458,6 @@ open class AVFoundationPlayback: Playback {
         player?.volume = enabled ? .zero : 1.0
     }
 
-    open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
-                                    change _: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-
-        switch context {
-        case &kvoBufferingContext:
-            handleBufferingEvent(keyPath)
-        default:
-            break
-        }
-    }
-
     private func updateState(_ newState: PlaybackState) {
         guard state != newState else { return }
         state = newState
@@ -480,31 +483,6 @@ open class AVFoundationPlayback: Playback {
         if lastDvrAvailability != isDvrAvailable {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
-        }
-    }
-
-    private var hasEnoughBufferToPlay: Bool {
-        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
-    }
-
-    private func handleBufferingEvent(_ keyPath: String?) {
-        guard let keyPath = keyPath, state != .paused else { return }
-
-        if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if hasEnoughBufferToPlay {
-                play()
-                selectDefaultSubtitleIfNeeded()
-            } else {
-                updateState(.stalling)
-            }
-        } else if keyPath == "currentItem.playbackBufferEmpty" {
-            updateState(.stalling)
-        }
-    }
-
-    private func handlePlayerRateChanged() {
-        if player?.rate == 0 && playerStatus != .unknown && state != .idle {
-            updateState(.paused)
         }
     }
 
@@ -595,8 +573,6 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
-        player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
         }
