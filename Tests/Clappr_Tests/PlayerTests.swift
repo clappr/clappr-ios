@@ -269,7 +269,24 @@ class PlayerTests: QuickSpec {
                 }
             }
 
-            describe("#lifecycle") {
+            describe("#attachTo") {
+                fit("triggers didAttachView") {
+                    let player = Player(options: [:])
+                    let view = UIView(frame: .zero)
+                    let controller = UIViewController()
+
+                    var didTriggerEvent = false
+                    player.listenTo(player.core!, eventName: Event.didAttachView.rawValue) { _ in
+                        didTriggerEvent = true
+                    }
+
+                    player.attachTo(view, controller: controller)
+
+                    expect(didTriggerEvent).to(beTrue())
+                }
+            }
+
+            describe("lifecycle") {
                 it("triggers events of destruction correctly") {
                     var triggeredEvents = [String]()
                     player = Player(options: options)
