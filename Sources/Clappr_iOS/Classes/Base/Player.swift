@@ -16,11 +16,7 @@ open class Player: BaseObject {
     }
 
     @objc open var isFullscreen: Bool {
-        guard let core = self.core else {
-            return false
-        }
-
-        return core.isFullscreen
+        return core?.isFullscreen ?? false
     }
 
     @objc open var state: PlaybackState {

@@ -46,11 +46,7 @@ open class Player: AVPlayerViewController {
     }
 
     open var isFullscreen: Bool {
-        core?.isFullscreen ?? false
-            return false
-        }
-
-        return core.isFullscreen
+        return core?.isFullscreen ?? false
     }
 
     open var state: PlaybackState {
