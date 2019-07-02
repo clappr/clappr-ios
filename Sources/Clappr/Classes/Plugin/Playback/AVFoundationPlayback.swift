@@ -12,7 +12,6 @@ open class AVFoundationPlayback: Playback {
     private var kvoBufferingContext = 0
     private var kvoExternalPlaybackActiveContext = 0
     private var kvoPlayerRateContext = 0
-    private var kvoViewBounds = 0
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     
@@ -33,6 +32,8 @@ open class AVFoundationPlayback: Playback {
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
     private(set) var loopObserver: NSKeyValueObservation?
+
+    private var observers = [NSKeyValueObservation]()
 
     var lastDvrAvailability: Bool?
     #if os(tvOS)
@@ -265,8 +266,9 @@ open class AVFoundationPlayback: Playback {
     #endif
 
     @objc internal func addObservers() {
-        view.addObserver(self, forKeyPath: "bounds",
-                         options: .new, context: &kvoViewBounds)
+        self.observers += [
+            view.observe(\UIView.bounds, options: .new, changeHandler: maximizePlayer),
+        ]
 
         player?.addObserver(self, forKeyPath: "currentItem.status",
                             options: .new, context: &kvoStatusDidChangeContext)
@@ -288,6 +290,12 @@ open class AVFoundationPlayback: Playback {
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player?.currentItem)
+    }
+
+    private func maximizePlayer(view: UIView, changes: NSKeyValueObservedChange<CGRect>) {
+        guard let playerLayer = playerLayer else { return }
+        playerLayer.frame = view.bounds
+        setupMaxResolution(for: playerLayer.frame.size)
     }
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
@@ -399,8 +407,6 @@ open class AVFoundationPlayback: Playback {
             handleExternalPlaybackActiveEvent()
         case &kvoPlayerRateContext:
             handlePlayerRateChanged()
-        case &kvoViewBounds:
-            handleViewBoundsChanged()
         default:
             break
         }
@@ -492,11 +498,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func handleViewBoundsChanged() {
-        guard let playerLayer = playerLayer else { return }
-        playerLayer.frame = view.bounds
-        setupMaxResolution(for: playerLayer.frame.size)
-    }
 
     private func handlePlayerRateChanged() {
         if player?.rate == 0 && playerStatus != .unknown && state != .idle {
@@ -620,8 +621,9 @@ open class AVFoundationPlayback: Playback {
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
         }
-        view.removeObserver(self, forKeyPath: "bounds")
         loopObserver = nil
+        observers.forEach { $0.invalidate() }
+        observers.removeAll()
     }
 
     override open func destroy() {
