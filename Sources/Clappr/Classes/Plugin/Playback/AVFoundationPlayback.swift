@@ -6,7 +6,6 @@ open class AVFoundationPlayback: Playback {
         "m3u8": "application/x-mpegurl",
     ]
 
-    private var kvoSeekableTimeRangesContext = 0
     private var kvoBufferingContext = 0
     private var kvoExternalPlaybackActiveContext = 0
     private var kvoPlayerRateContext = 0
@@ -269,10 +268,9 @@ open class AVFoundationPlayback: Playback {
             view.observe(\.bounds, options: .new, changeHandler: maximizePlayer),
             player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
             player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
+            player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
         ]
 
-        player.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
-                            options: .new, context: &kvoSeekableTimeRangesContext)
         player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
                             options: .new, context: &kvoBufferingContext)
         player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
@@ -315,6 +313,12 @@ open class AVFoundationPlayback: Playback {
             "duration": CMTimeGetSeconds(timeRange.duration),
         ]
         trigger(.didUpdateBuffer, userInfo: info)
+    }
+
+    private func handleSeekableTimeRangesEvent(player: AVPlayer, changes: Any) {
+        guard !seekableTimeRanges.isEmpty else { return }
+        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+        handleDvrAvailabilityChange()
     }
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
@@ -414,8 +418,6 @@ open class AVFoundationPlayback: Playback {
         guard let context = context else { return }
 
         switch context {
-        case &kvoSeekableTimeRangesContext:
-            handleSeekableTimeRangesEvent()
         case &kvoBufferingContext:
             handleBufferingEvent(keyPath)
         case &kvoExternalPlaybackActiveContext:
@@ -457,12 +459,6 @@ open class AVFoundationPlayback: Playback {
             restoreBackgroundSession()
         }
         trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": isExternalPlaybackActive])
-    }
-
-    private func handleSeekableTimeRangesEvent() {
-        guard !seekableTimeRanges.isEmpty else { return }
-        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
-        handleDvrAvailabilityChange()
     }
 
     func handleDvrAvailabilityChange() {
@@ -603,7 +599,6 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        player.removeObserver(self, forKeyPath: "currentItem.seekableTimeRanges")
         player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
         player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
         player.removeObserver(self, forKeyPath: "externalPlaybackActive")
