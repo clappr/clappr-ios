@@ -7,7 +7,6 @@ open class AVFoundationPlayback: Playback {
     ]
 
     private var kvoBufferingContext = 0
-    private var kvoExternalPlaybackActiveContext = 0
     private var kvoPlayerRateContext = 0
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
@@ -269,14 +268,13 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
             player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
             player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
+            player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
         ]
 
         player.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
                             options: .new, context: &kvoBufferingContext)
         player.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
                             options: .new, context: &kvoBufferingContext)
-        player.addObserver(self, forKeyPath: "externalPlaybackActive",
-                            options: .new, context: &kvoExternalPlaybackActiveContext)
         player.addObserver(self, forKeyPath: "rate",
                             options: .new, context: &kvoPlayerRateContext)
 
@@ -319,6 +317,40 @@ open class AVFoundationPlayback: Playback {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
         handleDvrAvailabilityChange()
+    }
+
+    private func handleExternalPlaybackActiveEvent(player: AVPlayer, changes: Any) {
+        if player.isExternalPlaybackActive {
+            enableBackgroundSession()
+        } else {
+            restoreBackgroundSession()
+        }
+        trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": player.isExternalPlaybackActive])
+    }
+
+    private func enableBackgroundSession() {
+        backgroundSessionBackup = AVAudioSession.sharedInstance().category
+        changeBackgroundSession(to: .playback)
+    }
+
+    private func restoreBackgroundSession() {
+        if let backgroundSession = backgroundSessionBackup {
+            changeBackgroundSession(to: backgroundSession)
+        }
+    }
+
+    private func changeBackgroundSession(to category: AVAudioSession.Category) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
+        } catch {
+            print("It was not possible to set the audio session category")
+        }
+    }
+
+    private func handlePlayerRateChanged(player: AVPlayer, changes: Any) {
+        if player.rate == 0 && playerStatus != .unknown && state != .idle {
+            updateState(.paused)
+        }
     }
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
@@ -420,8 +452,6 @@ open class AVFoundationPlayback: Playback {
         switch context {
         case &kvoBufferingContext:
             handleBufferingEvent(keyPath)
-        case &kvoExternalPlaybackActiveContext:
-            handleExternalPlaybackActiveEvent()
         case &kvoPlayerRateContext:
             handlePlayerRateChanged()
         default:
@@ -448,17 +478,6 @@ open class AVFoundationPlayback: Playback {
         default:
             break
         }
-    }
-
-    private func handleExternalPlaybackActiveEvent() {
-        guard let isExternalPlaybackActive = player?.isExternalPlaybackActive else { return }
-
-        if isExternalPlaybackActive {
-            enableBackgroundSession()
-        } else {
-            restoreBackgroundSession()
-        }
-        trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": isExternalPlaybackActive])
     }
 
     func handleDvrAvailabilityChange() {
@@ -490,25 +509,6 @@ open class AVFoundationPlayback: Playback {
     private func handlePlayerRateChanged() {
         if player?.rate == 0 && playerStatus != .unknown && state != .idle {
             updateState(.paused)
-        }
-    }
-
-    private func enableBackgroundSession() {
-        backgroundSessionBackup = AVAudioSession.sharedInstance().category
-        changeBackgroundSession(to: .playback)
-    }
-
-    private func restoreBackgroundSession() {
-        if let backgroundSession = backgroundSessionBackup {
-            changeBackgroundSession(to: backgroundSession)
-        }
-    }
-
-    private func changeBackgroundSession(to category: AVAudioSession.Category) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
-        } catch {
-            print("It was not possible to set the audio session category")
         }
     }
 
@@ -601,7 +601,6 @@ open class AVFoundationPlayback: Playback {
         guard let player = player, player.observationInfo != nil else { return }
         player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
         player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
-        player.removeObserver(self, forKeyPath: "externalPlaybackActive")
         player.removeObserver(self, forKeyPath: "rate")
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
