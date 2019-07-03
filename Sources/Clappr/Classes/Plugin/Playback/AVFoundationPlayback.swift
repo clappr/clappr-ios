@@ -60,7 +60,7 @@ open class AVFoundationPlayback: Playback {
         get {
             guard subtitles?.isEmpty == false else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(.legible)
-            return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
+            return MediaOptionFactory.subtitle(from: option)
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
