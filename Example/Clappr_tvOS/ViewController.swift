@@ -46,6 +46,10 @@ class ViewController: UIViewController {
         player.on(Event.willSeek) { _ in print("on willSeek") }
 
         player.on(Event.didSeek) { _ in print("on didSeek") }
+
+        player.on(Event.didSelectAudio) { userInfo in print("on didSelectAudio \(String(describing: userInfo))") }
+
+        player.on(Event.didSelectSubtitle) { userInfo in print("on didSelectSubtitle \(String(describing: userInfo))") }
     }
 
     #if !os(tvOS)
