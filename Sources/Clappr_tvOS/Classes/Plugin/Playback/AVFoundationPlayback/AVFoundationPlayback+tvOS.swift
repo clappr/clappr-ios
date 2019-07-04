@@ -13,8 +13,9 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
 
     public func playerViewController(_ playerViewController: AVPlayerViewController, didSelect mediaSelectionOption: AVMediaSelectionOption?, in mediaSelectionGroup: AVMediaSelectionGroup) {
         guard let mediaType = mediaSelectionGroup.options.first?.mediaType else { return }
-        if mediaType.rawValue == AVMediaType.subtitle.rawValue {
-            triggerMediaOptionSelectedEvent(option: selectedSubtitle, event: Event.didSelectSubtitle)
+
+        if [.closedCaption, .subtitle].contains(mediaType) {
+            selectedSubtitle = MediaOptionFactory.subtitle(from: mediaSelectionOption)
         }
 
         if mediaType.rawValue == AVMediaType.audio.rawValue {
