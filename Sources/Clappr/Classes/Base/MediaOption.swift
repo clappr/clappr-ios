@@ -1,5 +1,3 @@
-import Foundation
-
 public struct MediaOption: Equatable {
     public var name: String
     public var type: MediaOptionType
