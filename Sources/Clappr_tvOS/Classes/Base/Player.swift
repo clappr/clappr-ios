@@ -9,9 +9,7 @@ open class Player: UIViewController {
     private let baseObject = BaseObject()
 
     override open func viewDidLoad() {
-        core?.parentView = view
-
-        if isMediaControlEnabled != false {
+        if isMediaControlEnabled {
             viewController = DecoratedPressAVPlayerViewController(player: self)
             core?.parentView = viewController?.contentOverlayView
             core?.parentController = self
@@ -20,7 +18,11 @@ open class Player: UIViewController {
             viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(viewController.view)
             viewController.didMove(toParent: self)
+        } else {
+            core?.parentView = view
         }
+
+        core?.trigger(.didAttachView)
 
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             UIApplication.willEnterForegroundNotification, object: nil)

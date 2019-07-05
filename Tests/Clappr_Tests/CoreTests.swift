@@ -76,6 +76,25 @@ class CoreTests: QuickSpec {
                 #endif
             }
 
+            describe("On view ready") {
+                context("when a parentView is set") {
+                    it("triggers a core ready event") {
+                        let core = CoreFactory.create(with: [:])
+                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                        let parentViewController = UIViewController()
+
+                        var didTriggerEvent = false
+                        core.listenTo(core, eventName: Event.didAttachView.rawValue) { _ in
+                            didTriggerEvent = true
+                        }
+
+                        core.attach(to: parentView, controller: parentViewController)
+
+                        expect(didTriggerEvent).to(beTrue())
+                    }
+                }
+            }
+
             #if os(iOS)
             describe("Fullscreen") {
                 var options: Options!

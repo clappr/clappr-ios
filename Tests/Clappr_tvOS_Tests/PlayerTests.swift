@@ -49,6 +49,21 @@ class PlayerTests: QuickSpec {
                     expect(player.core!.options["foo"] as? String).to(equal("bar"))
                 }
             }
+
+            describe("attachTo") {
+                it("triggers didAttachView") {
+                    let player = Player(options: [:])
+
+                    var didTriggerEvent = false
+                    player.listenTo(player.core!, eventName: Event.didAttachView.rawValue) { _ in
+                        didTriggerEvent = true
+                    }
+
+                    player.viewDidLoad()
+
+                    expect(didTriggerEvent).to(beTrue())
+                }
+            }
             
             it("Should listen to didSelectSubtitle event") {
                 var callbackWasCalled = false
