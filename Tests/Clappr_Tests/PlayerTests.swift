@@ -270,7 +270,7 @@ class PlayerTests: QuickSpec {
             }
 
             describe("#attachTo") {
-                fit("triggers didAttachView") {
+                it("triggers didAttachView") {
                     let player = Player(options: [:])
                     let view = UIView(frame: .zero)
                     let controller = UIViewController()
