@@ -16,7 +16,7 @@ class PlayerTests: QuickSpec {
             
             beforeEach {
                 Loader.shared.resetPlugins()
-                player = Player(options: options, externalPlugins: [AContainerPlugin.self])
+                player = Player(options: options, externalPlugins: [AContainerPlugin.self, AnUICorePlugin.self])
                 playback = player.activePlayback
             }
 
@@ -85,10 +85,11 @@ class PlayerTests: QuickSpec {
             }
 
             it("contains focusable items") {
-                let button = UIButton(type: .system)
-                button.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-                player.contentOverlayView?.addSubview(button)
-                expect(player.focusEnvironments).to(equal([button]))
+                let player = Player(options: [kMediaControl: true], externalPlugins: [AnUICorePlugin.self])
+
+                player.viewDidLoad()
+
+                expect(player.focusEnvironments.contains(where: { $0 is UIButton} )).to(beTrue())
             }
         }
     }
@@ -117,5 +118,17 @@ class PlayerTests: QuickSpec {
 class AContainerPlugin : ContainerPlugin {
     override class var name: String {
         return "AContainerPlugin"
+    }
+}
+
+class AnUICorePlugin: UICorePlugin {
+    override class var name: String {
+        return "AnUICorePlugin"
+    }
+
+    override func bindEvents() { }
+
+    override func render() {
+        view = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     }
 }

@@ -21,4 +21,22 @@ extension AVFoundationPlayback: AVPlayerViewControllerDelegate {
             triggerMediaOptionSelectedEvent(option: selectedAudioSource, event: Event.didSelectAudio)
         }
     }
+
+    public func playerViewController(_ playerViewController: AVPlayerViewController, willTransitionToVisibilityOfTransportBar visible: Bool, with coordinator: AVPlayerViewControllerAnimationCoordinator) {
+        if #available(tvOS 11.0, *) {
+            coordinator.addCoordinatedAnimations({
+                self.handleTransitionBar(with: visible)
+            })
+        } else {
+            self.handleTransitionBar(with: visible)
+        }
+    }
+
+    private func handleTransitionBar(with visibility: Bool) {
+        if visibility {
+            trigger(Event.willShowMediaControl.rawValue)
+        } else {
+            trigger(Event.willHideMediaControl.rawValue)
+        }
+    }
 }

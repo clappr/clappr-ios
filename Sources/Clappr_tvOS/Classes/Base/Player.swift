@@ -34,7 +34,11 @@ open class Player: AVPlayerViewController {
     }
 
     public var focusEnvironments: [UIView] {
-        return contentOverlayView?.subviews ?? []
+        return contentOverlayView?.subviews.first?.subviews ?? []
+    }
+
+    open override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        return context.nextFocusedView is UIButton
     }
 
     open var activeContainer: Container? {
