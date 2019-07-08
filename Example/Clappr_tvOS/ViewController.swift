@@ -11,7 +11,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         let options = [
-            kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8",
+            kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
             kMediaControl: true
             ] as [String: Any]
         player = Player(options: options)
@@ -46,6 +46,10 @@ class ViewController: UIViewController {
         player.on(Event.willSeek) { _ in print("on willSeek") }
 
         player.on(Event.didSeek) { _ in print("on didSeek") }
+
+        player.on(Event.didSelectAudio) { userInfo in print("on didSelectAudio \(String(describing: userInfo))") }
+
+        player.on(Event.didSelectSubtitle) { userInfo in print("on didSelectSubtitle \(String(describing: userInfo))") }
     }
 
     #if !os(tvOS)

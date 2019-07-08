@@ -108,8 +108,7 @@ open class Player: BaseObject {
     }
     
     @objc open func attachTo(_ view: UIView, controller: UIViewController) {
-        core?.parentController = controller
-        core?.parentView = view
+        core?.attach(to: view, controller: controller)
         core?.render()
     }
 

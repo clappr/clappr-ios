@@ -6,19 +6,11 @@ open class AVFoundationPlayback: Playback {
         "m3u8": "application/x-mpegurl",
     ]
 
-    private var kvoStatusDidChangeContext = 0
-    private var kvoLoadedTimeRangesContext = 0
-    private var kvoSeekableTimeRangesContext = 0
-    private var kvoBufferingContext = 0
-    private var kvoExternalPlaybackActiveContext = 0
-    private var kvoPlayerRateContext = 0
-    private var kvoViewBounds = 0
-
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
-    @objc dynamic internal var player: AVPlayer?
+    @objc dynamic var player: AVPlayer?
     @objc dynamic private var playerLooper: AVPlayerLooper? {
         didSet {
             loopObserver = observe(\.playerLooper?.loopCount) { [weak self] _, _ in
@@ -33,6 +25,8 @@ open class AVFoundationPlayback: Playback {
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
     private(set) var loopObserver: NSKeyValueObservation?
+
+    private var observers = [NSKeyValueObservation]()
 
     var lastDvrAvailability: Bool?
     #if os(tvOS)
@@ -60,7 +54,7 @@ open class AVFoundationPlayback: Playback {
         get {
             guard subtitles?.isEmpty == false else { return nil }
             let option = getSelectedMediaOptionWithCharacteristic(.legible)
-            return MediaOptionFactory.fromAVMediaOption(option, type: .subtitle) ?? MediaOptionFactory.offSubtitle()
+            return MediaOptionFactory.subtitle(from: option)
         }
         set {
             let newOption = newValue?.raw as? AVMediaSelectionOption
@@ -265,29 +259,111 @@ open class AVFoundationPlayback: Playback {
     #endif
 
     @objc internal func addObservers() {
-        view.addObserver(self, forKeyPath: "bounds",
-                         options: .new, context: &kvoViewBounds)
-
-        player?.addObserver(self, forKeyPath: "currentItem.status",
-                            options: .new, context: &kvoStatusDidChangeContext)
-        player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges",
-                            options: .new, context: &kvoLoadedTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.seekableTimeRanges",
-                            options: .new, context: &kvoSeekableTimeRangesContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp",
-                            options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "currentItem.playbackBufferEmpty",
-                            options: .new, context: &kvoBufferingContext)
-        player?.addObserver(self, forKeyPath: "externalPlaybackActive",
-                            options: .new, context: &kvoExternalPlaybackActiveContext)
-        player?.addObserver(self, forKeyPath: "rate",
-                            options: .new, context: &kvoPlayerRateContext)
+        guard let player = player else { return }
+        self.observers += [
+            view.observe(\.bounds, options: .new, changeHandler: maximizePlayer),
+            player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
+            player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
+            player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
+            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp, options: .new, changeHandler: handlePlaybackLikelyToKeepUp),
+            player.observe(\.currentItem?.isPlaybackBufferEmpty, options: .new, changeHandler: handlePlaybackBufferEmpty),
+            player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
+            player.observe(\.rate, options: .new, changeHandler: handlePlayerRateChanged),
+        ]
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem)
+            object: player.currentItem)
+    }
+
+    private var hasEnoughBufferToPlay: Bool {
+        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    }
+
+    private func handlePlaybackLikelyToKeepUp(player: AVPlayer, changes: Any) {
+        guard state != .paused else { return }
+
+        if hasEnoughBufferToPlay {
+            play()
+            selectDefaultSubtitleIfNeeded()
+        } else {
+            updateState(.stalling)
+        }
+    }
+
+    private func handlePlaybackBufferEmpty(player: AVPlayer, changes: Any) {
+        guard state != .paused else { return }
+        updateState(.stalling)
+    }
+
+    private func maximizePlayer(view: UIView, changes: NSKeyValueObservedChange<CGRect>) {
+        guard let playerLayer = playerLayer else { return }
+        playerLayer.frame = view.bounds
+        setupMaxResolution(for: playerLayer.frame.size)
+    }
+
+    private func handleStatusChangedEvent(player: AVPlayer, changes: Any) {
+        guard let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
+        playerStatus = currentItem.status
+
+        if isReadyToPlay && state != .paused {
+            readyToPlay()
+        } else if playerStatus == .failed, let error = currentItem.error {
+            trigger(.error, userInfo: ["error": error])
+            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
+        }
+    }
+
+    private func handleLoadedTimeRangesEvent(player: AVPlayer, changes: Any) {
+        guard let timeRange = player.currentItem?.loadedTimeRanges.first?.timeRangeValue else { return }
+        let info = [
+            "start_position": CMTimeGetSeconds(timeRange.start),
+            "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
+            "duration": CMTimeGetSeconds(timeRange.duration),
+        ]
+        trigger(.didUpdateBuffer, userInfo: info)
+    }
+
+    private func handleSeekableTimeRangesEvent(player: AVPlayer, changes: Any) {
+        guard !seekableTimeRanges.isEmpty else { return }
+        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+        handleDvrAvailabilityChange()
+    }
+
+    private func handleExternalPlaybackActiveEvent(player: AVPlayer, changes: Any) {
+        if player.isExternalPlaybackActive {
+            enableBackgroundSession()
+        } else {
+            restoreBackgroundSession()
+        }
+        trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": player.isExternalPlaybackActive])
+    }
+
+    private func enableBackgroundSession() {
+        backgroundSessionBackup = AVAudioSession.sharedInstance().category
+        changeBackgroundSession(to: .playback)
+    }
+
+    private func restoreBackgroundSession() {
+        if let backgroundSession = backgroundSessionBackup {
+            changeBackgroundSession(to: backgroundSession)
+        }
+    }
+
+    private func changeBackgroundSession(to category: AVAudioSession.Category) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
+        } catch {
+            print("It was not possible to set the audio session category")
+        }
+    }
+
+    private func handlePlayerRateChanged(player: AVPlayer, changes: Any) {
+        if player.rate == 0 && playerStatus != .unknown && state != .idle {
+            updateState(.paused)
+        }
     }
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
@@ -382,30 +458,6 @@ open class AVFoundationPlayback: Playback {
         player?.volume = enabled ? .zero : 1.0
     }
 
-    open override func observeValue(forKeyPath keyPath: String?, of _: Any?,
-                                    change _: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-
-        switch context {
-        case &kvoStatusDidChangeContext:
-            handleStatusChangedEvent()
-        case &kvoLoadedTimeRangesContext:
-            handleLoadedTimeRangesEvent()
-        case &kvoSeekableTimeRangesContext:
-            handleSeekableTimeRangesEvent()
-        case &kvoBufferingContext:
-            handleBufferingEvent(keyPath)
-        case &kvoExternalPlaybackActiveContext:
-            handleExternalPlaybackActiveEvent()
-        case &kvoPlayerRateContext:
-            handlePlayerRateChanged()
-        case &kvoViewBounds:
-            handleViewBoundsChanged()
-        default:
-            break
-        }
-    }
-
     private func updateState(_ newState: PlaybackState) {
         guard state != newState else { return }
         state = newState
@@ -427,99 +479,10 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func handleExternalPlaybackActiveEvent() {
-        guard let isExternalPlaybackActive = player?.isExternalPlaybackActive else { return }
-
-        if isExternalPlaybackActive {
-            enableBackgroundSession()
-        } else {
-            restoreBackgroundSession()
-        }
-        trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": isExternalPlaybackActive])
-    }
-
-    private func handleStatusChangedEvent() {
-        guard let currentItem = player?.currentItem, playerStatus != currentItem.status else { return }
-        playerStatus = currentItem.status
-
-        if isReadyToPlay && state != .paused {
-            readyToPlay()
-        } else if playerStatus == .failed, let error = currentItem.error {
-            trigger(.error, userInfo: ["error": error])
-            Logger.logError("playback failed with error: \(error.localizedDescription) ", scope: pluginName)
-        }
-    }
-
-    private func handleLoadedTimeRangesEvent() {
-        guard let timeRange = player?.currentItem?.loadedTimeRanges.first?.timeRangeValue else { return }
-        let info = [
-            "start_position": CMTimeGetSeconds(timeRange.start),
-            "end_position": CMTimeGetSeconds(CMTimeAdd(timeRange.start, timeRange.duration)),
-            "duration": CMTimeGetSeconds(timeRange.duration),
-        ]
-        trigger(.didUpdateBuffer, userInfo: info)
-    }
-
-    private func handleSeekableTimeRangesEvent() {
-        guard !seekableTimeRanges.isEmpty else { return }
-        trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
-        handleDvrAvailabilityChange()
-    }
-
     func handleDvrAvailabilityChange() {
         if lastDvrAvailability != isDvrAvailable {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
-        }
-    }
-
-    private var hasEnoughBufferToPlay: Bool {
-        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
-    }
-
-    private func handleBufferingEvent(_ keyPath: String?) {
-        guard let keyPath = keyPath, state != .paused else { return }
-
-        if keyPath == "currentItem.playbackLikelyToKeepUp" {
-            if hasEnoughBufferToPlay {
-                play()
-                selectDefaultSubtitleIfNeeded()
-            } else {
-                updateState(.stalling)
-            }
-        } else if keyPath == "currentItem.playbackBufferEmpty" {
-            updateState(.stalling)
-        }
-    }
-
-    private func handleViewBoundsChanged() {
-        guard let playerLayer = playerLayer else { return }
-        playerLayer.frame = view.bounds
-        setupMaxResolution(for: playerLayer.frame.size)
-    }
-
-    private func handlePlayerRateChanged() {
-        if player?.rate == 0 && playerStatus != .unknown && state != .idle {
-            updateState(.paused)
-        }
-    }
-
-    private func enableBackgroundSession() {
-        backgroundSessionBackup = AVAudioSession.sharedInstance().category
-        changeBackgroundSession(to: .playback)
-    }
-
-    private func restoreBackgroundSession() {
-        if let backgroundSession = backgroundSessionBackup {
-            changeBackgroundSession(to: backgroundSession)
-        }
-    }
-
-    private func changeBackgroundSession(to category: AVAudioSession.Category) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
-        } catch {
-            print("It was not possible to set the audio session category")
         }
     }
 
@@ -554,7 +517,7 @@ open class AVFoundationPlayback: Playback {
     internal func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = subtitles else { return }
         var isFirstSelection = false
-        let defaultSubtitle = defaultMediaOption(for: subtitles, with: defaultSubtitleLanguage)
+        let defaultSubtitle = defaultMediaOption(for: subtitles, with: defaultSubtitleLanguage) ?? mediaSelectionGroup(.legible)?.defaultOption
         if let selectedOption = defaultSubtitle, !selectedCharacteristics.contains(.legible) {
             isFirstSelection = true
             setMediaSelectionOption(selectedOption, characteristic: .legible)
@@ -610,18 +573,12 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        player.removeObserver(self, forKeyPath: "currentItem.status")
-        player.removeObserver(self, forKeyPath: "currentItem.loadedTimeRanges")
-        player.removeObserver(self, forKeyPath: "currentItem.seekableTimeRanges")
-        player.removeObserver(self, forKeyPath: "currentItem.playbackLikelyToKeepUp")
-        player.removeObserver(self, forKeyPath: "currentItem.playbackBufferEmpty")
-        player.removeObserver(self, forKeyPath: "externalPlaybackActive")
-        player.removeObserver(self, forKeyPath: "rate")
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
         }
-        view.removeObserver(self, forKeyPath: "bounds")
         loopObserver = nil
+        observers.forEach { $0.invalidate() }
+        observers.removeAll()
     }
 
     override open func destroy() {

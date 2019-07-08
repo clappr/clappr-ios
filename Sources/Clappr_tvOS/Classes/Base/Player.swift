@@ -16,6 +16,8 @@ open class Player: AVPlayerViewController {
             core?.parentController = self
         }
 
+        core?.trigger(.didAttachView)
+
         NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name:
             UIApplication.willEnterForegroundNotification, object: nil)
 

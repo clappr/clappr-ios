@@ -96,6 +96,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         parentView?.addSubviewMatchingConstraints(view)
     }
 
+    open func attach(to parentView: UIView, controller: UIViewController) {
+        self.parentController = controller
+        self.parentView = parentView
+        trigger(Event.didAttachView)
+    }
+
     open override func render() {
         containers.forEach(renderContainer)
         addToContainer()

@@ -9,6 +9,10 @@ class MediaOptionFactory {
         return nil
     }
 
+    class func subtitle(from option: AVMediaSelectionOption?) -> MediaOption {
+        return fromAVMediaOption(option, type: .subtitle) ?? offSubtitle()
+    }
+
     class func offSubtitle() -> MediaOption {
         return MediaOption(name: "Off", type: .subtitle, language: "off", raw: nil)
     }
