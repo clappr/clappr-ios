@@ -1358,7 +1358,6 @@
 			isa = PBXGroup;
 			children = (
 				FC77859E2005233D00EC879F /* Player.swift */,
-				CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1886,7 +1885,6 @@
 				32E401C41FF42335001C2096 /* UIView+Ext.swift in Sources */,
 				325111452134827F001FEEBA /* Options.swift in Sources */,
 				ABE7D3EF212C36200049773A /* SharedData.swift in Sources */,
-				CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				FBD47AB021AD6856003265AF /* ContainerFactory.swift in Sources */,

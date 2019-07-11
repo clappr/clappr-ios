@@ -1,26 +1,20 @@
 import AVKit
 
 @objcMembers
-open class Player: UIViewController {
+open class Player: AVPlayerViewController {
     open var playbackEventsToListen: [String] = []
-    fileprivate var playbackEventsListenIds: [String] = []
-    fileprivate(set) var core: Core?
+    private var playbackEventsListenIds: [String] = []
+    private(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
-    fileprivate var viewController: AVPlayerViewController!
     private let baseObject = BaseObject()
 
     override open func viewDidLoad() {
+        super.viewDidLoad()
+        core?.parentView = view
+
         if isMediaControlEnabled {
-            viewController = DecoratedPressAVPlayerViewController(player: self)
-            core?.parentView = viewController?.contentOverlayView
+            core?.parentView = contentOverlayView
             core?.parentController = self
-            addChild(viewController)
-            viewController.view.frame = view.bounds
-            viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            view.addSubview(viewController.view)
-            viewController.didMove(toParent: self)
-        } else {
-            core?.parentView = view
         }
 
         core?.trigger(.didAttachView)
@@ -35,11 +29,19 @@ open class Player: UIViewController {
         return core?.options[kMediaControl] as? Bool ?? false
     }
 
-    @objc fileprivate func willEnterForeground() {
+    @objc private func willEnterForeground() {
         if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled {
             Logger.logDebug("forced play after return from background", scope: "Player")
             playback.play()
         }
+    }
+
+    public var focusEnvironments: [UIView] {
+        return contentOverlayView?.subviews.first?.subviews ?? []
+    }
+
+    open override func shouldUpdateFocus(in context: UIFocusUpdateContext) -> Bool {
+        return context.nextFocusedView is UIButton
     }
 
     open var activeContainer: Container? {
@@ -51,7 +53,7 @@ open class Player: UIViewController {
     }
 
     open var isFullscreen: Bool {
-        guard let core = self.core else {
+        guard let core = core else {
             return false
         }
 
@@ -104,7 +106,7 @@ open class Player: UIViewController {
 
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
-        self.playbackEventsToListen.append(contentsOf:
+        playbackEventsToListen.append(contentsOf:
             [Event.ready.rawValue, Event.error.rawValue,
              Event.playing.rawValue, Event.didComplete.rawValue,
              Event.didPause.rawValue, Event.stalling.rawValue,
@@ -119,7 +121,7 @@ open class Player: UIViewController {
         )
 
         setCore(with: options)
-        
+
         bindPlaybackEvents()
     }
 
@@ -128,17 +130,15 @@ open class Player: UIViewController {
     }
 
     private func setCore(with options: Options) {
-        self.core = CoreFactory.create(with: options)
+        core = CoreFactory.create(with: options)
         bindCoreEvents()
     }
-    
-    fileprivate func bindCoreEvents() {
-        self.core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        self.core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        self.core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
-        self.core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
 
-        self.core?.render()
+    private func bindCoreEvents() {
+        core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
+        core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
+        core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
+        core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
@@ -173,17 +173,17 @@ open class Player: UIViewController {
     open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
     }
-    
+
     open var options: Options? {
         return core?.options
     }
-    
+
     open func getPlugin(name: String) -> Plugin? {
         var plugins: [Plugin] = core?.plugins ?? []
         let containerPlugins: [Plugin] = activeContainer?.plugins ?? []
-        
+
         plugins.append(contentsOf: containerPlugins)
-        
+
         return plugins.first(where: { $0.pluginName == name })
     }
 
@@ -210,7 +210,7 @@ open class Player: UIViewController {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
 
-    fileprivate func bindPlaybackEvents() {
+    private func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
             for event in playbackEventsToListen {
                 let listenId = baseObject.listenTo(
@@ -227,21 +227,21 @@ open class Player: UIViewController {
         }
     }
 
-    fileprivate func bindPlayer(playback: Playback?) {
+    private func bindPlayer(playback: Playback?) {
         if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
-            viewController?.player = player
-            viewController?.delegate = avFoundationPlayback
+            self.player = player
+            delegate = avFoundationPlayback
         }
     }
 
-    fileprivate func unbindPlaybackEvents() {
+    private func unbindPlaybackEvents() {
         for eventId in playbackEventsListenIds {
             baseObject.stopListening(eventId)
         }
 
         playbackEventsListenIds.removeAll()
     }
-    
+
     open class func register(playbacks: [Playback.Type]) {
         if !hasAlreadyRegisteredPlaybacks {
             Loader.shared.register(playbacks: [AVFoundationPlayback.self])
@@ -254,7 +254,7 @@ open class Player: UIViewController {
         Loader.shared.register(plugins: plugins)
     }
 
-    fileprivate func forward(_ event: Event, userInfo: EventUserInfo) {
+    private func forward(_ event: Event, userInfo: EventUserInfo) {
         baseObject.trigger(event.rawValue, userInfo: userInfo)
     }
 
@@ -262,20 +262,13 @@ open class Player: UIViewController {
         Logger.logDebug("destroying", scope: "Player")
         baseObject.stopListening()
         Logger.logDebug("destroying core", scope: "Player")
-        self.core?.destroy()
+        core?.destroy()
         Logger.logDebug("destroying viewController", scope: "Player")
         destroyViewController()
         Logger.logDebug("destroyed", scope: "Player")
     }
 
-    fileprivate func destroyViewController() {
-        if let viewController = viewController {
-            viewController.player = nil
-            viewController.willMove(toParent: nil)
-            viewController.view.removeFromSuperview()
-            viewController.removeFromParent()
-        }
-
+    private func destroyViewController() {
         willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
@@ -290,5 +283,33 @@ open class Player: UIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+}
+
+extension Player {
+    private var isPaused: Bool {
+        return activePlayback?.state == .paused
+    }
+
+    private var isPlaying: Bool {
+        return activePlayback?.state == .playing
+    }
+
+    open override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        if presses.containsAny(pressTypes: [.select, .playPause]) && isPaused {
+            activePlayback?.trigger(.willPlay)
+        }
+
+        if presses.containsAny(pressTypes: [.select, .playPause]) && isPlaying {
+            activePlayback?.trigger(.willPause)
+        }
+
+        super.pressesBegan(presses, with: event)
+    }
+}
+
+extension Set where Element == UIPress {
+    func containsAny(pressTypes: [UIPress.PressType]) -> Bool {
+        return self.contains { pressTypes.contains($0.type) }
     }
 }

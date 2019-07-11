@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import AVFoundation
+import AVKit
 
 @testable import Clappr
 
@@ -9,20 +10,22 @@ class PlayerTests: QuickSpec {
     
     override func spec() {
         describe("Player") {
-            
-            let options = [kSourceUrl: "http://clappr.com/video.mp4"]
-            
+            let options: Options = [kSourceUrl: "http://clappr.com/video.mp4"]
             var player: Player!
             var playback: Playback!
             
             beforeEach {
                 Loader.shared.resetPlugins()
-                player = Player(options: options, externalPlugins: [AContainerPlugin.self])
+                player = Player(options: options, externalPlugins: [AContainerPlugin.self, AnUICorePlugin.self])
                 playback = player.activePlayback
             }
+
+            it("is an instance of AVPlayerViewController") {
+                expect(player).to(beAKindOf(AVPlayerViewController.self))
+            }
             
-            it("Should load source on core when initializing") {
-                let player = Player(options: options as Options)
+            it("loads source on core when initializing") {
+                let player = Player(options: options)
                 
                 if let core = player.core {
                     expect(core.activeContainer).toNot(beNil())
@@ -31,7 +34,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("Should listen to playing event") {
+            it("listen to playing event") {
                 var callbackWasCalled = false
                 
                 player.on(.playing) { _ in
@@ -65,7 +68,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("Should listen to didSelectSubtitle event") {
+            it("listen to didSelectSubtitle event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectSubtitle) { _ in
@@ -76,7 +79,7 @@ class PlayerTests: QuickSpec {
                 expect(callbackWasCalled).to(beTrue())
             }
             
-            it("Should listen to didSelectAudio event") {
+            it("listen to didSelectAudio event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectAudio) { _ in
@@ -94,6 +97,14 @@ class PlayerTests: QuickSpec {
                 _ = Player(options: options)
 
                 expect(Loader.shared.playbacks.first).to(be(AVFoundationPlayback.self))
+            }
+
+            it("contains focusable items") {
+                let player = Player(options: [kMediaControl: true], externalPlugins: [AnUICorePlugin.self])
+
+                player.viewDidLoad()
+
+                expect(player.focusEnvironments.contains(where: { $0 is UIButton} )).to(beTrue())
             }
         }
     }
@@ -122,5 +133,17 @@ class PlayerTests: QuickSpec {
 class AContainerPlugin : ContainerPlugin {
     override class var name: String {
         return "AContainerPlugin"
+    }
+}
+
+class AnUICorePlugin: UICorePlugin {
+    override class var name: String {
+        return "AnUICorePlugin"
+    }
+
+    override func bindEvents() { }
+
+    override func render() {
+        view = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     }
 }
