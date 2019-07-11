@@ -71,6 +71,9 @@ open class Container: UIObject {
         renderPlayback()
 
         observeWhenViewChangeBounds()
+        #if os(iOS)
+        addOrientationObserver()
+        #endif
     }
 
     fileprivate func renderPlayback() {
@@ -118,6 +121,29 @@ open class Container: UIObject {
         }
     }
 
+    #if os(iOS)
+    private func addOrientationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(orientationDidChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil)
+    }
+
+    private func removeOrientationObserver() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil)
+    }
+
+    @objc func orientationDidChange() {
+        let orientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
+
+        trigger(.didChangeScreenOrientation, userInfo: ["orientation": orientation])
+    }
+    #endif
+
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
 
@@ -141,7 +167,9 @@ open class Container: UIObject {
         view.removeFromSuperview()
 
         boundsObservation?.invalidate()
-
+        #if os(iOS)
+        removeOrientationObserver()
+        #endif
         trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
