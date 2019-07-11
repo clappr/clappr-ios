@@ -1,21 +1,22 @@
+@objcMembers
 open class Player: BaseObject {
 
-    @objc open var playbackEventsToListen: [String] = []
+    open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
-    @objc private(set) var core: Core?
+    private(set) var core: Core?
 
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
 
-    @objc open var activeContainer: Container? {
+    open var activeContainer: Container? {
         return core?.activeContainer
     }
 
-    @objc open var activePlayback: Playback? {
+    open var activePlayback: Playback? {
         return core?.activePlayback
     }
 
-    @objc open var isFullscreen: Bool {
+    open var isFullscreen: Bool {
         guard let core = self.core else {
             return false
         }
@@ -23,15 +24,15 @@ open class Player: BaseObject {
         return core.isFullscreen
     }
 
-    @objc open var state: PlaybackState {
+    open var state: PlaybackState {
         return activePlayback?.state ?? .none
     }
 
-    @objc open var duration: Double {
+    open var duration: Double {
         return activePlayback?.duration ?? 0
     }
 
-    @objc open var position: Double {
+    open var position: Double {
         return activePlayback?.position ?? 0
     }
 
@@ -97,47 +98,47 @@ open class Player: BaseObject {
         core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
     }
     
-    @objc open func presentFullscreenIn(_ controller: UIViewController) {
+    open func presentFullscreenIn(_ controller: UIViewController) {
         guard let coreView = core?.view else { return }
         controller.view.addSubviewMatchingConstraints(coreView)
     }
     
-    @objc open func fitParentView() {
+    open func fitParentView() {
         guard let coreView = core?.view else { return }
         core?.parentView?.addSubviewMatchingConstraints(coreView)
     }
     
-    @objc open func attachTo(_ view: UIView, controller: UIViewController) {
+    open func attachTo(_ view: UIView, controller: UIViewController) {
         core?.attach(to: view, controller: controller)
         core?.render()
     }
 
-    @objc open func load(_ source: String, mimeType: String? = nil) {
+    open func load(_ source: String, mimeType: String? = nil) {
         core?.activeContainer?.load(source, mimeType: mimeType)
         play()
     }
 
-    @objc open func configure(options: Options) {
+    open func configure(options: Options) {
         core?.options = options
     }
 
-    @objc open func play() {
+    open func play() {
         core?.activePlayback?.play()
     }
 
-    @objc open func pause() {
+    open func pause() {
         core?.activePlayback?.pause()
     }
 
-    @objc open func stop() {
+    open func stop() {
         core?.activePlayback?.stop()
     }
 
-    @objc open func seek(_ timeInterval: TimeInterval) {
+    open func seek(_ timeInterval: TimeInterval) {
         core?.activePlayback?.seek(timeInterval)
     }
 
-    @objc open func setFullscreen(_ fullscreen: Bool) {
+    open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
     }
     
@@ -209,7 +210,7 @@ open class Player: BaseObject {
         Loader.shared.register(plugins: plugins)
     }
 
-    @objc open func destroy() {
+    open func destroy() {
         Logger.logDebug("destroying", scope: "Player")
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
