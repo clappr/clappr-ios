@@ -65,7 +65,7 @@ public class QuickSeekPlugin: UICorePlugin {
         playback.seek(playback.position - 10)
         guard playback.position - 10 > 0.0 else { return }
         animatonHandler?.animateBackward()
-        core?.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "left"])
+        core?.activeContainer?.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "left"])
     }
     
     private func seekForward(_ playback: Playback) {
@@ -74,7 +74,7 @@ public class QuickSeekPlugin: UICorePlugin {
         playback.seek(playback.position + 10)
         guard playback.position + 10 < playback.duration else { return }
         animatonHandler?.animateForward()
-        core?.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "right"])
+        core?.activeContainer?.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "right"])
     }
     
     private func impactFeedback() {
