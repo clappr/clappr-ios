@@ -46,8 +46,21 @@ class QuickSeekCorePluginTests: QuickSpec {
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(10))
                     }
+
+                    it("triggers didDoubleTouchMediaControl event") {
+                        var eventArguments: EventUserInfo = [:]
+                        core.playbackMock?.set(position: 20.0)
+
+                        core.on(Event.didDoubleTouchMediaControl.rawValue) { userInfo in
+                            eventArguments = userInfo
+                        }
+
+                        quickSeekPlugin.quickSeek(xPosition: 0)
+
+                        expect(eventArguments?["position"] as? String).to(equal("left"))
+                    }
                 }
-                
+
                 context("and its position is higher than half of the view (right)") {
                     it("seeks forward 10 seconds") {
                         core.playbackMock?.set(position: 20.0)
@@ -57,6 +70,19 @@ class QuickSeekCorePluginTests: QuickSpec {
                         expect(eventTrigger).toEventually(beTrue())
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(30))
+                    }
+
+                    it("triggers didDoubleTouchMediaControl event") {
+                        var eventArguments: EventUserInfo = [:]
+                        core.playbackMock?.set(position: 20.0)
+
+                        core.on(Event.didDoubleTouchMediaControl.rawValue) { userInfo in
+                            eventArguments = userInfo
+                        }
+
+                        quickSeekPlugin.quickSeek(xPosition: 100)
+
+                        expect(eventArguments?["position"] as? String).to(equal("right"))
                     }
                 }
                 
