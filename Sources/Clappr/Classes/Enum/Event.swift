@@ -29,7 +29,6 @@ public enum Event: String, CaseIterable {
     case didChangeDvrStatus = "Clappr:didChangeDvrStatus"
     case seekableUpdate = "Clappr:seekableUpdate"
     case didChangeDvrAvailability = "Clappr:didChangeDvrAvailability"
-    case willUpdateOptions = "Clappr:willUpdateOptions"
     case didUpdateOptions = "Clappr:didUpdateOptions"
     case willShowMediaControl = "Clappr:willShowMediaControl"
     case didShowMediaControl = "Clappr:didShowMediaControl"

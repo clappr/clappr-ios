@@ -52,15 +52,17 @@ class PlayerTests: QuickSpec {
                     expect(player.core!.options["foo"] as? String).to(equal("bar"))
                 }
 
-                it("triggers willUpdateOptions with new options") {
-                    var newOptions: [String: String]?
-                    player.core!.on(Event.willUpdateOptions.rawValue) { userInfo in
-                        newOptions = userInfo?["options"] as? [String: String]
+                context("when source is passed in configure") {
+                    it("triggers willLoadSource in core") {
+                        var triggeredWillLoadSource = false
+                        player.core!.on(Event.willLoadSource.rawValue) { userInfo in
+                            triggeredWillLoadSource = true
+                        }
+
+                        player.configure(options: [kSourceUrl: "new source url"])
+
+                        expect(triggeredWillLoadSource).to(beTrue())
                     }
-
-                    player.configure(options: ["foo": "bar"])
-
-                    expect(newOptions).to(equal(["foo": "bar"]))
                 }
             }
 
@@ -117,7 +119,6 @@ class PlayerTests: QuickSpec {
 
                 expect(player.focusEnvironments.contains(where: { $0 is UIButton} )).to(beTrue())
             }
-
 
             it("triggers willLoadSource in core on load") {
                 Loader.shared.resetPlaybacks()

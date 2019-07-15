@@ -283,19 +283,19 @@ class PlayerTests: QuickSpec {
                     expect(playerOptionValue).to(equal("bar"))
                 }
 
-                it("triggers willUpdateOptions with new options") {
-                    Loader.shared.resetPlugins()
-                    Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
-                    player = Player(options: options)
+                it("triggers willLoadSource in core on load") {
+                    Loader.shared.resetPlaybacks()
+                    Player.register(playbacks: [SpecialStubPlayback.self])
+                    let player = Player(options: options)
+                    var willLoadSourceTriggered = false
 
-                    var newOptions: [String: String]?
-                    player.core!.on(Event.willUpdateOptions.rawValue) { userInfo in
-                        newOptions = userInfo?["options"] as? [String: String]
+                    player.core?.on(Event.willLoadSource.rawValue) { _ in
+                        willLoadSourceTriggered = true
                     }
 
-                    player.configure(options: ["foo": "bar"])
+                    player.load(PlayerTests.specialSource)
 
-                    expect(newOptions).to(equal(["foo": "bar"]))
+                    expect(willLoadSourceTriggered).to(beTrue())
                 }
             }
 

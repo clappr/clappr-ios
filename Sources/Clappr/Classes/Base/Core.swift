@@ -176,6 +176,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     fileprivate func loadSourceIfNeeded() {
         if let source = options[kSourceUrl] as? String {
+            trigger(.willLoadSource)
             activeContainer?.load(source, mimeType: options[kMimeType] as? String)
         }
     }

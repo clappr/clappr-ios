@@ -120,7 +120,6 @@ open class Player: BaseObject {
     }
 
     open func configure(options: Options) {
-        core?.trigger(.willUpdateOptions, userInfo: ["options": options])
         core?.options = options
     }
 
