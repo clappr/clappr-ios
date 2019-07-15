@@ -612,7 +612,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
     
-    public func getBitrate() -> Double? {
+    open func getBitrate() -> Double? {
         guard let logEvent = lastLogEvent() else { return nil }
         if (logEvent.segmentsDownloadedDuration ) > 0 {
             return logEvent.indicatedBitrate
@@ -620,7 +620,7 @@ open class AVFoundationPlayback: Playback {
         return logEvent.observedBitrate
     }
     
-    public func getAvgBitrate() -> Double? {
+    open func getAvgBitrate() -> Double? {
         guard let logEvent = lastLogEvent() else { return nil }
         return logEvent.averageVideoBitrate
     }
