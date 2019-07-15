@@ -32,7 +32,9 @@ open class Container: UIObject {
     }
 
     private var boundsObservation: NSKeyValueObservation?
-
+    #if os(iOS)
+    private var previousDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    #endif
     public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
@@ -138,9 +140,12 @@ open class Container: UIObject {
     }
 
     @objc func orientationDidChange() {
-        let orientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
+        let currentOrientation = UIDevice.current.orientation
+        guard currentOrientation != previousDeviceOrientation else { return }
 
-        trigger(.didChangeScreenOrientation, userInfo: ["orientation": orientation])
+        let description = currentOrientation.isPortrait ? "portrait" : "landscape"
+        trigger(.didChangeScreenOrientation, userInfo: ["orientation": description])
+        previousDeviceOrientation = currentOrientation
     }
     #endif
 
