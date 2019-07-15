@@ -52,9 +52,9 @@ class PlayerTests: QuickSpec {
                     expect(player.core!.options["foo"] as? String).to(equal("bar"))
                 }
 
-                it("triggers willConfigure with new options") {
+                it("triggers willUpdateOptions with new options") {
                     var newOptions: [String: String]?
-                    player.core!.on(Event.willConfigure.rawValue) { userInfo in
+                    player.core!.on(Event.willUpdateOptions.rawValue) { userInfo in
                         newOptions = userInfo?["options"] as? [String: String]
                     }
 

@@ -268,13 +268,13 @@ class PlayerTests: QuickSpec {
                     expect(playerOptionValue).to(equal("bar"))
                 }
 
-                it("triggers willConfigure with new options") {
+                it("triggers willUpdateOptions with new options") {
                     Loader.shared.resetPlugins()
                     Player.register(playbacks: [SpecialStubPlayback.self, StubPlayback.self])
                     player = Player(options: options)
 
                     var newOptions: [String: String]?
-                    player.core!.on(Event.willConfigure.rawValue) { userInfo in
+                    player.core!.on(Event.willUpdateOptions.rawValue) { userInfo in
                         newOptions = userInfo?["options"] as? [String: String]
                     }
 

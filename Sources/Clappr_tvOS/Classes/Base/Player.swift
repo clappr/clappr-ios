@@ -147,7 +147,7 @@ open class Player: AVPlayerViewController {
     }
 
     open func configure(options: Options) {
-        core?.trigger(.willConfigure, userInfo: ["options": options])
+        core?.trigger(.willUpdateOptions, userInfo: ["options": options])
         core?.options = options
     }
 
