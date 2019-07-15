@@ -142,6 +142,7 @@ open class Player: AVPlayerViewController {
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
+        core?.trigger(.willLoadSource)
         activeContainer?.load(source, mimeType: mimeType)
         play()
     }

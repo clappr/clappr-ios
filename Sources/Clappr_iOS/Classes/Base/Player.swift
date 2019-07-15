@@ -114,6 +114,7 @@ open class Player: BaseObject {
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
+        core?.trigger(.willLoadSource)
         core?.activeContainer?.load(source, mimeType: mimeType)
         play()
     }
