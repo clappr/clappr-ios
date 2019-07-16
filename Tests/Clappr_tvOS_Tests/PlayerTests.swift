@@ -125,14 +125,17 @@ class PlayerTests: QuickSpec {
                 Player.register(playbacks: [SpecialStubPlayback.self])
                 let player = Player(options: options)
                 var willLoadSourceTriggered = false
+                var timesTriggered = 0
 
                 player.core?.on(Event.willLoadSource.rawValue) { _ in
                     willLoadSourceTriggered = true
+                    timesTriggered += 1
                 }
 
                 player.load(PlayerTests.specialSource)
 
                 expect(willLoadSourceTriggered).to(beTrue())
+                expect(timesTriggered).toEventually(equal(1))
             }
         }
     }
