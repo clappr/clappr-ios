@@ -149,6 +149,7 @@ open class Player: AVPlayerViewController {
 
     open func configure(options: Options) {
         core?.options = options
+        core?.load()
     }
 
     open func play() {

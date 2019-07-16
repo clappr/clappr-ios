@@ -121,6 +121,7 @@ open class Player: BaseObject {
 
     open func configure(options: Options) {
         core?.options = options
+        core?.load()
     }
 
     open func play() {
