@@ -1,7 +1,7 @@
 import UIKit
 
 public class QuickSeekPlugin: UICorePlugin {
-    let seekDuration = 10.0
+    private let seekDuration = 10.0
     var doubleTapGesture: UITapGestureRecognizer!
 
     open class override var name: String {
