@@ -51,6 +51,19 @@ class PlayerTests: QuickSpec {
                     
                     expect(player.core!.options["foo"] as? String).to(equal("bar"))
                 }
+
+                context("when source is passed in configure") {
+                    it("triggers willLoadSource in core") {
+                        var triggeredWillLoadSource = false
+                        player.core!.on(Event.willLoadSource.rawValue) { userInfo in
+                            triggeredWillLoadSource = true
+                        }
+
+                        player.configure(options: [kSourceUrl: "new source url"])
+
+                        expect(triggeredWillLoadSource).to(beTrue())
+                    }
+                }
             }
 
             describe("attachTo") {
@@ -105,6 +118,24 @@ class PlayerTests: QuickSpec {
                 player.viewDidLoad()
 
                 expect(player.focusEnvironments.contains(where: { $0 is UIButton} )).to(beTrue())
+            }
+
+            it("triggers willLoadSource in core on load") {
+                Loader.shared.resetPlaybacks()
+                Player.register(playbacks: [SpecialStubPlayback.self])
+                let player = Player(options: options)
+                var willLoadSourceTriggered = false
+                var timesTriggered = 0
+
+                player.core?.on(Event.willLoadSource.rawValue) { _ in
+                    willLoadSourceTriggered = true
+                    timesTriggered += 1
+                }
+
+                player.load(PlayerTests.specialSource)
+
+                expect(willLoadSourceTriggered).to(beTrue())
+                expect(timesTriggered).toEventually(equal(1))
             }
         }
     }

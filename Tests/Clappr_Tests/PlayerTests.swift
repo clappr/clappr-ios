@@ -210,6 +210,21 @@ class PlayerTests: QuickSpec {
 
                         expect(player.activePlayback).to(beAKindOf(SpecialStubPlayback.self))
                     }
+
+                    it("triggers willLoadSource in core") {
+                        Loader.shared.resetPlaybacks()
+                        Player.register(playbacks: [SpecialStubPlayback.self])
+                        let player = Player(options: options)
+                        var willLoadSourceTriggered = false
+
+                        player.core?.on(Event.willLoadSource.rawValue) { _ in
+                            willLoadSourceTriggered = true
+                        }
+
+                        player.load(PlayerTests.specialSource)
+
+                        expect(willLoadSourceTriggered).to(beTrue())
+                    }
                 }
 
                 context("third party plugins") {
@@ -266,6 +281,21 @@ class PlayerTests: QuickSpec {
                     let playerOptionValue = player.core?.options["foo"] as? String
 
                     expect(playerOptionValue).to(equal("bar"))
+                }
+
+                it("triggers willLoadSource in core on load") {
+                    Loader.shared.resetPlaybacks()
+                    Player.register(playbacks: [SpecialStubPlayback.self])
+                    let player = Player(options: options)
+                    var willLoadSourceTriggered = false
+
+                    player.core?.on(Event.willLoadSource.rawValue) { _ in
+                        willLoadSourceTriggered = true
+                    }
+
+                    player.load(PlayerTests.specialSource)
+
+                    expect(willLoadSourceTriggered).to(beTrue())
                 }
             }
 

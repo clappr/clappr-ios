@@ -83,7 +83,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.seek(playback.duration)
 
-                            expect(didLoopTriggered).toEventually(beTrue(), timeout: 3)
+                            expect(didLoopTriggered).toEventually(beTrue(), timeout: 4)
                         }
                     }
 

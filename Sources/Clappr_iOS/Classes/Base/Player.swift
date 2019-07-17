@@ -114,12 +114,15 @@ open class Player: BaseObject {
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
-        core?.activeContainer?.load(source, mimeType: mimeType)
+        guard let core = core else { return }
+        let newOptions = core.options.merging([kSourceUrl: source, kMimeType: mimeType as Any], uniquingKeysWith: { _, second in second })
+        configure(options: newOptions)
         play()
     }
 
     open func configure(options: Options) {
         core?.options = options
+        core?.load()
     }
 
     open func play() {
