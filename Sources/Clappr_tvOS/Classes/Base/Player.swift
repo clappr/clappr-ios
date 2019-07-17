@@ -142,9 +142,9 @@ open class Player: AVPlayerViewController {
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
-        core?.options[kSourceUrl] = source
-        core?.options[kMimeType] = mimeType
-        core?.load()
+        guard let core = core else { return }
+        let newOptions = core.options.merging([kSourceUrl: source, kMimeType: mimeType as Any], uniquingKeysWith: { _, second in second })
+        configure(options: newOptions)
         play()
     }
 
