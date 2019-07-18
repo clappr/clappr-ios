@@ -20,7 +20,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     lazy var fullscreenHandler: FullscreenStateHandler? = {
         return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
     }()
-    private var previousDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    private var orientationObserver: OrientationObserver?
     #endif
 
     lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
@@ -62,7 +62,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         view.backgroundColor = .black
 
         addTapGestures()
-        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { plugin in
@@ -95,7 +94,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
         listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
-        addOrientationObserver()
+        orientationObserver = OrientationObserver(core: self)
         #endif
     }
 
@@ -192,32 +191,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    #if os(iOS)
-    private func addOrientationObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(orientationDidChange),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil)
-    }
-
-    private func removeOrientationObserver() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil)
-    }
-
-    @objc func orientationDidChange() {
-        let currentOrientation = UIDevice.current.orientation
-        guard currentOrientation != previousDeviceOrientation else { return }
-
-        let description = currentOrientation.isPortrait ? "portrait" : "landscape"
-        trigger(.didChangeScreenOrientation, userInfo: ["orientation": description])
-        previousDeviceOrientation = currentOrientation
-    }
-    #endif
-
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
@@ -247,7 +220,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         fullscreenHandler?.destroy()
         fullscreenHandler = nil
         fullscreenController = nil
-        removeOrientationObserver()
+        orientationObserver = nil
         #endif
         view.removeFromSuperview()
 

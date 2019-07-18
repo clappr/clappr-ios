@@ -258,6 +258,7 @@
 		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C9B6D6E7216FDD5400588896 /* FullscreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */; };
+		C9B8414922E0F454009DE097 /* OrientationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B8414822E0F454009DE097 /* OrientationObserver.swift */; };
 		C9EDF8482162C98D00789E2F /* MediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */; };
 		C9EDF84A2162CCB700789E2F /* MediaControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF8492162CCB700789E2F /* MediaControlTests.swift */; };
 		C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */; };
@@ -277,7 +278,6 @@
 		CD57FCF122949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF222949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF322949BBB00AB24CF /* SimpleCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCEE22949B0F00AB24CF /* SimpleCorePlugin.swift */; };
-		CDCECC42228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
@@ -546,6 +546,7 @@
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
 		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
+		C9B8414822E0F454009DE097 /* OrientationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationObserver.swift; sourceTree = "<group>"; };
 		C9EDF8472162C98D00789E2F /* MediaControlPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlPluginTests.swift; sourceTree = "<group>"; };
 		C9EDF8492162CCB700789E2F /* MediaControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlTests.swift; sourceTree = "<group>"; };
 		C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerMock.swift; sourceTree = "<group>"; };
@@ -561,7 +562,6 @@
 		CD10D93C22C28D4C0096B035 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		CD57FCEE22949B0F00AB24CF /* SimpleCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCorePlugin.swift; sourceTree = "<group>"; };
 		CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleContainerPlugin.swift; sourceTree = "<group>"; };
-		CDCECC41228F28CB0012FD33 /* DecoratedPressAVPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecoratedPressAVPlayerViewController.swift; sourceTree = "<group>"; };
 		D105480873032552EC2B57ED /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
@@ -1079,6 +1079,7 @@
 			children = (
 				9E26CFF02016148400AE92B7 /* FullScreen */,
 				96D362961D41339400CCB866 /* Player.swift */,
+				C9B8414822E0F454009DE097 /* OrientationObserver.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2010,6 +2011,7 @@
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
+				C9B8414922E0F454009DE097 /* OrientationObserver.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
 				96D362D91D41339400CCB866 /* UIView+Ext.swift in Sources */,
