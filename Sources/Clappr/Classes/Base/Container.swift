@@ -32,9 +32,7 @@ open class Container: UIObject {
     }
 
     private var boundsObservation: NSKeyValueObservation?
-    #if os(iOS)
-    private var previousDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
-    #endif
+
     public init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
@@ -73,9 +71,6 @@ open class Container: UIObject {
         renderPlayback()
 
         observeWhenViewChangeBounds()
-        #if os(iOS)
-        addOrientationObserver()
-        #endif
     }
 
     fileprivate func renderPlayback() {
@@ -123,32 +118,6 @@ open class Container: UIObject {
         }
     }
 
-    #if os(iOS)
-    private func addOrientationObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(orientationDidChange),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil)
-    }
-
-    private func removeOrientationObserver() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil)
-    }
-
-    @objc func orientationDidChange() {
-        let currentOrientation = UIDevice.current.orientation
-        guard currentOrientation != previousDeviceOrientation else { return }
-
-        let description = currentOrientation.isPortrait ? "portrait" : "landscape"
-        trigger(.didChangeScreenOrientation, userInfo: ["orientation": description])
-        previousDeviceOrientation = currentOrientation
-    }
-    #endif
-
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Container")
 
@@ -172,9 +141,6 @@ open class Container: UIObject {
         view.removeFromSuperview()
 
         boundsObservation?.invalidate()
-        #if os(iOS)
-        removeOrientationObserver()
-        #endif
         trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
