@@ -56,4 +56,6 @@ public enum Event: String, CaseIterable {
     case willHideModal = "Clappr:willHideModal"
     case didResize = "Clappr:didResize"
     case didAttachView = "Clappr:didAttachView"
+    case didChangeScreenOrientation = "Clappr:didChangeScreenOrientation"
+    case didDoubleTouchMediaControl = "Clappr:didDoubleTouchMediaControl"
 }

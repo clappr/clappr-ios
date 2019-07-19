@@ -1,7 +1,7 @@
 import UIKit
 
 public class QuickSeekPlugin: UICorePlugin {
-    
+    private let seekDuration = 10.0
     var doubleTapGesture: UITapGestureRecognizer!
 
     open class override var name: String {
@@ -49,12 +49,13 @@ public class QuickSeekPlugin: UICorePlugin {
         guard let activePlayback = core?.activePlayback,
             let container = core?.activeContainer,
             let coreViewWidth = core?.view.frame.width else { return }
-        
-        container.trigger(InternalEvent.didTapQuickSeek.rawValue)
+
         let didTapLeftSide = xPosition < coreViewWidth / 2
         if didTapLeftSide {
+            container.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "left"])
             seekBackward(activePlayback)
         } else {
+            container.trigger(.didDoubleTouchMediaControl, userInfo: ["position": "right"])
             seekForward(activePlayback)
         }
     }
@@ -62,17 +63,19 @@ public class QuickSeekPlugin: UICorePlugin {
     private func seekBackward(_ playback: Playback) {
         guard playback.playbackType == .vod || playback.isDvrAvailable else { return }
         impactFeedback()
-        playback.seek(playback.position - 10)
-        guard playback.position - 10 > 0.0 else { return }
+        playback.seek(playback.position - seekDuration)
+        guard playback.position - seekDuration > 0.0 else { return }
         animatonHandler?.animateBackward()
+        core?.activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": -seekDuration])
     }
     
     private func seekForward(_ playback: Playback) {
         guard playback.playbackType == .vod || playback.isDvrAvailable && playback.isDvrInUse else { return }
         impactFeedback()
-        playback.seek(playback.position + 10)
-        guard playback.position + 10 < playback.duration else { return }
+        playback.seek(playback.position + seekDuration)
+        guard playback.position + seekDuration < playback.duration else { return }
         animatonHandler?.animateForward()
+        core?.activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": seekDuration])
     }
     
     private func impactFeedback() {

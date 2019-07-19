@@ -20,6 +20,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     lazy var fullscreenHandler: FullscreenStateHandler? = {
         return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
     }()
+    private var orientationObserver: OrientationObserver?
     #endif
 
     lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
@@ -61,7 +62,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         view.backgroundColor = .black
 
         addTapGestures()
-        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { plugin in
@@ -94,6 +94,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
         listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
+        orientationObserver = OrientationObserver(core: self)
         #endif
     }
 
@@ -219,6 +220,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         fullscreenHandler?.destroy()
         fullscreenHandler = nil
         fullscreenController = nil
+        orientationObserver = nil
         #endif
         view.removeFromSuperview()
 

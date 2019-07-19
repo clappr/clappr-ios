@@ -10,7 +10,8 @@ class QuickSeekCorePluginTests: QuickSpec {
             var quickSeekPlugin: QuickSeekCorePlugin!
             var core: CoreStub!
             var eventTrigger = false
-            
+            var eventParams: EventUserInfo = [:]
+
             beforeEach {
                 core = CoreStub()
                 core.playbackMock?.videoDuration = 60.0
@@ -18,8 +19,9 @@ class QuickSeekCorePluginTests: QuickSpec {
                 core.addPlugin(quickSeekPlugin)
                 core.view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                 quickSeekPlugin.render()
-                core._container?.on(InternalEvent.didTapQuickSeek.rawValue) { _ in
+                core._container?.on(InternalEvent.didQuickSeek.rawValue) { userInfo in
                     eventTrigger = true
+                    eventParams = userInfo
                 }
             }
             
@@ -43,11 +45,25 @@ class QuickSeekCorePluginTests: QuickSpec {
                         quickSeekPlugin.quickSeek(xPosition: 0)
                         
                         expect(eventTrigger).toEventually(beTrue())
+                        expect(eventParams?["duration"] as? Double).to(equal(-10.0))
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(10))
                     }
+
+                    it("triggers didDoubleTouchMediaControl event") {
+                        var eventArguments: EventUserInfo = [:]
+                        core.playbackMock?.set(position: 20.0)
+
+                        core.activeContainer?.on(Event.didDoubleTouchMediaControl.rawValue) { userInfo in
+                            eventArguments = userInfo
+                        }
+
+                        quickSeekPlugin.quickSeek(xPosition: 0)
+
+                        expect(eventArguments?["position"] as? String).to(equal("left"))
+                    }
                 }
-                
+
                 context("and its position is higher than half of the view (right)") {
                     it("seeks forward 10 seconds") {
                         core.playbackMock?.set(position: 20.0)
@@ -55,8 +71,22 @@ class QuickSeekCorePluginTests: QuickSpec {
                         quickSeekPlugin.quickSeek(xPosition: 100)
 
                         expect(eventTrigger).toEventually(beTrue())
+                        expect(eventParams?["duration"] as? Double).to(equal(10.0))
                         expect(core.playbackMock?.didCallSeek).to(beTrue())
                         expect(core.playbackMock?.didCallSeekWithValue).to(equal(30))
+                    }
+
+                    it("triggers didDoubleTouchMediaControl event") {
+                        var eventArguments: EventUserInfo = [:]
+                        core.playbackMock?.set(position: 20.0)
+
+                        core.activeContainer?.on(Event.didDoubleTouchMediaControl.rawValue) { userInfo in
+                            eventArguments = userInfo
+                        }
+
+                        quickSeekPlugin.quickSeek(xPosition: 100)
+
+                        expect(eventArguments?["position"] as? String).to(equal("right"))
                     }
                 }
                 

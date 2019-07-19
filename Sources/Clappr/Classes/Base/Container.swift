@@ -141,7 +141,6 @@ open class Container: UIObject {
         view.removeFromSuperview()
 
         boundsObservation?.invalidate()
-
         trigger(Event.didDestroy.rawValue)
         Logger.logDebug("destroying listeners", scope: "Container")
         stopListening()
