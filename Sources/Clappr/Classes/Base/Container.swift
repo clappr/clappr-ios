@@ -113,8 +113,8 @@ open class Container: UIObject {
     }
 
     private func observeWhenViewChangeBounds() {
-        boundsObservation = view.observe(\.bounds) { [weak self] (_, _) in
-            self?.trigger(Event.didResize)
+        boundsObservation = view.observe(\.bounds) { [weak self] (view, _) in
+            self?.trigger(Event.didResize, userInfo: ["size": view.bounds.size])
         }
     }
 

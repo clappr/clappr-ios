@@ -353,18 +353,23 @@ class ContainerTests: QuickSpec {
             context("when resized") {
                 it("triggers didResize event") {
                     let container = Container()
+                    container.view.superview?.addSubviewMatchingConstraints(container.view)
                     container.render()
                     container.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
                     var didResizeTriggered = false
+                    var didResizeValue: CGSize? = .zero
 
-                    container.on(Event.didResize.rawValue) { _ in
+                    container.on(Event.didResize.rawValue) { userInfo in
                         didResizeTriggered = true
+                        didResizeValue = userInfo?["size"] as? CGSize
                     }
 
                     container.view.setWidthAndHeight(with: CGSize(width: 10, height: 10))
                     container.view.layoutIfNeeded()
 
                     expect(didResizeTriggered).toEventually(beTrue())
+                    expect(didResizeValue?.width).toEventually(equal(10))
+                    expect(didResizeValue?.height).toEventually(equal(10))
                 }
             }
         }
