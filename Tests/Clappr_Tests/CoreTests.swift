@@ -95,6 +95,20 @@ class CoreTests: QuickSpec {
                 }
             }
 
+            describe("Core sharedData") {
+                context("when stores a value on sharedData") {
+
+                    beforeEach {
+                        core = CoreFactory.create(with: [:])
+                        core.sharedData.storeDictionary["testKey"] = "testValue"
+                    }
+
+                    it("retrieves stored value") {
+                        expect(core.sharedData.storeDictionary["testKey"] as? String) == "testValue"
+                    }
+                }
+            }
+
             #if os(iOS)
             describe("Fullscreen") {
                 var options: Options!
