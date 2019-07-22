@@ -100,11 +100,11 @@ class CoreTests: QuickSpec {
 
                     beforeEach {
                         core = CoreFactory.create(with: [:])
-                        core.sharedData.storeDictionary["testKey"] = "testValue"
+                        core.sharedData["testKey"] = "testValue"
                     }
 
                     it("retrieves stored value") {
-                        expect(core.sharedData.storeDictionary["testKey"] as? String) == "testValue"
+                        expect(core.sharedData["testKey"] as? String) == "testValue"
                     }
                 }
             }
