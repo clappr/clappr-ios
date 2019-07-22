@@ -337,15 +337,22 @@ class ContainerTests: QuickSpec {
             }
 
             describe("Container sharedData") {
-                context("when stores a value on sharedData") {
+                context("on a brand new instance") {
+                    it("starts empty") {
+                        container = ContainerFactory.create(with: Resource.valid)
 
+                        expect(container.sharedData).to(beEmpty())
+                    }
+                }
+
+                context("when stores a value on sharedData") {
                     beforeEach {
                         container = ContainerFactory.create(with: Resource.valid)
-                        container.sharedData.storeDictionary["testKey"] = "testValue"
+                        container.sharedData["testKey"] = "testValue"
                     }
 
                     it("retrieves stored value") {
-                        expect(container.sharedData.storeDictionary["testKey"] as? String) == "testValue"
+                        expect(container.sharedData["testKey"] as? String) == "testValue"
                     }
                 }
             }
