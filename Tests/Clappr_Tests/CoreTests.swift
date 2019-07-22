@@ -96,8 +96,15 @@ class CoreTests: QuickSpec {
             }
 
             describe("Core sharedData") {
-                context("when stores a value on sharedData") {
+                context("on a brand new instance") {
+                    it("starts empty") {
+                        core = CoreFactory.create(with: [:])
 
+                        expect(core.sharedData).to(beEmpty())
+                    }
+                }
+
+                context("when stores a value on sharedData") {
                     beforeEach {
                         core = CoreFactory.create(with: [:])
                         core.sharedData["testKey"] = "testValue"
