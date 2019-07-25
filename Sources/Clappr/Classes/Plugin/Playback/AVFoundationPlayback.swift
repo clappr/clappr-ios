@@ -24,6 +24,7 @@ open class AVFoundationPlayback: Playback {
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
+    private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
 
     private var observers = [NSKeyValueObservation]()
@@ -268,7 +269,7 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.currentItem?.isPlaybackLikelyToKeepUp, options: .new, changeHandler: handlePlaybackLikelyToKeepUp),
             player.observe(\.currentItem?.isPlaybackBufferEmpty, options: .new, changeHandler: handlePlaybackBufferEmpty),
             player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
-            player.observe(\.rate, options: .new, changeHandler: handlePlayerRateChanged),
+            player.observe(\.rate, options: [.old, .new, .prior], changeHandler: handlePlayerRateChanged),
         ]
 
         NotificationCenter.default.addObserver(
@@ -356,12 +357,18 @@ open class AVFoundationPlayback: Playback {
         do {
             try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
         } catch {
-            print("It was not possible to set the audio session category")
+            Logger.logError("It was not possible to set the audio session category")
         }
     }
-
-    private func handlePlayerRateChanged(player: AVPlayer, changes: Any) {
-        if player.rate == 0 && playerStatus != .unknown && state != .idle {
+    
+    private func handlePlayerRateChanged(player: AVPlayer, changes: NSKeyValueObservedChange<Float>) {
+        guard playerStatus != .unknown else { return }
+        if changes.isPrior && player.rate == 1 && state == .playing {
+            if canTriggerWillPause {
+                canTriggerWillPause = false
+                trigger(.willPause)
+            }
+        } else if !changes.isPrior && player.rate == 0 && state != .idle {
             updateState(.paused)
         }
     }
@@ -382,7 +389,10 @@ open class AVFoundationPlayback: Playback {
 
     open override func pause() {
         guard canPause else { return }
-        trigger(.willPause)
+        if canTriggerWillPause {
+            canTriggerWillPause = false
+            trigger(.willPause)
+        }
         player?.pause()
         updateState(.paused)
     }
@@ -390,8 +400,8 @@ open class AVFoundationPlayback: Playback {
     open override func stop() {
         isStopped = true
         trigger(.willStop)
-        player?.pause()
         updateState(.idle)
+        player?.pause()
         releaseResources()
         trigger(.didStop)
     }
@@ -470,6 +480,7 @@ open class AVFoundationPlayback: Playback {
                 isStopped = false
             } else {
                 trigger(.didPause)
+                canTriggerWillPause = true
             }
             triggerDvrStatusIfNeeded()
         case .playing:
