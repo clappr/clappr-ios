@@ -47,23 +47,26 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
-                        playback.render()
 
-                        #if os(iOS)
-                        playback.play()
-                        #endif
-                        playback.once(Event.playing.rawValue) { _ in
-                            playback.pause()
-                            playback.seek(2)
-                        }
                         playback.once(Event.didSeek.rawValue) { _ in
                             playback.play()
-
+                            
                             playback.once(Event.playing.rawValue) { _ in
                                 playback.stop()
                             }
                         }
+                        
+                        playback.once(Event.playing.rawValue) { _ in
+                            playback.pause()
+                            playback.seek(2)
+                        }
 
+                        playback.render()
+                        
+                        #if os(iOS)
+                        playback.play()
+                        #endif
+                        
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 15)
                     }
                 }
