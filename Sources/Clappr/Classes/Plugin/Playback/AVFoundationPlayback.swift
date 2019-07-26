@@ -361,13 +361,17 @@ open class AVFoundationPlayback: Playback {
         }
     }
     
+    private func triggerWillPause() {
+        if canTriggerWillPause {
+            canTriggerWillPause = false
+            trigger(.willPause)
+        }
+    }
+
     private func handlePlayerRateChanged(player: AVPlayer, changes: NSKeyValueObservedChange<Float>) {
         guard playerStatus != .unknown else { return }
         if changes.isPrior && player.rate == 1 && state == .playing {
-            if canTriggerWillPause {
-                canTriggerWillPause = false
-                trigger(.willPause)
-            }
+            triggerWillPause()
         } else if !changes.isPrior && player.rate == 0 && state != .idle {
             updateState(.paused)
         }
@@ -389,10 +393,7 @@ open class AVFoundationPlayback: Playback {
 
     open override func pause() {
         guard canPause else { return }
-        if canTriggerWillPause {
-            canTriggerWillPause = false
-            trigger(.willPause)
-        }
+        triggerWillPause()
         player?.pause()
         updateState(.paused)
     }
