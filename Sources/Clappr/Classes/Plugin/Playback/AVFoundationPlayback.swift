@@ -370,7 +370,7 @@ open class AVFoundationPlayback: Playback {
 
     private func handlePlayerRateChanged(_ player: AVPlayer, _ changes: NSKeyValueObservedChange<Float>) {
         guard playerStatus != .unknown else { return }
-        if changes.isPrior && player.rate == 1 && state == .playing {
+        if changes.isPrior && player.rate != 0.0 && state == .playing {
             triggerWillPause()
         } else if !changes.isPrior && player.rate == 0 && state != .idle {
             updateState(.paused)
@@ -556,7 +556,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func timeUpdated(_ time: CMTime) {
-        if player?.rate == 1.0 {
+        if player?.rate != 0.0 {
             updateState(.playing)
             trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
