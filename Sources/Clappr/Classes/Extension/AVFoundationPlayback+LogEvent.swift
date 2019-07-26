@@ -1,15 +1,7 @@
 import AVFoundation
 
 extension AVFoundationPlayback {
-    open var bitrate: Double? {
-        return lastLogEvent?.bitrate
-    }
-    
-    open var averageBitrate: Double? {
-        return lastLogEvent?.averageVideoBitrate
-    }
-    
-    private var lastLogEvent: AVPlayerItemAccessLogEvent? {
+    var lastLogEvent: AVPlayerItemAccessLogEvent? {
         return player?.currentItem?.accessLog()?.events.last
     }
 }

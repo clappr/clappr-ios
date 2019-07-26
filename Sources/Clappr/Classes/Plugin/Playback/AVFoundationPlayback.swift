@@ -45,6 +45,14 @@ open class AVFoundationPlayback: Playback {
             return currentState
         }
     }
+    
+    open var bitrate: Double? {
+        return lastLogEvent?.bitrate
+    }
+    
+    open var averageBitrate: Double? {
+        return lastLogEvent?.averageVideoBitrate
+    }
 
     open class override var name: String {
         return "AVPlayback"
