@@ -269,6 +269,7 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.currentItem?.isPlaybackLikelyToKeepUp) { [weak self] player, _ in self?.handlePlaybackLikelyToKeepUp(player) },
             player.observe(\.currentItem?.isPlaybackBufferEmpty) { [weak self] player, _ in self?.handlePlaybackBufferEmpty(player) },
             player.observe(\.isExternalPlaybackActive) { [weak self] player, _ in self?.updateAirplayStatus(from: player) },
+            player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
             player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
         ]
 
@@ -374,6 +375,12 @@ open class AVFoundationPlayback: Playback {
             triggerWillPause()
         } else if !changes.isPrior && player.rate == 0 && state != .idle {
             updateState(.paused)
+        }
+    }
+
+    private func triggerStallingIfNeeded(_ player: AVPlayer) {
+        if player.timeControlStatus == .waitingToPlayAtSpecifiedRate {
+            updateState(.stalling)
         }
     }
 

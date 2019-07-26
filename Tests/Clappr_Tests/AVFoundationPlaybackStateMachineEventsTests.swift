@@ -39,7 +39,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let expectedEvents: [Event] = [
                             .ready, .willPlay, .stalling, .willPlay, .playing,
                             .willPause, .didPause, .willSeek, .didSeek,
-                            .willPlay, .playing, .willStop, .didStop
+                            .willPlay, .stalling, .willPlay, .playing, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
