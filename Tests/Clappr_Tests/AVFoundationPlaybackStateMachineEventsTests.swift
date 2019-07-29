@@ -39,7 +39,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let expectedEvents: [Event] = [
                             .ready, .willPlay, .stalling, .willPlay, .playing,
                             .willPause, .didPause, .willSeek, .didSeek,
-                            .willPlay, .playing, .willStop, .didStop
+                            .willPlay, .stalling, .willPlay, .playing, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
@@ -47,23 +47,26 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                                 triggeredEvents.append(event)
                             }
                         }
-                        playback.render()
 
-                        #if os(iOS)
-                        playback.play()
-                        #endif
-                        playback.once(Event.playing.rawValue) { _ in
-                            playback.pause()
-                            playback.seek(2)
-                        }
                         playback.once(Event.didSeek.rawValue) { _ in
                             playback.play()
-
+                            
                             playback.once(Event.playing.rawValue) { _ in
                                 playback.stop()
                             }
                         }
+                        
+                        playback.once(Event.playing.rawValue) { _ in
+                            playback.pause()
+                            playback.seek(2)
+                        }
 
+                        playback.render()
+                        
+                        #if os(iOS)
+                        playback.play()
+                        #endif
+                        
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 15)
                     }
                 }

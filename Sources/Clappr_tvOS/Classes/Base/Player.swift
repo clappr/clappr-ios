@@ -302,11 +302,7 @@ extension Player {
         if presses.containsAny(pressTypes: [.select, .playPause]) && isPaused {
             activePlayback?.trigger(.willPlay)
         }
-
-        if presses.containsAny(pressTypes: [.select, .playPause]) && isPlaying {
-            activePlayback?.trigger(.willPause)
-        }
-
+        
         super.pressesBegan(presses, with: event)
     }
 }

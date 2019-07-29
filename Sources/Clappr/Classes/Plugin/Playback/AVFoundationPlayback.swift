@@ -24,6 +24,7 @@ open class AVFoundationPlayback: Playback {
     private var timeObserver: Any?
     private var asset: AVURLAsset?
     private var backgroundSessionBackup: AVAudioSession.Category?
+    private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
 
     private var observers = [NSKeyValueObservation]()
@@ -261,14 +262,15 @@ open class AVFoundationPlayback: Playback {
     @objc internal func addObservers() {
         guard let player = player else { return }
         self.observers += [
-            view.observe(\.bounds, options: .new, changeHandler: maximizePlayer),
-            player.observe(\.currentItem?.status, options: .new, changeHandler: handleStatusChangedEvent),
-            player.observe(\.currentItem?.loadedTimeRanges, options: .new, changeHandler: handleLoadedTimeRangesEvent),
-            player.observe(\.currentItem?.seekableTimeRanges, options: .new, changeHandler: handleSeekableTimeRangesEvent),
-            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp, options: .new, changeHandler: handlePlaybackLikelyToKeepUp),
-            player.observe(\.currentItem?.isPlaybackBufferEmpty, options: .new, changeHandler: handlePlaybackBufferEmpty),
-            player.observe(\.isExternalPlaybackActive, options: .new, changeHandler: handleExternalPlaybackActiveEvent),
-            player.observe(\.rate, options: .new, changeHandler: handlePlayerRateChanged),
+            view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
+            player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
+            player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
+            player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
+            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp) { [weak self] player, _ in self?.handlePlaybackLikelyToKeepUp(player) },
+            player.observe(\.currentItem?.isPlaybackBufferEmpty) { [weak self] player, _ in self?.handlePlaybackBufferEmpty(player) },
+            player.observe(\.isExternalPlaybackActive) { [weak self] player, _ in self?.updateAirplayStatus(from: player) },
+            player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
+            player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
         ]
 
         NotificationCenter.default.addObserver(
@@ -282,7 +284,7 @@ open class AVFoundationPlayback: Playback {
         return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
     }
 
-    private func handlePlaybackLikelyToKeepUp(player: AVPlayer, changes: Any) {
+    private func handlePlaybackLikelyToKeepUp(_ player: AVPlayer) {
         guard state != .paused else { return }
 
         if hasEnoughBufferToPlay {
@@ -293,18 +295,18 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func handlePlaybackBufferEmpty(player: AVPlayer, changes: Any) {
+    private func handlePlaybackBufferEmpty(_ player: AVPlayer) {
         guard state != .paused else { return }
         updateState(.stalling)
     }
 
-    private func maximizePlayer(view: UIView, changes: NSKeyValueObservedChange<CGRect>) {
+    private func maximizePlayer(within view: UIView) {
         guard let playerLayer = playerLayer else { return }
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
     }
 
-    private func handleStatusChangedEvent(player: AVPlayer, changes: Any) {
+    private func handleStatusChangedEvent(_ player: AVPlayer) {
         guard let currentItem = player.currentItem, playerStatus != currentItem.status else { return }
         playerStatus = currentItem.status
 
@@ -316,7 +318,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func handleLoadedTimeRangesEvent(player: AVPlayer, changes: Any) {
+    private func triggerDidUpdateBuffer(with player: AVPlayer) {
         guard let timeRange = player.currentItem?.loadedTimeRanges.first?.timeRangeValue else { return }
         let info = [
             "start_position": CMTimeGetSeconds(timeRange.start),
@@ -326,13 +328,13 @@ open class AVFoundationPlayback: Playback {
         trigger(.didUpdateBuffer, userInfo: info)
     }
 
-    private func handleSeekableTimeRangesEvent(player: AVPlayer, changes: Any) {
+    private func handleSeekableTimeRangesEvent(_ player: AVPlayer) {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
         handleDvrAvailabilityChange()
     }
 
-    private func handleExternalPlaybackActiveEvent(player: AVPlayer, changes: Any) {
+    private func updateAirplayStatus(from player: AVPlayer) {
         if player.isExternalPlaybackActive {
             enableBackgroundSession()
         } else {
@@ -356,13 +358,29 @@ open class AVFoundationPlayback: Playback {
         do {
             try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
         } catch {
-            print("It was not possible to set the audio session category")
+            Logger.logError("It was not possible to set the audio session category")
+        }
+    }
+    
+    private func triggerWillPause() {
+        if canTriggerWillPause {
+            canTriggerWillPause = false
+            trigger(.willPause)
         }
     }
 
-    private func handlePlayerRateChanged(player: AVPlayer, changes: Any) {
-        if player.rate == 0 && playerStatus != .unknown && state != .idle {
+    private func handlePlayerRateChanged(_ player: AVPlayer, _ changes: NSKeyValueObservedChange<Float>) {
+        guard playerStatus != .unknown else { return }
+        if changes.isPrior && player.rate != 0.0 && state == .playing {
+            triggerWillPause()
+        } else if !changes.isPrior && player.rate == 0 && state != .idle {
             updateState(.paused)
+        }
+    }
+
+    private func triggerStallingIfNeeded(_ player: AVPlayer) {
+        if player.timeControlStatus == .waitingToPlayAtSpecifiedRate {
+            updateState(.stalling)
         }
     }
 
@@ -382,7 +400,7 @@ open class AVFoundationPlayback: Playback {
 
     open override func pause() {
         guard canPause else { return }
-        trigger(.willPause)
+        triggerWillPause()
         player?.pause()
         updateState(.paused)
     }
@@ -390,8 +408,8 @@ open class AVFoundationPlayback: Playback {
     open override func stop() {
         isStopped = true
         trigger(.willStop)
-        player?.pause()
         updateState(.idle)
+        player?.pause()
         releaseResources()
         trigger(.didStop)
     }
@@ -470,6 +488,7 @@ open class AVFoundationPlayback: Playback {
                 isStopped = false
             } else {
                 trigger(.didPause)
+                canTriggerWillPause = true
             }
             triggerDvrStatusIfNeeded()
         case .playing:
@@ -544,7 +563,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func timeUpdated(_ time: CMTime) {
-        if player?.rate == 1.0 {
+        if player?.rate != 0.0 {
             updateState(.playing)
             trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
