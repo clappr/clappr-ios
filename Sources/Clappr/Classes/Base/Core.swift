@@ -115,6 +115,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     open override func render() {
         containers.forEach(renderContainer)
         addToContainer()
+        trigger(.coreReady)
     }
 
     #if os(tvOS)

@@ -691,6 +691,19 @@ class CoreTests: QuickSpec {
 
                     expect(plugin.view.superview).to(equal(core.view))
                 }
+
+                it("triggers core ready after rendering containers") {
+                    let core = Core()
+                    var didCallCoreReady = false
+
+                    core.listenTo(core, event: .coreReady) { _ in
+                        didCallCoreReady.toggle()
+                    }
+
+                    core.render()
+
+                    expect(didCallCoreReady).toEventually(beTrue())
+                }
                 
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlPlugin") {
