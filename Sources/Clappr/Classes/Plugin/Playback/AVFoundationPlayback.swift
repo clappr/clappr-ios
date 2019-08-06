@@ -303,7 +303,7 @@ open class AVFoundationPlayback: Playback {
         
         if lastBitrate != lastEvent.bitrate {
             lastBitrate = lastEvent.bitrate
-            trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate as Any])
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate ?? 0.0])
         }
     }
 

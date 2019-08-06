@@ -98,23 +98,23 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.loopObserver).to(beNil())
                         }
                     }
+                }
+            }
+            
+            context("when bitrate changes") {
+                it("triggers didUpdateBitrate with the new value") {
+                    let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4"]
+                    let playback = AVFoundationPlayback(options: options)
                     
-                    context("when bitrate changes") {
-                        it("triggers didUpdateBitrate with the new value") {
-                            let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
-                            let playback = AVFoundationPlayback(options: options)
-                            
-                            var didUpdateBitrateWithValue: Double?
-                            
-                            playback.on(Event.didUpdateBitrate.rawValue) { userInfo in
-                                didUpdateBitrateWithValue = userInfo?["bitrate"] as? Double
-                            }
-
-                            playback.play()
-                            
-                            expect(didUpdateBitrateWithValue).toEventuallyNot(beNil(), timeout: 4)
-                        }
+                    var didUpdateBitrateWithValue: Double?
+                    
+                    playback.on(Event.didUpdateBitrate.rawValue) { userInfo in
+                        didUpdateBitrateWithValue = userInfo?["bitrate"] as? Double
                     }
+                    
+                    playback.play()
+                    
+                    expect(didUpdateBitrateWithValue).toEventuallyNot(beNil(), timeout: 4)
                 }
             }
 
