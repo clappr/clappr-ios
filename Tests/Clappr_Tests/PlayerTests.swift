@@ -177,7 +177,15 @@ class PlayerTests: QuickSpec {
 
                         expect(callbackWasCalled).to(beTrue())
                     }
-
+                    
+                    it("calls a callback function to handle didUpateBitrate event") {
+                        player.on(.didUpdateBitrate) { _ in
+                            callbackWasCalled = true
+                        }
+                        playback.trigger(.didUpdateBitrate)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
                 }
 
                 context("core dependency") {
