@@ -26,6 +26,7 @@ open class AVFoundationPlayback: Playback {
     private var backgroundSessionBackup: AVAudioSession.Category?
     private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
+    private var lastBitrate: Double?
 
     private var observers = [NSKeyValueObservation]()
 
@@ -286,6 +287,24 @@ open class AVFoundationPlayback: Playback {
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(AVFoundationPlayback.onAccessLogEntry),
+            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+            object: nil)
+    }
+    
+    @objc func onAccessLogEntry(notification: NSNotification?) {
+        guard let playerItem = notification?.object as? AVPlayerItem,
+            let lastEvent = playerItem.accessLog()?.events.last else {
+                return
+        }
+        
+        if lastBitrate != lastEvent.bitrate {
+            lastBitrate = lastEvent.bitrate
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate as Any])
+        }
     }
 
     private var hasEnoughBufferToPlay: Bool {
