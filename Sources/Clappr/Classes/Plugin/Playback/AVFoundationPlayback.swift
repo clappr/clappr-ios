@@ -524,7 +524,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     func handleDvrAvailabilityChange() {
-        if lastDvrAvailability != isDvrAvailable {
+        if lastDvrAvailability != isDvrAvailable && playbackType == .live {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
         }

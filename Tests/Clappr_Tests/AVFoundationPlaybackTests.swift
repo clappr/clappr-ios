@@ -257,9 +257,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                     var didCallChangeDvrAvailability: Bool?
                     let playerAsset = AVURLAssetStub(url: URL(string: "http://clappr.sample/master.m3u8")!)
                     
-                    func setupTest(minDvrSize: Double, seekableTimeRange: Double) {
+                    func setupTest(minDvrSize: Double, seekableTimeRange: Double, duration: CMTime = CMTime.indefinite) {
                         playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
-                        playerAsset.set(duration: CMTime.indefinite)
+                        playerAsset.set(duration: duration)
                         playerItem = AVPlayerItemStub(asset: playerAsset)
                         playerItem!.setSeekableTimeRange(with: seekableTimeRange)
                         let player = AVPlayerStub()
@@ -354,6 +354,17 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     expect(available).toEventually(beTrue())
                                 }
                             }
+                        }
+                    }
+                    
+                    context("video is not live") {
+                        it("does not call didChangeDvrAvailability") {
+                            setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0, duration: CMTime(seconds: 60, preferredTimescale: 1))
+                            playback.lastDvrAvailability = nil
+                            
+                            playback.handleDvrAvailabilityChange()
+                            
+                            expect(didCallChangeDvrAvailability).toEventually(beFalse())
                         }
                     }
                 }
