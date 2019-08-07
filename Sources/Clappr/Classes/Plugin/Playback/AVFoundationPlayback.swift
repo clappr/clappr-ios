@@ -298,7 +298,11 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         guard lastBitrate != bitrate else { return }
         lastBitrate = bitrate
-        trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate ?? 0.0])
+        if let newBitrate = lastBitrate, !newBitrate.isNaN {
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": newBitrate])
+        } else {
+            trigger(.didUpdateBitrate)
+        }
     }
 
     private var hasEnoughBufferToPlay: Bool {
