@@ -531,7 +531,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private var dvrAvailabilityChanged: Bool {
-        return lastDvrAvailability != isDvrAvailable && playbackType == .live
+        return playbackType == .live && lastDvrAvailability != isDvrAvailable
     }
 
     @objc internal func seekOnReadyIfNeeded() {
