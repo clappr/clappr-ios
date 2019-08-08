@@ -249,7 +249,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer!.frame.size)
 
-        asset.wait(for: .characteristics, then: selectDefaultAudioIfNeeded)
+        asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
         asset.wait(for: .duration, then: seekToStartAtIfNeeded)
         addObservers()
     }
@@ -314,7 +314,6 @@ open class AVFoundationPlayback: Playback {
 
         if hasEnoughBufferToPlay {
             play()
-            selectDefaultSubtitleIfNeeded()
         } else {
             updateState(.stalling)
         }
@@ -558,6 +557,11 @@ open class AVFoundationPlayback: Playback {
         return source.first(where: { $0.language == language })?.raw as? AVMediaSelectionOption
     }
 
+    func selectDefaultMediaOptionIfNeeded() {
+        selectDefaultAudioIfNeeded()
+        selectDefaultSubtitleIfNeeded()
+    }
+    
     internal func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = subtitles else { return }
         var isFirstSelection = false
