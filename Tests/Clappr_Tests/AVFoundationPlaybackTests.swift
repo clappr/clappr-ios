@@ -29,7 +29,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 playback = AVFoundationPlayback(options: [:])
                 playback.player = player
                 
-                stub(condition: isHost("clappr.sample")) { result in
+                stub(condition: isHost("clappr.sample") || isHost("clappr.io")) { result in
                     if result.url?.path == "/master.m3u8" {
                         let stubPath = OHPathForFile("master.m3u8", type(of: self))
                         return fixture(filePath: stubPath!, headers: [:])
@@ -71,7 +71,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when video finishes") {
                         it("triggers didLoop event") {
-                            let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
+                            let options: Options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kLoop: true]
                             let playback = AVFoundationPlayback(options: options)
 
                             var didLoopTriggered = false
@@ -103,7 +103,7 @@ class AVFoundationPlaybackTests: QuickSpec {
             
             context("when bitrate changes") {
                 it("triggers didUpdateBitrate with the new value") {
-                    let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4"]
+                    let options: Options = [kSourceUrl: "http://clappr.io/master.m3u8"]
                     let playback = AVFoundationPlayback(options: options)
                     
                     var didUpdateBitrateWithValue: Double?
@@ -114,7 +114,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     playback.play()
                     
-                    expect(didUpdateBitrateWithValue).toEventuallyNot(beNil(), timeout: 4)
+                    expect(didUpdateBitrateWithValue).toEventuallyNot(beNil())
                 }
             }
 
