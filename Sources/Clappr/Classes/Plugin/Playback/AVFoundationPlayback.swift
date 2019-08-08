@@ -355,6 +355,7 @@ open class AVFoundationPlayback: Playback {
     private func handleSeekableTimeRangesEvent(_ player: AVPlayer) {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+
         handleDvrAvailabilityChange()
     }
 
@@ -523,10 +524,14 @@ open class AVFoundationPlayback: Playback {
     }
 
     func handleDvrAvailabilityChange() {
-        if lastDvrAvailability != isDvrAvailable && playbackType == .live {
+        if dvrAvailabilityChanged {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
         }
+    }
+
+    private var dvrAvailabilityChanged: Bool {
+        return lastDvrAvailability != isDvrAvailable && playbackType == .live
     }
 
     @objc internal func seekOnReadyIfNeeded() {
