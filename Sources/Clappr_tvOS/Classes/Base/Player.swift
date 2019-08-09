@@ -114,9 +114,9 @@ open class Player: AVPlayerViewController {
              Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
              Event.willPause.rawValue, Event.willStop.rawValue,
              Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
-             Event.didSeek.rawValue,
-             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
-             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue
+             Event.didSeek.rawValue, Event.didFindSubtitle.rawValue,
+             Event.didFindAudio.rawValue, Event.didSelectSubtitle.rawValue,
+             Event.didSelectAudio.rawValue, Event.didUpdateBitrate.rawValue
             ]
         )
 

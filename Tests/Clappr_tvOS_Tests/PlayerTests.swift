@@ -34,7 +34,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("listen to playing event") {
+            it("listens to playing event") {
                 var callbackWasCalled = false
                 
                 player.on(.playing) { _ in
@@ -81,7 +81,7 @@ class PlayerTests: QuickSpec {
                 }
             }
             
-            it("listen to didSelectSubtitle event") {
+            it("listens to didSelectSubtitle event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectSubtitle) { _ in
@@ -92,7 +92,7 @@ class PlayerTests: QuickSpec {
                 expect(callbackWasCalled).to(beTrue())
             }
             
-            it("listen to didSelectAudio event") {
+            it("listens to didSelectAudio event") {
                 var callbackWasCalled = false
                 
                 player.on(.didSelectAudio) { _ in
@@ -100,6 +100,17 @@ class PlayerTests: QuickSpec {
                 }
                 
                 playback.trigger(.didSelectAudio)
+                expect(callbackWasCalled).to(beTrue())
+            }
+            
+            it("listens to didUpateBitrate event") {
+                var callbackWasCalled = false
+                
+                player.on(.didUpdateBitrate) { _ in
+                    callbackWasCalled = true
+                }
+                playback.trigger(.didUpdateBitrate)
+                
                 expect(callbackWasCalled).to(beTrue())
             }
 

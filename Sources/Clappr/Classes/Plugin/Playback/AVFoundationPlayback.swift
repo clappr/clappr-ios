@@ -26,6 +26,7 @@ open class AVFoundationPlayback: Playback {
     private var backgroundSessionBackup: AVAudioSession.Category?
     private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
+    private var lastBitrate: Double?
 
     private var observers = [NSKeyValueObservation]()
 
@@ -248,7 +249,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer!.frame.size)
 
-        asset.wait(for: .characteristics, then: selectDefaultAudioIfNeeded)
+        asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
         asset.wait(for: .duration, then: seekToStartAtIfNeeded)
         addObservers()
     }
@@ -286,6 +287,22 @@ open class AVFoundationPlayback: Playback {
             selector: #selector(AVFoundationPlayback.playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(AVFoundationPlayback.onAccessLogEntry),
+            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+            object: nil)
+    }
+    
+    @objc func onAccessLogEntry(notification: NSNotification?) {
+        guard lastBitrate != bitrate else { return }
+        lastBitrate = bitrate
+        if let newBitrate = lastBitrate, !newBitrate.isNaN {
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": newBitrate])
+        } else {
+            trigger(.didUpdateBitrate)
+        }
     }
 
     private var hasEnoughBufferToPlay: Bool {
@@ -297,7 +314,6 @@ open class AVFoundationPlayback: Playback {
 
         if hasEnoughBufferToPlay {
             play()
-            selectDefaultSubtitleIfNeeded()
         } else {
             updateState(.stalling)
         }
@@ -339,6 +355,7 @@ open class AVFoundationPlayback: Playback {
     private func handleSeekableTimeRangesEvent(_ player: AVPlayer) {
         guard !seekableTimeRanges.isEmpty else { return }
         trigger(.seekableUpdate, userInfo: ["seekableTimeRanges": seekableTimeRanges])
+
         handleDvrAvailabilityChange()
     }
 
@@ -507,10 +524,14 @@ open class AVFoundationPlayback: Playback {
     }
 
     func handleDvrAvailabilityChange() {
-        if lastDvrAvailability != isDvrAvailable {
+        if dvrAvailabilityChanged {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
         }
+    }
+
+    private var dvrAvailabilityChanged: Bool {
+        return playbackType == .live && lastDvrAvailability != isDvrAvailable
     }
 
     @objc internal func seekOnReadyIfNeeded() {
@@ -541,6 +562,11 @@ open class AVFoundationPlayback: Playback {
         return source.first(where: { $0.language == language })?.raw as? AVMediaSelectionOption
     }
 
+    func selectDefaultMediaOptionIfNeeded() {
+        selectDefaultAudioIfNeeded()
+        selectDefaultSubtitleIfNeeded()
+    }
+    
     internal func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = subtitles else { return }
         var isFirstSelection = false
