@@ -94,6 +94,8 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		4807611A23046FF400B1BB0C /* MediaControlElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4807611723046F9B00B1BB0C /* MediaControlElementTests.swift */; };
+		4807611B23046FF600B1BB0C /* MediaControlElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4807611723046F9B00B1BB0C /* MediaControlElementTests.swift */; };
 		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6AE220C72AE00D1C134 /* SeekBubble.swift */; };
 		4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */; };
@@ -417,6 +419,7 @@
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		4807611723046F9B00B1BB0C /* MediaControlElementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElementTests.swift; sourceTree = "<group>"; };
 		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClapprAnimationDuration.swift; sourceTree = "<group>"; };
@@ -727,6 +730,14 @@
 				CD10D93C22C28D4C0096B035 /* Environment.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		4807611623046F5B00B1BB0C /* Element */ = {
+			isa = PBXGroup;
+			children = (
+				4807611723046F9B00B1BB0C /* MediaControlElementTests.swift */,
+			);
+			path = Element;
 			sourceTree = "<group>";
 		};
 		4822B6B2220C72E300D1C134 /* SeekBubble */ = {
@@ -1240,6 +1251,7 @@
 		C9EDF8462162C93900789E2F /* MediaControl */ = {
 			isa = PBXGroup;
 			children = (
+				4807611623046F5B00B1BB0C /* Element */,
 				E7D0BD15218A382E00F5FDF2 /* Seekbar */,
 				C9EDF85C2163E17F00789E2F /* Layout */,
 				C9EDF8492162CCB700789E2F /* MediaControlTests.swift */,
@@ -1909,6 +1921,7 @@
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
+				4807611B23046FF600B1BB0C /* MediaControlElementTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
 				48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */,
 				576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */,
@@ -1965,6 +1978,7 @@
 				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
 				23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */,
 				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
+				4807611A23046FF400B1BB0C /* MediaControlElementTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,

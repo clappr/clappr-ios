@@ -1,6 +1,17 @@
 import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
+
+    open class Element: UICorePlugin, MediaControlPluginType {
+        open var panel: MediaControlPanel {
+            return .center
+        }
+
+        open var position: MediaControlPosition {
+            return .left
+        }
+    }
+
     public var tapGesture: UITapGestureRecognizer?
 
     var mediaControlView: MediaControlView = .fromNib()
