@@ -32,20 +32,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         willSet {
             activeContainer?.stopListening()
-            trigger(Event.willChangeActiveContainer.rawValue)
+            trigger(.willChangeActiveContainer)
         }
 
         didSet {
-            activeContainer?.on(
-            Event.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+            activeContainer?.on(Event.willChangePlayback.rawValue) { [weak self] info in
                 self?.trigger(Event.willChangeActivePlayback.rawValue, userInfo: info)
             }
 
-            activeContainer?.on(
-            Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
+            activeContainer?.on(Event.didChangePlayback.rawValue) { [weak self] info in
                 self?.trigger(Event.didChangeActivePlayback.rawValue, userInfo: info)
             }
-            trigger(Event.didChangeActiveContainer.rawValue)
+
+            trigger(.didChangeActiveContainer)
         }
     }
 
@@ -67,9 +66,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         addTapGestures()
         bindEventListeners()
         
-        Loader.shared.corePlugins.forEach { plugin in
-            self.addPlugin(plugin.init(context: self))
-        }
+        Loader.shared.corePlugins.forEach { addPlugin($0.init(context: self)) }
     }
     
     func load() {
@@ -109,7 +106,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     open func attach(to parentView: UIView, controller: UIViewController) {
         self.parentController = controller
         self.parentView = parentView
-        trigger(Event.didAttachView)
+        trigger(.didAttachView)
     }
 
     open override func render() {
@@ -119,21 +116,17 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #if os(tvOS)
     private func renderPlugins() {
-        plugins.forEach { plugin in
-            render(plugin)
-        }
+        plugins.forEach(render)
     }
     #endif
 
     #if os(iOS)
 
     private func renderCorePlugins() {
-        plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
-            render(plugin)
-        }
+        plugins.filter(isNotMediaControlElement).forEach(render)
     }
 
-    private var mediaControlPlugin: MediaControl? {
+    private var mediaControl: MediaControl? {
         return plugins.first { $0 is MediaControl } as? MediaControl
     }
 
@@ -142,10 +135,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     private func renderMediaControlElements() {
-        mediaControlPlugin?.renderElements(mediaControlElements)
+        mediaControl?.renderElements(mediaControlElements)
     }
 
-    private func isNotMediaControlPlugin(_ plugin: Plugin) -> Bool {
+    private func isNotMediaControlElement(_ plugin: Plugin) -> Bool {
         return !(plugin is MediaControl.Element)
     }
     #endif
@@ -200,25 +193,17 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
-        trigger(Event.willDestroy.rawValue)
+        trigger(.willDestroy)
 
         Logger.logDebug("destroying listeners", scope: "Core")
         stopListening()
 
         Logger.logDebug("destroying containers", scope: "Core")
-        containers.forEach { container in container.destroy() }
+        containers.forEach { $0.destroy() }
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach { plugin in
-            do {
-                try ObjC.catchException {
-                    plugin.destroy()
-                }
-            } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
-            }
-        }
+        plugins.forEach(safeDestroy)
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")
@@ -230,6 +215,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
         view.removeFromSuperview()
 
-        trigger(Event.didDestroy.rawValue)
+        trigger(.didDestroy)
+    }
+
+    private func safeDestroy(_ plugin: Plugin) {
+        do {
+            try ObjC.catchException {
+                plugin.destroy()
+            }
+        } catch {
+            Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+        }
     }
 }
