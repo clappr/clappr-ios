@@ -126,10 +126,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #endif
 
     #if os(iOS)
-    private func renderCoreAndMediaControlPlugins() {
-        renderCorePlugins()
-        renderMediaControlPlugins()
-    }
 
     private func renderCorePlugins() {
         plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
@@ -137,13 +133,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
-    private func renderMediaControlPlugins() {
-        let mediaControl = plugins.first { $0 is MediaControl }
+    private var mediaControlPlugin: MediaControl? {
+        return plugins.first { $0 is MediaControl } as? MediaControl
+    }
 
-        if let mediaControl = mediaControl as? MediaControl {
-            let mediaControlPlugins = plugins.compactMap { $0 as? MediaControl.Element }
-            mediaControl.renderPlugins(mediaControlPlugins)
-        }
+    private var mediaControlElements: [MediaControl.Element] {
+        return plugins.compactMap { $0 as? MediaControl.Element }
+    }
+
+    private func renderMediaControlElements() {
+        mediaControlPlugin?.renderElements(mediaControlElements)
     }
 
     private func isNotMediaControlPlugin(_ plugin: Plugin) -> Bool {
@@ -164,14 +163,18 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
+    private var shouldEnterInFullScreen: Bool {
+        return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
+    }
+
     fileprivate func addToContainer() {
         #if os(iOS)
-        if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
-            renderCoreAndMediaControlPlugins()
+        renderCorePlugins()
+        renderMediaControlElements()
+        if shouldEnterInFullScreen {
             fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
-            renderCoreAndMediaControlPlugins()
         }
         #else
         renderInContainerView()

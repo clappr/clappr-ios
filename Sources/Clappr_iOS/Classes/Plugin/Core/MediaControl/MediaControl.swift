@@ -206,17 +206,17 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view.bindFrameToSuperviewBounds()
     }
 
-    func renderPlugins(_ plugins: [MediaControl.Element]) {
-        let orderedPlugins = sortPluginsIfNeeded(plugins)
-        orderedPlugins.forEach { plugin in
-            mediaControlView.addSubview(plugin.view, in: plugin.panel, at: plugin.position)
+    func renderElements(_ elements: [MediaControl.Element]) {
+        let orderedElements = sortPluginsIfNeeded(elements)
+        orderedElements.forEach { element in
+            mediaControlView.addSubview(element.view, in: element.panel, at: element.position)
 
             do {
                 try ObjC.catchException {
-                    plugin.render()
+                    element.render()
                 }
             } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "MediaControl")
+                Logger.logError("\((element as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "MediaControl")
             }
         }
     }

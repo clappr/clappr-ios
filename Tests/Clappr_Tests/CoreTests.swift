@@ -812,7 +812,7 @@ class CorePluginMock: CorePlugin {
 private class MediaControlMock: MediaControl {
     var didCallRenderPlugins = false
     
-    override func renderPlugins(_ plugins: [MediaControl.Element]) {
+    override func renderElements(_ plugins: [MediaControl.Element]) {
         didCallRenderPlugins = true
     }
 }
