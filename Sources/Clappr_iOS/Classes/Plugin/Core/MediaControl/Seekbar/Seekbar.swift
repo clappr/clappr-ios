@@ -1,4 +1,4 @@
-class Seekbar: MediaControlPlugin {
+class Seekbar: MediaControl.Element {
 
     open override class var name: String {
         return "Seekbar"

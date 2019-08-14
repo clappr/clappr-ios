@@ -16,7 +16,7 @@ class SeekbarTests: QuickSpec {
 
         describe("Seekbar") {
             it("is a MediaControlPlugin") {
-                expect(seekbar).to(beAKindOf(MediaControlPlugin.self))
+                expect(seekbar).to(beAKindOf(MediaControl.Element.self))
             }
         }
 

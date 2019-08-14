@@ -374,7 +374,7 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("renderPlugins") {
-                var plugins: [MediaControlPlugin]!
+                var plugins: [MediaControl.Element]!
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
@@ -494,7 +494,7 @@ class MediaControlTests: QuickSpec {
     }
 }
 
-class MediaControlPluginMock: MediaControlPlugin {
+class MediaControlPluginMock: MediaControl.Element {
     static var _panel: MediaControlPanel = .top
     static var _position: MediaControlPosition = .left
     static var didCallRender = false
@@ -546,7 +546,7 @@ class TimeIndicatorPluginMock: TimeIndicator {
 
 }
 
-class FirstPlugin: MediaControlPlugin {
+class FirstPlugin: MediaControl.Element {
     override class var name: String {
         return "FirstPlugin"
     }
@@ -573,7 +573,7 @@ class FirstPlugin: MediaControlPlugin {
     }
 }
 
-class SecondPlugin: MediaControlPlugin {
+class SecondPlugin: MediaControl.Element {
     override class var name: String {
         return "SecondPlugin"
     }

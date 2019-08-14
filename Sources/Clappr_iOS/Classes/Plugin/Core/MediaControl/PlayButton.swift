@@ -1,4 +1,4 @@
-open class PlayButton: MediaControlPlugin {
+open class PlayButton: MediaControl.Element {
     open class override var name: String {
         return "PlayButton"
     }
