@@ -442,10 +442,10 @@ class MediaControlTests: QuickSpec {
                     }
                 }
 
-                context("when kMediaControlPluginsOrder is passed") {
-                    it("renders the plugins following the kMediaControlPluginsOrder with all plugins specified in the option") {
+                context("when kMediaControlElementsOrder is passed") {
+                    it("renders the plugins following the kMediaControlElementsOrder with all plugins specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondPlugin", "FirstPlugin"]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondPlugin", "FirstPlugin"]
                         let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
@@ -459,9 +459,9 @@ class MediaControlTests: QuickSpec {
                         expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("FirstPlugin"))
                     }
 
-                    it("renders the plugins following the kMediaControlPluginsOrder with only two plugins specified in the option") {
+                    it("renders the plugins following the kMediaControlElementsOrder with only two plugins specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
                         let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
