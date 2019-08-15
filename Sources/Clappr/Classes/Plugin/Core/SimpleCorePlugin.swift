@@ -5,30 +5,43 @@ open class SimpleCorePlugin: CorePlugin {
 
     @objc public required init(context: UIObject) {
         super.init(context: context)
+
         bindAllEvents()
     }
 
     func bindAllEvents() {
         stopListening()
+
         bindEvents()
+        bindCoreEvents()
+        bindContainerEvents()
+    }
+
+    open func bindEvents() {
+        let exceptionName = NSExceptionName(rawValue: "MissingBindEvents")
+        let exceptionReason = "SimpleCorePlugins should always override bindEvents with its own binds: \(pluginName) does not implement."
+
+        NSException(name: exceptionName, reason: exceptionReason, userInfo: nil).raise()
+    }
+
+    private func bindCoreEvents() {
         guard let core = core else { return }
-        listenTo(core, eventName: Event.didChangeActiveContainer.rawValue) { [weak self] _ in
+
+        listenTo(core, event: .didChangeActiveContainer) { [weak self] _ in
             self?.bindAllEvents()
             self?.onDidChangeActiveContainer()
         }
-        guard let container = core.activeContainer else { return }
+    }
+
+    private func bindContainerEvents() {
+        guard let container = activeContainer else { return }
+
         listenTo(container, event: .didChangePlayback) { [weak self] _ in
             self?.bindAllEvents()
             self?.onDidChangePlayback()
         }
     }
 
-    open func bindEvents() {
-        NSException(name: NSExceptionName(rawValue: "MissingBindEvents"), reason: "SimpleCorePlugins should always override bindEvents with its own binds: \(pluginName) does not implement.", userInfo: nil).raise()
-    }
-
     open func onDidChangePlayback() { }
-
     open func onDidChangeActiveContainer() { }
-
 }
