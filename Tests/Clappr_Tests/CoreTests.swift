@@ -712,7 +712,7 @@ class CoreTests: QuickSpec {
                     core.addPlugin(mediaControlPluginMock)
                     core.render()
                     
-                    expect(mediaControlMock.didCallRenderPlugins).to(beTrue())
+                    expect(mediaControlMock.didCallRenderElements).to(beTrue())
                 }
                 #endif
 
@@ -810,10 +810,10 @@ class CorePluginMock: CorePlugin {
 
 #if os(iOS)
 private class MediaControlMock: MediaControl {
-    var didCallRenderPlugins = false
+    var didCallRenderElements = false
     
     override func renderElements(_ plugins: [MediaControl.Element]) {
-        didCallRenderPlugins = true
+        didCallRenderElements = true
     }
 }
 #endif
