@@ -15,7 +15,7 @@ class TimeIndicatorTests: QuickSpec {
 
         describe(".TimeIndicatorTests") {
             it("is a MediaControlPlugin") {
-                expect(timeIndicator).to(beAKindOf(MediaControlPlugin.self))
+                expect(timeIndicator).to(beAKindOf(MediaControl.Element.self))
             }
 
             describe("#pluginName") {

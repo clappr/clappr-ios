@@ -35,7 +35,7 @@ class FullscreenButtonTests: QuickSpec {
                 
                 describe("#init") {
                     it("is an MediaControlPlugin type") {
-                        expect(fullscreenButton).to(beAKindOf(MediaControlPlugin.self))
+                        expect(fullscreenButton).to(beAKindOf(MediaControl.Element.self))
                     }
                 }
                 

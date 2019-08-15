@@ -373,106 +373,106 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            describe("renderPlugins") {
-                var plugins: [MediaControlPlugin]!
+            describe("renderElements") {
+                var elements: [MediaControl.Element]!
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-                    plugins = [MediaControlPluginMock(context: coreStub)]
+                    elements = [MediaControlElementMock(context: coreStub)]
                     mediaControlViewMock = MediaControlViewMock()
-                    MediaControlPluginMock.reset()
+                    MediaControlElementMock.reset()
                 }
 
-                context("for any plugin configuration") {
+                context("for any element configuration") {
                     it("always calls the MediaControlView to position the view") {
                         let mediaControl = MediaControl(context: coreStub)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
                         expect(mediaControlViewMock.didCallAddSubview).to(beTrue())
                     }
 
-                    it("always calls the MediaControlView passing the plugin's view") {
+                    it("always calls the MediaControlView passing the element's view") {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
-                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(plugins.first?.view))
+                        expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(elements.first?.view))
                     }
 
-                    it("always calls the MediaControlView passing the plugin's panel") {
-                        MediaControlPluginMock._panel = .center
+                    it("always calls the MediaControlView passing the element's panel") {
+                        MediaControlElementMock._panel = .center
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))
                     }
 
-                    it("always calls the MediaControlView passing the plugin's position") {
-                        MediaControlPluginMock._position = .left
+                    it("always calls the MediaControlView passing the element's position") {
+                        MediaControlElementMock._position = .left
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
                         
                         expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
                     }
 
                     it("always calls the method render") {
-                        MediaControlPluginMock._panel = .top
+                        MediaControlElementMock._panel = .top
                         mediaControl.render()
                         
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
-                        expect(MediaControlPluginMock.didCallRender).to(beTrue())
+                        expect(MediaControlElementMock.didCallRender).to(beTrue())
                     }
 
-                    it("protect the main thread when plugin crashes in render") {
-                        MediaControlPluginMock.crashOnRender = true
+                    it("protect the main thread when element crashes in render") {
+                        MediaControlElementMock.crashOnRender = true
                         mediaControl.render()
 
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
                         expect(mediaControl).to(beAKindOf(MediaControl.self))
                     }
                 }
 
-                context("when kMediaControlPluginsOrder is passed") {
-                    it("renders the plugins following the kMediaControlPluginsOrder with all plugins specified in the option") {
+                context("when kMediaControlElementsOrder is passed") {
+                    it("renders the elements following the kMediaControlElementsOrder with all elements specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondPlugin", "FirstPlugin"]
-                        let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorElementMock", "SecondElement", "FirstElement"]
+                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
                         expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
                         expect(bottomRightView?.subviews[1].subviews.first?.accessibilityIdentifier).to(equal("timeIndicator"))
-                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("SecondPlugin"))
-                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("FirstPlugin"))
+                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("SecondElement"))
+                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("FirstElement"))
                     }
 
-                    it("renders the plugins following the kMediaControlPluginsOrder with only two plugins specified in the option") {
+                    it("renders the elements following the kMediaControlElementsOrder with only two elements specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlPluginsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
-                        let plugins = [FirstPlugin(context: core), SecondPlugin(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorElementMock"]
+                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
-                        mediaControl.renderPlugins(plugins)
+                        mediaControl.renderElements(elements)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
                         expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
                         expect(bottomRightView?.subviews[1].subviews.first?.accessibilityIdentifier).to(equal("timeIndicator"))
-                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("FirstPlugin"))
-                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("SecondPlugin"))
+                        expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("FirstElement"))
+                        expect(bottomRightView?.subviews[3].subviews.first?.accessibilityIdentifier).to(equal("SecondElement"))
                     }
                 }
             }
@@ -494,36 +494,36 @@ class MediaControlTests: QuickSpec {
     }
 }
 
-class MediaControlPluginMock: MediaControlPlugin {
+class MediaControlElementMock: MediaControl.Element {
     static var _panel: MediaControlPanel = .top
     static var _position: MediaControlPosition = .left
     static var didCallRender = false
     static var crashOnRender = false
     
     override class var name: String {
-        return "MediaControlPluginMock"
+        return "MediaControlElementMock"
     }
     
     open override var panel: MediaControlPanel {
-        return MediaControlPluginMock._panel
+        return MediaControlElementMock._panel
     }
     
     open override var position: MediaControlPosition {
-        return MediaControlPluginMock._position
+        return MediaControlElementMock._position
     }
 
     override func bindEvents() { }
 
     override func render() {
-        MediaControlPluginMock.didCallRender = true
+        MediaControlElementMock.didCallRender = true
 
-        if MediaControlPluginMock.crashOnRender {
+        if MediaControlElementMock.crashOnRender {
             codeThatCrashes()
         }
     }
     
     static func reset() {
-        MediaControlPluginMock.didCallRender = false
+        MediaControlElementMock.didCallRender = false
     }
 
     private func codeThatCrashes() {
@@ -531,9 +531,9 @@ class MediaControlPluginMock: MediaControlPlugin {
     }
 }
 
-class TimeIndicatorPluginMock: TimeIndicator {
+class TimeIndicatorElementMock: TimeIndicator {
     override class var name: String {
-        return "TimeIndicatorPluginMock"
+        return "TimeIndicatorElementMock"
     }
 
     open override var panel: MediaControlPanel {
@@ -546,9 +546,9 @@ class TimeIndicatorPluginMock: TimeIndicator {
 
 }
 
-class FirstPlugin: MediaControlPlugin {
+class FirstElement: MediaControl.Element {
     override class var name: String {
-        return "FirstPlugin"
+        return "FirstElement"
     }
     
     var button: UIButton! {
@@ -573,9 +573,9 @@ class FirstPlugin: MediaControlPlugin {
     }
 }
 
-class SecondPlugin: MediaControlPlugin {
+class SecondElement: MediaControl.Element {
     override class var name: String {
-        return "SecondPlugin"
+        return "SecondElement"
     }
 
     var button: UIButton! {

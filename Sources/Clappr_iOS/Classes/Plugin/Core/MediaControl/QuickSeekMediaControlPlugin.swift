@@ -36,7 +36,7 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
         let pluginsWithoutMediaControl = core?.plugins.filter({ $0.pluginName != MediaControl.name })
         return pluginsWithoutMediaControl?
             .compactMap({ $0 as? UICorePlugin })
-            .filter({ ($0 as? MediaControlPlugin)?.panel != .modal })
+            .filter({ ($0 as? MediaControl.Element)?.panel != .modal })
     }
     
     override func shouldSeek(point: CGPoint) -> Bool {

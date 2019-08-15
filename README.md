@@ -81,12 +81,12 @@ Clappr comes with four default components: play/pause button, seekbar, fullscree
 
 #### Media Control Plugins
 
-You can add your own components into the `MediaControl` by creating your own Media Control Plugin.
+You can add your own components into the `MediaControl` by creating your own Media Control Element.
 
 To do so, you must:
 
-* Inherit from `MediaControlPlugin`;
-* Define in which `panel` and `position` the plugin will be rendered;
+* Inherit from `MediaControl.Element`;
+ * Define in which `panel` and `position` the element will be rendered;
 * Have a unique name;
 
 If you provide the same name that an existing plugin (built-in), the plugin will override the existent plugin.

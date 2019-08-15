@@ -32,20 +32,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         willSet {
             activeContainer?.stopListening()
-            trigger(Event.willChangeActiveContainer.rawValue)
+            trigger(.willChangeActiveContainer)
         }
 
         didSet {
-            activeContainer?.on(
-            Event.willChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(Event.willChangeActivePlayback.rawValue, userInfo: info)
+            activeContainer?.on(Event.willChangePlayback.rawValue) { [weak self] info in
+                self?.trigger(.willChangeActivePlayback, userInfo: info)
             }
 
-            activeContainer?.on(
-            Event.didChangePlayback.rawValue) { [weak self] (info: EventUserInfo) in
-                self?.trigger(Event.didChangeActivePlayback.rawValue, userInfo: info)
+            activeContainer?.on(Event.didChangePlayback.rawValue) { [weak self] info in
+                self?.trigger(.didChangeActivePlayback, userInfo: info)
             }
-            trigger(Event.didChangeActiveContainer.rawValue)
+
+            trigger(.didChangeActiveContainer)
         }
     }
 
@@ -67,9 +66,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         addTapGestures()
         bindEventListeners()
         
-        Loader.shared.corePlugins.forEach { plugin in
-            self.addPlugin(plugin.init(context: self))
-        }
+        Loader.shared.corePlugins.forEach { addPlugin($0.init(context: self)) }
     }
     
     func load() {
@@ -109,7 +106,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     open func attach(to parentView: UIView, controller: UIViewController) {
         self.parentController = controller
         self.parentView = parentView
-        trigger(Event.didAttachView)
+        trigger(.didAttachView)
     }
 
     open override func render() {
@@ -119,35 +116,30 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #if os(tvOS)
     private func renderPlugins() {
-        plugins.forEach { plugin in
-            render(plugin)
-        }
+        plugins.forEach(render)
     }
     #endif
 
     #if os(iOS)
-    private func renderCoreAndMediaControlPlugins() {
-        renderCorePlugins()
-        renderMediaControlPlugins()
-    }
 
     private func renderCorePlugins() {
-        plugins.filter { isNotMediaControlPlugin($0) }.forEach { plugin in
-            render(plugin)
-        }
+        plugins.filter(isNotMediaControlElement).forEach(render)
     }
 
-    private func renderMediaControlPlugins() {
-        let mediaControl = plugins.first { $0 is MediaControl }
-
-        if let mediaControl = mediaControl as? MediaControl {
-            let mediaControlPlugins = plugins.compactMap { $0 as? MediaControlPlugin }
-            mediaControl.renderPlugins(mediaControlPlugins)
-        }
+    private var mediaControl: MediaControl? {
+        return plugins.first { $0 is MediaControl } as? MediaControl
     }
 
-    private func isNotMediaControlPlugin(_ plugin: Plugin) -> Bool {
-        return !(plugin is MediaControlPlugin)
+    private var mediaControlElements: [MediaControl.Element] {
+        return plugins.compactMap { $0 as? MediaControl.Element }
+    }
+
+    private func renderMediaControlElements() {
+        mediaControl?.renderElements(mediaControlElements)
+    }
+
+    private func isNotMediaControlElement(_ plugin: Plugin) -> Bool {
+        return !(plugin is MediaControl.Element)
     }
     #endif
 
@@ -164,14 +156,18 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
+    private var shouldEnterInFullScreen: Bool {
+        return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
+    }
+
     fileprivate func addToContainer() {
         #if os(iOS)
-        if optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp {
-            renderCoreAndMediaControlPlugins()
+        renderCorePlugins()
+        renderMediaControlElements()
+        if shouldEnterInFullScreen {
             fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
-            renderCoreAndMediaControlPlugins()
         }
         #else
         renderInContainerView()
@@ -197,25 +193,17 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
-        trigger(Event.willDestroy.rawValue)
+        trigger(.willDestroy)
 
         Logger.logDebug("destroying listeners", scope: "Core")
         stopListening()
 
         Logger.logDebug("destroying containers", scope: "Core")
-        containers.forEach { container in container.destroy() }
+        containers.forEach { $0.destroy() }
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach { plugin in
-            do {
-                try ObjC.catchException {
-                    plugin.destroy()
-                }
-            } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
-            }
-        }
+        plugins.forEach(safeDestroy)
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")
@@ -227,6 +215,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
         view.removeFromSuperview()
 
-        trigger(Event.didDestroy.rawValue)
+        trigger(.didDestroy)
+    }
+
+    private func safeDestroy(_ plugin: Plugin) {
+        do {
+            try ObjC.catchException {
+                plugin.destroy()
+            }
+        } catch {
+            Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+        }
     }
 }

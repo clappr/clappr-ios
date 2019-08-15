@@ -17,7 +17,7 @@ class PlayButtonTests: QuickSpec {
             describe("Plugin structure") {
                 context("#init") {
                     it("is an MediaControlPlugin type") {
-                        expect(playButton).to(beAKindOf(MediaControlPlugin.self))
+                        expect(playButton).to(beAKindOf(MediaControl.Element.self))
                     }
                 }
 
