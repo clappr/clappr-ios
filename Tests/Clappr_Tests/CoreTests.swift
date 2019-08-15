@@ -695,7 +695,7 @@ class CoreTests: QuickSpec {
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlPlugin") {
                     let core = Core()
-                    let plugin = MediaControlPluginMock(context: core)
+                    let plugin = MediaControlElementMock(context: core)
                     
                     core.addPlugin(plugin)
                     core.render()
@@ -706,7 +706,7 @@ class CoreTests: QuickSpec {
                 it("calls the mediacontrol to add the plugins into the panels") {
                     let core = CoreFactory.create(with: [:])
                     let mediaControlMock = MediaControlMock(context: core)
-                    let mediaControlPluginMock = MediaControlPluginMock(context: core)
+                    let mediaControlPluginMock = MediaControlElementMock(context: core)
                     
                     core.addPlugin(mediaControlMock)
                     core.addPlugin(mediaControlPluginMock)

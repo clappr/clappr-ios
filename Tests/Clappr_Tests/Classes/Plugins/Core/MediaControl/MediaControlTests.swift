@@ -378,9 +378,9 @@ class MediaControlTests: QuickSpec {
                 var mediaControlViewMock: MediaControlViewMock!
 
                 beforeEach {
-                    elements = [MediaControlPluginMock(context: coreStub)]
+                    elements = [MediaControlElementMock(context: coreStub)]
                     mediaControlViewMock = MediaControlViewMock()
-                    MediaControlPluginMock.reset()
+                    MediaControlElementMock.reset()
                 }
 
                 context("for any element configuration") {
@@ -404,7 +404,7 @@ class MediaControlTests: QuickSpec {
                     }
 
                     it("always calls the MediaControlView passing the element's panel") {
-                        MediaControlPluginMock._panel = .center
+                        MediaControlElementMock._panel = .center
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
@@ -414,7 +414,7 @@ class MediaControlTests: QuickSpec {
                     }
 
                     it("always calls the MediaControlView passing the element's position") {
-                        MediaControlPluginMock._position = .left
+                        MediaControlElementMock._position = .left
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
@@ -424,16 +424,16 @@ class MediaControlTests: QuickSpec {
                     }
 
                     it("always calls the method render") {
-                        MediaControlPluginMock._panel = .top
+                        MediaControlElementMock._panel = .top
                         mediaControl.render()
                         
                         mediaControl.renderElements(elements)
 
-                        expect(MediaControlPluginMock.didCallRender).to(beTrue())
+                        expect(MediaControlElementMock.didCallRender).to(beTrue())
                     }
 
                     it("protect the main thread when element crashes in render") {
-                        MediaControlPluginMock.crashOnRender = true
+                        MediaControlElementMock.crashOnRender = true
                         mediaControl.render()
 
                         mediaControl.renderElements(elements)
@@ -445,8 +445,8 @@ class MediaControlTests: QuickSpec {
                 context("when kMediaControlElementsOrder is passed") {
                     it("renders the elements following the kMediaControlElementsOrder with all elements specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock", "SecondElement", "FirstElement"]
-                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorElementMock", "SecondElement", "FirstElement"]
+                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
@@ -461,8 +461,8 @@ class MediaControlTests: QuickSpec {
 
                     it("renders the elements following the kMediaControlElementsOrder with only two elements specified in the option") {
                         let core = Core()
-                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorPluginMock"]
-                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorPluginMock(context: core), FullscreenButton(context: core), ]
+                        core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorElementMock"]
+                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core), ]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
@@ -494,36 +494,36 @@ class MediaControlTests: QuickSpec {
     }
 }
 
-class MediaControlPluginMock: MediaControl.Element {
+class MediaControlElementMock: MediaControl.Element {
     static var _panel: MediaControlPanel = .top
     static var _position: MediaControlPosition = .left
     static var didCallRender = false
     static var crashOnRender = false
     
     override class var name: String {
-        return "MediaControlPluginMock"
+        return "MediaControlElementMock"
     }
     
     open override var panel: MediaControlPanel {
-        return MediaControlPluginMock._panel
+        return MediaControlElementMock._panel
     }
     
     open override var position: MediaControlPosition {
-        return MediaControlPluginMock._position
+        return MediaControlElementMock._position
     }
 
     override func bindEvents() { }
 
     override func render() {
-        MediaControlPluginMock.didCallRender = true
+        MediaControlElementMock.didCallRender = true
 
-        if MediaControlPluginMock.crashOnRender {
+        if MediaControlElementMock.crashOnRender {
             codeThatCrashes()
         }
     }
     
     static func reset() {
-        MediaControlPluginMock.didCallRender = false
+        MediaControlElementMock.didCallRender = false
     }
 
     private func codeThatCrashes() {
@@ -531,9 +531,9 @@ class MediaControlPluginMock: MediaControl.Element {
     }
 }
 
-class TimeIndicatorPluginMock: TimeIndicator {
+class TimeIndicatorElementMock: TimeIndicator {
     override class var name: String {
-        return "TimeIndicatorPluginMock"
+        return "TimeIndicatorElementMock"
     }
 
     open override var panel: MediaControlPanel {
