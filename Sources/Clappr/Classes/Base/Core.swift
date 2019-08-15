@@ -37,11 +37,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         didSet {
             activeContainer?.on(Event.willChangePlayback.rawValue) { [weak self] info in
-                self?.trigger(Event.willChangeActivePlayback.rawValue, userInfo: info)
+                self?.trigger(.willChangeActivePlayback, userInfo: info)
             }
 
             activeContainer?.on(Event.didChangePlayback.rawValue) { [weak self] info in
-                self?.trigger(Event.didChangeActivePlayback.rawValue, userInfo: info)
+                self?.trigger(.didChangeActivePlayback, userInfo: info)
             }
 
             trigger(.didChangeActiveContainer)
