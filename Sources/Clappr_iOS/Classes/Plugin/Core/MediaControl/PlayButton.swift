@@ -14,10 +14,6 @@ open class PlayButton: MediaControl.Element {
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-    public var activeContainer: Container? {
-        return core?.activeContainer
-    }
-
     public var activePlayback: Playback? {
         return core?.activePlayback
     }

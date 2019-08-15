@@ -1,4 +1,7 @@
 open class SimpleCorePlugin: CorePlugin {
+    open var activeContainer: Container? {
+        return core?.activeContainer
+    }
 
     @objc public required init(context: UIObject) {
         super.init(context: context)

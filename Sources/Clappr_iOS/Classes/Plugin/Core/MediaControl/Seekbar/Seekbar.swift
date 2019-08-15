@@ -28,10 +28,6 @@ class Seekbar: MediaControl.Element {
         bindOfflinePlaybackEvents()
     }
 
-    private var activeContainer: Container? {
-        return core?.activeContainer
-    }
-
     fileprivate var activePlayback: Playback? {
         return core?.activePlayback
     }

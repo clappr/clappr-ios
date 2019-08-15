@@ -57,10 +57,6 @@ open class TimeIndicator: MediaControl.Element {
         }
     }
 
-    public var activeContainer: Container? {
-        return core?.activeContainer
-    }
-
     public var activePlayback: Playback? {
         return core?.activePlayback
     }

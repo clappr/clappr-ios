@@ -20,6 +20,13 @@ class SimpleCorePluginTests: QuickSpec {
 
                     expect(simpleCorePlugin.core).toNot(beNil())
                 }
+
+                it("has a non nil activeContainer") {
+                    let core = CoreStub()
+                    let simpleCorePlugin = SimpleCoreStubPlugin(context: core)
+
+                    expect(simpleCorePlugin.activeContainer).to(equal(core.activeContainer))
+                }
             }
         }
     }
