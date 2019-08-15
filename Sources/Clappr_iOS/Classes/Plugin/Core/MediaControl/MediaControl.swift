@@ -207,7 +207,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func renderElements(_ elements: [MediaControl.Element]) {
-        let orderedElements = sortPluginsIfNeeded(elements)
+        let orderedElements = sortElementsIfNeeded(elements)
         orderedElements.forEach { element in
             mediaControlView.addSubview(element.view, in: element.panel, at: element.position)
 
@@ -221,22 +221,22 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
     }
 
-    private func sortPluginsIfNeeded(_ plugins: [MediaControl.Element]) -> [MediaControl.Element] {
-        if let pluginsOrder = core?.options[kMediaControlElementsOrder] as? [String] {
-            var orderedPlugins = [MediaControl.Element]()
-            pluginsOrder.forEach { pluginName in
-                if let selectedPlugin = plugins.first(where: { $0.pluginName == pluginName }) {
-                    orderedPlugins.append(selectedPlugin)
+    private func sortElementsIfNeeded(_ elements: [MediaControl.Element]) -> [MediaControl.Element] {
+        if let elementsOrder = core?.options[kMediaControlElementsOrder] as? [String] {
+            var orderedElements = [MediaControl.Element]()
+            elementsOrder.forEach { elementName in
+                if let selectedElement = elements.first(where: { $0.pluginName == elementName }) {
+                    orderedElements.append(selectedElement)
                 } else {
-                    Logger.logInfo("Plugin \(pluginName) not found.")
+                    Logger.logInfo("Element \(elementName) not found.")
                 }
             }
-            orderedPlugins.append(contentsOf: plugins.filter { !pluginsOrder.contains($0.pluginName) })
+            orderedElements.append(contentsOf: elements.filter { !elementsOrder.contains($0.pluginName) })
 
-            return orderedPlugins
+            return orderedElements
         }
 
-        return plugins
+        return elements
     }
 
     private func showIfAlwaysVisible() {
