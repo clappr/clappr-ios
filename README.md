@@ -86,7 +86,7 @@ You can add your own components into the `MediaControl` by creating your own Med
 To do so, you must:
 
 * Inherit from `MediaControl.Element`;
-* Define in which `panel` and `position` the plugin will be rendered;
+ * Define in which `panel` and `position` the element will be rendered;
 * Have a unique name;
 
 If you provide the same name that an existing plugin (built-in), the plugin will override the existent plugin.
