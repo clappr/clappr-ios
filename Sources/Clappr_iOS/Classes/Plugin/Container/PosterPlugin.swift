@@ -43,8 +43,8 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     @objc func playTouched() {
-        activePlayback?.seek(0)
-        activePlayback?.play()
+        playback?.seek(0)
+        playback?.play()
     }
 
     fileprivate func configureViews() {
@@ -68,7 +68,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     private func bindPlaybackEvents() {
-        if let playback = activePlayback {
+        if let playback = playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
             listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
@@ -82,7 +82,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     @objc var isNoOpPlayback: Bool {
-        return activePlayback?.pluginName == "NoOp"
+        return playback?.pluginName == "NoOp"
     }
 
     override open func onDidChangePlayback() {

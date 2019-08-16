@@ -1,5 +1,5 @@
 open class SimpleContainerPlugin: ContainerPlugin {
-    open var activePlayback: Playback? {
+    open var playback: Playback? {
         return container?.playback
     }
 

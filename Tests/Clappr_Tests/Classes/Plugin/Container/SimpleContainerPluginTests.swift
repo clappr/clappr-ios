@@ -25,7 +25,7 @@ class SimpleContainerPluginTests: QuickSpec {
                     let container = ContainerStub()
                     let simpleContainerPlugin = SimpleContainerStubPlugin(context: container)
 
-                    expect(simpleContainerPlugin.activePlayback).to(equal(container.playback))
+                    expect(simpleContainerPlugin.playback).to(equal(container.playback))
                 }
             }
         }
