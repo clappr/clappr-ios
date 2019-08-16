@@ -28,10 +28,6 @@ class Seekbar: MediaControl.Element {
         bindOfflinePlaybackEvents()
     }
 
-    fileprivate var activePlayback: Playback? {
-        return core?.activePlayback
-    }
-
     fileprivate func setSeekbarViewLive() {
         seekbarView.isLive = activePlayback?.playbackType == .live
     }

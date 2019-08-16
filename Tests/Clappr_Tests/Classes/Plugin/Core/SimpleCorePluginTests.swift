@@ -27,6 +27,13 @@ class SimpleCorePluginTests: QuickSpec {
 
                     expect(simpleCorePlugin.activeContainer).to(equal(core.activeContainer))
                 }
+
+                it("has a non nil activePlayback") {
+                    let core = CoreStub()
+                    let simpleCorePlugin = SimpleCoreStubPlugin(context: core)
+
+                    expect(simpleCorePlugin.activePlayback).to(equal(core.activePlayback))
+                }
             }
         }
     }

@@ -21,7 +21,7 @@ public class QuickSeekCorePlugin: QuickSeekPlugin {
     }
     
     override func shouldSeek(point: CGPoint) -> Bool {
-        let pluginColidingWithGesture = core?.activeContainer?.plugins
+        let pluginColidingWithGesture = activeContainer?.plugins
             .compactMap({ $0 as? UIContainerPlugin })
             .first(where: {
             !$0.view.isHidden && $0.view.point(inside: core!.view.convert(point, to: $0.view), with: nil)

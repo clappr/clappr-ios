@@ -3,6 +3,10 @@ open class SimpleCorePlugin: CorePlugin {
         return core?.activeContainer
     }
 
+    open var activePlayback: Playback? {
+        return core?.activePlayback
+    }
+
     @objc public required init(context: UIObject) {
         super.init(context: context)
 
