@@ -21,11 +21,18 @@ class SimpleContainerPluginTests: QuickSpec {
                     expect(simpleContainerPlugin.container).toNot(beNil())
                 }
 
-                it("has a non nil activePlayback") {
+                it("has a non nil playback") {
                     let container = ContainerStub()
                     let simpleContainerPlugin = SimpleContainerStubPlugin(context: container)
 
                     expect(simpleContainerPlugin.playback).to(equal(container.playback))
+                }
+
+                it("has a non nil foundationPlayback") {
+                    let container = ContainerStub()
+                    let simpleContainerPlugin = SimpleContainerStubPlugin(context: container)
+
+                    expect(simpleContainerPlugin.foundationPlayback).toNot(beNil())
                 }
             }
         }

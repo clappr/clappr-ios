@@ -3,6 +3,10 @@ open class SimpleContainerPlugin: ContainerPlugin {
         return container?.playback
     }
 
+    open var foundationPlayback: AVFoundationPlayback? {
+        return container?.playback as? AVFoundationPlayback
+    }
+
     @objc public required init(context: UIObject) {
         super.init(context: context)
         
