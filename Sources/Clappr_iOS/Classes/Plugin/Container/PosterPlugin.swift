@@ -81,10 +81,6 @@ open class PosterPlugin: UIContainerPlugin {
         listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] _ in self?.updatePoster(container.options) }
     }
 
-    @objc var isNoOpPlayback: Bool {
-        return playback?.pluginName == "NoOp"
-    }
-
     override open func onDidChangePlayback() {
         if isNoOpPlayback {
             view.isHidden = true

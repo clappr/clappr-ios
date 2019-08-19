@@ -7,6 +7,10 @@ open class SimpleContainerPlugin: ContainerPlugin {
         return container?.playback as? AVFoundationPlayback
     }
 
+    open var isNoOpPlayback: Bool {
+        return playback?.pluginName == "NoOp"
+    }
+
     @objc public required init(context: UIObject) {
         super.init(context: context)
         
