@@ -703,7 +703,7 @@ class CoreTests: QuickSpec {
                     expect(plugin.view.superview).to(beNil())
                 }
 
-                it("render MediaControlElements after CorePlugins") {
+                it("renders MediaControlElements after CorePlugins") {
                     let core = Core()
                     let mediaControl = MediaControl(context: core)
                     let element = MediaControlElementMock(context: core)
