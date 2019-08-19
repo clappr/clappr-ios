@@ -162,12 +162,14 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     fileprivate func addToContainer() {
         #if os(iOS)
-        renderCorePlugins()
-        renderMediaControlElements()
         if shouldEnterInFullScreen {
+            renderCorePlugins()
+            renderMediaControlElements()
             fullscreenHandler?.enterInFullscreen()
         } else {
             renderInContainerView()
+            renderCorePlugins()
+            renderMediaControlElements()
         }
         #else
         renderInContainerView()
