@@ -516,10 +516,12 @@ class MediaControlElementMock: MediaControl.Element {
 
     override func render() {
         MediaControlElementMock.didCallRender = true
-
+        
         if MediaControlElementMock.crashOnRender {
             codeThatCrashes()
         }
+
+        trigger("render")
     }
     
     static func reset() {
