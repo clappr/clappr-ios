@@ -153,7 +153,6 @@
 		57AB0E882253CAB70096BCA4 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AB0E872253CAB70096BCA4 /* PassthroughView.swift */; };
 		57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F1354821836EE000111BC6 /* Array+appendOrReplace.swift */; };
 		7B51DF0C230B58A800C2B045 /* MediaControlElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51DF0B230B58A800C2B045 /* MediaControlElementTests.swift */; };
-		7B51DF0D230B58A800C2B045 /* MediaControlElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B51DF0B230B58A800C2B045 /* MediaControlElementTests.swift */; };
 		7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
 		7BCD8EE123073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
@@ -1989,7 +1988,6 @@
 				7BCD8EE123073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				571B7B2A21750157005C0942 /* HTTPStub.swift in Sources */,
-				7B51DF0D230B58A800C2B045 /* MediaControlElementTests.swift in Sources */,
 				C923387D221DD43F002202F8 /* BaseObjectTests.swift in Sources */,
 				C93466962305BC510062E8DE /* LoaderTests.swift in Sources */,
 				3251114821359C48001FEEBA /* CoreTests.swift in Sources */,
