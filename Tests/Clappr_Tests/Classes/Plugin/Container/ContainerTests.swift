@@ -10,35 +10,28 @@ class ContainerTests: QuickSpec {
             var container: Container!
 
             describe("#Init") {
-
                 context("with a invalid resource") {
-
-                    beforeEach {
-                        container = ContainerFactory.create(with: Resource.invalid)
-                        container.load(Source.invalid.rawValue)
-                        Loader.shared.resetPlugins()
-                    }
-
                     it("creates a container with invalid playback") {
+                        container = ContainerFactory.create(with: Resource.invalid)
+
+                        container.load(Source.invalid.rawValue)
+
                         expect(container.playback?.pluginName) == "NoOp"
                     }
                 }
 
                 context("with a valid resource") {
-
-                    beforeEach {
+                    it("creates a container with valid playback") {
                         Loader.shared.register(playbacks: [AVFoundationPlayback.self])
                         container = ContainerFactory.create(with: Resource.valid)
-                        container.load(Source.valid.rawValue)
-                    }
 
-                    it("creates a container with valid playback") {
+                        container.load(Source.valid.rawValue)
+
                         expect(container.playback?.pluginName) == "AVPlayback"
                     }
                 }
 
                 context("when resource is not empty") {
-
                     beforeEach {
                         container = ContainerFactory.create(with: Resource.valid)
                         container.load(Source.valid.rawValue)
@@ -167,6 +160,7 @@ class ContainerTests: QuickSpec {
 
                 it("destroy playback") {
                     container.destroy()
+
                     expect(container.playback?.view.superview).to(beNil())
                 }
 
@@ -338,12 +332,10 @@ class ContainerTests: QuickSpec {
                 }
 
                 context("when stores a value on sharedData") {
-                    beforeEach {
+                    it("retrieves stored value") {
                         container = ContainerFactory.create(with: Resource.valid)
                         container.sharedData["testKey"] = "testValue"
-                    }
 
-                    it("retrieves stored value") {
                         expect(container.sharedData["testKey"] as? String) == "testValue"
                     }
                 }
