@@ -32,7 +32,7 @@ class SimpleContainerPluginTests: QuickSpec {
                     let container = ContainerStub()
                     let simpleContainerPlugin = SimpleContainerStubPlugin(context: container)
 
-                    expect(simpleContainerPlugin.foundationPlayback).toNot(beNil())
+                    expect(simpleContainerPlugin.foundationPlayback).to(equal(container.playback as? AVFoundationPlayback))
                 }
             }
         }
