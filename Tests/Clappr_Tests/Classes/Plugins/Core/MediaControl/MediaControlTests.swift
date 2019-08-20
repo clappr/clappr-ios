@@ -520,6 +520,8 @@ class MediaControlElementMock: MediaControl.Element {
         if MediaControlElementMock.crashOnRender {
             codeThatCrashes()
         }
+
+        trigger("render")
     }
     
     static func reset() {

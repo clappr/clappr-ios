@@ -693,7 +693,7 @@ class CoreTests: QuickSpec {
                 }
                 
                 #if os(iOS)
-                it("doesnt add plugin as subview if it is a MediaControlPlugin") {
+                it("doesnt add plugin as subview if it is a MediaControlElement") {
                     let core = Core()
                     let plugin = MediaControlElementMock(context: core)
                     
@@ -702,8 +702,31 @@ class CoreTests: QuickSpec {
                     
                     expect(plugin.view.superview).to(beNil())
                 }
+
+                it("renders MediaControlElements after CorePlugins") {
+                    let core = Core()
+                    let mediaControl = MediaControl(context: core)
+                    let element = MediaControlElementMock(context: core)
+                    let plugin = UICorePluginMock(context: core)
+
+                    var renderingOrder: [String] = []
+                    element.on("render") { _ in
+                        renderingOrder.append("element")
+                    }
+
+                    plugin.on("render") { _ in
+                        renderingOrder.append("plugin")
+                    }
+
+                    core.addPlugin(mediaControl)
+                    core.addPlugin(element)
+                    core.addPlugin(plugin)
+                    core.render()
+
+                    expect(renderingOrder).toEventually(equal(["plugin", "element"]))
+                }
                 
-                it("calls the mediacontrol to add the plugins into the panels") {
+                it("calls the mediacontrol to add the elements into the panels") {
                     let core = CoreFactory.create(with: [:])
                     let mediaControlMock = MediaControlMock(context: core)
                     let mediaControlPluginMock = MediaControlElementMock(context: core)
@@ -773,6 +796,7 @@ class UICorePluginMock: UICorePlugin {
     override class var name: String {
         return "UICorePluginMock"
     }
+    
 
     override func render() {
         UICorePluginMock.didCallRender = true
@@ -780,6 +804,8 @@ class UICorePluginMock: UICorePlugin {
         if UICorePluginMock.crashOnRender {
             codeThatCrashes()
         }
+
+        trigger("render")
     }
 
     override func bindEvents() {  }
@@ -805,7 +831,6 @@ class CorePluginMock: CorePlugin {
     override class var name: String {
         return "CorePluginMock"
     }
-
 }
 
 #if os(iOS)
