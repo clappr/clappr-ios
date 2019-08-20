@@ -132,6 +132,7 @@ open class Player: AVPlayerViewController {
     private func setCore(with options: Options) {
         core = CoreFactory.create(with: options)
         bindCoreEvents()
+        core?.load()
     }
 
     private func bindCoreEvents() {

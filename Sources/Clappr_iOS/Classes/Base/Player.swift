@@ -89,6 +89,7 @@ open class Player: BaseObject {
         core?.stopListening()
         core = CoreFactory.create(with: options)
         bindCoreEvents()
+        core?.load()
     }
 
     private func bindCoreEvents() {

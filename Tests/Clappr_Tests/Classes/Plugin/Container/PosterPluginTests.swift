@@ -104,6 +104,7 @@ class PosterPluginTests: QuickSpec {
 
                 beforeEach {
                     container = ContainerFactory.create(with: options)
+                    container.load(options[kSourceUrl]!)
                     container.render()
                     posterPlugin = self.getPosterPlugin(container)
                 }
