@@ -19,6 +19,13 @@ class OverlayPluginTests: QuickSpec {
 
                     expect(plugin).to(beAKindOf(UICorePlugin.self))
                 }
+
+                it("starts with modal flag set to false") {
+                    let core = CoreStub()
+                    let plugin = OverlayPlugin(context: core)
+
+                    expect(plugin.isModal).to(beFalse())
+                }
             }
         }
     }
