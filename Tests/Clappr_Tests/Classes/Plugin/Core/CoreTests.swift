@@ -68,6 +68,10 @@ class CoreTests: QuickSpec {
                     expect(core.plugins.compactMap({ $0 as? UICorePluginMock })).toNot(beNil())
                     expect(core.plugins.compactMap({ $0 as? CorePluginMock })).toNot(beNil())
                 }
+
+                it("has an overlayView as a PassthroughView") {
+                    expect(core.overlayView).to(beAnInstanceOf(PassthroughView.self))
+                }
                 
                 #if os(iOS)
                 it("add gesture recognizer") {

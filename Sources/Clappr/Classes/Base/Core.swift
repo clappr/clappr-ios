@@ -16,7 +16,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
-    @objc open var overlayView = UIView()
+    @objc open var overlayView = PassthroughView()
 
     #if os(iOS)
     @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
