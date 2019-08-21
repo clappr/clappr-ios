@@ -1,4 +1,4 @@
-class OverlayPlugin: UICorePlugin {
+public class OverlayPlugin: UICorePlugin {
     open class override var name: String {
         return "OverlayPlugin"
     }
@@ -7,5 +7,5 @@ class OverlayPlugin: UICorePlugin {
         return false
     }
 
-    override func bindEvents() { }
+    override public func bindEvents() { }
 }
