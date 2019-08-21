@@ -27,13 +27,6 @@ class SimpleContainerPluginTests: QuickSpec {
 
                     expect(simpleContainerPlugin.playback).to(equal(container.playback))
                 }
-
-                it("has a non nil foundationPlayback") {
-                    let container = ContainerStub()
-                    let simpleContainerPlugin = SimpleContainerStubPlugin(context: container)
-
-                    expect(simpleContainerPlugin.foundationPlayback).to(equal(container.playback as? AVFoundationPlayback))
-                }
             }
         }
     }

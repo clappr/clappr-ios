@@ -3,10 +3,6 @@ open class SimpleContainerPlugin: ContainerPlugin {
         return container?.playback
     }
 
-    open var foundationPlayback: AVFoundationPlayback? {
-        return container?.playback as? AVFoundationPlayback
-    }
-
     open var isNoOpPlayback: Bool {
         return playback?.pluginName == "NoOp"
     }
