@@ -16,6 +16,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
+    @objc open var overlayView = UIView()
 
     #if os(iOS)
     @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
@@ -58,7 +59,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
-
         super.init()
 
         view.backgroundColor = .black
@@ -110,6 +110,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     open override func render() {
+        parentView?.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
     }
@@ -123,7 +124,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #if os(iOS)
 
     private func renderCorePlugins() {
-        plugins.filter(isNotMediaControlElement).forEach(render)
+        plugins.filter(isNotMediaControlElement).forEach({ render($0, in: view) })
     }
 
     private var mediaControl: MediaControl? {
@@ -134,6 +135,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return plugins.compactMap { $0 as? MediaControl.Element }
     }
 
+    private var overlayPlugins: [OverlayPlugin] {
+        return plugins.compactMap { $0 as? OverlayPlugin }
+    }
+
     private func renderMediaControlElements() {
         mediaControl?.renderElements(mediaControlElements)
     }
@@ -141,9 +146,14 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func isNotMediaControlElement(_ plugin: Plugin) -> Bool {
         return !(plugin is MediaControl.Element)
     }
+
     #endif
 
-    private func render(_ plugin: Plugin) {
+    private func renderOverlayPlugins() {
+        overlayPlugins.forEach({ render($0, in: overlayView) })
+    }
+
+    private func render(_ plugin: Plugin, in view: UIView) {
         if let plugin = plugin as? UICorePlugin {
             view.addSubview(plugin.view)
             do {
@@ -171,6 +181,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             renderCorePlugins()
             renderMediaControlElements()
         }
+        renderOverlayPlugins()
         #else
         renderInContainerView()
         renderPlugins()

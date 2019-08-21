@@ -765,6 +765,19 @@ class CoreTests: QuickSpec {
                     expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
             }
+
+            describe("rendering") {
+                context("when plugin is overlay") {
+                    it("renders on the overlay view") {
+                        Loader.shared.register(plugins: [FakeOverlayPlugin.self])
+                        let core = CoreFactory.create(with: [:])
+
+                        core.render()
+
+                        expect(core.overlayView.subviews.count).to(equal(1))
+                    }
+                }
+            }
         }
     }
 
@@ -784,6 +797,12 @@ class CoreTests: QuickSpec {
         let viewController = UIViewController()
         UIApplication.shared.keyWindow?.rootViewController = viewController
         return viewController
+    }
+}
+
+class FakeOverlayPlugin: OverlayPlugin {
+    open class override var name: String {
+        return "FakeOverlayPlugin"
     }
 }
 
