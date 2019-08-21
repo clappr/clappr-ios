@@ -1,6 +1,6 @@
 class OverlayPlugin: UICorePlugin {
     open class override var name: String {
-        return ""
+        return "OverlayPlugin"
     }
 
     override func bindEvents() { }

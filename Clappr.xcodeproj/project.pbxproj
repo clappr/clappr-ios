@@ -123,6 +123,8 @@
 		48A995192220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
 		48B9F9AD230D82C200CD07D5 /* OverlayPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */; };
 		48B9F9AE230D82C200CD07D5 /* OverlayPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */; };
+		48B9F9B0230DA29400CD07D5 /* OverlayPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AF230DA29400CD07D5 /* OverlayPluginTests.swift */; };
+		48B9F9B1230DA29400CD07D5 /* OverlayPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AF230DA29400CD07D5 /* OverlayPluginTests.swift */; };
 		48D81F1D21F9F41200B2D52E /* QuickSeekCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */; };
 		48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */; };
 		48EC492022A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
@@ -440,6 +442,7 @@
 		48A29C0D221DF3950004AD3B /* CorePluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePluginStub.swift; sourceTree = "<group>"; };
 		48A995172220842000042C0E /* UIPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPluginStub.swift; sourceTree = "<group>"; };
 		48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayPlugin.swift; sourceTree = "<group>"; };
+		48B9F9AF230DA29400CD07D5 /* OverlayPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayPluginTests.swift; sourceTree = "<group>"; };
 		48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
@@ -1299,6 +1302,7 @@
 				48A29C06221DEF640004AD3B /* CorePluginTests.swift */,
 				EDF652211D467CCA00627C48 /* UICorePluginTests.swift */,
 				C9C8BFAD2305C9B800A8FA55 /* SimpleCorePluginTests.swift */,
+				48B9F9AF230DA29400CD07D5 /* OverlayPluginTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1977,6 +1981,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5733D1BF21BAA6E4002107D2 /* Dictionary+ExtTests.swift in Sources */,
+				48B9F9B1230DA29400CD07D5 /* OverlayPluginTests.swift in Sources */,
 				FC7785C2200526D900EC879F /* AVFoundationPlaybackNowPlayingServiceTests.swift in Sources */,
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				C934669B2305C13F0062E8DE /* String+Ext.swift in Sources */,
@@ -2072,6 +2077,7 @@
 				9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */,
 				48A29C10221DF3BF0004AD3B /* CorePluginStub.swift in Sources */,
 				57937C5A1FB0DD2C000A239E /* AVURLAssetWithCookiesTests.swift in Sources */,
+				48B9F9B0230DA29400CD07D5 /* OverlayPluginTests.swift in Sources */,
 				9E1613FC2051CD89006E95F2 /* HTTPStub.swift in Sources */,
 				969703A61BEA8C7500B7F282 /* BaseObjectTests.swift in Sources */,
 				487747D5220B5BFB000167CE /* QuickSeekMediaControlPluginTests.swift in Sources */,
