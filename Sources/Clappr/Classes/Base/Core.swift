@@ -155,7 +155,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     private func render(_ plugin: Plugin, in view: UIView) {
         if let plugin = plugin as? UICorePlugin {
-            view.addSubview(plugin.view)
+            let shouldRenderModally = (plugin as? OverlayPlugin)?.isModal == true
+            if shouldRenderModally {
+                view.addSubviewMatchingConstraints(plugin.view)
+            } else {
+                view.addSubview(plugin.view)
+            }
             do {
                 try ObjC.catchException {
                     plugin.render()
