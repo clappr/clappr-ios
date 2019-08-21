@@ -781,6 +781,17 @@ class CoreTests: QuickSpec {
                         expect(core.overlayView.subviews.count).to(equal(1))
                     }
                 }
+
+                it("has the overlayView on top of the view stack") {
+                    Loader.shared.register(plugins: [FakeOverlayPlugin.self, UICorePluginMock.self, MediaControlMock.self])
+                    let core = CoreFactory.create(with: [:])
+                    let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                    core.parentView = parentView
+
+                    core.render()
+
+                    expect(core.parentView?.subviews.last).to(beAKindOf(PassthroughView.self))
+                }
             }
         }
     }

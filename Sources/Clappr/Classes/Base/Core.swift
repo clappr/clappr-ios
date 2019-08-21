@@ -113,6 +113,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         parentView?.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
+        parentView?.bringSubviewToFront(overlayView)
     }
 
     #if os(tvOS)
