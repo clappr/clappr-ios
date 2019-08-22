@@ -783,7 +783,7 @@ class CoreTests: QuickSpec {
                 }
 
                 it("has the overlayView on top of the view stack") {
-                    Loader.shared.register(plugins: [FakeOverlayPlugin.self, UICorePluginMock.self, MediaControlMock.self])
+                    Loader.shared.register(plugins: [FakeOverlayPlugin.self, UICorePluginMock.self])
                     let core = CoreFactory.create(with: [:])
                     let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                     core.parentView = parentView

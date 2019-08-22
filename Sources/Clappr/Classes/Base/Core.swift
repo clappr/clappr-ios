@@ -125,7 +125,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #if os(iOS)
 
     private func renderCorePlugins() {
-        plugins.filter(isNotMediaControlElement).forEach({ render($0, in: view) })
+        plugins.filter(isNotMediaControlElement).forEach(render)
     }
 
     private var mediaControl: MediaControl? {
@@ -134,10 +134,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     private var mediaControlElements: [MediaControl.Element] {
         return plugins.compactMap { $0 as? MediaControl.Element }
-    }
-
-    private var overlayPlugins: [OverlayPlugin] {
-        return plugins.compactMap { $0 as? OverlayPlugin }
     }
 
     private func renderMediaControlElements() {
@@ -150,25 +146,39 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #endif
 
-    private func renderOverlayPlugins() {
-        overlayPlugins.forEach({ render($0, in: overlayView) })
+    private var overlayPlugins: [OverlayPlugin] {
+        return plugins.compactMap { $0 as? OverlayPlugin }
     }
 
-    private func render(_ plugin: Plugin, in view: UIView) {
-        if let plugin = plugin as? UICorePlugin {
-            let shouldRenderModally = (plugin as? OverlayPlugin)?.isModal == true
-            if shouldRenderModally {
-                view.addSubviewMatchingConstraints(plugin.view)
-            } else {
-                view.addSubview(plugin.view)
+    private func renderOverlayPlugins() {
+        overlayPlugins.forEach(render)
+    }
+
+    private func viewThatRenders(_ plugin: Plugin) -> UIView {
+        return plugin is OverlayPlugin ? overlayView : view
+    }
+
+    private func shouldFitParentView(_ plugin: Plugin) -> Bool {
+        return (plugin as? OverlayPlugin)?.isModal == true
+    }
+
+    private func add(_ plugin: UICorePlugin, to view: UIView) {
+        if plugin.shouldFitParentView {
+            view.addSubviewMatchingConstraints(plugin.view)
+        } else {
+            view.addSubview(plugin.view)
+        }
+    }
+
+    private func render(_ plugin: Plugin) {
+        guard let plugin = plugin as? UICorePlugin else { return }
+        add(plugin, to: viewThatRenders(plugin))
+        do {
+            try ObjC.catchException {
+                plugin.render()
             }
-            do {
-                try ObjC.catchException {
-                    plugin.render()
-                }
-            } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
-            }
+        } catch {
+            plugin.logRenderCrash(for: error)
         }
     }
 
@@ -243,7 +253,21 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
                 plugin.destroy()
             }
         } catch {
-            Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+            plugin.logDestroyCrash(for: error)
         }
+    }
+}
+
+fileprivate extension Plugin {
+    func logRenderCrash(for error: Error) {
+        Logger.logError("\(pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
+    }
+
+    func logDestroyCrash(for error: Error) {
+        Logger.logError("\(pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+    }
+
+    var shouldFitParentView: Bool {
+        return (self as? OverlayPlugin)?.isModal == true
     }
 }
