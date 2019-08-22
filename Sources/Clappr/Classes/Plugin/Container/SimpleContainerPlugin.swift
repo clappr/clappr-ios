@@ -4,7 +4,7 @@ open class SimpleContainerPlugin: ContainerPlugin {
     }
 
     open var isNoOpPlayback: Bool {
-        return playback?.pluginName == "NoOp"
+        return playback is NoOpPlayback
     }
 
     @objc public required init(context: UIObject) {
