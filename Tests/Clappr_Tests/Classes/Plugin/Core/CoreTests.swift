@@ -773,7 +773,7 @@ class CoreTests: QuickSpec {
             describe("rendering") {
                 context("when plugin is overlay") {
                     it("renders on the overlay view") {
-                        Loader.shared.register(plugins: [OverlayPlugin.self])
+                        Loader.shared.register(plugins: [OverlayPluginMock.self])
                         let core = CoreFactory.create(with: [:])
 
                         core.render()
@@ -783,7 +783,7 @@ class CoreTests: QuickSpec {
                 }
 
                 it("has the overlayView on top of the view stack") {
-                    Loader.shared.register(plugins: [OverlayPlugin.self, UICorePluginMock.self])
+                    Loader.shared.register(plugins: [OverlayPluginMock.self, UICorePluginMock.self])
                     let core = CoreFactory.create(with: [:])
                     let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                     core.parentView = parentView

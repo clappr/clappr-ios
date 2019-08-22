@@ -11,7 +11,7 @@ class OverlayPluginTests: QuickSpec {
 
                 beforeEach {
                     core = CoreStub()
-                    plugin = OverlayPlugin(context: core)
+                    plugin = OverlayPluginMock(context: core)
                 }
 
                 it("has a name") {
@@ -31,7 +31,7 @@ class OverlayPluginTests: QuickSpec {
                 context("when it is not modal") {
                     it("renders with its own frame") {
                         let core = CoreStub()
-                        let plugin = OverlayPlugin(context: core)
+                        let plugin = OverlayPluginMock(context: core)
                         let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                         core.parentView = parentView
                         plugin.view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
@@ -49,6 +49,7 @@ class OverlayPluginTests: QuickSpec {
                         let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                         core.parentView = parentView
                         let plugin = OverlayPluginMock(context: core)
+                        plugin._isModal = true
                         plugin.view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
                         core.addPlugin(plugin)
 
@@ -63,7 +64,12 @@ class OverlayPluginTests: QuickSpec {
 }
 
 class OverlayPluginMock: OverlayPlugin {
+    var _isModal: Bool = false
+
     override var isModal: Bool {
-        return true
+        return _isModal
     }
+
+    override func bindEvents() { }
 }
+

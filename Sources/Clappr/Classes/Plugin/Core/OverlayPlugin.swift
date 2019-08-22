@@ -6,6 +6,4 @@ public class OverlayPlugin: UICorePlugin {
     open var isModal: Bool {
         return false
     }
-
-    override public func bindEvents() { }
 }
