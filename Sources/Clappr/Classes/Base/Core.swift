@@ -253,13 +253,13 @@ fileprivate extension Plugin {
             logDestroyCrash(for: error)
         }
     }
+}
 
+fileprivate extension UICorePlugin {
     func safeRender() {
         do {
             try ObjC.catchException {
-                if let plugin = self as? UICorePlugin {
-                    plugin.render()
-                }
+                self.render()
             }
         } catch {
             logRenderCrash(for: error)
