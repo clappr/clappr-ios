@@ -68,12 +68,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         
         Loader.shared.corePlugins.forEach { addPlugin($0.init(context: self)) }
     }
-    
+
     func load() {
-        if let source = options[kSourceUrl] as? String {
-            trigger(.willLoadSource)
-            activeContainer?.load(source, mimeType: options[kMimeType] as? String)
-        }
+        guard let source = options[kSourceUrl] as? String else { return }
+        trigger(.willLoadSource)
+        activeContainer?.load(source, mimeType: options[kMimeType] as? String)
     }
     
     public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -123,43 +122,27 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #endif
 
     #if os(iOS)
-
     private func renderCorePlugins() {
-        plugins.filter(isNotMediaControlElement).forEach(render)
-    }
-
-    private var mediaControl: MediaControl? {
-        return plugins.first { $0 is MediaControl } as? MediaControl
-    }
-
-    private var mediaControlElements: [MediaControl.Element] {
-        return plugins.compactMap { $0 as? MediaControl.Element }
+        plugins
+            .filter { $0.isNotMediaControlElement }
+            .forEach(render)
     }
 
     private func renderMediaControlElements() {
-        mediaControl?.renderElements(mediaControlElements)
-    }
-
-    private func isNotMediaControlElement(_ plugin: Plugin) -> Bool {
-        return !(plugin is MediaControl.Element)
-    }
-
-    #endif
-
-    private var overlayPlugins: [OverlayPlugin] {
-        return plugins.compactMap { $0 as? OverlayPlugin }
+        let mediaControl = plugins.first { $0 is MediaControl } as? MediaControl
+        let elements = plugins.compactMap { $0 as? MediaControl.Element }
+        mediaControl?.renderElements(elements)
     }
 
     private func renderOverlayPlugins() {
-        overlayPlugins.forEach(render)
+        plugins
+            .compactMap { $0 as? OverlayPlugin }
+            .forEach(render)
     }
+    #endif
 
     private func viewThatRenders(_ plugin: Plugin) -> UIView {
         return plugin is OverlayPlugin ? overlayView : view
-    }
-
-    private func shouldFitParentView(_ plugin: Plugin) -> Bool {
-        return (plugin as? OverlayPlugin)?.isModal == true
     }
 
     private func add(_ plugin: UICorePlugin, to view: UIView) {
@@ -173,13 +156,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func render(_ plugin: Plugin) {
         guard let plugin = plugin as? UICorePlugin else { return }
         add(plugin, to: viewThatRenders(plugin))
-        do {
-            try ObjC.catchException {
-                plugin.render()
-            }
-        } catch {
-            plugin.logRenderCrash(for: error)
-        }
+        plugin.safeRender()
     }
 
     private var shouldEnterInFullScreen: Bool {
@@ -232,7 +209,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach(safeDestroy)
+        plugins.forEach { $0.safeDestroy() }
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")
@@ -245,16 +222,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         view.removeFromSuperview()
 
         trigger(.didDestroy)
-    }
-
-    private func safeDestroy(_ plugin: Plugin) {
-        do {
-            try ObjC.catchException {
-                plugin.destroy()
-            }
-        } catch {
-            plugin.logDestroyCrash(for: error)
-        }
     }
 }
 
@@ -269,5 +236,33 @@ fileprivate extension Plugin {
 
     var shouldFitParentView: Bool {
         return (self as? OverlayPlugin)?.isModal == true
+    }
+
+    #if os(iOS)
+    var isNotMediaControlElement: Bool {
+        return !(self is MediaControl.Element)
+    }
+    #endif
+
+    func safeDestroy() {
+        do {
+            try ObjC.catchException {
+                self.destroy()
+            }
+        } catch {
+            logDestroyCrash(for: error)
+        }
+    }
+
+    func safeRender() {
+        do {
+            try ObjC.catchException {
+                if let plugin = self as? UICorePlugin {
+                    plugin.render()
+                }
+            }
+        } catch {
+            logRenderCrash(for: error)
+        }
     }
 }
