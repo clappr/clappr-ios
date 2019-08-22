@@ -198,7 +198,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view.bindFrameToSuperviewBounds()
     }
 
-    func renderElements(_ elements: [MediaControl.Element]) {
+    func render(_ elements: [MediaControl.Element]) {
         let orderedElements = sortElementsIfNeeded(elements)
         orderedElements.forEach { element in
             mediaControlView.addSubview(element.view, in: element.panel, at: element.position)

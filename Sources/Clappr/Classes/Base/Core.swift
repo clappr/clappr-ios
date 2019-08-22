@@ -131,7 +131,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderMediaControlElements() {
         let mediaControl = plugins.first { $0 is MediaControl } as? MediaControl
         let elements = plugins.compactMap { $0 as? MediaControl.Element }
-        mediaControl?.renderElements(elements)
+        mediaControl?.render(elements)
     }
 
     private func renderOverlayPlugins() {
