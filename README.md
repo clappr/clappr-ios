@@ -79,7 +79,7 @@ Under the hood is a set of stack views divided into panels and position, that ca
 
 Clappr comes with four default components: play/pause button, seekbar, fullscreen button, and time indicator. With them, the user can fully interact with the playback. You can customize it with your own plugins, see below:
 
-#### Media Control Plugins
+#### Media Control Elements
 
 You can add your own components into the `MediaControl` by creating your own Media Control Element.
 
