@@ -77,7 +77,7 @@ Under the hood is a set of stack views divided into panels and position, that ca
 
 * **Position**: defines in which part of the _panel_ the plugin will be rendered. The options are `left`, `center`, `right` and `none`.
 
-Clappr comes with four default components: play/pause button, seekbar, fullscreen button, and time indicator. With them, the user can fully interact with the playback. You can customize it with your own plugins, see below:
+Clappr comes with four default components: play/pause button, seekbar, fullscreen button, and time indicator. With them, the user can fully interact with the playback. You can customize it with your own elements, see below:
 
 #### Media Control Elements
 
