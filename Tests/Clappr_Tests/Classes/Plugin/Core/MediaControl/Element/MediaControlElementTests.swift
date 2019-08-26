@@ -22,6 +22,34 @@ class MediaControlElementTests: QuickSpec {
                 expect(mediaControlElement.view).to(beAKindOf(UIView.self))
                 expect(mediaControlElement.view).toNot(beNil())
             }
+
+            it("calls bind events") {
+                let core = CoreStub()
+                let mediaControlElement = StubMediaControlElement(context: core)
+
+                expect(mediaControlElement.didCallBindEvents).to(beTrue())
+            }
+
+            it("has a non nil core") {
+                let core = CoreStub()
+                let mediaControlElement = StubMediaControlElement(context: core)
+
+                expect(mediaControlElement.core).toNot(beNil())
+            }
+
+            it("has a non nil activeContainer") {
+                let core = CoreStub()
+                let mediaControlElement = StubMediaControlElement(context: core)
+
+                expect(mediaControlElement.activeContainer).to(equal(core.activeContainer))
+            }
+
+            it("has a non nil activePlayback") {
+                let core = CoreStub()
+                let mediaControlElement = StubMediaControlElement(context: core)
+
+                expect(mediaControlElement.activePlayback).to(equal(core.activePlayback))
+            }
         }
 
         describe("panel") {
@@ -53,9 +81,9 @@ class MediaControlElementTests: QuickSpec {
 }
 
 class StubMediaControlElement: MediaControl.Element {
-    override class var name: String {
-        return "StubMediaControlElement"
-    }
+    var didCallBindEvents = false
 
-    override func bindEvents() { }
+    override func bindEvents() {
+        didCallBindEvents = true
+    }
 }

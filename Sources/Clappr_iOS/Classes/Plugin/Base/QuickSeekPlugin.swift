@@ -8,10 +8,6 @@ public class QuickSeekPlugin: UICorePlugin {
         return "QuickSeekPlugin"
     }
     
-    private var activePlayback: Playback? {
-        return core?.activePlayback
-    }
-    
     private var animatonHandler: QuickSeekAnimation?
     
     required init(context: UIObject) {
@@ -46,8 +42,8 @@ public class QuickSeekPlugin: UICorePlugin {
     }
 
     @objc func quickSeek(xPosition: CGFloat) {
-        guard let activePlayback = core?.activePlayback,
-            let container = core?.activeContainer,
+        guard let activePlayback = activePlayback,
+            let container = activeContainer,
             let coreViewWidth = core?.view.frame.width else { return }
 
         let didTapLeftSide = xPosition < coreViewWidth / 2
@@ -66,7 +62,7 @@ public class QuickSeekPlugin: UICorePlugin {
         playback.seek(playback.position - seekDuration)
         guard playback.position - seekDuration > 0.0 else { return }
         animatonHandler?.animateBackward()
-        core?.activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": -seekDuration])
+        activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": -seekDuration])
     }
     
     private func seekForward(_ playback: Playback) {
@@ -75,7 +71,7 @@ public class QuickSeekPlugin: UICorePlugin {
         playback.seek(playback.position + seekDuration)
         guard playback.position + seekDuration < playback.duration else { return }
         animatonHandler?.animateForward()
-        core?.activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": seekDuration])
+        activeContainer?.trigger(InternalEvent.didQuickSeek.rawValue, userInfo: ["duration": seekDuration])
     }
     
     private func impactFeedback() {

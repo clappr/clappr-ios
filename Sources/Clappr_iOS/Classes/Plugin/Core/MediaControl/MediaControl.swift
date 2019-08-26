@@ -10,14 +10,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return core?.options
     }
 
-    private var activeContainer: Container? {
-        return core?.activeContainer
-    }
-
-    private var activePlayback: Playback? {
-        return core?.activePlayback
-    }
-
     open class override var name: String {
         return "MediaControl"
     }

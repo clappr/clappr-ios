@@ -83,10 +83,6 @@ class LoaderTests: QuickSpec {
         }
     }
 
-    class StubMediaControl: MediaControl {
-
-    }
-
     class StubPlayback: Playback {
         override class var name: String {
             return "stupPlayback"
