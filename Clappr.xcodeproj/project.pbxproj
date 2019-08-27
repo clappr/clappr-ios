@@ -103,7 +103,7 @@
 		4856322B220B4C9C0096CDAE /* QuickSeekMediaControlPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322A220B4C9C0096CDAE /* QuickSeekMediaControlPlugin.swift */; };
 		4856322E220B54B90096CDAE /* QuickSeekPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856322D220B54B90096CDAE /* QuickSeekPlugin.swift */; };
 		486E8DFC2315699F0024E6CA /* OverlayPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E8DFA231569920024E6CA /* OverlayPluginTests.swift */; };
-		486E8DFD231569AC0024E6CA /* OverlayPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E8DFA231569920024E6CA /* OverlayPluginTests.swift */; };
+		486E8DFE23156A880024E6CA /* OverlayPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E8DFA231569920024E6CA /* OverlayPluginTests.swift */; };
 		487747D5220B5BFB000167CE /* QuickSeekMediaControlPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487747D3220B5BCD000167CE /* QuickSeekMediaControlPluginTests.swift */; };
 		488849B022845D97004B4AD1 /* AVAsset+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488849AF22845D97004B4AD1 /* AVAsset+Ext.swift */; };
 		488849B122845D97004B4AD1 /* AVAsset+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488849AF22845D97004B4AD1 /* AVAsset+Ext.swift */; };
@@ -1963,7 +1963,6 @@
 				5744C05821EE37270087D9FB /* EventHandler.swift in Sources */,
 				32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */,
 				48B9F9AE230D82C200CD07D5 /* OverlayPlugin.swift in Sources */,
-				486E8DFD231569AC0024E6CA /* OverlayPluginTests.swift in Sources */,
 				32E401C41FF42335001C2096 /* UIView+Ext.swift in Sources */,
 				325111452134827F001FEEBA /* Options.swift in Sources */,
 				576786C02188A4B40046508C /* Array+appendOrReplace.swift in Sources */,
@@ -1991,6 +1990,7 @@
 				C9C8BFAF2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
+				486E8DFE23156A880024E6CA /* OverlayPluginTests.swift in Sources */,
 				48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */,
 				576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */,
 				48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */,
