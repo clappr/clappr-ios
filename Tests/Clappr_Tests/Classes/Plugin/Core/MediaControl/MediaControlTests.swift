@@ -389,7 +389,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         expect(mediaControlViewMock.didCallAddSubview).to(beTrue())
                     }
@@ -398,7 +398,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(elements.first?.view))
                     }
@@ -408,7 +408,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))
                     }
@@ -418,7 +418,7 @@ class MediaControlTests: QuickSpec {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
 
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
                         
                         expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
                     }
@@ -427,7 +427,7 @@ class MediaControlTests: QuickSpec {
                         MediaControlElementMock._panel = .top
                         mediaControl.render()
                         
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         expect(MediaControlElementMock.didCallRender).to(beTrue())
                     }
@@ -436,7 +436,7 @@ class MediaControlTests: QuickSpec {
                         MediaControlElementMock.crashOnRender = true
                         mediaControl.render()
 
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         expect(mediaControl).to(beAKindOf(MediaControl.self))
                     }
@@ -450,7 +450,7 @@ class MediaControlTests: QuickSpec {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
                         expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
@@ -466,7 +466,7 @@ class MediaControlTests: QuickSpec {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
-                        mediaControl.renderElements(elements)
+                        mediaControl.render(elements)
 
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
                         expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))

@@ -16,6 +16,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
+    @objc open var overlayView = PassthroughView()
 
     #if os(iOS)
     @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
@@ -58,7 +59,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
-
         super.init()
 
         view.backgroundColor = .black
@@ -68,12 +68,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         
         Loader.shared.corePlugins.forEach { addPlugin($0.init(context: self)) }
     }
-    
+
     func load() {
-        if let source = options[kSourceUrl] as? String {
-            trigger(.willLoadSource)
-            activeContainer?.load(source, mimeType: options[kMimeType] as? String)
-        }
+        guard let source = options[kSourceUrl] as? String else { return }
+        trigger(.willLoadSource)
+        activeContainer?.load(source, mimeType: options[kMimeType] as? String)
     }
     
     public func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -110,8 +109,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     open override func render() {
+        parentView?.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
+        parentView?.bringSubviewToFront(overlayView)
     }
 
     #if os(tvOS)
@@ -121,39 +122,41 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     #endif
 
     #if os(iOS)
-
     private func renderCorePlugins() {
-        plugins.filter(isNotMediaControlElement).forEach(render)
-    }
-
-    private var mediaControl: MediaControl? {
-        return plugins.first { $0 is MediaControl } as? MediaControl
-    }
-
-    private var mediaControlElements: [MediaControl.Element] {
-        return plugins.compactMap { $0 as? MediaControl.Element }
+        plugins
+            .filter { $0.isNotMediaControlElement }
+            .forEach(render)
     }
 
     private func renderMediaControlElements() {
-        mediaControl?.renderElements(mediaControlElements)
+        let mediaControl = plugins.first { $0 is MediaControl } as? MediaControl
+        let elements = plugins.compactMap { $0 as? MediaControl.Element }
+        mediaControl?.render(elements)
     }
 
-    private func isNotMediaControlElement(_ plugin: Plugin) -> Bool {
-        return !(plugin is MediaControl.Element)
+    private func renderOverlayPlugins() {
+        plugins
+            .compactMap { $0 as? OverlayPlugin }
+            .forEach(render)
     }
     #endif
 
-    private func render(_ plugin: Plugin) {
-        if let plugin = plugin as? UICorePlugin {
+    private func viewThatRenders(_ plugin: Plugin) -> UIView {
+        return plugin is OverlayPlugin ? overlayView : view
+    }
+
+    private func add(_ plugin: UICorePlugin, to view: UIView) {
+        if plugin.shouldFitParentView {
+            view.addSubviewMatchingConstraints(plugin.view)
+        } else {
             view.addSubview(plugin.view)
-            do {
-                try ObjC.catchException {
-                    plugin.render()
-                }
-            } catch {
-                Logger.logError("\((plugin as Plugin).pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
-            }
         }
+    }
+
+    private func render(_ plugin: Plugin) {
+        guard let plugin = plugin as? UICorePlugin else { return }
+        add(plugin, to: viewThatRenders(plugin))
+        plugin.safeRender()
     }
 
     private var shouldEnterInFullScreen: Bool {
@@ -171,6 +174,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             renderCorePlugins()
             renderMediaControlElements()
         }
+        renderOverlayPlugins()
         #else
         renderInContainerView()
         renderPlugins()
@@ -205,7 +209,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         containers.removeAll()
 
         Logger.logDebug("destroying plugins", scope: "Core")
-        plugins.forEach(safeDestroy)
+        plugins.forEach { $0.safeDestroy() }
         plugins.removeAll()
 
         Logger.logDebug("destroyed", scope: "Core")
@@ -219,14 +223,46 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         trigger(.didDestroy)
     }
+}
 
-    private func safeDestroy(_ plugin: Plugin) {
+fileprivate extension Plugin {
+    func logRenderCrash(for error: Error) {
+        Logger.logError("\(pluginName) crashed during render (\(error.localizedDescription))", scope: "Core")
+    }
+
+    func logDestroyCrash(for error: Error) {
+        Logger.logError("\(pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+    }
+
+    var shouldFitParentView: Bool {
+        return (self as? OverlayPlugin)?.isModal == true
+    }
+
+    #if os(iOS)
+    var isNotMediaControlElement: Bool {
+        return !(self is MediaControl.Element)
+    }
+    #endif
+
+    func safeDestroy() {
         do {
             try ObjC.catchException {
-                plugin.destroy()
+                self.destroy()
             }
         } catch {
-            Logger.logError("\((plugin as Plugin).pluginName) crashed during destroy (\(error.localizedDescription))", scope: "Core")
+            logDestroyCrash(for: error)
+        }
+    }
+}
+
+fileprivate extension UICorePlugin {
+    func safeRender() {
+        do {
+            try ObjC.catchException {
+                self.render()
+            }
+        } catch {
+            logRenderCrash(for: error)
         }
     }
 }

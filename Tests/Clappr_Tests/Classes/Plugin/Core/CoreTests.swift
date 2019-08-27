@@ -68,6 +68,10 @@ class CoreTests: QuickSpec {
                     expect(core.plugins.compactMap({ $0 as? UICorePluginMock })).toNot(beNil())
                     expect(core.plugins.compactMap({ $0 as? CorePluginMock })).toNot(beNil())
                 }
+
+                it("has an overlayView as a PassthroughView") {
+                    expect(core.overlayView).to(beAnInstanceOf(PassthroughView.self))
+                }
                 
                 #if os(iOS)
                 it("add gesture recognizer") {
@@ -765,6 +769,30 @@ class CoreTests: QuickSpec {
                     expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
             }
+
+            describe("rendering") {
+                context("when plugin is overlay") {
+                    it("renders on the overlay view") {
+                        Loader.shared.register(plugins: [OverlayPluginMock.self])
+                        let core = CoreFactory.create(with: [:])
+
+                        core.render()
+
+                        expect(core.overlayView.subviews.count).to(equal(1))
+                    }
+                }
+
+                it("has the overlayView on top of the view stack") {
+                    Loader.shared.register(plugins: [OverlayPluginMock.self, UICorePluginMock.self])
+                    let core = CoreFactory.create(with: [:])
+                    let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                    core.parentView = parentView
+
+                    core.render()
+
+                    expect(core.parentView?.subviews.last).to(beAKindOf(PassthroughView.self))
+                }
+            }
         }
     }
 
@@ -837,7 +865,7 @@ class CorePluginMock: CorePlugin {
 private class MediaControlMock: MediaControl {
     var didCallRenderElements = false
     
-    override func renderElements(_ plugins: [MediaControl.Element]) {
+    override func render(_ elements: [MediaControl.Element]) {
         didCallRenderElements = true
     }
 }
