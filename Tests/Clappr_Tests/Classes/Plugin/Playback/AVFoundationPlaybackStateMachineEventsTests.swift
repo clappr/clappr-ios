@@ -12,7 +12,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                 .didUpdateBuffer, .didUpdatePosition,
                 .seekableUpdate, .didFindAudio,
                 .didFindSubtitle, .didChangeDvrAvailability,
-                .didUpdateDuration, .didUpdateBitrate
+                .didUpdateDuration, .didUpdateBitrate,
+                .assetReady
             ]
 
             beforeEach {

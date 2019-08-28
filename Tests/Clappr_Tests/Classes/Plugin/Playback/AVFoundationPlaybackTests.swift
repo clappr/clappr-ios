@@ -1509,6 +1509,24 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("#setupPlayer") {
+                context("when asset is available") {
+                    it("triggers event assetAvailable") {
+                        let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                        let playback = AVFoundationPlayback(options: options)
+                        var didTriggerAssetReady = false
+
+                        playback.on(Event.assetReady.rawValue) { _ in
+                            didTriggerAssetReady = true
+                        }
+
+                        playback.play()
+
+                        expect(didTriggerAssetReady).toEventually(beTrue())
+                    }
+                }
+            }
+
             #if os(tvOS)
             describe("#loadMetadata") {
                 func getPlayback(with source: String) -> AVFoundationPlayback {
