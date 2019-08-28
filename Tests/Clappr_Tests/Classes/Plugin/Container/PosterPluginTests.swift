@@ -7,58 +7,64 @@ class PosterPluginTests: QuickSpec {
     override func spec() {
 
         describe(".PosterPlugin") {
-            var container: Container!
+            var core: Core!
             let options = [
                 kSourceUrl: "http://globo.com/video.mp4",
                 kPosterUrl: "http://clappr.io/poster.png",
             ]
 
-            context("when container has no options") {
-                it("hides itself") {
-                    container = ContainerFactory.create(with: [:])
-                    container.render()
+            beforeEach {
+                Loader.shared.register(plugins: [PosterPlugin.self])
+            }
 
-                    let posterPlugin = self.getPosterPlugin(container)
+            afterEach {
+                Loader.shared.resetPlugins()
+            }
+
+            context("when core has no options") {
+                it("hides itself") {
+                    core = CoreFactory.create(with: [:])
+                    core.render()
+
+                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
 
                     expect(posterPlugin.view.isHidden).to(beTrue())
                 }
             }
 
-            context("when container doesnt have posterUrl option") {
+            context("when core doesnt have posterUrl option") {
                 it("hides itself") {
-                    container = ContainerFactory.create(with: ["anotherOption": true])
-                    container.render()
+                    core = CoreFactory.create(with: ["anotherOption": true])
+                    core.render()
 
-                    let posterPlugin = self.getPosterPlugin(container)
+                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
 
                     expect(posterPlugin.view.isHidden).to(beTrue())
                 }
             }
 
-            context("when container has posterUrl option") {
+            context("when core has posterUrl option") {
                 it("it renders itself") {
-                    container = ContainerFactory.create(with: options)
-                    container.render()
+                    core = CoreFactory.create(with: options)
+                    core.render()
 
-                    let posterPlugin = self.getPosterPlugin(container)
+                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
 
-                    expect(posterPlugin.view.superview) == container.view
+                    expect(posterPlugin.view.superview).to(equal(core.activeContainer?.view))
                 }
             }
 
             context("when changes the activePlayback") {
-
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    container = ContainerFactory.create(with: [:])
+                    core = CoreFactory.create(with: [:])
                 }
 
                 context("to NoOpPlayback") {
-
                     beforeEach {
-                        container.playback = NoOpPlayback(options: [:])
-                        posterPlugin = self.getPosterPlugin(container)
+                        core.activeContainer?.playback = NoOpPlayback(options: [:])
+                        posterPlugin = self.getPosterPlugin(core.activeContainer)
                     }
 
                     it("hides itself") {
@@ -66,14 +72,13 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("isNoOpPlayback is true") {
-                        expect(posterPlugin.isNoOpPlayback) == true
+                        expect(posterPlugin.isNoOpPlayback).to(beTrue())
                     }
 
                     context("and change again to another playback") {
-
                         beforeEach {
-                            container.playback = AVFoundationPlayback(options: [:])
-                            posterPlugin = self.getPosterPlugin(container)
+                            core.activeContainer?.playback = AVFoundationPlayback(options: [:])
+                            posterPlugin = self.getPosterPlugin(core.activeContainer)
                         }
 
                         it("hides itself") {
@@ -85,8 +90,8 @@ class PosterPluginTests: QuickSpec {
                 context("to another a playback diferent from NoOpPlayback") {
 
                     beforeEach {
-                        container.playback = AVFoundationPlayback(options: [:])
-                        posterPlugin = self.getPosterPlugin(container)
+                        core.activeContainer?.playback = AVFoundationPlayback(options: [:])
+                        posterPlugin = self.getPosterPlugin(core.activeContainer)
                     }
 
                     it("reveal itself") {
@@ -94,7 +99,7 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("isNoOpPlayback is true") {
-                        expect(posterPlugin.isNoOpPlayback) == false
+                        expect(posterPlugin.isNoOpPlayback).to(beFalse())
                     }
                 }
             }
@@ -103,24 +108,23 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    container = ContainerFactory.create(with: options)
-                    container.load(options[kSourceUrl]!)
-                    container.render()
-                    posterPlugin = self.getPosterPlugin(container)
+                    core = CoreFactory.create(with: options)
+                    core.load()
+                    core.render()
+                    posterPlugin = self.getPosterPlugin(core.activeContainer)
                 }
 
                 context("when playback trigger a play event") {
                     it("hides itself") {
-                        expect(posterPlugin.view.isHidden).to(beFalse())
-                        container.playback?.trigger(Event.playing.rawValue)
+                        core.activeContainer?.playback?.trigger(Event.playing.rawValue)
                         expect(posterPlugin.view.isHidden).to(beTrue())
                     }
                 }
 
                 context("when playback trigger a end event") {
                     it("reveal itself") {
-                        container.playback?.trigger(Event.playing.rawValue)
-                        container.playback?.trigger(Event.didComplete.rawValue)
+                        core.activeContainer?.playback?.trigger(Event.playing.rawValue)
+                        core.activeContainer?.playback?.trigger(Event.didComplete.rawValue)
 
                         expect(posterPlugin.view.isHidden).to(beFalse())
                     }
@@ -129,7 +133,7 @@ class PosterPluginTests: QuickSpec {
         }
     }
 
-    private func getPosterPlugin(_ container: Container) -> PosterPlugin {
-        return container.plugins.filter({ $0.pluginName == PosterPlugin.name }).first as! PosterPlugin
+    private func getPosterPlugin(_ container: Container?) -> PosterPlugin {
+        return container?.plugins.first(where: { $0.pluginName == PosterPlugin.name }) as! PosterPlugin
     }
 }

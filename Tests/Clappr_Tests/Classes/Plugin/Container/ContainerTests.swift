@@ -110,21 +110,6 @@ class ContainerTests: QuickSpec {
                         }
                     }
                 }
-
-                context("when resource is empty") {
-
-                    beforeEach {
-                        container = ContainerFactory.create(with: [:])
-                    }
-
-                    it("set playback as subview") {
-                        expect(container.playback?.view.superview).to(beNil())
-                    }
-
-                    it("set playback to front of container") {
-                        expect(container.view.subviews.first).to(beNil())
-                    }
-                }
             }
 
             describe("#render") {
