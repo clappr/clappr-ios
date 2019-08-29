@@ -81,14 +81,15 @@ open class Player: BaseObject {
              Event.didSelectAudio.rawValue, Event.didUpdateBitrate.rawValue])
 
         setCore(with: options)
-
+        bindCoreEvents()
         bindPlaybackEvents()
+
+        core?.load()
     }
     
     private func setCore(with options: Options) {
         core?.stopListening()
         core = CoreFactory.create(with: options)
-        bindCoreEvents()
     }
 
     private func bindCoreEvents() {

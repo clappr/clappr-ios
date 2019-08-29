@@ -23,14 +23,10 @@ class PlayerTests: QuickSpec {
             it("is an instance of AVPlayerViewController") {
                 expect(player).to(beAKindOf(AVPlayerViewController.self))
             }
-            
-            it("loads source on core when initializing") {
-                let player = Player(options: options)
-                
-                if let core = player.core {
-                    expect(core.activeContainer).toNot(beNil())
-                } else {
-                    fail("player.core is nil")
+
+            describe("#init") {
+                it("loads source on core when initializing") {
+                    expect(player.core?.activeContainer).toNot(beNil())
                 }
             }
             

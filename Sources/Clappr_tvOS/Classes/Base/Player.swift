@@ -122,7 +122,10 @@ open class Player: AVPlayerViewController {
 
         setCore(with: options)
 
+        bindCoreEvents()
         bindPlaybackEvents()
+        
+        core?.load()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -131,7 +134,6 @@ open class Player: AVPlayerViewController {
 
     private func setCore(with options: Options) {
         core = CoreFactory.create(with: options)
-        bindCoreEvents()
     }
 
     private func bindCoreEvents() {
