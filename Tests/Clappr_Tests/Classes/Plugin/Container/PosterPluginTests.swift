@@ -98,7 +98,7 @@ class PosterPluginTests: QuickSpec {
                         expect(posterPlugin.view.isHidden).toEventually(beFalse())
                     }
 
-                    it("isNoOpPlayback is true") {
+                    it("isNoOpPlayback is false") {
                         expect(posterPlugin.isNoOpPlayback).to(beFalse())
                     }
                 }
@@ -110,7 +110,6 @@ class PosterPluginTests: QuickSpec {
                 beforeEach {
                     core = CoreFactory.create(with: options)
                     core.load()
-                    core.render()
                     posterPlugin = self.getPosterPlugin(core.activeContainer)
                 }
 
@@ -134,6 +133,6 @@ class PosterPluginTests: QuickSpec {
     }
 
     private func getPosterPlugin(_ container: Container?) -> PosterPlugin {
-        return container?.plugins.first(where: { $0.pluginName == PosterPlugin.name }) as! PosterPlugin
+        return container?.plugins.first { $0.pluginName == PosterPlugin.name } as! PosterPlugin
     }
 }
