@@ -14,7 +14,7 @@ class ContainerTests: QuickSpec {
                     it("creates a container with invalid playback") {
                         container = ContainerFactory.create(with: Resource.invalid)
 
-                        container.load(Source.invalid.rawValue)
+                        container.load(Source.invalid)
 
                         expect(container.playback?.pluginName) == "NoOp"
                     }
@@ -25,7 +25,7 @@ class ContainerTests: QuickSpec {
                         Loader.shared.register(playbacks: [AVFoundationPlayback.self])
                         container = ContainerFactory.create(with: Resource.valid)
 
-                        container.load(Source.valid.rawValue)
+                        container.load(Source.valid)
 
                         expect(container.playback?.pluginName) == "AVPlayback"
                     }
@@ -34,7 +34,7 @@ class ContainerTests: QuickSpec {
                 context("when resource is not empty") {
                     beforeEach {
                         container = ContainerFactory.create(with: Resource.valid)
-                        container.load(Source.valid.rawValue)
+                        container.load(Source.valid)
                     }
 
                     context("and add container plugins from loader") {
@@ -42,7 +42,7 @@ class ContainerTests: QuickSpec {
                             Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
                             container = ContainerFactory.create(with: [:])
 
-                            container.load(Source.valid.rawValue)
+                            container.load(Source.valid)
 
                             expect(container.hasPlugin(FakeContainerPlugin.name)).to(beTrue())
                             expect(container.hasPlugin(AnotherFakeContainerPlugin.name)).to(beTrue())
@@ -222,14 +222,14 @@ class ContainerTests: QuickSpec {
                     }
 
                     it("loads a valid playback") {
-                        container.load(Source.valid.rawValue)
+                        container.load(Source.valid)
 
                         expect(container.playback?.pluginName) == "AVPlayback"
                         expect(container.playback?.view.superview) == container.view
                     }
 
                     it("load a source with mime type") {
-                        container.load(Source.valid.rawValue, mimeType: "video/mp4")
+                        container.load(Source.valid, mimeType: "video/mp4")
 
                         expect(container.playback?.pluginName) == "AVPlayback"
                         expect(container.playback?.view.superview) == container.view
@@ -239,18 +239,18 @@ class ContainerTests: QuickSpec {
                 context("when pass a invalid resource") {
                     beforeEach {
                         container = ContainerFactory.create(with: [:])
-                        container.load(Source.invalid.rawValue)
+                        container.load(Source.invalid)
                     }
 
                     it("set playback as a 'noop' playback") {
-                        container.load(Source.invalid.rawValue)
+                        container.load(Source.invalid)
 
                         expect(container.playback?.pluginName) == NoOpPlayback.name
                         expect(container.playback?.view.superview) == container.view
                     }
 
                     it("set playback as a 'noop' playback with mimetype") {
-                        container.load(Source.valid.rawValue, mimeType: "video/mp4")
+                        container.load(Source.valid, mimeType: "video/mp4")
 
                         expect(container.playback?.pluginName) == "AVPlayback"
                         expect(container.playback?.view.superview) == container.view
@@ -274,20 +274,20 @@ class ContainerTests: QuickSpec {
                     Loader.shared.resetPlugins()
                     Loader.shared.register(playbacks: [StubPlayback.self])
                     container = ContainerFactory.create(with: Resource.valid)
-                    container.load(Source.valid.rawValue)
+                    container.load(Source.valid)
                 }
 
                 it("reset startAt after first play event") {
 
                     let options = [kSourceUrl: "someUrl", kStartAt: 15.0] as Options
                     let container = ContainerFactory.create(with: options)
-                    container.load(Source.invalid.rawValue)
+                    container.load(Source.invalid)
 
                     expect(container.options[kStartAt] as? TimeInterval) == 15.0
                     expect(container.playback?.startAt) == 15.0
 
                     container.playback?.play()
-                    container.load(Source.valid.rawValue)
+                    container.load(Source.valid)
 
                     expect(container.options[kStartAt] as? TimeInterval) == 0.0
                     expect(container.playback?.startAt) == 0.0
@@ -418,7 +418,7 @@ struct Resource {
     static let invalid = [kSourceUrl: Source.invalid]
 }
 
-enum Source: String {
-    case valid = "http://clappr.com/video.mp4"
-    case invalid = "invalid"
+struct Source {
+    static let valid = "http://clappr.com/video.mp4"
+    static let invalid = "invalid"
 }
