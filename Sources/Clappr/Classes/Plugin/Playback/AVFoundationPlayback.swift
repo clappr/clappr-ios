@@ -250,8 +250,13 @@ open class AVFoundationPlayback: Playback {
         setupMaxResolution(for: playerLayer!.frame.size)
 
         asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
-        asset.wait(for: .duration, then: seekToStartAtIfNeeded)
+        asset.wait(for: .duration, then: durationAvailable)
         addObservers()
+    }
+
+    private func durationAvailable() {
+        trigger(.assetReady)
+        seekToStartAtIfNeeded()
     }
 
     private func seekToStartAtIfNeeded() {
