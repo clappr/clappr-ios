@@ -191,6 +191,26 @@ class MediaControlViewTests: QuickSpec {
 
                         expect(mediaControlView.subviews[1].frame.height).to(equal(321))
                     }
+
+                    it("modifies bottom padding, and dont change the size of constrast view") {
+                        let mediaControlView: MediaControlView = .fromNib()
+                        let height = mediaControlView.contrastView.frame.height
+
+                        mediaControlView.bottomPadding.constant = 10
+                        mediaControlView.layoutIfNeeded()
+
+                        expect(mediaControlView.contrastView.frame.height).to(equal(height))
+                    }
+
+                    it("modifies top padding, and dont change the size of constrast view") {
+                        let mediaControlView: MediaControlView = .fromNib()
+                        let height = mediaControlView.contrastView.frame.height
+
+                        mediaControlView.topPadding.constant = 10
+                        mediaControlView.layoutIfNeeded()
+
+                        expect(mediaControlView.contrastView.frame.height).to(equal(height))
+                    }
                 }
             }
         }
