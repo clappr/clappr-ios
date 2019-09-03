@@ -21,6 +21,8 @@ class MediaControlView: UIView {
     @IBOutlet weak var topPadding: NSLayoutConstraint!
     @IBOutlet weak var bottomPadding: NSLayoutConstraint!
 
+    
+
     var panels: [MediaControlPanel: [MediaControlPosition: UIStackView]] {
         return [
             .top: [
