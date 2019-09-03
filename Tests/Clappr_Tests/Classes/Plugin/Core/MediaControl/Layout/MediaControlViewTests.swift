@@ -149,6 +149,21 @@ class MediaControlViewTests: QuickSpec {
                         expect(didCallAnchorInCenter).to(beTrue())
                     }
                 }
+
+                context("padding constraints") {
+
+                    it("bottom starts with value 0") {
+                        let mediaControlView: MediaControlView = .fromNib()
+
+                        expect(mediaControlView.bottomPadding.constant).to(equal(0))
+                    }
+
+                    it("top starts with value 0") {
+                        let mediaControlView: MediaControlView = .fromNib()
+
+                        expect(mediaControlView.topPadding.constant).to(equal(0))
+                    }
+                }
             }
         }
     }
