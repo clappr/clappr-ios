@@ -2,7 +2,6 @@ public typealias Options = [String: Any]
 
 public let kPosterUrl = "posterUrl"
 public let kSourceUrl = "sourceUrl"
-public let kMediaControl = "mediaControl"
 public let kFullscreen = "fullscreen"
 public let kFullscreenDisabled = "fullscreenDisabled"
 public let kFullscreenByApp = "fullscreenByApp"
@@ -12,7 +11,9 @@ public let kMimeType = "mimeType"
 public let kDefaultSubtitle = "defaultSubtitle"
 public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
+public let kMediaControl = "mediaControl"
 public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
+public let kMediaControlBottomPadding = "mediaControlBottomPadding"
 
 // List of MediaControl Elements
 public let kMediaControlElements = "mediaControlElements"

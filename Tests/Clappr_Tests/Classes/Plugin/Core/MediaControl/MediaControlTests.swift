@@ -109,6 +109,18 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("options") {
+                context("on request padding") {
+                    it("applies padding to Media Control") {
+                        let options: Options = [kMediaControlBottomPadding: 14]
+                        let core = Core(options: options)
+                        let mediaControl = MediaControl(context: core)
+
+                        mediaControl.render()
+
+                        expect(mediaControl.mediaControlView.bottomPadding?.constant).to(equal(14.0))
+                    }
+                }
+
                 it("has the same options as the Core") {
                     let options: Options = ["foo": "bar"]
                     let core = Core(options: options)
@@ -407,7 +419,7 @@ class MediaControlTests: QuickSpec {
                         MediaControlElementMock._panel = .center
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
-                        
+                         
                         mediaControl.render(elements)
 
                         expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))

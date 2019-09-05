@@ -22,4 +22,17 @@ public extension Dictionary where Key == String, Value == Any {
         }
         return alternative
     }
+
+    func double(_ key: String, orElse alternative: Double? = nil) -> Double? {
+        switch self[key] {
+        case is Double:
+            return self[key] as? Double
+        case let value as Int:
+            return Double(value)
+        case let value as String:
+            return Double(value)
+        default:
+             return alternative
+        }
+    }
 }

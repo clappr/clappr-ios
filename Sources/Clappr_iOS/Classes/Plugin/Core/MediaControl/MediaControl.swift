@@ -196,6 +196,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         showIfAlwaysVisible()
         view.bindFrameToSuperviewBounds()
+
+        if let padding = options?.double(kMediaControlBottomPadding) {
+            mediaControlView.bottomPadding?.constant = CGFloat(padding)
+        }
     }
 
     func render(_ elements: [MediaControl.Element]) {
