@@ -61,4 +61,10 @@ public enum Event: String, CaseIterable {
     case didUpdateBitrate = "Clappr:didUpdateBitrate"
     case assetReady = "Clappr:assetReady"
     case requestPadding = "Clappr:requestPadding"
+    case showDrawerPlugin = "Clappr:showDrawerPlugin"
+    case willShowDrawerPlugin = "Clappr:willShowDrawerPlugin"
+    case didShowDrawerPlugin = "Clappr:didShowDrawerPlugin"
+    case hideDrawerPlugin = "Clappr:hideDrawerPlugin"
+    case willHideDrawerPlugin = "Clappr:willHideDrawerPlugin"
+    case didHideDrawerPlugin = "Clappr:didHideDrawerPlugin"
 }

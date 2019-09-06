@@ -130,6 +130,8 @@
 		48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */; };
 		48EC492022A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
 		48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
+		48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */; };
+		48F1E97423229FDC00EAD6A1 /* DrawerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
 		571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
@@ -447,6 +449,8 @@
 		48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
+		48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPluginTests.swift; sourceTree = "<group>"; };
+		48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPlugin.swift; sourceTree = "<group>"; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		5733D1BD21BAA6E4002107D2 /* Dictionary+ExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+ExtTests.swift"; sourceTree = "<group>"; };
@@ -760,6 +764,22 @@
 				4856322D220B54B90096CDAE /* QuickSeekPlugin.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		48F1E96F232296CC00EAD6A1 /* Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */,
+			);
+			path = Drawer;
+			sourceTree = "<group>";
+		};
+		48F1E97223229FB200EAD6A1 /* Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */,
+			);
+			path = Drawer;
 			sourceTree = "<group>";
 		};
 		571B7B2F21750398005C0942 /* Stub */ = {
@@ -1178,8 +1198,9 @@
 		C92F1C97216F80B80059D860 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */,
+				48F1E97223229FB200EAD6A1 /* Drawer */,
 				AB163504215AB93300635233 /* MediaControl */,
+				48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1297,6 +1318,7 @@
 		C9EDF8452162C8FF00789E2F /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				48F1E96F232296CC00EAD6A1 /* Drawer */,
 				C9EDF8462162C93900789E2F /* MediaControl */,
 				96A979861BFF964C00E5EA01 /* CoreTests.swift */,
 				48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */,
@@ -2064,6 +2086,7 @@
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
+				48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
@@ -2165,6 +2188,7 @@
 				CD10D93D22C28D4C0096B035 /* Environment.swift in Sources */,
 				96D362C51D41339400CCB866 /* Container.swift in Sources */,
 				963B19981E4B827700A0A6BA /* Event.swift in Sources */,
+				48F1E97423229FDC00EAD6A1 /* DrawerPlugin.swift in Sources */,
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
 				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,

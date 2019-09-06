@@ -24,7 +24,6 @@ open class SimpleCorePlugin: CorePlugin {
     open func bindEvents() {
         let exceptionName = NSExceptionName(rawValue: "MissingBindEvents")
         let exceptionReason = "SimpleCorePlugins should always override bindEvents with its own binds: \(pluginName) does not implement."
-
         NSException(name: exceptionName, reason: exceptionReason, userInfo: nil).raise()
     }
 
