@@ -13,7 +13,6 @@ public let kDefaultAudioSource = "defaultAudioSource"
 public let kMinDvrSize = "minDvrSize"
 public let kMediaControl = "mediaControl"
 public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
-public let kMediaControlBottomPadding = "mediaControlBottomPadding"
 
 // List of MediaControl Elements
 public let kMediaControlElements = "mediaControlElements"

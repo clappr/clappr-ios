@@ -3,6 +3,7 @@ import Foundation
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     public var tapGesture: UITapGestureRecognizer?
+    private let paddingHeight: CGFloat = 32.0
 
     var mediaControlView: MediaControlView = .fromNib()
 
@@ -38,6 +39,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     open func bindCoreEvents() {
         if let core = self.core {
+
+            listenTo(core, event: .requestPadding) { [weak self] _ in
+                guard let padding = self?.paddingHeight else { return }
+                self?.mediaControlView.bottomPadding.constant = padding
+            }
 
             listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
                 if self?.hideControlsTimer?.isValid ?? false {
@@ -196,10 +202,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         showIfAlwaysVisible()
         view.bindFrameToSuperviewBounds()
-
-        if let padding = options?.double(kMediaControlBottomPadding) {
-            mediaControlView.bottomPadding?.constant = CGFloat(padding)
-        }
     }
 
     func render(_ elements: [MediaControl.Element]) {

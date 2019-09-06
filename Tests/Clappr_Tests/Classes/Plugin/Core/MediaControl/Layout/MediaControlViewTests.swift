@@ -151,7 +151,6 @@ class MediaControlViewTests: QuickSpec {
                 }
 
                 context("padding constraints") {
-
                     it("bottom starts with value 0") {
                         let mediaControlView: MediaControlView = .fromNib()
 

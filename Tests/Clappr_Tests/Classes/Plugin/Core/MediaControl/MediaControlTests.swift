@@ -111,13 +111,13 @@ class MediaControlTests: QuickSpec {
             describe("options") {
                 context("on request padding") {
                     it("applies padding to Media Control") {
-                        let options: Options = [kMediaControlBottomPadding: 14]
-                        let core = Core(options: options)
+                        let core = Core()
                         let mediaControl = MediaControl(context: core)
-
                         mediaControl.render()
 
-                        expect(mediaControl.mediaControlView.bottomPadding?.constant).to(equal(14.0))
+                        core.trigger(.requestPadding)
+
+                        expect(mediaControl.mediaControlView.bottomPadding?.constant).to(equal(32.0))
                     }
                 }
 
