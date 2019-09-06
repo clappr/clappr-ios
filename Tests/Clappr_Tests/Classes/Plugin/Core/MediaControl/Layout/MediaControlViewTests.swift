@@ -154,7 +154,7 @@ class MediaControlViewTests: QuickSpec {
                     it("bottom starts with value 0") {
                         let mediaControlView: MediaControlView = .fromNib()
 
-                        expect(mediaControlView.bottomPadding?.constant).to(equal(0))
+                        expect(mediaControlView.bottomPadding.constant).to(equal(0))
                     }
 
                     it("top starts with value 0") {
@@ -166,7 +166,7 @@ class MediaControlViewTests: QuickSpec {
                     it("modifies bottom padding with constant") {
                         let mediaControlView: MediaControlView = .fromNib()
 
-                        mediaControlView.bottomPadding?.constant = 10
+                        mediaControlView.bottomPadding.constant = 10
                         mediaControlView.layoutIfNeeded()
 
                         expect(mediaControlView.subviews[1].frame.height).to(equal(331))
@@ -185,7 +185,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
 
                         mediaControlView.topPadding.constant = 10
-                        mediaControlView.bottomPadding?.constant = 10
+                        mediaControlView.bottomPadding.constant = 10
                         mediaControlView.layoutIfNeeded()
 
                         expect(mediaControlView.subviews[1].frame.height).to(equal(321))
@@ -195,7 +195,7 @@ class MediaControlViewTests: QuickSpec {
                         let mediaControlView: MediaControlView = .fromNib()
                         let height = mediaControlView.contrastView.frame.height
 
-                        mediaControlView.bottomPadding?.constant = 10
+                        mediaControlView.bottomPadding.constant = 10
                         mediaControlView.layoutIfNeeded()
 
                         expect(mediaControlView.contrastView.frame.height).to(equal(height))
