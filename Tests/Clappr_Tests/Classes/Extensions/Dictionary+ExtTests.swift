@@ -59,37 +59,6 @@ class DictionaryExtensionTests: QuickSpec {
                     }
                 }
             }
-
-            describe("#double") {
-                context("when have multiple types in dictionary") {
-                    it("returns Double passing an Int") {
-                        let options: Options = ["foo": 14]
-
-                        expect(options.double("foo")).to(beAKindOf(Double.self))
-                        expect(options.double("foo")).to(equal(14.0))
-                    }
-
-                    it("returns nil passing not castable value") {
-                        let options: Options = ["foo": ["":""]]
-
-                        expect(options.double("foo")).to(beNil())
-                    }
-
-                    it("returns Double passing a String") {
-                        let options: Options = ["foo": "14"]
-
-                        expect(options.double("foo")).to(beAKindOf(Double.self))
-                        expect(options.double("foo")).to(equal(14.0))
-                    }
-
-                    it("returns Double passing a Double") {
-                        let options: Options = ["foo": Double(14.0)]
-
-                        expect(options.double("foo")).to(beAKindOf(Double.self))
-                        expect(options.double("foo")).to(equal(14.0))
-                    }
-                }
-            }
         }
     }
 }
