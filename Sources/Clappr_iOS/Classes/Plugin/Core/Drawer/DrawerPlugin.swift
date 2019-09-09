@@ -1,7 +1,6 @@
 class DrawerPlugin: OverlayPlugin {
     enum Position {
         case undefined
-        case bottom
     }
 
     var position: DrawerPlugin.Position {
