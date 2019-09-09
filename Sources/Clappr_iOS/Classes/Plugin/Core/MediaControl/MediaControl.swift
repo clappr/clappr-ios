@@ -3,6 +3,7 @@ import Foundation
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     public var tapGesture: UITapGestureRecognizer?
+    private let paddingHeight: CGFloat = 32.0
 
     var mediaControlView: MediaControlView = .fromNib()
 
@@ -37,33 +38,20 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     open func bindCoreEvents() {
-        if let core = self.core {
+        guard let core = core else { return }
 
-            listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
-                if self?.hideControlsTimer?.isValid ?? false {
-                    self?.disappearAfterSomeTime()
-                }
-            }
+        listenFullscreenEvents()
 
-            listenTo(core, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in
-                if self?.hideControlsTimer?.isValid ?? false {
-                    self?.disappearAfterSomeTime()
-                }
-            }
-
-            listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
-                self?.toggleVisibility()
-            }
-
-            listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
-                self?.keepVisible()
-            }
-
-            listenTo(core, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
-                guard self?.activePlayback?.state == .playing else { return }
-                self?.disappearAfterSomeTime()
-            }
+        listenTo(core, event: .requestPadding) { [weak self] _ in
+            guard let padding = self?.paddingHeight else { return }
+            self?.mediaControlView.bottomPadding.constant = padding
         }
+
+        listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
+            self?.toggleVisibility()
+        }
+
+        listenScrubbingEvents()
     }
 
     private func bindContainerEvents() {
@@ -97,6 +85,35 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             listenTo(playback, eventName: Event.error.rawValue) { [weak self] _ in
                 self?.showControls = false
             }
+        }
+    }
+
+    private func listenFullscreenEvents() {
+        guard let core = core else { return }
+
+        listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
+            if self?.hideControlsTimer?.isValid ?? false {
+                self?.disappearAfterSomeTime()
+            }
+        }
+
+        listenTo(core, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in
+            if self?.hideControlsTimer?.isValid ?? false {
+                self?.disappearAfterSomeTime()
+            }
+        }
+    }
+
+    private func listenScrubbingEvents() {
+        guard let core = core else { return }
+
+        listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
+            self?.keepVisible()
+        }
+
+        listenTo(core, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
+            guard self?.activePlayback?.state == .playing else { return }
+            self?.disappearAfterSomeTime()
         }
     }
 
