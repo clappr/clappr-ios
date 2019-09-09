@@ -42,8 +42,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
         listenFullscreenEvents()
 
-        listenTo(core, event: .requestPadding) { [weak self] _ in
-            guard let padding = self?.paddingHeight else { return }
+        listenTo(core, event: .requestPadding) { [weak self] info in
+            guard let padding = info?["padding"] as? CGFloat else { return }
             self?.mediaControlView.bottomPadding.constant = padding
         }
 
