@@ -31,7 +31,7 @@ class DrawerPluginTests: QuickSpec {
                 }
             }
 
-            describe("event listening") {
+            fdescribe("event listening") {
                 var triggeredEvents: [Event] = []
 
                 beforeEach {
@@ -88,6 +88,37 @@ class DrawerPluginTests: QuickSpec {
 
                         expect(plugin.isClosed).to(beTrue())
                         expect(triggeredEvents).to(equal([.willShowDrawerPlugin, .didShowDrawerPlugin, .willHideDrawerPlugin, .didHideDrawerPlugin]))
+                    }
+                }
+
+                context("when media control is going to be presented") {
+                    it("sets drawer plugin alpha to 1") {
+                        plugin.view.alpha = 0
+                        
+                        core.trigger(.willShowMediaControl)
+
+                        expect(plugin.view.alpha).toEventually(equal(1))
+                    }
+                }
+
+                context("when media control is going to be dismissed") {
+                    it("sets drawer plugin alpha to 1") {
+                        plugin.view.alpha = 1
+
+                        core.trigger(.willHideMediaControl)
+
+                        expect(plugin.view.alpha).toEventually(equal(0))
+                    }
+                }
+
+                context("when drawer is opened") {
+                    context("and media control will be dismissed") {
+                        it("keeps the drawer with alpha 1") {
+                            core.trigger(.showDrawerPlugin)
+                            core.trigger(.willHideMediaControl)
+
+                            expect(plugin.view.alpha).toEventually(equal(1))
+                        }
                     }
                 }
             }

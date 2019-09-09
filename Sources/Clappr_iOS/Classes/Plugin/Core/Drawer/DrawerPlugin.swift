@@ -37,6 +37,19 @@ class DrawerPlugin: OverlayPlugin {
     override func bindEvents() {
         guard let core = core else { return }
 
+        listenTo(core, event: .willShowMediaControl) { [weak self] _ in
+            UIView.animate(withDuration: ClapprAnimationDuration.mediaControlShow) {
+                self?.view.alpha = 1
+            }
+        }
+
+        listenTo(core, event: .willHideMediaControl) { [weak self] _ in
+            guard self?.isClosed == true else { return }
+            UIView.animate(withDuration: ClapprAnimationDuration.mediaControlHide) {
+                self?.view.alpha = 0
+            }
+        }
+
         listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
             guard self?.isClosed != false else { return }
             self?.isClosed = false
