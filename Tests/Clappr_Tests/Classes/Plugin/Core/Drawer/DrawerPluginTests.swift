@@ -31,7 +31,7 @@ class DrawerPluginTests: QuickSpec {
                 }
             }
 
-            fdescribe("event listening") {
+            describe("event listening") {
                 var triggeredEvents: [Event] = []
 
                 beforeEach {
