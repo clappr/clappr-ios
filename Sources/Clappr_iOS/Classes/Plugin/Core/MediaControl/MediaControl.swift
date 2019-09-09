@@ -3,7 +3,6 @@ import Foundation
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     public var tapGesture: UITapGestureRecognizer?
-    private let paddingHeight: CGFloat = 32.0
 
     var mediaControlView: MediaControlView = .fromNib()
 
