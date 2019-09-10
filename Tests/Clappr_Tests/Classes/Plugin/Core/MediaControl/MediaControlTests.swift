@@ -115,7 +115,7 @@ class MediaControlTests: QuickSpec {
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
 
-                        core.trigger(.requestPadding)
+                        core.trigger(.requestPadding, userInfo: ["padding": CGFloat(32)])
 
                         expect(mediaControl.mediaControlView.bottomPadding?.constant).to(equal(32.0))
                     }
