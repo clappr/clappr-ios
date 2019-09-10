@@ -14,7 +14,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc fileprivate(set) open var containers: [Container] = []
     fileprivate(set) open var plugins: [Plugin] = [] {
         didSet {
-            if (plugins.filter { $0.hasPlaceholder }).count > 1 {
+            if plugins.filter({ $0.hasPlaceholder }).count > 1 {
                 plugins = oldValue
             }
         }
