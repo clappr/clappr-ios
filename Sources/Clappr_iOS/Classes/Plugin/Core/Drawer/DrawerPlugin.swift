@@ -1,21 +1,17 @@
-class DrawerPlugin: OverlayPlugin {
-    enum Position {
+open class DrawerPlugin: OverlayPlugin {
+    public enum Position {
         case undefined
     }
 
-    var position: DrawerPlugin.Position {
+    open var position: DrawerPlugin.Position {
         return .undefined
     }
 
-    var size: CGSize {
+    open var size: CGSize {
         return .zero
     }
 
-    var padding: CGFloat {
-        return .zero
-    }
-
-    var placeholder: CGFloat {
+    open var placeholder: CGFloat {
         return .zero
     }
 
@@ -38,7 +34,7 @@ class DrawerPlugin: OverlayPlugin {
         }
     }
 
-    override func bindEvents() {
+    open override func bindEvents() {
         guard let core = core else { return }
 
         listenTo(core, event: .willShowMediaControl) { [weak self] _ in
@@ -65,7 +61,7 @@ class DrawerPlugin: OverlayPlugin {
         }
     }
 
-    override func render() {
+    override open func render() {
         requestPaddingIfNeeded()
     }
 

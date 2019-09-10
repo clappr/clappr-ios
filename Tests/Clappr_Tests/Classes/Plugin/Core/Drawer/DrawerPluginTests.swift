@@ -26,10 +26,6 @@ class DrawerPluginTests: QuickSpec {
                     expect(plugin.isClosed).to(beTrue())
                 }
 
-                it("has a padding") {
-                    expect(plugin.padding).to(equal(.zero))
-                }
-
                 it("has a placeholder") {
                     expect(plugin.placeholder).to(equal(.zero))
                 }
