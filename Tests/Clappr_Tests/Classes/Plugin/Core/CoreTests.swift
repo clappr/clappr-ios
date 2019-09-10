@@ -72,7 +72,21 @@ class CoreTests: QuickSpec {
                 it("has an overlayView as a PassthroughView") {
                     expect(core.overlayView).to(beAnInstanceOf(PassthroughView.self))
                 }
-                
+
+                it("has only one drawerPlugin with placeholder") {
+                    Loader.shared.register(plugins: [
+                        MockPlaceholderDrawerPluginOne.self,
+                        UICorePluginMock.self,
+                        MockPlaceholderDrawerPluginTwo.self,
+                        CorePluginMock.self,
+                    ])
+
+                    let core = CoreFactory.create(with: options)
+
+                    expect(core.plugins.count).to(equal(3))
+                    expect(core.plugins.first).to(beAKindOf(MockPlaceholderDrawerPluginOne.self))
+                }
+
                 #if os(iOS)
                 it("add gesture recognizer") {
                     expect(core.view.gestureRecognizers?.count) > 0
@@ -867,6 +881,26 @@ private class MediaControlMock: MediaControl {
     
     override func render(_ elements: [MediaControl.Element]) {
         didCallRenderElements = true
+    }
+}
+
+class MockPlaceholderDrawerPluginOne: DrawerPlugin {
+    override class var name: String {
+        return "MockPlaceholderDrawerPluginOne"
+    }
+
+    override var placeholder: CGFloat {
+        return 1
+    }
+}
+
+class MockPlaceholderDrawerPluginTwo: DrawerPlugin {
+    override class var name: String {
+        return "MockPlaceholderDrawerPluginTwo"
+    }
+
+    override var placeholder: CGFloat {
+        return 1
     }
 }
 #endif

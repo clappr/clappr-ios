@@ -12,7 +12,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
     @objc fileprivate(set) open var containers: [Container] = []
-    fileprivate(set) open var plugins: [Plugin] = []
+    fileprivate(set) open var plugins: [Plugin] = [] {
+        didSet {
+            if (plugins.filter { $0.hasPlaceholder }).count > 1 {
+                plugins = oldValue
+            }
+        }
+    }
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
@@ -264,5 +270,11 @@ fileprivate extension UICorePlugin {
         } catch {
             logRenderCrash(for: error)
         }
+    }
+}
+
+fileprivate extension Plugin {
+    var hasPlaceholder: Bool {
+        return (self as? DrawerPlugin)?.placeholder ?? .zero > .zero
     }
 }

@@ -127,7 +127,7 @@ class DrawerPluginTests: QuickSpec {
                 }
             }
 
-            fdescribe("rendering") {
+            describe("rendering") {
                 context("when placeholder is greater than zero") {
                     it("triggers requestPadding event") {
                         let core = CoreStub()
