@@ -15,6 +15,10 @@ class DrawerPlugin: OverlayPlugin {
         return .zero
     }
 
+    var placeholder: CGFloat {
+        return .zero
+    }
+
     private func willSetClosed(with newValue: Bool) {
         let event: Event = newValue ? .willHideDrawerPlugin : .willShowDrawerPlugin
         core?.trigger(event)
@@ -58,6 +62,16 @@ class DrawerPlugin: OverlayPlugin {
         listenTo(core, event: .hideDrawerPlugin) { [weak self] _ in
             guard self?.isClosed != true else { return }
             self?.isClosed = true
+        }
+    }
+
+    override func render() {
+        requestPaddingIfNeeded()
+    }
+
+    private func requestPaddingIfNeeded() {
+        if placeholder > 0 {
+            core?.trigger(.requestPadding, userInfo: ["padding": CGFloat(32)])
         }
     }
 }

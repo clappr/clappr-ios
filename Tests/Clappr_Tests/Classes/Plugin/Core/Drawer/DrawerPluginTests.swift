@@ -29,6 +29,10 @@ class DrawerPluginTests: QuickSpec {
                 it("has a padding") {
                     expect(plugin.padding).to(equal(.zero))
                 }
+
+                it("has a placeholder") {
+                    expect(plugin.placeholder).to(equal(.zero))
+                }
             }
 
             describe("event listening") {
@@ -122,6 +126,51 @@ class DrawerPluginTests: QuickSpec {
                     }
                 }
             }
+
+            fdescribe("rendering") {
+                context("when placeholder is greater than zero") {
+                    it("triggers requestPadding event") {
+                        let core = CoreStub()
+                        let plugin = MockDrawerPlugin(context: core)
+                        plugin._placeholder = 32.0
+                        var paddingRequested: CGFloat = .zero
+
+                        core.on(Event.requestPadding.rawValue) { info in
+                            paddingRequested = info?["padding"] as? CGFloat ?? .zero
+                        }
+
+                        plugin.render()
+
+                        expect(plugin.placeholder).to(equal(32))
+                        expect(paddingRequested).to(equal(32))
+                    }
+                }
+
+                context("when placeholder less than or equal zero") {
+                    it("doesn't trigger requestPadding event") {
+                        let core = CoreStub()
+                        let plugin = MockDrawerPlugin(context: core)
+                        plugin._placeholder = .zero
+                        var didCallRequestPadding = false
+
+                        core.on(Event.requestPadding.rawValue) { info in
+                            didCallRequestPadding.toggle()
+                        }
+
+                        plugin.render()
+
+                        expect(plugin.placeholder).to(equal(.zero))
+                        expect(didCallRequestPadding).to(beFalse())
+                    }
+                }
+            }
         }
+    }
+}
+
+class MockDrawerPlugin: DrawerPlugin {
+    var _placeholder: CGFloat = .zero
+    override var placeholder: CGFloat {
+        return _placeholder
     }
 }

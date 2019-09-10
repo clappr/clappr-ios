@@ -19,11 +19,11 @@ class CoreTests: QuickSpec {
             override func bindEvents() {  }
         }
 
-        let options = [kSourceUrl: "http//test.com"]
+        let options: Options = [kSourceUrl: "http//test.com"]
         var core: Core!
 
         beforeEach {
-            core = Core(options: options as Options)
+            core = Core(options: options)
             Loader.shared.resetPlugins()
             Loader.shared.register(playbacks: [StubPlayback.self])
         }
@@ -33,7 +33,7 @@ class CoreTests: QuickSpec {
             describe("#init") {
 
                 beforeEach {
-                    core = CoreFactory.create(with: options as Options)
+                    core = CoreFactory.create(with: options)
                 }
                 
                 it("set backgroundColor to black") {
@@ -46,7 +46,7 @@ class CoreTests: QuickSpec {
 
                 it("save options passed on parameter") {
                     let options = ["SomeOption": true]
-                    let core = Core(options: options as Options)
+                    let core = Core(options: options)
 
                     expect(core.options["SomeOption"] as? Bool) == true
                 }
@@ -62,7 +62,7 @@ class CoreTests: QuickSpec {
                 it("stores plugin instances") {
                     Loader.shared.register(plugins: [UICorePluginMock.self, CorePluginMock.self])
 
-                    let core = CoreFactory.create(with: options as Options)
+                    let core = CoreFactory.create(with: options)
 
                     expect(core.plugins.count).to(equal(2))
                     expect(core.plugins.compactMap({ $0 as? UICorePluginMock })).toNot(beNil())
@@ -481,7 +481,7 @@ class CoreTests: QuickSpec {
                     }
 
                     it("start as fullscreen video when its false") {
-                        let player = Player(options: [kFullscreenByApp: false] as Options)
+                        let player = Player(options: [kFullscreenByApp: false])
 
                         self.playerSetup(player: player)
 
@@ -495,7 +495,7 @@ class CoreTests: QuickSpec {
                 context("when only kFullscreenByApp is false") {
 
                     it("start as fullscreen video") {
-                        let player = Player(options: [kFullscreenByApp: false] as Options)
+                        let player = Player(options: [kFullscreenByApp: false])
 
                         self.playerSetup(player: player)
 
@@ -760,7 +760,7 @@ class CoreTests: QuickSpec {
             context("core position") {
                 it("is positioned in front of Container view") {
                     Loader.shared.register(plugins: [FakeCorePlugin.self])
-                    let core = CoreFactory.create(with: options as Options)
+                    let core = CoreFactory.create(with: options)
 
                     core.render()
 
