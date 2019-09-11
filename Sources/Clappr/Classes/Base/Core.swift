@@ -11,8 +11,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             trigger(Event.didUpdateOptions)
         }
     }
-    @objc fileprivate(set) open var containers: [Container] = []
-    fileprivate(set) open var plugins: [Plugin] = [] {
+    @objc private(set) open var containers: [Container] = []
+    private(set) open var plugins: [Plugin] = [] {
         didSet {
             if plugins.filter({ $0.hasPlaceholder }).count > 1 {
                 plugins = oldValue
@@ -95,7 +95,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func bindEventListeners() {
+    private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
         listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
@@ -103,7 +103,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    fileprivate func renderInContainerView() {
+    private func renderInContainerView() {
         isFullscreen = false
         parentView?.addSubviewMatchingConstraints(view)
     }
@@ -169,7 +169,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
     }
 
-    fileprivate func addToContainer() {
+    private func addToContainer() {
         #if os(iOS)
         if shouldEnterInFullScreen {
             renderCorePlugins()
@@ -187,7 +187,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    fileprivate func renderContainer(_ container: Container) {
+    private func renderContainer(_ container: Container) {
         view.addSubviewMatchingConstraints(container.view)
         container.render()
     }
@@ -244,6 +244,10 @@ fileprivate extension Plugin {
         return (self as? OverlayPlugin)?.isModal == true
     }
 
+    var hasPlaceholder: Bool {
+        return (self as? DrawerPlugin)?.placeholder ?? .zero > .zero
+    }
+
     #if os(iOS)
     var isNotMediaControlElement: Bool {
         return !(self is MediaControl.Element)
@@ -270,11 +274,5 @@ fileprivate extension UICorePlugin {
         } catch {
             logRenderCrash(for: error)
         }
-    }
-}
-
-fileprivate extension Plugin {
-    var hasPlaceholder: Bool {
-        return (self as? DrawerPlugin)?.placeholder ?? .zero > .zero
     }
 }
