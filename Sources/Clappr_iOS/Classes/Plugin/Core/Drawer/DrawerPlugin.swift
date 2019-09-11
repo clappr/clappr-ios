@@ -15,22 +15,14 @@ open class DrawerPlugin: OverlayPlugin {
         return .zero
     }
 
-    private func willSetClosed(with newValue: Bool) {
-        let event: Event = newValue ? .willHideDrawerPlugin : .willShowDrawerPlugin
-        core?.trigger(event)
-    }
-
-    private func didSetClosed(with newValue: Bool) {
-        let event: Event = newValue ? .didHideDrawerPlugin : .didShowDrawerPlugin
-        core?.trigger(event)
-    }
-
     private(set) var isClosed: Bool = true {
         willSet {
-            willSetClosed(with: newValue)
+            let event: Event = newValue ? .willHideDrawerPlugin : .willShowDrawerPlugin
+            core?.trigger(event)
         }
         didSet {
-            didSetClosed(with: isClosed)
+            let event: Event = isClosed ? .didHideDrawerPlugin : .didShowDrawerPlugin
+            core?.trigger(event)
         }
     }
 
@@ -40,6 +32,11 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     open override func bindEvents() {
+        bindMediaControlEvents()
+        bindDrawerEvents()
+    }
+
+    private func bindMediaControlEvents() {
         guard let core = core else { return }
 
         listenTo(core, event: .willShowMediaControl) { [weak self] _ in
@@ -54,6 +51,10 @@ open class DrawerPlugin: OverlayPlugin {
                 self?.view.alpha = 0
             }
         }
+    }
+
+    private func bindDrawerEvents() {
+        guard let core = core else { return }
 
         listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
             guard self?.isClosed != false else { return }
