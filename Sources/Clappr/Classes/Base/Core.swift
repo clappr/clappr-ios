@@ -11,8 +11,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             trigger(Event.didUpdateOptions)
         }
     }
-    @objc fileprivate(set) open var containers: [Container] = []
-    fileprivate(set) open var plugins: [Plugin] = []
+    @objc private(set) open var containers: [Container] = []
+    private(set) open var plugins: [Plugin] = []
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
@@ -89,7 +89,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func bindEventListeners() {
+    private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
         listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
@@ -97,7 +97,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    fileprivate func renderInContainerView() {
+    private func renderInContainerView() {
         isFullscreen = false
         parentView?.addSubviewMatchingConstraints(view)
     }
@@ -163,7 +163,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
     }
 
-    fileprivate func addToContainer() {
+    private func addToContainer() {
         #if os(iOS)
         if shouldEnterInFullScreen {
             renderCorePlugins()
@@ -181,13 +181,17 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #endif
     }
 
-    fileprivate func renderContainer(_ container: Container) {
+    private func renderContainer(_ container: Container) {
         view.addSubviewMatchingConstraints(container.view)
         container.render()
     }
 
     open func addPlugin(_ plugin: Plugin) {
-        plugins.append(plugin)
+        let containsPluginWithPlaceholder = plugins.contains(where: { $0.hasPlaceholder })
+
+        if !plugin.hasPlaceholder || !containsPluginWithPlaceholder {
+            plugins.append(plugin)
+        }
     }
     
     @objc open func setFullscreen(_ fullscreen: Bool) {
@@ -236,6 +240,15 @@ fileprivate extension Plugin {
 
     var shouldFitParentView: Bool {
         return (self as? OverlayPlugin)?.isModal == true
+    }
+
+    var hasPlaceholder: Bool {
+        #if os(iOS)
+            guard let drawer = self as? DrawerPlugin else { return false }
+            return drawer.placeholder > .zero
+        #else
+            return false
+        #endif
     }
 
     #if os(iOS)
