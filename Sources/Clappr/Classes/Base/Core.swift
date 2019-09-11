@@ -14,10 +14,14 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc private(set) open var containers: [Container] = []
     private(set) open var plugins: [Plugin] = [] {
         didSet {
-            if plugins.filter({ $0.hasPlaceholder }).count > 1 {
+            if hasMoreThanOnePlaceholder {
                 plugins = oldValue
             }
         }
+    }
+
+    private var hasMoreThanOnePlaceholder: Bool {
+        return plugins.filter({ $0.hasPlaceholder }).count > 1
     }
 
     @objc open weak var parentController: UIViewController?
