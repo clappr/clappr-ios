@@ -57,14 +57,17 @@ open class DrawerPlugin: OverlayPlugin {
         guard let core = core else { return }
 
         listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
-            guard self?.isClosed != false else { return }
-            self?.isClosed = false
+            self?.toggleIsClosed(to: false)
         }
 
         listenTo(core, event: .hideDrawerPlugin) { [weak self] _ in
-            guard self?.isClosed != true else { return }
-            self?.isClosed = true
+            self?.toggleIsClosed(to: true)
         }
+    }
+
+    private func toggleIsClosed(to newValue: Bool) {
+        guard isClosed != newValue else { return }
+        isClosed = newValue
     }
 
     override open func render() {
