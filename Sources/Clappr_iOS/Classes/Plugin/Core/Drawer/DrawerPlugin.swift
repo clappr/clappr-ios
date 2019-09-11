@@ -34,6 +34,11 @@ open class DrawerPlugin: OverlayPlugin {
         }
     }
 
+    public required init(context: UIObject) {
+        super.init(context: context)
+        view.alpha = .zero
+    }
+
     open override func bindEvents() {
         guard let core = core else { return }
 

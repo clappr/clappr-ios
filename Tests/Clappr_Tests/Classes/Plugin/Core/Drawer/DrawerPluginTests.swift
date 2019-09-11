@@ -29,6 +29,10 @@ class DrawerPluginTests: QuickSpec {
                 it("has a placeholder") {
                     expect(plugin.placeholder).to(equal(.zero))
                 }
+
+                it("starts with alpha zero") {
+                    expect(plugin.view.alpha).to(equal(.zero))
+                }
             }
 
             describe("event listening") {
@@ -115,6 +119,7 @@ class DrawerPluginTests: QuickSpec {
                     context("and media control will be dismissed") {
                         it("keeps the drawer with alpha 1") {
                             core.trigger(.showDrawerPlugin)
+                            core.trigger(.willShowMediaControl)
                             core.trigger(.willHideMediaControl)
 
                             expect(plugin.view.alpha).toEventually(equal(1))
