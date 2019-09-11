@@ -12,17 +12,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
     @objc private(set) open var containers: [Container] = []
-    private(set) open var plugins: [Plugin] = [] {
-        didSet {
-            if hasMoreThanOnePlaceholder {
-                plugins = oldValue
-            }
-        }
-    }
-
-    private var hasMoreThanOnePlaceholder: Bool {
-        return plugins.filter({ $0.hasPlaceholder }).count > 1
-    }
+    private(set) open var plugins: [Plugin] = []
 
     @objc open weak var parentController: UIViewController?
     @objc open var parentView: UIView?
@@ -197,7 +187,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     open func addPlugin(_ plugin: Plugin) {
-        plugins.append(plugin)
+        let containsPluginWithPlaceholder = plugins.contains(where: { $0.hasPlaceholder })
+
+        if !plugin.hasPlaceholder || !containsPluginWithPlaceholder {
+            plugins.append(plugin)
+        }
     }
     
     @objc open func setFullscreen(_ fullscreen: Bool) {
@@ -249,7 +243,8 @@ fileprivate extension Plugin {
     }
 
     var hasPlaceholder: Bool {
-        return (self as? DrawerPlugin)?.placeholder ?? .zero > .zero
+        guard let drawer = self as? DrawerPlugin else { return false }
+        return drawer.placeholder > .zero
     }
 
     #if os(iOS)
