@@ -73,6 +73,7 @@ class CoreTests: QuickSpec {
                     expect(core.overlayView).to(beAnInstanceOf(PassthroughView.self))
                 }
 
+                #if os(iOS)
                 it("has only one drawerPlugin with placeholder") {
                     Loader.shared.register(plugins: [
                         MockPlaceholderDrawerPluginOne.self,
@@ -87,7 +88,7 @@ class CoreTests: QuickSpec {
                     expect(core.plugins.first).to(beAKindOf(MockPlaceholderDrawerPluginOne.self))
                 }
 
-                #if os(iOS)
+
                 it("add gesture recognizer") {
                     expect(core.view.gestureRecognizers?.count) > 0
                 }

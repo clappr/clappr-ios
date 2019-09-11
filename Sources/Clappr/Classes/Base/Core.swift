@@ -243,8 +243,12 @@ fileprivate extension Plugin {
     }
 
     var hasPlaceholder: Bool {
-        guard let drawer = self as? DrawerPlugin else { return false }
-        return drawer.placeholder > .zero
+        #if os(iOS)
+            guard let drawer = self as? DrawerPlugin else { return false }
+            return drawer.placeholder > .zero
+        #else
+            return false
+        #endif
     }
 
     #if os(iOS)
