@@ -21,27 +21,46 @@ class BottomDrawerPlugin: DrawerPlugin {
     override func render() {
         super.render()
 
+        adjustSize()
         moveDown()
     }
 
-    override func bindEvents() {
-        guard let core = core else { return }
-        super.bindEvents()
+    override func onDrawerShow() {
+        moveUp()
+    }
 
-        listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
-            self?.moveUp()
-        }
+    override func onDrawerHide() {
+        moveDown()
+    }
+
+    private func adjustSize() {
+        view.frame.size = size
     }
 
     private func moveUp() {
-        setVerticalPoint(to: size.height)
+        view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
     private func moveDown() {
-        setVerticalPoint(to: coreViewBounds.height)
+        let point = coreViewBounds.height - placeholder
+        view.setVerticalPoint(to: point, duration: ClapprAnimationDuration.mediaControlHide)
     }
 
-    private func setVerticalPoint(to point: CGFloat) {
-        view.frame.origin.y = point
+    private func addTapGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        view.addGestureRecognizer(gesture)
+    }
+
+    @objc private func didTapView() {
+        showDrawerPlugin()
+        hideMediaControl()
+    }
+
+    private func showDrawerPlugin() {
+        core?.trigger(.showDrawerPlugin)
+    }
+
+    private func hideMediaControl() {
+        activeContainer?.trigger(.disableMediaControl)
     }
 }
