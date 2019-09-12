@@ -14,16 +14,19 @@ class BottomDrawerPlugin: DrawerPlugin {
 
     private var coreViewBounds: CGRect {
         guard let core = core else { return .zero }
-        return core.view.bounds
+        return core.view.frame
     }
 
     override func render() {
+        super.render()
+
         moveDown()
     }
 
     override func bindEvents() {
         guard let core = core else { return }
-        
+        super.bindEvents()
+
         listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
             self?.moveUp()
         }
@@ -38,6 +41,6 @@ class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func setVerticalPoint(to point: CGFloat) {
-        view.bounds.origin.y = point
+        view.frame.origin.y = point
     }
 }

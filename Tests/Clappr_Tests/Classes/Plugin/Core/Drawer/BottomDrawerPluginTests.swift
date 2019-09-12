@@ -39,8 +39,8 @@ class BottomDrawerPluginTests: QuickSpec {
 
                     plugin.render()
 
-                    expect(plugin.view.bounds.origin.y).to(equal(100))
-                    expect(plugin.view.bounds.origin.x).to(equal(.zero))
+                    expect(plugin.view.frame.origin.y).to(equal(100))
+                    expect(plugin.view.frame.origin.x).to(equal(.zero))
                 }
             }
 
@@ -53,8 +53,8 @@ class BottomDrawerPluginTests: QuickSpec {
                     plugin.render()
                     core.trigger(.showDrawerPlugin)
 
-                    expect(plugin.view.bounds.origin.y).to(equal(plugin.size.height))
-                    expect(plugin.view.bounds.origin.x).to(equal(.zero))
+                    expect(plugin.view.frame.origin.y).to(equal(plugin.size.height))
+                    expect(plugin.view.frame.origin.x).to(equal(.zero))
                 }
             }
         }
