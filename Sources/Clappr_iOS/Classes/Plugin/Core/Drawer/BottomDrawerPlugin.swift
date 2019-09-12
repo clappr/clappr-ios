@@ -1,7 +1,8 @@
 class BottomDrawerPlugin: DrawerPlugin {
+    required init(context: UIObject) {
+        super.init(context: context)
 
-    open class override var name: String {
-        return "BottomDrawerPlugin"
+        self.addTapGesture()
     }
 
     override var position: DrawerPlugin.Position {

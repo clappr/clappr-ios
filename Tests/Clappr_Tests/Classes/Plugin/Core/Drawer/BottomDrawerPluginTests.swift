@@ -16,10 +16,6 @@ class BottomDrawerPluginTests: QuickSpec {
                     plugin = BottomDrawerPlugin(context: core)
                 }
 
-                it("has a name") {
-                    expect(plugin.pluginName).to(equal("BottomDrawerPlugin"))
-                }
-
                 it("has bottom as position") {
                     expect(plugin.position).to(equal(.bottom))
                 }
