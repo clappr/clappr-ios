@@ -113,6 +113,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         containers.forEach(renderContainer)
         addToContainer()
         parentView?.bringSubviewToFront(overlayView)
+        overlayView.clipsToBounds = true
     }
 
     #if os(tvOS)
