@@ -125,6 +125,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderCorePlugins() {
         plugins
             .filter { $0.isNotMediaControlElement }
+            .filter { $0.isNotOverlayPlugin}
             .forEach(render)
     }
 
@@ -254,6 +255,10 @@ fileprivate extension Plugin {
     #if os(iOS)
     var isNotMediaControlElement: Bool {
         return !(self is MediaControl.Element)
+    }
+
+    var isNotOverlayPlugin: Bool {
+        return !(self is OverlayPlugin)
     }
     #endif
 
