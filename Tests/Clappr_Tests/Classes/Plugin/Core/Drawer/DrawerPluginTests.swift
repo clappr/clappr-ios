@@ -164,6 +164,39 @@ class DrawerPluginTests: QuickSpec {
                         expect(didCallRequestPadding).to(beFalse())
                     }
                 }
+
+                context("when enter on fullscreen") {
+                    it("calls render") {
+                        let core = CoreStub()
+                        let plugin = MockDrawerPlugin(context: core)
+
+                        core.trigger(.didEnterFullscreen)
+
+                        expect(plugin.didCallRender).to(beTrue())
+                    }
+                }
+
+                context("when exit fullscreen") {
+                    it("calls render") {
+                        let core = CoreStub()
+                        let plugin = MockDrawerPlugin(context: core)
+
+                        core.trigger(.didExitFullscreen)
+
+                        expect(plugin.didCallRender).to(beTrue())
+                    }
+                }
+
+                context("when changes the orientation") {
+                    it("calls render") {
+                        let core = CoreStub()
+                        let plugin = MockDrawerPlugin(context: core)
+
+                        core.trigger(.didChangeScreenOrientation)
+
+                        expect(plugin.didCallRender).to(beTrue())
+                    }
+                }
             }
         }
     }
@@ -171,7 +204,14 @@ class DrawerPluginTests: QuickSpec {
 
 class MockDrawerPlugin: DrawerPlugin {
     var _placeholder: CGFloat = .zero
+    var didCallRender = false
+
     override var placeholder: CGFloat {
         return _placeholder
+    }
+
+    override func render() {
+        super.render()
+        didCallRender = true
     }
 }
