@@ -723,6 +723,7 @@ class CoreTests: QuickSpec {
                 }
 
                 it("renders MediaControlElements after CorePlugins") {
+                    UICorePluginMock.crashOnRender = false
                     let core = Core()
                     let mediaControl = MediaControl(context: core)
                     let element = MediaControlElementMock(context: core)
@@ -779,7 +780,7 @@ class CoreTests: QuickSpec {
 
                     core.render()
 
-                    expect(core.view.subviews.count).to(equal(2))
+                    expect(core.view.subviews.count).to(equal(3))
                     expect(core.view.subviews.first?.accessibilityIdentifier).to(equal("Container"))
                     expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
@@ -805,7 +806,7 @@ class CoreTests: QuickSpec {
 
                     core.render()
 
-                    expect(core.parentView?.subviews.last).to(beAKindOf(PassthroughView.self))
+                    expect(core.view.subviews.last).to(beAKindOf(PassthroughView.self))
                 }
             }
         }
@@ -839,7 +840,6 @@ class UICorePluginMock: UICorePlugin {
     override class var name: String {
         return "UICorePluginMock"
     }
-    
 
     override func render() {
         UICorePluginMock.didCallRender = true

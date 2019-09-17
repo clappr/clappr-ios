@@ -109,7 +109,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     open override func render() {
-        parentView?.addSubviewMatchingConstraints(overlayView)
+        view.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
         parentView?.bringSubviewToFront(overlayView)
@@ -140,6 +140,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins
             .compactMap { $0 as? OverlayPlugin }
             .forEach(render)
+        view.bringSubviewToFront(overlayView)
     }
     #endif
 
