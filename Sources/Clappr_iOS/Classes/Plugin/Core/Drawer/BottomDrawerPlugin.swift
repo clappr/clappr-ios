@@ -97,12 +97,12 @@ class BottomDrawerPlugin: DrawerPlugin {
         let updatedY = gestureView.frame.origin.y
 
         switch gesture.state {
-            case .began, .changed:
-                handleGestureChange(for: newYCoordinate, within: gestureView)
-            case .ended, .failed:
-                handleGestureEnded(for: updatedY)
-            default:
-                Logger.logInfo("unhandled gesture state")
+        case .began, .changed:
+            handleGestureChange(for: newYCoordinate, within: gestureView)
+        case .ended, .failed:
+            handleGestureEnded(for: updatedY)
+        default:
+            Logger.logInfo("unhandled gesture state")
         }
 
         gesture.setTranslation(.zero, in: view)
@@ -113,7 +113,7 @@ class BottomDrawerPlugin: DrawerPlugin {
             view.center.y = newYCoordinate
             view.alpha = 1
             let portionShown = initialCenterY - newYCoordinate
-            let alpha = hiddenHeight / portionShown * 0.2
+            let alpha = hiddenHeight / portionShown * 0.08
             core?.trigger(.didDragDrawer, userInfo: ["alpha": alpha])
         }
     }
