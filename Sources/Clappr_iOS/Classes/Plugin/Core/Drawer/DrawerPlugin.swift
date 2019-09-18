@@ -16,6 +16,11 @@ open class DrawerPlugin: OverlayPlugin {
         return .zero
     }
 
+    open var coreViewFrame: CGRect {
+        guard let core = core else { return .zero }
+        return core.view.frame
+    }
+
     private(set) var isClosed: Bool = true {
         willSet {
             let event: Event = newValue ? .willHideDrawerPlugin : .willShowDrawerPlugin
