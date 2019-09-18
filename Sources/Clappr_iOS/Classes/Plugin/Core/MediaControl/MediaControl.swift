@@ -51,6 +51,19 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenScrubbingEvents()
+
+        listenTo(core, event: .didDragDrawer) { [weak self] info in
+            guard let alpha = info?["alpha"] as? CGFloat else { return }
+            self?.view.alpha = alpha
+        }
+
+        listenTo(core, event: .didShowDrawerPlugin) { [weak self] _ in
+            self?.hide()
+        }
+
+        listenTo(core, event: .didHideDrawerPlugin) { [weak self] _ in
+            self?.show()
+        }
     }
 
     private func bindContainerEvents() {

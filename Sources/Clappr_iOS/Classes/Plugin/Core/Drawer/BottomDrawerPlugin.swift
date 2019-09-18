@@ -1,10 +1,4 @@
 class BottomDrawerPlugin: DrawerPlugin {
-    required init(context: UIObject) {
-        super.init(context: context)
-
-        self.addTapGesture()
-    }
-
     override var position: DrawerPlugin.Position {
         return .bottom
     }
@@ -18,11 +12,29 @@ class BottomDrawerPlugin: DrawerPlugin {
         return core.view.frame
     }
 
+    private var minYToShow: CGFloat {
+        return coreViewBounds.height * 0.75
+    }
+
+    private var hiddenHeight: CGFloat {
+        return coreViewBounds.height - placeholder
+    }
+
+    private var initialCenterY: CGFloat = .zero
+
+    required init(context: UIObject) {
+        super.init(context: context)
+
+        addTapGesture()
+        addDragGesture()
+    }
+
     override func render() {
         super.render()
 
         adjustSize()
         moveDown()
+        adjustInitialPosition()
     }
 
     override func onDrawerShow() {
@@ -37,17 +49,25 @@ class BottomDrawerPlugin: DrawerPlugin {
         view.frame.size = size
     }
 
+    private func adjustInitialPosition() {
+        initialCenterY = view.center.y
+    }
+
     private func moveUp() {
         view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
     private func moveDown() {
-        let point = coreViewBounds.height - placeholder
-        view.setVerticalPoint(to: point, duration: ClapprAnimationDuration.mediaControlHide)
+        view.setVerticalPoint(to: hiddenHeight, duration: ClapprAnimationDuration.mediaControlHide)
     }
 
     private func addTapGesture() {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        view.addGestureRecognizer(gesture)
+    }
+
+    private func addDragGesture() {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(onDragView))
         view.addGestureRecognizer(gesture)
     }
 
@@ -62,5 +82,50 @@ class BottomDrawerPlugin: DrawerPlugin {
 
     private func hideMediaControl() {
         activeContainer?.trigger(.disableMediaControl)
+    }
+
+    private func hideDrawerPlugin() {
+        core?.trigger(.hideDrawerPlugin)
+        activeContainer?.trigger(.enableMediaControl)
+    }
+
+    @objc private func onDragView(_ gesture: UIPanGestureRecognizer) {
+        guard let gestureView = gesture.view else { return }
+
+        let translation = gesture.translation(in: gestureView)
+        let newYCoordinate = gestureView.center.y + translation.y
+        let updatedY = gestureView.frame.origin.y
+
+        switch gesture.state {
+            case .began, .changed:
+                handleGestureChange(for: newYCoordinate, within: gestureView)
+            case .ended, .failed:
+                handleGestureEnded(for: updatedY)
+            default:
+                Logger.logInfo("unhandled gesture state")
+        }
+
+        gesture.setTranslation(.zero, in: view)
+    }
+
+    private func handleGestureChange(for newYCoordinate: CGFloat, within view: UIView) {
+        if canDrag(with: newYCoordinate) {
+            view.center.y = newYCoordinate
+            view.alpha = 1
+            let portionShown = initialCenterY - newYCoordinate
+            let alpha = hiddenHeight / portionShown * 0.2
+            core?.trigger(.didDragDrawer, userInfo: ["alpha": alpha])
+        }
+    }
+
+    private func handleGestureEnded(for newYCoordinate: CGFloat) {
+        let isHalfWayOpen = newYCoordinate <= minYToShow
+        isHalfWayOpen ? showDrawerPlugin() : hideDrawerPlugin()
+    }
+
+    private func canDrag(with newYCoordinate: CGFloat) -> Bool {
+        let canDragUp = newYCoordinate > minYToShow
+        let canDragDown = initialCenterY > newYCoordinate
+        return canDragUp && canDragDown
     }
 }
