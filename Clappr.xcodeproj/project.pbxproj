@@ -270,6 +270,7 @@
 		C94D8CEE221B1E5400C7855D /* ContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */; };
 		C94D8CF0221B22C300C7855D /* ContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */; };
 		C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */; };
+		C957E82A2332C45B001F0612 /* PanGesture+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957E8292332C45B001F0612 /* PanGesture+Ext.swift */; };
 		C98C014C2166B50E009DFE0A /* FullscreenButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */; };
 		C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
 		C990DAA62194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */; };
@@ -568,6 +569,7 @@
 		C93212462212013700F0C47B /* UIImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewTests.swift; sourceTree = "<group>"; };
 		C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPluginTests.swift; sourceTree = "<group>"; };
 		C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPlugin.swift; sourceTree = "<group>"; };
+		C957E8292332C45B001F0612 /* PanGesture+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PanGesture+Ext.swift"; sourceTree = "<group>"; };
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
 		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9B6D6E6216FDD5400588896 /* FullscreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenButton.swift; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 				48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */,
 				AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */,
 				AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */,
+				C957E8292332C45B001F0612 /* PanGesture+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2136,6 +2139,7 @@
 				96D362D91D41339400CCB866 /* UIView+Ext.swift in Sources */,
 				96D362DD1D41339400CCB866 /* PlaybackFactory.swift in Sources */,
 				AB163506215AB97800635233 /* MediaControlElement.swift in Sources */,
+				C957E82A2332C45B001F0612 /* PanGesture+Ext.swift in Sources */,
 				96D362E61D41339400CCB866 /* EventProtocol.swift in Sources */,
 				CD57FCF122949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */,
 				48B9F9AD230D82C200CD07D5 /* OverlayPlugin.swift in Sources */,
