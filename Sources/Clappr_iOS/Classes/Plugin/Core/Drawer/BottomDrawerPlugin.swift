@@ -85,17 +85,13 @@ class BottomDrawerPlugin: DrawerPlugin {
     }
 
     @objc private func onDragView(_ gesture: UIPanGestureRecognizer) {
-        guard let gestureView = gesture.view else { return }
-
-        let translation = gesture.translation(in: gestureView)
-        let newYCoordinate = gestureView.center.y + translation.y
-        let updatedY = gestureView.frame.origin.y
+        guard let view = gesture.view else { return }
 
         switch gesture.state {
         case .began, .changed:
-            handleGestureChange(for: newYCoordinate, within: gestureView)
+            handleGestureChange(with: gesture)
         case .ended, .failed:
-            handleGestureEnded(for: updatedY)
+            handleGestureEnded(for: view.frame.origin.y)
         default:
             Logger.logInfo("unhandled gesture state")
         }
@@ -103,12 +99,16 @@ class BottomDrawerPlugin: DrawerPlugin {
         gesture.setTranslation(.zero, in: view)
     }
 
-    private func handleGestureChange(for newYCoordinate: CGFloat, within view: UIView) {
-        if canDrag(with: newYCoordinate) {
-            view.center.y = newYCoordinate
-            view.alpha = 1
-            let portionShown = initialCenterY - newYCoordinate
+    private func handleGestureChange(with gesture: UIPanGestureRecognizer) {
+        guard let view = gesture.view else { return }
+
+        if canDrag(with: gesture.newYCoordinate) {
+            let portionShown = initialCenterY - gesture.newYCoordinate
             let alpha = hiddenHeight / portionShown * 0.08
+
+            view.center.y = gesture.newYCoordinate
+            view.alpha = 1
+
             core?.trigger(.didDragDrawer, userInfo: ["alpha": alpha])
         }
     }
