@@ -1,26 +1,21 @@
 class BottomDrawerPlugin: DrawerPlugin {
+    private var initialCenterY: CGFloat = .zero
+
     override var position: DrawerPlugin.Position {
         return .bottom
     }
 
     override var size: CGSize {
-        return CGSize(width: coreViewBounds.width, height: coreViewBounds.height/2)
-    }
-
-    private var coreViewBounds: CGRect {
-        guard let core = core else { return .zero }
-        return core.view.frame
+        return CGSize(width: coreViewFrame.width, height: coreViewFrame.height/2)
     }
 
     private var minYToShow: CGFloat {
-        return coreViewBounds.height * 0.75
+        return coreViewFrame.height * 0.75
     }
 
     private var hiddenHeight: CGFloat {
-        return coreViewBounds.height - placeholder
+        return coreViewFrame.height - placeholder
     }
-
-    private var initialCenterY: CGFloat = .zero
 
     required init(context: UIObject) {
         super.init(context: context)
@@ -33,16 +28,8 @@ class BottomDrawerPlugin: DrawerPlugin {
         super.render()
 
         adjustSize()
-        moveDown()
+        moveDown(with: .zero)
         adjustInitialPosition()
-    }
-
-    override func onDrawerShow() {
-        moveUp()
-    }
-
-    override func onDrawerHide() {
-        moveDown()
     }
 
     private func adjustSize() {
@@ -53,12 +40,20 @@ class BottomDrawerPlugin: DrawerPlugin {
         initialCenterY = view.center.y
     }
 
+    override func onDrawerShow() {
+        moveUp()
+    }
+
+    override func onDrawerHide() {
+        moveDown()
+    }
+
     private func moveUp() {
         view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
-    private func moveDown() {
-        view.setVerticalPoint(to: hiddenHeight, duration: ClapprAnimationDuration.mediaControlHide)
+    private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
+        view.setVerticalPoint(to: hiddenHeight, duration: duration)
     }
 
     private func addTapGesture() {
