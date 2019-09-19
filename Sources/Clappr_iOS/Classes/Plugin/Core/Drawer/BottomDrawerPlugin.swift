@@ -1,11 +1,11 @@
-class BottomDrawerPlugin: DrawerPlugin {
+open class BottomDrawerPlugin: DrawerPlugin {
     private var initialCenterY: CGFloat = .zero
 
-    override var position: DrawerPlugin.Position {
+    override open var position: DrawerPlugin.Position {
         return .bottom
     }
 
-    override var size: CGSize {
+    override open var size: CGSize {
         return CGSize(width: coreViewFrame.width, height: coreViewFrame.height/2)
     }
 
@@ -17,14 +17,14 @@ class BottomDrawerPlugin: DrawerPlugin {
         return coreViewFrame.height - placeholder
     }
 
-    required init(context: UIObject) {
+    required public init(context: UIObject) {
         super.init(context: context)
 
         addTapGesture()
         addDragGesture()
     }
 
-    override func render() {
+    override open func render() {
         super.render()
 
         adjustSize()
@@ -40,11 +40,11 @@ class BottomDrawerPlugin: DrawerPlugin {
         initialCenterY = view.center.y
     }
 
-    override func onDrawerShow() {
+    override open func onDrawerShow() {
         moveUp()
     }
 
-    override func onDrawerHide() {
+    override open func onDrawerHide() {
         moveDown()
     }
 
