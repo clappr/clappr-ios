@@ -68,20 +68,14 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
     @objc private func didTapView() {
         showDrawerPlugin()
-        hideMediaControl()
     }
 
     private func showDrawerPlugin() {
         core?.trigger(.showDrawerPlugin)
     }
 
-    private func hideMediaControl() {
-        activeContainer?.trigger(.disableMediaControl)
-    }
-
     private func hideDrawerPlugin() {
         core?.trigger(.hideDrawerPlugin)
-        activeContainer?.trigger(.enableMediaControl)
     }
 
     @objc private func onDragView(_ gesture: UIPanGestureRecognizer) {
@@ -109,7 +103,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
             view.center.y = gesture.newYCoordinate
             view.alpha = 1
 
-            core?.trigger(.didDragDrawer, userInfo: ["alpha": alpha])
+            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": alpha])
         }
     }
 
