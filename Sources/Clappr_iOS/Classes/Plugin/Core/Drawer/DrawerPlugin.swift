@@ -54,6 +54,12 @@ open class DrawerPlugin: OverlayPlugin {
             context.trigger(.hideDrawerPlugin)
         }
 
+        listenTo(context, event: .didComplete) { [weak self] _ in
+            guard self?.isClosed == false else { return }
+
+            context.trigger(.hideDrawerPlugin)
+        }
+
         eventsToRender.forEach {
             listenTo(context, event: $0) { [weak self] _ in
                 self?.render()

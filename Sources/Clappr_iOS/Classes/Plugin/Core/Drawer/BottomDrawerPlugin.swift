@@ -98,12 +98,12 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
         if canDrag(with: gesture.newYCoordinate) {
             let portionShown = initialCenterY - gesture.newYCoordinate
-            let alphaToSet = hiddenHeight / portionShown * 0.08
+            let mediaControlAlpha = hiddenHeight / portionShown * 0.08
 
             view.center.y = gesture.newYCoordinate
             view.alpha = 1
 
-            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alphaToSet": alphaToSet])
+            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": mediaControlAlpha])
         }
     }
 
