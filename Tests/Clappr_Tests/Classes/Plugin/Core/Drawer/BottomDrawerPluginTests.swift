@@ -88,6 +88,18 @@ class BottomDrawerPluginTests: QuickSpec {
                         expect(didCallHideDrawer).to(beTrue())
                     }
                 }
+
+                context("when the didComplete event is triggered") {
+                    it("calls hideDrawer event") {
+                        var didCallHideDrawer = false
+                        core.on(Event.hideDrawerPlugin.rawValue) { _ in didCallHideDrawer.toggle() }
+                        core.trigger(.showDrawerPlugin)
+
+                        core.trigger(.didComplete)
+
+                        expect(didCallHideDrawer).to(beTrue())
+                    }
+                }
             }
         }
     }
