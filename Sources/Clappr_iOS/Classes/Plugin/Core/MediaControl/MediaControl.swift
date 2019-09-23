@@ -53,7 +53,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         listenScrubbingEvents()
 
         listenTo(core, eventName: InternalEvent.didDragDrawer.rawValue) { [weak self] info in
-            guard let alpha = info?["alpha"] as? CGFloat else { return }
+            guard let alpha = info?["alphaToSet"] as? CGFloat else { return }
             self?.view.alpha = alpha
         }
 
