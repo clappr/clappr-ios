@@ -27,7 +27,7 @@ class BottomDrawerPluginTests: QuickSpec {
                 }
             }
 
-            context("#render") {
+            describe("#render") {
                 var core: CoreStub!
                 var plugin: BottomDrawerPlugin!
 
@@ -47,6 +47,17 @@ class BottomDrawerPluginTests: QuickSpec {
                     plugin.render()
 
                     expect(plugin.view.frame.size).to(equal(CGSize(width: 320, height: 50)))
+                }
+
+                context("when plugin request a height greater then the limit") {
+                    it("uses the height limit insted") {
+                        core.view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 100))
+                        let pluginMock = BottomDrawerPluginMock(context: core)
+
+                        pluginMock.render()
+
+                        expect(pluginMock.view.frame.size).to(equal(CGSize(width: 320, height: 50)))
+                    }
                 }
             }
 
@@ -102,5 +113,12 @@ class BottomDrawerPluginTests: QuickSpec {
                 }
             }
         }
+    }
+}
+
+class BottomDrawerPluginMock: BottomDrawerPlugin {
+
+    override var height: CGFloat {
+        return 1000
     }
 }

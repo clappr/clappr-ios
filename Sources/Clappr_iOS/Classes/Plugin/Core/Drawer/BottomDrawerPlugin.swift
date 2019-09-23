@@ -1,12 +1,20 @@
 open class BottomDrawerPlugin: DrawerPlugin {
     private var initialCenterY: CGFloat = .zero
 
+    private var maxHeight: CGFloat {
+        return coreViewFrame.height/2
+    }
+
+    open var height: CGFloat {
+        return maxHeight
+    }
+
     override open var position: DrawerPlugin.Position {
         return .bottom
     }
 
-    override open var size: CGSize {
-        return CGSize(width: coreViewFrame.width, height: coreViewFrame.height/2)
+    override var size: CGSize {
+        return CGSize(width: coreViewFrame.width, height: min(maxHeight, height))
     }
 
     private var minYToShow: CGFloat {

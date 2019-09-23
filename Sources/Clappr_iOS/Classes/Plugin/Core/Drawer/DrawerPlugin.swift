@@ -8,7 +8,7 @@ open class DrawerPlugin: OverlayPlugin {
         return .undefined
     }
 
-    open var size: CGSize {
+    var size: CGSize {
         return .zero
     }
 
