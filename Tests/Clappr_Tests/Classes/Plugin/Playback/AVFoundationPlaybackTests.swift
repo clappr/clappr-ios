@@ -105,6 +105,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 it("triggers didUpdateBitrate with the new value") {
                     let options: Options = [kSourceUrl: "http://clappr.io/master.m3u8"]
                     let playback = AVFoundationPlayback(options: options)
+                    playback.player = MockPlayer()
                     
                     var didUpdateBitrateWithValue: Double?
                     
@@ -112,7 +113,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         didUpdateBitrateWithValue = userInfo?["bitrate"] as? Double
                     }
                     
-                    playback.play()
+                    playback.addObservers()
                     
                     expect(didUpdateBitrateWithValue).toEventuallyNot(beNil())
                 }
@@ -1636,5 +1637,43 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
             #endif
         }
+    }
+}
+
+private class MockPlayer: AVPlayer {
+    override var currentItem: AVPlayerItem? {
+        return MockPlayerItem(bitrate: 5)
+    }
+}
+
+private class MockPlayerItem: AVPlayerItem {
+    private var itemAccessLog: MockPlayerItemAccessLog = MockPlayerItemAccessLog(bitrate: 5)
+    
+    init(bitrate: Double) {
+        super.init(asset: AVAsset(url: URL(string: "http://clappr.sample/master.m3u8")!), automaticallyLoadedAssetKeys: nil)
+    }
+    
+    override func accessLog() -> AVPlayerItemAccessLog? {
+        return itemAccessLog
+    }
+}
+
+private class MockPlayerItemAccessLog: AVPlayerItemAccessLog {
+    private var accessLogEvent: MockAccessLogEvent = MockAccessLogEvent(bitrate: 5)
+    
+    init(bitrate: Double) {
+    }
+    
+    override var events: [AVPlayerItemAccessLogEvent] {
+        return [accessLogEvent]
+    }
+}
+
+private class MockAccessLogEvent: AVPlayerItemAccessLogEvent {
+    init(bitrate: Double) {
+    }
+    
+    override var indicatedBitrate: Double {
+        return 5
     }
 }
