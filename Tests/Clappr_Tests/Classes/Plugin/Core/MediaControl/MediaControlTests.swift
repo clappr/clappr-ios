@@ -314,6 +314,31 @@ class MediaControlTests: QuickSpec {
                     }
                 }
 
+                context("when the drawer events are triggered") {
+                    it("dont show Media Control when the video ended") {
+                        var didCallShow = false
+
+                        coreStub.trigger(.didShowDrawerPlugin)
+                        coreStub.activePlayback?.trigger(.didComplete)
+                        coreStub.trigger(.didHideDrawerPlugin)
+
+                        mediaControl.show() { didCallShow = true }
+
+                        expect(didCallShow).to(beFalse())
+                    }
+
+                    it("shows Media Control when the video is not ended") {
+                        var didCallShow = false
+
+                        coreStub.trigger(.didShowDrawerPlugin)
+                        coreStub.trigger(.didHideDrawerPlugin)
+
+                        mediaControl.show() { didCallShow = true }
+
+                        expect(didCallShow).to(beTrue())
+                    }
+                }
+
                 func mediaControlHidden() {
                     coreStub.activePlayback?.trigger(Event.didComplete)
                 }

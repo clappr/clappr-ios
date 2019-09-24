@@ -43,7 +43,6 @@ open class DrawerPlugin: OverlayPlugin {
         bindCoreEvents(context: core)
         bindMediaControlEvents(context: core)
         bindDrawerEvents(context: core)
-        bindPlaybackEvents(context: core)
     }
 
     private func bindCoreEvents(context: UIObject) {
@@ -87,17 +86,6 @@ open class DrawerPlugin: OverlayPlugin {
             self?.toggleIsClosed(to: true)
             self?.onDrawerHide()
         }
-    }
-
-    private func bindPlaybackEvents(context: UIObject?) {
-        guard let core = context as? Core, let activePlayback = core.activePlayback else { return }
-
-        listenTo(activePlayback, event: .didComplete) { [weak self] _ in
-            guard self?.isClosed == false else { return }
-
-            self?.onDrawerHide()
-        }
-
     }
 
     private func toggleIsClosed(to newValue: Bool) {

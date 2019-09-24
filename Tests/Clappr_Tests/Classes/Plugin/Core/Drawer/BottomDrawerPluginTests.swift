@@ -99,16 +99,6 @@ class BottomDrawerPluginTests: QuickSpec {
                         expect(didCallHideDrawer).to(beTrue())
                     }
                 }
-
-                context("when the didComplete event is triggered") {
-                    it("calls hideDrawer event") {
-                        core.trigger(.showDrawerPlugin)
-
-                        core.activePlayback?.trigger(.didComplete)
-
-                        expect(plugin.view.frame.origin).to(equal(CGPoint(x: .zero, y: 100)))
-                    }
-                }
             }
         }
     }
