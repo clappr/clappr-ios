@@ -40,7 +40,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     open func bindCoreEvents() {
         guard let core = core else { return }
 
-        listenFullscreenEvents()
+        listenFullscreenEvents(context: core)
 
         listenTo(core, event: .requestPadding) { [weak self] info in
             guard let padding = info?["padding"] as? CGFloat else { return }
@@ -51,21 +51,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             self?.toggleVisibility()
         }
 
-        listenScrubbingEvents()
+        listenScrubbingEvents(context: core)
 
-        listenTo(core, eventName: InternalEvent.didDragDrawer.rawValue) { [weak self] info in
-            guard let alpha = info?["alpha"] as? CGFloat else { return }
-            self?.view.alpha = alpha
-        }
-
-        listenTo(core, event: .didShowDrawerPlugin) { [weak self] _ in
-            self?.hide()
-        }
-
-        listenTo(core, event: .didHideDrawerPlugin) { [weak self] _ in
-            guard self?.showOnDrawerHide == true else { return }
-            self?.show()
-        }
+        listenDrawerEvents(context: core)
     }
 
     private func bindContainerEvents() {
@@ -104,34 +92,47 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
     }
 
-    private func listenFullscreenEvents() {
-        guard let core = core else { return }
-
-        listenTo(core, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
+    private func listenFullscreenEvents(context: UIObject) {
+        listenTo(context, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
             if self?.hideControlsTimer?.isValid ?? false {
                 self?.disappearAfterSomeTime()
             }
         }
 
-        listenTo(core, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in
+        listenTo(context, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in
             if self?.hideControlsTimer?.isValid ?? false {
                 self?.disappearAfterSomeTime()
             }
         }
     }
 
-    private func listenScrubbingEvents() {
-        guard let core = core else { return }
-
-        listenTo(core, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
+    private func listenScrubbingEvents(context: UIObject) {
+        listenTo(context, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
             self?.keepVisible()
         }
 
-        listenTo(core, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
+        listenTo(context, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
             guard self?.activePlayback?.state == .playing else { return }
             self?.disappearAfterSomeTime()
         }
     }
+
+    private func listenDrawerEvents(context: UIObject) {
+        listenTo(context, eventName: InternalEvent.didDragDrawer.rawValue) { [weak self] info in
+            guard let alpha = info?["alpha"] as? CGFloat else { return }
+            self?.view.alpha = alpha
+        }
+
+        listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in
+            self?.hide()
+        }
+
+        listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
+            guard self?.showOnDrawerHide == true else { return }
+            self?.show()
+        }
+    }
+
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
         if currentlyShowing {
