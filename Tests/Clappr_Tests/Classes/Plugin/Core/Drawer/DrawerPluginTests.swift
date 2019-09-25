@@ -126,6 +126,18 @@ class DrawerPluginTests: QuickSpec {
                         }
                     }
                 }
+
+                context("when the didTappedCore event is triggered") {
+                    it("calls hideDrawer event") {
+                        var didCallHideDrawer = false
+                        core.on(Event.hideDrawerPlugin.rawValue) { _ in didCallHideDrawer.toggle() }
+                        core.trigger(.showDrawerPlugin)
+
+                        core.trigger(InternalEvent.didTappedCore.rawValue)
+
+                        expect(didCallHideDrawer).to(beTrue())
+                    }
+                }
             }
 
             describe("rendering") {

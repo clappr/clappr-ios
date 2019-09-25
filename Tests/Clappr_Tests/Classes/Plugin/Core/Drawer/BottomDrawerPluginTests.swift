@@ -50,7 +50,7 @@ class BottomDrawerPluginTests: QuickSpec {
                 }
 
                 context("when plugin request a height greater then the limit") {
-                    it("uses the height limit insted") {
+                    it("uses the height limit instead") {
                         core.view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 100))
                         let pluginMock = BottomDrawerPluginMock(context: core)
 
@@ -85,18 +85,6 @@ class BottomDrawerPluginTests: QuickSpec {
                         core.trigger(.hideDrawerPlugin)
 
                         expect(plugin.view.frame.origin).to(equal(CGPoint(x: .zero, y: 100)))
-                    }
-                }
-
-                context("when the didTappedCore event is triggered") {
-                    it("calls hideDrawer event") {
-                        var didCallHideDrawer = false
-                        core.on(Event.hideDrawerPlugin.rawValue) { _ in didCallHideDrawer.toggle() }
-                        core.trigger(.showDrawerPlugin)
-
-                        core.trigger(InternalEvent.didTappedCore.rawValue)
-
-                        expect(didCallHideDrawer).to(beTrue())
                     }
                 }
             }
