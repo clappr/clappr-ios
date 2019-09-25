@@ -1,18 +1,24 @@
 open class DrawerPlugin: OverlayPlugin {
     public enum Position {
         case undefined
+        case bottom
     }
 
     open var position: DrawerPlugin.Position {
         return .undefined
     }
 
-    open var size: CGSize {
+    var size: CGSize {
         return .zero
     }
 
     open var placeholder: CGFloat {
         return .zero
+    }
+
+    open var coreViewFrame: CGRect {
+        guard let core = core else { return .zero }
+        return core.view.frame
     }
 
     private(set) var isClosed: Bool = true {
@@ -32,20 +38,37 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     open override func bindEvents() {
-        bindMediaControlEvents()
-        bindDrawerEvents()
-    }
-
-    private func bindMediaControlEvents() {
         guard let core = core else { return }
 
-        listenTo(core, event: .willShowMediaControl) { [weak self] _ in
+        bindCoreEvents(context: core)
+        bindMediaControlEvents(context: core)
+        bindDrawerEvents(context: core)
+    }
+
+    private func bindCoreEvents(context: UIObject) {
+        let eventsToRender: [Event] = [.didEnterFullscreen, .didExitFullscreen, .didChangeScreenOrientation]
+
+        listenTo(context, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
+            guard self?.isClosed == false else { return }
+
+            context.trigger(.hideDrawerPlugin)
+        }
+
+        eventsToRender.forEach {
+            listenTo(context, event: $0) { [weak self] _ in
+                self?.render()
+            }
+        }
+    }
+
+    private func bindMediaControlEvents(context: UIObject) {
+        listenTo(context, event: .willShowMediaControl) { [weak self] _ in
             UIView.animate(withDuration: ClapprAnimationDuration.mediaControlShow) {
                 self?.view.alpha = 1
             }
         }
 
-        listenTo(core, event: .willHideMediaControl) { [weak self] _ in
+        listenTo(context, event: .willHideMediaControl) { [weak self] _ in
             guard self?.isClosed == true else { return }
             UIView.animate(withDuration: ClapprAnimationDuration.mediaControlHide) {
                 self?.view.alpha = 0
@@ -53,15 +76,15 @@ open class DrawerPlugin: OverlayPlugin {
         }
     }
 
-    private func bindDrawerEvents() {
-        guard let core = core else { return }
-
-        listenTo(core, event: .showDrawerPlugin) { [weak self] _ in
+    private func bindDrawerEvents(context: UIObject) {
+        listenTo(context, event: .showDrawerPlugin) { [weak self] _ in
             self?.toggleIsClosed(to: false)
+            self?.onDrawerShow()
         }
 
-        listenTo(core, event: .hideDrawerPlugin) { [weak self] _ in
+        listenTo(context, event: .hideDrawerPlugin) { [weak self] _ in
             self?.toggleIsClosed(to: true)
+            self?.onDrawerHide()
         }
     }
 
@@ -72,6 +95,14 @@ open class DrawerPlugin: OverlayPlugin {
 
     override open func render() {
         requestPaddingIfNeeded()
+    }
+
+    open func onDrawerShow() {
+        Logger.logWarn("You have to override onDrawerShow function")
+    }
+
+    open func onDrawerHide() {
+        Logger.logWarn("You have to override onDrawerHide function")
     }
 
     private func requestPaddingIfNeeded() {

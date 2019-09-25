@@ -109,10 +109,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     open override func render() {
-        parentView?.addSubviewMatchingConstraints(overlayView)
+        view.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
-        parentView?.bringSubviewToFront(overlayView)
+        view.bringSubviewToFront(overlayView)
+        overlayView.clipsToBounds = true
     }
 
     #if os(tvOS)
@@ -125,6 +126,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func renderCorePlugins() {
         plugins
             .filter { $0.isNotMediaControlElement }
+            .filter { $0.isNotOverlayPlugin}
             .forEach(render)
     }
 
@@ -138,6 +140,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins
             .compactMap { $0 as? OverlayPlugin }
             .forEach(render)
+        view.bringSubviewToFront(overlayView)
     }
     #endif
 
@@ -254,6 +257,10 @@ fileprivate extension Plugin {
     #if os(iOS)
     var isNotMediaControlElement: Bool {
         return !(self is MediaControl.Element)
+    }
+
+    var isNotOverlayPlugin: Bool {
+        return !(self is OverlayPlugin)
     }
     #endif
 

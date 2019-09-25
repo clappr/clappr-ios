@@ -76,4 +76,10 @@ extension UIView {
         layer.cornerRadius = radius
         clipsToBounds = true
     }
+
+    func setVerticalPoint(to point: CGFloat, duration: TimeInterval = 0) {
+        UIView.animate(withDuration: duration) {
+            self.frame.origin.y = point
+        }
+    }
 }
