@@ -1,4 +1,6 @@
 # Clappr for iOS and tvOS
+[![Maintainability](https://api.codeclimate.com/v1/badges/e6ef398a6615c8526c52/maintainability)](https://codeclimate.com/github/clappr/clappr-ios/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e6ef398a6615c8526c52/test_coverage)](https://codeclimate.com/github/clappr/clappr-ios/test_coverage)
 
 ![image](https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png)
 
@@ -133,7 +135,7 @@ let secondTimePlugins = [PluginExemploB.self]
 WMPlayer.register(plugins: secondTimePlugins)
 
 // PluginExemploB will not be used in this instance of Player
-player.attachTo(playerContainer, controller: self) 
+player.attachTo(playerContainer, controller: self)
 
 player.destroy()
 
