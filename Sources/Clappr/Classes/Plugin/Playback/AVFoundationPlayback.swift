@@ -203,19 +203,15 @@ open class AVFoundationPlayback: Playback {
 
     open override func play() {
         guard canPlay else { return }
-
-        if player == nil {
-            setupPlayer()
-        }
-
+        setupPlayerIfNeeded()
         trigger(.willPlay)
         player?.play()
+        updateInitialStateIfNeeded()
+    }
 
-        if let currentItem = player?.currentItem {
-            if !currentItem.isPlaybackLikelyToKeepUp {
-                updateState(.stalling)
-            }
-        }
+    private func updateInitialStateIfNeeded() {
+        guard player?.currentItem?.isPlaybackLikelyToKeepUp == true else { return }
+        updateState(.stalling)
     }
 
     private var shouldLoop: Bool {
@@ -240,7 +236,8 @@ open class AVFoundationPlayback: Playback {
         Logger.logError("could not setup player", scope: pluginName)
     }
 
-    private func setupPlayer() {
+    private func setupPlayerIfNeeded() {
+        guard player == nil else { return }
         guard let asset = asset else { return triggerSetupError() }
 
         createPlayerInstance(with: AVPlayerItem(asset: asset))
