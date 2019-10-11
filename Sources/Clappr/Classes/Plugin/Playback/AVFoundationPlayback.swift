@@ -478,16 +478,10 @@ open class AVFoundationPlayback: Playback {
 
         trigger(.willSeek)
 
-        player?.currentItem?.seek(
-            to: timeInterval.seek().time,
-            toleranceBefore: timeInterval.seek().tolerance,
-            toleranceAfter: timeInterval.seek().tolerance
-        ) { [weak self] success in
-            if success {
-                self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(timeInterval.seek().time)])
-                self?.trigger(.didSeek)
-                triggerEvent?()
-            }
+        player?.currentItem?.seek(to: timeInterval) { [weak self] in
+            self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(timeInterval.seek().time)])
+            self?.trigger(.didSeek)
+            triggerEvent?()
         }
     }
 
