@@ -123,6 +123,9 @@
 		48A29C12221DF8CD0004AD3B /* CorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A29C0A221DEFC10004AD3B /* CorePlugin.swift */; };
 		48A995182220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
 		48A995192220842000042C0E /* UIPluginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A995172220842000042C0E /* UIPluginStub.swift */; };
+		48B39E8723510FB300CE9D72 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */; };
+		48B39E8823510FB700CE9D72 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */; };
+		48B39E8A23510FFF00CE9D72 /* TimeIntervalExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B39E8923510FFF00CE9D72 /* TimeIntervalExtensionTests.swift */; };
 		48B9F9AD230D82C200CD07D5 /* OverlayPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */; };
 		48B9F9AE230D82C200CD07D5 /* OverlayPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */; };
 		48CF67C8230E2FE6007F3128 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AB0E872253CAB70096BCA4 /* PassthroughView.swift */; };
@@ -448,6 +451,8 @@
 		48A29C0A221DEFC10004AD3B /* CorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePlugin.swift; sourceTree = "<group>"; };
 		48A29C0D221DF3950004AD3B /* CorePluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorePluginStub.swift; sourceTree = "<group>"; };
 		48A995172220842000042C0E /* UIPluginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPluginStub.swift; sourceTree = "<group>"; };
+		48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extensions.swift"; sourceTree = "<group>"; };
+		48B39E8923510FFF00CE9D72 /* TimeIntervalExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtensionTests.swift; sourceTree = "<group>"; };
 		48B9F9AC230D82C200CD07D5 /* OverlayPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayPlugin.swift; sourceTree = "<group>"; };
 		48D81F1C21F9F41200B2D52E /* QuickSeekCorePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePlugin.swift; sourceTree = "<group>"; };
 		48D81F1E21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekCorePluginTests.swift; sourceTree = "<group>"; };
@@ -993,6 +998,7 @@
 				AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */,
 				AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */,
 				C957E8292332C45B001F0612 /* PanGesture+Ext.swift */,
+				48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1222,6 +1228,7 @@
 				5733D1BD21BAA6E4002107D2 /* Dictionary+ExtTests.swift */,
 				23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */,
 				C92F1C99216F8F000059D860 /* UIViewExtensionTests.swift */,
+				48B39E8923510FFF00CE9D72 /* TimeIntervalExtensionTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1954,6 +1961,7 @@
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				48CF67C8230E2FE6007F3128 /* PassthroughView.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
+				48B39E8823510FB700CE9D72 /* TimeInterval+Extensions.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */,
@@ -2098,6 +2106,7 @@
 				48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
+				48B39E8A23510FFF00CE9D72 /* TimeIntervalExtensionTests.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
@@ -2133,6 +2142,7 @@
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
+				48B39E8723510FB300CE9D72 /* TimeInterval+Extensions.swift in Sources */,
 				C9B8414922E0F454009DE097 /* OrientationObserver.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
 				96D362CD1D41339400CCB866 /* Playback.swift in Sources */,
