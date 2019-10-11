@@ -6,12 +6,12 @@ extension AVPlayerItem {
     }
 
     func seek(to timeInterval: TimeInterval, _ completion: (() -> Void)? = nil) {
-        seek(
-            to: timeInterval.seek().time,
-            toleranceBefore: timeInterval.seek().tolerance,
-            toleranceAfter: timeInterval.seek().tolerance
-        ) { success in
-            if success { completion?() }
+        let time = timeInterval.seek().time
+        let tolerance = timeInterval.seek().tolerance
+        seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { success in
+            if success {
+                completion?()
+            }
         }
     }
 }
