@@ -24,7 +24,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var alwaysVisible = false
     private var currentlyShowing = false
     private var currentlyHiding = false
-    private var showOnDrawerHide = true
 
     required public init(context: UIObject) {
         super.init(context: context)
@@ -73,13 +72,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
                 self?.hide()
-                self?.showOnDrawerHide = false
             }
 
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in
                 self?.keepVisible()
                 self?.listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in
-                    self?.showOnDrawerHide = true
                     self?.show { [weak self] in
                         self?.disappearAfterSomeTime()
                     }
@@ -128,11 +125,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
-            guard self?.showOnDrawerHide == true else { return }
+            let statesToShow: [PlaybackState] = [.playing, .paused]
+
+            guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
             self?.show()
         }
     }
-
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
         if currentlyShowing {
