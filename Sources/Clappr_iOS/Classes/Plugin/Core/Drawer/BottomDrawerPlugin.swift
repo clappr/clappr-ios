@@ -28,8 +28,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
     required public init(context: UIObject) {
         super.init(context: context)
 
-        addTapGesture()
-        addDragGesture()
+        addGesture(UITapGestureRecognizer(target: self, action: #selector(didTapView)))
+        addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)))
     }
 
     override open func render() {
@@ -64,16 +64,9 @@ open class BottomDrawerPlugin: DrawerPlugin {
         view.setVerticalPoint(to: hiddenHeight, duration: duration)
     }
 
-    private func addTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-
-    private func addDragGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDragView))
-        panGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(panGesture)
+    private func addGesture(_ gesture: UIGestureRecognizer) {
+        gesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(gesture)
     }
 
     @objc private func didTapView() {
