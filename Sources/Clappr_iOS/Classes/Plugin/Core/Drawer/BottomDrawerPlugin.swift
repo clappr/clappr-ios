@@ -65,15 +65,15 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func addTapGesture() {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
-        gesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(gesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
 
     private func addDragGesture() {
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(onDragView))
-        gesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(gesture)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onDragView))
+        panGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(panGesture)
     }
 
     @objc private func didTapView() {
