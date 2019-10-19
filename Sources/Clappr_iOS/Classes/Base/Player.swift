@@ -97,6 +97,15 @@ open class Player: BaseObject {
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
         core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
+        bindMediaControlEvents()
+    }
+    
+    private func bindMediaControlEvents() {
+        let eventsToListen: [Event] = [.willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl]
+        
+        eventsToListen.forEach { event in
+            core?.on(event.rawValue) { [weak self] _ in self?.trigger(event.rawValue) }
+        }
     }
     
     open func presentFullscreenIn(_ controller: UIViewController) {
