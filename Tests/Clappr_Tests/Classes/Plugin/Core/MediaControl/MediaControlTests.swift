@@ -330,6 +330,8 @@ class MediaControlTests: QuickSpec {
                     it("shows Media Control when the video is not ended") {
                         var didCallShow = false
 
+                        coreStub.playbackMock?.set(state: .playing)
+
                         coreStub.trigger(.didShowDrawerPlugin)
                         coreStub.trigger(.didHideDrawerPlugin)
 
