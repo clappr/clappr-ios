@@ -203,19 +203,15 @@ open class AVFoundationPlayback: Playback {
 
     open override func play() {
         guard canPlay else { return }
-
-        if player == nil {
-            setupPlayer()
-        }
-
+        setupPlayerIfNeeded()
         trigger(.willPlay)
         player?.play()
+        updateInitialStateIfNeeded()
+    }
 
-        if let currentItem = player?.currentItem {
-            if !currentItem.isPlaybackLikelyToKeepUp {
-                updateState(.stalling)
-            }
-        }
+    private func updateInitialStateIfNeeded() {
+        guard player?.currentItem?.isPlaybackLikelyToKeepUp == true else { return }
+        updateState(.stalling)
     }
 
     private var shouldLoop: Bool {
@@ -240,7 +236,8 @@ open class AVFoundationPlayback: Playback {
         Logger.logError("could not setup player", scope: pluginName)
     }
 
-    private func setupPlayer() {
+    private func setupPlayerIfNeeded() {
+        guard player == nil else { return }
         guard let asset = asset else { return triggerSetupError() }
 
         createPlayerInstance(with: AVPlayerItem(asset: asset))
@@ -474,25 +471,17 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func seek(_ timeInterval: TimeInterval, _ triggerEvent: (() -> Void)?) {
-        if !isReadyToPlay {
+        guard isReadyToPlay else {
             seekToTimeWhenReadyToPlay = timeInterval
             return
         }
 
-        let timeScale = Int32(NSEC_PER_SEC)
-        let time = CMTimeMakeWithSeconds(timeInterval, preferredTimescale: timeScale)
-        let tolerance = CMTime(value: 0, timescale: timeScale)
-
         trigger(.willSeek)
 
-        player?.currentItem?.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] success in
-            if success {
-                self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
-                self?.trigger(.didSeek)
-                if let triggerEvent = triggerEvent {
-                    triggerEvent()
-                }
-            }
+        player?.currentItem?.seek(to: timeInterval) { [weak self] in
+            self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(timeInterval.seek().time)])
+            self?.trigger(.didSeek)
+            triggerEvent?()
         }
     }
 
