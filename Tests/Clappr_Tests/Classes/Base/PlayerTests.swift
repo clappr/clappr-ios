@@ -187,6 +187,51 @@ class PlayerTests: QuickSpec {
                         expect(callbackWasCalled).to(beTrue())
                     }
                 }
+                
+                context("when listening to core events") {
+                    var callbackWasCalled = false
+                       
+                    beforeEach {
+                        player = Player(options: options)
+                        callbackWasCalled = false
+                    }
+                       
+                    it("calls a callback function to handle willShowMediaControl") {
+                        player.on(.willShowMediaControl) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.core?.trigger(.willShowMediaControl)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                    
+                    it("calls a callback function to handle didShowMediaControl") {
+                        player.on(.didShowMediaControl) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.core?.trigger(.didShowMediaControl)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                    
+                    it("calls a callback function to handle willHideMediaControl") {
+                        player.on(.willHideMediaControl) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.core?.trigger(.willHideMediaControl)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                    
+                    it("calls a callback function to handle didHideMediaControl") {
+                        player.on(.didHideMediaControl) { _ in
+                            callbackWasCalled = true
+                        }
+                        player.core?.trigger(.didHideMediaControl)
+                        
+                        expect(callbackWasCalled).to(beTrue())
+                    }
+                }
 
                 context("core dependency") {
                     it("is initialized") {

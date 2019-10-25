@@ -101,7 +101,7 @@ open class Player: BaseObject {
     }
     
     private func bindMediaControlEvents() {
-        let eventsToListen: [Event] = [.willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl]
+        let eventsToListen = [Event.willShowMediaControl, .didShowMediaControl, .willHideMediaControl, .didHideMediaControl]
         
         eventsToListen.forEach { event in
             core?.on(event.rawValue) { [weak self] _ in self?.trigger(event.rawValue) }
