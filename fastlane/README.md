@@ -45,6 +45,11 @@ Release a new snapshot
 fastlane release
 ```
 Release a new version of Clappr
+### release_from_ci
+```
+fastlane release_from_ci
+```
+Release a new version of Clappr from CI
 
 ----
 
