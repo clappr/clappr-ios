@@ -39,6 +39,14 @@ class ViewController: UIViewController {
         player.on(Event.willSeek) { _ in print("on willSeek") }
 
         player.on(Event.didSeek) { _ in print("on didSeek") }
+        
+        player.on(Event.willShowMediaControl) { _ in print("on willShowMediaControl") }
+        
+        player.on(Event.didShowMediaControl) { _ in print("on didShowMediaControl") }
+        
+        player.on(Event.willHideMediaControl) { _ in print("on willHideMediaControl") }
+        
+        player.on(Event.didHideMediaControl) { _ in print("on didHideMediaControl") }
 
         player.on(Event.requestFullscreen) { _ in
             print("on requestFullscreen")
