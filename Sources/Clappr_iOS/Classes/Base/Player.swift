@@ -82,6 +82,7 @@ open class Player: BaseObject {
 
         setCore(with: options)
         bindCoreEvents()
+        bindMediaControlEvents()
         bindPlaybackEvents()
 
         core?.load()
@@ -97,7 +98,6 @@ open class Player: BaseObject {
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
         core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
-        bindMediaControlEvents()
     }
     
     private func bindMediaControlEvents() {
