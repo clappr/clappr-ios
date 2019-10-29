@@ -55,8 +55,10 @@ lane :version_bump do |options|
     }
   )
 
-  increment_build_number(
-    build_number: version
+  increment_build_number_in_plist(
+    build_number: version,
+    xcodeproj: "Clappr.xcodeproj",
+    target: "Clappr"
   )
 end
 
@@ -110,7 +112,7 @@ lane :release do |options|
     branch: 'dev'
   )
 
-  test
+  test unless options[:ignore_unit_tests]
 
   branch_name = "release/#{options[:version]}"
   create_branch(branch_name)
@@ -177,6 +179,23 @@ lane :release do |options|
   pod_push(
     allow_warnings: true
   )
+end
+
+desc "Release a new version of Clappr from CI"
+lane :release_from_ci do
+  last_dev_commit_hash = Actions.sh("git log origin/dev --pretty=format:'%H' -n 1")
+  UI.user_error!("❌ Only the last commit from origin/dev is allow to generate a new automated version ❌") if last_git_commit[:commit_hash].to_s != last_dev_commit_hash.to_s
+
+  version = increment_version_number_in_plist(
+              xcodeproj: "Clappr.xcodeproj",
+              target: "Clappr",
+              bump_type: "minor"
+            )
+
+  release({
+    version: version,
+    ignore_unit_tests: true
+  })
 end
 
 def create_branch(branch_name)

@@ -25,6 +25,9 @@ wipe: ## Clean the Xcode temp files and kills simulators
 test: ## Run clappr-ios tests
 	$(FASTLANE) test
 
+release_from_ci: ## Release clappr-ios to cocoa pods from CI
+	$(FASTLANE) release_from_ci
+
 release: ## Release clappr-ios to cocoa pods
 	$(FASTLANE) release version:$(version)
 
