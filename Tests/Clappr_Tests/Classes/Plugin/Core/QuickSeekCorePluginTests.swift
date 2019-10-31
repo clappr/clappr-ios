@@ -38,9 +38,9 @@ class QuickSeekCorePluginTests: QuickSpec {
             }
 
             describe("adding and removing doubleTap gesture") {
-                context("given that a didShowModal event is triggered") {
+                context("given that a didShowOverlay event is triggered") {
                     it("ends up with one gesture only") {
-                        core.trigger(.didShowModal)
+                        core.trigger(.didShowOverlayPlugin)
 
                         expect(core.view.gestureRecognizers?.count).to(equal(1))
                     }
@@ -48,25 +48,8 @@ class QuickSeekCorePluginTests: QuickSpec {
 
                 context("given that a didShowModal and a didHideModal events are triggered") {
                     it("ends up with two gestures") {
-                        core.trigger(.didShowModal)
-                        core.trigger(.didHideModal)
-
-                        expect(core.view.gestureRecognizers?.count).to(equal(2))
-                    }
-                }
-
-                context("given that a didShowDrawerPlugin event is triggered") {
-                    it("ends up with one gesture only") {
-                        core.trigger(.didShowDrawerPlugin)
-
-                        expect(core.view.gestureRecognizers?.count).to(equal(1))
-                    }
-                }
-
-                context("given that a didShowDrawerPlugin and a didHideDrawerPlugin events are triggered") {
-                    it("ends up with one gesture only") {
-                        core.trigger(.didShowDrawerPlugin)
-                        core.trigger(.didHideDrawerPlugin)
+                        core.trigger(.didShowOverlayPlugin)
+                        core.trigger(.didHideOverlayPlugin)
 
                         expect(core.view.gestureRecognizers?.count).to(equal(2))
                     }
