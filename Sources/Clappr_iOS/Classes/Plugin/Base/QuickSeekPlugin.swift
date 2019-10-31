@@ -23,6 +23,8 @@ public class QuickSeekPlugin: UICorePlugin {
         guard let core = core else { return }
         listenTo(core, eventName: Event.didShowModal.rawValue) { [weak self] _ in self?.removeGesture() }
         listenTo(core, eventName: Event.didHideModal.rawValue) { [weak self] _ in self?.addGesture() }
+        listenTo(core, eventName: Event.didShowDrawerPlugin.rawValue) { [weak self] _ in self?.removeGesture() }
+        listenTo(core, eventName: Event.didHideDrawerPlugin.rawValue) { [weak self] _ in self?.addGesture() }
     }
     
     func removeGesture() {
