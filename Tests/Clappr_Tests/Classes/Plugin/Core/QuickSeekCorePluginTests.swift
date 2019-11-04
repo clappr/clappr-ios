@@ -46,7 +46,7 @@ class QuickSeekCorePluginTests: QuickSpec {
                     }
                 }
 
-                context("given that a didShowModal and a didHideModal events are triggered") {
+                context("given that a didShowOverlay and a didHideOverlay events are triggered") {
                     it("ends up with two gestures") {
                         core.trigger(.didShowOverlayPlugin)
                         core.trigger(.didHideOverlayPlugin)
