@@ -27,8 +27,13 @@ open class DrawerPlugin: OverlayPlugin {
             core?.trigger(event)
         }
         didSet {
-            let event: Event = isClosed ? .didHideDrawerPlugin : .didShowDrawerPlugin
-            core?.trigger(event)
+            if isClosed {
+                hide()
+                core?.trigger(.didHideDrawerPlugin)
+            } else {
+                show()
+                core?.trigger(.didShowDrawerPlugin)
+            }
         }
     }
 

@@ -36,6 +36,25 @@ class QuickSeekCorePluginTests: QuickSpec {
                     expect(core.view.gestureRecognizers?.count).to(equal(2))
                 }
             }
+
+            describe("adding and removing doubleTap gesture") {
+                context("given that a didShowOverlay event is triggered") {
+                    it("ends up with one gesture only") {
+                        core.trigger(.didShowOverlayPlugin)
+
+                        expect(core.view.gestureRecognizers?.count).to(equal(1))
+                    }
+                }
+
+                context("given that a didShowOverlay and a didHideOverlay events are triggered") {
+                    it("ends up with two gestures") {
+                        core.trigger(.didShowOverlayPlugin)
+                        core.trigger(.didHideOverlayPlugin)
+
+                        expect(core.view.gestureRecognizers?.count).to(equal(2))
+                    }
+                }
+            }
             
             describe("when quickSeek is triggered") {
                 context("and its position is less than half of the view (left)") {

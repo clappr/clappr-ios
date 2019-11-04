@@ -58,6 +58,40 @@ class OverlayPluginTests: QuickSpec {
                         expect(plugin.view.frame.size).to(equal(parentView.frame.size))
                     }
                 }
+
+                context("on show") {
+                    it("triggers didShowOverlayPlugin") {
+                        let core = CoreStub()
+                        let plugin = OverlayPluginMock(context: core)
+
+                        var didCallEvent = false
+
+                        core.on(Event.didShowOverlayPlugin.rawValue) { _ in
+                            didCallEvent.toggle()
+                        }
+
+                        plugin.show()
+
+                        expect(didCallEvent).to(beTrue())
+                    }
+                }
+
+                context("on hide") {
+                    it("triggers didHideOverlayPlugin") {
+                        let core = CoreStub()
+                        let plugin = OverlayPluginMock(context: core)
+
+                        var didCallEvent = false
+
+                        core.on(Event.didHideOverlayPlugin.rawValue) { _ in
+                            didCallEvent.toggle()
+                        }
+
+                        plugin.hide()
+
+                        expect(didCallEvent).to(beTrue())
+                    }
+                }
             }
         }
     }

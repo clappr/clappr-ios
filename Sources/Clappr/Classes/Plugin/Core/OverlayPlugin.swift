@@ -6,4 +6,12 @@ open class OverlayPlugin: UICorePlugin {
     open var isModal: Bool {
         return false
     }
+
+    open func show() {
+        core?.trigger(.didShowOverlayPlugin)
+    }
+
+    open func hide() {
+        core?.trigger(.didHideOverlayPlugin)
+    }
 }
