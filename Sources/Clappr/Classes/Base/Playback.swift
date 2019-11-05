@@ -131,6 +131,10 @@ extension Playback {
     @objc open var currentDate: Date? {
         return nil
     }
+
+    @objc open var currentLiveDate: Date? {
+        return nil
+    }
     
     @objc open var seekableTimeRanges: [NSValue] {
         return []

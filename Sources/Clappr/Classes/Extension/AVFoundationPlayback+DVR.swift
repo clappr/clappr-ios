@@ -20,6 +20,13 @@ extension AVFoundationPlayback {
     open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
     }
+
+    open override var currentLiveDate: Date? {
+        guard let currentDate = currentDate else { return nil }
+        let liveDate = currentDate.timeIntervalSince1970 + (duration - TimeInterval(position))
+
+        return Date(timeIntervalSince1970: liveDate)
+    }
     
     open override var seekableTimeRanges: [NSValue] {
         guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
