@@ -489,6 +489,22 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.currentDate).to(equal(date))
                     }
                 }
+
+                describe("#currentLiveDate") {
+                    context("when there's a currentDate") {
+                        it("returns the currentLiveDate of the video") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            let currentDate = Date()
+
+                            item.set(currentDate: currentDate)
+                            playback._position = 0
+                            playback._duration = 0
+
+                            expect(playback.currentLiveDate?.timeIntervalSince1970).to(equal(currentDate.timeIntervalSince1970))
+                        }
+                    }
+                }
             }
 
             describe("#duration") {
@@ -1676,4 +1692,12 @@ private class MockAccessLogEvent: AVPlayerItemAccessLogEvent {
     override var indicatedBitrate: Double {
         return 5
     }
+}
+
+private class StubbedLiveDatePlayback: AVFoundationPlayback {
+    var _position: Double = .zero
+    override var position: Double { _position }
+
+    var _duration: Double = .zero
+    override var duration: Double { _duration }
 }
