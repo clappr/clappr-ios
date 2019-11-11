@@ -491,6 +491,16 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 describe("#currentLiveDate") {
+                    context("when a video is not live") {
+                        it("returns nil") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            playback._playbackType = .vod
+
+                            expect(playback.currentLiveDate).to(beNil())
+                        }
+                    }
+
                     context("when there's a currentDate") {
                         it("returns the currentLiveDate of the video") {
                             let playback = StubbedLiveDatePlayback(options: [:])
@@ -1714,4 +1724,7 @@ private class StubbedLiveDatePlayback: AVFoundationPlayback {
 
     var _duration: Double = .zero
     override var duration: Double { _duration }
+
+    var _playbackType: PlaybackType = .live
+    override var playbackType: PlaybackType { _playbackType }
 }

@@ -22,7 +22,7 @@ extension AVFoundationPlayback {
     }
 
     open override var currentLiveDate: Date? {
-        guard let currentDate = currentDate else { return nil }
+        guard let currentDate = currentDate, playbackType == .live else { return nil }
         let liveDate = currentDate.timeIntervalSince1970 + (duration - TimeInterval(position))
 
         return Date(timeIntervalSince1970: liveDate)
