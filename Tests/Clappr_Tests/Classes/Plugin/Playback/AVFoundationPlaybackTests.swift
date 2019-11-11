@@ -504,6 +504,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.currentLiveDate?.timeIntervalSince1970).to(equal(currentDate.timeIntervalSince1970))
                         }
                     }
+
+                    context("when the video is not at the live position") {
+                        it("returns the currentLiveDate of the video") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            let currentDate = Date()
+
+                            item.set(currentDate: currentDate)
+                            playback._position = 30
+                            playback._duration = 1000
+
+                            expect(currentDate.timeIntervalSince1970).to(beLessThan(playback.currentLiveDate?.timeIntervalSince1970))
+                        }
+                    }
                 }
             }
 
