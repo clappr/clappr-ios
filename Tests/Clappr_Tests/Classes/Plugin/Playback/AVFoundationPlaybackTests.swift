@@ -489,6 +489,46 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.currentDate).to(equal(date))
                     }
                 }
+
+                describe("#currentLiveDate") {
+                    context("when a video is not live") {
+                        it("returns nil") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            playback._playbackType = .vod
+
+                            expect(playback.currentLiveDate).to(beNil())
+                        }
+                    }
+
+                    context("when there's a currentDate") {
+                        it("returns the currentLiveDate of the video") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            let currentDate = Date()
+
+                            item.set(currentDate: currentDate)
+                            playback._position = 0
+                            playback._duration = 0
+
+                            expect(playback.currentLiveDate?.timeIntervalSince1970).to(equal(currentDate.timeIntervalSince1970))
+                        }
+                    }
+
+                    context("when the video is not at the live position") {
+                        it("returns the currentLiveDate of the video") {
+                            let playback = StubbedLiveDatePlayback(options: [:])
+                            playback.player = player
+                            let currentDate = Date()
+
+                            item.set(currentDate: currentDate)
+                            playback._position = 30
+                            playback._duration = 1000
+
+                            expect(currentDate.timeIntervalSince1970).to(beLessThan(playback.currentLiveDate?.timeIntervalSince1970))
+                        }
+                    }
+                }
             }
 
             describe("#duration") {
@@ -1676,4 +1716,15 @@ private class MockAccessLogEvent: AVPlayerItemAccessLogEvent {
     override var indicatedBitrate: Double {
         return 5
     }
+}
+
+private class StubbedLiveDatePlayback: AVFoundationPlayback {
+    var _position: Double = .zero
+    override var position: Double { _position }
+
+    var _duration: Double = .zero
+    override var duration: Double { _duration }
+
+    var _playbackType: PlaybackType = .live
+    override var playbackType: PlaybackType { _playbackType }
 }
