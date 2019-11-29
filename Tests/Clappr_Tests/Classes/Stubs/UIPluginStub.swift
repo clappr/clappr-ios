@@ -1,3 +1,5 @@
+@testable import Clappr
+
 class UIPluginStub: BaseObject, UIPlugin {
     
     var uiObject: UIObject = UIObject()

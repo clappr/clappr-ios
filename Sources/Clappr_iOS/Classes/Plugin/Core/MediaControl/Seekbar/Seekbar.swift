@@ -1,14 +1,14 @@
-class Seekbar: MediaControl.Element {
+open class Seekbar: MediaControl.Element {
 
     open override class var name: String {
         return "Seekbar"
     }
 
-    override var panel: MediaControlPanel {
+    override open var panel: MediaControlPanel {
         return .bottom
     }
 
-    override var position: MediaControlPosition {
+    override open var position: MediaControlPosition {
         return .none
     }
 
@@ -73,7 +73,7 @@ class Seekbar: MediaControl.Element {
         seekbarView.updateBuffer(time: maxBufferTime)
     }
 
-    override func render() {
+    override open func render() {
         setupHeightSize()
         containerView = UIStackView()
         containerView.addArrangedSubview(seekbarView)
