@@ -1114,6 +1114,25 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(position).to(equal(expectedSeekPosition))
                     expect(didTriggerDidSeek).to(beTrue())
                 }
+                
+                context("and playback is paused") {
+                    it("triggers didPause event") {
+                        let playback = AVFoundationPlaybackMock(options: [:])
+                        playback.videoDuration = 100
+                        let player = AVPlayerStub()
+                        playback.player = player
+                        player.setStatus(to: .readyToPlay)
+                        playback.set(state: .paused)
+                        var didTriggerDidPause = false
+                        playback.on(Event.didPause.rawValue) { _ in
+                            didTriggerDidPause = true
+                        }
+
+                        playback.seek(5)
+
+                        expect(didTriggerDidPause).to(beTrue())
+                    }
+                }
 
                 it("triggers didUpdatePosition for the desired position") {
                     let playback = AVFoundationPlaybackMock(options: [:])
@@ -1179,7 +1198,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 it("triggers seek event") {
                     var didTriggerDidSeek = false
-                    playback.on(Event.didSeek.rawValue) { _ in
+                    playback.once(Event.didSeek.rawValue) { _ in
                         didTriggerDidSeek = true
                     }
 
@@ -1189,9 +1208,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didUpdatePosition for the desired position") {
-                    var updatedPosition: Double? = nil
-                    playback.on(Event.didUpdatePosition.rawValue) { userInfo in
-                        updatedPosition = userInfo?["position"] as? Double
+                    var updatedPosition: Float64? = nil
+                    playback.once(Event.didUpdatePosition.rawValue) { userInfo in
+                        updatedPosition = userInfo?["position"] as? Float64
                     }
 
                     playback.seekToLivePosition()

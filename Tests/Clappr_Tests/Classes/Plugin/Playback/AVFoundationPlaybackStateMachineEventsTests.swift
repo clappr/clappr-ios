@@ -151,6 +151,36 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
                     }
                 }
+                
+                context("when pause and seek") {
+                    it("triggers events following the state machine pattern") {
+                        let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                        let playback = AVFoundationPlayback(options: options)
+                        let expectedEvents: [Event] = [
+                            .ready, .willPlay, .stalling,
+                            .willPlay, .playing, .willPause,
+                            .didPause, .willSeek, .didSeek,
+                            .didPause
+                        ]
+                        var triggeredEvents: [Event] = []
+                        for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
+                            playback.on(event.rawValue) { _ in
+                                triggeredEvents.append(event)
+                            }
+                        }
+                        playback.once(Event.didPause.rawValue) { _ in
+                            playback.seek(2)
+                        }
+                        playback.once(Event.playing.rawValue) { _ in
+                            playback.pause()
+                        }
+                        
+                        playback.render()
+                        playback.play()
+
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 25)
+                    }
+                }
             }
 
             describe("#state machine error events") {

@@ -501,6 +501,11 @@ open class AVFoundationPlayback: Playback {
         player?.currentItem?.seek(to: timeInterval) { [weak self] in
             self?.trigger(.didUpdatePosition, userInfo: userInfo)
             self?.trigger(.didSeek, userInfo: userInfo)
+
+            if self?.state == .paused {
+                self?.trigger(.didPause)
+            }
+
             triggerEvent?()
         }
     }
