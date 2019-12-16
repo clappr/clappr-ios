@@ -205,6 +205,7 @@ open class AVFoundationPlayback: Playback {
         guard canPlay else { return }
         setupPlayerIfNeeded()
         trigger(.willPlay)
+        if state == .stalling { trigger(.stalling) }
         player?.play()
         updateInitialStateIfNeeded()
     }
@@ -445,6 +446,7 @@ open class AVFoundationPlayback: Playback {
     open override func pause() {
         guard canPause else { return }
         triggerWillPause()
+        if state == .stalling { trigger(.stalling) }
         player?.pause()
         updateState(.paused)
     }
@@ -501,12 +503,21 @@ open class AVFoundationPlayback: Playback {
         player?.currentItem?.seek(to: timeInterval) { [weak self] in
             self?.trigger(.didUpdatePosition, userInfo: userInfo)
             self?.trigger(.didSeek, userInfo: userInfo)
-
-            if self?.state == .paused {
-                self?.trigger(.didPause)
-            }
-
+            self?.triggerStateEvents()
             triggerEvent?()
+        }
+    }
+    
+    private func triggerStateEvents() {
+        switch state {
+        case .playing:
+            trigger(.playing)
+        case .paused:
+            trigger(.didPause)
+        case .stalling:
+            trigger(.stalling)
+        default:
+            break
         }
     }
 
