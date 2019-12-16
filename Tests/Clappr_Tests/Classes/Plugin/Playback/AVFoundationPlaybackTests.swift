@@ -928,6 +928,22 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            context("when onFailedToPlayToEndTime") {
+                it("dispatch error") {
+                    let playback = AVFoundationPlaybackMock(options: [:])
+                    let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+                    var didErrorCalled = false
+
+                    playback.onFailedToPlayToEndTime(notification: notification)
+
+                    playback.on(Event.error.rawValue) { _ in
+                        didErrorCalled = true
+                    }
+
+                    expect(didErrorCalled).to(beFalse())
+                }
+            }
+
             context("when sets a kvo on player") {
                 class KVOStub: NSObject {
                     var didObserveValue = false
