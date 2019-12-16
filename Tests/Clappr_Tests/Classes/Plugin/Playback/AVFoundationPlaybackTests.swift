@@ -1056,35 +1056,43 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
 
-                it("triggers willSeek event") {
+                it("triggers willSeek event and send position") {
                     let playback = AVFoundationPlaybackMock(options: [:])
                     playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var didTriggerWillSeek = false
-                    playback.on(Event.willSeek.rawValue) { _ in
+                    var position: Float64?
+
+                    playback.on(Event.willSeek.rawValue) { userInfo in
+                        position = userInfo?["position"] as? Float64
                         didTriggerWillSeek = true
                     }
 
                     playback.seek(5)
 
+                    expect(position).to(equal(0))
                     expect(didTriggerWillSeek).to(beTrue())
                 }
 
-                it("triggers didSeek when a seek is completed") {
+                it("triggers didSeek when a seek is completed and send position") {
                     let playback = AVFoundationPlaybackMock(options: [:])
                     playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var didTriggerDidSeek = false
-                    playback.on(Event.didSeek.rawValue) { _ in
+
+                    var position: Float64?
+                    playback.on(Event.didSeek.rawValue) { userInfo in
+                        position = userInfo?["position"] as? Float64
                         didTriggerDidSeek = true
                     }
 
                     playback.seek(5)
 
+                    expect(position).to(equal(5))
                     expect(didTriggerDidSeek).to(beTrue())
                 }
 
