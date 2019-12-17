@@ -248,6 +248,7 @@ open class AVFoundationPlayback: Playback {
 
         asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
         asset.wait(for: .duration, then: durationAvailable)
+        setupObservers()
         addObservers()
     }
 
@@ -270,7 +271,7 @@ open class AVFoundationPlayback: Playback {
     }
     #endif
 
-    @objc internal func addObservers() {
+    @objc internal func setupObservers() {
         guard let player = player else { return }
         self.observers += [
             view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
@@ -283,6 +284,10 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
             player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
         ]
+    }
+
+    @objc internal func addObservers() {
+        guard let player = player else { return }
 
         NotificationCenter.default.addObserver(
             self,
