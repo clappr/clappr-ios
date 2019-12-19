@@ -1079,10 +1079,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var didTriggerWillSeek = false
-                    var position: Float64?
+                    var position: Double?
 
                     playback.on(Event.willSeek.rawValue) { userInfo in
-                        position = userInfo?["position"] as? Float64
+                        position = userInfo?["position"] as? Double
                         didTriggerWillSeek = true
                     }
 
@@ -1099,10 +1099,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var didTriggerDidSeek = false
+                    var position: Double?
 
-                    var position: Float64?
                     playback.on(Event.didSeek.rawValue) { userInfo in
-                        position = userInfo?["position"] as? Float64
+                        position = userInfo?["position"] as? Double
                         didTriggerDidSeek = true
                     }
 
@@ -1118,9 +1118,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
-                    var updatedPosition: Float64? = nil
+                    var updatedPosition: Double? = nil
+
                     playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
-                        updatedPosition = userInfo!["position"] as? Float64
+                        updatedPosition = userInfo!["position"] as? Double
                     }
 
                     playback.seek(5)

@@ -271,9 +271,9 @@ open class AVFoundationPlayback: Playback {
     }
     #endif
 
-    @objc internal func setupObservers() {
+    @objc func setupObservers() {
         guard let player = player else { return }
-        self.observers += [
+        observers += [
             view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
@@ -286,24 +286,24 @@ open class AVFoundationPlayback: Playback {
         ]
     }
 
-    @objc internal func addObservers() {
+    @objc func addObservers() {
         guard let player = player else { return }
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(AVFoundationPlayback.playbackDidEnd),
+            selector: #selector(playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(AVFoundationPlayback.onAccessLogEntry),
+            selector: #selector(onAccessLogEntry),
             name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
             object: nil)
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(AVFoundationPlayback.onFailedToPlayToEndTime),
+            selector: #selector(onFailedToPlayToEndTime),
             name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
             object: nil)
     }
@@ -496,7 +496,7 @@ open class AVFoundationPlayback: Playback {
         let newPosition = CMTimeGetSeconds(timeInterval.seek().time)
         let userInfo = ["position": newPosition]
 
-        trigger(.willSeek, userInfo: ["position": self.position])
+        trigger(.willSeek, userInfo: ["position": position])
 
         player?.currentItem?.seek(to: timeInterval) { [weak self] in
             self?.trigger(.didUpdatePosition, userInfo: userInfo)
