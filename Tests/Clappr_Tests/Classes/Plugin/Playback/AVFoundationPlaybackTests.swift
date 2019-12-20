@@ -28,7 +28,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 playback = AVFoundationPlayback(options: [:])
                 playback.player = player
-                
+
                 stub(condition: isHost("clappr.sample") || isHost("clappr.io")) { result in
                     if result.url?.path == "/master.m3u8" {
                         let stubPath = OHPathForFile("master.m3u8", type(of: self))
@@ -42,30 +42,30 @@ class AVFoundationPlaybackTests: QuickSpec {
                     return fixture(filePath: stubPath!, headers: [:])
                 }
             }
-            
+
             afterEach {
                 playback.stop()
             }
-            
+
             describe("#init") {
                 context("without kLoop option") {
                     it("instantiates player as an instance of AVPlayer") {
                         let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
                         let playback = AVFoundationPlayback(options: options)
-                        
+
                         playback.play()
-                        
+
                         expect(playback.player).to(beAKindOf(AVPlayer.self))
                     }
                 }
-                
+
                 context("with kLoop option") {
                     it("instantiates player as an instance of AVQueuePlayer") {
                         let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
                         let playback = AVFoundationPlayback(options: options)
-                        
+
                         playback.play()
-                        
+
                         expect(playback.player).to(beAKindOf(AVQueuePlayer.self))
                     }
 
@@ -100,21 +100,21 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-            
+
             context("when bitrate changes") {
                 it("triggers didUpdateBitrate with the new value") {
                     let options: Options = [kSourceUrl: "http://clappr.io/master.m3u8"]
                     let playback = AVFoundationPlayback(options: options)
                     playback.player = MockPlayer()
-                    
+
                     var didUpdateBitrateWithValue: Double?
-                    
+
                     playback.on(Event.didUpdateBitrate.rawValue) { userInfo in
                         didUpdateBitrateWithValue = userInfo?["bitrate"] as? Double
                     }
-                    
+
                     playback.addObservers()
-                    
+
                     expect(didUpdateBitrateWithValue).toEventuallyNot(beNil())
                 }
             }
@@ -257,7 +257,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     var available: Bool?
                     var didCallChangeDvrAvailability: Bool?
                     let playerAsset = AVURLAssetStub(url: URL(string: "http://clappr.sample/master.m3u8")!)
-                    
+
                     func setupTest(minDvrSize: Double, seekableTimeRange: Double, duration: CMTime = .indefinite) {
                         playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
                         playerAsset.set(duration: duration)
@@ -267,7 +267,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         player.set(currentItem: playerItem!)
                         playback.player = player
                         player.setStatus(to: .readyToPlay)
-                        
+
                         playback.on(Event.didChangeDvrAvailability.rawValue) { info in
                             didCallChangeDvrAvailability = true
                             if let dvrAvailable = info?["available"] as? Bool {
@@ -275,11 +275,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
                         }
                     }
-                    
+
                     beforeEach {
                         didCallChangeDvrAvailability = false
                     }
-                    
+
                     context("when calls handleDvrAvailabilityChange") {
                         context("and lastDvrAvailability is nil") {
                             context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
@@ -293,20 +293,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                                     expect(available).toEventually(beFalse())
                                 }
                             }
-                            
+
                             context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
                                 it("calls didChangeDvrAvailability event with available true") {
                                     setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0)
                                     playback.lastDvrAvailability = nil
-                                    
+
                                     playback.handleDvrAvailabilityChange()
-                                    
+
                                     expect(didCallChangeDvrAvailability).toEventually(beTrue())
                                     expect(available).toEventually(beTrue())
                                 }
                             }
                         }
-                        
+
                         context("and lastDvrAvailability is true") {
                             context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
                                 it("calls didChangeDvrAvailability event with available false") {
@@ -337,7 +337,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 it("does not call didChangeDvrAvailability") {
                                     setupTest(minDvrSize: 60.0, seekableTimeRange: 35.0)
                                     playback.lastDvrAvailability = false
-                                    
+
                                     playback.handleDvrAvailabilityChange()
 
                                     expect(didCallChangeDvrAvailability).toEventually(beFalse())
@@ -357,19 +357,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                             }
                         }
                     }
-                    
+
                     context("video is not live") {
                         it("does not call didChangeDvrAvailability") {
                             setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0, duration: CMTime(seconds: 60, preferredTimescale: 1))
                             playback.lastDvrAvailability = nil
-                            
+
                             playback.handleDvrAvailabilityChange()
-                            
+
                             expect(didCallChangeDvrAvailability).toEventually(beFalse())
                         }
                     }
                 }
-                
+
                 describe("#seekableTimeRanges") {
                     context("when player is nil") {
                         it("is empty") {
@@ -392,7 +392,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
                 }
-                
+
                 describe("#epochDvrWindowStart") {
                     it("returns the epoch time corresponding to the DVR start") {
                         let now = Date()
@@ -401,7 +401,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         item.setWindow(start: 100, end: 160)
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
                         item.set(currentDate: now)
-                        
+
                         let dvrStart = now.addingTimeInterval(-25).timeIntervalSince1970
                         expect(playback.epochDvrWindowStart).to(equal(dvrStart))
                     }
@@ -465,17 +465,17 @@ class AVFoundationPlaybackTests: QuickSpec {
                             it("returns 0") {
                                 asset.set(duration: .indefinite)
                                 item.setSeekableTimeRange(with: 0)
-                                
+
                                 expect(playback.position).to(equal(0))
                             }
                         }
                     }
-                    
+
                     context("when vod") {
                         it("returns current time") {
                             asset.set(duration: CMTime(seconds: 160, preferredTimescale: 1))
                             player.set(currentTime: CMTime(seconds: 125, preferredTimescale: 1))
-                            
+
                             expect(playback.position).to(equal(125))
                         }
                     }
@@ -485,7 +485,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("returns the currentDate of the video") {
                         let date = Date()
                         item.set(currentDate: date)
-                        
+
                         expect(playback.currentDate).to(equal(date))
                     }
                 }
@@ -689,7 +689,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("cannot Pause") {
                             playback._playbackType = .live
                             playback.set(isDvrAvailable: false)
-                            
+
                             expect(playback.canPause).to(beFalse())
                         }
                     }
@@ -785,11 +785,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("triggers didUpdatePosition") {
                             let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.sample/master.m3u8", kStartAt: 10])
                             var didCallUpdatePosition = false
-                            var startAtValue: Float64 = 0
+                            var startAtValue: Double = 0
                             playback.render()
                             playback.on(Event.didUpdatePosition.rawValue) { userInfo in
                                 didCallUpdatePosition = true
-                                startAtValue = userInfo!["position"] as! Float64
+                                startAtValue = userInfo!["position"] as! Double
                             }
 
                             playback.play()
@@ -930,17 +930,18 @@ class AVFoundationPlaybackTests: QuickSpec {
 
             context("when onFailedToPlayToEndTime") {
                 it("dispatch error") {
-                    let playback = AVFoundationPlaybackMock(options: [:])
-                    let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem)
+                    let playback = AVFoundationPlayback(options: [:])
+                    let error = NSError(domain: "", code: 0, userInfo: [:])
+                    let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem, userInfo: ["AVPlayerItemFailedToPlayToEndTimeErrorKey": error])
+
                     var didErrorCalled = false
-
-                    playback.onFailedToPlayToEndTime(notification: notification)
-
                     playback.on(Event.error.rawValue) { _ in
                         didErrorCalled = true
                     }
 
-                    expect(didErrorCalled).to(beFalse())
+                    playback.onFailedToPlayToEndTime(notification: notification)
+
+                    expect(didErrorCalled).to(beTrue())
                 }
             }
 
@@ -1128,29 +1129,29 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     expect(updatedPosition).to(equal(5))
                 }
-                
+
                 it("triggers didUpdatePosition before didSeek event") {
                     let playback = AVFoundationPlaybackMock(options: [:])
                     playback.videoDuration = 100
                     let player = AVPlayerStub()
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
-                    var updatedPosition: Float64? = nil
+                    var updatedPosition: Double? = nil
                     var didSeek = false
                     var didTriggerDidSeekBefore = false
-                    
+
                     playback.on(Event.didSeek.rawValue) { _ in
                         didSeek = true
                     }
                     playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
-                        updatedPosition = userInfo!["position"] as? Float64
+                        updatedPosition = userInfo!["position"] as? Double
                         if didSeek {
                             didTriggerDidSeekBefore = true
                         }
                     }
-                    
+
                     playback.seek(5)
-                    
+
                     expect(updatedPosition).to(equal(5))
                     expect(didTriggerDidSeekBefore).to(beFalse())
                 }
@@ -1159,7 +1160,7 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#seekToLivePosition") {
                 var playback: AVFoundationPlayback!
                 var playerItem: AVPlayerItemStub!
-                
+
                 beforeEach {
                     playback = AVFoundationPlayback(options: [:])
                     let url = URL(string: "http://clappr.sample/master.m3u8")!
@@ -1184,9 +1185,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didUpdatePosition for the desired position") {
-                    var updatedPosition: Float64? = nil
+                    var updatedPosition: Double? = nil
                     playback.on(Event.didUpdatePosition.rawValue) { userInfo in
-                        updatedPosition = userInfo?["position"] as? Float64
+                        updatedPosition = userInfo?["position"] as? Double
                     }
 
                     playback.seekToLivePosition()
@@ -1206,34 +1207,34 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.isDvrInUse).to(beTrue())
                     }
                 }
-                
+
                 context("when currentTime is lower then dvrWindowEnd - liveHeadTolerance") {
                     it("returns true") {
                         asset.set(duration: .indefinite)
                         item.setSeekableTimeRange(with: 160)
                         player.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
-                        
+
                         player.play()
-                        
+
                         expect(playback.isDvrInUse).toEventually(beTrue())
                     }
                 }
-                
+
                 context("when currentTime is higher or equal then dvrWindowEnd - liveHeadTolerance") {
                     it("returns false") {
                         asset.set(duration: .indefinite)
                         item.setSeekableTimeRange(with: 160)
                         player.set(currentTime: CMTime(seconds: 156, preferredTimescale: 1))
-                        
+
                         player.play()
-                        
+
                         expect(playback.isDvrInUse).toEventually(beFalse())
                     }
                 }
             }
-            
+
             describe("#didFindAudio") {
-                
+
                 context("when video is ready") {
                     context("and has no default audio from options") {
                         it("triggers didFindAudio event with hasDefaultFromOption false") {
@@ -1288,7 +1289,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
                 }
             }
-            
+
             describe("#didFindSubtitle") {
                 context("when video is ready and has subtitle available") {
                     context("and has default subtitle from options") {
@@ -1300,13 +1301,13 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
-                            
+
                             playback.play()
-                            
+
                             expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
                         }
                     }
-                    
+
                     context("and has no default subtitle from options") {
                         it("triggers didFindSubtitle event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
@@ -1316,9 +1317,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
                                 hasDefaultFromOption = subtitles.hasDefaultSelected
                             }
-                            
+
                             playback.play()
-                            
+
                             expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 4)
                         }
                     }
@@ -1386,14 +1387,14 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-            
+
             describe("#AVFoundationPlayback states") {
                 describe("#idle") {
                     context("when ready to play") {
                         it("current state must be idle") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-                            
+
                             expect(playback.state).toEventually(equal(.idle))
                         }
                     }
@@ -1415,7 +1416,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let playback = AVFoundationPlayback(options: options)
 
                             playback.pause()
-                            
+
                             expect(playback.state).toEventually(equal(.paused), timeout: 3)
                         }
                     }
@@ -1426,7 +1427,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes current state to paused") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-                            
+
                             playback.play()
                             playback.pause()
 
@@ -1441,7 +1442,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             playback.seek(10)
-                            
+
                             expect(playback.state).toEventually(equal(.playing), timeout: 3)
                         }
                     }
@@ -1450,26 +1451,26 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes state to idle") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-                            
+
                             playback.play()
                             playback.stop()
 
                             expect(playback.state).toEventually(equal(.idle), timeout: 3)
                         }
                     }
-                    
+
                     context("when video is over") {
                         it("changes state to idle") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-                            
+
                             playback.play()
                             playback.seek(playback.duration)
-                            
+
                             expect(playback.state).toEventually(equal(.idle), timeout: 10)
                         }
                     }
-                    
+
                     context("when is not likely to keep up") {
                         it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
@@ -1530,7 +1531,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
                             playback.pause()
                             playback.play()
-                            
+
                             expect(playback.state).toEventually(equal(.stalling), timeout: 3)
                         }
                     }
@@ -1544,23 +1545,23 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             playback.seek(10)
-                            
+
                             expect(playback.state).to(equal(.stalling))
                         }
                     }
-                    
+
                     context("when paused is called") {
                         it("changes state to paused") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-                            
+
                             playback.play()
                             playback.pause()
-                            
+
                             expect(playback.state).to(equal(.paused))
                         }
                     }
-                    
+
                     context("when stop is called") {
                         it("changes state to idle") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
@@ -1568,7 +1569,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             playback.play()
                             playback.stop()
-                            
+
                             expect(playback.state).to(equal(.idle))
                         }
                     }
@@ -1598,34 +1599,34 @@ class AVFoundationPlaybackTests: QuickSpec {
                 func getPlayback(with source: String) -> AVFoundationPlayback {
                     let asset = AVAsset(url: URL(string: source)!)
                     let playerItem = AVPlayerItem(asset: asset)
-                    
+
                     let playback = AVFoundationPlayback(options: [kSourceUrl: source])
                     playback.player = AVPlayer(playerItem: playerItem)
                     return playback
                 }
-                
+
                 context("when avplayer has playerItem") {
                     let playback = getPlayback(with: "https://clappr.io/highline.mp4")
-                    
+
                     it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
                         let nowPlayingService = NowPlayingServiceStub()
                         playback.nowPlayingService = nowPlayingService
-                        
+
                         playback.loadMetadata()
-                        
+
                         expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
                     }
                 }
-                
+
                 context("when AVPlayer don't have playerItem") {
                     let playback = AVFoundationPlayback(options: [:])
-                    
+
                     it("doesn't call setItemsToPlayerItem of AVFoundationNowPlaying") {
                         let nowPlayingService = NowPlayingServiceStub()
                         playback.nowPlayingService = nowPlayingService
-                        
+
                         playback.loadMetadata()
-                        
+
                         expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(0))
                     }
                 }
@@ -1643,58 +1644,58 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-            
+
             describe("#playerViewController") {
                 var avFoundationPlayback: AVFoundationPlayback!
                 var controller: AVPlayerViewController!
                 let fromTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
                 let toTime = CMTimeMakeWithSeconds(10, preferredTimescale: Int32(NSEC_PER_SEC))
-                
+
                 beforeEach {
                     controller = AVPlayerViewController()
-                    
+
                     stub(condition: isHost("clappr.sample")) { _ in
                         let stubPath = OHPathForFile("sample.m3u8", type(of: self))
                         return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
                     }
                     avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.sample/sample.m3u8"])
-                    
+
                     avFoundationPlayback.play()
                 }
-                
+
                 context("when seek will begin") {
                     it("triggers will seek") {
                         waitUntil { done in
                             avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
                                 done()
                             }
-                            
+
                             _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
                         }
                     }
-                    
+
                     it("triggers didSeek") {
                         waitUntil { done in
                             avFoundationPlayback.on(Event.didSeek.rawValue) { _ in
                                 done()
                             }
-                            
+
                             _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
                         }
                     }
                 }
-                
+
                 context("when subtitle is selected") {
                     it("triggers subtitle selected event") {
                         waitUntil { done in
                             avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { _ in
                                 done()
                             }
-                            
+
                             let group = avFoundationPlayback.player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: AVMediaCharacteristic.legible.rawValue))
-                            
+
                             let option = avFoundationPlayback.player?.currentItem?.currentMediaSelection.selectedMediaOption(in: group!)
-                            
+
                             _ = avFoundationPlayback.playerViewController(controller, didSelect: option, in: group!)
                         }
                     }
@@ -1713,11 +1714,11 @@ private class MockPlayer: AVPlayer {
 
 private class MockPlayerItem: AVPlayerItem {
     private var itemAccessLog: MockPlayerItemAccessLog = MockPlayerItemAccessLog(bitrate: 5)
-    
+
     init(bitrate: Double) {
         super.init(asset: AVAsset(url: URL(string: "http://clappr.sample/master.m3u8")!), automaticallyLoadedAssetKeys: nil)
     }
-    
+
     override func accessLog() -> AVPlayerItemAccessLog? {
         return itemAccessLog
     }
@@ -1725,10 +1726,10 @@ private class MockPlayerItem: AVPlayerItem {
 
 private class MockPlayerItemAccessLog: AVPlayerItemAccessLog {
     private var accessLogEvent: MockAccessLogEvent = MockAccessLogEvent(bitrate: 5)
-    
+
     init(bitrate: Double) {
     }
-    
+
     override var events: [AVPlayerItemAccessLogEvent] {
         return [accessLogEvent]
     }
@@ -1737,7 +1738,7 @@ private class MockPlayerItemAccessLog: AVPlayerItemAccessLog {
 private class MockAccessLogEvent: AVPlayerItemAccessLogEvent {
     init(bitrate: Double) {
     }
-    
+
     override var indicatedBitrate: Double {
         return 5
     }
@@ -1753,3 +1754,4 @@ private class StubbedLiveDatePlayback: AVFoundationPlayback {
     var _playbackType: PlaybackType = .live
     override var playbackType: PlaybackType { _playbackType }
 }
+
