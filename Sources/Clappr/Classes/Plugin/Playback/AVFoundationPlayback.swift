@@ -248,6 +248,7 @@ open class AVFoundationPlayback: Playback {
 
         asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
         asset.wait(for: .duration, then: durationAvailable)
+        setupObservers()
         addObservers()
     }
 
@@ -270,9 +271,9 @@ open class AVFoundationPlayback: Playback {
     }
     #endif
 
-    @objc internal func addObservers() {
+    @objc func setupObservers() {
         guard let player = player else { return }
-        self.observers += [
+        observers += [
             view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
@@ -283,18 +284,34 @@ open class AVFoundationPlayback: Playback {
             player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
             player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
         ]
+    }
+
+    @objc func addObservers() {
+        guard let player = player else { return }
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(AVFoundationPlayback.playbackDidEnd),
+            selector: #selector(playbackDidEnd),
             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(AVFoundationPlayback.onAccessLogEntry),
+            selector: #selector(onAccessLogEntry),
             name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
             object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onFailedToPlayToEndTime),
+            name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
+            object: nil)
+    }
+
+    @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
+        if let error = notification?.userInfo?["AVPlayerItemFailedToPlayToEndTimeErrorKey"] as? Error {
+            trigger(.error, userInfo: ["error": error])
+        }
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
@@ -476,11 +493,14 @@ open class AVFoundationPlayback: Playback {
             return
         }
 
-        trigger(.willSeek)
+        let newPosition = CMTimeGetSeconds(timeInterval.seek().time)
+        let userInfo = ["position": newPosition]
+
+        trigger(.willSeek, userInfo: ["position": position])
 
         player?.currentItem?.seek(to: timeInterval) { [weak self] in
-            self?.trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(timeInterval.seek().time)])
-            self?.trigger(.didSeek)
+            self?.trigger(.didUpdatePosition, userInfo: userInfo)
+            self?.trigger(.didSeek, userInfo: userInfo)
             triggerEvent?()
         }
     }
