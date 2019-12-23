@@ -1081,6 +1081,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     player.setStatus(to: .readyToPlay)
                     var didTriggerWillSeek = false
                     var position: Double?
+                    let initialSeekPosition = 0.0
 
                     playback.on(Event.willSeek.rawValue) { userInfo in
                         position = userInfo?["position"] as? Double
@@ -1089,7 +1090,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     playback.seek(5)
 
-                    expect(position).to(equal(0))
+                    expect(position).to(equal(initialSeekPosition))
                     expect(didTriggerWillSeek).to(beTrue())
                 }
 
@@ -1101,6 +1102,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     player.setStatus(to: .readyToPlay)
                     var didTriggerDidSeek = false
                     var position: Double?
+                    let expectedSeekPosition = 5.0
 
                     playback.on(Event.didSeek.rawValue) { userInfo in
                         position = userInfo?["position"] as? Double
@@ -1109,7 +1111,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     playback.seek(5)
 
-                    expect(position).to(equal(5))
+                    expect(position).to(equal(expectedSeekPosition))
                     expect(didTriggerDidSeek).to(beTrue())
                 }
 
@@ -1120,6 +1122,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                     var updatedPosition: Double? = nil
+                    let expectedSeekPosition = 5.0
 
                     playback.on(Event.didUpdatePosition.rawValue) { (userInfo: EventUserInfo) in
                         updatedPosition = userInfo!["position"] as? Double
@@ -1127,7 +1130,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     playback.seek(5)
 
-                    expect(updatedPosition).to(equal(5))
+                    expect(updatedPosition).to(equal(expectedSeekPosition))
                 }
 
                 it("triggers didUpdatePosition before didSeek event") {
@@ -1139,6 +1142,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     var updatedPosition: Double? = nil
                     var didSeek = false
                     var didTriggerDidSeekBefore = false
+                    let expectedSeekPosition = 5.0
 
                     playback.on(Event.didSeek.rawValue) { _ in
                         didSeek = true
@@ -1152,7 +1156,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     playback.seek(5)
 
-                    expect(updatedPosition).to(equal(5))
+                    expect(updatedPosition).to(equal(expectedSeekPosition))
                     expect(didTriggerDidSeekBefore).to(beFalse())
                 }
             }
