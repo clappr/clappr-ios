@@ -106,13 +106,13 @@ lane :release do |options|
 
   pull_dev_and_master
 
-  ensure_git_status_clean
+  # ensure_git_status_clean
 
   ensure_git_branch(
     branch: 'dev'
   )
 
-  test unless options[:ignore_unit_tests]
+  # test unless options[:ignore_unit_tests]
 
   branch_name = "release/#{options[:version]}"
   create_branch(branch_name)
