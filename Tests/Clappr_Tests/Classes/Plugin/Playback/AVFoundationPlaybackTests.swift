@@ -795,7 +795,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback.play()
 
                             expect(didCallUpdatePosition).toEventually(beTrue())
-                            expect(startAtValue).toEventually(equal(10.0))
+                            expect(startAtValue).toEventually(beCloseTo(10, within: 0.1))
                         }
                     }
                 }
