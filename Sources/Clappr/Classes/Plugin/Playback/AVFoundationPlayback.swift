@@ -334,8 +334,6 @@ open class AVFoundationPlayback: Playback {
 
         if hasEnoughBufferToPlay {
             play()
-        } else {
-            updateState(.stalling)
         }
     }
 
