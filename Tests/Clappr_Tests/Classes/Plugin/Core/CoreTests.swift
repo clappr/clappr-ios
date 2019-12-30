@@ -90,7 +90,14 @@ class CoreTests: QuickSpec {
 
 
                 it("add gesture recognizer") {
-                    expect(core.view.gestureRecognizers?.count) > 0
+                    expect(core.view.gestureRecognizers?.count).to(beGreaterThan(0))
+                }
+                
+                it("does not add gesture recognizer when in Chromeless mode") {
+                    let options = [kChromeless: true]
+                    let core = Core(options: options)
+                    
+                    expect(core.view.gestureRecognizers).to(beNil())
                 }
                 #endif
             }
