@@ -1208,9 +1208,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 it("triggers didUpdatePosition for the desired position") {
-                    var updatedPosition: Float64? = nil
+                    var updatedPosition: Double? = nil
                     playback.once(Event.didUpdatePosition.rawValue) { userInfo in
-                        updatedPosition = userInfo?["position"] as? Float64
+                        updatedPosition = userInfo?["position"] as? Double
                     }
 
                     playback.seekToLivePosition()
