@@ -144,6 +144,31 @@ class PlayerTests: QuickSpec {
                 expect(willLoadSourceTriggered).to(beTrue())
                 expect(timesTriggered).toEventually(equal(1))
             }
+            
+            describe("Player chromeless") {
+                context("when in chromeless mode") {
+                    it("hide playback controls") {
+                        let player = Player(options:[kChromeless: true])
+                        
+                        player.viewDidLoad()
+                        
+                        expect(player.showsPlaybackControls).to(beFalse())
+                    }
+                    
+                    it("autoplay when app returns from background") {
+                        Loader.shared.resetPlaybacks()
+                        Player.register(playbacks: [FakeAVFoundationPlaybackMock.self])
+                        let player = Player(options:[kSourceUrl:"http://sitedoesnotexist.co.ce", kChromeless: true])
+                        let playback = player.activePlayback as? FakeAVFoundationPlaybackMock
+                        
+                        player.viewDidLoad()
+                        
+                        NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+                        
+                        expect(playback?.didCallPlay).toEventually(beTrue())
+                    }
+                }
+            }
         }
     }
     
@@ -165,6 +190,20 @@ class PlayerTests: QuickSpec {
         override class func canPlay(_ options: Options) -> Bool {
             return options[kSourceUrl] as! String == PlayerTests.specialSource
         }
+    }
+}
+
+class FakeAVFoundationPlaybackMock: AVFoundationPlayback {
+    var didCallPlay = false
+    
+    override func play() {
+        didCallPlay = true
+    }
+    
+    override func render() { }
+    
+    override class func canPlay(_: Options) -> Bool {
+        return true
     }
 }
 

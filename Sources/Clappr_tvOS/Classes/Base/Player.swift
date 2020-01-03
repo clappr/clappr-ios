@@ -7,10 +7,15 @@ open class Player: AVPlayerViewController {
     private(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
     private let baseObject = BaseObject()
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
         core?.parentView = view
+
+        if isChromeless {
+            showsPlaybackControls = false
+        }
 
         if isMediaControlEnabled {
             core?.parentView = contentOverlayView
@@ -30,7 +35,7 @@ open class Player: AVPlayerViewController {
     }
 
     @objc private func willEnterForeground() {
-        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled {
+        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled || isChromeless {
             Logger.logDebug("forced play after return from background", scope: "Player")
             playback.play()
         }
