@@ -38,9 +38,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalling, .willPlay, .playing,
-                            .willPause, .didPause, .willSeek, .didSeek,
-                            .willPlay, .stalling, .willPlay, .playing, .willStop, .didStop
+                            .ready, .willPlay, .stalling, .willPlay, .stalling, .playing,
+                            .willPause, .didPause, .willSeek, .didSeek, .didPause,
+                            .willPlay, .stalling, .willPlay, .stalling, .playing, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
                         for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
@@ -50,8 +50,9 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         }
 
                         playback.once(Event.didSeek.rawValue) { _ in
-                            playback.play()
-                            
+                            playback.once(Event.didPause.rawValue) { _ in
+                                playback.play()
+                            }
                             playback.once(Event.playing.rawValue) { _ in
                                 playback.stop()
                             }
@@ -77,8 +78,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
-                            .ready, .willPlay, .stalling, .willPlay, .playing,
-                            .willSeek, .stalling, .playing, .didSeek, .stalling,
+                            .ready, .willPlay, .stalling, .willPlay, .stalling, .playing,
+                            .willSeek, .stalling, .playing, .didSeek,
                             .playing, .didComplete
                         ]
                         var triggeredEvents: [Event] = []
@@ -131,7 +132,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
                             .ready, .willPause, .didPause,
-                            .willPlay, .stalling, .willPause,
+                            .willPlay, .stalling, .willPause, .stalling,
                             .didPause, .willStop, .didStop
                         ]
                         var triggeredEvents: [Event] = []
@@ -149,6 +150,36 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         playback.destroy()
 
                         expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 5)
+                    }
+                }
+                
+                context("when pause and seek") {
+                    it("triggers events following the state machine pattern") {
+                        let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                        let playback = AVFoundationPlayback(options: options)
+                        let expectedEvents: [Event] = [
+                            .ready, .willPlay, .stalling,
+                            .willPlay, .stalling, .playing, .willPause,
+                            .didPause, .willSeek, .didSeek,
+                            .didPause
+                        ]
+                        var triggeredEvents: [Event] = []
+                        for event in Set(Event.allCases).subtracting(Set(unwantedEvents)) {
+                            playback.on(event.rawValue) { _ in
+                                triggeredEvents.append(event)
+                            }
+                        }
+                        playback.once(Event.didPause.rawValue) { _ in
+                            playback.seek(2)
+                        }
+                        playback.once(Event.playing.rawValue) { _ in
+                            playback.pause()
+                        }
+                        
+                        playback.render()
+                        playback.play()
+
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 25)
                     }
                 }
             }
