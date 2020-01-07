@@ -6,11 +6,11 @@ class PlaybackTests: QuickSpec {
 
     override func spec() {
         describe("Playback") {
-            var playback: StubPlayback!
+            var playback: Playback!
             let options = [kSourceUrl: "http://globo.com/video.mp4"]
 
             beforeEach {
-                playback = StubPlayback(options: options as Options)
+                playback = Playback(options: options as Options)
             }
 
             describe("#name") {
@@ -94,50 +94,50 @@ class PlaybackTests: QuickSpec {
             }
 
             it("has a canPlay flag set to false") {
-                let playback = StubPlayback(options: [:])
+                let playback = Playback(options: [:])
                 expect(playback.canPlay).to(beFalse())
             }
 
             it("has a canPause flag set to false") {
-                let playback = StubPlayback(options: [:])
+                let playback = Playback(options: [:])
                 expect(playback.canPause).to(beFalse())
             }
 
             it("has a canSeek flag set to false") {
-                let playback = StubPlayback(options: [:])
+                let playback = Playback(options: [:])
                 expect(playback.canSeek).to(beFalse())
+            }
+            
+            it("delegate render to PlaybackRenderer") {
+                let playback = Playback(options: [:])
+                let playbackRenderer = MockPlaybackRenderer()
+                playback.playbackRenderer = playbackRenderer
+                
+                playback.render()
+                
+                expect(playbackRenderer.didCallRender).to(beTrue())
             }
 
             context("StartAt") {
                 it("set start at property from options") {
-                    let playback = StubPlayback(options: [kStartAt: 10.0])
+                    let playback = Playback(options: [kStartAt: 10.0])
                     expect(playback.startAt) == 10.0
                 }
 
                 it("has startAt with 0 if no time is set on options") {
-                    let playback = StubPlayback(options: [:])
+                    let playback = Playback(options: [:])
                     expect(playback.startAt) == 0.0
-                }
-
-                context("when video is live") {
-                    it("doesn't seek video when rendering if startAt is set") {
-                        let playback = StubPlayback(options: [kStartAt: 15.0])
-                        playback.type = .live
-                        playback.render()
-                        playback.play()
-                        expect(playback.seekWasCalled).to(beFalse())
-                    }
                 }
             }
 
             context("Playback source") {
                 it("has a source property with the url sent via options") {
-                    let playback = StubPlayback(options: [kSourceUrl: "someUrl"])
+                    let playback = Playback(options: [kSourceUrl: "someUrl"])
                     expect(playback.source) == "someUrl"
                 }
 
                 it("has a source property with nil if no source is set") {
-                    let playback = StubPlayback(options: [:])
+                    let playback = Playback(options: [:])
                     expect(playback.source).to(beNil())
                 }
             }
@@ -156,29 +156,12 @@ class PlaybackTests: QuickSpec {
             }
         }
     }
+}
 
-    class StubPlayback: Playback {
-        var playWasCalled = false
-        var seekWasCalled = false
-        var seekWasCalledWithValue: TimeInterval = -1
-        var type: PlaybackType = .unknown
-
-        override class var name: String {
-            return "stupPlayback"
-        }
-
-        override func play() {
-            trigger(.ready)
-            playWasCalled = true
-        }
-
-        override func seek(_ timeInterval: TimeInterval) {
-            seekWasCalledWithValue = timeInterval
-            seekWasCalled = true
-        }
-
-        override var playbackType: PlaybackType {
-            return type
-        }
+class MockPlaybackRenderer: PlaybackRendererProtocol {
+    var didCallRender = false
+    
+    func render(playback: Playback) {
+        didCallRender = true
     }
 }

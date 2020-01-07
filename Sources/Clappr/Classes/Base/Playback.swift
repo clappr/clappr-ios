@@ -23,6 +23,9 @@ open class Playback: UIObject, NamedType {
     open var selectedAudioSource: MediaOption?
     fileprivate(set) open var subtitles: [MediaOption]?
     fileprivate(set) open var audioSources: [MediaOption]?
+    
+    var isChromeless: Bool { options.bool(kChromeless) }
+    var playbackRenderer: PlaybackRendererProtocol = PlaybackRenderer()
 
     @objc internal(set) open var options: Options {
         didSet {
@@ -70,19 +73,15 @@ open class Playback: UIObject, NamedType {
     }
 
     @objc public required init(context _: UIObject) {
-        fatalError("Use init(url: NSURL) instead")
+        fatalError("Use init(options: Options) instead")
     }
 
     @objc open class func canPlay(_: Options) -> Bool {
         return false
     }
-
+    
     open override func render() {
-        #if os(tvOS)
-        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
-            self?.play()
-        }
-        #endif
+        playbackRenderer.render(playback: self)
     }
 
     @objc open var canPlay: Bool {

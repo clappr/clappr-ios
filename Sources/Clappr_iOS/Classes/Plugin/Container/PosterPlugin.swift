@@ -1,6 +1,7 @@
 open class PosterPlugin: UIContainerPlugin {
     var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
+    private var isChromeless: Bool { container?.options.bool(kChromeless) ?? false }
 
     open override class var name: String {
         return "poster"
@@ -14,6 +15,11 @@ open class PosterPlugin: UIContainerPlugin {
 
     open override func render() {
         guard let container = container else { return }
+        
+        if isChromeless {
+            view.isHidden = true
+        }
+        
         if let urlString = container.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
@@ -63,6 +69,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     override open func bindEvents() {
+        guard !isChromeless else { return }
         bindContainerEvents()
         bindPlaybackEvents()
     }
