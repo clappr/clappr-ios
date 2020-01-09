@@ -44,8 +44,8 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
     override func shouldSeek(point: CGPoint) -> Bool {
         guard let mediaControlView = mediaControl?.mediaControlView else { return false }
         
-            $0.view.point(inside: mediaControlView.convert(point, to: $0.view), with: nil)
         let pluginColidingWithGesture = filteredOutPlugins()?.first(where: {
+            $0.view.alpha != 0.0 && $0.view.point(inside: mediaControlView.convert(point, to: $0.view), with: nil)
         })
         
         return pluginColidingWithGesture == nil
