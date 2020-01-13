@@ -24,7 +24,7 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
     
     @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
-            let point = gestureRecognizer.location(in: view)
+            let point = gestureRecognizer.location(in: mediaControl?.mediaControlView)
             if shouldSeek(point: point) {
                 mediaControl?.hide()
                 quickSeek(xPosition: point.x)
