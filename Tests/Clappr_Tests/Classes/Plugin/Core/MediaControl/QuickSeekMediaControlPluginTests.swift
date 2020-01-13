@@ -19,20 +19,15 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                 core.playbackMock?.videoDuration = 60.0
                 quickSeekPlugin = QuickSeekMediaControlPlugin(context: core)
                 mediaControl = MediaControl(context: core)
-                playButton = PlayButton(context: core)
-                overlayPlugin = OverlayPluginStub(context: core)
                 
                 core.addPlugin(mediaControl)
                 core.addPlugin(quickSeekPlugin)
-                core.addPlugin(playButton)
-                core.addPlugin(overlayPlugin)
                 
                 core.view.frame = CGRect(x: 0, y: 0, width: 320, height: 200)
                 
                 core.render()
                 mediaControl.render()
                 quickSeekPlugin.render()
-                overlayPlugin.render()
             }
             
             describe("pluginName") {
@@ -72,36 +67,54 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                     }
                 }
                 
-                context("and it collides with another UICorePlugin") {
-                    it("does not seek") {
+                describe("and there is another UICorePlugin") {
+                    beforeEach {
+                        playButton = PlayButton(context: core)
+                        
+                        core.addPlugin(playButton)
+                        core.render()
+                        
+                        mediaControl.render()
                         playButton.view.layoutIfNeeded()
                         mediaControl.view.layoutIfNeeded()
-                        
-                        let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
-                        
-                        expect(shouldSeek).to(beFalse())
+                    }
+                    
+                    context("and it collides with that plugin") {
+                        it("does not seek") {
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
+                            
+                            expect(shouldSeek).to(beFalse())
+                        }
+                    }
+                    
+                    context("and it does not collide with that plugin") {
+                        it("does seek") {
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 260, y: 100))
+                            
+                            expect(shouldSeek).to(beTrue())
+                        }
+                    }
+                    
+                    context("and that plugin is not visible") {
+                        it("does seek") {
+                            playButton.view.alpha = 0.0
+                            
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
+                            
+                            expect(shouldSeek).to(beTrue())
+                        }
                     }
                 }
                 
                 context("and there are overlay plugins") {
                     it("ignores them and seeks") {
-                        mediaControl.view.layoutIfNeeded()
+                        overlayPlugin = OverlayPluginStub(context: core)
+                        core.addPlugin(overlayPlugin)
+                        core.render()
+                        overlayPlugin.render()
                         overlayPlugin.view.layoutIfNeeded()
-                        playButton.view.layoutIfNeeded()
                         
                         let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 260, y: 100))
-                        
-                        expect(shouldSeek).to(beTrue())
-                    }
-                }
-                
-                context("and there are plugins that are not visible") {
-                    it("does seek") {
-                        mediaControl.view.layoutIfNeeded()
-                        playButton.view.layoutIfNeeded()
-                        playButton.view.alpha = 0.0
-                        
-                        let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
                         
                         expect(shouldSeek).to(beTrue())
                     }
