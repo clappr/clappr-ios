@@ -72,7 +72,7 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                     }
                 }
                 
-                context("and it colides with another UICorePlugin") {
+                context("and it collides with another UICorePlugin") {
                     it("does not seek") {
                         playButton.view.layoutIfNeeded()
                         mediaControl.view.layoutIfNeeded()
@@ -96,7 +96,7 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                 }
                 
                 context("and there are plugins that are not visible") {
-                    fit("does seek") {
+                    it("does seek") {
                         mediaControl.view.layoutIfNeeded()
                         playButton.view.layoutIfNeeded()
                         playButton.view.alpha = 0.0
