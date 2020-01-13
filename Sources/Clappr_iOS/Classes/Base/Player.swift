@@ -4,6 +4,7 @@ open class Player: BaseObject {
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     private(set) var core: Core?
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
@@ -84,6 +85,7 @@ open class Player: BaseObject {
         bindCoreEvents()
         bindMediaControlEvents()
         bindPlaybackEvents()
+        bindNotifications()
 
         core?.load()
     }
@@ -105,6 +107,17 @@ open class Player: BaseObject {
         
         eventsToListen.forEach { event in
             core?.on(event.rawValue) { [weak self] _ in self?.trigger(event.rawValue) }
+        }
+    }
+    
+    private func bindNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(Player.willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc private func willEnterForeground() {
+        if isChromeless {
+            Logger.logDebug("forced play after return from background", scope: "Player")
+            play()
         }
     }
     
@@ -230,5 +243,9 @@ open class Player: BaseObject {
         self.core = nil
         stopListening()
         Logger.logDebug("destroyed", scope: "Player")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

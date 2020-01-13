@@ -386,12 +386,56 @@ class PlayerTests: QuickSpec {
                     expect(player.activeContainer).to(beNil())
                 }
             }
+            
+            context("when in Chromeless mode") {
+                let options: Options = [kSourceUrl: "http://sitedoesnotexist.com.br/",
+                                        kChromeless: true]
+                Loader.shared.resetPlugins()
+                Player.register(playbacks: [StubPlayback.self])
+                let player = Player(options: options)
+                let playback = player.activePlayback as? StubPlayback
+                
+                it("auto play when come from background") {
+                    playback?.didCallPlay = false
+                    
+                    NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+                    
+                    expect(playback?.didCallPlay).to(beTrue())
+                }
+            }
+            
+            context("when not in Chromeless mode") {
+                let options: Options = [kSourceUrl: "http://sitedoesnotexist.com.br/"]
+                Loader.shared.resetPlugins()
+                Player.register(playbacks: [StubPlayback.self])
+                let player = Player(options: options)
+                let playback = player.activePlayback as? StubPlayback
+                
+                it("does not auto play when come from background") {
+                    playback?.didCallPlay = false
+                    
+                    NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+                    
+                    expect(playback?.didCallPlay).to(beFalse())
+                }
+            }
         }
     }
 
     class StubPlayback: Playback {
+        var didCallPlay = false
+        var didCallStop = false
+        
         override class var name: String {
             return "StubPlayback"
+        }
+        
+        override func play() {
+            didCallPlay = true
+        }
+        
+        override func stop() {
+            didCallStop = true
         }
 
         override class func canPlay(_: Options) -> Bool {
