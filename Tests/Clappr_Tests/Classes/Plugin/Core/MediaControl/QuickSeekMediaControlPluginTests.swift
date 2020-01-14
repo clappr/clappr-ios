@@ -11,6 +11,7 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
             var core: CoreStub!
             var mediaControl: MediaControl!
             var playButton: PlayButton!
+            var overlayPlugin: OverlayPlugin!
             
             beforeEach {
                 Loader.shared.resetPlugins()
@@ -18,11 +19,9 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                 core.playbackMock?.videoDuration = 60.0
                 quickSeekPlugin = QuickSeekMediaControlPlugin(context: core)
                 mediaControl = MediaControl(context: core)
-                playButton = PlayButton(context: core)
                 
                 core.addPlugin(mediaControl)
                 core.addPlugin(quickSeekPlugin)
-                core.addPlugin(playButton)
                 
                 core.view.frame = CGRect(x: 0, y: 0, width: 320, height: 200)
                 
@@ -68,14 +67,64 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                     }
                 }
                 
-                context("and it colides with another UICorePlugin") {
-                    it("does not seek") {
+                describe("and there is another UICorePlugin") {
+                    beforeEach {
+                        playButton = PlayButton(context: core)
+                        
+                        core.addPlugin(playButton)
+                        core.render()
+                        
+                        mediaControl.render()
                         playButton.view.layoutIfNeeded()
                         mediaControl.view.layoutIfNeeded()
                         
-                        let shouldSeek = quickSeekPlugin.shouldSeek(point: CGPoint(x: 100, y: 100))
+                    }
+                    
+                    context("and it collides with that plugin") {
+                        it("does not seek") {
+                            let playButtonCenterInMediaControlCoordinate = playButton.view.convert(playButton.view.center, to: mediaControl.mediaControlView)
+                            
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: playButtonCenterInMediaControlCoordinate)
+                            
+                            expect(shouldSeek).to(beFalse())
+                        }
+                    }
+                    
+                    context("and it does not collide with that plugin") {
+                        it("does seek") {
+                            let pointOutsidePlayButton = CGPoint(x: playButton.view.frame.width + 1, y: playButton.view.frame.height + 1)
+                            let outsidePointInMediaControlCoordinate = playButton.view.convert(pointOutsidePlayButton, to: mediaControl.mediaControlView)
+                            
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: outsidePointInMediaControlCoordinate)
+                            
+                            expect(shouldSeek).to(beTrue())
+                        }
+                    }
+                    
+                    context("and that plugin is not visible") {
+                        it("does seek") {
+                            let playButtonCenterInMediaControlCoordinate = playButton.view.convert(playButton.view.center, to: mediaControl.mediaControlView)
+                            playButton.view.alpha = 0.0
+                            
+                            let shouldSeek = quickSeekPlugin.shouldSeek(point: playButtonCenterInMediaControlCoordinate)
+                            
+                            expect(shouldSeek).to(beTrue())
+                        }
+                    }
+                }
+                
+                context("and there are not visible overlay plugins") {
+                    it("ignores them and seeks") {
+                        overlayPlugin = OverlayPluginStub(context: core)
+                        core.addPlugin(overlayPlugin)
+                        core.render()
+                        overlayPlugin.render()
+                        overlayPlugin.view.layoutIfNeeded()
+                        let overlayPluginCenterInMediaControlCoordinate = overlayPlugin.view.convert(overlayPlugin.view.center, to: mediaControl.mediaControlView)
+
+                        let shouldSeek = quickSeekPlugin.shouldSeek(point: overlayPluginCenterInMediaControlCoordinate)
                         
-                        expect(shouldSeek).to(beFalse())
+                        expect(shouldSeek).to(beTrue())
                     }
                 }
                 
@@ -136,5 +185,21 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                 }
             }
         }
+    }
+}
+
+class OverlayPluginStub: OverlayPlugin {
+    override var isModal: Bool {
+        true
+    }
+    
+    override class var name: String {
+        "OverlayPluginStub"
+    }
+    
+    override func bindEvents() {}
+    
+    override func render() {
+        view.backgroundColor = .red
     }
 }

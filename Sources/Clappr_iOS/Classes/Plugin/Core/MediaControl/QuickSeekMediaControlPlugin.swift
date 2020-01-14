@@ -24,7 +24,7 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
     
     @objc private func didTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
-            let point = gestureRecognizer.location(in: view)
+            let point = gestureRecognizer.location(in: mediaControl?.mediaControlView)
             if shouldSeek(point: point) {
                 mediaControl?.hide()
                 quickSeek(xPosition: point.x)
@@ -32,18 +32,20 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
         }
     }
     
-    private func filteredOutModalPlugins() -> [UICorePlugin]? {
+    private func filteredOutPlugins() -> [UICorePlugin]? {
         let pluginsWithoutMediaControl = core?.plugins.filter({ $0.pluginName != MediaControl.name })
+        
         return pluginsWithoutMediaControl?
             .compactMap({ $0 as? UICorePlugin })
-            .filter({ ($0 as? MediaControl.Element)?.panel != .modal })
+            .filter({ ($0 as? MediaControl.Element)?.panel != .modal
+                && !$0.isKind(of: OverlayPlugin.self) })
     }
     
     override func shouldSeek(point: CGPoint) -> Bool {
         guard let mediaControlView = mediaControl?.mediaControlView else { return false }
         
-        let pluginColidingWithGesture = filteredOutModalPlugins()?.first(where: {
-            $0.view.point(inside: mediaControlView.convert(point, to: $0.view), with: nil)
+        let pluginColidingWithGesture = filteredOutPlugins()?.first(where: {
+            $0.view.alpha != 0.0 && $0.view.point(inside: mediaControlView.convert(point, to: $0.view), with: nil)
         })
         
         return pluginColidingWithGesture == nil
