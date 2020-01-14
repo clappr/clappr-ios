@@ -113,7 +113,7 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                     }
                 }
                 
-                context("and there are overlay plugins") {
+                context("and there are not visible overlay plugins") {
                     it("ignores them and seeks") {
                         overlayPlugin = OverlayPluginStub(context: core)
                         core.addPlugin(overlayPlugin)
