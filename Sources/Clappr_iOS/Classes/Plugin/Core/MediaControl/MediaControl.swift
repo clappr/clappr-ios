@@ -24,6 +24,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var alwaysVisible = false
     private var currentlyShowing = false
     private var currentlyHiding = false
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+
 
     required public init(context: UIObject) {
         super.init(context: context)
@@ -133,7 +135,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
-        if currentlyShowing {
+        if currentlyShowing || isChromeless {
             completion?()
             return
         }

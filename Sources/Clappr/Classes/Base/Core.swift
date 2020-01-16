@@ -54,6 +54,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     @objc open var isFullscreen: Bool = false
+    private var isChromeless: Bool { options.bool(kChromeless) }
 
     public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
@@ -62,8 +63,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         super.init()
 
         view.backgroundColor = .black
-
-        addTapGestures()
+        
+        if !isChromeless {
+            addTapGestures()
+        }
+        
         bindEventListeners()
         
         Loader.shared.corePlugins.forEach { addPlugin($0.init(context: self)) }
