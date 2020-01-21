@@ -10,6 +10,11 @@ class ContainerTests: QuickSpec {
             var container: Container!
 
             describe("#Init") {
+
+                beforeEach {
+                    Loader.shared.resetPlaybacks()
+                }
+
                 context("with a invalid resource") {
                     it("creates a container with invalid playback") {
                         container = ContainerFactory.create(with: Resource.invalid)
