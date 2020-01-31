@@ -1,13 +1,11 @@
 class QuickSeekAnimation {
-    private weak var core: Core?
     private var seekLeftBubble = SeekBubble()
     private var seekRightBubble = SeekBubble()
     
-    init(_ core: Core?) {
-        self.core = core
-        if let coreView = core?.view {
-            seekLeftBubble.setup(within: coreView, bubbleSide: .left)
-            seekRightBubble.setup(within: coreView, bubbleSide: .right)
+    init(_ view: UIView?) {
+        if let parentView = view {
+            seekLeftBubble.setup(within: parentView, bubbleSide: .left)
+            seekRightBubble.setup(within: parentView, bubbleSide: .right)
         }
     }
     
