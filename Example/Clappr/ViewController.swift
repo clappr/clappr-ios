@@ -96,12 +96,12 @@ class ViewController: UIViewController {
         listenToPlayerEvents()
 
         player.attachTo(playerContainer, controller: self)
-        player.play()
     }
     
     @IBAction func recreatePlayer(_ sender: Any) {
         player.destroy()
         player = nil
         createPlayer()
+        player.play()
     }
 }
