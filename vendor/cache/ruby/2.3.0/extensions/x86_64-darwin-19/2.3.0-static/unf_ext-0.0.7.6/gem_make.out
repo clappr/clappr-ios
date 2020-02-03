@@ -1,0 +1,38 @@
+current directory: /Users/lapaulohenriquedossantos/Development/Clapper/vendor/cache/ruby/2.3.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+/Users/lapaulohenriquedossantos/.rbenv/versions/2.3.3/bin/ruby -I /Users/lapaulohenriquedossantos/.rbenv/versions/2.3.3/lib/ruby/site_ruby/2.3.0 -r ./siteconf20200203-13360-k6x93l.rb extconf.rb
+checking for main() in -lstdc++... yes
+creating Makefile
+
+current directory: /Users/lapaulohenriquedossantos/Development/Clapper/vendor/cache/ruby/2.3.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /Users/lapaulohenriquedossantos/Development/Clapper/vendor/cache/ruby/2.3.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+In file included from unf.cc:1:
+In file included from ./unf/normalizer.hh:8:
+In file included from ./unf/trie/searcher.hh:4:
+./unf/trie/char_stream.hh:52:56: warning: implicit conversion loses integer precision: 'long' to 'unsigned int' [-Wshorten-64-to-32]
+      unsigned offset() const { return cur1-beg1 + cur2-beg2; }
+                                ~~~~~~ ~~~~~~~~~~~~~~~~^~~~~
+./unf/trie/char_stream.hh:89:25: warning: implicit conversion loses integer precision: 'std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::size_type' (aka 'unsigned long') to 'unsigned int' [-Wshorten-64-to-32]
+        skipped_tail = skipped.size();
+                     ~ ~~~~~~~~^~~~~~
+In file included from unf.cc:1:
+In file included from ./unf/normalizer.hh:8:
+./unf/trie/searcher.hh:49:25: warning: implicit conversion loses integer precision: 'long' to 'unsigned int' [-Wshorten-64-to-32]
+        unsigned beg = in.cur()-str;
+                 ~~~   ~~~~~~~~^~~~
+./unf/trie/searcher.hh:59:27: warning: implicit conversion loses integer precision: 'long' to 'unsigned int' [-Wshorten-64-to-32]
+              sort_end = in.cur()-str;
+                       ~ ~~~~~~~~^~~~
+In file included from unf.cc:1:
+./unf/normalizer.hh:60:27: warning: implicit conversion loses integer precision: 'std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >::size_type' (aka 'unsigned long') to 'unsigned int' [-Wshorten-64-to-32]
+      unsigned last = buf.size();
+               ~~~~   ~~~~^~~~~~
+5 warnings generated.
+linking shared-object unf_ext.bundle
+
+current directory: /Users/lapaulohenriquedossantos/Development/Clapper/vendor/cache/ruby/2.3.0/gems/unf_ext-0.0.7.6/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20200203-13360-136a90i
