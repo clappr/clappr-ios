@@ -3,7 +3,7 @@ class SeekBubble: UIView {
     private var images: [UIImageView] = []
     private var text: String!
     
-    private var parentView: UIView!
+    private weak var parentView: UIView!
     
     var bubbleHeight = NSLayoutConstraint()
     var bubbleWidth = NSLayoutConstraint()

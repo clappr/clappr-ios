@@ -1,14 +1,11 @@
 class QuickSeekAnimation {
-    private var core: Core?
     private var seekLeftBubble = SeekBubble()
     private var seekRightBubble = SeekBubble()
     
-    init(_ core: Core?) {
-        self.core = core
-        if let coreView = core?.view {
-            seekLeftBubble.setup(within: coreView, bubbleSide: .left)
-            seekRightBubble.setup(within: coreView, bubbleSide: .right)
-        }
+    init(_ view: UIView?) {
+        guard let parentView = view else { return }
+        seekLeftBubble.setup(within: parentView, bubbleSide: .left)
+        seekRightBubble.setup(within: parentView, bubbleSide: .right)
     }
     
     func animateBackward() {

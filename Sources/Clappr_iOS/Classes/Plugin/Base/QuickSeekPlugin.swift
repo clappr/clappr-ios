@@ -12,7 +12,7 @@ public class QuickSeekPlugin: UICorePlugin {
     
     required init(context: UIObject) {
         super.init(context: context)
-        animatonHandler = QuickSeekAnimation(core)
+        animatonHandler = QuickSeekAnimation(core?.view)
     }
     
     override public func bindEvents() {

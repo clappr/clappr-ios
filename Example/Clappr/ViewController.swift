@@ -14,11 +14,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        player = Player(options: options)
-
-        listenToPlayerEvents()
-
-        player.attachTo(playerContainer, controller: self)
+        createPlayer()
     }
 
     @objc func listenToPlayerEvents() {
@@ -48,14 +44,14 @@ class ViewController: UIViewController {
         
         player.on(Event.didHideMediaControl) { _ in print("on didHideMediaControl") }
 
-        player.on(Event.requestFullscreen) { _ in
+        player.on(Event.requestFullscreen) { [weak self] _ in
             print("on requestFullscreen")
-            self.onRequestFullscreen()
+            self?.onRequestFullscreen()
         }
 
-        player.on(Event.exitFullscreen) { _ in
+        player.on(Event.exitFullscreen) { [weak self] _ in
             print("on exitFullscreen")
-            self.onExitFullscreen()
+            self?.onExitFullscreen()
         }
     }
 
@@ -92,5 +88,20 @@ class ViewController: UIViewController {
         let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertViewController.addAction(UIAlertAction(title: "ok", style: UIAlertAction.Style.default, handler: nil))
         self.navigationController?.present(alertViewController, animated: true, completion: nil)
+    }
+    
+    private func createPlayer() {
+        player = Player(options: options)
+
+        listenToPlayerEvents()
+
+        player.attachTo(playerContainer, controller: self)
+    }
+    
+    @IBAction func recreatePlayer(_ sender: Any) {
+        player.destroy()
+        player = nil
+        createPlayer()
+        player.play()
     }
 }
