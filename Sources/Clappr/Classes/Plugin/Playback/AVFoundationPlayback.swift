@@ -587,7 +587,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func defaultMediaOption(for source: [MediaOption], with language: String?) -> AVMediaSelectionOption? {
-        return source.first(where: { $0.language == language })?.raw as? AVMediaSelectionOption
+        source.first { $0.language == language }?.raw as? AVMediaSelectionOption
     }
 
     func selectDefaultMediaOptionIfNeeded() {
@@ -595,7 +595,7 @@ open class AVFoundationPlayback: Playback {
         selectDefaultSubtitleIfNeeded()
     }
     
-    internal func selectDefaultSubtitleIfNeeded() {
+    func selectDefaultSubtitleIfNeeded() {
         guard let subtitles = subtitles else { return }
         var isFirstSelection = false
         let defaultSubtitle = defaultMediaOption(for: subtitles, with: defaultSubtitleLanguage) ?? mediaSelectionGroup(.legible)?.defaultOption
@@ -606,7 +606,7 @@ open class AVFoundationPlayback: Playback {
         trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: isFirstSelection)])
     }
 
-    internal func selectDefaultAudioIfNeeded() {
+    func selectDefaultAudioIfNeeded() {
         guard let audios = audioSources else { return }
         var isFirstSelection = false
         let defaultAudio = defaultMediaOption(for: audios, with: defaultAudioSource)

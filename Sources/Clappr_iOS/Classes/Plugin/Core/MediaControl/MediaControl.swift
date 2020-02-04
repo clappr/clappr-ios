@@ -26,7 +26,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var currentlyHiding = false
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
-
     required public init(context: UIObject) {
         super.init(context: context)
         alwaysVisible = (core?.options[kMediaControlAlwaysVisible] as? Bool) ?? false
