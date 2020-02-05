@@ -13,10 +13,10 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
 
                     beforeEach {
                         OHHTTPStubs.removeAllStubs()
-                        OHHTTPStubs.onStubMissing(<#T##block: ((URLRequest) -> Void)?##((URLRequest) -> Void)?##(URLRequest) -> Void#>)
+
                         stubsDescriptor = stub(condition: isHost("clappr.io")   ) { result in
                             let stubPath = OHPathForFile("sample.m3u8", type(of: self))
-                            return fixture(filePath: stubPath!, headers: [:])
+                            return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
                         }
 
                         stubsDescriptor?.name = "StubToHighlineVideo.mp4"
@@ -35,7 +35,19 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
 
                         avfoundationPlayback.play()
 
-                        expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal(MediaOptionFactory.offSubtitle().language))
+                        expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("off"))
+                    }
+
+                    it("sets characteristic to pt") {
+                        let options = [
+                            kSourceUrl: "http://clappr.io/highline.mp4",
+                            kDefaultSubtitle: "pt"
+                        ]
+                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+
+                        avfoundationPlayback.play()
+
+                        expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("pt"))
                     }
                 }
             }
