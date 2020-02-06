@@ -8,25 +8,25 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
     override func spec() {
         describe(".AVFoundationPlaybackMediaSelection") {
             describe("subtitle selection") {
-                context("when option is off") {
-                    var stubsDescriptor: OHHTTPStubsDescriptor?
+                var stubsDescriptor: OHHTTPStubsDescriptor?
 
-                    beforeEach {
-                        OHHTTPStubs.removeAllStubs()
+                beforeEach {
+                    OHHTTPStubs.removeAllStubs()
 
-                        stubsDescriptor = stub(condition: isHost("clappr.io")   ) { result in
-                            let stubPath = OHPathForFile("sample.m3u8", type(of: self))
-                            return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
-                        }
-
-                        stubsDescriptor?.name = "StubToHighlineVideo.mp4"
+                    stubsDescriptor = stub(condition: isHost("clappr.io")   ) { result in
+                        let stubPath = OHPathForFile("sample.m3u8", type(of: self))
+                        return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
                     }
 
-                    afterEach {
-                        OHTTPStubsHelper.removeStub(with: stubsDescriptor)
-                    }
+                    stubsDescriptor?.name = "StubToHighlineVideo.mp4"
+                }
 
-                    it("sets characteristic to nil") {
+                afterEach {
+                    OHTTPStubsHelper.removeStub(with: stubsDescriptor)
+                }
+
+                context("when option defaultSubtitle is off") {
+                    it("sets language to off") {
                         let options = [
                             kSourceUrl: "http://clappr.io/highline.mp4",
                             kDefaultSubtitle: "off"
@@ -37,8 +37,10 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
 
                         expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("off"))
                     }
+                }
 
-                    it("sets characteristic to pt") {
+                context("when option defaultSubtitle is pt") {
+                    it("sets language to pt") {
                         let options = [
                             kSourceUrl: "http://clappr.io/highline.mp4",
                             kDefaultSubtitle: "pt"
@@ -48,6 +50,21 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                         avfoundationPlayback.play()
 
                         expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("pt"))
+                    }
+
+                    context("and sets selectedSubtitle to off") {
+                        it("sets language to off") {
+                            let options = [
+                                kSourceUrl: "http://clappr.io/highline.mp4",
+                                kDefaultSubtitle: "pt"
+                            ]
+                            let avfoundationPlayback = AVFoundationPlayback(options: options)
+                            avfoundationPlayback.play()
+
+                            avfoundationPlayback.selectedSubtitle = MediaOptionFactory.offSubtitle()
+
+                            expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("off"))
+                        }
                     }
                 }
             }
