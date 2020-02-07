@@ -84,7 +84,7 @@ open class AVFoundationPlayback: Playback {
             return MediaOptionFactory.fromAVMediaOption(option, type: .audioSource)
         }
         set {
-            if let newOption = newValue?.raw as? AVMediaSelectionOption {
+            if let newOption = newValue?.avMediaSelectionOption {
                 setMediaSelectionOption(newOption, characteristic: .audible)
             }
             triggerMediaOptionSelectedEvent(option: newValue, event: Event.didSelectAudio)
@@ -592,7 +592,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func defaultMediaOption(for source: [MediaOption], with language: String?) -> AVMediaSelectionOption? {
-        source.first { $0.language == language }?.raw as? AVMediaSelectionOption
+        source.first { $0.language == language }?.avMediaSelectionOption
     }
 
     func selectDefaultMediaOptionIfNeeded() {
