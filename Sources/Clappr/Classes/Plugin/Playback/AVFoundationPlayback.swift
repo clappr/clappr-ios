@@ -67,8 +67,13 @@ open class AVFoundationPlayback: Playback {
             return MediaOptionFactory.subtitle(from: option)
         }
         set {
-            let newOption = newValue?.raw as? AVMediaSelectionOption
-            setMediaSelectionOption(newOption, characteristic: .legible)
+            if newValue == MediaOption.offSubtitle {
+                setMediaSelectionOption(nil, characteristic: .legible)
+            } else {
+                let newOption = newValue?.avMediaSelectionOption
+                setMediaSelectionOption(newOption, characteristic: .legible)
+            }
+
             triggerMediaOptionSelectedEvent(option: newValue, event: .didSelectSubtitle)
         }
     }
