@@ -99,7 +99,7 @@ open class AVFoundationPlayback: Playback {
     open override var subtitles: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(.legible) else { return [] }
         let availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
-        return availableOptions + [MediaOptionFactory.offSubtitle()]
+        return availableOptions + [MediaOption.offSubtitle]
     }
 
     open override var audioSources: [MediaOption]? {

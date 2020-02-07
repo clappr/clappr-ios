@@ -61,7 +61,7 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                             let avfoundationPlayback = AVFoundationPlayback(options: options)
                             avfoundationPlayback.play()
 
-                            avfoundationPlayback.selectedSubtitle = MediaOptionFactory.offSubtitle()
+                            avfoundationPlayback.selectedSubtitle = MediaOption.offSubtitle
 
                             expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("off"))
                         }
