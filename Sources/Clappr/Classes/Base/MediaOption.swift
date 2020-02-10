@@ -12,6 +12,6 @@ public struct MediaOption: Equatable {
     }
 
     public static func ==(lhs: MediaOption, rhs: MediaOption) -> Bool {
-        return lhs.name == rhs.name && lhs.type == rhs.type && lhs.language == rhs.language
+        lhs.name == rhs.name && lhs.type == rhs.type && lhs.language == rhs.language
     }
 }

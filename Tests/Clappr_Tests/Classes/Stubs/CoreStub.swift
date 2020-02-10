@@ -6,9 +6,8 @@ class CoreStub: Core {
         get {
             return _container
         }
-        
         set {
-            _container = activeContainer
+            _container = newValue
         }
     }
     

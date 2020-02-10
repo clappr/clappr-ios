@@ -10,10 +10,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let options = [
+        let options: Options = [
             kSourceUrl: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
             kMediaControl: true
-            ] as [String: Any]
+        ]
+
         player = Player(options: options)
 
         listenToPlayerEvents()
