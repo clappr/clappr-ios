@@ -155,8 +155,13 @@ open class AVFoundationPlayback: Playback {
 
         return AVURLAsset.isPlayableExtendedMIMEType(mimeType)
     }
+    
+    open var isApplicationActive: Bool {
+        UIApplication.shared.applicationState == .active
+    }
 
     open override var canPlay: Bool {
+        if !isApplicationActive { return false }
         switch state {
         case .idle, .paused:
             return true
