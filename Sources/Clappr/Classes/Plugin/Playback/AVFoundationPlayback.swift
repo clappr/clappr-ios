@@ -47,9 +47,9 @@ open class AVFoundationPlayback: Playback {
             return currentState
         }
     }
-    
+
     open var bitrate: Double? {
-        return lastLogEvent?.bitrate
+        return lastLogEvent?.indicatedBitrate
     }
     
     open var averageBitrate: Double? {

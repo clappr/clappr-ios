@@ -167,6 +167,12 @@
 		7B5EBDEC23297EFE00B2FBBC /* BottomDrawerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EBDEB23297EFE00B2FBBC /* BottomDrawerPlugin.swift */; };
 		7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
 		7BCD8EE123073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
+		7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */; };
+		7BD29B8123FDDEDC00C82098 /* PlayerItemMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */; };
+		7BD29B8323FDDF1900C82098 /* PlayerItemAccessLogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */; };
+		7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
+		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
+		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
@@ -490,6 +496,12 @@
 		7B5EBDE923297D4E00B2FBBC /* BottomDrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPluginTests.swift; sourceTree = "<group>"; };
 		7B5EBDEB23297EFE00B2FBBC /* BottomDrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPlugin.swift; sourceTree = "<group>"; };
 		7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleContainerPluginTests.swift; sourceTree = "<group>"; };
+		7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMock.swift; sourceTree = "<group>"; };
+		7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerItemMock.swift; sourceTree = "<group>"; };
+		7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerItemAccessLogMock.swift; sourceTree = "<group>"; };
+		7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLogEventMock.swift; sourceTree = "<group>"; };
+		7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackQualityMetricsTests.swift; sourceTree = "<group>"; };
+		7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHTTPStubsHelper.swift; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
@@ -1270,6 +1282,7 @@
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
 				C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */,
 				C9A1CCAF23E995D000621048 /* AVFoundationPlaybackMediaSelectionTests.swift */,
+				7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -1305,6 +1318,7 @@
 			children = (
 				57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */,
 				23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */,
+				7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1392,6 +1406,10 @@
 				C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */,
 				C9EDF84E2162CF1600789E2F /* UINavigationControllerMock.swift */,
 				C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */,
+				7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */,
+				7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */,
+				7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */,
+				7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2122,6 +2140,7 @@
 				23EDF91E224EAF9A00FB0D96 /* String+Ext.swift in Sources */,
 				E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */,
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
+				7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				7B51DF0C230B58A800C2B045 /* MediaControlElementTests.swift in Sources */,
 				C9A1CCB023E995D100621048 /* AVFoundationPlaybackMediaSelectionTests.swift in Sources */,
@@ -2132,6 +2151,7 @@
 				23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */,
 				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
+				7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
@@ -2144,13 +2164,16 @@
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
+				7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
+				7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */,
 				EFEC758223C52A9A00FA6A52 /* PlaybackRendererTests.swift in Sources */,
 				48B39E8A23510FFF00CE9D72 /* TimeIntervalExtensionTests.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
+				7BD29B8323FDDF1900C82098 /* PlayerItemAccessLogMock.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
 				C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */,
@@ -2158,6 +2181,7 @@
 				320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */,
 				969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */,
 				9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */,
+				7BD29B8123FDDEDC00C82098 /* PlayerItemMock.swift in Sources */,
 				C9C8BFAE2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
 				32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */,
 				9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */,
