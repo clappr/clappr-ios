@@ -258,8 +258,6 @@
 		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
 		AB163517215ACA0C00635233 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* MediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
-		AB25CC2822EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */; };
-		AB25CC2922EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */; };
 		AB25CC2B22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */; };
 		AB25CC2C22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
@@ -586,7 +584,6 @@
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
 		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
 		AB163514215ACA0C00635233 /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
-		AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+LogEvent.swift"; sourceTree = "<group>"; };
 		AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+DVR.swift"; sourceTree = "<group>"; };
 		ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableMediaOptions.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -1028,7 +1025,6 @@
 				48563228220B47B10096CDAE /* Core+Ext.swift */,
 				C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */,
 				48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */,
-				AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */,
 				AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */,
 				C957E8292332C45B001F0612 /* PanGesture+Ext.swift */,
 				48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */,
@@ -2044,7 +2040,6 @@
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
-				AB25CC2922EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */,
 				CD57FCF222949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				CD10D93E22C28D4C0096B035 /* Environment.swift in Sources */,
@@ -2243,7 +2238,6 @@
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
 				FBD47AAF21AD6856003265AF /* ContainerFactory.swift in Sources */,
 				AB163517215ACA0C00635233 /* MediaControl.swift in Sources */,
-				AB25CC2822EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */,
 				9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
 				7B5EBDEC23297EFE00B2FBBC /* BottomDrawerPlugin.swift in Sources */,

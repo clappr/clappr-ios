@@ -1,15 +1,17 @@
 import AVFoundation
 
 class PlayerMock: AVPlayer {
-    private var bitrate: Double
+    private var indicatedBitrate: Double
+    private var observedBitrate: Double
 
-    init(bitrate: Double = 0.0) {
-        self.bitrate = bitrate
+    init(indicatedBitrate: Double = 0.0, observedBitrate: Double = 0.0) {
+        self.indicatedBitrate = indicatedBitrate
+        self.observedBitrate = observedBitrate
 
         super.init()
     }
 
     override var currentItem: AVPlayerItem? {
-        return PlayerItemMock(bitrate: bitrate)
+        return PlayerItemMock(indicatedBitrate: indicatedBitrate, observedBitrate: observedBitrate)
     }
 }

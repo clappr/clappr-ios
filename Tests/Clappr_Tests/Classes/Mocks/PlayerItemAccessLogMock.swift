@@ -3,8 +3,8 @@ import AVFoundation
 class PlayerItemAccessLogMock: AVPlayerItemAccessLog {
     private var accessLogEvent: AccessLogEventMock
 
-    init(bitrate: Double) {
-        self.accessLogEvent = AccessLogEventMock(bitrate: bitrate)
+    init(indicatedBitrate: Double, observedBitrate: Double) {
+        self.accessLogEvent = AccessLogEventMock(indicatedBitrate: indicatedBitrate, observedBitrate: observedBitrate)
     }
 
     override var events: [AVPlayerItemAccessLogEvent] {

@@ -24,25 +24,45 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                 OHTTPStubsHelper.removeStub(with: stubsDescriptor)
             }
 
-            context("when receive AVPlayerItemNewAccessLogEntry with new bitrate value") {
-                it("changes the bitrate") {
-                    let options = [
-                        kSourceUrl: "http://clappr.io/highline.mp4"
-                    ]
-                    let avfoundationPlayback = AVFoundationPlayback(options: options)
-                    let player = PlayerMock(bitrate: 7.0)
-                    avfoundationPlayback.player = player
-                    avfoundationPlayback.addObservers()
+            context("when receives AVPlayerItemNewAccessLogEntry event") {
+                context("with new indicatedBitrate value") {
+                    it("changes the bitrate") {
+                        let options = [
+                            kSourceUrl: "http://clappr.io/highline.mp4"
+                        ]
+                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let player = PlayerMock(indicatedBitrate: 7.0)
+                        avfoundationPlayback.player = player
+                        avfoundationPlayback.addObservers()
 
-                    NotificationCenter.default.post(
-                        name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
-                        object: player.currentItem
-                    )
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            object: player.currentItem
+                        )
 
-                    expect(avfoundationPlayback.bitrate).toEventually(equal(7.0))
+                        expect(avfoundationPlayback.bitrate).toEventually(equal(7.0))
+                    }
+                }
+
+                context("with new observedBitrate value") {
+                    it("changes the bandwidth") {
+                        let options = [
+                            kSourceUrl: "http://clappr.io/highline.mp4"
+                        ]
+                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let player = PlayerMock(observedBitrate: 13.0)
+                        avfoundationPlayback.player = player
+                        avfoundationPlayback.addObservers()
+
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            object: player.currentItem
+                        )
+
+                        expect(avfoundationPlayback.bandwidth).toEventually(equal(13.0))
+                    }
                 }
             }
-
         }
     }
 }

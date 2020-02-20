@@ -1,11 +1,14 @@
 import AVFoundation
 
 class AccessLogEventMock: AVPlayerItemAccessLogEvent {
-    var bitrate: Double
+    private var _indicatedBitrate: Double
+    private var _observedBitrate: Double
 
-    init(bitrate: Double) {
-        self.bitrate = bitrate
+    init(indicatedBitrate: Double, observedBitrate: Double) {
+        _indicatedBitrate = indicatedBitrate
+        _observedBitrate = observedBitrate
     }
 
-    override var indicatedBitrate: Double { bitrate }
+    override var indicatedBitrate: Double { _indicatedBitrate }
+    override var observedBitrate: Double { _observedBitrate }
 }

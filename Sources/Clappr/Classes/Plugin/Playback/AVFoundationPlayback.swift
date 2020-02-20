@@ -1,14 +1,16 @@
 import AVFoundation
 
 open class AVFoundationPlayback: Playback {
+    open class override var name: String { "AVPlayback" }
+
     private static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
     ]
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
-    
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
+    private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
 
     @objc dynamic var player: AVPlayer?
     @objc dynamic private var playerLooper: AVPlayerLooper? {
@@ -48,17 +50,9 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    open var bitrate: Double? {
-        return lastLogEvent?.indicatedBitrate
-    }
-    
-    open var averageBitrate: Double? {
-        return lastLogEvent?.averageVideoBitrate
-    }
-
-    open class override var name: String {
-        return "AVPlayback"
-    }
+    open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
+    open var bandwidth: Double? { lastLogEvent?.observedBitrate }
+    open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
 
     open override var selectedSubtitle: MediaOption? {
         get {
@@ -323,8 +317,8 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         guard lastBitrate != bitrate else { return }
         lastBitrate = bitrate
-        if let newBitrate = lastBitrate, !newBitrate.isNaN {
-            trigger(.didUpdateBitrate, userInfo: ["bitrate": newBitrate])
+        if let lastBitrate = lastBitrate, !lastBitrate.isNaN {
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate])
         } else {
             trigger(.didUpdateBitrate)
         }
