@@ -88,6 +88,19 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                     }
                 }
             }
+
+            context("when call play") {
+                it("makes available domain host") {
+                    let options = [
+                        kSourceUrl: "http://clappr.io/highline.mp4"
+                    ]
+                    let avfoundationPlayback = AVFoundationPlayback(options: options)
+
+                    avfoundationPlayback.play()
+
+                    expect(avfoundationPlayback.domainHost).to(equal("clappr.io"))
+                }
+            }
         }
     }
 }

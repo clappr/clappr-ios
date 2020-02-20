@@ -54,6 +54,7 @@ open class AVFoundationPlayback: Playback {
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
     open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    open var domainHost: String? { asset?.url.host }
 
     open override var selectedSubtitle: MediaOption? {
         get {
