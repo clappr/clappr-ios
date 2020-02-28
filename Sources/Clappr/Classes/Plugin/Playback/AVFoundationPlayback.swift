@@ -10,7 +10,6 @@ open class AVFoundationPlayback: Playback {
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
-    private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
 
     @objc dynamic var player: AVPlayer?
     @objc dynamic private var playerLooper: AVPlayerLooper? {
@@ -49,12 +48,6 @@ open class AVFoundationPlayback: Playback {
             return currentState
         }
     }
-
-    open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
-    open var bandwidth: Double? { lastLogEvent?.observedBitrate }
-    open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
-    open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
-    open var domainHost: String? { asset?.url.host }
 
     open override var selectedSubtitle: MediaOption? {
         get {
