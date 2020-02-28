@@ -174,6 +174,7 @@
 		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
 		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
 		7BDD982B24006C4B00032FD4 /* AVFoundationPlayback+QualityMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD982A24006C4B00032FD4 /* AVFoundationPlayback+QualityMetrics.swift */; };
+		7BDD982F2409885E00032FD4 /* AVFoundationPlayback+QualityMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD982A24006C4B00032FD4 /* AVFoundationPlayback+QualityMetrics.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
@@ -2025,6 +2026,7 @@
 				32E401CB1FF42379001C2096 /* Plugin.swift in Sources */,
 				32B3D23D2007FA7D00D81C0A /* ClapprDateFormatter.swift in Sources */,
 				48A29C12221DF8CD0004AD3B /* CorePlugin.swift in Sources */,
+				7BDD982F2409885E00032FD4 /* AVFoundationPlayback+QualityMetrics.swift in Sources */,
 				32E401C31FF42321001C2096 /* InternalEvent.swift in Sources */,
 				CD57FCF322949BBB00AB24CF /* SimpleCorePlugin.swift in Sources */,
 				48A29C01221D82700004AD3B /* UIObject.swift in Sources */,
