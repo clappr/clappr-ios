@@ -7,6 +7,7 @@ extension AVFoundationPlayback {
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
     open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    open var totalFrames: Int? { 0 }
     open var domainHost: String? {
         guard let asset = player?.currentItem?.asset as? AVURLAsset else { return nil }
         return asset.url.host

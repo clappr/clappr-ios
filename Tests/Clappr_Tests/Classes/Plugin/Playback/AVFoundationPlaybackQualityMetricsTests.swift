@@ -87,6 +87,26 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         expect(avfoundationPlayback.droppedFrames).toEventually(equal(2))
                     }
                 }
+
+                context("with new number of Total video frames value") {
+                    it("changes the totalFrames") {
+                        let options = [
+                            kSourceUrl: "http://clappr.io/highline.mp4"
+                        ]
+                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let accessLog = AccessLogEventMock()
+                        let player = PlayerMock(accessLogEvent: accessLog)
+                        avfoundationPlayback.player = player
+                        avfoundationPlayback.addObservers()
+
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            object: player.currentItem
+                        )
+
+                        expect(avfoundationPlayback.totalFrames).toEventually(equal(0))
+                    }
+                }
             }
 
             context("when call play") {
