@@ -37,7 +37,7 @@ open class AVFoundationPlayback: Playback {
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
     open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
-    open var totalFrames: Int? { 0 }
+    open var decodedFrames: Int? { -1 }
     open var domainHost: String? { asset?.url.host }
 
     var lastDvrAvailability: Bool?
