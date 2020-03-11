@@ -112,17 +112,16 @@ open class Player: AVPlayerViewController {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalling.rawValue,
-             Event.didStop.rawValue, Event.didUpdateBuffer.rawValue,
-             Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
-             Event.didSeek.rawValue, Event.didFindSubtitle.rawValue,
-             Event.didFindAudio.rawValue, Event.didSelectSubtitle.rawValue,
-             Event.didSelectAudio.rawValue, Event.didUpdateBitrate.rawValue
-            ]
+            [Event.ready.rawValue, Event.playing.rawValue,
+             Event.didComplete.rawValue, Event.didPause.rawValue,
+             Event.stalling.rawValue, Event.didStop.rawValue,
+             Event.didUpdateBuffer.rawValue, Event.willPlay.rawValue,
+             Event.didUpdatePosition.rawValue, Event.willPause.rawValue,
+             Event.willStop.rawValue, Event.willSeek.rawValue,
+             Event.didUpdateAirPlayStatus.rawValue, Event.didSeek.rawValue,
+             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,
+             Event.didUpdateBitrate.rawValue]
         )
 
         setCore(with: options)
@@ -222,21 +221,29 @@ open class Player: AVPlayerViewController {
 
     private func bindPlaybackEvents() {
         if let playback = core?.activePlayback {
+            var listenId = ""
             for event in playbackEventsToListen {
-                let listenId = baseObject.listenTo(
-                    playback, eventName: event,
-                    callback: { [weak self] (info: EventUserInfo) in
+                listenId = baseObject.listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
                         self?.baseObject.trigger(event, userInfo: info)
-                })
+                }
 
                 playbackEventsListenIds.append(listenId)
             }
 
-            let listenId = baseObject.listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+            listenId = baseObject.listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+            playbackEventsListenIds.append(listenId)
+
+            listenId = baseObject.listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
+                self?.baseObject.trigger(Event.error, userInfo: self?.fillErrorUserInfo(info))
+            }
             playbackEventsListenIds.append(listenId)
         }
     }
 
+    open func fillErrorUserInfo(_ info: EventUserInfo) -> EventUserInfo {
+        return info
+    }
+    
     private func bindPlayer(playback: Playback?) {
         if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
             self.player = player
