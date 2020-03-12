@@ -163,6 +163,10 @@ open class Player: BaseObject {
     open func seek(_ timeInterval: TimeInterval) {
         core?.activePlayback?.seek(timeInterval)
     }
+    
+    open func mute(enabled: Bool) {
+        core?.activePlayback?.mute(enabled)
+    }
 
     open func setFullscreen(_ fullscreen: Bool) {
         core?.setFullscreen(fullscreen)
