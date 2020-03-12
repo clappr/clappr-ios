@@ -191,21 +191,21 @@ open class Player: BaseObject {
     }
 
     private func bindPlaybackEvents() {
-        if let playback = core?.activePlayback {
-            var listenId = ""
-            for event in playbackEventsToListen {
-                listenId = listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
-                        self?.trigger(event, userInfo: info)
-                }
-
-                playbackEventsListenIds.append(listenId)
+        guard let playback = core?.activePlayback else { return }
+        
+        var listenId = ""
+        playbackEventsToListen.forEach { event in
+            listenId = listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
+                self?.trigger(event, userInfo: info)
             }
-
-            listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
-                self?.trigger(Event.error, userInfo: self?.fillErrorUserInfo(info))
-            }
+            
             playbackEventsListenIds.append(listenId)
         }
+        
+        listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
+            self?.trigger(Event.error, userInfo: self?.fillErrorUserInfo(info))
+        }
+        playbackEventsListenIds.append(listenId)
     }
 
     open func fillErrorUserInfo(_ info: EventUserInfo) -> EventUserInfo {

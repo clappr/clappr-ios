@@ -218,26 +218,31 @@ open class Player: AVPlayerViewController {
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
+    
+    @discardableResult
+    open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
+    }
 
     private func bindPlaybackEvents() {
-        if let playback = core?.activePlayback {
-            var listenId = ""
-            for event in playbackEventsToListen {
-                listenId = baseObject.listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
-                        self?.baseObject.trigger(event, userInfo: info)
-                }
-
-                playbackEventsListenIds.append(listenId)
+        guard let playback = core?.activePlayback else { return }
+        
+        var listenId = ""
+        playbackEventsToListen.forEach { event in
+            listenId = listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
+                self?.baseObject.trigger(event, userInfo: info)
             }
-
-            listenId = baseObject.listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
-            playbackEventsListenIds.append(listenId)
-
-            listenId = baseObject.listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
-                self?.baseObject.trigger(Event.error, userInfo: self?.fillErrorUserInfo(info))
-            }
+            
             playbackEventsListenIds.append(listenId)
         }
+        
+        listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+        playbackEventsListenIds.append(listenId)
+        
+        listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
+            self?.trigger(Event.error.rawValue, userInfo: self?.fillErrorUserInfo(info))
+        }
+        playbackEventsListenIds.append(listenId)
     }
 
     open func fillErrorUserInfo(_ info: EventUserInfo) -> EventUserInfo {
