@@ -14,7 +14,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
 
                 stubsDescriptor = stub(condition: isHost("clappr.io")   ) { result in
                     let stubPath = OHPathForFile("sample.m3u8", type(of: self))
-                    return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
+                    return fixture(filePath: stubPath!, headers: [:])
                 }
 
                 stubsDescriptor?.name = "StubToHighlineVideo.mp4"
