@@ -240,13 +240,13 @@ open class Player: AVPlayerViewController {
         playbackEventsListenIds.append(listenId)
         
         listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
-            self?.trigger(Event.error.rawValue, userInfo: self?.fillErrorUserInfo(info))
+            self?.trigger(Event.error.rawValue, userInfo: self?.fillErrorWith(info))
         }
         playbackEventsListenIds.append(listenId)
     }
 
-    open func fillErrorUserInfo(_ info: EventUserInfo) -> EventUserInfo {
-        return info
+    open func fillErrorWith(_ userInfo: EventUserInfo) -> EventUserInfo {
+        return userInfo
     }
     
     private func bindPlayer(playback: Playback?) {

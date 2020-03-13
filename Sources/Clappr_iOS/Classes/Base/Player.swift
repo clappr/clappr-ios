@@ -203,13 +203,13 @@ open class Player: BaseObject {
         }
         
         listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
-            self?.trigger(Event.error, userInfo: self?.fillErrorUserInfo(info))
+            self?.trigger(Event.error, userInfo: self?.fillErrorWith(info))
         }
         playbackEventsListenIds.append(listenId)
     }
 
-    open func fillErrorUserInfo(_ info: EventUserInfo) -> EventUserInfo {
-        return info
+    open func fillErrorWith(_ userInfo: EventUserInfo) -> EventUserInfo {
+        return userInfo
     }
     
     private func unbindPlaybackEvents() {
