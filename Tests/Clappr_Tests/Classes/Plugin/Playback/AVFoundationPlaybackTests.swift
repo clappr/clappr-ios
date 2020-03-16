@@ -1707,6 +1707,25 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
             #endif
+            
+            describe("#mute") {
+                context("when mute is enabled") {
+                    it("sets volume to zero") {
+                        playback.mute(true)
+                        
+                        expect(player.volume).to(equal(0))
+                    }
+                }
+                context("when mute is disabled") {
+                    it("sets volume to maximum") {
+                        player.volume = 0
+                        
+                        playback.mute(false)
+                        
+                        expect(player.volume).to(equal(1))
+                    }
+                }
+            }
         }
     }
 }
