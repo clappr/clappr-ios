@@ -112,17 +112,16 @@ open class Player: AVPlayerViewController {
         Logger.logInfo("loading with \(options)", scope: "Clappr")
 
         playbackEventsToListen.append(contentsOf:
-            [Event.ready.rawValue, Event.error.rawValue,
-             Event.playing.rawValue, Event.didComplete.rawValue,
-             Event.didPause.rawValue, Event.stalling.rawValue,
-             Event.didStop.rawValue, Event.didUpdateBuffer.rawValue,
-             Event.willPlay.rawValue, Event.didUpdatePosition.rawValue,
-             Event.willPause.rawValue, Event.willStop.rawValue,
-             Event.willSeek.rawValue, Event.didUpdateAirPlayStatus.rawValue,
-             Event.didSeek.rawValue, Event.didFindSubtitle.rawValue,
-             Event.didFindAudio.rawValue, Event.didSelectSubtitle.rawValue,
-             Event.didSelectAudio.rawValue, Event.didUpdateBitrate.rawValue
-            ]
+            [Event.ready.rawValue, Event.playing.rawValue,
+             Event.didComplete.rawValue, Event.didPause.rawValue,
+             Event.stalling.rawValue, Event.didStop.rawValue,
+             Event.didUpdateBuffer.rawValue, Event.willPlay.rawValue,
+             Event.didUpdatePosition.rawValue, Event.willPause.rawValue,
+             Event.willStop.rawValue, Event.willSeek.rawValue,
+             Event.didUpdateAirPlayStatus.rawValue, Event.didSeek.rawValue,
+             Event.didFindSubtitle.rawValue, Event.didFindAudio.rawValue,
+             Event.didSelectSubtitle.rawValue, Event.didSelectAudio.rawValue,
+             Event.didUpdateBitrate.rawValue]
         )
 
         setCore(with: options)
@@ -219,24 +218,37 @@ open class Player: AVPlayerViewController {
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
-
-    private func bindPlaybackEvents() {
-        if let playback = core?.activePlayback {
-            for event in playbackEventsToListen {
-                let listenId = baseObject.listenTo(
-                    playback, eventName: event,
-                    callback: { [weak self] (info: EventUserInfo) in
-                        self?.baseObject.trigger(event, userInfo: info)
-                })
-
-                playbackEventsListenIds.append(listenId)
-            }
-
-            let listenId = baseObject.listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
-            playbackEventsListenIds.append(listenId)
-        }
+    
+    @discardableResult
+    open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
+        return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
     }
 
+    private func bindPlaybackEvents() {
+        guard let playback = core?.activePlayback else { return }
+        
+        var listenId = ""
+        playbackEventsToListen.forEach { event in
+            listenId = listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
+                self?.baseObject.trigger(event, userInfo: info)
+            }
+            
+            playbackEventsListenIds.append(listenId)
+        }
+        
+        listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
+        playbackEventsListenIds.append(listenId)
+        
+        listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
+            self?.trigger(Event.error.rawValue, userInfo: self?.fillErrorWith(info))
+        }
+        playbackEventsListenIds.append(listenId)
+    }
+
+    open func fillErrorWith(_ userInfo: EventUserInfo) -> EventUserInfo {
+        return userInfo
+    }
+    
     private func bindPlayer(playback: Playback?) {
         if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
             self.player = player
