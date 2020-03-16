@@ -25,6 +25,8 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                     } else if result.url!.path.contains(".ts") {
                         let stubPath = OHPathForFile(result.url!.path.replacingOccurrences(of: "/", with: ""), type(of: self))
                         return fixture(filePath: stubPath!, headers: [:])
+                    } else if result.url?.path == "/error.m3u8" {
+                        return fixture(filePath: "", status: 400, headers: [:])
                     }
                     
                     let stubPath = OHPathForFile("master.m3u8", type(of: self))
@@ -187,7 +189,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
             describe("#state machine error events") {
                 context("when play and an error occurs") {
                     it("triggers events following the state machine pattern") {
-                        let options = [kSourceUrl: "http://clappr8.sample/master.m3u8"]
+                        let options = [kSourceUrl: "http://clappr.sample/error.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
                         let expectedEvents: [Event] = [
                             .ready, .willPlay, .stalling, .error, .didPause
@@ -205,7 +207,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                         playback.play()
                         #endif
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 30)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents))
                     }
                 }
             }
