@@ -7,51 +7,29 @@ import OHHTTPStubs
 class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
     override func spec() {
         describe(".AVFoundationPlaybackQualityMetricsTests") {
-            var stubsDescriptor: OHHTTPStubsDescriptor?
-
-            beforeEach {
-                OHHTTPStubs.removeAllStubs()
-
-                stubsDescriptor = stub(condition: isHost("clappr.io")   ) { result in
-                    let stubPath = OHPathForFile("sample.m3u8", type(of: self))
-                    return fixture(filePath: stubPath!, headers: [:])
-                }
-
-                stubsDescriptor?.name = "StubToHighlineVideo.mp4"
-            }
-
-            afterEach {
-                OHTTPStubsHelper.removeStub(with: stubsDescriptor)
-            }
-
             context("when receives AVPlayerItemNewAccessLogEntry event") {
                 context("with new indicatedBitrate value") {
                     it("changes the bitrate") {
-                        let options = [
-                            kSourceUrl: "http://clappr.io/highline.mp4"
-                        ]
-                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let baseObject = BaseObject()
+                        var bitrate: Double?
+                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         let accessLog = AccessLogEventMock()
-                        accessLog.setIndicatedBitrate(7.0)
                         let player = PlayerMock(accessLogEvent: accessLog)
+                        accessLog.setIndicatedBitrate(7)
                         avfoundationPlayback.player = player
-                        avfoundationPlayback.addObservers()
+                        baseObject.listenToOnce(avfoundationPlayback, eventName: Event.didUpdateBitrate.rawValue) { userInfo in
+                            bitrate = userInfo?["bitrate"] as? Double
+                        }
 
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
-                            object: player.currentItem
-                        )
-
-                        expect(avfoundationPlayback.bitrate).toEventually(equal(7.0))
+                        avfoundationPlayback.onAccessLogEntry(notification: nil)
+                        
+                        expect(bitrate).toEventually(equal(7))
                     }
                 }
-
+                
                 context("with new observedBitrate value") {
                     it("changes the bandwidth") {
-                        let options = [
-                            kSourceUrl: "http://clappr.io/highline.mp4"
-                        ]
-                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         let accessLog = AccessLogEventMock()
                         accessLog.setObservedBitrate(13.0)
                         let player = PlayerMock(accessLogEvent: accessLog)
@@ -69,10 +47,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
 
                 context("with new numberOfDroppedVideoFrames value") {
                     it("changes the droppedFrames") {
-                        let options = [
-                            kSourceUrl: "http://clappr.io/highline.mp4"
-                        ]
-                        let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         let accessLog = AccessLogEventMock()
                         accessLog.setDroppedFrames(2)
                         let player = PlayerMock(accessLogEvent: accessLog)
@@ -90,24 +65,38 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
             }
 
             context("when call play") {
+                var stubsDescriptor: OHHTTPStubsDescriptor?
+
+                beforeEach {
+                    OHHTTPStubs.removeAllStubs()
+
+                    stubsDescriptor = stub(condition: isAbsoluteURLString("http://clappr.io/highline.mp4")) { _ in
+                        return fixture(filePath: "", headers: [:])
+                    }
+                    
+                    stubsDescriptor?.name = "StubToHighlineVideo.mp4"
+                }
+
+                afterEach {
+                    OHTTPStubsHelper.removeStub(with: stubsDescriptor)
+                }
+
                 it("makes available domain host") {
                     let options = [
                         kSourceUrl: "http://clappr.io/highline.mp4"
                     ]
+
                     let avfoundationPlayback = AVFoundationPlayback(options: options)
 
-                    avfoundationPlayback.play()
-
-                    expect(avfoundationPlayback.domainHost).to(equal("clappr.io"))
+                    expect(avfoundationPlayback.domainHost).toEventually(equal("clappr.io"))
                 }
 
                 it("makes available the decoded frames value") {
                     let options = [
                         kSourceUrl: "http://clappr.io/highline.mp4"
                     ]
-                    let avfoundationPlayback = AVFoundationPlayback(options: options)
 
-                    avfoundationPlayback.play()
+                    let avfoundationPlayback = AVFoundationPlayback(options: options)
 
                     expect(avfoundationPlayback.decodedFrames).toEventually(equal(-1))
                 }
