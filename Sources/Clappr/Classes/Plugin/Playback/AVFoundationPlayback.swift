@@ -1,13 +1,14 @@
 import AVFoundation
 
 open class AVFoundationPlayback: Playback {
+    open class override var name: String { "AVPlayback" }
+
     private static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
     ]
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
-    
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
     @objc dynamic var player: AVPlayer?
@@ -30,6 +31,15 @@ open class AVFoundationPlayback: Playback {
 
     private var observers = [NSKeyValueObservation]()
 
+    private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
+
+    open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
+    open var bandwidth: Double? { lastLogEvent?.observedBitrate }
+    open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
+    open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    open var decodedFrames: Int? { -1 }
+    open var domainHost: String? { asset?.url.host }
+
     var lastDvrAvailability: Bool?
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
@@ -46,18 +56,6 @@ open class AVFoundationPlayback: Playback {
         get {
             return currentState
         }
-    }
-    
-    open var bitrate: Double? {
-        return lastLogEvent?.bitrate
-    }
-    
-    open var averageBitrate: Double? {
-        return lastLogEvent?.averageVideoBitrate
-    }
-
-    open class override var name: String {
-        return "AVPlayback"
     }
 
     open override var selectedSubtitle: MediaOption? {
@@ -323,8 +321,8 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         guard lastBitrate != bitrate else { return }
         lastBitrate = bitrate
-        if let newBitrate = lastBitrate, !newBitrate.isNaN {
-            trigger(.didUpdateBitrate, userInfo: ["bitrate": newBitrate])
+        if let lastBitrate = lastBitrate, !lastBitrate.isNaN {
+            trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate])
         } else {
             trigger(.didUpdateBitrate)
         }

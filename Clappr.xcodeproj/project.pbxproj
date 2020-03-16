@@ -167,6 +167,12 @@
 		7B5EBDEC23297EFE00B2FBBC /* BottomDrawerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EBDEB23297EFE00B2FBBC /* BottomDrawerPlugin.swift */; };
 		7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
 		7BCD8EE123073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */; };
+		7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */; };
+		7BD29B8123FDDEDC00C82098 /* PlayerItemMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */; };
+		7BD29B8323FDDF1900C82098 /* PlayerItemAccessLogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */; };
+		7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
+		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
+		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
@@ -252,8 +258,6 @@
 		AB16350F215AC9FC00635233 /* MediaControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB16350B215AC9FC00635233 /* MediaControlView.xib */; };
 		AB163517215ACA0C00635233 /* MediaControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163514215ACA0C00635233 /* MediaControl.swift */; };
 		AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
-		AB25CC2822EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */; };
-		AB25CC2922EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */; };
 		AB25CC2B22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */; };
 		AB25CC2C22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */; };
 		ABAFEBA62152C25B007BA497 /* AvailableMediaOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */; };
@@ -262,6 +266,7 @@
 		B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
 		B46D05AB1DB7DE570004B23F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		C905869322132046009D2FA0 /* poster.png in Resources */ = {isa = PBXBuildFile; fileRef = C905869222132046009D2FA0 /* poster.png */; };
+		C9096F1F24086B05001BB2A4 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
 		C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */; };
 		C923387D221DD43F002202F8 /* BaseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */; };
@@ -490,6 +495,12 @@
 		7B5EBDE923297D4E00B2FBBC /* BottomDrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPluginTests.swift; sourceTree = "<group>"; };
 		7B5EBDEB23297EFE00B2FBBC /* BottomDrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPlugin.swift; sourceTree = "<group>"; };
 		7BCD8EDF23073A8900FBE5A2 /* SimpleContainerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleContainerPluginTests.swift; sourceTree = "<group>"; };
+		7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMock.swift; sourceTree = "<group>"; };
+		7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerItemMock.swift; sourceTree = "<group>"; };
+		7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerItemAccessLogMock.swift; sourceTree = "<group>"; };
+		7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLogEventMock.swift; sourceTree = "<group>"; };
+		7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackQualityMetricsTests.swift; sourceTree = "<group>"; };
+		7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHTTPStubsHelper.swift; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
@@ -574,7 +585,6 @@
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
 		AB16350B215AC9FC00635233 /* MediaControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaControlView.xib; sourceTree = "<group>"; };
 		AB163514215ACA0C00635233 /* MediaControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControl.swift; sourceTree = "<group>"; };
-		AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+LogEvent.swift"; sourceTree = "<group>"; };
 		AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVFoundationPlayback+DVR.swift"; sourceTree = "<group>"; };
 		ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableMediaOptions.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -1016,7 +1026,6 @@
 				48563228220B47B10096CDAE /* Core+Ext.swift */,
 				C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */,
 				48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */,
-				AB25CC2722EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift */,
 				AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */,
 				C957E8292332C45B001F0612 /* PanGesture+Ext.swift */,
 				48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */,
@@ -1270,6 +1279,7 @@
 				9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */,
 				C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */,
 				C9A1CCAF23E995D000621048 /* AVFoundationPlaybackMediaSelectionTests.swift */,
+				7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -1305,6 +1315,7 @@
 			children = (
 				57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */,
 				23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */,
+				7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1392,6 +1403,10 @@
 				C9EDF84C2162CEF500789E2F /* UIViewControllerMock.swift */,
 				C9EDF84E2162CF1600789E2F /* UINavigationControllerMock.swift */,
 				C9EDF8532162D0DD00789E2F /* AVFoundationPlaybackMock.swift */,
+				7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */,
+				7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */,
+				7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */,
+				7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2026,7 +2041,6 @@
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
 				FC7785B8200523E400EC879F /* AVFoundationNowPlayingService.swift in Sources */,
 				FC7785AE2005233D00EC879F /* Player.swift in Sources */,
-				AB25CC2922EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */,
 				CD57FCF222949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */,
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				CD10D93E22C28D4C0096B035 /* Environment.swift in Sources */,
@@ -2063,6 +2077,7 @@
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				C934669B2305C13F0062E8DE /* String+Ext.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
+				C9096F1F24086B05001BB2A4 /* OHTTPStubsHelper.swift in Sources */,
 				C9C8BFAF2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
@@ -2122,6 +2137,7 @@
 				23EDF91E224EAF9A00FB0D96 /* String+Ext.swift in Sources */,
 				E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */,
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
+				7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				7B51DF0C230B58A800C2B045 /* MediaControlElementTests.swift in Sources */,
 				C9A1CCB023E995D100621048 /* AVFoundationPlaybackMediaSelectionTests.swift in Sources */,
@@ -2132,6 +2148,7 @@
 				23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */,
 				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
+				7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */,
 				96B4656B1BF6028A0025975A /* UIPluginTests.swift in Sources */,
 				C9EDF8562162D10B00789E2F /* ContainerStub.swift in Sources */,
 				9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */,
@@ -2144,13 +2161,16 @@
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
+				7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
 				96664E571BF0CBD400095E6E /* UIObjectTests.swift in Sources */,
+				7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */,
 				EFEC758223C52A9A00FA6A52 /* PlaybackRendererTests.swift in Sources */,
 				48B39E8A23510FFF00CE9D72 /* TimeIntervalExtensionTests.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
+				7BD29B8323FDDF1900C82098 /* PlayerItemAccessLogMock.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,
 				96A979881BFF964F00E5EA01 /* CoreTests.swift in Sources */,
 				C9EDF85E2163E1E800789E2F /* MediaControlViewTests.swift in Sources */,
@@ -2158,6 +2178,7 @@
 				320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */,
 				969703A01BEA716100B7F282 /* EventHandlerTests.swift in Sources */,
 				9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */,
+				7BD29B8123FDDEDC00C82098 /* PlayerItemMock.swift in Sources */,
 				C9C8BFAE2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
 				32D18C8E20484CA10097653C /* SpinnerPluginTests.swift in Sources */,
 				9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */,
@@ -2219,7 +2240,6 @@
 				96D362C71D41339400CCB866 /* EventHandler.swift in Sources */,
 				FBD47AAF21AD6856003265AF /* ContainerFactory.swift in Sources */,
 				AB163517215ACA0C00635233 /* MediaControl.swift in Sources */,
-				AB25CC2822EB7D0500AD4759 /* AVFoundationPlayback+LogEvent.swift in Sources */,
 				9E26CFF42016149600AE92B7 /* FullscreenController.swift in Sources */,
 				96D362E71D41339400CCB866 /* Plugin.swift in Sources */,
 				7B5EBDEC23297EFE00B2FBBC /* BottomDrawerPlugin.swift in Sources */,
