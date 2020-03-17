@@ -322,9 +322,6 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         updateNumberOfDroppedFrames()
         updateBitrate()
-
-        print("### Last dropped frames: ", droppedFrames ?? -1)
-        print("### Total dropped frames: ", totalOfDroppedFrames)
     }
 
     private var hasEnoughBufferToPlay: Bool {
