@@ -40,6 +40,7 @@ open class AVFoundationPlayback: Playback {
     open var decodedFrames: Int? { -1 }
     open var domainHost: String? { asset?.url.host }
 
+    var totalOfDroppedFrames: Int = 0
     var lastDvrAvailability: Bool?
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
@@ -319,7 +320,20 @@ open class AVFoundationPlayback: Playback {
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
+        updateNumberOfDroppedFrames()
+        updateBitrate()
+
+        print("### Last dropped frames: ", droppedFrames ?? -1)
+        print("### Total dropped frames: ", totalOfDroppedFrames)
+    }
+
+    private var hasEnoughBufferToPlay: Bool {
+        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    }
+
+    private func updateBitrate() {
         guard lastBitrate != bitrate else { return }
+        
         lastBitrate = bitrate
         if let lastBitrate = lastBitrate, !lastBitrate.isNaN {
             trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate])
@@ -328,8 +342,10 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private var hasEnoughBufferToPlay: Bool {
-        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    private func updateNumberOfDroppedFrames() {
+        guard let droppedFrames = droppedFrames, droppedFrames > 0 else { return }
+
+        totalOfDroppedFrames += droppedFrames
     }
 
     private func handlePlaybackLikelyToKeepUp(_ player: AVPlayer) {

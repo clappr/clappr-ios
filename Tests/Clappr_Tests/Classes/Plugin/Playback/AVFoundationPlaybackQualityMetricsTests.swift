@@ -61,6 +61,29 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
 
                         expect(avfoundationPlayback.droppedFrames).toEventually(equal(2))
                     }
+
+                    it("changes the totalOfDroppedFrames") {
+                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                        let accessLog = AccessLogEventMock()
+                        accessLog.setDroppedFrames(2)
+                        let player = PlayerMock(accessLogEvent: accessLog)
+                        avfoundationPlayback.player = player
+                        avfoundationPlayback.addObservers()
+
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            object: player.currentItem
+                        )
+
+                        accessLog.setDroppedFrames(3)
+
+                        NotificationCenter.default.post(
+                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            object: player.currentItem
+                        )
+
+                        expect(avfoundationPlayback.totalOfDroppedFrames).toEventually(equal(5))
+                    }
                 }
             }
 
