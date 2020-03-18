@@ -32,15 +32,15 @@ open class AVFoundationPlayback: Playback {
     private var observers = [NSKeyValueObservation]()
 
     private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
-
+    private var numberOfDroppedVideoFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    
     open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
-    open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    open var droppedFrames: Int = 0
     open var decodedFrames: Int? { -1 }
     open var domainHost: String? { asset?.url.host }
 
-    var totalOfDroppedFrames: Int = 0
     var lastDvrAvailability: Bool?
     #if os(tvOS)
     lazy var nowPlayingService: AVFoundationNowPlayingService = {
@@ -340,9 +340,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func updateNumberOfDroppedFrames() {
-        guard let droppedFrames = droppedFrames, droppedFrames > 0 else { return }
+        guard let numberOfDroppedVideoFrames = numberOfDroppedVideoFrames, numberOfDroppedVideoFrames > 0 else { return }
 
-        totalOfDroppedFrames += droppedFrames
+        droppedFrames += numberOfDroppedVideoFrames
     }
 
     private func handlePlaybackLikelyToKeepUp(_ player: AVPlayer) {
@@ -455,6 +455,7 @@ open class AVFoundationPlayback: Playback {
         guard didFinishedItem(from: notification) else { return }
         trigger(.didComplete)
         updateState(.idle)
+        droppedFrames = 0
     }
 
     open override func pause() {
@@ -480,6 +481,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer = nil
         player?.replaceCurrentItem(with: nil)
         player = nil
+        droppedFrames = 0
     }
 
     @objc var isReadyToPlay: Bool {
