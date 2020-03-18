@@ -297,19 +297,19 @@ open class AVFoundationPlayback: Playback {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(playbackDidEnd),
-            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+            name: .AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onAccessLogEntry),
-            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+            name: .AVPlayerItemNewAccessLogEntry,
             object: nil)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onFailedToPlayToEndTime),
-            name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
+            name: .AVPlayerItemFailedToPlayToEndTime,
             object: nil)
     }
 
@@ -322,10 +322,6 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         updateNumberOfDroppedFrames()
         updateBitrate()
-    }
-
-    private var hasEnoughBufferToPlay: Bool {
-        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
     }
 
     private func updateBitrate() {
@@ -352,7 +348,11 @@ open class AVFoundationPlayback: Playback {
             play()
         }
     }
-
+    
+    private var hasEnoughBufferToPlay: Bool {
+        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    }
+    
     private func handlePlaybackBufferEmpty(_ player: AVPlayer) {
         guard state != .paused else { return }
         updateState(.stalling)

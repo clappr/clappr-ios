@@ -37,7 +37,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         avfoundationPlayback.addObservers()
 
                         NotificationCenter.default.post(
-                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            name: .AVPlayerItemNewAccessLogEntry,
                             object: player.currentItem
                         )
 
@@ -56,7 +56,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                             avfoundationPlayback.addObservers()
                             
                             NotificationCenter.default.post(
-                                name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
                             )
                             
@@ -73,14 +73,14 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                 avfoundationPlayback.addObservers()
                                 
                                 NotificationCenter.default.post(
-                                    name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                    name: .AVPlayerItemNewAccessLogEntry,
                                     object: player.currentItem
                                 )
                                 
                                 accessLog.setDroppedFrames(3)
                                 
                                 NotificationCenter.default.post(
-                                    name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                    name: .AVPlayerItemNewAccessLogEntry,
                                     object: player.currentItem
                                 )
                                 
@@ -97,14 +97,14 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                     avfoundationPlayback.addObservers()
                                     
                                     NotificationCenter.default.post(
-                                        name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                        name: .AVPlayerItemNewAccessLogEntry,
                                         object: player.currentItem
                                     )
                                     
                                     accessLog.setDroppedFrames(-1)
                                     
                                     NotificationCenter.default.post(
-                                        name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                        name: .AVPlayerItemNewAccessLogEntry,
                                         object: player.currentItem
                                     )
                                     
@@ -123,7 +123,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                             avfoundationPlayback.player = player
                             avfoundationPlayback.addObservers()
                             NotificationCenter.default.post(
-                                name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                                name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
                             )
                             
