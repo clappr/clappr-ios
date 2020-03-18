@@ -320,7 +320,7 @@ open class AVFoundationPlayback: Playback {
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
-        updateNumberOfDroppedFrames()
+        updateDroppedFrames()
         updateBitrate()
     }
 
@@ -335,7 +335,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private func updateNumberOfDroppedFrames() {
+    private func updateDroppedFrames() {
         guard let numberOfDroppedVideoFrames = numberOfDroppedVideoFrames, numberOfDroppedVideoFrames > 0 else { return }
 
         droppedFrames += numberOfDroppedVideoFrames
