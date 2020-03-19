@@ -32,11 +32,12 @@ open class AVFoundationPlayback: Playback {
     private var observers = [NSKeyValueObservation]()
 
     private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
-
+    private var numberOfDroppedVideoFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    
     open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
-    open var droppedFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
+    open var droppedFrames: Int = 0
     open var decodedFrames: Int? { -1 }
     open var domainHost: String? { asset?.url.host }
 
@@ -296,19 +297,19 @@ open class AVFoundationPlayback: Playback {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(playbackDidEnd),
-            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+            name: .AVPlayerItemDidPlayToEndTime,
             object: player.currentItem)
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onAccessLogEntry),
-            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+            name: .AVPlayerItemNewAccessLogEntry,
             object: nil)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onFailedToPlayToEndTime),
-            name: NSNotification.Name.AVPlayerItemFailedToPlayToEndTime,
+            name: .AVPlayerItemFailedToPlayToEndTime,
             object: nil)
     }
 
@@ -319,7 +320,13 @@ open class AVFoundationPlayback: Playback {
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
+        updateDroppedFrames()
+        updateBitrate()
+    }
+
+    private func updateBitrate() {
         guard lastBitrate != bitrate else { return }
+        
         lastBitrate = bitrate
         if let lastBitrate = lastBitrate, !lastBitrate.isNaN {
             trigger(.didUpdateBitrate, userInfo: ["bitrate": lastBitrate])
@@ -328,8 +335,10 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    private var hasEnoughBufferToPlay: Bool {
-        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    private func updateDroppedFrames() {
+        guard let numberOfDroppedVideoFrames = numberOfDroppedVideoFrames, numberOfDroppedVideoFrames > 0 else { return }
+
+        droppedFrames += numberOfDroppedVideoFrames
     }
 
     private func handlePlaybackLikelyToKeepUp(_ player: AVPlayer) {
@@ -339,7 +348,11 @@ open class AVFoundationPlayback: Playback {
             play()
         }
     }
-
+    
+    private var hasEnoughBufferToPlay: Bool {
+        return player?.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+    }
+    
     private func handlePlaybackBufferEmpty(_ player: AVPlayer) {
         guard state != .paused else { return }
         updateState(.stalling)
@@ -442,6 +455,7 @@ open class AVFoundationPlayback: Playback {
         guard didFinishedItem(from: notification) else { return }
         trigger(.didComplete)
         updateState(.idle)
+        droppedFrames = 0
     }
 
     open override func pause() {
@@ -467,6 +481,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer = nil
         player?.replaceCurrentItem(with: nil)
         player = nil
+        droppedFrames = 0
     }
 
     @objc var isReadyToPlay: Bool {

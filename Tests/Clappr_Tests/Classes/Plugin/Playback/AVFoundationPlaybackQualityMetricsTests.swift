@@ -37,7 +37,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         avfoundationPlayback.addObservers()
 
                         NotificationCenter.default.post(
-                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
+                            name: .AVPlayerItemNewAccessLogEntry,
                             object: player.currentItem
                         )
 
@@ -45,21 +45,115 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                     }
                 }
 
-                context("with new numberOfDroppedVideoFrames value") {
-                    it("changes the droppedFrames") {
-                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                        let accessLog = AccessLogEventMock()
-                        accessLog.setDroppedFrames(2)
-                        let player = PlayerMock(accessLogEvent: accessLog)
-                        avfoundationPlayback.player = player
-                        avfoundationPlayback.addObservers()
+                describe("droppedFrames") {
+                    context("with new numberOfDroppedVideoFrames value") {
+                        it("changes the droppedFrames") {
+                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                            let accessLog = AccessLogEventMock()
+                            accessLog.setDroppedFrames(2)
+                            let player = PlayerMock(accessLogEvent: accessLog)
+                            avfoundationPlayback.player = player
+                            avfoundationPlayback.addObservers()
+                            
+                            NotificationCenter.default.post(
+                                name: .AVPlayerItemNewAccessLogEntry,
+                                object: player.currentItem
+                            )
+                            
+                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(2))
+                        }
+                        
+                        context("when occurs another AVPlayerItemNewAccessLogEntry event") {
+                            it("changes the droppedFrames to an accumulated value") {
+                                let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                                let accessLog = AccessLogEventMock()
+                                accessLog.setDroppedFrames(2)
+                                let player = PlayerMock(accessLogEvent: accessLog)
+                                avfoundationPlayback.player = player
+                                avfoundationPlayback.addObservers()
+                                
+                                NotificationCenter.default.post(
+                                    name: .AVPlayerItemNewAccessLogEntry,
+                                    object: player.currentItem
+                                )
+                                
+                                accessLog.setDroppedFrames(3)
+                                
+                                NotificationCenter.default.post(
+                                    name: .AVPlayerItemNewAccessLogEntry,
+                                    object: player.currentItem
+                                )
+                                
+                                expect(avfoundationPlayback.droppedFrames).toEventually(equal(5))
+                            }
+                            
+                            context("when value is negative") {
+                                it("doesn't change the droppedFrames accumulated value") {
+                                    let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                                    let accessLog = AccessLogEventMock()
+                                    accessLog.setDroppedFrames(31)
+                                    let player = PlayerMock(accessLogEvent: accessLog)
+                                    avfoundationPlayback.player = player
+                                    avfoundationPlayback.addObservers()
+                                    
+                                    NotificationCenter.default.post(
+                                        name: .AVPlayerItemNewAccessLogEntry,
+                                        object: player.currentItem
+                                    )
+                                    
+                                    accessLog.setDroppedFrames(-1)
+                                    
+                                    NotificationCenter.default.post(
+                                        name: .AVPlayerItemNewAccessLogEntry,
+                                        object: player.currentItem
+                                    )
+                                    
+                                    expect(avfoundationPlayback.droppedFrames).toEventually(equal(31))
+                                }
+                            }
+                        }
+                    }
+                    
+                    context("when call stop") {
+                        it("clears droppedFrames value") {
+                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                            let accessLog = AccessLogEventMock()
+                            accessLog.setDroppedFrames(24)
+                            let player = PlayerMock(accessLogEvent: accessLog)
+                            avfoundationPlayback.player = player
+                            avfoundationPlayback.addObservers()
+                            NotificationCenter.default.post(
+                                name: .AVPlayerItemNewAccessLogEntry,
+                                object: player.currentItem
+                            )
+                            
+                            avfoundationPlayback.stop()
+                            
+                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(0))
+                        }
+                    }
+                    
+                    context("when playback did end") {
+                        it("clears droppedFrames value") {
+                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
+                            let accessLog = AccessLogEventMock()
+                            accessLog.setDroppedFrames(76)
+                            let player = PlayerMock(accessLogEvent: accessLog, isFinished: true)
+                            avfoundationPlayback.player = player
+                            avfoundationPlayback.addObservers()
+                            
+                            NotificationCenter.default.post(
+                                name: .AVPlayerItemNewAccessLogEntry,
+                                object: nil
+                            )
 
-                        NotificationCenter.default.post(
-                            name: NSNotification.Name.AVPlayerItemNewAccessLogEntry,
-                            object: player.currentItem
-                        )
-
-                        expect(avfoundationPlayback.droppedFrames).toEventually(equal(2))
+                            NotificationCenter.default.post(
+                                name: .AVPlayerItemDidPlayToEndTime,
+                                object: player.currentItem
+                            )
+                            
+                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(0))
+                        }
                     }
                 }
             }
