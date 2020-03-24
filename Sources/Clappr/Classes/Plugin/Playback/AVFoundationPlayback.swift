@@ -314,9 +314,10 @@ open class AVFoundationPlayback: Playback {
     }
 
     @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
-        if let error = notification?.userInfo?["AVPlayerItemFailedToPlayToEndTimeErrorKey"] as? Error {
-            trigger(.error, userInfo: ["error": error])
-        }
+        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
+        guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
+
+        trigger(.error, userInfo: ["error": error])
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
