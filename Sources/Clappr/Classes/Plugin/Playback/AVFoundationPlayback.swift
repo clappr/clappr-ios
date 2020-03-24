@@ -298,19 +298,34 @@ open class AVFoundationPlayback: Playback {
             self,
             selector: #selector(playbackDidEnd),
             name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem)
+            object: player.currentItem
+        )
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onAccessLogEntry),
             name: .AVPlayerItemNewAccessLogEntry,
-            object: nil)
+            object: nil
+        )
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onFailedToPlayToEndTime),
             name: .AVPlayerItemFailedToPlayToEndTime,
-            object: nil)
+            object: nil
+        )
+    }
+    
+    @objc func playbackDidEnd(notification: NSNotification?) {
+        guard didFinishedItem(from: notification) else { return }
+        trigger(.didComplete)
+        updateState(.idle)
+        droppedFrames = 0
+    }
+
+    @objc func onAccessLogEntry(notification: NSNotification?) {
+        updateDroppedFrames()
+        updateBitrate()
     }
 
     @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
@@ -318,11 +333,6 @@ open class AVFoundationPlayback: Playback {
         guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
 
         trigger(.error, userInfo: ["error": error])
-    }
-    
-    @objc func onAccessLogEntry(notification: NSNotification?) {
-        updateDroppedFrames()
-        updateBitrate()
     }
 
     private func updateBitrate() {
@@ -450,13 +460,6 @@ open class AVFoundationPlayback: Playback {
             object == item,
             item.isFinished() else { return false }
         return true
-    }
-
-    @objc func playbackDidEnd(notification: NSNotification?) {
-        guard didFinishedItem(from: notification) else { return }
-        trigger(.didComplete)
-        updateState(.idle)
-        droppedFrames = 0
     }
 
     open override func pause() {
