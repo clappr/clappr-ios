@@ -90,7 +90,6 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 context("and a video is playing") {
-
                     beforeEach {
                         coreStub.playbackMock?.set(state: .playing)
                     }
@@ -192,6 +191,111 @@ class PlayButtonTests: QuickSpec {
                     coreStub.activePlayback?.trigger(.playing)
 
                     expect(playButton.view.isHidden).to(beFalse())
+                }
+            }
+            
+            describe("#togglePlayPause") {
+                var core: CoreStub!
+                var playButton: PlayButton!
+                
+                beforeEach {
+                    core = CoreStub()
+                    playButton = PlayButton(context: core)
+                    playButton.render()
+                }
+
+                context("when playback state is paused") {
+                    context("can play is true") {
+                        it("calls play") {
+                            core.playbackMock?.state = .paused
+                            core.playbackMock?._canPlay = true
+
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPlay).to(beTrue())
+                        }
+                    }
+                    
+                    context("can play is false") {
+                        it("does not call play") {
+                            core.playbackMock?.state = .paused
+                            core.playbackMock?._canPlay = false
+                            
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPlay).to(beFalse())
+                        }
+                        
+                    }
+                }
+                
+                context("when playback state is idle") {
+                    context("can play is true") {
+                        it("calls play") {
+                            core.playbackMock?.state = .idle
+                            core.playbackMock?._canPlay = true
+                                
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPlay).to(beTrue())
+                        }
+                    }
+                    
+                    context("can play is false") {
+                        it("does not call play") {
+                            core.playbackMock?.state = .idle
+                            core.playbackMock?._canPlay = false
+                                
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPlay).to(beFalse())
+                        }
+                    }
+                }
+                
+                context("when playback state is playing") {
+                    context("can pause is true") {
+                        it("calls pause") {
+                            core.playbackMock?.state = .playing
+                            core.playbackMock?._canPause = true
+                            
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPause).to(beTrue())
+                        }
+                    }
+                    
+                    context("can pause is false") {
+                        it("calls pause") {
+                            core.playbackMock?.state = .playing
+                            core.playbackMock?._canPause = false
+                            
+                            playButton.togglePlayPause()
+                            
+                            expect(core.playbackMock?.didCallPause).to(beFalse())
+                        }
+                    }
+                }
+                
+                context("when playback state is none") {
+                    it("does not call play") {
+                        core.playbackMock?.state = .none
+                        core.playbackMock?._canPlay = true
+                        
+                        playButton.togglePlayPause()
+                        
+                        expect(core.playbackMock?.didCallPlay).to(beFalse())
+                    }
+                    
+                    it("does not call pause") {
+                        core.playbackMock?.state = .none
+                        core.playbackMock?._canPause = true
+
+                        playButton.togglePlayPause()
+                        
+                        expect(core.playbackMock?.didCallPause).to(beFalse())
+                    }
+                    
                 }
             }
         }

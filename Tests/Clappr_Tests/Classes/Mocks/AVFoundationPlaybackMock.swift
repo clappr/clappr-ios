@@ -15,6 +15,8 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     var _isDvrAvailable = false
     var videoPosition: Double = 0
     var _isDvrInUse = false
+    var _canPlay: Bool?
+    var _canPause: Bool?
     var didCallSeekToLivePosition = false
     var _playbackType: PlaybackType = .vod
     var _state: PlaybackState = .none
@@ -30,6 +32,14 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     
     override var duration: Double {
         return videoDuration
+    }
+    
+    override var canPlay: Bool {
+        return _canPlay ?? super.canPlay
+    }
+    
+    override var canPause: Bool {
+        return _canPause ?? super.canPause
     }
     
     override var isDvrAvailable: Bool {
@@ -71,7 +81,9 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     override func pause() {
         didCallPause = true
         set(state: .paused)
+        trigger(.willPause)
         super.pause()
+        trigger(.didPause)
     }
     
     override func play() {

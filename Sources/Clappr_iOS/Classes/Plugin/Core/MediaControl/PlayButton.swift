@@ -65,21 +65,32 @@ open class PlayButton: MediaControl.Element {
     }
 
     @objc func togglePlayPause() {
-        guard let playback = activePlayback else {
-            return
-        }
+        guard let playback = activePlayback else { return }
 
-        if playback.state == .playing {
-            activePlayback?.pause()
-        } else if playback.state == .paused {
-            activePlayback?.play()
+        switch playback.state {
+        case .playing:
+            pause()
+        case .paused, .idle:
+            play()
+        default:
+            break
         }
     }
 
+    private func pause() {
+        guard let playback = activePlayback, playback.canPause else { return }
+        
+        activePlayback?.pause()
+    }
+    
+    private func play() {
+        guard let playback = activePlayback, playback.canPlay else { return }
+        
+        activePlayback?.play()
+    }
+    
     public func changeIcon() {
-        guard let playback = activePlayback else {
-            return
-        }
+        guard let playback = activePlayback else { return }
 
         if playback.state == .paused {
             button.setImage(playIcon, for: .normal)
