@@ -1,15 +1,8 @@
 open class PlayButton: MediaControl.Element {
-    open class override var name: String {
-        return "PlayButton"
-    }
+    open class override var name: String { "PlayButton" }
 
-    override open var panel: MediaControlPanel {
-        return .center
-    }
-
-    override open var position: MediaControlPosition {
-        return .center
-    }
+    override open var panel: MediaControlPanel { .center }
+    override open var position: MediaControlPosition { .center }
 
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
