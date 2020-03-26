@@ -311,6 +311,20 @@ class PlayButtonTests: QuickSpec {
                         
                         expect(playButton.view.isHidden).to(beFalse())
                     }
+                    
+                    it("changes button icon") {
+                        let core = CoreStub()
+                        let playIcon = UIImage.fromName("play", for: PlayButton.self)
+                        let playButton = PlayButton(context: core)
+                        playButton.render()
+                        core.playbackMock?.state = .playing
+                        core.activePlayback?.trigger(.playing)
+                        core.playbackMock?.state = .idle
+                        
+                        core.activePlayback?.trigger(.didStop)
+
+                        expect(playButton.button?.imageView?.image).to(equal(playIcon))
+                    }
                 }
             }
         }
