@@ -16,6 +16,14 @@ open class PlayButton: MediaControl.Element {
             button.bindFrameToSuperviewBounds()
         }
     }
+    
+    private var canShowPlayIcon: Bool {
+        activePlayback?.state == .paused || activePlayback?.state == .idle
+    }
+    
+    private var canShowPauseIcon: Bool {
+        activePlayback?.state == .playing
+    }
 
     override open func bindEvents() {
         bindPlaybackEvents()
@@ -24,6 +32,7 @@ open class PlayButton: MediaControl.Element {
     func bindPlaybackEvents() {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
+            listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onPause() }
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
             listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
         }
@@ -41,12 +50,12 @@ open class PlayButton: MediaControl.Element {
 
     open func onPlay() {
         show()
-        changeIcon()
+        changeToPauseIcon()
     }
 
     private func onPause() {
         show()
-        changeIcon()
+        changeToPlayIcon()
     }
 
     public func hide() {
@@ -82,13 +91,15 @@ open class PlayButton: MediaControl.Element {
         activePlayback?.play()
     }
     
-    public func changeIcon() {
-        guard let playback = activePlayback else { return }
-
-        if playback.state == .paused {
-            button.setImage(playIcon, for: .normal)
-        } else if playback.state == .playing {
-            button.setImage(pauseIcon, for: .normal)
-        }
+    private func changeToPlayIcon() {
+        guard canShowPlayIcon else { return }
+        
+        button.setImage(playIcon, for: .normal)
+    }
+    
+    private func changeToPauseIcon() {
+        guard canShowPauseIcon else { return }
+        
+        button.setImage(pauseIcon, for: .normal)
     }
 }
