@@ -7,8 +7,10 @@ open class PlayButton: MediaControl.Element {
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-    public var button: UIButton! {
+    public var button: UIButton? {
         didSet {
+            guard let button = button else { return }
+
             view.addSubview(button)
             button.setImage(playIcon, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
@@ -32,7 +34,7 @@ open class PlayButton: MediaControl.Element {
     func bindPlaybackEvents() {
         if let playback = activePlayback {
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
-            listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onPause() }
+            listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onStop() }
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
             listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
         }
@@ -45,7 +47,7 @@ open class PlayButton: MediaControl.Element {
         }
 
         button = UIButton(type: .custom)
-        button.accessibilityIdentifier = "PlayPauseButton"
+        button?.accessibilityIdentifier = "PlayPauseButton"
     }
 
     open func onPlay() {
@@ -54,6 +56,11 @@ open class PlayButton: MediaControl.Element {
     }
 
     private func onPause() {
+        show()
+        changeToPlayIcon()
+    }
+    
+    private func onStop() {
         show()
         changeToPlayIcon()
     }
@@ -94,12 +101,12 @@ open class PlayButton: MediaControl.Element {
     private func changeToPlayIcon() {
         guard canShowPlayIcon else { return }
         
-        button.setImage(playIcon, for: .normal)
+        button?.setImage(playIcon, for: .normal)
     }
     
     private func changeToPauseIcon() {
         guard canShowPauseIcon else { return }
         
-        button.setImage(pauseIcon, for: .normal)
+        button?.setImage(pauseIcon, for: .normal)
     }
 }
