@@ -111,7 +111,7 @@ open class PlayButton: MediaControl.Element {
         button?.setImage(playIcon, for: .normal)
     }
     
-    private func changeToPauseIcon() {
+    public func changeToPauseIcon() {
         guard canShowPauseIcon else { return }
         
         button?.setImage(pauseIcon, for: .normal)
