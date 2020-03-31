@@ -115,6 +115,14 @@ class ContainerTests: QuickSpec {
                         }
                     }
                 }
+                
+                context("should reload") {
+                    it("has false as initial value") {
+                        let container = Container()
+                        
+                        expect(container.shouldReload).to(beFalse())
+                    }
+                }
             }
 
             describe("#render") {
@@ -353,21 +361,79 @@ class ContainerTests: QuickSpec {
                     expect(didResizeValue?.height).toEventually(equal(10))
                 }
             }
+            
+            describe("#reload") {
+                context("should reload") {
+                    it("sets to false") {
+                        let container = Container()
+                        container.shouldReload = true
+                        
+                        container.reload(videoId: Source.valid)
+                        
+                        expect(container.shouldReload).to(beFalse())
+                    }
+                }
+
+                context("options") {
+                    it("changes source URL") {
+                        Loader.shared.resetPlaybacks()
+                        Loader.shared.register(playbacks: [StubPlayback.self])
+                        let container = Container()
+                        container.load(Source.valid)
+                        
+                        container.reload(videoId: Source.invalid)
+                        
+                        expect(container.options[kSourceUrl] as? String).to(equal("invalid"))
+                    }
+                    
+                    it("changes selected subtitle") {
+                        Loader.shared.resetPlaybacks()
+                        Loader.shared.register(playbacks: [StubPlayback.self])
+                        let container = Container()
+                        container.load(Source.valid)
+                        let subtitle = MediaOption(name: "newSubtitle", type: .subtitle, language: "newLanguage")
+                        (container.playback as? StubPlayback)?.stubSubtitle = subtitle
+                        
+                        container.reload(videoId: Source.valid)
+                        
+                        expect(container.options[kDefaultSubtitle] as? String).to(equal("newLanguage"))
+                    }
+                    
+                    it("changes selected audio") {
+                        Loader.shared.resetPlaybacks()
+                        Loader.shared.register(playbacks: [StubPlayback.self])
+                        let container = Container()
+                        container.load(Source.valid)
+                        let audio = MediaOption(name: "newAudio", type: .subtitle, language: "newLanguage")
+                        (container.playback as? StubPlayback)?.stubAudioSource = audio
+                        
+                        container.reload(videoId: Source.valid)
+                        
+                        expect(container.options[kDefaultAudioSource] as? String).to(equal("newLanguage"))
+                    }
+                }
+            }
         }
     }
 
     class StubPlayback: Playback {
-        override class var name: String {
-            return "AVPlayback"
+        override class var name: String { "AVPlayback" }
+        
+        var stubSubtitle = MediaOption(name: "name", type: .subtitle, language: "language")
+        var stubAudioSource = MediaOption(name: "name", type: .audioSource, language: "language")
+        
+        override var selectedSubtitle: MediaOption? {
+            get { stubSubtitle }
+            set { print(stubSubtitle) }
+        }
+        
+        override var selectedAudioSource: MediaOption? {
+            get { stubAudioSource }
+            set { print(stubAudioSource) }
         }
 
-        override class func canPlay(_: Options) -> Bool {
-            return true
-        }
-
-        override func play() {
-            trigger(.playing)
-        }
+        override class func canPlay(_: Options) -> Bool { true }
+        override func play() { trigger(.playing) }
     }
 
     class FakeContainerPlugin: ContainerPlugin {

@@ -3,6 +3,7 @@ import Foundation
 open class Container: UIObject {
     private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
+    @objc open var shouldReload = false
     @objc open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)
@@ -44,6 +45,7 @@ open class Container: UIObject {
     }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
+        shouldReload = false
         trigger(Event.willLoadSource.rawValue)
 
         options[kSourceUrl] = source
@@ -63,6 +65,15 @@ open class Container: UIObject {
         }
     }
 
+    @objc open func reload(videoId: String) {
+        let mimeType = options[kMimeType] as? String
+
+        options[kDefaultSubtitle] = playback?.selectedSubtitle?.language
+        options[kDefaultAudioSource] = playback?.selectedAudioSource?.language
+
+        load(videoId, mimeType: mimeType)
+    }
+    
     open override func render() {
         plugins.forEach(renderPlugin)
 
