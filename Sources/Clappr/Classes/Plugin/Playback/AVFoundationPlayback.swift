@@ -246,9 +246,7 @@ open class AVFoundationPlayback: Playback {
         guard let asset = asset else { return triggerSetupError() }
 
         createPlayerInstance(with: AVPlayerItem(asset: asset))
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.frame = view.bounds
-        setupMaxResolution(for: playerLayer!.frame.size)
+        playerLayer?.player = player
 
         asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
         asset.wait(for: .duration, then: durationAvailable)
@@ -693,7 +691,10 @@ open class AVFoundationPlayback: Playback {
     open override func render() {
         super.render()
         
+        playerLayer = AVPlayerLayer(player: AVPlayer())
         view.layer.addSublayer(playerLayer!)
+        playerLayer?.frame = view.bounds
+        setupMaxResolution(for: playerLayer!.frame.size)
         
         if asset != nil {
             trigger(.ready)
