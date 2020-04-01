@@ -19,7 +19,7 @@ open class AVFoundationPlayback: Playback {
             }
         }
     }
-    private var playerLayer: AVPlayerLayer?
+    private var playerLayer: AVPlayerLayer? = AVPlayerLayer(player: AVPlayer())
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var isStopped = false
     private var timeObserver: Any?
@@ -156,12 +156,7 @@ open class AVFoundationPlayback: Playback {
         return AVURLAsset.isPlayableExtendedMIMEType(mimeType)
     }
     
-    open var isApplicationActive: Bool {
-        UIApplication.shared.applicationState == .active
-    }
-
     open override var canPlay: Bool {
-        if !isApplicationActive { return false }
         switch state {
         case .idle, .paused:
             return true
@@ -252,7 +247,6 @@ open class AVFoundationPlayback: Playback {
 
         createPlayerInstance(with: AVPlayerItem(asset: asset))
         playerLayer = AVPlayerLayer(player: player)
-        view.layer.addSublayer(playerLayer!)
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer!.frame.size)
 
@@ -345,9 +339,13 @@ open class AVFoundationPlayback: Playback {
 
         droppedFrames += numberOfDroppedVideoFrames
     }
+    
+    open var isApplicationActive: Bool {
+        UIApplication.shared.applicationState == .active
+    }
 
     private func handlePlaybackLikelyToKeepUp(_ player: AVPlayer) {
-        guard state != .paused else { return }
+        guard state != .paused, isApplicationActive else { return }
 
         if hasEnoughBufferToPlay {
             play()
@@ -694,6 +692,9 @@ open class AVFoundationPlayback: Playback {
 
     open override func render() {
         super.render()
+        
+        view.layer.addSublayer(playerLayer!)
+        
         if asset != nil {
             trigger(.ready)
         }
