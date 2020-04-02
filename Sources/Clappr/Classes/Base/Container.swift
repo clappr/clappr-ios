@@ -65,13 +65,13 @@ open class Container: UIObject {
         }
     }
 
-    @objc open func reload(videoId: String) {
+    @objc open func reload(source: String) {
         let mimeType = options[kMimeType] as? String
 
         options[kDefaultSubtitle] = playback?.selectedSubtitle?.language
         options[kDefaultAudioSource] = playback?.selectedAudioSource?.language
 
-        load(videoId, mimeType: mimeType)
+        load(source, mimeType: mimeType)
     }
     
     open override func render() {

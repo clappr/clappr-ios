@@ -368,7 +368,7 @@ class ContainerTests: QuickSpec {
                         let container = Container()
                         container.shouldReload = true
                         
-                        container.reload(videoId: Source.valid)
+                        container.reload(source: Source.valid)
                         
                         expect(container.shouldReload).to(beFalse())
                     }
@@ -381,7 +381,7 @@ class ContainerTests: QuickSpec {
                         let container = Container()
                         container.load(Source.valid)
                         
-                        container.reload(videoId: Source.invalid)
+                        container.reload(source: Source.invalid)
                         
                         expect(container.options[kSourceUrl] as? String).to(equal("invalid"))
                     }
@@ -394,7 +394,7 @@ class ContainerTests: QuickSpec {
                         let subtitle = MediaOption(name: "newSubtitle", type: .subtitle, language: "newLanguage")
                         (container.playback as? StubPlayback)?.stubSubtitle = subtitle
                         
-                        container.reload(videoId: Source.valid)
+                        container.reload(source: Source.valid)
                         
                         expect(container.options[kDefaultSubtitle] as? String).to(equal("newLanguage"))
                     }
@@ -407,7 +407,7 @@ class ContainerTests: QuickSpec {
                         let audio = MediaOption(name: "newAudio", type: .subtitle, language: "newLanguage")
                         (container.playback as? StubPlayback)?.stubAudioSource = audio
                         
-                        container.reload(videoId: Source.valid)
+                        container.reload(source: Source.valid)
                         
                         expect(container.options[kDefaultAudioSource] as? String).to(equal("newLanguage"))
                     }
