@@ -3,7 +3,8 @@ import Foundation
 open class Container: UIObject {
     private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
-    @objc open var shouldReload = false
+    private var shouldReload = false
+    private var source: String?
     @objc open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)
@@ -43,9 +44,26 @@ open class Container: UIObject {
         view.backgroundColor = .clear
         view.accessibilityIdentifier = "Container"
     }
+    
+    open func setNeedsReload() {
+        shouldReload = true
+    }
+    
+    open func play() {
+        if shouldReload {
+            reload()
+        } else {
+            playback?.play()
+        }
+    }
+    
+    open func pause() {
+        playback?.pause()
+    }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
-        shouldReload = false
+        self.source = source
+        
         trigger(Event.willLoadSource.rawValue)
 
         options[kSourceUrl] = source
@@ -65,13 +83,21 @@ open class Container: UIObject {
         }
     }
 
-    @objc open func reload(source: String) {
+    @objc open func reload() {
+        shouldReload = false
+        
+        guard let source = self.source else { return }
+        
         let mimeType = options[kMimeType] as? String
-
-        options[kDefaultSubtitle] = playback?.selectedSubtitle?.language
-        options[kDefaultAudioSource] = playback?.selectedAudioSource?.language
+        
+        extractDefaultLanguageOptions()
 
         load(source, mimeType: mimeType)
+    }
+    
+    private func extractDefaultLanguageOptions() {
+        options[kDefaultSubtitle] = playback?.selectedSubtitle?.language
+        options[kDefaultAudioSource] = playback?.selectedAudioSource?.language
     }
     
     open override func render() {
