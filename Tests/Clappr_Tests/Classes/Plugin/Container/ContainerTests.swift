@@ -363,7 +363,7 @@ class ContainerTests: QuickSpec {
                         container.load(Source.invalid)
                         
                         container.setNeedsReload()
-                        container.reload()
+                        container.play()
                         
                         expect(container.options[kSourceUrl] as? String).to(equal("invalid"))
                     }
@@ -377,7 +377,7 @@ class ContainerTests: QuickSpec {
                         (container.playback as? StubPlayback)?.stubSubtitle = subtitle
                         
                         container.setNeedsReload()
-                        container.reload()
+                        container.play()
                         
                         expect(container.options[kDefaultSubtitle] as? String).to(equal("newLanguage"))
                     }
@@ -391,7 +391,7 @@ class ContainerTests: QuickSpec {
                         (container.playback as? StubPlayback)?.stubAudioSource = audio
                         
                         container.setNeedsReload()
-                        container.reload()
+                        container.play()
                         
                         expect(container.options[kDefaultAudioSource] as? String).to(equal("newLanguage"))
                     }

@@ -83,7 +83,7 @@ open class Container: UIObject {
         }
     }
 
-    @objc open func reload() {
+    private func reload() {
         shouldReload = false
         
         guard let source = self.source else { return }
