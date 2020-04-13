@@ -356,18 +356,6 @@ class ContainerTests: QuickSpec {
             
             describe("#reload") {
                 context("options") {
-                    it("changes source URL") {
-                        Loader.shared.resetPlaybacks()
-                        Loader.shared.register(playbacks: [StubPlayback.self])
-                        let container = Container()
-                        container.load(Source.invalid)
-                        
-                        container.setNeedsReload()
-                        container.play()
-                        
-                        expect(container.options[kSourceUrl] as? String).to(equal("invalid"))
-                    }
-                    
                     it("changes selected subtitle") {
                         Loader.shared.resetPlaybacks()
                         Loader.shared.register(playbacks: [StubPlayback.self])
@@ -418,6 +406,9 @@ class ContainerTests: QuickSpec {
 
         override class func canPlay(_: Options) -> Bool { true }
         override func play() { trigger(.playing) }
+        
+        override open var canPlay: Bool { true }
+        override open var canPause: Bool { true }
     }
 
     class FakeContainerPlugin: ContainerPlugin {

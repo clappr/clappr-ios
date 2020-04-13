@@ -50,6 +50,8 @@ open class Container: UIObject {
     }
     
     open func play() {
+        guard playback?.canPlay ?? false else { return }
+        
         if shouldReload {
             reload()
         } else {
@@ -58,6 +60,8 @@ open class Container: UIObject {
     }
     
     open func pause() {
+        guard playback?.canPause ?? false else { return }
+        
         playback?.pause()
     }
 
