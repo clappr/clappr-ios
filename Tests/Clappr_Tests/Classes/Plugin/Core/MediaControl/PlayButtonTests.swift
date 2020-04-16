@@ -7,10 +7,13 @@ class PlayButtonTests: QuickSpec {
     override func spec() {
         describe(".PlayButton") {
             var coreStub: CoreStub!
+            var container: ContainerStub!
             var playButton: PlayButton!
 
             beforeEach {
                 coreStub = CoreStub()
+                container = ContainerStub()
+                coreStub.activeContainer = container
                 playButton = PlayButton(context: coreStub)
             }
 
@@ -73,7 +76,7 @@ class PlayButtonTests: QuickSpec {
                     it("calls the playback play") {
                         playButton.button?.sendActions(for: .touchUpInside)
 
-                        expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
+                        expect(container.didCallPlay).to(beTrue())
                     }
 
                     it("shows play button") {
@@ -97,7 +100,7 @@ class PlayButtonTests: QuickSpec {
                     it("calls the playback pause") {
                         playButton.button?.sendActions(for: .touchUpInside)
 
-                        expect(coreStub.playbackMock?.didCallPause).to(beTrue())
+                        expect(container.didCallPause).to(beTrue())
                     }
 
                     it("changes the image to a play icon") {
@@ -131,10 +134,10 @@ class PlayButtonTests: QuickSpec {
                     it("calls the playback play") {
                         playButton.button?.sendActions(for: .touchUpInside)
 
-                        expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
+                        expect(container.didCallPlay).to(beTrue())
                     }
 
-                    it("changes the image to a pause icon") {
+                    fit("changes the image to a pause icon") {                        
                         let pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
                         playButton.button?.sendActions(for: .touchUpInside)
@@ -205,95 +208,56 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 context("when playback state is paused") {
-                    context("can play is true") {
-                        it("calls play") {
-                            core.playbackMock?.state = .paused
-                            core.playbackMock?._canPlay = true
+                    it("calls play") {
+                        core.playbackMock?.state = .paused
 
-                            playButton.togglePlayPause()
-                            
-                            expect(core.playbackMock?.didCallPlay).to(beTrue())
-                        }
-                    }
-                    
-                    context("can play is false") {
-                        it("does not call play") {
-                            core.playbackMock?.state = .paused
-                            core.playbackMock?._canPlay = false
-                            
-                            playButton.togglePlayPause()
-                            
-                            expect(core.playbackMock?.didCallPlay).to(beFalse())
-                        }
+                        playButton.togglePlayPause()
                         
+                        let containerStub = playButton.activeContainer as! ContainerStub
+                        expect(containerStub.didCallPlay).to(beTrue())
                     }
                 }
                 
                 context("when playback state is idle") {
-                    context("can play is true") {
-                        it("calls play") {
-                            core.playbackMock?.state = .idle
-                            core.playbackMock?._canPlay = true
-                                
-                            playButton.togglePlayPause()
+                    it("calls play") {
+                        core.playbackMock?.state = .idle
                             
-                            expect(core.playbackMock?.didCallPlay).to(beTrue())
-                        }
-                    }
-                    
-                    context("can play is false") {
-                        it("does not call play") {
-                            core.playbackMock?.state = .idle
-                            core.playbackMock?._canPlay = false
-                                
-                            playButton.togglePlayPause()
-                            
-                            expect(core.playbackMock?.didCallPlay).to(beFalse())
-                        }
+                        playButton.togglePlayPause()
+                        
+                        let containerStub = playButton.activeContainer as! ContainerStub
+                        
+                        expect(containerStub.didCallPlay).to(beTrue())
                     }
                 }
-                
+
                 context("when playback state is playing") {
-                    context("can pause is true") {
-                        it("calls pause") {
-                            core.playbackMock?.state = .playing
-                            core.playbackMock?._canPause = true
-                            
-                            playButton.togglePlayPause()
-                            
-                            expect(core.playbackMock?.didCallPause).to(beTrue())
-                        }
-                    }
-                    
-                    context("can pause is false") {
-                        it("calls pause") {
-                            core.playbackMock?.state = .playing
-                            core.playbackMock?._canPause = false
-                            
-                            playButton.togglePlayPause()
-                            
-                            expect(core.playbackMock?.didCallPause).to(beFalse())
-                        }
+                    it("calls pause") {
+                        core.playbackMock?.state = .playing
+                        
+                        playButton.togglePlayPause()
+                        
+                        let containerStub = playButton.activeContainer as! ContainerStub
+                        expect(containerStub.didCallPause).to(beTrue())
                     }
                 }
                 
                 context("when playback state is none") {
                     it("does not call play") {
                         core.playbackMock?.state = .none
-                        core.playbackMock?._canPlay = true
                         
                         playButton.togglePlayPause()
                         
-                        expect(core.playbackMock?.didCallPlay).to(beFalse())
+                        let containerStub = playButton.activeContainer as! ContainerStub
+                        expect(containerStub.didCallPlay).to(beFalse())
                     }
                     
                     it("does not call pause") {
                         core.playbackMock?.state = .none
-                        core.playbackMock?._canPause = true
 
                         playButton.togglePlayPause()
                         
-                        expect(core.playbackMock?.didCallPause).to(beFalse())
+                        let containerStub = playButton.activeContainer as! ContainerStub
+                        expect(containerStub.didCallPause).to(beFalse())
                     }
                     
                 }
