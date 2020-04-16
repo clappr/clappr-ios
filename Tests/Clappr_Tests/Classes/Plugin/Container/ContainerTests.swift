@@ -354,36 +354,97 @@ class ContainerTests: QuickSpec {
                 }
             }
             
-            describe("#reload") {
-                context("options") {
-                    it("changes selected subtitle") {
-                        Loader.shared.resetPlaybacks()
-                        Loader.shared.register(playbacks: [StubPlayback.self])
-                        let container = Container()
-                        container.load(Source.valid)
-                        let subtitle = MediaOption(name: "newSubtitle", type: .subtitle, language: "newLanguage")
-                        (container.playback as? StubPlayback)?.stubSubtitle = subtitle
+            describe("#play") {
+                var playback: StubPlayback!
+                
+                beforeEach {
+                    Loader.shared.resetPlaybacks()
+                    Loader.shared.register(playbacks: [StubPlayback.self])
+                    container = Container()
+                    container.load(Source.valid)
+                    playback = (container.playback as! StubPlayback)
+                }
+                
+                context("when can not play") {
+                    it("does not calls playback play") {
+                        playback.canPlayMock = false
                         
-                        container.setNeedsReload()
                         container.play()
                         
-                        expect(container.options[kDefaultSubtitle] as? String).to(equal("newLanguage"))
-                    }
-                    
-                    it("changes selected audio") {
-                        Loader.shared.resetPlaybacks()
-                        Loader.shared.register(playbacks: [StubPlayback.self])
-                        let container = Container()
-                        container.load(Source.valid)
-                        let audio = MediaOption(name: "newAudio", type: .subtitle, language: "newLanguage")
-                        (container.playback as? StubPlayback)?.stubAudioSource = audio
+                        expect(playback.didCallPlay).to(beFalse())
                         
-                        container.setNeedsReload()
-                        container.play()
-                        
-                        expect(container.options[kDefaultAudioSource] as? String).to(equal("newLanguage"))
                     }
                 }
+                
+                context("when can play") {
+                    it("calls playback play") {
+                        playback.canPlayMock = true
+                        
+                        container.play()
+                        
+                        expect(playback.didCallPlay).to(beTrue())
+                    }
+                }
+                
+                context("when needs reload") {
+                    context("options") {
+                        it("changes selected subtitle") {
+                            container.load(Source.valid)
+                            let subtitle = MediaOption(name: "newSubtitle", type: .subtitle, language: "newLanguage")
+                            (container.playback as? StubPlayback)?.stubSubtitle = subtitle
+                            
+                            container.setNeedsReload()
+                            container.play()
+                            
+                            expect(container.options[kDefaultSubtitle] as? String).to(equal("newLanguage"))
+                        }
+                        
+                        it("changes selected audio") {
+                            container.load(Source.valid)
+                            let audio = MediaOption(name: "newAudio", type: .subtitle, language: "newLanguage")
+                            (container.playback as? StubPlayback)?.stubAudioSource = audio
+                            
+                            container.setNeedsReload()
+                            container.play()
+                            
+                            expect(container.options[kDefaultAudioSource] as? String).to(equal("newLanguage"))
+                        }
+                    }
+                }
+                
+                describe("#pause") {
+                    var playback: StubPlayback!
+                    
+                    beforeEach {
+                        Loader.shared.resetPlaybacks()
+                        Loader.shared.register(playbacks: [StubPlayback.self])
+                        container = Container()
+                        container.load(Source.valid)
+                        playback = (container.playback as! StubPlayback)
+                    }
+                    
+                    context("when can not pause") {
+                        it("does not calls playback pause") {
+                            playback.canPauseMock = false
+                            
+                            container.pause()
+                            
+                            expect(playback.didCallPause).to(beFalse())
+                            
+                        }
+                    }
+                    
+                    context("when can pause") {
+                        it("calls playback pause") {
+                            playback.canPauseMock = true
+                            
+                            container.pause()
+                            
+                            expect(playback.didCallPause).to(beTrue())
+                        }
+                    }
+                }
+                
             }
         }
     }
@@ -393,6 +454,11 @@ class ContainerTests: QuickSpec {
         
         var stubSubtitle = MediaOption(name: "name", type: .subtitle, language: "language")
         var stubAudioSource = MediaOption(name: "name", type: .audioSource, language: "language")
+        
+        var canPlayMock = true
+        var canPauseMock = true
+        var didCallPlay = false
+        var didCallPause = false
         
         override var selectedSubtitle: MediaOption? {
             get { stubSubtitle }
@@ -405,10 +471,18 @@ class ContainerTests: QuickSpec {
         }
 
         override class func canPlay(_: Options) -> Bool { true }
-        override func play() { trigger(.playing) }
         
-        override open var canPlay: Bool { true }
-        override open var canPause: Bool { true }
+        override func play() {
+            trigger(.playing)
+            didCallPlay = true
+        }
+        
+        override func pause() {
+            didCallPause = true
+        }
+        
+        override open var canPlay: Bool { canPlayMock }
+        override open var canPause: Bool { canPauseMock }
     }
 
     class FakeContainerPlugin: ContainerPlugin {

@@ -50,19 +50,19 @@ open class Container: UIObject {
     }
     
     open func play() {
-        guard playback?.canPlay ?? false else { return }
+        guard let activePlayback = playback, activePlayback.canPlay else { return }
         
         if shouldReload {
             reload()
         } else {
-            playback?.play()
+            activePlayback.play()
         }
     }
     
     open func pause() {
-        guard playback?.canPause ?? false else { return }
+        guard let activePlayback = playback, activePlayback.canPause else { return }
         
-        playback?.pause()
+        activePlayback.pause()
     }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
