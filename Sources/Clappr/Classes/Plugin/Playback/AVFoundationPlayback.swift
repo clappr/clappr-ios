@@ -24,7 +24,7 @@ open class AVFoundationPlayback: Playback {
     private var isStopped = false
     private var timeObserver: Any?
     private var asset: AVURLAsset?
-    private var backgroundSessionBackup: AVAudioSession.Category?
+    private var audioSessionCategoryBackup: AVAudioSession.Category?
     private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
     private var lastBitrate: Double?
@@ -186,6 +186,7 @@ open class AVFoundationPlayback: Playback {
     public required init(options: Options) {
         super.init(options: options)
         asset = createAsset(from: options[kSourceUrl] as? String)
+        setAudioSessionCategory(to: .playback)
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
@@ -414,19 +415,19 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func enableBackgroundSession() {
-        backgroundSessionBackup = AVAudioSession.sharedInstance().category
-        changeBackgroundSession(to: .playback)
+        audioSessionCategoryBackup = AVAudioSession.sharedInstance().category
+        setAudioSessionCategory(to: .playback, with: [.allowAirPlay])
     }
 
     private func restoreBackgroundSession() {
-        if let backgroundSession = backgroundSessionBackup {
-            changeBackgroundSession(to: backgroundSession)
+        if let backgroundSession = audioSessionCategoryBackup {
+            setAudioSessionCategory(to: backgroundSession)
         }
     }
 
-    private func changeBackgroundSession(to category: AVAudioSession.Category) {
+    private func setAudioSessionCategory(to category: AVAudioSession.Category, with options: AVAudioSession.CategoryOptions = []) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: [.allowAirPlay])
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: options)
         } catch {
             Logger.logError("It was not possible to set the audio session category")
         }
