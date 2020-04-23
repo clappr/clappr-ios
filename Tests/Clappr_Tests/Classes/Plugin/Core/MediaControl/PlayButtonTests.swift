@@ -137,7 +137,7 @@ class PlayButtonTests: QuickSpec {
                         expect(container.didCallPlay).to(beTrue())
                     }
 
-                    fit("changes the image to a pause icon") {                        
+                    it("changes the image to a pause icon") {                        
                         let pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
                         playButton.button?.sendActions(for: .touchUpInside)
