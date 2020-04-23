@@ -27,6 +27,7 @@ Pods/
 
 # Carthage
 Carthage/
+vendor/
 
 # fastlane specific
 fastlane/report.xml
