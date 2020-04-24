@@ -55,8 +55,16 @@ open class Container: UIObject {
         if shouldReload {
             reload()
         } else {
+            seekToDVRStartIfNeeded()
             activePlayback.play()
         }
+    }
+    
+    private func seekToDVRStartIfNeeded() {
+        guard let playback = playback, playback.isDvrAvailable, playback.position < 0 else { return }
+        
+        let timeInterval: TimeInterval = 100
+        playback.seek(timeInterval)
     }
     
     open func pause() {

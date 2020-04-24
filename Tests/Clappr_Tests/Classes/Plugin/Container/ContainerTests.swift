@@ -412,39 +412,83 @@ class ContainerTests: QuickSpec {
                     }
                 }
                 
-                describe("#pause") {
-                    var playback: StubPlayback!
-                    
-                    beforeEach {
-                        Loader.shared.resetPlaybacks()
-                        Loader.shared.register(playbacks: [StubPlayback.self])
-                        container = Container()
-                        container.load(Source.valid)
-                        playback = (container.playback as! StubPlayback)
-                    }
-                    
-                    context("when can not pause") {
-                        it("does not calls playback pause") {
-                            playback.canPauseMock = false
+                context("when does not need reload and is playing a DVR video") {
+                    context("and the current position is inside DVR window") {
+                        it("calls playback play") {
+                            playback.canPlayMock = true
+                            playback.isDvrAvailableMock = true
+                            playback.positionMock = 100
+
+                            container.play()
                             
-                            container.pause()
+                            expect(playback.didCallPlay).to(beTrue())
+                        }
+                        
+                        it("does not call playback seek") {
+                            playback.canPlayMock = true
+                            playback.isDvrAvailableMock = true
+                            playback.positionMock = 100
+
+                            container.play()
                             
-                            expect(playback.didCallPause).to(beFalse())
-                            
+                            expect(playback.didCallSeek).to(beFalse())
                         }
                     }
-                    
-                    context("when can pause") {
-                        it("calls playback pause") {
-                            playback.canPauseMock = true
+                    context("and the current position is outside DVR window") {
+                        it("calls playback play") {
+                            playback.canPlayMock = true
+                            playback.isDvrAvailableMock = true
+                            playback.positionMock = -100
+
+                            container.play()
                             
-                            container.pause()
+                            expect(playback.didCallPlay).to(beTrue())
+                        }
+                        
+                        it("calls playback seek") {
+                            playback.canPlayMock = true
+                            playback.isDvrAvailableMock = true
+                            playback.positionMock = -100
+
+                            container.play()
                             
-                            expect(playback.didCallPause).to(beTrue())
+                            expect(playback.didCallSeek).to(beTrue())
                         }
                     }
                 }
+            }
                 
+            describe("#pause") {
+                var playback: StubPlayback!
+                
+                beforeEach {
+                    Loader.shared.resetPlaybacks()
+                    Loader.shared.register(playbacks: [StubPlayback.self])
+                    container = Container()
+                    container.load(Source.valid)
+                    playback = (container.playback as! StubPlayback)
+                }
+                
+                context("when can not pause") {
+                    it("does not calls playback pause") {
+                        playback.canPauseMock = false
+                        
+                        container.pause()
+                        
+                        expect(playback.didCallPause).to(beFalse())
+                        
+                    }
+                }
+                
+                context("when can pause") {
+                    it("calls playback pause") {
+                        playback.canPauseMock = true
+                        
+                        container.pause()
+                        
+                        expect(playback.didCallPause).to(beTrue())
+                    }
+                }
             }
         }
     }
@@ -459,6 +503,13 @@ class ContainerTests: QuickSpec {
         var canPauseMock = true
         var didCallPlay = false
         var didCallPause = false
+        var didCallSeek = false
+        
+        var positionMock: Double = 0
+        var isDvrAvailableMock = false
+        
+        override var position: Double { positionMock }
+        override var isDvrAvailable: Bool { isDvrAvailableMock }
         
         override var selectedSubtitle: MediaOption? {
             get { stubSubtitle }
@@ -479,6 +530,10 @@ class ContainerTests: QuickSpec {
         
         override func pause() {
             didCallPause = true
+        }
+        
+        override func seek(_: TimeInterval) {
+            didCallSeek = true
         }
         
         override open var canPlay: Bool { canPlayMock }
