@@ -43,8 +43,8 @@ extension AVFoundationPlayback {
         return currentDate.timeIntervalSince1970 - position
     }
     
-    var dvrWindowStart: Double? {
-        guard let end = dvrWindowEnd, isDvrAvailable, playbackType == .live else { return nil }
+    override var dvrWindowStart: Double {
+        guard let end = dvrWindowEnd, isDvrAvailable, playbackType == .live else { return 0 }
         return end - duration
     }
     

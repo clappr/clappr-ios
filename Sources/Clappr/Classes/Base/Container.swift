@@ -62,8 +62,9 @@ open class Container: UIObject {
     
     private func seekToDVRStartIfNeeded() {
         guard let playback = playback, playback.isDvrAvailable, playback.position < 0 else { return }
-        
-        let timeInterval: TimeInterval = 100
+
+        let securityMargin: TimeInterval = 30
+        let timeInterval: TimeInterval = playback.dvrWindowStart + securityMargin
         playback.seek(timeInterval)
     }
     

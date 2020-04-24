@@ -454,6 +454,18 @@ class ContainerTests: QuickSpec {
                             
                             expect(playback.didCallSeek).to(beTrue())
                         }
+
+                        it("does seek to DVR window start with a security margin") {
+                            let expectedSeekValue: TimeInterval = 130
+                            playback.canPlayMock = true
+                            playback.isDvrAvailableMock = true
+                            playback.positionMock = -100
+                            playback.dvrWindowStartMock = 100
+
+                            container.play()
+
+                            expect(playback.seekCalledWith).to(equal(expectedSeekValue))
+                        }
                     }
                 }
             }
@@ -507,9 +519,12 @@ class ContainerTests: QuickSpec {
         
         var positionMock: Double = 0
         var isDvrAvailableMock = false
+        var dvrWindowStartMock: Double = 0
+        var seekCalledWith: TimeInterval = 0
         
         override var position: Double { positionMock }
         override var isDvrAvailable: Bool { isDvrAvailableMock }
+        override var dvrWindowStart: Double { dvrWindowStartMock }
         
         override var selectedSubtitle: MediaOption? {
             get { stubSubtitle }
@@ -532,8 +547,9 @@ class ContainerTests: QuickSpec {
             didCallPause = true
         }
         
-        override func seek(_: TimeInterval) {
+        override func seek(_ value: TimeInterval) {
             didCallSeek = true
+            seekCalledWith = value
         }
         
         override open var canPlay: Bool { canPlayMock }

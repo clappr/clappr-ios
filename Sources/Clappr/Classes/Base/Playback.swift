@@ -115,35 +115,21 @@ open class Playback: UIObject, NamedType {
 
 // MARK: - DVR
 extension Playback {
-    @objc var minDvrSize: Double {
-        return 0
-    }
+    @objc var minDvrSize: Double { 0 }
 
-    @objc open var isDvrInUse: Bool {
-        return false
-    }
+    @objc var dvrWindowStart: Double { 0 }
 
-    @objc open var isDvrAvailable: Bool {
-        return false
-    }
+    @objc open var isDvrInUse: Bool { false }
 
-    @objc open var currentDate: Date? {
-        return nil
-    }
+    @objc open var isDvrAvailable: Bool { false }
 
-    @objc open var currentLiveDate: Date? {
-        return nil
-    }
+    @objc open var currentDate: Date? { nil }
+
+    @objc open var currentLiveDate: Date? { nil }
     
-    @objc open var seekableTimeRanges: [NSValue] {
-        return []
-    }
+    @objc open var seekableTimeRanges: [NSValue] { [] }
     
-    @objc open var loadedTimeRanges: [NSValue] {
-        return []
-    }
+    @objc open var loadedTimeRanges: [NSValue] { [] }
     
-    @objc open var epochDvrWindowStart: TimeInterval {
-        return 0
-    }
+    @objc open var epochDvrWindowStart: TimeInterval { 0 }
 }
