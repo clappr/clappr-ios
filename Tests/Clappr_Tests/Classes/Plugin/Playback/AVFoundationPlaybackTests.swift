@@ -471,6 +471,36 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(playback.currentDate).to(equal(date))
                     }
                 }
+                
+                describe("#currentDateInDVRWindow") {
+                    context("when playback is paused") {
+                        it("returns the last date before player was paused") {
+                            let lastCurrentDate = Date()
+                            item.set(currentDate: lastCurrentDate)
+                            
+                            playback.pause()
+                            
+                            let newCurrentDate = Date()
+                            item.set(currentDate: newCurrentDate)
+
+                            expect(playback.currentDateInDVRWindow).to(equal(lastCurrentDate))
+                        }
+                    }
+                    
+                    context("when playback is playing") {
+                        it("returns the current date and keep updating") {
+                            let firstCurrentDate = Date()
+                            item.set(currentDate: firstCurrentDate)
+                            
+                            expect(playback.currentDateInDVRWindow).to(equal(firstCurrentDate))
+                            
+                            let newCurrentDate = Date()
+                            item.set(currentDate: newCurrentDate)
+
+                            expect(playback.currentDateInDVRWindow).to(equal(newCurrentDate))
+                        }
+                    }
+                }
 
                 describe("#currentLiveDate") {
                     context("when a video is not live") {

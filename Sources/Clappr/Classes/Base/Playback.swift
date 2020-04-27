@@ -18,7 +18,7 @@ open class Playback: UIObject, NamedType {
         NSException(name: NSExceptionName(rawValue: "MissingPlaybackName"), reason: "Playbacks should always declare a name. \(self) does not.", userInfo: nil).raise()
         return ""
     }
-
+    
     open var selectedSubtitle: MediaOption?
     open var selectedAudioSource: MediaOption?
     fileprivate(set) open var subtitles: [MediaOption]?
@@ -124,6 +124,8 @@ extension Playback {
     @objc open var isDvrAvailable: Bool { false }
 
     @objc open var currentDate: Date? { nil }
+    
+    @objc open var currentDateInDVRWindow: Date? { nil }
 
     @objc open var currentLiveDate: Date? { nil }
     

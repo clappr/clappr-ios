@@ -34,6 +34,8 @@ open class AVFoundationPlayback: Playback {
     private var lastLogEvent: AVPlayerItemAccessLogEvent? { player?.currentItem?.accessLog()?.events.last }
     private var numberOfDroppedVideoFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
     
+    internal var lastCurrentDate: Date?
+    
     open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
     open var bandwidth: Double? { lastLogEvent?.observedBitrate }
     open var averageBitrate: Double? { lastLogEvent?.averageVideoBitrate }
@@ -467,6 +469,7 @@ open class AVFoundationPlayback: Playback {
         triggerWillPause()
         if state == .stalling { trigger(.stalling) }
         player?.pause()
+        lastCurrentDate = currentDate
         updateState(.paused)
     }
 

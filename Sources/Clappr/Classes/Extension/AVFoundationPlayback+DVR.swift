@@ -20,6 +20,10 @@ extension AVFoundationPlayback {
     open override var currentDate: Date? {
         return player?.currentItem?.currentDate()
     }
+    
+    open override var currentDateInDVRWindow: Date? {
+        state == .paused ? lastCurrentDate : currentDate
+    }
 
     open override var currentLiveDate: Date? {
         guard let currentDate = currentDate, playbackType == .live else { return nil }
