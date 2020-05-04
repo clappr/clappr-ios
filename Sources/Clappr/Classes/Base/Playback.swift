@@ -146,4 +146,8 @@ extension Playback {
     @objc open var epochDvrWindowStart: TimeInterval {
         return 0
     }
+
+    @objc open var dvrWindowStart: Double {
+        return 0
+    }
 }

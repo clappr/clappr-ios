@@ -127,9 +127,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var position: Double {
-        if isDvrAvailable, let start = dvrWindowStart,
+        if isDvrAvailable,
             let position = player?.currentItem?.currentTime().seconds {
-            return position - start
+            return position - dvrWindowStart
         }
         guard playbackType == .vod, let player = player else { return 0 }
         return CMTimeGetSeconds(player.currentTime())
@@ -506,7 +506,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func relativeTime(to time: TimeInterval) -> TimeInterval {
-        return isDvrAvailable ? time + (dvrWindowStart ?? 0) : time
+        return isDvrAvailable ? time + dvrWindowStart : time
     }
 
     private func triggerDvrStatusIfNeeded() {
