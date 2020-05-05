@@ -17,23 +17,5 @@ class ContainerStub: Container {
         super.trigger(eventName)
     }
     
-    override func play() {
-        let playbackMock = _playback as! AVFoundationPlaybackMock
-        
-        playbackMock.set(state: .playing)
-        
-        playback?.trigger(.playing)
-        didCallPlay = true
-    }
-    
-    override func pause() {
-        let playbackMock = _playback as! AVFoundationPlaybackMock
-        
-        playbackMock.set(state: .paused)
-        
-        playback?.trigger(.didPause)
-        didCallPause = true
-    }
-    
     var _playback: Playback? = AVFoundationPlaybackMock(options:[:])
 }

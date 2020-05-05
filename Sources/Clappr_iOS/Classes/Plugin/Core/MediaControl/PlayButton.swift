@@ -94,11 +94,15 @@ open class PlayButton: MediaControl.Element {
     }
 
     private func pause() {
-        activeContainer?.pause()
+        guard let playback = activePlayback, playback.canPause else { return }
+        
+        playback.pause()
     }
     
     private func play() {
-        activeContainer?.play()
+        guard let playback = activePlayback, playback.canPlay else { return }
+        
+        playback.play()
     }
     
     private func changeToPlayIcon() {

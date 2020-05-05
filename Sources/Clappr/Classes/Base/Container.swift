@@ -42,18 +42,6 @@ open class Container: UIObject {
         view.backgroundColor = .clear
         view.accessibilityIdentifier = "Container"
     }
-    
-    open func play() {
-        guard let activePlayback = playback, activePlayback.canPlay else { return }
-        
-        activePlayback.play()
-    }
-    
-    open func pause() {
-        guard let activePlayback = playback, activePlayback.canPause else { return }
-        
-        activePlayback.pause()
-    }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
         trigger(Event.willLoadSource.rawValue)
