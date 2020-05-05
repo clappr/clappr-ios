@@ -455,11 +455,6 @@ class ContainerTests: QuickSpec {
         var stubSubtitle = MediaOption(name: "name", type: .subtitle, language: "language")
         var stubAudioSource = MediaOption(name: "name", type: .audioSource, language: "language")
         
-        var canPlayMock = true
-        var canPauseMock = true
-        var didCallPlay = false
-        var didCallPause = false
-        
         override var selectedSubtitle: MediaOption? {
             get { stubSubtitle }
             set { print(stubSubtitle) }
@@ -471,18 +466,7 @@ class ContainerTests: QuickSpec {
         }
 
         override class func canPlay(_: Options) -> Bool { true }
-        
-        override func play() {
-            trigger(.playing)
-            didCallPlay = true
-        }
-        
-        override func pause() {
-            didCallPause = true
-        }
-        
-        override open var canPlay: Bool { canPlayMock }
-        override open var canPause: Bool { canPauseMock }
+        override func play() { trigger(.playing) }
     }
 
     class FakeContainerPlugin: ContainerPlugin {
