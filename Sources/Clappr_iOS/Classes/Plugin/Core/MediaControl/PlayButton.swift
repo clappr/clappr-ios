@@ -1,13 +1,14 @@
 open class PlayButton: MediaControl.Element {
     open class override var name: String {
-        "PlayButton"
+        return "PlayButton"
     }
 
     override open var panel: MediaControlPanel {
-        .center
+        return .center
     }
+    
     override open var position: MediaControlPosition {
-        .center
+        return .center
     }
 
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
@@ -63,7 +64,7 @@ open class PlayButton: MediaControl.Element {
         view.isHidden = false
     }
 
-    @objc open func togglePlayPause() {
+    @objc func togglePlayPause() {
         guard let playback = activePlayback else {
             return
         }
@@ -75,7 +76,7 @@ open class PlayButton: MediaControl.Element {
         }
     }
     
-    private func changeIcon() {
+    public func changeIcon() {
         guard let playback = activePlayback else {
             return
         }
