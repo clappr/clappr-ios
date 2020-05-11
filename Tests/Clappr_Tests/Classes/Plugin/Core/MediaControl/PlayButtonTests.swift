@@ -7,13 +7,10 @@ class PlayButtonTests: QuickSpec {
     override func spec() {
         describe(".PlayButton") {
             var coreStub: CoreStub!
-            var container: ContainerStub!
             var playButton: PlayButton!
 
             beforeEach {
                 coreStub = CoreStub()
-                container = ContainerStub()
-                coreStub.activeContainer = container
                 playButton = PlayButton(context: coreStub)
             }
 
@@ -74,13 +71,13 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback play") {
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
-                        expect(container.didCallPlay).to(beTrue())
+                        expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
 
                     it("shows play button") {
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
                         expect(playButton.view.isHidden).toEventually(beFalse())
                     }
@@ -98,17 +95,17 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback pause") {
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
-                        expect(container.didCallPause).to(beTrue())
+                        expect(coreStub.playbackMock?.didCallPause).to(beTrue())
                     }
 
                     it("changes the image to a play icon") {
                         let playIcon = UIImage.fromName("play", for: PlayButton.self)!
 
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
-                        let currentButtonIcon = (playButton.button?.imageView?.image)!
+                        let currentButtonIcon = (playButton.button.imageView?.image)!
                         expect(currentButtonIcon.isEqual(playIcon)).toEventually(beTrue())
                     }
 
@@ -132,17 +129,17 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback play") {
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
-                        expect(container.didCallPlay).to(beTrue())
+                        expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
 
                     it("changes the image to a pause icon") {                        
                         let pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-                        playButton.button?.sendActions(for: .touchUpInside)
+                        playButton.button.sendActions(for: .touchUpInside)
 
-                        let currentButtonIcon = (playButton.button?.imageView?.image)!
+                        let currentButtonIcon = (playButton.button.imageView?.image)!
                         expect(currentButtonIcon.isEqual(pauseIcon)).toEventually(beTrue())
                     }
 
@@ -165,7 +162,7 @@ class PlayButtonTests: QuickSpec {
                 it("set's acessibilityIdentifier to button") {
                     playButton.render()
 
-                    expect(playButton.button?.accessibilityIdentifier).to(equal("PlayPauseButton"))
+                    expect(playButton.button.accessibilityIdentifier).to(equal("PlayPauseButton"))
                 }
 
                 describe("button") {
@@ -178,7 +175,7 @@ class PlayButtonTests: QuickSpec {
                     it("has scaleAspectFit content mode") {
                         playButton.render()
 
-                        expect(playButton.button?.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
+                        expect(playButton.button.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
                     }
                 }
             }
@@ -194,101 +191,6 @@ class PlayButtonTests: QuickSpec {
                     coreStub.activePlayback?.trigger(.playing)
 
                     expect(playButton.view.isHidden).to(beFalse())
-                }
-            }
-            
-            describe("#togglePlayPause") {
-                var core: CoreStub!
-                var playButton: PlayButton!
-                
-                beforeEach {
-                    core = CoreStub()
-                    playButton = PlayButton(context: core)
-                    playButton.render()
-                }
-
-                context("when playback state is paused") {
-                    it("calls play") {
-                        core.playbackMock?.state = .paused
-
-                        playButton.togglePlayPause()
-                        
-                        let containerStub = playButton.activeContainer as! ContainerStub
-                        expect(containerStub.didCallPlay).to(beTrue())
-                    }
-                }
-                
-                context("when playback state is idle") {
-                    it("calls play") {
-                        core.playbackMock?.state = .idle
-                            
-                        playButton.togglePlayPause()
-                        
-                        let containerStub = playButton.activeContainer as! ContainerStub
-                        
-                        expect(containerStub.didCallPlay).to(beTrue())
-                    }
-                }
-
-                context("when playback state is playing") {
-                    it("calls pause") {
-                        core.playbackMock?.state = .playing
-                        
-                        playButton.togglePlayPause()
-                        
-                        let containerStub = playButton.activeContainer as! ContainerStub
-                        expect(containerStub.didCallPause).to(beTrue())
-                    }
-                }
-                
-                context("when playback state is none") {
-                    it("does not call play") {
-                        core.playbackMock?.state = .none
-                        
-                        playButton.togglePlayPause()
-                        
-                        let containerStub = playButton.activeContainer as! ContainerStub
-                        expect(containerStub.didCallPlay).to(beFalse())
-                    }
-                    
-                    it("does not call pause") {
-                        core.playbackMock?.state = .none
-
-                        playButton.togglePlayPause()
-                        
-                        let containerStub = playButton.activeContainer as! ContainerStub
-                        expect(containerStub.didCallPause).to(beFalse())
-                    }
-                    
-                }
-            }
-            
-            describe("#events") {
-                context("didStop") {
-                    it("shows button view") {
-                        let core = CoreStub()
-                        let playButton = PlayButton(context: core)
-                        playButton.render()
-                        playButton.hide()
-                        
-                        core.activePlayback?.trigger(.didStop)
-                        
-                        expect(playButton.view.isHidden).to(beFalse())
-                    }
-                    
-                    it("changes button icon") {
-                        let core = CoreStub()
-                        let playIcon = UIImage.fromName("play", for: PlayButton.self)
-                        let playButton = PlayButton(context: core)
-                        playButton.render()
-                        core.playbackMock?.state = .playing
-                        core.activePlayback?.trigger(.playing)
-                        core.playbackMock?.state = .idle
-                        
-                        core.activePlayback?.trigger(.didStop)
-
-                        expect(playButton.button?.imageView?.image).to(equal(playIcon))
-                    }
                 }
             }
         }

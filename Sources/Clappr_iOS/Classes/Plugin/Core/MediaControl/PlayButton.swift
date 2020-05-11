@@ -7,10 +7,8 @@ open class PlayButton: MediaControl.Element {
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-    public var button: UIButton? {
+    public var button: UIButton! {
         didSet {
-            guard let button = button else { return }
-
             view.addSubview(button)
             button.setImage(playIcon, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
@@ -22,7 +20,7 @@ open class PlayButton: MediaControl.Element {
     private var canShowPlayIcon: Bool {
         activePlayback?.state == .paused || activePlayback?.state == .idle
     }
-    
+
     private var canShowPauseIcon: Bool {
         activePlayback?.state == .playing
     }
@@ -35,7 +33,6 @@ open class PlayButton: MediaControl.Element {
         guard let playback = activePlayback else { return }
         
         listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
-        listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onStop() }
         listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
         listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
     }
@@ -54,7 +51,7 @@ open class PlayButton: MediaControl.Element {
     
     private func setupButton() {
         button = UIButton(type: .custom)
-        button?.accessibilityIdentifier = "PlayPauseButton"
+        button.accessibilityIdentifier = "PlayPauseButton"
     }
     
     open func onPlay() {
@@ -67,11 +64,6 @@ open class PlayButton: MediaControl.Element {
         changeToPlayIcon()
     }
     
-    private func onStop() {
-        show()
-        changeToPlayIcon()
-    }
-
     public func hide() {
         view.isHidden = true
     }
@@ -85,20 +77,12 @@ open class PlayButton: MediaControl.Element {
 
         switch playback.state {
         case .playing:
-            pause()
+            activePlayback?.pause()
         case .paused, .idle:
-            play()
+            activePlayback?.play()
         default:
             break
         }
-    }
-
-    private func pause() {
-        activeContainer?.pause()
-    }
-    
-    private func play() {
-        activeContainer?.play()
     }
     
     private func changeToPlayIcon() {
