@@ -299,22 +299,26 @@ open class AVFoundationPlayback: Playback {
             self,
             selector: #selector(playbackDidEnd),
             name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem
-        )
+            object: player.currentItem)
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onAccessLogEntry),
             name: .AVPlayerItemNewAccessLogEntry,
-            object: nil
-        )
+            object: nil)
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onFailedToPlayToEndTime),
             name: .AVPlayerItemFailedToPlayToEndTime,
-            object: nil
-        )
+            object: nil)
+    }
+    
+    @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
+        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
+        guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
+
+        trigger(.error, userInfo: ["error": error])
     }
     
     @objc func playbackDidEnd(notification: NSNotification?) {
@@ -327,13 +331,6 @@ open class AVFoundationPlayback: Playback {
     @objc func onAccessLogEntry(notification: NSNotification?) {
         updateDroppedFrames()
         updateBitrate()
-    }
-
-    @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
-        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
-        guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
-
-        trigger(.error, userInfo: ["error": error])
     }
 
     private func updateBitrate() {
@@ -477,7 +474,6 @@ open class AVFoundationPlayback: Playback {
         updateState(.idle)
         player?.pause()
         releaseResources()
-        clearObjects()
         trigger(.didStop)
     }
 
@@ -487,11 +483,7 @@ open class AVFoundationPlayback: Playback {
         playerLayer = nil
         player?.replaceCurrentItem(with: nil)
         player = nil
-    }
-    
-    private func clearObjects() {
         droppedFrames = 0
-        playerStatus = .unknown
     }
     
     @objc var isReadyToPlay: Bool {
