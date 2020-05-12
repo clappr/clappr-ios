@@ -40,6 +40,10 @@ open class Playback: UIObject, NamedType {
     @objc open var startAt: TimeInterval {
         return options.startAt ?? 0.0
     }
+    
+    open var liveStartTime: TimeInterval? {
+        return options[kLiveStartTime] as? Double
+    }
 
     @objc open var duration: Double {
         return 0.0
