@@ -265,7 +265,6 @@ open class AVFoundationPlayback: Playback {
     private func durationAvailable() {
         trigger(.assetReady)
         seekToStartAtIfNeeded()
-        seekToLiveStartTimeIfNeeded()
     }
 
     private func seekToStartAtIfNeeded() {
@@ -275,9 +274,9 @@ open class AVFoundationPlayback: Playback {
     }
     
     private func seekToLiveStartTimeIfNeeded() {
-        guard canLiveStartAt, let liveStartTime = liveStartTime, let dvrWindowStart = dvrWindowStart else { return }
+        guard canLiveStartAt, let liveStartTime = liveStartTime else { return }
         
-        let positionToSeek = liveStartTime - dvrWindowStart
+        let positionToSeek = liveStartTime - epochDvrWindowStart
         
         if positionToSeek < 0 || positionToSeek > duration { return }
         
@@ -598,6 +597,10 @@ open class AVFoundationPlayback: Playback {
         if dvrAvailabilityChanged {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
+            
+            if isDvrAvailable {
+                seekToLiveStartTimeIfNeeded()
+            }
         }
     }
 
