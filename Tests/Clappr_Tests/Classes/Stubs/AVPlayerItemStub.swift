@@ -55,6 +55,10 @@ class AVPlayerItemStub: AVPlayerItem {
     func set(currentDate: Date) {
         _currentDate = currentDate
     }
+    
+    func set(currentTime: CMTime) {
+        _currentTime = currentTime
+    }
 
     override var duration: CMTime {
         return _duration

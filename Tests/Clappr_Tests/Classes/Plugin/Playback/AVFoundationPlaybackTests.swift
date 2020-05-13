@@ -780,6 +780,150 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(startAtValue).toEventually(beCloseTo(10, within: 0.1))
                         }
                     }
+                    
+                    context("with liveStartTime") {
+                        context("when video is live with dvr") {
+                            context("and liveStartTime is between seekable range") {
+                                it("triggers didUpdatePosition") {
+                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 2500.0])
+                                    
+                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
+                                    asset.set(duration: .indefinite)
+                                    
+                                    let item = AVPlayerItemStub(asset: asset)
+                                    item.setWindow(start: 0, end: 1000)
+                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
+                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
+                                    
+                                    let player = AVPlayerStub()
+                                    player.set(currentItem: item)
+                                    
+                                    playback.player = player
+                                    player.setStatus(to: .readyToPlay)
+                                    
+                                    var didCallUpdatePosition = false
+                                    var liveStartTime: Double = 0
+                                    
+                                    playback.on(Event.didUpdatePosition.rawValue) { userInfo in
+                                        didCallUpdatePosition = true
+                                        liveStartTime = userInfo!["position"] as! Double
+                                    }
+                                    
+                                    playback.handleDvrAvailabilityChange()
+                                    
+                                    expect(didCallUpdatePosition).toEventually(beTrue())
+                                    expect(liveStartTime).toEventually(equal(500))
+                                }
+                            }
+                            
+                            context("and liveStartTime is before seekable range") {
+                                it("should not seek") {
+                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 1500.0])
+                                    
+                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
+                                    asset.set(duration: .indefinite)
+                                    
+                                    let item = AVPlayerItemStub(asset: asset)
+                                    item.setWindow(start: 0, end: 1000)
+                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
+                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
+                                    
+                                    let player = AVPlayerStub()
+                                    player.set(currentItem: item)
+                                    
+                                    playback.player = player
+                                    player.setStatus(to: .readyToPlay)
+                                    
+                                    var didSeek = false
+                                    
+                                    playback.on(Event.didSeek.rawValue) { _ in
+                                        didSeek = true
+                                    }
+                                    
+                                    playback.handleDvrAvailabilityChange()
+                                    
+                                    expect(didSeek).toEventually(beFalse())
+                                }
+                            }
+                            
+                            context("and liveStartTime is after seekable range") {
+                                it("should not seek") {
+                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 3500.0])
+                                    
+                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
+                                    asset.set(duration: .indefinite)
+                                    
+                                    let item = AVPlayerItemStub(asset: asset)
+                                    item.setWindow(start: 0, end: 1000)
+                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
+                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
+                                    
+                                    let player = AVPlayerStub()
+                                    player.set(currentItem: item)
+                                    
+                                    playback.player = player
+                                    player.setStatus(to: .readyToPlay)
+                                    
+                                    var didSeek = false
+                                    
+                                    playback.on(Event.didSeek.rawValue) { _ in
+                                        didSeek = true
+                                    }
+                                    
+                                    playback.handleDvrAvailabilityChange()
+                                    
+                                    expect(didSeek).toEventually(beFalse())
+                                }
+                            }
+                        }
+                        
+                        context("when video is live without dvr") {
+                            it("should not seek") {
+                                let playback = AVFoundationPlayback(options: [kLiveStartTime: 2500.0])
+                                
+                                let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
+                                asset.set(duration: .indefinite)
+                                
+                                let item = AVPlayerItemStub(asset: asset)
+                                
+                                let player = AVPlayerStub()
+                                player.set(currentItem: item)
+                                
+                                playback.player = player
+                                player.setStatus(to: .readyToPlay)
+                                
+                                var didSeek = false
+                                
+                                playback.on(Event.didSeek.rawValue) { _ in
+                                    didSeek = true
+                                }
+                                
+                                playback.handleDvrAvailabilityChange()
+                                
+                                expect(didSeek).toEventually(beFalse())
+                            }
+                        }
+                        
+                        context("when video is VOD") {
+                            it("should not seek") {
+                                let playback = AVFoundationPlayback(options: [kLiveStartTime: 2500.0])
+                                let playerStub = AVPlayerStub()
+                                playback.player = playerStub
+
+                                playerStub.setStatus(to: .readyToPlay)
+
+                                var didSeek = false
+                                
+                                playback.on(Event.didSeek.rawValue) { _ in
+                                    didSeek = true
+                                }
+                                
+                                playback.handleDvrAvailabilityChange()
+                                
+                                expect(didSeek).toEventually(beFalse())
+                            }
+                        }
+                    }
                 }
             }
 
