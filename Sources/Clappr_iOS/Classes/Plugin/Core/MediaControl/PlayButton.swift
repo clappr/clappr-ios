@@ -6,7 +6,7 @@ open class PlayButton: MediaControl.Element {
     override open var panel: MediaControlPanel {
         return .center
     }
-    
+
     override open var position: MediaControlPosition {
         return .center
     }
@@ -23,7 +23,7 @@ open class PlayButton: MediaControl.Element {
             button.bindFrameToSuperviewBounds()
         }
     }
-    
+
     override open func bindEvents() {
         bindPlaybackEvents()
     }
@@ -41,7 +41,7 @@ open class PlayButton: MediaControl.Element {
             view.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 0.6).isActive = true
             view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.6).isActive = true
         }
-        
+
         button = UIButton(type: .custom)
         button.accessibilityIdentifier = "PlayPauseButton"
     }
@@ -55,7 +55,7 @@ open class PlayButton: MediaControl.Element {
         show()
         changeIcon()
     }
-    
+
     public func hide() {
         view.isHidden = true
     }
@@ -68,14 +68,14 @@ open class PlayButton: MediaControl.Element {
         guard let playback = activePlayback else {
             return
         }
-        
+
         if playback.state == .playing {
             activePlayback?.pause()
         } else if playback.state == .paused {
             activePlayback?.play()
         }
     }
-    
+
     public func changeIcon() {
         guard let playback = activePlayback else {
             return

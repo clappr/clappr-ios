@@ -62,7 +62,7 @@ open class Container: UIObject {
             trigger(Event.didLoadSource.rawValue)
         }
     }
-    
+
     open override func render() {
         plugins.forEach(renderPlugin)
 
