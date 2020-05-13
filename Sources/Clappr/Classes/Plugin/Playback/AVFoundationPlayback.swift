@@ -313,21 +313,13 @@ open class AVFoundationPlayback: Playback {
             name: .AVPlayerItemFailedToPlayToEndTime,
             object: nil)
     }
-    
+
     @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
-        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
-        guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
-
-        trigger(.error, userInfo: ["error": error])
+        if let error = notification?.userInfo?["AVPlayerItemFailedToPlayToEndTimeErrorKey"] as? Error {
+            trigger(.error, userInfo: ["error": error])
+        }
     }
     
-    @objc func playbackDidEnd(notification: NSNotification?) {
-        guard didFinishedItem(from: notification) else { return }
-        trigger(.didComplete)
-        updateState(.idle)
-        droppedFrames = 0
-    }
-
     @objc func onAccessLogEntry(notification: NSNotification?) {
         updateDroppedFrames()
         updateBitrate()
@@ -460,6 +452,12 @@ open class AVFoundationPlayback: Playback {
         return true
     }
 
+    @objc func playbackDidEnd(notification: NSNotification?) {
+        guard didFinishedItem(from: notification) else { return }
+        trigger(.didComplete)
+        updateState(.idle)
+    }
+
     open override func pause() {
         guard canPause else { return }
         triggerWillPause()
@@ -485,7 +483,7 @@ open class AVFoundationPlayback: Playback {
         player = nil
         droppedFrames = 0
     }
-    
+
     @objc var isReadyToPlay: Bool {
         return player?.currentItem?.status == .readyToPlay
     }
