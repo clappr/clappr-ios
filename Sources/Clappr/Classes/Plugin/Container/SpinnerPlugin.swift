@@ -48,19 +48,10 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     private func bindPlaybackEvents() {
         guard let playback = playback else { return }
-        
-        listenTo(playback, event: .playing) { [weak self] (info: EventUserInfo) in
-            self?.stopAnimating(info)
-        }
-        listenTo(playback, event: .stalling) { [weak self] (info: EventUserInfo) in
-            self?.startAnimating(info)
-        }
-        listenTo(playback, event: .error) { [weak self] (info: EventUserInfo) in
-            self?.stopAnimating(info)
-        }
-        listenTo(playback, event: .didComplete) { [weak self] (info: EventUserInfo) in
-            self?.stopAnimating(info)
-        }
+        listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+        listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
     }
 
     fileprivate func startAnimating(_: EventUserInfo) {
