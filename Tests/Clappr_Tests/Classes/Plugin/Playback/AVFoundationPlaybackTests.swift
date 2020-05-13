@@ -782,24 +782,29 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     
                     context("with liveStartTime") {
+                        
+                        func setupLiveDvr(liveStartTime: Double)  {
+                            playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: liveStartTime])
+                            
+                            asset = AVURLAssetStub(url: URL(string:"globo.com")!)
+                            asset.set(duration: .indefinite)
+                            
+                            item = AVPlayerItemStub(asset: asset)
+                            item.setWindow(start: 0, end: 1000)
+                            item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
+                            item.set(currentDate: Date(timeIntervalSince1970: 3000))
+                            
+                            player = AVPlayerStub()
+                            player.set(currentItem: item)
+                            
+                            playback.player = player
+                            player.setStatus(to: .readyToPlay)
+                        }
+                        
                         context("when video is live with dvr") {
                             context("and liveStartTime is between seekable range") {
                                 it("triggers didUpdatePosition") {
-                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 2500.0])
-                                    
-                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
-                                    asset.set(duration: .indefinite)
-                                    
-                                    let item = AVPlayerItemStub(asset: asset)
-                                    item.setWindow(start: 0, end: 1000)
-                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
-                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
-                                    
-                                    let player = AVPlayerStub()
-                                    player.set(currentItem: item)
-                                    
-                                    playback.player = player
-                                    player.setStatus(to: .readyToPlay)
+                                    setupLiveDvr(liveStartTime: 2500.0)
                                     
                                     var didCallUpdatePosition = false
                                     var liveStartTime: Double = 0
@@ -818,21 +823,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             context("and liveStartTime is before seekable range") {
                                 it("should not seek") {
-                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 1500.0])
-                                    
-                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
-                                    asset.set(duration: .indefinite)
-                                    
-                                    let item = AVPlayerItemStub(asset: asset)
-                                    item.setWindow(start: 0, end: 1000)
-                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
-                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
-                                    
-                                    let player = AVPlayerStub()
-                                    player.set(currentItem: item)
-                                    
-                                    playback.player = player
-                                    player.setStatus(to: .readyToPlay)
+                                    setupLiveDvr(liveStartTime: 1500.0)
                                     
                                     var didSeek = false
                                     
@@ -848,21 +839,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             context("and liveStartTime is after seekable range") {
                                 it("should not seek") {
-                                    let playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: 3500.0])
-                                    
-                                    let asset = AVURLAssetStub(url: URL(string:"globo.com")!)
-                                    asset.set(duration: .indefinite)
-                                    
-                                    let item = AVPlayerItemStub(asset: asset)
-                                    item.setWindow(start: 0, end: 1000)
-                                    item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
-                                    item.set(currentDate: Date(timeIntervalSince1970: 3000))
-                                    
-                                    let player = AVPlayerStub()
-                                    player.set(currentItem: item)
-                                    
-                                    playback.player = player
-                                    player.setStatus(to: .readyToPlay)
+                                    setupLiveDvr(liveStartTime: 3500.0)
                                     
                                     var didSeek = false
                                     
