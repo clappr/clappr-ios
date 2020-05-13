@@ -90,6 +90,7 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 context("and a video is playing") {
+
                     beforeEach {
                         coreStub.playbackMock?.set(state: .playing)
                     }
@@ -134,7 +135,7 @@ class PlayButtonTests: QuickSpec {
                         expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
 
-                    it("changes the image to a pause icon") {                        
+                    it("changes the image to a pause icon") {
                         let pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
                         playButton.button.sendActions(for: .touchUpInside)

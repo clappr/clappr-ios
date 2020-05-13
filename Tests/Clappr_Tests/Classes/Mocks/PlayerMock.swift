@@ -4,7 +4,7 @@ class PlayerMock: AVPlayer {
     private var accessLogEvent: AccessLogEventMock
     private var isFinished: Bool
     private var playerItemMock: PlayerItemMock
-        
+    
     init(accessLogEvent: AccessLogEventMock, isFinished: Bool = false) {
         self.accessLogEvent = accessLogEvent
         self.isFinished = isFinished
@@ -12,6 +12,6 @@ class PlayerMock: AVPlayer {
             
         super.init()
     }
-    
+
     override var currentItem: AVPlayerItem? { playerItemMock }
 }

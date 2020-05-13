@@ -364,7 +364,7 @@ class ContainerTests: QuickSpec {
         override class func canPlay(_: Options) -> Bool {
             return true
         }
-        
+
         override func play() {
             trigger(.playing)
         }
