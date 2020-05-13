@@ -456,6 +456,7 @@ open class AVFoundationPlayback: Playback {
         guard didFinishedItem(from: notification) else { return }
         trigger(.didComplete)
         updateState(.idle)
+        droppedFrames = 0
     }
 
     open override func pause() {
