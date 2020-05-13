@@ -82,9 +82,9 @@ open class PlayButton: MediaControl.Element {
         }
 
         if playback.state == .paused {
-            button?.setImage(playIcon, for: .normal)
+            button.setImage(playIcon, for: .normal)
         } else if playback.state == .playing {
-            button?.setImage(pauseIcon, for: .normal)
+            button.setImage(pauseIcon, for: .normal)
         }
     }
 }
