@@ -53,6 +53,8 @@ open class SpinnerPlugin: UIContainerPlugin {
         listenTo(playback, event: .stalling) { [weak self] _ in self?.startAnimating() }
         listenTo(playback, event: .error) { [weak self] _ in self?.stopAnimating() }
         listenTo(playback, event: .didComplete) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .didPause) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
     }
 
     fileprivate func startAnimating() {
