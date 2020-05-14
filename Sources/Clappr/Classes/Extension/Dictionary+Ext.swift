@@ -4,7 +4,7 @@ extension Dictionary where Key == String, Value == Any {
     var startAt: Double? { optionAsOptionalDouble(kStartAt) }
     var liveStartTime: Double? { optionAsOptionalDouble(kLiveStartTime) }
     
-    private func optionAsOptionalDouble(_ option:String) -> Double? {
+    private func optionAsOptionalDouble(_ option: String) -> Double? {
         switch self[option] {
         case is Double:
             return self[option] as? Double
