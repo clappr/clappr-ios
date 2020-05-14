@@ -477,7 +477,7 @@ open class AVFoundationPlayback: Playback {
         updateState(.idle)
         player?.pause()
         releaseResources()
-        clearObjects()
+        resetPlaybackProperties()
         trigger(.didStop)
     }
 
@@ -489,7 +489,7 @@ open class AVFoundationPlayback: Playback {
         player = nil
     }
 
-    private func clearObjects() {
+    private func resetPlaybackProperties() {
         droppedFrames = 0
         playerStatus = .unknown
     }
