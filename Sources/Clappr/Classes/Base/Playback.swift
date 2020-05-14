@@ -42,7 +42,7 @@ open class Playback: UIObject, NamedType {
     }
     
     open var liveStartTime: TimeInterval? {
-        return options[kLiveStartTime] as? Double
+        return options.liveStartTime
     }
 
     @objc open var duration: Double {

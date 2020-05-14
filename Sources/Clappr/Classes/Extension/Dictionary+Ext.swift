@@ -13,6 +13,19 @@ extension Dictionary where Key == String, Value == Any {
             return nil
         }
     }
+    
+    var liveStartTime: Double? {
+        switch self[kLiveStartTime] {
+        case is Double:
+            return self[kLiveStartTime] as? Double
+        case let liveStartTime as Int:
+            return Double(liveStartTime)
+        case let liveStartTime as String:
+            return Double(liveStartTime)
+        default:
+            return nil
+        }
+    }
 }
 
 public extension Dictionary where Key == String, Value == Any {
