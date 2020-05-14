@@ -62,6 +62,6 @@ extension AVFoundationPlayback {
         
         let position = epoch - epochDvrWindowStart
         
-        return position > 0 || position < duration
+        return position > 0 && position < duration
     }
 }
