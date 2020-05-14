@@ -783,16 +783,17 @@ class AVFoundationPlaybackTests: QuickSpec {
                     
                     context("with liveStartTime") {
                         
-                        func setupLiveDvr(liveStartTime: Double)  {
+                        func setupLiveDvr(liveStartTime: Double, dvrWindowStart: Double, dvrWindowEnd: Double)  {
                             playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: liveStartTime])
                             
                             asset = AVURLAssetStub(url: URL(string:"globo.com")!)
                             asset.set(duration: .indefinite)
                             
                             item = AVPlayerItemStub(asset: asset)
-                            item.setWindow(start: 0, end: 1000)
-                            item.set(currentTime: CMTime(seconds: 1000, preferredTimescale: 1))
-                            item.set(currentDate: Date(timeIntervalSince1970: 3000))
+                            let dvrWindowSize = dvrWindowEnd - dvrWindowStart
+                            item.setWindow(start: 0, end: dvrWindowSize)
+                            item.set(currentTime: CMTime(seconds: dvrWindowSize, preferredTimescale: 1))
+                            item.set(currentDate: Date(timeIntervalSince1970: dvrWindowEnd))
                             
                             player = AVPlayerStub()
                             player.set(currentItem: item)
@@ -802,28 +803,30 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                         
                         context("when video is live with dvr") {
-                            context("and liveStartTime is between seekable range") {
+                            context("and liveStartTime is between dvrWindow range") {
                                 it("triggers didUpdatePosition") {
-                                    setupLiveDvr(liveStartTime: 2500.0)
+                                    setupLiveDvr(liveStartTime: 2500, dvrWindowStart: 2000, dvrWindowEnd: 3000)
+                                    
+                                    let expectedPositionToSeek = 500.0
                                     
                                     var didCallUpdatePosition = false
-                                    var liveStartTime: Double = 0
+                                    var positionToSeek: Double = 0
                                     
                                     playback.on(Event.didUpdatePosition.rawValue) { userInfo in
                                         didCallUpdatePosition = true
-                                        liveStartTime = userInfo!["position"] as! Double
+                                        positionToSeek = userInfo!["position"] as! Double
                                     }
                                     
                                     playback.handleDvrAvailabilityChange()
                                     
                                     expect(didCallUpdatePosition).toEventually(beTrue())
-                                    expect(liveStartTime).toEventually(equal(500))
+                                    expect(positionToSeek).toEventually(equal(expectedPositionToSeek))
                                 }
                             }
                             
-                            context("and liveStartTime is before seekable range") {
+                            context("and liveStartTime is before dvrWindow range") {
                                 it("should not seek") {
-                                    setupLiveDvr(liveStartTime: 1500.0)
+                                    setupLiveDvr(liveStartTime: 1500, dvrWindowStart: 2000, dvrWindowEnd: 3000)
                                     
                                     var didSeek = false
                                     
@@ -837,9 +840,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 }
                             }
                             
-                            context("and liveStartTime is after seekable range") {
+                            context("and liveStartTime is after dvrWindow range") {
                                 it("should not seek") {
-                                    setupLiveDvr(liveStartTime: 3500.0)
+                                    setupLiveDvr(liveStartTime: 3500, dvrWindowStart: 2000, dvrWindowEnd: 3000)
                                     
                                     var didSeek = false
                                     
