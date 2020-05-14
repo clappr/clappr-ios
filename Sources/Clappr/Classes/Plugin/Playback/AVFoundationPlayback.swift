@@ -682,11 +682,20 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        if let timeObserver = timeObserver {
-            player.removeTimeObserver(timeObserver)
-            self.timeObserver = nil
-        }
+
+        removeTimeObserver()
         loopObserver = nil
+        removePlayerObservers()
+    }
+
+    private func removeTimeObserver() {
+        guard let player = player, let timeObserver = timeObserver else { return }
+
+        player.removeTimeObserver(timeObserver)
+        self.timeObserver = nil
+    }
+
+    private func removePlayerObservers() {
         observers.forEach { $0.invalidate() }
         observers.removeAll()
     }
