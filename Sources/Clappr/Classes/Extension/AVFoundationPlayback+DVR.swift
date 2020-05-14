@@ -56,4 +56,12 @@ extension AVFoundationPlayback {
     fileprivate var liveHeadTolerance: Double {
         return 5
     }
+    
+    func isEpochInsideDVRWindow(_ epoch: Double?) -> Bool {
+        guard let epoch = epoch else { return false }
+        
+        let position = epoch - epochDvrWindowStart
+        
+        return position > 0 && position < duration
+    }
 }

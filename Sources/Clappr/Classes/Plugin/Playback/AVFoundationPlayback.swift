@@ -227,6 +227,10 @@ open class AVFoundationPlayback: Playback {
     private var canStartAt: Bool {
         return startAt != 0.0 && playbackType == .vod
     }
+    
+    private var canLiveStartAtTime: Bool {
+        return isDvrAvailable && isEpochInsideDVRWindow(liveStartTime)
+    }
 
     private func createPlayerInstance(with item: AVPlayerItem) {
         player = shouldLoop ? AVQueuePlayer(playerItem: item): AVPlayer(playerItem: item)
@@ -264,9 +268,17 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func seekToStartAtIfNeeded() {
-        if canStartAt {
-            seek(startAt)
-        }
+        guard canStartAt else { return }
+        
+        seek(startAt)
+    }
+    
+    private func seekToLiveStartTime() {
+        guard let liveStartTime = liveStartTime else { return }
+        
+        let positionToSeek = liveStartTime - epochDvrWindowStart
+        
+        seek(positionToSeek)
     }
 
     #if os(tvOS)
@@ -574,6 +586,10 @@ open class AVFoundationPlayback: Playback {
         if dvrAvailabilityChanged {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
+            
+            if canLiveStartAtTime {
+                seekToLiveStartTime()
+            }
         }
     }
 

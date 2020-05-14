@@ -129,6 +129,19 @@ class PlaybackTests: QuickSpec {
                     expect(playback.startAt) == 0.0
                 }
             }
+            
+            context("LiveStartTime") {
+                it("set start at property from options") {
+                    let playback = Playback(options: [kLiveStartTime: 10000.0])
+                    expect(playback.liveStartTime) == 10000.0
+                }
+
+                it("has liveStartTime with nil value if no time is set on options") {
+                    let playback = Playback(options: [:])
+                    expect(playback.liveStartTime).to(beNil())
+                }
+            }
+
 
             context("Playback source") {
                 it("has a source property with the url sent via options") {

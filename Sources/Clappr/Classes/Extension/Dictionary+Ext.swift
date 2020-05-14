@@ -1,14 +1,17 @@
 import Foundation
 
 extension Dictionary where Key == String, Value == Any {
-    var startAt: Double? {
-        switch self[kStartAt] {
+    var startAt: Double? { optionAsOptionalDouble(kStartAt) }
+    var liveStartTime: Double? { optionAsOptionalDouble(kLiveStartTime) }
+    
+    private func optionAsOptionalDouble(_ option: String) -> Double? {
+        switch self[option] {
         case is Double:
-            return self[kStartAt] as? Double
-        case let startAt as Int:
-            return Double(startAt)
-        case let startAt as String:
-            return Double(startAt)
+            return self[option] as? Double
+        case let option as Int:
+            return Double(option)
+        case let option as String:
+            return Double(option)
         default:
             return nil
         }
