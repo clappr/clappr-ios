@@ -925,6 +925,24 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     expect(didErrorCalled).to(beTrue())
                 }
+                
+                context("user info on notification is nil") {
+                    it("triggers default error") {
+                        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
+                        let playback = AVFoundationPlayback(options: [:])
+                        let notification = NSNotification(name: NSNotification.Name(""), object: playback.player?.currentItem, userInfo: nil)
+
+                        var error: NSError?
+                        playback.on(Event.error.rawValue) { userInfo in
+                            error = userInfo?["error"] as? NSError
+                        }
+
+                        playback.onFailedToPlayToEndTime(notification: notification)
+
+                        let errorDescription = error?.userInfo[errorKey] as? String
+                        expect(errorDescription).to(equal("defaultError"))
+                    }
+                }
             }
 
             context("when sets a kvo on player") {

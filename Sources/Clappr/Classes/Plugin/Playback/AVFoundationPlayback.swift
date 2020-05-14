@@ -326,9 +326,13 @@ open class AVFoundationPlayback: Playback {
 
     @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
         let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
-        guard let error = notification?.userInfo?[errorKey] as? NSError else { return }
-
-        trigger(.error, userInfo: ["error": error])
+        
+        if let error = notification?.userInfo?[errorKey] as? NSError {
+            trigger(.error, userInfo: ["error": error])
+        } else {
+            let defaultError = createFailedToPlayToEndError()
+            trigger(.error, userInfo: ["error": defaultError])
+        }
     }
     
     @objc func onAccessLogEntry(notification: NSNotification?) {
@@ -336,6 +340,15 @@ open class AVFoundationPlayback: Playback {
         updateBitrate()
     }
 
+    private func createFailedToPlayToEndError() -> NSError {
+        let userInfo = [
+            "AVPlayerItemFailedToPlayToEndTimeErrorKey": "defaultError"
+        ]
+        let error = NSError(domain: "AVPlayer", code: 0, userInfo: userInfo)
+        
+        return error
+    }
+    
     private func updateBitrate() {
         guard lastBitrate != bitrate else { return }
         
