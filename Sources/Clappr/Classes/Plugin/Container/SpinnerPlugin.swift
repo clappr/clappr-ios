@@ -48,22 +48,20 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     private func bindPlaybackEvents() {
         guard let playback = playback else { return }
-        
-        listenTo(playback, event: .playing) { [weak self] _ in self?.stopAnimating() }
-        listenTo(playback, event: .stalling) { [weak self] _ in self?.startAnimating() }
-        listenTo(playback, event: .error) { [weak self] _ in self?.stopAnimating() }
-        listenTo(playback, event: .didComplete) { [weak self] _ in self?.stopAnimating() }
-        listenTo(playback, event: .didPause) { [weak self] _ in self?.stopAnimating() }
-        listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
+        listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+        listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
+
     }
 
-    fileprivate func startAnimating() {
+    fileprivate func startAnimating(_: EventUserInfo) {
         view.isHidden = false
         spinningWheel.startAnimating()
         Logger.logDebug("started animating spinning wheel", scope: pluginName)
     }
 
-    fileprivate func stopAnimating() {
+    fileprivate func stopAnimating(_: EventUserInfo) {
         view.isHidden = true
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)

@@ -3,8 +3,6 @@ import Foundation
 open class Container: UIObject {
     private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
-    private var shouldReload = false
-    private var source: String?
     @objc open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)
@@ -44,30 +42,8 @@ open class Container: UIObject {
         view.backgroundColor = .clear
         view.accessibilityIdentifier = "Container"
     }
-    
-    open func setNeedsReload() {
-        shouldReload = true
-    }
-    
-    open func play() {
-        guard let activePlayback = playback, activePlayback.canPlay else { return }
-        
-        if shouldReload {
-            reload()
-        } else {
-            activePlayback.play()
-        }
-    }
-    
-    open func pause() {
-        guard let activePlayback = playback, activePlayback.canPause else { return }
-        
-        activePlayback.pause()
-    }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
-        self.source = source
-        
         trigger(Event.willLoadSource.rawValue)
 
         options[kSourceUrl] = source
@@ -87,23 +63,6 @@ open class Container: UIObject {
         }
     }
 
-    private func reload() {
-        shouldReload = false
-        
-        guard let source = self.source else { return }
-        
-        let mimeType = options[kMimeType] as? String
-        
-        extractDefaultLanguageOptions()
-
-        load(source, mimeType: mimeType)
-    }
-    
-    private func extractDefaultLanguageOptions() {
-        options[kDefaultSubtitle] = playback?.selectedSubtitle?.language
-        options[kDefaultAudioSource] = playback?.selectedAudioSource?.language
-    }
-    
     open override func render() {
         plugins.forEach(renderPlugin)
 

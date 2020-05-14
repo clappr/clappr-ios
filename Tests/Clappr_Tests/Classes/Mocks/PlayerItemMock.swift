@@ -13,9 +13,8 @@ class PlayerItemMock: AVPlayerItem {
         self.isFinished = isFinished
         self.durationMocked = CMTimeMakeWithSeconds(100, preferredTimescale: Int32(NSEC_PER_SEC))
         self.currentTimeMocked = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
-
-        let asset = AVURLAssetStub(url: URL(string: "http://clappr.sample/master.m3u8")!)
-        super.init(asset: asset, automaticallyLoadedAssetKeys: nil)
+        
+        super.init(asset: AVAsset(url: URL(string: "http://clappr.sample/master.m3u8")!), automaticallyLoadedAssetKeys: nil)
     }
     
     override func currentTime() -> CMTime { isFinished ? duration : currentTimeMocked }
