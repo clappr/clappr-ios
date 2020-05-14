@@ -473,6 +473,7 @@ open class AVFoundationPlayback: Playback {
         updateState(.idle)
         player?.pause()
         releaseResources()
+        clearObjects()
         trigger(.didStop)
     }
 
@@ -482,7 +483,11 @@ open class AVFoundationPlayback: Playback {
         playerLayer = nil
         player?.replaceCurrentItem(with: nil)
         player = nil
+    }
+
+    private func clearObjects() {
         droppedFrames = 0
+        playerStatus = .unknown
     }
 
     @objc var isReadyToPlay: Bool {
