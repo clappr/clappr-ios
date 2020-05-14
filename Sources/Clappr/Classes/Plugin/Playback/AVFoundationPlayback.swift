@@ -684,6 +684,7 @@ open class AVFoundationPlayback: Playback {
         guard let player = player, player.observationInfo != nil else { return }
         if let timeObserver = timeObserver {
             player.removeTimeObserver(timeObserver)
+            self.timeObserver = nil
         }
         loopObserver = nil
         observers.forEach { $0.invalidate() }
