@@ -135,6 +135,8 @@
 		48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
 		48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */; };
 		48F1E97423229FDC00EAD6A1 /* DrawerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */; };
+		522C8997246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */; };
+		522C8998246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */; };
 		524B66AB242A9BE70085789D /* PlayerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B7E23FDDE7300C82098 /* PlayerMock.swift */; };
 		524B66AC242A9BEA0085789D /* PlayerItemMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */; };
 		524B66AD242A9BEF0085789D /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
@@ -480,6 +482,7 @@
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
 		48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPluginTests.swift; sourceTree = "<group>"; };
 		48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPlugin.swift; sourceTree = "<group>"; };
+		522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStopActionTests.swift; sourceTree = "<group>"; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
 		5733D1BB21BAA3C8002107D2 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		5733D1BD21BAA6E4002107D2 /* Dictionary+ExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+ExtTests.swift"; sourceTree = "<group>"; };
@@ -1284,6 +1287,7 @@
 				C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */,
 				C9A1CCAF23E995D000621048 /* AVFoundationPlaybackMediaSelectionTests.swift */,
 				7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */,
+				522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -2086,6 +2090,7 @@
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
 				486E8DFE23156A880024E6CA /* OverlayPluginTests.swift in Sources */,
+				522C8998246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */,
 				524B66AC242A9BEA0085789D /* PlayerItemMock.swift in Sources */,
 				524B66AD242A9BEF0085789D /* AccessLogEventMock.swift in Sources */,
 				48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */,
@@ -2147,6 +2152,7 @@
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
 				7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
+				522C8997246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */,
 				7B51DF0C230B58A800C2B045 /* MediaControlElementTests.swift in Sources */,
 				C9A1CCB023E995D100621048 /* AVFoundationPlaybackMediaSelectionTests.swift in Sources */,
 				5733D1BE21BAA6E4002107D2 /* Dictionary+ExtTests.swift in Sources */,
