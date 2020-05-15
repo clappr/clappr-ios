@@ -7,8 +7,10 @@ open class PlayButton: MediaControl.Element {
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-    public var button: UIButton! {
+    public var button: UIButton? {
         didSet {
+            guard let button = button else { return }
+
             view.addSubview(button)
             button.setImage(playIcon, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
@@ -37,7 +39,7 @@ open class PlayButton: MediaControl.Element {
         }
 
         button = UIButton(type: .custom)
-        button.accessibilityIdentifier = "PlayPauseButton"
+        button?.accessibilityIdentifier = "PlayPauseButton"
     }
 
     open func onPlay() {
@@ -81,9 +83,9 @@ open class PlayButton: MediaControl.Element {
         }
 
         if playback.state == .paused || playback.state == .idle {
-            button.setImage(playIcon, for: .normal)
+            button?.setImage(playIcon, for: .normal)
         } else if playback.state == .playing {
-            button.setImage(pauseIcon, for: .normal)
+            button?.setImage(pauseIcon, for: .normal)
         }
     }
 }

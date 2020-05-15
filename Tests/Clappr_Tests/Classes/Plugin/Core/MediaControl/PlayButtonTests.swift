@@ -71,13 +71,13 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback play") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
 
                     it("shows play button") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(playButton.view.isHidden).toEventually(beFalse())
                     }
@@ -89,13 +89,13 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback play") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
 
                     it("shows play button") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(playButton.view.isHidden).toEventually(beFalse())
                     }
@@ -114,7 +114,7 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback pause") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(coreStub.playbackMock?.didCallPause).to(beTrue())
                     }
@@ -122,9 +122,9 @@ class PlayButtonTests: QuickSpec {
                     it("changes the image to a play icon") {
                         let playIcon = UIImage.fromName("play", for: PlayButton.self)!
 
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
-                        let currentButtonIcon = (playButton.button.imageView?.image)!
+                        let currentButtonIcon = (playButton.button?.imageView?.image)!
                         expect(currentButtonIcon.isEqual(playIcon)).toEventually(beTrue())
                     }
 
@@ -148,7 +148,7 @@ class PlayButtonTests: QuickSpec {
                     }
 
                     it("calls the playback play") {
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
                         expect(coreStub.playbackMock?.didCallPlay).to(beTrue())
                     }
@@ -156,9 +156,9 @@ class PlayButtonTests: QuickSpec {
                     it("changes the image to a pause icon") {
                         let pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
 
-                        playButton.button.sendActions(for: .touchUpInside)
+                        playButton.button?.sendActions(for: .touchUpInside)
 
-                        let currentButtonIcon = (playButton.button.imageView?.image)!
+                        let currentButtonIcon = (playButton.button?.imageView?.image)!
                         expect(currentButtonIcon.isEqual(pauseIcon)).toEventually(beTrue())
                     }
 
@@ -181,7 +181,7 @@ class PlayButtonTests: QuickSpec {
                 it("set's acessibilityIdentifier to button") {
                     playButton.render()
 
-                    expect(playButton.button.accessibilityIdentifier).to(equal("PlayPauseButton"))
+                    expect(playButton.button?.accessibilityIdentifier).to(equal("PlayPauseButton"))
                 }
 
                 describe("button") {
@@ -194,7 +194,7 @@ class PlayButtonTests: QuickSpec {
                     it("has scaleAspectFit content mode") {
                         playButton.render()
 
-                        expect(playButton.button.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
+                        expect(playButton.button?.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))
                     }
                 }
             }
