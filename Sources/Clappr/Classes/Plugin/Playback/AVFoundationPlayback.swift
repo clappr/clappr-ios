@@ -311,24 +311,39 @@ open class AVFoundationPlayback: Playback {
             self,
             selector: #selector(playbackDidEnd),
             name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem)
+            object: player.currentItem
+        )
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onAccessLogEntry),
             name: .AVPlayerItemNewAccessLogEntry,
-            object: nil)
+            object: nil
+        )
 
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onFailedToPlayToEndTime),
             name: .AVPlayerItemFailedToPlayToEndTime,
-            object: nil)
+            object: nil
+        )
+    }
+
+    @objc func playbackDidEnd(notification: NSNotification?) {
+        guard didFinishedItem(from: notification) else { return }
+        trigger(.didComplete)
+        updateState(.idle)
+        droppedFrames = 0
     }
 
     @objc func onFailedToPlayToEndTime(notification: NSNotification?) {
-        if let error = notification?.userInfo?["AVPlayerItemFailedToPlayToEndTimeErrorKey"] as? Error {
+        let errorKey = "AVPlayerItemFailedToPlayToEndTimeErrorKey"
+        
+        if let error = notification?.userInfo?[errorKey] as? NSError {
             trigger(.error, userInfo: ["error": error])
+        } else {
+            let defaultError = createFailedToPlayToEndError()
+            trigger(.error, userInfo: ["error": defaultError])
         }
     }
     
@@ -337,6 +352,15 @@ open class AVFoundationPlayback: Playback {
         updateBitrate()
     }
 
+    private func createFailedToPlayToEndError() -> NSError {
+        let userInfo = [
+            "AVPlayerItemFailedToPlayToEndTimeErrorKey": "defaultError"
+        ]
+        let error = NSError(domain: "AVPlayer", code: 0, userInfo: userInfo)
+        
+        return error
+    }
+    
     private func updateBitrate() {
         guard lastBitrate != bitrate else { return }
         
@@ -464,13 +488,6 @@ open class AVFoundationPlayback: Playback {
         return true
     }
 
-    @objc func playbackDidEnd(notification: NSNotification?) {
-        guard didFinishedItem(from: notification) else { return }
-        trigger(.didComplete)
-        updateState(.idle)
-        droppedFrames = 0
-    }
-
     open override func pause() {
         guard canPause else { return }
         triggerWillPause()
@@ -485,6 +502,7 @@ open class AVFoundationPlayback: Playback {
         updateState(.idle)
         player?.pause()
         releaseResources()
+        resetPlaybackProperties()
         trigger(.didStop)
     }
 
@@ -494,7 +512,11 @@ open class AVFoundationPlayback: Playback {
         playerLayer = nil
         player?.replaceCurrentItem(with: nil)
         player = nil
+    }
+
+    private func resetPlaybackProperties() {
         droppedFrames = 0
+        playerStatus = .unknown
     }
 
     @objc var isReadyToPlay: Bool {
@@ -689,10 +711,20 @@ open class AVFoundationPlayback: Playback {
 
     private func removeObservers() {
         guard let player = player, player.observationInfo != nil else { return }
-        if let timeObserver = timeObserver {
-            player.removeTimeObserver(timeObserver)
-        }
+
+        removeTimeObserver()
         loopObserver = nil
+        removePlayerObservers()
+    }
+
+    private func removeTimeObserver() {
+        guard let player = player, let timeObserver = timeObserver else { return }
+
+        player.removeTimeObserver(timeObserver)
+        self.timeObserver = nil
+    }
+
+    private func removePlayerObservers() {
         observers.forEach { $0.invalidate() }
         observers.removeAll()
     }

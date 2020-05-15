@@ -5,7 +5,7 @@ class PlayerMock: AVPlayer {
     private var isFinished: Bool
     private var playerItemMock: PlayerItemMock
     
-    init(accessLogEvent: AccessLogEventMock, isFinished: Bool = false) {
+    init(accessLogEvent: AccessLogEventMock = AccessLogEventMock(), isFinished: Bool = false) {
         self.accessLogEvent = accessLogEvent
         self.isFinished = isFinished
         self.playerItemMock = PlayerItemMock(accessLogEvent: accessLogEvent, isFinished: isFinished)
