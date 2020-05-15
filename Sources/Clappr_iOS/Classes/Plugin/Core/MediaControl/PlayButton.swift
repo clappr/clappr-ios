@@ -79,7 +79,7 @@ open class PlayButton: MediaControl.Element {
     public func show() {
         view.isHidden = false
     }
-    
+
     @objc func togglePlayPause() {
         guard let playback = activePlayback else { return }
         
