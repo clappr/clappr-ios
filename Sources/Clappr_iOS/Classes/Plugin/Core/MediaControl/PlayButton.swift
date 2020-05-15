@@ -33,6 +33,7 @@ open class PlayButton: MediaControl.Element {
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
             listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
+            listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onStop() }
         }
     }
 
@@ -56,6 +57,11 @@ open class PlayButton: MediaControl.Element {
         changeIcon()
     }
 
+    private func onStop() {
+        show()
+        changeIcon()
+    }
+    
     public func hide() {
         view.isHidden = true
     }
@@ -71,7 +77,7 @@ open class PlayButton: MediaControl.Element {
 
         if playback.state == .playing {
             activePlayback?.pause()
-        } else if playback.state == .paused {
+        } else if playback.state == .paused || playback.state == .idle {
             activePlayback?.play()
         }
     }
@@ -81,7 +87,7 @@ open class PlayButton: MediaControl.Element {
             return
         }
 
-        if playback.state == .paused {
+        if playback.state == .paused || playback.state == .idle {
             button.setImage(playIcon, for: .normal)
         } else if playback.state == .playing {
             button.setImage(pauseIcon, for: .normal)
