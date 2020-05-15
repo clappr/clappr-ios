@@ -19,6 +19,14 @@ open class PlayButton: MediaControl.Element {
         }
     }
 
+    private var canShowPlayIcon: Bool {
+        activePlayback?.state == .paused || activePlayback?.state == .idle
+    }
+
+    private var canShowPauseIcon: Bool {
+        activePlayback?.state == .playing
+    }
+
     override open func bindEvents() {
         bindPlaybackEvents()
     }
@@ -51,17 +59,17 @@ open class PlayButton: MediaControl.Element {
 
     open func onPlay() {
         show()
-        changeIcon()
+        changeToPauseIcon()
     }
 
     private func onPause() {
         show()
-        changeIcon()
+        changeToPlayIcon()
     }
 
     private func onStop() {
         show()
-        changeIcon()
+        changeToPlayIcon()
     }
     
     public func hide() {
@@ -92,16 +100,16 @@ open class PlayButton: MediaControl.Element {
     private func play() {
         activePlayback?.play()
     }
+    
+    private func changeToPlayIcon() {
+        guard canShowPlayIcon else { return }
 
-    public func changeIcon() {
-        guard let playback = activePlayback else {
-            return
-        }
+        button?.setImage(playIcon, for: .normal)
+    }
 
-        if playback.state == .paused || playback.state == .idle {
-            button?.setImage(playIcon, for: .normal)
-        } else if playback.state == .playing {
-            button?.setImage(pauseIcon, for: .normal)
-        }
+    public func changeToPauseIcon() {
+        guard canShowPauseIcon else { return }
+
+        button?.setImage(pauseIcon, for: .normal)
     }
 }
