@@ -32,12 +32,12 @@ open class PlayButton: MediaControl.Element {
     }
 
     func bindPlaybackEvents() {
-        if let playback = activePlayback {
-            listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
-            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
-            listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onStop() }
-        }
+        guard let playback = activePlayback else { return }
+
+        listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in self?.onPause() }
+        listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.onPlay() }
+        listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.hide() }
+        listenTo(playback, eventName: Event.didStop.rawValue) { [weak self] _ in self?.onStop() }
     }
 
     override open func render() {
