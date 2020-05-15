@@ -33,11 +33,18 @@ open class PlayButton: MediaControl.Element {
     }
 
     override open func render() {
-        if let superview = view.superview {
-            view.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 0.6).isActive = true
-            view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.6).isActive = true
-        }
+        setupView()
+        setupButton()
+    }
 
+    private func setupView() {
+        guard let superview = view.superview else { return }
+
+        view.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 0.6).isActive = true
+        view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.6).isActive = true
+    }
+
+    private func setupButton() {
         button = UIButton(type: .custom)
         button?.accessibilityIdentifier = "PlayPauseButton"
     }
