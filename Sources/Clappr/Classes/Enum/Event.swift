@@ -69,5 +69,7 @@ public enum Event: String, CaseIterable {
     case didHideDrawerPlugin = "Clappr:didHideDrawerPlugin"
     case didShowOverlayPlugin = "Clappr:didShowOverlayPlugin"
     case didHideOverlayPlugin = "Clappr:didHideOverlayPlugin"
+    #if os(tvOS)
     case requestFocusUpdate = "Clappr:requestFocusUpdate"
+    #endif
 }
