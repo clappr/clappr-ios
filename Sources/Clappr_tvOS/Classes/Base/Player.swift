@@ -141,6 +141,12 @@ open class Player: AVPlayerViewController {
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
+        core?.on(Event.requestFocusUpdate.rawValue) { [weak self] _ in self?.updateFocus() }
+    }
+    
+    private func updateFocus() {
+        setNeedsFocusUpdate()
+        updateFocusIfNeeded()
     }
 
     open func load(_ source: String, mimeType: String? = nil) {
