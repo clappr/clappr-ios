@@ -43,7 +43,7 @@ open class Player: AVPlayerViewController {
 
     override open var preferredFocusEnvironments: [UIFocusEnvironment] {
         let subviews = contentOverlayView?.subviews.first?.subviews
-        if let button = subviews?.first { $0 is UIButton }, button.alpha > 0.1 {
+        if let button = subviews?.first(where: { $0 is UIButton }), button.alpha > 0.1 {
             return [button]
         }
 
