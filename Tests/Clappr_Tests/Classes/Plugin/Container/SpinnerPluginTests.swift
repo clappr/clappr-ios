@@ -140,6 +140,21 @@ class SpinnerPluginTests: QuickSpec {
                     expect(spinnerPlugin.isAnimating).toEventually(beFalse())
                 }
             }
+
+            context("when the playback trigger a willPlay event") {
+
+                beforeEach {
+                    playback.trigger(Event.willPlay.rawValue)
+                }
+
+                it("hides the spinner") {
+                    expect(spinnerPlugin.view.isHidden).toEventually(beFalse())
+                }
+
+                it("sets the isAnimating to false") {
+                    expect(spinnerPlugin.isAnimating).toEventually(beTrue())
+                }
+            }
         }
     }
 
