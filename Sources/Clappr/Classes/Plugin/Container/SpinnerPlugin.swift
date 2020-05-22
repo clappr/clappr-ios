@@ -26,7 +26,7 @@ open class SpinnerPlugin: UIContainerPlugin {
         addCenteringConstraints()
     }
 
-    fileprivate func addCenteringConstraints() {
+    private func addCenteringConstraints() {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal,
@@ -57,13 +57,13 @@ open class SpinnerPlugin: UIContainerPlugin {
         listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
     }
 
-    fileprivate func startAnimating() {
+    private func startAnimating() {
         view.isHidden = false
         spinningWheel.startAnimating()
         Logger.logDebug("started animating spinning wheel", scope: pluginName)
     }
 
-    fileprivate func stopAnimating() {
+    private func stopAnimating() {
         view.isHidden = true
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
@@ -71,6 +71,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     open override func destroy() {
         super.destroy()
+
         Logger.logDebug("destroying", scope: "SpinnerPlugin")
         Logger.logDebug("destroying ui elements", scope: "SpinnerPlugin")
         view.removeFromSuperview()
