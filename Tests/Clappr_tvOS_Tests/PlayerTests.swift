@@ -169,6 +169,32 @@ class PlayerTests: QuickSpec {
                     }
                 }
             }
+            
+            describe("when choosing the next focus item") {
+                context("and have a plugin with a visible UIButton") {
+                    it("focus on the button") {
+                        Loader.shared.resetPlugins()
+                        let player = Player(options: [kMediaControl: true], externalPlugins: [AnUICorePlugin.self])
+                        
+                        player.viewDidLoad()
+                        
+                        expect(player.preferredFocusEnvironments.first).to(beAKindOf(UIButton.self))
+                    }
+                }
+                
+                context("and does not have a plugin with a visible UIButton") {
+                    it("not focus on a UIButton") {
+                        Loader.shared.resetPlugins()
+                        player = Player(options: [kMediaControl: true])
+                        
+                        player.viewDidLoad()
+                        
+                        expect(player.preferredFocusEnvironments.first).toNot(beAKindOf(UIButton.self))
+                    }
+                }
+            }
+            
+            
         }
     }
     
