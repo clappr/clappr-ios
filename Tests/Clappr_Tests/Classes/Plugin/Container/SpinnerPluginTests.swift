@@ -110,6 +110,51 @@ class SpinnerPluginTests: QuickSpec {
                     expect(spinnerPlugin.isAnimating).toEventually(beTrue())
                 }
             }
+            
+            context("when the playback trigger a pause event") {
+
+                beforeEach {
+                    playback.trigger(Event.didPause.rawValue)
+                }
+
+                it("hides the spinner") {
+                    expect(spinnerPlugin.view.isHidden).toEventually(beTrue())
+                }
+
+                it("sets the isAnimating to false") {
+                    expect(spinnerPlugin.isAnimating).toEventually(beFalse())
+                }
+            }
+
+            context("when the playback trigger a stop event") {
+
+                beforeEach {
+                    playback.trigger(Event.didStop.rawValue)
+                }
+
+                it("hides the spinner") {
+                    expect(spinnerPlugin.view.isHidden).toEventually(beTrue())
+                }
+
+                it("sets the isAnimating to false") {
+                    expect(spinnerPlugin.isAnimating).toEventually(beFalse())
+                }
+            }
+
+            context("when the playback trigger a willPlay event") {
+
+                beforeEach {
+                    playback.trigger(Event.willPlay.rawValue)
+                }
+
+                it("hides the spinner") {
+                    expect(spinnerPlugin.view.isHidden).toEventually(beFalse())
+                }
+
+                it("sets the isAnimating to false") {
+                    expect(spinnerPlugin.isAnimating).toEventually(beTrue())
+                }
+            }
         }
     }
 

@@ -26,7 +26,7 @@ open class SpinnerPlugin: UIContainerPlugin {
         addCenteringConstraints()
     }
 
-    fileprivate func addCenteringConstraints() {
+    private func addCenteringConstraints() {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal,
@@ -48,20 +48,23 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     private func bindPlaybackEvents() {
         guard let playback = playback else { return }
-        listenTo(playback, eventName: Event.playing.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-        listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] (info: EventUserInfo) in self?.startAnimating(info) }
-        listenTo(playback, eventName: Event.error.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-        listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] (info: EventUserInfo) in self?.stopAnimating(info) }
-
+        
+        listenTo(playback, event: .playing) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .stalling) { [weak self] _ in self?.startAnimating() }
+        listenTo(playback, event: .willPlay) { [weak self] _ in self?.startAnimating() }
+        listenTo(playback, event: .error) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .didComplete) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .didPause) { [weak self] _ in self?.stopAnimating() }
+        listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
     }
 
-    fileprivate func startAnimating(_: EventUserInfo) {
+    private func startAnimating() {
         view.isHidden = false
         spinningWheel.startAnimating()
         Logger.logDebug("started animating spinning wheel", scope: pluginName)
     }
 
-    fileprivate func stopAnimating(_: EventUserInfo) {
+    private func stopAnimating() {
         view.isHidden = true
         spinningWheel.stopAnimating()
         Logger.logDebug("stoped animating spinning wheel", scope: pluginName)
@@ -69,6 +72,7 @@ open class SpinnerPlugin: UIContainerPlugin {
 
     open override func destroy() {
         super.destroy()
+
         Logger.logDebug("destroying", scope: "SpinnerPlugin")
         Logger.logDebug("destroying ui elements", scope: "SpinnerPlugin")
         view.removeFromSuperview()
