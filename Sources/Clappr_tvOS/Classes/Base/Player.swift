@@ -43,9 +43,8 @@ open class Player: AVPlayerViewController {
     }
 
     override open var preferredFocusEnvironments: [UIFocusEnvironment] {
-        if let nextFocusEnvironment = nextFocusEnvironment {
-            self.nextFocusEnvironment = nil
-            return [nextFocusEnvironment]
+        if let view = nextFocusEnvironment as? UIView, view.alpha > 0.1 {
+            return [view]
         }
 
         return super.preferredFocusEnvironments
