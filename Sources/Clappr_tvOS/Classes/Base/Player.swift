@@ -8,6 +8,7 @@ open class Player: AVPlayerViewController {
     static var hasAlreadyRegisteredPlaybacks = false
     private let baseObject = BaseObject()
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+    private var nextFocusEnvironment: UIFocusEnvironment?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +43,9 @@ open class Player: AVPlayerViewController {
     }
 
     override open var preferredFocusEnvironments: [UIFocusEnvironment] {
-        let subviews = contentOverlayView?.subviews.first?.subviews
-        if let button = subviews?.first(where: { $0 is UIButton }), button.alpha > 0.1 {
-            return [button]
+        if let nextFocusEnvironment = nextFocusEnvironment {
+            self.nextFocusEnvironment = nil
+            return [nextFocusEnvironment]
         }
 
         return super.preferredFocusEnvironments
@@ -150,10 +151,14 @@ open class Player: AVPlayerViewController {
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-        core?.on(Event.requestFocusUpdate.rawValue) { [weak self] _ in self?.updateFocus() }
+        core?.on(Event.requestFocusUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateFocus(userInfo: info) }
     }
     
-    private func updateFocus() {
+    private func updateFocus(userInfo: EventUserInfo) {
+        if let nextFocusEnvironment = userInfo?["nextFocusEnvironment"] as? UIFocusEnvironment {
+            self.nextFocusEnvironment = nextFocusEnvironment
+        }
+        
         setNeedsFocusUpdate()
         updateFocusIfNeeded()
     }
