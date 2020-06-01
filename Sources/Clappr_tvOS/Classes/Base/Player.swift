@@ -43,10 +43,10 @@ open class Player: AVPlayerViewController {
     }
 
     override open var preferredFocusEnvironments: [UIFocusEnvironment] {
-        if let view = nextFocusEnvironment as? UIView, view.alpha > 0.1 {
-            return [view]
+        if let nextFocusEnvironment = nextFocusEnvironment, nextFocusEnvironment.isFocusable {
+            return [nextFocusEnvironment]
         }
-
+        
         return super.preferredFocusEnvironments
     }
 
@@ -150,14 +150,19 @@ open class Player: AVPlayerViewController {
         core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
         core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
-        core?.on(Event.requestFocusUpdate.rawValue) { [weak self] (info: EventUserInfo) in self?.updateFocus(userInfo: info) }
+        core?.on(Event.requestFocus.rawValue) { [weak self] (info: EventUserInfo) in self?.handleRequestFocusEvent(userInfo: info) }
+        core?.on(Event.updateFocus.rawValue) { [weak self] _ in self?.updateFocus() }
     }
     
-    private func updateFocus(userInfo: EventUserInfo) {
-        if let nextFocusEnvironment = userInfo?["nextFocusEnvironment"] as? UIFocusEnvironment {
-            self.nextFocusEnvironment = nextFocusEnvironment
+    private func handleRequestFocusEvent(userInfo: EventUserInfo) {
+        if let tag = userInfo?["viewTag"] as? Int {
+            self.nextFocusEnvironment = core?.view.viewWithTag(tag)
         }
         
+        updateFocus()
+    }
+    
+    private func updateFocus() {
         setNeedsFocusUpdate()
         updateFocusIfNeeded()
     }
