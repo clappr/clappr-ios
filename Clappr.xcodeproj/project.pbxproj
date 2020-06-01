@@ -327,6 +327,7 @@
 		EFEC757F23C51FE700FA6A52 /* PlaybackRenderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEC757D23C51FE700FA6A52 /* PlaybackRenderProtocol.swift */; };
 		EFEC758223C52A9A00FA6A52 /* PlaybackRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEC758023C52A7D00FA6A52 /* PlaybackRendererTests.swift */; };
 		EFEC758423C52D4500FA6A52 /* PlaybackRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEC758323C52D4500FA6A52 /* PlaybackRendererTests.swift */; };
+		EFFC35CC24858D9E00A18E90 /* UIFocusEnvironment+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFC35CB24858D9E00A18E90 /* UIFocusEnvironment+ext.swift */; };
 		FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
 		FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0A223D21754C1700D2180F /* PlayerTests.swift */; };
 		FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB61A3F2209F885800BDF267 /* FullscreenTests.swift */; };
@@ -638,6 +639,7 @@
 		EFEC757D23C51FE700FA6A52 /* PlaybackRenderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackRenderProtocol.swift; sourceTree = "<group>"; };
 		EFEC758023C52A7D00FA6A52 /* PlaybackRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackRendererTests.swift; sourceTree = "<group>"; };
 		EFEC758323C52D4500FA6A52 /* PlaybackRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackRendererTests.swift; sourceTree = "<group>"; };
+		EFFC35CB24858D9E00A18E90 /* UIFocusEnvironment+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFocusEnvironment+ext.swift"; sourceTree = "<group>"; };
 		FB0A223D21754C1700D2180F /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
 		FB46260021AC8D2B008D9A25 /* CoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreFactory.swift; sourceTree = "<group>"; };
 		FB61A3F2209F885800BDF267 /* FullscreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenTests.swift; sourceTree = "<group>"; };
@@ -1495,6 +1497,7 @@
 			isa = PBXGroup;
 			children = (
 				EF5A5D3823D0A9B6001CCDBC /* Set+ext.swift */,
+				EFFC35CB24858D9E00A18E90 /* UIFocusEnvironment+ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2036,6 +2039,7 @@
 				48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */,
 				C9EDF8592163A9A900789E2F /* UIColor+ClapprAdditions.swift in Sources */,
 				48A29C00221D81B90004AD3B /* EventProtocol.swift in Sources */,
+				EFFC35CC24858D9E00A18E90 /* UIFocusEnvironment+ext.swift in Sources */,
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
