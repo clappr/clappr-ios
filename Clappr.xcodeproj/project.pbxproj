@@ -141,6 +141,7 @@
 		524B66AC242A9BEA0085789D /* PlayerItemMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8023FDDEDC00C82098 /* PlayerItemMock.swift */; };
 		524B66AD242A9BEF0085789D /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
 		524B66AE242A9C070085789D /* PlayerItemAccessLogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8223FDDF1900C82098 /* PlayerItemAccessLogMock.swift */; };
+		529D2F7224880ACD006283A4 /* UICorePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF652211D467CCA00627C48 /* UICorePluginTests.swift */; };
 		571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D362B31D41339400CCB866 /* AVFoundationPlayback.swift */; };
 		571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7785B6200523E400EC879F /* AVFoundationPlayback+tvOS.swift */; };
 		571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9684B6C81D186E2D00D012C2 /* AVFoundationPlaybackTests.swift */; };
@@ -2115,6 +2116,7 @@
 				48A29C11221DF3C00004AD3B /* CorePluginStub.swift in Sources */,
 				571B7B2D21750173005C0942 /* AVPlayerStub.swift in Sources */,
 				48A29C04221DBE740004AD3B /* ContainerPluginStub.swift in Sources */,
+				529D2F7224880ACD006283A4 /* UICorePluginTests.swift in Sources */,
 				571B7B32217503BB005C0942 /* NowPlayingServiceStub.swift in Sources */,
 				32A7A298215EA49700296DE3 /* NoOpPlaybackTests.swift in Sources */,
 				FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */,

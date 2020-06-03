@@ -42,6 +42,43 @@ class UICorePluginTests: QuickSpec {
                     expect(plugin.render()).to(raiseException(named: expectedExceptionName, reason: expectedExceptionReason))
                 }
             }
+
+            #if os(tvOS)
+            describe("#requestFocus") {
+                it("triggers a requestFocus event with viewTag") {
+                    var didCallRequestFocusWithTag: Int?
+                    let core = CoreStub()
+                    let plugin = StubCorePlugin(context: core)
+                    plugin.view.tag = 123
+
+                    core.on(Event.requestFocus.rawValue) { userInfo in
+                        didCallRequestFocusWithTag = userInfo?["viewTag"] as? Int
+                    }
+
+                    plugin.requestFocus()
+
+                    expect(didCallRequestFocusWithTag).toEventually(equal(123))
+                }
+            }
+
+            describe("#requestFocus") {
+                it("triggers a requestFocus event with viewTag") {
+                    var didCallReleaseFocusWithTag: Int?
+                    let core = CoreStub()
+                    let plugin = StubCorePlugin(context: core)
+                    plugin.view.tag = 123
+
+                    core.on(Event.releaseFocus.rawValue) { userInfo in
+                        didCallReleaseFocusWithTag = userInfo?["viewTag"] as? Int
+                    }
+
+                    plugin.releaseFocus()
+
+                    expect(didCallReleaseFocusWithTag).toEventually(equal(123))
+                }
+            }
+
+            #endif
         }
     }
 
