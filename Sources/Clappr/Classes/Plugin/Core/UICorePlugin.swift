@@ -10,13 +10,14 @@ open class UICorePlugin: SimpleCorePlugin, UIPlugin {
     }
     
     #if os(tvOS)
-    open func requestFocusToMe() {
+    open func requestFocus() {
         let info: EventUserInfo = ["viewTag": view.tag]
         core?.trigger(.requestFocus, userInfo: info)
     }
     
-    open func updateFocus() {
-        core?.trigger(.updateFocus)
+    open func releaseFocus() {
+        let info: EventUserInfo = ["viewTag": view.tag]
+        core?.trigger(.releaseFocus, userInfo: info)
     }
     #endif
     

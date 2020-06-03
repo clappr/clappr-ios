@@ -8,7 +8,13 @@ open class Player: AVPlayerViewController {
     static var hasAlreadyRegisteredPlaybacks = false
     private let baseObject = BaseObject()
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
-    private var nextFocusEnvironment: UIFocusEnvironment?
+    private var nextFocusViewTag: Int?
+
+    private var nextFocusEnvironment: UIFocusEnvironment? {
+        guard let nextFocusViewTag = nextFocusViewTag else { return nil }
+
+        return core?.view.viewWithTag(nextFocusViewTag)
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -151,14 +157,20 @@ open class Player: AVPlayerViewController {
         core?.on(Event.didEnterFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.requestFullscreen, userInfo: info) }
         core?.on(Event.didExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.forward(.exitFullscreen, userInfo: info) }
         core?.on(Event.requestFocus.rawValue) { [weak self] (info: EventUserInfo) in self?.handleRequestFocusEvent(userInfo: info) }
-        core?.on(Event.updateFocus.rawValue) { [weak self] _ in self?.updateFocus() }
+        core?.on(Event.releaseFocus.rawValue) { [weak self] (info: EventUserInfo) in self?.releaseFocus(userInfo: info) }
     }
     
     private func handleRequestFocusEvent(userInfo: EventUserInfo) {
-        if let tag = userInfo?["viewTag"] as? Int {
-            self.nextFocusEnvironment = core?.view.viewWithTag(tag)
-        }
-        
+        guard let viewTag = userInfo?["viewTag"] as? Int, self.nextFocusViewTag == nil else { return }
+
+        self.nextFocusViewTag = viewTag
+        updateFocus()
+    }
+
+    private func releaseFocus(userInfo: EventUserInfo) {
+        guard let viewTag = userInfo?["viewTag"] as? Int, self.nextFocusViewTag == viewTag else { return }
+
+        self.nextFocusViewTag = nil
         updateFocus()
     }
     
@@ -238,7 +250,7 @@ open class Player: AVPlayerViewController {
     open func listenTo<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return baseObject.listenTo(contextObject, eventName: eventName, callback: callback)
     }
-    
+
     @discardableResult
     open func listenToOnce<T: EventProtocol>(_ contextObject: T, eventName: String, callback: @escaping EventCallback) -> String {
         return baseObject.listenToOnce(contextObject, eventName: eventName, callback: callback)
@@ -246,19 +258,19 @@ open class Player: AVPlayerViewController {
 
     private func bindPlaybackEvents() {
         guard let playback = core?.activePlayback else { return }
-        
+
         var listenId = ""
         playbackEventsToListen.forEach { event in
             listenId = listenTo(playback, eventName: event) { [weak self] (info: EventUserInfo) in
                 self?.baseObject.trigger(event, userInfo: info)
             }
-            
+
             playbackEventsListenIds.append(listenId)
         }
-        
+
         listenId = listenToOnce(playback, eventName: Event.playing.rawValue, callback: { [weak self] _ in self?.bindPlayer(playback: playback) })
         playbackEventsListenIds.append(listenId)
-        
+
         listenId = listenTo(playback, eventName: Event.error.rawValue) { [weak self] info in
             self?.trigger(Event.error.rawValue, userInfo: self?.fillErrorWith(info))
         }
@@ -268,7 +280,7 @@ open class Player: AVPlayerViewController {
     open func fillErrorWith(_ userInfo: EventUserInfo) -> EventUserInfo {
         return userInfo
     }
-    
+
     private func bindPlayer(playback: Playback?) {
         if let avFoundationPlayback = (playback as? AVFoundationPlayback), let player = avFoundationPlayback.player {
             self.player = player
@@ -341,7 +353,7 @@ extension Player {
         if presses.containsAny(pressTypes: [.select, .playPause]) && isPaused {
             activePlayback?.trigger(.willPlay)
         }
-        
+
         super.pressesBegan(presses, with: event)
     }
 }
