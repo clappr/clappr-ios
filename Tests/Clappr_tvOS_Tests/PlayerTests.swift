@@ -169,9 +169,134 @@ class PlayerTests: QuickSpec {
                     }
                 }
             }
+            
+            describe("Player focus") {
+                context("when an view is the first to request focus") {
+                    context("the item is focusable") {
+                        it("changes focus to itself") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            button.tag = 1234
+                            player.core?.view.addSubview(button)
+                            player.viewDidLoad()
+
+                            self.requestFocus(button, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).to(be(button))
+                        }
+                    }
+                    
+                    context("the item is not focusable") {
+                        it("doesn't change focus to itself") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            button.tag = 5678
+                            button.isHidden = true
+                            player.core?.view.addSubview(button)
+                            player.viewDidLoad()
+                            
+                            self.requestFocus(button, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).toNot(be(button))
+                        }
+                    }
+                }
+                
+                context("when an view release focus") {
+                    context("and focus is itself") {
+                        it("releases the focus") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            button.tag = 12345
+                            player.core?.view.addSubview(button)
+                            player.viewDidLoad()
+                            
+                            self.requestFocus(button, baseObject: player.core)
+                            self.releaseFocus(button, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).toNot(be(button))
+                        }
+                    }
+                    
+                    context("and focus is not itself") {
+                        it("doesn't release the focus") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            let buttonWithoutFocus = UIButton()
+                            button.tag = 123456
+                            buttonWithoutFocus.tag = 7890
+                            player.core?.view.addSubview(button)
+                            player.core?.view.addSubview(buttonWithoutFocus)
+                            player.viewDidLoad()
+
+                            self.requestFocus(button, baseObject: player.core)
+                            self.releaseFocus(buttonWithoutFocus, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).to(be(button))
+                        }
+                    }
+                }
+                
+                context("when an view is not the first to request focus") {
+                    context("and the focus was released") {
+                        it("changes focus to itself") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            let anotherButton = UIButton()
+                            button.tag = 111
+                            anotherButton.tag = 222
+                            player.core?.view.addSubview(button)
+                            player.core?.view.addSubview(anotherButton)
+                            player.viewDidLoad()
+                            self.requestFocus(button, baseObject: player.core)
+                            self.releaseFocus(button, baseObject: player.core)
+                            
+                            self.requestFocus(anotherButton, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).to(be(anotherButton))
+                        }
+                    }
+                    
+                    context("and the focus was not released") {
+                        it("doesn't change focus to itself") {
+                            let player = Player(options: [kMediaControl: true])
+                            let button = UIButton()
+                            let anotherButton = UIButton()
+                            button.tag = 111
+                            anotherButton.tag = 222
+                            player.core?.view.addSubview(button)
+                            player.core?.view.addSubview(anotherButton)
+                            player.viewDidLoad()
+                            self.requestFocus(button, baseObject: player.core)
+                            
+                            self.requestFocus(anotherButton, baseObject: player.core)
+                            
+                            let focusedView = player.preferredFocusEnvironments.first as? UIView
+                            expect(focusedView).to(be(button))
+                        }
+                    }
+                }
+            }
         }
     }
     
+    private func requestFocus(_ view: UIView, baseObject: BaseObject?) {
+        let userInfo: EventUserInfo = ["viewTag": view.tag]
+
+        baseObject?.trigger(.requestFocus, userInfo: userInfo)
+    }
+
+    private func releaseFocus(_ view: UIView, baseObject: BaseObject?) {
+        let userInfo: EventUserInfo = ["viewTag": view.tag]
+
+        baseObject?.trigger(.releaseFocus, userInfo: userInfo)
+    }
+
     class StubPlayback: Playback {
         override class var name: String {
             return "StubPlayback"
