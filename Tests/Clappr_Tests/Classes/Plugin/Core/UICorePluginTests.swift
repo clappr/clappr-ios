@@ -61,7 +61,7 @@ class UICorePluginTests: QuickSpec {
                 }
             }
 
-            describe("#requestFocus") {
+            describe("#releaseFocus") {
                 it("triggers a requestFocus event with viewTag") {
                     var didCallReleaseFocusWithTag: Int?
                     let core = CoreStub()
