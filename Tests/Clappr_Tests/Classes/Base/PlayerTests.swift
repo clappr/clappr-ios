@@ -233,9 +233,7 @@ class PlayerTests: QuickSpec {
                     }
                     
                     it("triggers a didDestroy event when requestDestroyPlayer was listened") {
-                        let baseObject = BaseObject()
-
-                        baseObject.listenTo(player, event: .didDestroy) { _ in
+                        player.on(.didDestroy) { _ in
                             callbackWasCalled = true
                         }
 
