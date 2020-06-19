@@ -97,13 +97,16 @@ open class Player: BaseObject {
 
     private func bindCoreEvents() {
         guard let core = core else { return }
-        
+
         listenTo(core, event: .willChangeActivePlayback) { [weak self] _ in self?.unbindPlaybackEvents() }
         listenTo(core, event: .didChangeActivePlayback) { [weak self] _ in self?.bindPlaybackEvents() }
 
         listenTo(core, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] userInfo in self?.trigger(.requestFullscreen, userInfo: userInfo)
         }
         listenTo(core, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] userInfo in self?.trigger(.exitFullscreen, userInfo: userInfo)
+        }
+        listenTo(core, eventName: InternalEvent.requestDestroyPlayer.rawValue) { [weak self] _ in
+            self?.destroy()
         }
     }
     
@@ -259,6 +262,7 @@ open class Player: BaseObject {
         self.core?.destroy()
         self.core = nil
         stopListening()
+        trigger(.didDestroy)
         Logger.logDebug("destroyed", scope: "Player")
     }
     
