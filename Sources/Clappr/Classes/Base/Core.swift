@@ -210,7 +210,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private var shouldDestroyPlayer: Bool {
         !optionsUnboxer.fullscreenControledByApp && optionsUnboxer.fullscreenDisable && optionsUnboxer.fullscreen
     }
-    
+
     private func onUserRequestExitFullscreen() {
         #if os(iOS)
         if shouldDestroyPlayer {
@@ -220,7 +220,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
         #endif
     }
-    
+
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Core")
 
