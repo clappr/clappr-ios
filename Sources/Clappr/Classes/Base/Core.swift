@@ -170,6 +170,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
     }
 
+    private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisable }
+    private var isFullscreenControlledByPlayer: Bool { !optionsUnboxer.fullscreenControledByApp }
+    private var shouldDestroyPlayer: Bool { isFullscreenButtonDisable && isFullscreenControlledByPlayer }
+
     private func addToContainer() {
         #if os(iOS)
         if shouldEnterInFullScreen {
@@ -205,10 +209,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #if os(iOS)
         fullscreenHandler?.set(fullscreen: fullscreen)
         #endif
-    }
-
-    private var shouldDestroyPlayer: Bool {
-        !optionsUnboxer.fullscreenControledByApp && optionsUnboxer.fullscreenDisable && optionsUnboxer.fullscreen
     }
 
     private func onUserRequestExitFullscreen() {

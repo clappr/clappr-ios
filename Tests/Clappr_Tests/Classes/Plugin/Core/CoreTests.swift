@@ -362,10 +362,9 @@ class CoreTests: QuickSpec {
                     describe("#shouldDestroy") {
                         describe("Event.userRequestExitFullscreen is triggered") {
                             context("isFullscreenByPlayer") {
-                                context("when isFullscreen and isFullscreenByPlayer and isFullscreenDisable") {
+                                context("when isFullscreenByPlayer and isFullscreenDisable") {
                                     it("triggers shouldDestroyPlayer event") {
                                         let options: Options = [
-                                            kFullscreen: true,
                                             kFullscreenByApp: false,
                                             kFullscreenDisabled: true
                                         ]
@@ -381,31 +380,11 @@ class CoreTests: QuickSpec {
                                     }
                                 }
 
-                                context("when isFullscreen and isFullscreenEnabled") {
+                                context("when isFullscreenEnabled") {
                                     it("doesn't trigger shouldDestroyPlayer event") {
                                         let options: Options = [
-                                            kFullscreen: true,
                                             kFullscreenByApp: false,
                                             kFullscreenDisabled: false
-                                        ]
-                                        let core = Core(options: options)
-                                        var didTriggerEvent = false
-
-                                        core.on(InternalEvent.requestDestroyPlayer.rawValue) { _ in
-                                            didTriggerEvent = true
-                                        }
-                                        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
-
-                                        expect(didTriggerEvent).to(beFalse())
-                                    }
-                                }
-
-                                context("when is not in fullscreen and isFullscreenDisable") {
-                                    it("doesn't trigger shouldDestroyPlayer event") {
-                                        let options: Options = [
-                                            kFullscreen: false,
-                                            kFullscreenByApp: false,
-                                            kFullscreenDisabled: true
                                         ]
                                         let core = Core(options: options)
                                         var didTriggerEvent = false
