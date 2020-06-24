@@ -6,6 +6,7 @@ open class PlayButton: MediaControl.Element {
 
     public var playIcon = UIImage.fromName("play", for: PlayButton.self)!
     public var pauseIcon = UIImage.fromName("pause", for: PlayButton.self)!
+    public var replayIcon = UIImage.fromName("replay", for: PlayButton.self)!
 
     public var button: UIButton? {
         didSet {
@@ -26,6 +27,11 @@ open class PlayButton: MediaControl.Element {
     private var canShowPauseIcon: Bool {
         activePlayback?.state == .playing
     }
+    
+    private var shouldReplay: Bool {
+        guard let playback = activePlayback else { return false }
+        return playback.position == playback.duration
+    }
 
     override open func bindEvents() {
         bindPlaybackEvents()
@@ -38,6 +44,8 @@ open class PlayButton: MediaControl.Element {
         listenTo(playback, event: .playing) { [weak self] _ in self?.onPlay() }
         listenTo(playback, event: .stalling) { [weak self] _ in self?.hide() }
         listenTo(playback, event: .didStop) { [weak self] _ in self?.onStop() }
+        listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
+        listenTo(playback, event: .willSeek) { [weak self] _ in self?.onSeek() }
     }
 
     override open func render() {
@@ -71,7 +79,18 @@ open class PlayButton: MediaControl.Element {
         show()
         changeToPlayIcon()
     }
+
+    private func onComplete() {
+        show()
+        changeToReplayIcon()
+    }
     
+    private func onSeek() {
+        guard !shouldReplay else { return }
+        show()
+        canShowPlayIcon ? changeToPlayIcon() : changeToPauseIcon()
+    }
+
     public func hide() {
         view.isHidden = true
     }
@@ -82,6 +101,8 @@ open class PlayButton: MediaControl.Element {
 
     @objc func togglePlayPause() {
         guard let playback = activePlayback else { return }
+        
+        if shouldReplay { playback.seek(0) }
         
         switch playback.state {
         case .playing:
@@ -111,5 +132,9 @@ open class PlayButton: MediaControl.Element {
         guard canShowPauseIcon else { return }
 
         button?.setImage(pauseIcon, for: .normal)
+    }
+
+    private func changeToReplayIcon() {
+        button?.setImage(replayIcon, for: .normal)
     }
 }

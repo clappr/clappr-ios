@@ -78,7 +78,6 @@ open class PosterPlugin: UIContainerPlugin {
         if let playback = playback {
             listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
             listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
-            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in self?.playbackEnded() }
         }
     }
 
@@ -101,13 +100,7 @@ open class PosterPlugin: UIContainerPlugin {
     fileprivate func playbackStarted() {
         view.isHidden = true
     }
-
-    fileprivate func playbackEnded() {
-        container?.mediaControlEnabled = false
-        playButton.isHidden = false
-        view.isHidden = false
-    }
-
+    
     fileprivate func updatePoster(_ info: EventUserInfo) {
         Logger.logInfo("Updating poster", scope: pluginName)
         guard let posterUrl = info?[kPosterUrl] as? String else {
