@@ -170,7 +170,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
     }
 
-    private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisable }
+    private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisabled }
     private var isFullscreenControlledByPlayer: Bool { !optionsUnboxer.fullscreenControledByApp }
     private var shouldDestroyPlayer: Bool { isFullscreenButtonDisable && isFullscreenControlledByPlayer }
 

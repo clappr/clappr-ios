@@ -35,5 +35,5 @@ struct OptionsUnboxer {
 
     var fullscreenControledByApp: Bool { options.bool(kFullscreenByApp, orElse: false)}
     var fullscreen: Bool { options.bool(kFullscreen, orElse: false) }
-    var fullscreenDisable: Bool { options.bool(kFullscreenDisabled, orElse: false) }
+    var fullscreenDisabled: Bool { options.bool(kFullscreenDisabled, orElse: false) }
 }
