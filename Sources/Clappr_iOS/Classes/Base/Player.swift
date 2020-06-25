@@ -96,10 +96,18 @@ open class Player: BaseObject {
     }
 
     private func bindCoreEvents() {
-        core?.on(Event.willChangeActivePlayback.rawValue) { [weak self] _ in self?.unbindPlaybackEvents() }
-        core?.on(Event.didChangeActivePlayback.rawValue) { [weak self] _ in self?.bindPlaybackEvents() }
-        core?.on(InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.requestFullscreen.rawValue, userInfo: info) }
-        core?.on(InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] (info: EventUserInfo) in self?.trigger(Event.exitFullscreen.rawValue, userInfo: info) }
+        guard let core = core else { return }
+
+        listenTo(core, event: .willChangeActivePlayback) { [weak self] _ in self?.unbindPlaybackEvents() }
+        listenTo(core, event: .didChangeActivePlayback) { [weak self] _ in self?.bindPlaybackEvents() }
+
+        listenTo(core, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] userInfo in self?.trigger(.requestFullscreen, userInfo: userInfo)
+        }
+        listenTo(core, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] userInfo in self?.trigger(.exitFullscreen, userInfo: userInfo)
+        }
+        listenTo(core, eventName: InternalEvent.requestDestroyPlayer.rawValue) { [weak self] _ in
+            self?.destroy()
+        }
     }
     
     private func bindMediaControlEvents() {
@@ -253,6 +261,7 @@ open class Player: BaseObject {
         Logger.logDebug("destroying core", scope: "Player")
         self.core?.destroy()
         self.core = nil
+        trigger(.didDestroy)
         stopListening()
         Logger.logDebug("destroyed", scope: "Player")
     }

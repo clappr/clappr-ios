@@ -33,11 +33,7 @@ public let kMetaDataArtwork = "mdArtwork"
 struct OptionsUnboxer {
     let options: Options
 
-    var fullscreenControledByApp: Bool {
-        return options[kFullscreenByApp] as? Bool ?? false
-    }
-
-    var fullscreen: Bool {
-        return options[kFullscreen] as? Bool ?? false
-    }
+    var fullscreenControledByApp: Bool { options.bool(kFullscreenByApp, orElse: false)}
+    var fullscreen: Bool { options.bool(kFullscreen, orElse: false) }
+    var fullscreenDisabled: Bool { options.bool(kFullscreenDisabled, orElse: false) }
 }

@@ -358,6 +358,48 @@ class CoreTests: QuickSpec {
                             expect(core.parentView?.subviews.filter { $0 == core.view }.count).to(equal(1))
                         }
                     }
+
+                    describe("#shouldDestroy") {
+                        describe("Event.userRequestExitFullscreen is triggered") {
+                            context("isFullscreenByPlayer") {
+                                context("when isFullscreenByPlayer and isFullscreenDisable") {
+                                    it("triggers shouldDestroyPlayer event") {
+                                        let options: Options = [
+                                            kFullscreenByApp: false,
+                                            kFullscreenDisabled: true
+                                        ]
+                                        let core = Core(options: options)
+                                        var didTriggerEvent = false
+
+                                        core.on(InternalEvent.requestDestroyPlayer.rawValue) { _ in
+                                            didTriggerEvent = true
+                                        }
+                                        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
+
+                                        expect(didTriggerEvent).to(beTrue())
+                                    }
+                                }
+
+                                context("when isFullscreenEnabled") {
+                                    it("doesn't trigger shouldDestroyPlayer event") {
+                                        let options: Options = [
+                                            kFullscreenByApp: false,
+                                            kFullscreenDisabled: false
+                                        ]
+                                        let core = Core(options: options)
+                                        var didTriggerEvent = false
+
+                                        core.on(InternalEvent.requestDestroyPlayer.rawValue) { _ in
+                                            didTriggerEvent = true
+                                        }
+                                        core.trigger(InternalEvent.userRequestExitFullscreen.rawValue)
+
+                                        expect(didTriggerEvent).to(beFalse())
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 describe("Forward events") {

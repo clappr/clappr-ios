@@ -96,7 +96,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
-        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.exitFullscreen() }
+        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.onUserRequestExitFullscreen() }
         orientationObserver = OrientationObserver(core: self)
         #endif
     }
@@ -170,6 +170,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
     }
 
+    private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisabled }
+    private var isFullscreenControlledByPlayer: Bool { !optionsUnboxer.fullscreenControledByApp }
+    private var shouldDestroyPlayer: Bool { isFullscreenButtonDisable && isFullscreenControlledByPlayer }
+
     private func addToContainer() {
         #if os(iOS)
         if shouldEnterInFullScreen {
@@ -204,6 +208,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open func setFullscreen(_ fullscreen: Bool) {
         #if os(iOS)
         fullscreenHandler?.set(fullscreen: fullscreen)
+        #endif
+    }
+
+    private func onUserRequestExitFullscreen() {
+        #if os(iOS)
+        if shouldDestroyPlayer {
+            trigger(InternalEvent.requestDestroyPlayer.rawValue)
+        } else {
+            fullscreenHandler?.exitFullscreen()
+        }
         #endif
     }
 
