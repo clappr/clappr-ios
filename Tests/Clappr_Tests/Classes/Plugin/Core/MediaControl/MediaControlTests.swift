@@ -142,7 +142,7 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 context("when ready") {
-                    it("shows the media control") {
+                    it("hides the media control") {
                         mediaControlHidden()
 
                         coreStub.activePlayback?.trigger(Event.ready)
@@ -153,7 +153,7 @@ class MediaControlTests: QuickSpec {
                 }
 
                 context("when playing") {
-                    it("shows the media control") {
+                    it("hides the media control") {
                         mediaControlHidden()
 
                         coreStub.activePlayback?.trigger(Event.playing)
@@ -315,34 +315,38 @@ class MediaControlTests: QuickSpec {
                 }
 
                 context("when the drawer events are triggered") {
-                    it("dont show Media Control when the video ended") {
-                        var didCallShow = false
+                    context("and the video ends") {
+                        it("dont show Media Control") {
+                            var didCallShow = false
 
-                        coreStub.trigger(.didShowDrawerPlugin)
-                        coreStub.activePlayback?.trigger(.didComplete)
-                        coreStub.trigger(.didHideDrawerPlugin)
+                            coreStub.trigger(.didShowDrawerPlugin)
+                            coreStub.activePlayback?.trigger(.didComplete)
+                            coreStub.trigger(.didHideDrawerPlugin)
 
-                        mediaControl.show() { didCallShow = true }
+                            mediaControl.show() { didCallShow = true }
 
-                        expect(didCallShow).to(beFalse())
+                            expect(didCallShow).to(beFalse())
+                        }
                     }
 
-                    it("shows Media Control when the video is not ended") {
-                        var didCallShow = false
-
-                        coreStub.playbackMock?.set(state: .playing)
-
-                        coreStub.trigger(.didShowDrawerPlugin)
-                        coreStub.trigger(.didHideDrawerPlugin)
-
-                        mediaControl.show() { didCallShow = true }
-
-                        expect(didCallShow).to(beTrue())
+                    context("and the video does not end") {
+                        it("shows Media Control") {
+                            var didCallShow = false
+                            
+                            coreStub.playbackMock?.set(state: .playing)
+                            
+                            coreStub.trigger(.didShowDrawerPlugin)
+                            coreStub.trigger(.didHideDrawerPlugin)
+                            
+                            mediaControl.show() { didCallShow = true }
+                            
+                            expect(didCallShow).to(beTrue())
+                        }
                     }
                 }
 
                 func mediaControlHidden() {
-                    coreStub.activePlayback?.trigger(Event.didComplete)
+                    mediaControl.hide()
                 }
 
                 func mediaControlVisible() {
