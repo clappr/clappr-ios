@@ -24,6 +24,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var alwaysVisible = false
     private var currentlyShowing = false
     private var currentlyHiding = false
+    private var isDrawerActive = false
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     required public init(context: UIObject) {
@@ -72,6 +73,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
+                guard let isDrawerActive = self?.isDrawerActive, !isDrawerActive else { return }
                 self?.show()
             }
 
@@ -122,11 +124,13 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in
+            self?.isDrawerActive = true
             self?.hide()
         }
 
         listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
             let statesToShow: [PlaybackState] = [.playing, .paused]
+            self?.isDrawerActive = false
 
             guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
             self?.show()
