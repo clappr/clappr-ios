@@ -47,7 +47,7 @@ open class PlayButton: MediaControl.Element {
         listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
         listenTo(playback, event: .willSeek) { [weak self] info in
             guard let position = info?["position"] as? Double else { return }
-            self?.onWillSeek(0)
+            self?.onWillSeek(position)
         }
     }
 
