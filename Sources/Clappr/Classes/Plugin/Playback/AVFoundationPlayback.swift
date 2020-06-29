@@ -6,6 +6,7 @@ open class AVFoundationPlayback: Playback {
     private static let mimeTypes = [
         "mp4": "video/mp4",
         "m3u8": "application/x-mpegurl",
+        "movpkg": "video/movpkg",
     ]
 
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
