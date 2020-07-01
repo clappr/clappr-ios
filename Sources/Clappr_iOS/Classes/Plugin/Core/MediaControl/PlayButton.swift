@@ -46,10 +46,7 @@ open class PlayButton: MediaControl.Element {
         listenTo(playback, event: .stalling) { [weak self] _ in self?.hide() }
         listenTo(playback, event: .didStop) { [weak self] _ in self?.onStop() }
         listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
-        listenTo(playback, event: .willSeek) { [weak self] info in
-            guard let position = info?["position"] as? Double else { return }
-            self?.onWillSeek(position)
-        }
+        listenTo(playback, event: .willSeek) { [weak self] info in self?.onWillSeek(info) }
     }
 
     override open func render() {
@@ -89,8 +86,11 @@ open class PlayButton: MediaControl.Element {
         changeToReplayIcon()
     }
     
-    private func onWillSeek(_ position: Double) {
-        guard let playback = activePlayback, position != playback.duration else { return }
+    private func onWillSeek(_ info: EventUserInfo) {
+        guard let playback = activePlayback,
+            let position = info?["position"] as? Double,
+            position != playback.duration else { return }
+        
         show()
         canShowPlayIcon ? changeToPlayIcon() : changeToPauseIcon()
     }
@@ -105,9 +105,7 @@ open class PlayButton: MediaControl.Element {
 
     @objc func togglePlayPause() {
         guard let playback = activePlayback else { return }
-        
-        if shouldReplay { playback.seek(0) }
-        
+
         switch playback.state {
         case .playing:
             pause()
@@ -123,6 +121,9 @@ open class PlayButton: MediaControl.Element {
     }
 
     private func play() {
+        if shouldReplay {
+            activePlayback?.seek(0)
+        }
         activePlayback?.play()
     }
     
