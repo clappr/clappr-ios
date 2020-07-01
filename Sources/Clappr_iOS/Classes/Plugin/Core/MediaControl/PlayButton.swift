@@ -30,6 +30,7 @@ open class PlayButton: MediaControl.Element {
     
     private var shouldReplay: Bool {
         guard let playback = activePlayback else { return false }
+        
         return playback.position >= playback.duration
     }
 

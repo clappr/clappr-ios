@@ -73,8 +73,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
-                guard let isDrawerActive = self?.isDrawerActive, !isDrawerActive else { return }
-                self?.show()
+                self?.onComplete()
             }
 
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in
@@ -135,6 +134,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
             self?.show()
         }
+    }
+    
+    func onComplete() {
+        guard !isDrawerActive else { return }
+        show()
     }
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
