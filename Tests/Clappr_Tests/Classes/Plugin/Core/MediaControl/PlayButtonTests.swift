@@ -143,7 +143,7 @@ class PlayButtonTests: QuickSpec {
                 }
                 
                 context("and the video has ended") {
-                    fit("restarts the video") {
+                    it("restarts the video") {
                         coreStub.playbackMock?.set(state: .idle)
                         coreStub.playbackMock?.trigger(.didComplete)
                         coreStub.playbackMock?.set(position: 20.0)
