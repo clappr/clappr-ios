@@ -133,7 +133,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
-            let statesToShow: [PlaybackState] = [.playing, .paused]
+            let statesToShow: [PlaybackState] = [.playing, .paused, .idle]
             self?.isDrawerActive = false
 
             guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
