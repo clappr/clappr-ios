@@ -27,4 +27,10 @@ extension MediaControl {
             return .left
         }
     }
+    
+    enum AnimationState {
+        case showing
+        case hiding
+        case none
+    }
 }
