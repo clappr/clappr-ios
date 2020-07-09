@@ -9,18 +9,20 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var hideControlsTimer: Timer?
     public var shortTimeToHideMediaControl = 0.4
     public var longTimeToHideMediaControl = 4.0
-    public var mediaControlShow = ClapprAnimationDuration.mediaControlShow
-    public var mediaControlHide = ClapprAnimationDuration.mediaControlHide
+    public var showDuration = ClapprAnimationDuration.mediaControlShow
+    public var hideDuration = ClapprAnimationDuration.mediaControlHide
 
-    private var alwaysVisible = false
-    private var currentlyShowing = false
-    private var currentlyHiding = false
-    private var isDrawerActive = false
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
     private var controlsEnabled = true
 
+    private var animationState: MediaControl.AnimationState = .none
+    
     var options: Options? { core?.options }
     private var alwaysVisible: Bool { core?.options.bool(kMediaControlAlwaysVisible) ?? false }
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+    private var isDrawerActive = false
+    
+    private var canShow: Bool { !isChromeless && animationState != .showing && !isDrawerActive }
+    private var canHide: Bool { animationState != .hiding && !alwaysVisible }
 
     override open func bindEvents() {
         bindCoreEvents()
@@ -141,63 +143,50 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         show()
     }
 
-    func show(animated: Bool = false, completion: (() -> Void)? = nil) {
-        if currentlyShowing || isChromeless {
-            completion?()
-            return
-        }
-
-        let duration = animated ? mediaControlShow : 0
-
-        currentlyShowing = true
-        currentlyHiding = false
-
-        core?.trigger(Event.willShowMediaControl.rawValue)
-
-        if view.alpha == 0 {
-            view.isHidden = false
-        }
-
+    private func animate(to alpha: CGFloat, duration: TimeInterval, completion: (() -> Void)? = nil) {
         UIView.animate(
             withDuration: duration,
             animations: {
-                self.view.alpha = 1
+                self.view.alpha = alpha
         },
-            completion: { [weak self] _ in
-                self?.view.isHidden = false
-                self?.currentlyShowing = false
-                self?.core?.trigger(Event.didShowMediaControl.rawValue)
-                completion?()
-            }
+            completion: { _ in completion?() }
         )
     }
 
-    func hide(animated: Bool = false, completion: (() -> Void)? = nil) {
-        if currentlyHiding {
+    func show(animated: Bool = false, completion: (() -> Void)? = nil) {
+        if !canShow {
             completion?()
             return
         }
+        
+        core?.trigger(Event.willShowMediaControl.rawValue)
+        animationState = .showing
 
-        if !alwaysVisible {
-            core?.trigger(Event.willHideMediaControl.rawValue)
+        let duration = animated ? showDuration : 0
 
-            currentlyShowing = false
-            currentlyHiding = true
+        self.view.isHidden = false
+        animate(to: 1, duration: duration) {
+            self.animationState = .none
+            self.core?.trigger(Event.didShowMediaControl.rawValue)
+            completion?()
+        }
+    }
 
-            let duration = animated ? mediaControlHide : 0
-
-            UIView.animate(
-                withDuration: duration,
-                animations: {
-                    self.view.alpha = 0
-            },
-                completion: { [weak self] _ in
-                    self?.currentlyHiding = false
-                    self?.view.isHidden = true
-                    self?.core?.trigger(Event.didHideMediaControl.rawValue)
-                    completion?()
-                }
-            )
+    func hide(animated: Bool = false, completion: (() -> Void)? = nil) {
+        if !canHide {
+            completion?()
+            return
+        }
+        
+        core?.trigger(Event.willHideMediaControl.rawValue)
+        animationState = .hiding
+        
+        let duration = animated ? hideDuration : 0
+        animate(to: 0, duration: duration) {
+            self.view.isHidden = true
+            self.animationState = .none
+            self.core?.trigger(Event.didHideMediaControl.rawValue)
+            completion?()
         }
     }
 
