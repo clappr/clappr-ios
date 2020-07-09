@@ -66,19 +66,19 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 self?.showIfAlwaysVisible()
             }
 
-            listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
+            listenTo(playback, event: .didComplete) { [weak self] _ in
                 self?.onComplete()
-                self?.listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in
-                    self?.show { [weak self] in
+                self?.listenToOnce(playback, event: .playing) { [weak self] _ in
+                    self?.show {
                         self?.disappearAfterSomeTime()
                     }
                 }
             }
 
-            listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in
+            listenTo(playback, event: .didPause) { [weak self] _ in
                 self?.keepVisible()
-                self?.listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in
-                    self?.show { [weak self] in
+                self?.listenToOnce(playback, event: .playing) { [weak self] _ in
+                    self?.show {
                         self?.disappearAfterSomeTime()
                     }
                 }
@@ -91,13 +91,13 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func listenFullscreenEvents(context: UIObject) {
-        listenTo(context, eventName: Event.didEnterFullscreen.rawValue) { [weak self] _ in
+        listenTo(context, event: .didEnterFullscreen) { [weak self] _ in
             if self?.hideControlsTimer?.isValid ?? false {
                 self?.disappearAfterSomeTime()
             }
         }
 
-        listenTo(context, eventName: Event.didExitFullscreen.rawValue) { [weak self] _ in
+        listenTo(context, event: .didExitFullscreen) { [weak self] _ in
             if self?.hideControlsTimer?.isValid ?? false {
                 self?.disappearAfterSomeTime()
             }
