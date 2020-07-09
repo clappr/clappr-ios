@@ -56,8 +56,8 @@ class MediaControlTests: QuickSpec {
                     expect(mediaControl.view.isHidden).to(beTrue())
                 }
 
-                context("when a option to keep media control always visible is given") {
-                    it("doesn't hide the mediacontrol and stop timer") {
+                context("when kMediaControlAlwaysVisible is true") {
+                    it("keeps the media control visible without timer") {
                         let options: Options = [kMediaControlAlwaysVisible: true]
                         let core = Core(options: options)
                         let mediaControl = MediaControl(context: core)
@@ -172,13 +172,14 @@ class MediaControlTests: QuickSpec {
                 }
 
                 context("when complete") {
-                    it("hides the media control") {
-                        mediaControlVisible()
+                    it("shows the media control") {
+                        mediaControl.view.isHidden = true
+                        mediaControl.view.alpha = 0.0
 
                         coreStub.activePlayback?.trigger(Event.didComplete)
 
-                        expect(mediaControl.view.isHidden).to(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
                     }
                 }
 

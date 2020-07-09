@@ -143,6 +143,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     
     func onComplete() {
         guard !isDrawerActive else { return }
+        keepVisible()
         show()
     }
 
