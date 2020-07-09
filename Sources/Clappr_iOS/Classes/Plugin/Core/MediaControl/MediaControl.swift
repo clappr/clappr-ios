@@ -269,9 +269,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func showIfAlwaysVisible() {
-        if alwaysVisible {
-            show()
-        }
+        guard alwaysVisible else { return }
+        
+        show()
     }
 
     private func toggleVisibility() {
