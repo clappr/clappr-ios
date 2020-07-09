@@ -140,4 +140,8 @@ public extension BaseObject {
     func listenTo<T: EventProtocol>(_ contextObject: T, event: Event, callback: @escaping EventCallback) {
         listenTo(contextObject, eventName: event.rawValue, callback: callback)
     }
+    
+    func listenToOnce<T: EventProtocol>(_ contextObject: T, event: Event, callback: @escaping EventCallback) {
+        listenToOnce(contextObject, eventName: event.rawValue, callback: callback)
+    }
 }
