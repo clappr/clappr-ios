@@ -61,6 +61,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             listenTo(playback, event: .ready) { [weak self] _ in
                 self?.controlsEnabled = true
             }
+            
+            listenToOnce(playback, event: .playing) { [weak self] _ in
+                self?.showIfAlwaysVisible()
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
@@ -217,22 +220,29 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         hideAndStopTimer()
     }
     
-    override open func render() {
-        view.addSubview(mediaControlView)
-        mediaControlView.bindFrameToSuperviewBounds()
-        
+    private func setupGestureRecognizer() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         self.tapGesture = tapGesture
-        
+    }
+    
+    private func setupViews() {
         view.isHidden = true
+        view.alpha = 0
         view.backgroundColor = UIColor.clear
         if let constrastView = mediaControlView.contrastView {
             constrastView.backgroundColor = UIColor.clapprBlack60Color()
         }
+    }
+    
+    override open func render() {
+        view.addSubview(mediaControlView)
+        mediaControlView.bindFrameToSuperviewBounds()
+        
+        setupGestureRecognizer()
+        setupViews()
 
-        showIfAlwaysVisible()
         view.bindFrameToSuperviewBounds()
     }
 
