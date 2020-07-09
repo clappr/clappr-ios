@@ -1,18 +1,10 @@
 import Foundation
 
 open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
+    open class override var name: String { "MediaControl" }
 
     public var tapGesture: UITapGestureRecognizer?
-
     var mediaControlView: MediaControlView = .fromNib()
-
-    var options: Options? {
-        return core?.options
-    }
-
-    open class override var name: String {
-        return "MediaControl"
-    }
 
     public var hideControlsTimer: Timer?
     public var shortTimeToHideMediaControl = 0.4
@@ -27,10 +19,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var isDrawerActive = false
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
-    required public init(context: UIObject) {
-        super.init(context: context)
-        alwaysVisible = (core?.options[kMediaControlAlwaysVisible] as? Bool) ?? false
-    }
+    var options: Options? { core?.options }
+    private var alwaysVisible: Bool { core?.options.bool(kMediaControlAlwaysVisible) ?? false }
 
     override open func bindEvents() {
         bindCoreEvents()
