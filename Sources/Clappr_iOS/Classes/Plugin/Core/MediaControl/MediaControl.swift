@@ -251,21 +251,20 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func sortElementsIfNeeded(_ elements: [MediaControl.Element]) -> [MediaControl.Element] {
-        if let elementsOrder = core?.options[kMediaControlElementsOrder] as? [String] {
-            var orderedElements = [MediaControl.Element]()
-            elementsOrder.forEach { elementName in
-                if let selectedElement = elements.first(where: { $0.pluginName == elementName }) {
-                    orderedElements.append(selectedElement)
-                } else {
-                    Logger.logInfo("Element \(elementName) not found.")
-                }
-            }
-            orderedElements.append(contentsOf: elements.filter { !elementsOrder.contains($0.pluginName) })
-
-            return orderedElements
+        guard let elementsOrder = core?.options[kMediaControlElementsOrder] as? [String] else {
+            return elements
         }
-
-        return elements
+        var orderedElements = [MediaControl.Element]()
+        elementsOrder.forEach { elementName in
+            if let selectedElement = elements.first(where: { $0.pluginName == elementName }) {
+                orderedElements.append(selectedElement)
+            } else {
+                Logger.logInfo("Element \(elementName) not found.")
+            }
+        }
+        orderedElements.append(contentsOf: elements.filter { !elementsOrder.contains($0.pluginName) })
+        
+        return orderedElements
     }
 
     private func showIfAlwaysVisible() {
