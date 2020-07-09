@@ -12,12 +12,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     public var mediaControlShow = ClapprAnimationDuration.mediaControlShow
     public var mediaControlHide = ClapprAnimationDuration.mediaControlHide
 
-    private var showControls = true
     private var alwaysVisible = false
     private var currentlyShowing = false
     private var currentlyHiding = false
     private var isDrawerActive = false
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+    private var controlsEnabled = true
 
     var options: Options? { core?.options }
     private var alwaysVisible: Bool { core?.options.bool(kMediaControlAlwaysVisible) ?? false }
@@ -58,8 +58,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in
-                self?.showControls = true
+            listenTo(playback, event: .ready) { [weak self] _ in
+                self?.controlsEnabled = true
+            }
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
@@ -80,8 +81,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                 }
             }
 
-            listenTo(playback, eventName: Event.error.rawValue) { [weak self] _ in
-                self?.showControls = false
+            listenTo(playback, event: .error) { [weak self] _ in
+                self?.controlsEnabled = false
             }
         }
     }
@@ -273,11 +274,11 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
     }
 
-    fileprivate func toggleVisibility() {
-        if showControls {
-            show(animated: true) { [weak self] in
-                self?.disappearAfterSomeTime(self?.longTimeToHideMediaControl)
-            }
+    private func toggleVisibility() {
+        guard controlsEnabled else { return }
+        
+        show(animated: true) {
+            self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
         }
     }
 
