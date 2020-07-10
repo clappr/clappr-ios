@@ -549,7 +549,7 @@ open class AVFoundationPlayback: Playback {
         let newPosition = CMTimeGetSeconds(timeInterval.seek().time)
         let userInfo = ["position": newPosition]
 
-        trigger(.willSeek, userInfo: ["position": position])
+        trigger(.willSeek, userInfo: userInfo)
 
         player?.currentItem?.seek(to: timeInterval) { [weak self] in
             self?.trigger(.didUpdatePosition, userInfo: userInfo)

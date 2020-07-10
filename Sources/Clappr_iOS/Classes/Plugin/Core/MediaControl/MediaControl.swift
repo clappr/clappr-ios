@@ -24,6 +24,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private var alwaysVisible = false
     private var currentlyShowing = false
     private var currentlyHiding = false
+    private var isDrawerActive = false
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     required public init(context: UIObject) {
@@ -72,7 +73,12 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
             }
 
             listenTo(playback, eventName: Event.didComplete.rawValue) { [weak self] _ in
-                self?.hide()
+                self?.onComplete()
+                self?.listenToOnce(playback, eventName: Event.playing.rawValue) { [weak self] _ in
+                    self?.show { [weak self] in
+                        self?.disappearAfterSomeTime()
+                    }
+                }
             }
 
             listenTo(playback, eventName: Event.didPause.rawValue) { [weak self] _ in
@@ -122,15 +128,23 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in
+            self?.isDrawerActive = true
             self?.hide()
         }
 
         listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
-            let statesToShow: [PlaybackState] = [.playing, .paused]
+            let statesToShow: [PlaybackState] = [.playing, .paused, .idle]
+            self?.isDrawerActive = false
 
             guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
             self?.show()
         }
+    }
+    
+    func onComplete() {
+        guard !isDrawerActive else { return }
+        keepVisible()
+        show()
     }
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {

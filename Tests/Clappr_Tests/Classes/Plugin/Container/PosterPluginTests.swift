@@ -121,11 +121,11 @@ class PosterPluginTests: QuickSpec {
                 }
 
                 context("when playback trigger a end event") {
-                    it("reveal itself") {
+                    it("do not reveal itself") {
                         core.activeContainer?.playback?.trigger(Event.playing.rawValue)
                         core.activeContainer?.playback?.trigger(Event.didComplete.rawValue)
 
-                        expect(posterPlugin.view.isHidden).to(beFalse())
+                        expect(posterPlugin.view.isHidden).to(beTrue())
                     }
                 }
             }

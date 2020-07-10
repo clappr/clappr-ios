@@ -1208,10 +1208,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let initialSeekPosition = 0.0
 
                     playback.on(Event.willSeek.rawValue) { userInfo in
-                        position = userInfo?["position"] as? Double
                         didTriggerWillSeek = true
                     }
-
+                    position = playback.position
                     playback.seek(5)
 
                     expect(position).to(equal(initialSeekPosition))
