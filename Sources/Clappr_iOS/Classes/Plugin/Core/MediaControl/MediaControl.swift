@@ -101,7 +101,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
     
     private func showIfAlwaysVisible() {
-        show(animated: true) { self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
+        show(animated: true) {
+            guard !self.alwaysVisible else { return }
+            self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
         }
     }
 
