@@ -7,22 +7,30 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     var mediaControlView: MediaControlView = .fromNib()
 
     public var hideControlsTimer: Timer?
-    public var shortTimeToHideMediaControl = 0.4
-    public var longTimeToHideMediaControl = 4.0
+    private var isTimerValid: Bool { hideControlsTimer?.isValid ?? false }
+    public var shortTimeToHideMediaControl = 0.3
+    public var longTimeToHideMediaControl = 3.0
     public var showDuration = ClapprAnimationDuration.mediaControlShow
     public var hideDuration = ClapprAnimationDuration.mediaControlHide
-
-    private var controlsEnabled = true
-
     private var animationState: MediaControl.AnimationState = .none
     
     var options: Options? { core?.options }
     private var alwaysVisible: Bool { core?.options.bool(kMediaControlAlwaysVisible) ?? false }
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
     private var isDrawerActive = false
+    private var controlsEnabled = true
+    private let statesToKeepVisible: [PlaybackState] = [.paused, .idle]
+    private var shouldDisappearAfterSomeTime: Bool {
+        guard let state = activePlayback?.state else { return false }
+        return !statesToKeepVisible.contains(state)
+    }
     
-    private var canShow: Bool { !isChromeless && animationState != .showing && !isDrawerActive }
     private var canHide: Bool { animationState != .hiding && !alwaysVisible }
+    private var canShow: Bool { !isChromeless
+        && animationState != .showing
+        && !isDrawerActive
+        && controlsEnabled
+    }
 
     override open func bindEvents() {
         bindCoreEvents()
@@ -32,125 +40,140 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     open func bindCoreEvents() {
         guard let core = core else { return }
-
-        listenFullscreenEvents(context: core)
-
         listenTo(core, event: .requestPadding) { [weak self] info in
-            guard let padding = info?["padding"] as? CGFloat else { return }
-            self?.mediaControlView.bottomPadding.constant = padding
+            self?.onPaddingRequested(info: info)
         }
 
         listenTo(core, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
-            self?.toggleVisibility()
+            self?.showOnTap()
         }
 
-        listenScrubbingEvents(context: core)
-
-        listenDrawerEvents(context: core)
+        listenToFullscreenEvents(context: core)
+        listenToScrubbingEvents(context: core)
+        listenToDrawerEvents(context: core)
     }
 
     private func bindContainerEvents() {
         if let container = activeContainer {
             listenTo(container,
-                     eventName: Event.enableMediaControl.rawValue) { [weak self] _ in self?.show() }
+                     event: Event.enableMediaControl) { [weak self] _ in self?.show(animated: true) }
             listenTo(container,
-                     eventName: Event.disableMediaControl.rawValue) { [weak self] _ in self?.hide() }
+                     event: Event.disableMediaControl) { [weak self] _ in self?.hide(animated: true) }
         }
     }
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, event: .ready) { [weak self] _ in
-                self?.controlsEnabled = true
-            }
+            listenTo(playback, event: .ready) { [weak self] _ in self?.controlsEnabled = true }
+            listenTo(playback, event: .error) { [weak self] _ in self?.controlsEnabled = false }
             
             listenToOnce(playback, event: .playing) { [weak self] _ in
                 self?.showIfAlwaysVisible()
             }
-
-            listenTo(playback, event: .didComplete) { [weak self] _ in
-                self?.onComplete()
-                self?.listenToOnce(playback, event: .playing) { [weak self] _ in
-                    self?.show {
-                        self?.disappearAfterSomeTime()
-                    }
-                }
-            }
-
-            listenTo(playback, event: .didPause) { [weak self] _ in
-                self?.keepVisible()
-                self?.listenToOnce(playback, event: .playing) { [weak self] _ in
-                    self?.show {
-                        self?.disappearAfterSomeTime()
-                    }
-                }
-            }
-
-            listenTo(playback, event: .error) { [weak self] _ in
-                self?.controlsEnabled = false
-            }
+            listenTo(playback, event: .didPause) { [weak self] _ in self?.onPause() }
+            listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
         }
     }
 
-    private func listenFullscreenEvents(context: UIObject) {
-        listenTo(context, event: .didEnterFullscreen) { [weak self] _ in
-            if self?.hideControlsTimer?.isValid ?? false {
-                self?.disappearAfterSomeTime()
-            }
-        }
-
-        listenTo(context, event: .didExitFullscreen) { [weak self] _ in
-            if self?.hideControlsTimer?.isValid ?? false {
-                self?.disappearAfterSomeTime()
-            }
-        }
+    private func listenToFullscreenEvents(context: UIObject) {
+        listenTo(context, event: .didEnterFullscreen) { [weak self] _ in self?.onFullscreenStateChanged() }
+        listenTo(context, event: .didExitFullscreen) { [weak self] _ in self?.onFullscreenStateChanged() }
     }
 
-    private func listenScrubbingEvents(context: UIObject) {
+    private func listenToScrubbingEvents(context: UIObject) {
         listenTo(context, eventName: InternalEvent.willBeginScrubbing.rawValue) { [weak self] _ in
             self?.keepVisible()
         }
 
         listenTo(context, eventName: InternalEvent.didFinishScrubbing.rawValue) { [weak self] _ in
-            guard self?.activePlayback?.state != .paused else { return }
-            self?.disappearAfterSomeTime()
+            self?.onScrubbingFinished()
         }
     }
 
-    private func listenDrawerEvents(context: UIObject) {
+    private func listenToDrawerEvents(context: UIObject) {
         listenTo(context, eventName: InternalEvent.didDragDrawer.rawValue) { [weak self] info in
-            guard let alpha = info?["alpha"] as? CGFloat else { return }
-            self?.view.alpha = alpha
+            self?.onDrawerDragged(info: info)
         }
 
-        listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in
-            self?.isDrawerActive = true
-            self?.hide()
+        listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in self?.onDrawerShowed() }
+
+        listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in self?.onDrawerHidden() }
+    }
+    
+    private func showIfAlwaysVisible() {
+        show(animated: true) { self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
         }
+    }
 
-        listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in
-            let statesToShow: [PlaybackState] = [.playing, .paused, .idle]
-            self?.isDrawerActive = false
-
-            guard let state = self?.activePlayback?.state, statesToShow.contains(state) else { return }
-            self?.show()
+    private func showOnTap() {
+        show(animated: true) {
+            guard self.shouldDisappearAfterSomeTime else { return }
+            self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
         }
     }
     
-    func onComplete() {
-        guard !isDrawerActive else { return }
+    private func onPaddingRequested(info: EventUserInfo) {
+        guard let padding = info?["padding"] as? CGFloat else { return }
+        mediaControlView.bottomPadding.constant = padding
+    }
+    
+    private func onPause() {
         keepVisible()
-        show()
+        resetTimerOnPlay()
+    }
+    
+    private func onComplete() {
+        guard !isDrawerActive else { return }
+        show(animated: true)
+        keepVisible()
+        resetTimerOnPlay()
+    }
+    
+    private func onFullscreenStateChanged() {
+        guard isTimerValid else { return }
+        disappearAfterSomeTime()
+    }
+    
+    private func onScrubbingFinished() {
+        guard shouldDisappearAfterSomeTime else { return }
+        disappearAfterSomeTime()
+    }
+    
+    private func onDrawerDragged(info: EventUserInfo) {
+        guard let alpha = info?["alpha"] as? CGFloat else { return }
+        view.alpha = alpha
+    }
+    
+    private func onDrawerShowed() {
+        isDrawerActive = true
+        hide(animated: true)
+    }
+    
+    private func onDrawerHidden() {
+        let statesToShow: [PlaybackState] = [.paused, .idle]
+        isDrawerActive = false
+        
+        guard let state = activePlayback?.state else { return }
+        if state == .playing {
+            show(animated: true) { self.disappearAfterSomeTime() }
+        } else if statesToShow.contains(state) {
+            show(animated: true)
+            keepVisible()
+            resetTimerOnPlay()
+        }
     }
 
-    private func animate(to alpha: CGFloat, duration: TimeInterval, completion: (() -> Void)? = nil) {
-        UIView.animate(
-            withDuration: duration,
-            animations: {
-                self.view.alpha = alpha
-        },
-            completion: { _ in completion?() }
-        )
+    private func resetTimerOnPlay() {
+        guard let playback = activePlayback else { return }
+        listenToOnce(playback, event: .playing) { [weak self] _ in
+            self?.disappearAfterSomeTime()
+        }
+    }
+    
+    public func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
+        hideControlsTimer?.invalidate()
+        hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? shortTimeToHideMediaControl,
+                                                 target: self, selector: #selector(hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
     func show(animated: Bool = false, completion: (() -> Void)? = nil) {
@@ -165,7 +188,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         let duration = animated ? showDuration : 0
 
         self.view.isHidden = false
-        animate(to: 1, duration: duration) {
+        animate(alpha: 1, options: .curveEaseOut, duration: duration) {
             self.animationState = .none
             self.core?.trigger(Event.didShowMediaControl.rawValue)
             completion?()
@@ -182,18 +205,24 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         animationState = .hiding
         
         let duration = animated ? hideDuration : 0
-        animate(to: 0, duration: duration) {
+        animate(alpha: 0, options: .curveEaseIn, duration: duration) {
             self.view.isHidden = true
             self.animationState = .none
             self.core?.trigger(Event.didHideMediaControl.rawValue)
             completion?()
         }
     }
-
-    public func disappearAfterSomeTime(_ duration: TimeInterval? = nil) {
-        hideControlsTimer?.invalidate()
-        hideControlsTimer = Timer.scheduledTimer(timeInterval: duration ?? shortTimeToHideMediaControl,
-                                                 target: self, selector: #selector(hideAndStopTimer), userInfo: nil, repeats: false)
+    
+    private func animate(alpha: CGFloat, options: UIView.AnimationOptions = [], duration: TimeInterval, completion: (() -> Void)? = nil) {
+        UIView.animate(
+            withDuration: duration,
+            delay: 0,
+            options: options,
+            animations: {
+                self.view.alpha = alpha
+        },
+            completion: { _ in completion?() }
+        )
     }
 
     public func keepVisible() {
@@ -204,13 +233,9 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         hideControlsTimer?.invalidate()
         hide(animated: true)
     }
-
-    @objc func tapped() {
-        hideAndStopTimer()
-    }
     
     private func setupGestureRecognizer() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideAndStopTimer))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         self.tapGesture = tapGesture
@@ -265,20 +290,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         orderedElements.append(contentsOf: elements.filter { !elementsOrder.contains($0.pluginName) })
         
         return orderedElements
-    }
-
-    private func showIfAlwaysVisible() {
-        guard alwaysVisible else { return }
-        
-        show()
-    }
-
-    private func toggleVisibility() {
-        guard controlsEnabled else { return }
-        
-        show(animated: true) {
-            self.disappearAfterSomeTime(self.longTimeToHideMediaControl)
-        }
     }
 
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
