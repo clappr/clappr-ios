@@ -28,13 +28,13 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("#shortTimeToHideMediaControl") {
-                it("is 0.4 seconds") {
+                it("is 0.3 seconds") {
                     expect(mediaControl.shortTimeToHideMediaControl).to(equal(0.3))
                 }
             }
 
             describe("#longTimeToHideMediaControl") {
-                it("is 4 seconds") {
+                it("is 3 seconds") {
                     expect(mediaControl.longTimeToHideMediaControl).to(equal(3))
                 }
             }
