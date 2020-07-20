@@ -1,9 +1,13 @@
-//
-//  BackgroundLayer.swift
-//  Clappr_Tests
-//
-//  Created by yves on 20/07/20.
-//  Copyright © 2020 CocoaPods. All rights reserved.
-//
+import UIKit
 
-import Foundation
+final class BackgroundLayer: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = UIColor.black
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
