@@ -12,7 +12,7 @@ class LayersCompositorTests: QuickSpec {
                     let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
                     let rootView = UIView(frame: frame)
                     
-                    let _ = LayersCompositor(rootView: rootView)
+                    let _ = LayersCompositor(for: rootView)
                     
                     if let backgroundLayer = rootView.subviews.first as? BackgroundLayer {
                         expect(backgroundLayer.bounds.size).to(equal(rootView.bounds.size))
@@ -26,7 +26,7 @@ class LayersCompositorTests: QuickSpec {
                     let rootView = UIView()
                     rootView.addSubview(fakeLayer)
                     
-                    let _ = LayersCompositor(rootView: rootView)
+                    let _ = LayersCompositor(for: rootView)
                     
                     if let _ = rootView.subviews.first as? BackgroundLayer {
                         succeed()

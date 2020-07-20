@@ -6,7 +6,7 @@ class LayersCompositor {
     
     private let backgroundLayer: BackgroundLayer
     
-    init(rootView: UIView) {
+    init(for rootView: UIView) {
         self.rootView = rootView
         
         self.backgroundLayer = BackgroundLayer(frame: rootView.bounds)
