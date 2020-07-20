@@ -260,6 +260,7 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
+		A32A51E224C60AC300A00439 /* LayersComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E124C60AC300A00439 /* LayersComposer.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlElement.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
@@ -591,6 +592,7 @@
 		9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackViewPortTests.swift; sourceTree = "<group>"; };
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
+		A32A51E124C60AC300A00439 /* LayersComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersComposer.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
@@ -1157,6 +1159,7 @@
 				96D362961D41339400CCB866 /* Player.swift */,
 				C9B8414822E0F454009DE097 /* OrientationObserver.swift */,
 				EFEC757923C51E1800FA6A52 /* PlaybackRenderer.swift */,
+				A32A51E124C60AC300A00439 /* LayersComposer.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2305,6 +2308,7 @@
 				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,
 				5744C05721EE1E040087D9FB /* ObjC.m in Sources */,
+				A32A51E224C60AC300A00439 /* LayersComposer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
