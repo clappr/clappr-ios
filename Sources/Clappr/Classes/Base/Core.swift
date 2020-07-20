@@ -63,8 +63,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
         self.options = options
         super.init()
-
-        view.backgroundColor = .black
         
         if !isChromeless {
             addTapGestures()
