@@ -14,3 +14,8 @@ protocol Layer {
 class BackgroundLayer: UIView, Layer {
     func attach(plugin: UIPlugin) {}
 }
+
+class LayersCompositor: LayersComposer {
+    func attach(containers: [Container]){}
+    func attach(corePlugins: [UICorePlugin]){}
+}
