@@ -9,7 +9,7 @@ protocol Layer {
     func attach(plugin: UIPlugin)
 }
 
-class BackgroundLayer: UIView {
+final class BackgroundLayer: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
