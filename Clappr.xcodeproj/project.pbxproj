@@ -262,6 +262,7 @@
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		A32A51E224C60AC300A00439 /* LayersComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E124C60AC300A00439 /* LayersComposer.swift */; };
 		A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */; };
+		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlElement.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
@@ -595,6 +596,7 @@
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		A32A51E124C60AC300A00439 /* LayersComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersComposer.swift; sourceTree = "<group>"; };
 		A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersCompositorTests.swift; sourceTree = "<group>"; };
+		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
@@ -1318,6 +1320,7 @@
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
 				96664E551BF0CBD100095E6E /* UIObjectTests.swift */,
 				A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */,
+				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2167,6 +2170,7 @@
 				E7D0BD17218A389B00F5FDF2 /* SeekbarTests.swift in Sources */,
 				C9EDF84D2162CEF500789E2F /* UIViewControllerMock.swift in Sources */,
 				7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */,
+				A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */,
 				EDF652241D46829100627C48 /* UIContainerPluginTests.swift in Sources */,
 				522C8997246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */,
 				7B51DF0C230B58A800C2B045 /* MediaControlElementTests.swift in Sources */,
