@@ -261,6 +261,7 @@
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		A32A51E224C60AC300A00439 /* LayersComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E124C60AC300A00439 /* LayersComposer.swift */; };
+		A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlElement.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
@@ -593,6 +594,7 @@
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		A32A51E124C60AC300A00439 /* LayersComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersComposer.swift; sourceTree = "<group>"; };
+		A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersCompositorTests.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
@@ -1315,6 +1317,7 @@
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
 				96664E551BF0CBD100095E6E /* UIObjectTests.swift */,
+				A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2186,6 +2189,7 @@
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
 				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
+				A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */,
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */,
