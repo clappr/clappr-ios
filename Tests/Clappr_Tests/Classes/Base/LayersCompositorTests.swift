@@ -39,6 +39,4 @@ class LayersCompositorTests: QuickSpec {
     }
 }
 
-class FakeLayer: UIView, Layer {
-    func attach(plugin: UIPlugin) {}
-}
+class FakeLayer: UIView {}

@@ -1,14 +1,5 @@
 import Foundation
 
-protocol LayersComposer {
-    func attach(containers: [Container])
-    func attach(corePlugins: [UICorePlugin])
-}
-
-protocol Layer {
-    func attach(plugin: UIPlugin)
-}
-
 final class BackgroundLayer: UIView {
     
     override init(frame: CGRect) {
@@ -21,7 +12,7 @@ final class BackgroundLayer: UIView {
     }
 }
 
-class LayersCompositor: LayersComposer {
+class LayersCompositor {
     
     private weak var rootView: UIView?
     
@@ -34,7 +25,4 @@ class LayersCompositor: LayersComposer {
         rootView.addSubview(backgroundLayer)
         rootView.sendSubviewToBack(backgroundLayer)
     }
-    
-    func attach(containers: [Container]){}
-    func attach(corePlugins: [UICorePlugin]){}
 }
