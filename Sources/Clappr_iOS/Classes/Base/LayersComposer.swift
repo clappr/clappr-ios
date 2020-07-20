@@ -1,7 +1,5 @@
 import Foundation
 
-import Foundation
-
 protocol LayersComposer {
     func attach(containers: [Container])
     func attach(corePlugins: [UICorePlugin])
@@ -16,6 +14,17 @@ class BackgroundLayer: UIView, Layer {
 }
 
 class LayersCompositor: LayersComposer {
+    
+    private weak var rootView: UIView?
+    
+    private var layers: [Layer] = [
+        BackgroundLayer(),
+    ]
+    
+    init(rootView: UIView) {
+        self.rootView = rootView
+    }
+
     func attach(containers: [Container]){}
     func attach(corePlugins: [UICorePlugin]){}
 }
