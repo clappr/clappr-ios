@@ -17,14 +17,15 @@ class LayersCompositor: LayersComposer {
     
     private weak var rootView: UIView?
     
-    private var layers: [Layer] = [
-        BackgroundLayer(),
-    ]
+    private let backgroundLayer = BackgroundLayer()
     
     init(rootView: UIView) {
         self.rootView = rootView
+        
+        rootView.addSubview(backgroundLayer)
+        rootView.sendSubviewToBack(backgroundLayer)
     }
-
+    
     func attach(containers: [Container]){}
     func attach(corePlugins: [UICorePlugin]){}
 }
