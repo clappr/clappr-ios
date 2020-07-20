@@ -10,3 +10,7 @@ protocol LayersComposer {
 protocol Layer {
     func attach(plugin: UIPlugin)
 }
+
+class BackgroundLayer: UIView, Layer {
+    func attach(plugin: UIPlugin) {}
+}
