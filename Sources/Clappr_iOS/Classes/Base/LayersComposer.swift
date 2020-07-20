@@ -9,7 +9,7 @@ protocol Layer {
     func attach(plugin: UIPlugin)
 }
 
-class BackgroundLayer: UIView, Layer {
+class BackgroundLayer: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,8 +19,6 @@ class BackgroundLayer: UIView, Layer {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func attach(plugin: UIPlugin) {}
 }
 
 class LayersCompositor: LayersComposer {
