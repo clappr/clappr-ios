@@ -102,6 +102,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open func attach(to parentView: UIView, controller: UIViewController) {
+        parentView.addSubviewMatchingConstraints(view)
         self.layersCompositor = LayersCompositor(for: self.view)
         self.parentController = controller
         self.parentView = parentView
