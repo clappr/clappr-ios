@@ -9,8 +9,8 @@ class LayersCompositor {
     init(for rootView: UIView) {
         self.rootView = rootView
         
-        self.backgroundLayer = BackgroundLayer(frame: rootView.bounds)
-        rootView.addSubview(backgroundLayer)
+        backgroundLayer = BackgroundLayer()
+        backgroundLayer.attach(to: rootView)
         rootView.sendSubviewToBack(backgroundLayer)
     }
 }
