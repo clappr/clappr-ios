@@ -2,7 +2,7 @@ public typealias SharedData = [String: Any]
 
 open class Core: UIObject, UIGestureRecognizerDelegate {
     
-    private var layersCompositor: LayersCompositor?
+    private var layersCompositor = LayersCompositor()
 
     @objc public let environment = Environment()
     @objc open var sharedData = SharedData()
@@ -103,7 +103,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     
     open func attach(to parentView: UIView, controller: UIViewController) {
         parentView.addSubviewMatchingConstraints(view)
-        self.layersCompositor = LayersCompositor(for: self.view)
+        self.layersCompositor.attach(to: view)
+        
         self.parentController = controller
         self.parentView = parentView
         trigger(.didAttachView)

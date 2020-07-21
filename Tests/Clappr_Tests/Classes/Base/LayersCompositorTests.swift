@@ -12,8 +12,9 @@ class LayersCompositorTests: QuickSpec {
                     let fakeLayer = FakeLayer()
                     let rootView = UIView()
                     rootView.addSubview(fakeLayer)
+                    let layersCompositor = LayersCompositor()
                     
-                    let _ = LayersCompositor(for: rootView)
+                    layersCompositor.attach(to: rootView)
                     
                     expect(rootView.subviews.first).to(
                         beAKindOf(BackgroundLayer.self),
