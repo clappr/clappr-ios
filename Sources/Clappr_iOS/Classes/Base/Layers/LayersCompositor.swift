@@ -4,7 +4,7 @@ class LayersCompositor {
     private weak var rootView: UIView?
     private var backgroundLayer: BackgroundLayer?
     
-    func attach(to rootView: UIView) {
+    func compose(inside rootView: UIView) {
         self.rootView = rootView
         
         let backgroundLayer = BackgroundLayer()

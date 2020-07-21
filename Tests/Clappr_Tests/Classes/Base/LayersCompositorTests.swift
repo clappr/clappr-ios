@@ -7,14 +7,14 @@ class LayersCompositorTests: QuickSpec {
     
     override func spec() {
         describe(".LayersCompositor") {
-            context("When LayersCompositor is attached to rootView") {
+            context("When LayersCompositor composes its layers") {
                 it("puts BackgroundLayer behind all other layers"){
                     let fakeLayer = FakeLayer()
                     let rootView = UIView()
                     rootView.addSubview(fakeLayer)
                     let layersCompositor = LayersCompositor()
                     
-                    layersCompositor.attach(to: rootView)
+                    layersCompositor.compose(inside: rootView)
                     
                     expect(rootView.subviews.first).to(
                         beAKindOf(BackgroundLayer.self),

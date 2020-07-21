@@ -20,10 +20,10 @@ class CoreTests: QuickSpec {
         }
         
         class LayersCompositorSpy: LayersCompositor {
-            var didCallAttach = false
+            var didCallCompose = false
             
-            override func attach(to rootView: UIView) {
-                didCallAttach = true
+            override func compose(inside rootView: UIView) {
+                didCallCompose = true
             }
         }
 
@@ -131,7 +131,7 @@ class CoreTests: QuickSpec {
                         
                         core.attach(to: parentView, controller: parentViewController)
                         
-                        expect(layersCompositorSpy.didCallAttach).to(beTrue())
+                        expect(layersCompositorSpy.didCallCompose).to(beTrue())
                     }
                 }
             }
