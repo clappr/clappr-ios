@@ -18,6 +18,14 @@ class CoreTests: QuickSpec {
 
             override func bindEvents() {  }
         }
+        
+        class LayersCompositorSpy: LayersCompositor {
+            var didCallAttach = false
+            
+            override func attach(to rootView: UIView) {
+                didCallAttach = true
+            }
+        }
 
         let options: Options = [kSourceUrl: "http//test.com"]
         var core: Core!
@@ -34,10 +42,6 @@ class CoreTests: QuickSpec {
 
                 beforeEach {
                     core = CoreFactory.create(with: options)
-                }
-                
-                it("set backgroundColor to black") {
-                    expect(core.view.backgroundColor) == .black
                 }
 
                 it("set frame Rect to zero") {
@@ -117,6 +121,17 @@ class CoreTests: QuickSpec {
                         core.attach(to: parentView, controller: parentViewController)
 
                         expect(didTriggerEvent).to(beTrue())
+                    }
+                    
+                    it("adds all visual layers") {
+                        let layersCompositorSpy = LayersCompositorSpy()
+                        let core = Core(layersCompositor: layersCompositorSpy)
+                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                        let parentViewController = UIViewController()
+                        
+                        core.attach(to: parentView, controller: parentViewController)
+                        
+                        expect(layersCompositorSpy.didCallAttach).to(beTrue())
                     }
                 }
             }
