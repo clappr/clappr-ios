@@ -14,7 +14,7 @@ class BackgroundLayerTests: QuickSpec {
                 }
             }
             context("When BackgroundLayer is attached to a view") {
-                it("resizes to fill the view bounds") {
+                it("resizes to match the view bounds") {
                     let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
                     let rootView = UIView(frame: frame)
                     let backgroundLayer = BackgroundLayer()
