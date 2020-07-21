@@ -14,11 +14,8 @@ class LayersCompositorTests: QuickSpec {
                     
                     let _ = LayersCompositor(for: rootView)
                     
-                    if let backgroundLayer = rootView.subviews.first as? BackgroundLayer {
-                        expect(backgroundLayer.bounds.size).to(equal(rootView.bounds.size))
-                    } else {
-                        fail("BackgroundLayer is not the first subview of rootView)")
-                    }
+                    expect(rootView.subviews.first).to(beAKindOf(BackgroundLayer.self))
+                    expect(rootView.subviews.first?.bounds.size).to(equal(rootView.bounds.size))
                 }
                 
                 it("adds BackgroundLayer behind all other layers"){
@@ -28,11 +25,10 @@ class LayersCompositorTests: QuickSpec {
                     
                     let _ = LayersCompositor(for: rootView)
                     
-                    if let _ = rootView.subviews.first as? BackgroundLayer {
-                        succeed()
-                    } else {
-                        fail("BackgroundLayer is not the first subview of rootView)")
-                    }
+                    expect(rootView.subviews.first).to(
+                        beAKindOf(BackgroundLayer.self),
+                        description: "BackgroundLayer should be the first subview of rootView."
+                    )
                 }
             }
         }
