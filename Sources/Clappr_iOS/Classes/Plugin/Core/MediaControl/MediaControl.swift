@@ -40,6 +40,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     open func bindCoreEvents() {
         guard let core = core else { return }
+
         listenTo(core, event: .requestPadding) { [weak self] info in
             self?.onPaddingRequested(info: info)
         }
@@ -54,25 +55,24 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
 
     private func bindContainerEvents() {
-        if let container = activeContainer {
-            listenTo(container,
-                     event: Event.enableMediaControl) { [weak self] _ in self?.show(animated: true) }
-            listenTo(container,
-                     event: Event.disableMediaControl) { [weak self] _ in self?.hide(animated: true) }
-        }
+        guard let container = activeContainer else { return }
+
+        listenTo(container, event: Event.enableMediaControl) { [weak self] _ in self?.show(animated: true) }
+        listenTo(container, event: Event.disableMediaControl) { [weak self] _ in self?.hide(animated: true) }
     }
 
     private func bindPlaybackEvents() {
-        if let playback = activePlayback {
-            listenTo(playback, event: .ready) { [weak self] _ in self?.controlsEnabled = true }
-            listenTo(playback, event: .error) { [weak self] _ in self?.controlsEnabled = false }
-            
-            listenToOnce(playback, event: .playing) { [weak self] _ in
-                self?.showIfAlwaysVisible()
-            }
-            listenTo(playback, event: .didPause) { [weak self] _ in self?.onPause() }
-            listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
+        guard let playback = activePlayback else { return }
+
+        listenTo(playback, event: .ready) { [weak self] _ in self?.controlsEnabled = true }
+        listenTo(playback, event: .error) { [weak self] _ in self?.controlsEnabled = false }
+
+        listenToOnce(playback, event: .playing) { [weak self] _ in
+            self?.showIfAlwaysVisible()
         }
+
+        listenTo(playback, event: .didPause) { [weak self] _ in self?.onPause() }
+        listenTo(playback, event: .didComplete) { [weak self] _ in self?.onComplete() }
     }
 
     private func listenToFullscreenEvents(context: UIObject) {
@@ -96,7 +96,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         }
 
         listenTo(context, event: .didShowDrawerPlugin) { [weak self] _ in self?.onDrawerShowed() }
-
         listenTo(context, event: .didHideDrawerPlugin) { [weak self] _ in self?.onDrawerHidden() }
     }
     
@@ -116,6 +115,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     
     private func onPaddingRequested(info: EventUserInfo) {
         guard let padding = info?["padding"] as? CGFloat else { return }
+
         mediaControlView.bottomPadding.constant = padding
     }
     
@@ -126,6 +126,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     
     private func onComplete() {
         guard !isDrawerActive else { return }
+
         show(animated: true)
         keepVisible()
         resetTimerOnPlay()
@@ -133,16 +134,19 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     
     private func onFullscreenStateChanged() {
         guard isTimerValid else { return }
+
         disappearAfterSomeTime()
     }
     
     private func onScrubbingFinished() {
         guard shouldDisappearAfterSomeTime else { return }
+
         disappearAfterSomeTime()
     }
     
     private func onDrawerDragged(info: EventUserInfo) {
         guard let alpha = info?["alpha"] as? CGFloat else { return }
+
         view.alpha = alpha
     }
     
@@ -156,6 +160,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         isDrawerActive = false
         
         guard let state = activePlayback?.state else { return }
+
         if state == .playing {
             show(animated: true) { self.disappearAfterSomeTime() }
         } else if statesToShow.contains(state) {
@@ -167,6 +172,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
 
     private func resetTimerOnPlay() {
         guard let playback = activePlayback else { return }
+
         listenToOnce(playback, event: .playing) { [weak self] _ in
             self?.disappearAfterSomeTime()
         }
@@ -247,6 +253,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         view.isHidden = true
         view.alpha = 0
         view.backgroundColor = UIColor.clear
+
         if let constrastView = mediaControlView.contrastView {
             constrastView.backgroundColor = UIColor.clapprBlack60Color()
         }
