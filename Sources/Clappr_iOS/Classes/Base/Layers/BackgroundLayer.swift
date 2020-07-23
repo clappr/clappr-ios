@@ -1,10 +1,10 @@
 import UIKit
 
 final class BackgroundLayer: UIView {
-    
     init() {
-        super.init(frame: CGRect.zero)
-        backgroundColor = UIColor.black
+        super.init(frame: .zero)
+
+        backgroundColor = .black
     }
     
     required init?(coder: NSCoder) {
