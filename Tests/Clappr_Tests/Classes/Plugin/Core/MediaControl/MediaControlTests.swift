@@ -377,7 +377,7 @@ class MediaControlTests: QuickSpec {
                 context("didDragDrawer") {
                     it("changes its alpha") {
                         showMediaControl()
-                        var info = ["alpha":CGFloat(0.5)]
+                        let info = ["alpha": CGFloat(0.5)]
                         
                         coreStub.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: info)
 
@@ -616,20 +616,54 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            class MediaControlViewMock: MediaControlView {
-                var didCallAddSubview = false
-                var didCallAddSubviewWithView: UIView?
-                var didCallAddSubviewWithPanel: MediaControlPanel?
-                var didCallAddSubviewWithPosition: MediaControlPosition?
+            describe("#gestureRecognizer") {
+                context("when the touch occurs in seekbar view") {
+                    it("should not receive touch") {
+                        let core = CoreStub()
+                        let mediaControl = MediaControl(context: core)
+                        let seekbar = Seekbar(context: core)
+                        let touch = UITouchStub()
+                        core.addPlugin(seekbar)
+                        seekbar.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 
-                override func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
-                    didCallAddSubviewWithView = view
-                    didCallAddSubviewWithPanel = panel
-                    didCallAddSubviewWithPosition = position
-                    didCallAddSubview = true
+                        let shouldReceiveTouch = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: touch)
+
+                        expect(shouldReceiveTouch).to(beFalse())
+                    }
+                }
+
+                context("when the touch occurs in seekbar view") {
+                    it("should receives touch") {
+                        let core = CoreStub()
+                        let mediaControl = MediaControl(context: core)
+                        let seekbar = Seekbar(context: core)
+                        let touch = UITouchStub()
+                        core.addPlugin(seekbar)
+                        seekbar.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+                        touch.x = 100
+                        touch.y = 100
+
+                        let shouldReceiveTouch = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: touch)
+
+                        expect(shouldReceiveTouch).to(beTrue())
+                    }
                 }
             }
         }
+    }
+}
+
+class MediaControlViewMock: MediaControlView {
+    var didCallAddSubview = false
+    var didCallAddSubviewWithView: UIView?
+    var didCallAddSubviewWithPanel: MediaControlPanel?
+    var didCallAddSubviewWithPosition: MediaControlPosition?
+
+    override func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
+        didCallAddSubviewWithView = view
+        didCallAddSubviewWithPanel = panel
+        didCallAddSubviewWithPosition = position
+        didCallAddSubview = true
     }
 }
 
