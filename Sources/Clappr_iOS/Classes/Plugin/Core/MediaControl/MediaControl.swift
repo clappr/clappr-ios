@@ -305,7 +305,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
         return !seekbarWasTouched(touch)
     }
 
-    private func seekbarWasTouched(_ touch: UITouch) -> Bool {
+    open func seekbarWasTouched(_ touch: UITouch) -> Bool {
         let seekbar = core?.plugins.first { $0.pluginName == Seekbar.name }
         if let seekbar = seekbar as? MediaControl.Element,
             seekbar.view.frame.contains(touch.location(in: seekbar.view)) {
