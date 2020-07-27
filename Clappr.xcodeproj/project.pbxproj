@@ -264,6 +264,8 @@
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
+		A3E7D45224CF0F2000531B21 /* LayersCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E124C60AC300A00439 /* LayersCompositor.swift */; };
+		A3E7D45324CF0F2400531B21 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E824C61F5700A00439 /* BackgroundLayer.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
 		AB163506215AB97800635233 /* MediaControlElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB163505215AB97800635233 /* MediaControlElement.swift */; };
 		AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16350A215AC9FC00635233 /* MediaControlView.swift */; };
@@ -2072,6 +2074,7 @@
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				4822B6B522158FA300D1C134 /* ClapprAnimationDuration.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
+				A3E7D45224CF0F2000531B21 /* LayersCompositor.swift in Sources */,
 				32755E22215038CB0088724E /* Playback.swift in Sources */,
 				488849B122845D97004B4AD1 /* AVAsset+Ext.swift in Sources */,
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
@@ -2083,6 +2086,7 @@
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
+				A3E7D45324CF0F2400531B21 /* BackgroundLayer.swift in Sources */,
 				32E401BC1FF422E0001C2096 /* Logger.swift in Sources */,
 				48A29BFD221D81910004AD3B /* BaseObject.swift in Sources */,
 				32E401BD1FF422E0001C2096 /* LogLevel.swift in Sources */,
