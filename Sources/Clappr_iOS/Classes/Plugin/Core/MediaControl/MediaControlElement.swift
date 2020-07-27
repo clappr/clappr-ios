@@ -19,12 +19,15 @@ public enum MediaControlPosition {
 
 extension MediaControl {
     open class Element: UICorePlugin, MediaControlElementType {
-        open var panel: MediaControlPanel {
-            return .center
-        }
+        open var panel: MediaControlPanel { .center }
+        open var position: MediaControlPosition { .left }
+    }
+}
 
-        open var position: MediaControlPosition {
-            return .left
-        }
+extension MediaControl {
+    enum AnimationState {
+        case showing
+        case hiding
+        case none
     }
 }

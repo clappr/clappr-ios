@@ -265,60 +265,61 @@ class SeekbarViewTests: QuickSpec {
         }
     }
 
-    class DragDetectorViewStub: DragDetectorView {
-        override var currentTouch: UITouch? {
-            return uiTouchStub
-        }
+}
 
-        override var touchState: DragDetectorView.State {
-            return _touchState
-        }
-
-        var uiTouchStub = UITouchStub()
-
-        var _touchState: DragDetectorView.State = .idle
-
-        func touch(x: CGFloat, y: CGFloat) {
-            uiTouchStub.x = x
-            uiTouchStub.y = y
-        }
-
-        func touch(state: DragDetectorView.State) {
-            _touchState = state
-        }
+class DragDetectorViewStub: DragDetectorView {
+    override var currentTouch: UITouch? {
+        return uiTouchStub
     }
 
-    class UITouchStub: UITouch {
-        var x: CGFloat = 0
-        var y: CGFloat = 0
-
-        override func location(in view: UIView?) -> CGPoint {
-            return CGPoint(x: x, y: y)
-        }
+    override var touchState: DragDetectorView.State {
+        return _touchState
     }
 
-    class SeekbarDelegateMock: NSObject, SeekbarDelegate {
-        var didCallSeek = false
-        var didCallSeekWithValue: TimeInterval = 0
-        var didCallWillBeginScrubbing = false
-        var didCallDidFinishScrubbing = false
-        var didCallIsScrubbing = false
+    var uiTouchStub = UITouchStub()
 
-        func seek(_ time: TimeInterval) {
-            didCallSeek = true
-            didCallSeekWithValue = time
-        }
+    var _touchState: DragDetectorView.State = .idle
 
-        func willBeginScrubbing() {
-            didCallWillBeginScrubbing = true
-        }
+    func touch(x: CGFloat, y: CGFloat) {
+        uiTouchStub.x = x
+        uiTouchStub.y = y
+    }
 
-        func didFinishScrubbing() {
-            didCallDidFinishScrubbing = true
-        }
+    func touch(state: DragDetectorView.State) {
+        _touchState = state
+    }
+}
 
-        func isScrubbing(scrubberFrame: CGRect, currentSecond: Int) {
-            didCallIsScrubbing = true
-        }
+class UITouchStub: UITouch {
+    var x: CGFloat = 0
+    var y: CGFloat = 0
+
+    override func location(in view: UIView?) -> CGPoint {
+        return CGPoint(x: x, y: y)
+    }
+}
+
+class SeekbarDelegateMock: NSObject, SeekbarDelegate {
+    var didCallSeek = false
+    var didCallSeekWithValue: TimeInterval = 0
+    var didCallWillBeginScrubbing = false
+    var didCallDidFinishScrubbing = false
+    var didCallIsScrubbing = false
+
+    func seek(_ time: TimeInterval) {
+        didCallSeek = true
+        didCallSeekWithValue = time
+    }
+
+    func willBeginScrubbing() {
+        didCallWillBeginScrubbing = true
+    }
+
+    func didFinishScrubbing() {
+        didCallDidFinishScrubbing = true
+    }
+
+    func isScrubbing(scrubberFrame: CGRect, currentSecond: Int) {
+        didCallIsScrubbing = true
     }
 }

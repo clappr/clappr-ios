@@ -22,19 +22,20 @@ class MediaControlTests: QuickSpec {
 
             describe("#animationDuration") {
                 it("is 0.3 seconds") {
+                    expect(ClapprAnimationDuration.mediaControlHide).to(equal(0.3))
                     expect(ClapprAnimationDuration.mediaControlShow).to(equal(0.3))
                 }
             }
 
-            describe("#secondsToHideControlFast") {
-                it("is 0.4 seconds") {
-                    expect(mediaControl.shortTimeToHideMediaControl).to(equal(0.4))
+            describe("#shortTimeToHideMediaControl") {
+                it("is 0.3 seconds") {
+                    expect(mediaControl.shortTimeToHideMediaControl).to(equal(0.3))
                 }
             }
 
-            describe("#secondsToHideControlSlow") {
-                it("is 4 seconds") {
-                    expect(mediaControl.longTimeToHideMediaControl).to(equal(4))
+            describe("#longTimeToHideMediaControl") {
+                it("is 3 seconds") {
+                    expect(mediaControl.longTimeToHideMediaControl).to(equal(3))
                 }
             }
 
@@ -46,28 +47,14 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            describe("#tapped") {
+            describe("#hideAndStopTimer") {
                 it("hides the mediacontrol and stop timer") {
                     mediaControl.render()
 
-                    mediaControl.tapped()
+                    mediaControl.hideAndStopTimer()
 
                     expect(mediaControl.hideControlsTimer?.isValid).to(beNil())
                     expect(mediaControl.view.isHidden).to(beTrue())
-                }
-
-                context("when kMediaControlAlwaysVisible is true") {
-                    it("keeps the media control visible without timer") {
-                        let options: Options = [kMediaControlAlwaysVisible: true]
-                        let core = Core(options: options)
-                        let mediaControl = MediaControl(context: core)
-                        mediaControl.render()
-
-                        mediaControl.tapped()
-
-                        expect(mediaControl.hideControlsTimer?.isValid).to(beNil())
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                    }
                 }
             }
 
@@ -109,311 +96,419 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("options") {
-                context("on request padding") {
-                    it("applies padding to Media Control") {
-                        let core = Core()
-                        let mediaControl = MediaControl(context: core)
+                context("when kMediaControlAlwaysVisible is true") {
+                    it("keeps itself visible without timer") {
+                        let options: Options = [kMediaControlAlwaysVisible: true]
+                        coreStub.options = options
+                        let mediaControl = MediaControl(context: coreStub)
                         mediaControl.render()
 
-                        core.trigger(.requestPadding, userInfo: ["padding": CGFloat(32)])
+                        coreStub.activePlayback?.trigger(.playing)
 
-                        expect(mediaControl.mediaControlView.bottomPadding?.constant).to(equal(32.0))
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beNil())
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
                     }
                 }
 
                 it("has the same options as the Core") {
                     let options: Options = ["foo": "bar"]
-                    let core = Core(options: options)
+                    coreStub.options = options
 
-                    let mediaControl = MediaControl(context: core)
+                    let mediaControl = MediaControl(context: coreStub)
 
                     expect(mediaControl.options).toNot(beNil())
-                    expect((mediaControl.options!["foo"] as! String)).to(equal("bar"))
+                    expect(mediaControl.options?["foo"] as? String).to(equal("bar"))
                 }
             }
 
             describe("Events") {
                 beforeEach {
-                    mediaControl.mediaControlShow = 0.1
-                    mediaControl.mediaControlHide = 0.1
+                    mediaControl.showDuration = 0.1
+                    mediaControl.hideDuration = 0.1
                     mediaControl.shortTimeToHideMediaControl = 0.1
                     mediaControl.longTimeToHideMediaControl = 0.1
                     mediaControl.render()
                 }
                 
-                context("when ready") {
-                    it("hides the media control") {
-                        mediaControlHidden()
+                context("requestPadding") {
+                    it("applies padding") {
+                        mediaControl.render()
 
-                        coreStub.activePlayback?.trigger(Event.ready)
+                        coreStub.trigger(.requestPadding, userInfo: ["padding": CGFloat(32)])
 
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
+                        expect(mediaControl.mediaControlView.bottomPadding?.constant).toEventually(equal(32.0))
                     }
                 }
 
-                context("when playing") {
-                    it("hides the media control") {
-                        mediaControlHidden()
-
-                        coreStub.activePlayback?.trigger(Event.playing)
-
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-
-                    it("starts the timer to hide itself") {
-                        mediaControlVisible()
-
-                        coreStub.activePlayback?.trigger(Event.playing)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                    }
-                }
-
-                context("when complete") {
-                    it("shows the media control") {
-                        mediaControl.view.isHidden = true
-                        mediaControl.view.alpha = 0.0
-
-                        coreStub.activePlayback?.trigger(Event.didComplete)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
-                    }
-                }
-
-                context("when showMediaControl") {
-                    it("shows itself when hidden") {
-                        mediaControlHidden()
-
-                        coreStub.trigger(InternalEvent.didTappedCore.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
-                    }
-
-                    it("doesn't show itself if an error occurred") {
-                        mediaControlVisible()
-                        mediaControlHidden()
-
-                        coreStub.activePlayback?.trigger(Event.error.rawValue)
-                        coreStub.trigger(InternalEvent.didTappedCore.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-                }
-
-                context("when paused") {
-                    it("keeps itself on the screen and visible") {
-                        mediaControlVisible()
-
-                        coreStub.activePlayback?.trigger(Event.didPause)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-
-                context("when willBeginScrubbing") {
-                    it("keeps itself on the screen and visible") {
-                        mediaControlVisible()
-
-                        coreStub.trigger(InternalEvent.willBeginScrubbing.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-
-                context("when didFinishScrubbing") {
-                    it("hides the media control after some time if the video is playing") {
-                        mediaControlVisible()
-
-                        coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-
-                    it("doesn't hide the media control after some time if the video is paused") {
-                        mediaControlVisible()
-                        coreStub.activePlayback?.trigger(Event.didPause)
-
-                        coreStub.trigger(InternalEvent.willBeginScrubbing.rawValue)
-                        coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-
-                    }
-                }
-                context("when didEnterFullscreen") {
-                    it("hides the media control after some time if the video is playing") {
-                        mediaControlVisible()
-
-                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-
-                    it("doesn't hide the media control after some time if the video is paused") {
-                        mediaControlVisible()
-                        coreStub.activePlayback?.trigger(Event.didPause)
-
-                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-
-                context("when didExitFullscreen") {
-                    it("hides the media control after some time if the video is playing") {
-                        mediaControlVisible()
-
-                        coreStub.trigger(Event.didExitFullscreen.rawValue)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-
-                    it("doesn't hide the media control after some time if the video is paused") {
-                        mediaControlVisible()
-                        coreStub.activePlayback?.trigger(Event.didPause)
-
-                        coreStub.trigger(Event.didEnterFullscreen.rawValue)
-
-                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
-                    }
-                }
-
-                context("when disableMediaControl") {
-                    it("hides the media control immediately") {
-                        mediaControlVisible()
-
-                        coreStub.activeContainer?.trigger(Event.disableMediaControl.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beTrue())
-                        expect(mediaControl.view.alpha).toEventually(equal(0))
-                    }
-                }
-
-                context("when enableMediaControl") {
-                    it("shows the media control") {
-                        mediaControlHidden()
-
-                        coreStub.activeContainer?.trigger(Event.enableMediaControl.rawValue)
-
-                        expect(mediaControl.view.isHidden).toEventually(beFalse())
-                        expect(mediaControl.view.alpha).toEventually(equal(1))
-                    }
-                }
-
-                context("when the drawer events are triggered") {
-                    context("and the video ends") {
-                        it("dont show Media Control") {
-                            var didCallShow = false
-
-                            coreStub.trigger(.didShowDrawerPlugin)
-                            coreStub.activePlayback?.trigger(.didComplete)
-                            coreStub.trigger(.didHideDrawerPlugin)
-
-                            mediaControl.show() { didCallShow = true }
-
-                            expect(didCallShow).to(beFalse())
+                context("playing") {
+                    context("after a pause") {
+                        it("hides itself after some time and stop timer") {
+                            showMediaControl()
+                            coreStub.activePlayback?.trigger(.didPause)
+                            
+                            coreStub.activePlayback?.trigger(.playing)
+                            
+                            expect(mediaControl.view.isHidden).toEventually(beTrue())
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
                         }
                     }
-
-                    context("and the video does not end") {
-                        it("shows Media Control") {
-                            var didCallShow = false
+                    
+                    context("after a complete") {
+                        it("hides itself after some time and stop timer") {
+                            showMediaControl()
+                            coreStub.activePlayback?.trigger(.didComplete)
                             
+                            coreStub.activePlayback?.trigger(.playing)
+                            
+                            expect(mediaControl.view.isHidden).toEventually(beTrue())
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                }
+
+                context("didComplete") {
+                    it("shows itself") {
+                        hideMediaControl()
+
+                        coreStub.activePlayback?.trigger(.didComplete)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                    }
+                }
+
+                context("didTappedCore") {
+                    it("shows itself and start the timer to hide") {
+                        hideMediaControl()
+
+                        coreStub.trigger(InternalEvent.didTappedCore.rawValue)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
+                    }
+                }
+
+                context("didPause") {
+                    it("keeps itself on the screen and visible") {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+
+                        coreStub.activePlayback?.trigger(.didPause)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                    }
+                }
+
+                context("willBeginScrubbing") {
+                    it("keeps itself on the screen and visible") {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+
+                        coreStub.trigger(InternalEvent.willBeginScrubbing.rawValue)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                        expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                    }
+                }
+
+                context("didFinishScrubbing") {
+                    beforeEach {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+                    }
+                    
+                    context("and the playback is playing") {
+                        it("hides itself after some time") {
                             coreStub.playbackMock?.set(state: .playing)
                             
-                            coreStub.trigger(.didShowDrawerPlugin)
-                            coreStub.trigger(.didHideDrawerPlugin)
+                            coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
+
+                            expect(mediaControl.view.isHidden).toEventually(beTrue())
+                            expect(mediaControl.view.alpha).toEventually(equal(0))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is paused") {
+                        it("keeps itself on the screen and visible") {
+                            coreStub.playbackMock?.set(state: .paused)
+                            coreStub.activePlayback?.trigger(.didPause)
+
+                            coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is idle") {
+                        it("keeps itself on the screen and visible") {
+                            coreStub.playbackMock?.set(state: .idle)
+                            coreStub.activePlayback?.trigger(.didComplete)
+
+                            coreStub.trigger(InternalEvent.didFinishScrubbing.rawValue)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+
+                        }
+                    }
+                }
+                context("didEnterFullscreen") {
+                    beforeEach {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+                    }
+                    
+                    context("and the playback is playing") {
+                        it("hides itself after some time") {
+                            coreStub.playbackMock?.set(state: .playing)
                             
-                            mediaControl.show() { didCallShow = true }
-                            
-                            expect(didCallShow).to(beTrue())
+                            coreStub.trigger(.didEnterFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beTrue())
+                            expect(mediaControl.view.alpha).toEventually(equal(0))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is paused") {
+                        it("keeps itself on the screen and visible") {
+                            coreStub.playbackMock?.set(state: .paused)
+                            coreStub.activePlayback?.trigger(.didPause)
+
+                            coreStub.trigger(.didEnterFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is idle") {
+                        it("keeps itself on the screen and visible") {
+                            coreStub.playbackMock?.set(state: .idle)
+                            coreStub.activePlayback?.trigger(.didComplete)
+
+                            coreStub.trigger(.didEnterFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+
                         }
                     }
                 }
 
-                func mediaControlHidden() {
-                    mediaControl.hide()
+                context("didExitFullscreen") {
+                    beforeEach {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+                    }
+                    
+                    context("and the playback is playing") {
+                        it("hides itself after some time") {
+                            coreStub.playbackMock?.set(state: .playing)
+                            
+                            coreStub.trigger(.didExitFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beTrue())
+                            expect(mediaControl.view.alpha).toEventually(equal(0))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is paused") {
+                        it("keeps itself visible") {
+                            coreStub.playbackMock?.set(state: .paused)
+                            coreStub.activePlayback?.trigger(.didPause)
+
+                            coreStub.trigger(.didExitFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is idle") {
+                        it("keeps itself on the screen and visible") {
+                            coreStub.playbackMock?.set(state: .idle)
+                            coreStub.activePlayback?.trigger(.didComplete)
+
+                            coreStub.trigger(.didExitFullscreen)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+
+                        }
+                    }
                 }
 
-                func mediaControlVisible() {
-                    coreStub.trigger(InternalEvent.didTappedCore.rawValue)
+                context("disableMediaControl") {
+                    it("hides itself immediately") {
+                        showMediaControl()
+
+                        coreStub.activeContainer?.trigger(.disableMediaControl)
+
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
+                    }
+                }
+
+                context("enableMediaControl") {
+                    it("shows itself immediately") {
+                        hideMediaControl()
+
+                        coreStub.activeContainer?.trigger(.enableMediaControl)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(1))
+                    }
+                }
+                
+                context("didDragDrawer") {
+                    it("changes its alpha") {
+                        showMediaControl()
+                        let info = ["alpha": CGFloat(0.5)]
+                        
+                        coreStub.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: info)
+
+                        expect(mediaControl.view.isHidden).toEventually(beFalse())
+                        expect(mediaControl.view.alpha).toEventually(equal(0.5))
+                    }
+                }
+                
+                context("didShowDrawerPlugin") {
+                    it("hides itself") {
+                        showMediaControl()
+                        
+                        coreStub.trigger(.didShowDrawerPlugin)
+                        
+                        expect(mediaControl.view.isHidden).toEventually(beTrue())
+                        expect(mediaControl.view.alpha).toEventually(equal(0))
+                    }
+                }
+                
+                context("didHideDrawerPlugin") {
+                    beforeEach {
+                        mediaControl.hideControlsTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in return })
+                        showMediaControl()
+                    }
+                    
+                    context("and the playback is playing") {
+                        it("shows itself and starts the timer to hide") {
+                            coreStub.playbackMock?.set(state: .playing)
+                            
+                            coreStub.trigger(.didHideDrawerPlugin)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beTrue())
+                        }
+                    }
+                    
+                    context("and the playback is paused") {
+                        it("shows itself and keeps visible") {
+                            coreStub.playbackMock?.set(state: .paused)
+
+                            coreStub.trigger(.didHideDrawerPlugin)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+                        }
+                    }
+                    
+                    context("and the playback is idle") {
+                        it("shows itself and keeps visible") {
+                            coreStub.playbackMock?.set(state: .idle)
+
+                            coreStub.trigger(.didHideDrawerPlugin)
+
+                            expect(mediaControl.view.isHidden).toEventually(beFalse())
+                            expect(mediaControl.view.alpha).toEventually(equal(1))
+                            expect(mediaControl.hideControlsTimer?.isValid).toEventually(beFalse())
+
+                        }
+                    }
+
+                }
+
+                func hideMediaControl() {
+                    mediaControl.view.isHidden = true
+                    mediaControl.view.alpha = 0
+                }
+
+                func showMediaControl() {
+                    mediaControl.view.isHidden = false
+                    mediaControl.view.alpha = 1
                 }
             }
             
             describe("show") {
                 it("triggers willShowMediaControl before showing the view") {
                     var eventTriggered = false
-                    var viewIsVisible: Bool?
-                    
+                    var viewWasVisible = false
                     mediaControl.render()
+                    
                     coreStub.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.view.isHidden
+                        viewWasVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.show()
                     
                     expect(eventTriggered).toEventually(beTrue())
-                    expect(viewIsVisible).to(beFalse())
+                    expect(viewWasVisible).to(beFalse())
                 }
                 
                 it("triggers didShowMediaControl after showing the view") {
                     var eventTriggered = false
-                    var viewIsVisible: Bool?
                     mediaControl.view.isHidden = true
                     
                     coreStub.on(Event.didShowMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.show()
                     
                     expect(eventTriggered).toEventually(beTrue())
-                    expect(viewIsVisible).to(beTrue())
+                    expect(mediaControl.view.isHidden).to(beFalse())
                 }
             }
             
             describe("hide") {
                 it("triggers willHideMediaControl before hiding the view") {
                     var eventTriggered = false
-                    var viewIsVisible: Bool?
+                    var viewWasVisible = false
+                    mediaControl.view.isHidden = false
                     
                     coreStub.on(Event.willHideMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.view.isHidden
+                        viewWasVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.hide()
                     
                     expect(eventTriggered).toEventually(beTrue())
-                    expect(viewIsVisible).to(beTrue())
+                    expect(viewWasVisible).to(beTrue())
                 }
                 
                 it("triggers didHideMediaControl after showing the view") {
                     var eventTriggered = false
-                    var viewIsVisible: Bool?
                     
                     coreStub.on(Event.didHideMediaControl.rawValue) { _ in
                         eventTriggered = true
-                        viewIsVisible = !mediaControl.view.isHidden
                     }
                     mediaControl.hide()
                     
                     expect(eventTriggered).toEventually(beTrue())
-                    expect(viewIsVisible).to(beFalse())
+                    expect(mediaControl.view.isHidden).to(beTrue())
                 }
             }
 
@@ -428,7 +523,7 @@ class MediaControlTests: QuickSpec {
                 }
 
                 context("for any element configuration") {
-                    it("always calls the MediaControlView to position the view") {
+                    it("adds the element view as subview of MediaControlView") {
                         let mediaControl = MediaControl(context: coreStub)
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
@@ -438,16 +533,16 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControlViewMock.didCallAddSubview).to(beTrue())
                     }
 
-                    it("always calls the MediaControlView passing the element's view") {
+                    it("passes the element's view") {
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
                         
                         mediaControl.render(elements)
-
+                        
                         expect(mediaControlViewMock.didCallAddSubviewWithView).to(equal(elements.first?.view))
                     }
 
-                    it("always calls the MediaControlView passing the element's panel") {
+                    it("passes the element's panel") {
                         MediaControlElementMock._panel = .center
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
@@ -457,7 +552,7 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControlViewMock.didCallAddSubviewWithPanel).to(equal(MediaControlPanel.center))
                     }
 
-                    it("always calls the MediaControlView passing the element's position") {
+                    it("passes the element's position") {
                         MediaControlElementMock._position = .left
                         mediaControl.mediaControlView = mediaControlViewMock
                         mediaControl.render()
@@ -467,7 +562,7 @@ class MediaControlTests: QuickSpec {
                         expect(mediaControlViewMock.didCallAddSubviewWithPosition).to(equal(MediaControlPosition.left))
                     }
 
-                    it("always calls the method render") {
+                    it("calls the element's render method") {
                         MediaControlElementMock._panel = .top
                         mediaControl.render()
                         
@@ -476,7 +571,7 @@ class MediaControlTests: QuickSpec {
                         expect(MediaControlElementMock.didCallRender).to(beTrue())
                     }
 
-                    it("protect the main thread when element crashes in render") {
+                    it("protects the main thread when element crashes in render") {
                         MediaControlElementMock.crashOnRender = true
                         mediaControl.render()
 
@@ -490,13 +585,13 @@ class MediaControlTests: QuickSpec {
                     it("renders the elements following the kMediaControlElementsOrder with all elements specified in the option") {
                         let core = Core()
                         core.options[kMediaControlElementsOrder] = ["FullscreenButton", "TimeIndicatorElementMock", "SecondElement", "FirstElement"]
-                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core), ]
+                        let elements = [FirstElement(context: core), SecondElement(context: core), TimeIndicatorElementMock(context: core), FullscreenButton(context: core)]
                         let mediaControl = MediaControl(context: core)
                         mediaControl.render()
-
-                        mediaControl.render(elements)
-
                         let bottomRightView = mediaControl.mediaControlView.bottomRight
+                        
+                        mediaControl.render(elements)
+                        
                         expect(bottomRightView?.subviews[0].subviews.first?.accessibilityIdentifier).to(equal("FullscreenButton"))
                         expect(bottomRightView?.subviews[1].subviews.first?.accessibilityIdentifier).to(equal("timeIndicator"))
                         expect(bottomRightView?.subviews[2].subviews.first?.accessibilityIdentifier).to(equal("SecondElement"))
@@ -521,20 +616,54 @@ class MediaControlTests: QuickSpec {
                 }
             }
 
-            class MediaControlViewMock: MediaControlView {
-                var didCallAddSubview = false
-                var didCallAddSubviewWithView: UIView?
-                var didCallAddSubviewWithPanel: MediaControlPanel?
-                var didCallAddSubviewWithPosition: MediaControlPosition?
+            describe("#gestureRecognizer") {
+                context("when the touch occurs in seekbar view") {
+                    it("should not receive touch") {
+                        let core = CoreStub()
+                        let mediaControl = MediaControl(context: core)
+                        let seekbar = Seekbar(context: core)
+                        let touch = UITouchStub()
+                        core.addPlugin(seekbar)
+                        seekbar.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 
-                override func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
-                    didCallAddSubviewWithView = view
-                    didCallAddSubviewWithPanel = panel
-                    didCallAddSubviewWithPosition = position
-                    didCallAddSubview = true
+                        let shouldReceiveTouch = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: touch)
+
+                        expect(shouldReceiveTouch).to(beFalse())
+                    }
+                }
+
+                context("when the touch occurs in seekbar view") {
+                    it("should receives touch") {
+                        let core = CoreStub()
+                        let mediaControl = MediaControl(context: core)
+                        let seekbar = Seekbar(context: core)
+                        let touch = UITouchStub()
+                        core.addPlugin(seekbar)
+                        seekbar.view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+                        touch.x = 100
+                        touch.y = 100
+
+                        let shouldReceiveTouch = mediaControl.gestureRecognizer(UITapGestureRecognizer(), shouldReceive: touch)
+
+                        expect(shouldReceiveTouch).to(beTrue())
+                    }
                 }
             }
         }
+    }
+}
+
+class MediaControlViewMock: MediaControlView {
+    var didCallAddSubview = false
+    var didCallAddSubviewWithView: UIView?
+    var didCallAddSubviewWithPanel: MediaControlPanel?
+    var didCallAddSubviewWithPosition: MediaControlPosition?
+
+    override func addSubview(_ view: UIView, in panel: MediaControlPanel, at position: MediaControlPosition) {
+        didCallAddSubviewWithView = view
+        didCallAddSubviewWithPanel = panel
+        didCallAddSubviewWithPosition = position
+        didCallAddSubview = true
     }
 }
 
