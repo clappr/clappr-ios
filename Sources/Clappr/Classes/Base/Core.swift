@@ -1,6 +1,8 @@
 public typealias SharedData = [String: Any]
 
 open class Core: UIObject, UIGestureRecognizerDelegate {
+    
+    private var layersCompositor = LayersCompositor()
 
     @objc public let environment = Environment()
     @objc open var sharedData = SharedData()
@@ -56,13 +58,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var isFullscreen: Bool = false
     private var isChromeless: Bool { options.bool(kChromeless) }
 
+    convenience init(options: Options = [:], layersCompositor: LayersCompositor = LayersCompositor()) {
+        self.init(options: options)
+        self.layersCompositor = layersCompositor
+    }
+    
     public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
         super.init()
-
-        view.backgroundColor = .black
         
         if !isChromeless {
             addTapGestures()
@@ -100,24 +105,50 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         orientationObserver = OrientationObserver(core: self)
         #endif
     }
-
-    private func renderInContainerView() {
-        isFullscreen = false
-        parentView?.addSubviewMatchingConstraints(view)
-    }
-
+    
     open func attach(to parentView: UIView, controller: UIViewController) {
+        parentView.addSubviewMatchingConstraints(view)
+        self.layersCompositor.compose(inside: view)
+        
         self.parentController = controller
         self.parentView = parentView
         trigger(.didAttachView)
     }
-
+    
     open override func render() {
         view.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
         view.bringSubviewToFront(overlayView)
         overlayView.clipsToBounds = true
+    }
+
+    private func addToContainer() {
+        #if os(iOS)
+        if shouldEnterInFullScreen {
+            renderCorePlugins()
+            renderMediaControlElements()
+            fullscreenHandler?.enterInFullscreen()
+        } else {
+            renderInContainerView()
+            renderCorePlugins()
+            renderMediaControlElements()
+        }
+        renderOverlayPlugins()
+        #else
+        renderInContainerView()
+        renderPlugins()
+        #endif
+    }
+    
+    private func renderInContainerView() {
+        isFullscreen = false
+        parentView?.addSubviewMatchingConstraints(view)
+    }
+
+    private func renderContainer(_ container: Container) {
+        view.addSubviewMatchingConstraints(container.view)
+        container.render()
     }
 
     #if os(tvOS)
@@ -173,29 +204,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisabled }
     private var isFullscreenControlledByPlayer: Bool { !optionsUnboxer.fullscreenControledByApp }
     private var shouldDestroyPlayer: Bool { isFullscreenButtonDisable && isFullscreenControlledByPlayer }
-
-    private func addToContainer() {
-        #if os(iOS)
-        if shouldEnterInFullScreen {
-            renderCorePlugins()
-            renderMediaControlElements()
-            fullscreenHandler?.enterInFullscreen()
-        } else {
-            renderInContainerView()
-            renderCorePlugins()
-            renderMediaControlElements()
-        }
-        renderOverlayPlugins()
-        #else
-        renderInContainerView()
-        renderPlugins()
-        #endif
-    }
-
-    private func renderContainer(_ container: Container) {
-        view.addSubviewMatchingConstraints(container.view)
-        container.render()
-    }
 
     open func addPlugin(_ plugin: Plugin) {
         let containsPluginWithPlaceholder = plugins.contains(where: { $0.hasPlaceholder })
