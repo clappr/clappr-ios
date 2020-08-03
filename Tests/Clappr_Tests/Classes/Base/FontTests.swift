@@ -12,35 +12,35 @@ class FontTests: QuickSpec {
         
         describe("Aligment") {
             context(".start") {
-                it("has value equal to kCMTextMarkupAlignmentType_Start") {
+                it("should the value be equal to kCMTextMarkupAlignmentType_Start") {
                     let aligment: Alignment = .start
                     expect(aligment.value).to(equal(String(kCMTextMarkupAlignmentType_Start)))
                 }
             }
             
             context(".middle") {
-                it("has value equal to kCMTextMarkupAlignmentType_Middle") {
+                it("should the value be equal to kCMTextMarkupAlignmentType_Middle") {
                     let aligment: Alignment = .middle
                     expect(aligment.value).to(equal(String(kCMTextMarkupAlignmentType_Middle)))
                 }
             }
             
             context(".end") {
-                it("has value equal to kCMTextMarkupAlignmentType_End") {
+                it("should the value be equal to kCMTextMarkupAlignmentType_End") {
                     let aligment: Alignment = .end
                     expect(aligment.value).to(equal(String(kCMTextMarkupAlignmentType_End)))
                 }
             }
             
             context(".left") {
-                it("has value equal to kCMTextMarkupAlignmentType_Left") {
+                it("should the value be equal to kCMTextMarkupAlignmentType_Left") {
                     let aligment: Alignment = .left
                     expect(aligment.value).to(equal(String(kCMTextMarkupAlignmentType_Left)))
                 }
             }
             
             context(".right") {
-                it("has value equal to kCMTextMarkupAlignmentType_Right") {
+                it("should the value be equal to kCMTextMarkupAlignmentType_Right") {
                     let aligment: Alignment = .right
                     expect(aligment.value).to(equal(String(kCMTextMarkupAlignmentType_Right)))
                 }
@@ -51,14 +51,14 @@ class FontTests: QuickSpec {
         
         describe("Direction") {
             context(".ltr") {
-                it("") {
+                it("should the value be equal to kCMTextVerticalLayout_LeftToRight") {
                     let direction: Direction = .ltr
                     expect(direction.value).to(equal(String(kCMTextVerticalLayout_LeftToRight)))
                 }
             }
             
             context(".rtl") {
-                it("") {
+                it("should the value be equal to kCMTextVerticalLayout_RightToLeft") {
                     let direction: Direction = .rtl
                     expect(direction.value).to(equal(String(kCMTextVerticalLayout_RightToLeft)))
                 }
@@ -69,33 +69,35 @@ class FontTests: QuickSpec {
         
         describe("EdgeStyle") {
             context(".none") {
-                it("") {
+                it("should the value be equal to kCMTextMarkupCharacterEdgeStyle_None") {
                     let edgeStyle: EdgeStyle = .none
                     expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_None))
                 }
             }
             
             context(".raised") {
-                let edgeStyle: EdgeStyle = .raised
-                expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_Raised))
+                it("should the value be equal to kCMTextMarkupCharacterEdgeStyle_Raised") {
+                    let edgeStyle: EdgeStyle = .raised
+                    expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_Raised))
+                }
             }
             
             context(".depressed") {
-                it("") {
+                it("should the value be equal to kCMTextMarkupCharacterEdgeStyle_Depressed") {
                     let edgeStyle: EdgeStyle = .depressed
                     expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_Depressed))
                 }
             }
             
             context(".uniform") {
-                it("") {
+                it("should the value be equal kCMTextMarkupCharacterEdgeStyle_Uniform") {
                     let edgeStyle: EdgeStyle = .uniform
                     expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_Uniform))
                 }
             }
             
             context(".dropShadow") {
-                it("") {
+                it("should the value be equal kCMTextMarkupCharacterEdgeStyle_DropShadow") {
                     let edgeStyle: EdgeStyle = .dropShadow
                     expect(edgeStyle.value).to(equal(kCMTextMarkupCharacterEdgeStyle_DropShadow))
                 }
@@ -106,7 +108,7 @@ class FontTests: QuickSpec {
         
         describe("Font") {
             context(".custom") {
-                it("has value equals CleanSans and key equal kCMTextMarkupAttribute_FontFamilyName") {
+                it("should the value be equal CleanSans and the key equal kCMTextMarkupAttribute_FontFamilyName") {
                     let fontCustom: Font = .custom("ClearSans")
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_FontFamilyName)))
@@ -115,7 +117,7 @@ class FontTests: QuickSpec {
             }
             
             context(".default") {
-                it("has value equals kCMTextMarkupGenericFontName_Default and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Default and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .default
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -124,7 +126,7 @@ class FontTests: QuickSpec {
             }
             
             context(".serif") {
-                it("has value equals kCMTextMarkupGenericFontName_Serif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Serif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .serif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -133,7 +135,7 @@ class FontTests: QuickSpec {
             }
             
             context(".sansSerif") {
-                it("has value equals kCMTextMarkupGenericFontName_SansSerif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_SansSerif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .sansSerif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -142,7 +144,7 @@ class FontTests: QuickSpec {
             }
             
             context(".monospace") {
-                it("has value equals kCMTextMarkupGenericFontName_Monospace and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Monospace and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .monospace
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -151,7 +153,7 @@ class FontTests: QuickSpec {
             }
             
             context(".proportionalSerif") {
-                it("has value equals kCMTextMarkupGenericFontName_ProportionalSerif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_ProportionalSerif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .proportionalSerif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -160,7 +162,7 @@ class FontTests: QuickSpec {
             }
             
             context(".proportionalSansSerif") {
-                it("has value equals kCMTextMarkupGenericFontName_ProportionalSansSerif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_ProportionalSansSerif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .proportionalSansSerif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -169,7 +171,7 @@ class FontTests: QuickSpec {
             }
             
             context(".monospaceSerif") {
-                it("has value equals kCMTextMarkupGenericFontName_MonospaceSerif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_MonospaceSerif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .monospaceSerif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -178,7 +180,7 @@ class FontTests: QuickSpec {
             }
             
             context(".monospaceSansSerif") {
-                it("has value equals kCMTextMarkupGenericFontName_MonospaceSansSerif and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_MonospaceSansSerif and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .monospaceSansSerif
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -187,7 +189,7 @@ class FontTests: QuickSpec {
             }
             
             context(".casual") {
-                it("has value equals kCMTextMarkupGenericFontName_Casual and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Casual and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .casual
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -196,7 +198,7 @@ class FontTests: QuickSpec {
             }
             
             context(".cursive") {
-                it("has value equals kCMTextMarkupGenericFontName_Cursive and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Cursive and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .cursive
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -205,7 +207,7 @@ class FontTests: QuickSpec {
             }
             
             context(".fantasy") {
-                it("has value equals kCMTextMarkupGenericFontName_Fantasy and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_Fantasy and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .fantasy
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -214,7 +216,7 @@ class FontTests: QuickSpec {
             }
             
             context(".smallCapital") {
-                it("has value equals kCMTextMarkupGenericFontName_SmallCapital and key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
+                it("should the value be equal kCMTextMarkupGenericFontName_SmallCapital and the key equal kCMTextMarkupAttribute_GenericFontFamilyName") {
                     let fontCustom: Font = .smallCapital
                     
                     expect(fontCustom.key).to(equal(String(kCMTextMarkupAttribute_GenericFontFamilyName)))
@@ -227,7 +229,7 @@ class FontTests: QuickSpec {
         
         describe("TextStyle") {
             context(".characterBackground") {
-                it("has ...") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_CharacterBackgroundColorARGB and the value be equal to [1, 1, 1, 1]") {
                     let style: TextStyle = .characterBackground(.white)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_CharacterBackgroundColorARGB) : [1.0, 1.0, 1.0, 1.0]])
                     
@@ -237,7 +239,7 @@ class FontTests: QuickSpec {
             }
             
             context(".background") {
-                it("has...") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BackgroundColorARGB and the value be equal to [1, 1, 1, 1]") {
                     let style: TextStyle = .background(.white)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_BackgroundColorARGB) : [1.0, 1.0, 1.0, 1.0]])
                     
@@ -247,7 +249,7 @@ class FontTests: QuickSpec {
             }
             
             context(".foreground") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_ForegroundColorARGB and the value be equal to [1, 1, 1, 1]") {
                     let style: TextStyle = .foreground(.red)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_ForegroundColorARGB) : [1.0, 1.0, 0, 0]])
                     
@@ -257,7 +259,7 @@ class FontTests: QuickSpec {
             }
             
             context(".fontSize") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight and the value be equal to 12") {
                     let style: TextStyle = .fontSize(12)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight) : 12])
                     
@@ -267,7 +269,7 @@ class FontTests: QuickSpec {
             }
             
             context(".bold") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BoldStyle and the value be equal to true") {
                     let style: TextStyle = .bold
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_BoldStyle) : true])
                     
@@ -277,7 +279,7 @@ class FontTests: QuickSpec {
             }
             
             context(".underline") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_UnderlineStyle and the value be equal to true") {
                     let style: TextStyle = .underline
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_UnderlineStyle) : true])
                     
@@ -287,7 +289,7 @@ class FontTests: QuickSpec {
             }
             
             context(".italic") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_ItalicStyle and the value be equal to true") {
                     let style: TextStyle = .italic
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_ItalicStyle) : true])
                     
@@ -297,9 +299,9 @@ class FontTests: QuickSpec {
             }
             
             context(".edge") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_CharacterEdgeStyle and the value be equal to kCMTextMarkupCharacterEdgeStyle_DropShadow") {
                     let style: TextStyle = .edge(.dropShadow)
-                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String((kCMTextMarkupAttribute_CharacterEdgeStyle)) : kCMTextMarkupCharacterEdgeStyle_DropShadow])
+                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_CharacterEdgeStyle) : kCMTextMarkupCharacterEdgeStyle_DropShadow])
                     
                     expect(style.key).to(equal(String((kCMTextMarkupAttribute_CharacterEdgeStyle))))
                     expect(style.value).to(equal(expectedValue))
@@ -307,9 +309,9 @@ class FontTests: QuickSpec {
             }
             
             context(".alignment") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_Alignment and the value be equal to kCMTextMarkupAlignmentType_Left") {
                     let style: TextStyle = .alignment(.left)
-                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String((kCMTextMarkupAttribute_Alignment)) : (kCMTextMarkupAlignmentType_Left)])
+                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_Alignment) : kCMTextMarkupAlignmentType_Left])
                     
                     expect(style.key).to(equal(String((kCMTextMarkupAttribute_Alignment))))
                     expect(style.value).to(equal(expectedValue))
@@ -317,9 +319,9 @@ class FontTests: QuickSpec {
             }
             
             context(".direction") {
-                it("") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_VerticalLayout and the value be equal to kCMTextVerticalLayout_LeftToRight") {
                     let style: TextStyle = .direction(.ltr)
-                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String((kCMTextMarkupAttribute_VerticalLayout)) : (kCMTextVerticalLayout_LeftToRight)])
+                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_VerticalLayout) : kCMTextVerticalLayout_LeftToRight])
                     
                     expect(style.key).to(equal(String((kCMTextMarkupAttribute_VerticalLayout))))
                     expect(style.value).to(equal(expectedValue))
@@ -330,8 +332,8 @@ class FontTests: QuickSpec {
         // MARK: - AVPlayerItem
         
         describe("AVPlayerItem") {
-            context("textStyle") {
-                it("") {
+            context(".textStyleRule") {
+                it("should the value be equal a map from 'textStyle' to an array of AVTextStyleRule") {
                     let currentItem = AVPlayerItem(url: URL(fileURLWithPath: ""))
                     currentItem.textStyle = [
                         .alignment(.left),
