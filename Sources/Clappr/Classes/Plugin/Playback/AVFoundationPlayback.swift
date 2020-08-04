@@ -759,4 +759,8 @@ open class AVFoundationPlayback: Playback {
             view.accessibilityIdentifier = "AVFoundationPlaybackError"
         }
     }
+
+    func changeSubtitle(style textStyle: [TextStyle]) {
+        self.player?.currentItem?.textStyle = textStyle
+    }
 }
