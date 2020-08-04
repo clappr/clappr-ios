@@ -1,6 +1,6 @@
 import CoreMedia
 
-enum Font {
+public enum Font {
     case `default`
     case serif
     case sansSerif

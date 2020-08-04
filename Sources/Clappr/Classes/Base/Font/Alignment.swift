@@ -1,6 +1,6 @@
 import CoreMedia
 
-enum Alignment: String, Equatable {
+public enum Alignment: String, Equatable {
     case start, middle, end, left, right
 
     var value: String {

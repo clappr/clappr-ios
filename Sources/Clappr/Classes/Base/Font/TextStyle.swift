@@ -1,7 +1,7 @@
 import AVKit
 import UIKit
 
-enum TextStyle {
+public enum TextStyle {
     case characterBackground(UIColor)
     case background(UIColor)
     case foreground(UIColor)

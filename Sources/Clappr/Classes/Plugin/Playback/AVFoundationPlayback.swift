@@ -760,7 +760,7 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
-    func changeSubtitle(style textStyle: [TextStyle]) {
+    public func changeSubtitle(style textStyle: [TextStyle]) {
         self.player?.currentItem?.textStyle = textStyle
     }
 }

@@ -1,6 +1,6 @@
 import CoreMedia
 
-enum Direction {
+public enum Direction {
     case ltr, rtl
 
     var value: String {

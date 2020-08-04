@@ -1,6 +1,6 @@
 import AVKit
 
-enum EdgeStyle {
+public enum EdgeStyle {
     case none
     case raised
     case depressed
