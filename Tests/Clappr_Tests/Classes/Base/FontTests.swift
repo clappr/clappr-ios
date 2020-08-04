@@ -333,6 +333,11 @@ class FontTests: QuickSpec {
         
         describe("AVPlayerItem") {
             context(".textStyleRule") {
+                it("should the default value be nil") {
+                    let currentItem = AVPlayerItem(url: URL(fileURLWithPath: ""))
+                    expect(currentItem.textStyleRules).to(beNil())
+                }
+
                 it("should the value be equal a map from 'textStyle' to an array of AVTextStyleRule") {
                     let currentItem = AVPlayerItem(url: URL(fileURLWithPath: ""))
                     currentItem.textStyle = [
