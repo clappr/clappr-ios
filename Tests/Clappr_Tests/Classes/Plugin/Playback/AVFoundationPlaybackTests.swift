@@ -1421,10 +1421,19 @@ class AVFoundationPlaybackTests: QuickSpec {
             describe("#changeSubtitleStyle") {
                 it("changes the subtitles style") {
                     let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
-                    let playback = AVFoundationPlaybackMock(options: options)
+                    let playback = AVFoundationPlayback(options: options)
+                    let expectedvalue = [
+                        AVTextStyleRule(textMarkupAttributes: [String((kCMTextMarkupAttribute_BoldStyle)) : true]),
+                        AVTextStyleRule(textMarkupAttributes: [String((kCMTextMarkupAttribute_GenericFontFamilyName)) : kCMTextMarkupGenericFontName_Default]),
+                    ]
 
-                    playback.changeSubtitle(style: [.font(.default), .bold])
-                    expect(playback.didCallChangeSubtitleStyle).to(beTrue())
+                    playback.play()
+                    playback.changeSubtitle(style: [
+                        .bold,
+                        .font(.default)
+                    ])
+
+                    expect(playback.player?.currentItem?.textStyleRules).toEventually(equal(expectedvalue), timeout: 2)
                 }
             }
 
