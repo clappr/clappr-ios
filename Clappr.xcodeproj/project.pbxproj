@@ -11,6 +11,11 @@
 		23EDF918224D83FD00FB0D96 /* Clappr.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D8810057D2C05E1F7A2759D7 /* Clappr.podspec */; };
 		23EDF91B224E8EB900FB0D96 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 23EDF91A224E8EB800FB0D96 /* .swift-version */; };
 		23EDF91E224EAF9A00FB0D96 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */; };
+		26211C1F24DC70C6000501A4 /* EdgeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491024D889C50049DAF7 /* EdgeStyle.swift */; };
+		26211C2024DC70CE000501A4 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491324D889C60049DAF7 /* Font.swift */; };
+		26211C2124DC70D5000501A4 /* Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490F24D889C50049DAF7 /* Alignment.swift */; };
+		26211C2224DC70E7000501A4 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491224D889C50049DAF7 /* Direction.swift */; };
+		26211C2324DC7102000501A4 /* UIColor+ARGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490B24D8898F0049DAF7 /* UIColor+ARGB.swift */; };
 		262B490C24D8898F0049DAF7 /* AVPlayerItem+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490A24D8898F0049DAF7 /* AVPlayerItem+Style.swift */; };
 		262B490D24D8898F0049DAF7 /* UIColor+ARGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490B24D8898F0049DAF7 /* UIColor+ARGB.swift */; };
 		262B491424D889C60049DAF7 /* Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490F24D889C50049DAF7 /* Alignment.swift */; };
@@ -19,6 +24,8 @@
 		262B491724D889C60049DAF7 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491224D889C50049DAF7 /* Direction.swift */; };
 		262B491824D889C60049DAF7 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491324D889C60049DAF7 /* Font.swift */; };
 		262B491A24D88BD60049DAF7 /* FontTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491924D88BD60049DAF7 /* FontTests.swift */; };
+		2652A2BC24DC6DA0009C52CF /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491124D889C50049DAF7 /* TextStyle.swift */; };
+		2652A2BD24DC6DA4009C52CF /* AVPlayerItem+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B490A24D8898F0049DAF7 /* AVPlayerItem+Style.swift */; };
 		320A7A0F216D45A9006D2B24 /* PlayButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */; };
 		320A7A15216FBF89006D2B24 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320A7A14216FBF89006D2B24 /* PlayButton.swift */; };
 		321781B21FED97D100EDD678 /* Clappr.h in Headers */ = {isa = PBXBuildFile; fileRef = 96D362881D41339400CCB866 /* Clappr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2077,14 +2084,19 @@
 				32E401C01FF42321001C2096 /* PlaybackType.swift in Sources */,
 				9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
 				EFEC757C23C51F4F00FA6A52 /* PlaybackRenderer.swift in Sources */,
+				2652A2BD24DC6DA4009C52CF /* AVPlayerItem+Style.swift in Sources */,
 				32E401CD1FF42386001C2096 /* DragDetectorView.swift in Sources */,
+				2652A2BC24DC6DA0009C52CF /* TextStyle.swift in Sources */,
 				32E401BE1FF42321001C2096 /* MediaControlState.swift in Sources */,
 				48CF67C8230E2FE6007F3128 /* PassthroughView.swift in Sources */,
 				32E401CC1FF42386001C2096 /* BorderView.swift in Sources */,
 				48B39E8823510FB700CE9D72 /* TimeInterval+Extensions.swift in Sources */,
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
+				26211C2024DC70CE000501A4 /* Font.swift in Sources */,
+				26211C1F24DC70C6000501A4 /* EdgeStyle.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */,
+				26211C2124DC70D5000501A4 /* Alignment.swift in Sources */,
 				32E401C11FF42321001C2096 /* PluginType.swift in Sources */,
 				32E401C91FF42359001C2096 /* UICorePlugin.swift in Sources */,
 				EF5A5D3923D0A9B6001CCDBC /* Set+ext.swift in Sources */,
@@ -2101,6 +2113,7 @@
 				32E401C61FF42343001C2096 /* PlaybackFactory.swift in Sources */,
 				32E401C51FF42343001C2096 /* MediaOptionFactory.swift in Sources */,
 				32A7A297215EA27F00296DE3 /* NoOpPlayback.swift in Sources */,
+				26211C2324DC7102000501A4 /* UIColor+ARGB.swift in Sources */,
 				32E401C21FF42321001C2096 /* Event.swift in Sources */,
 				EFEC757F23C51FE700FA6A52 /* PlaybackRenderProtocol.swift in Sources */,
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
@@ -2131,6 +2144,7 @@
 				32DA34191FFBCFC400484C90 /* Container.swift in Sources */,
 				FBD47AB021AD6856003265AF /* ContainerFactory.swift in Sources */,
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
+				26211C2224DC70E7000501A4 /* Direction.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
 				C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				AB25CC2C22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */,
