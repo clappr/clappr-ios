@@ -1418,6 +1418,16 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
             }
 
+            describe("#changeSubtitleStyle") {
+                it("changes the subtitles style") {
+                    let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
+                    let playback = AVFoundationPlaybackMock(options: options)
+
+                    playback.changeSubtitle(style: [.font(.default), .bold])
+                    expect(playback.didCallChangeSubtitleStyle).to(beTrue())
+                }
+            }
+
             describe("#selectDefaultAudioIfNeeded") {
                 it("changes audio just once") {
                     let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultAudioSource: "pt"]

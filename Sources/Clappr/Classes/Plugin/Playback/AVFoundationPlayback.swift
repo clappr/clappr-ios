@@ -635,6 +635,10 @@ open class AVFoundationPlayback: Playback {
         #endif
     }
 
+    public func changeSubtitle(style textStyle: [TextStyle]) {
+        self.player?.currentItem?.textStyle = textStyle
+    }
+
     private var defaultSubtitleLanguage: String? {
         return options[kDefaultSubtitle] as? String
     }
@@ -758,9 +762,5 @@ open class AVFoundationPlayback: Playback {
         case .error:
             view.accessibilityIdentifier = "AVFoundationPlaybackError"
         }
-    }
-
-    public func changeSubtitle(style textStyle: [TextStyle]) {
-        self.player?.currentItem?.textStyle = textStyle
     }
 }
