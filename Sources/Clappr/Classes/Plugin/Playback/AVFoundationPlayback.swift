@@ -635,7 +635,7 @@ open class AVFoundationPlayback: Playback {
         #endif
     }
 
-    public func changeSubtitle(style textStyle: [TextStyle]) {
+    open override func changeSubtitle(style textStyle: [TextStyle]) {
         self.player?.currentItem?.textStyle = textStyle
     }
 

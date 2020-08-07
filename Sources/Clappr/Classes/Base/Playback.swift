@@ -106,6 +106,7 @@ open class Playback: UIObject, NamedType {
     @objc open func seek(_: TimeInterval) {}
     @objc open func seekToLivePosition() {}
     open func mute(_: Bool) {}
+    open func changeSubtitle(style textStyle: [TextStyle]) {}
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
