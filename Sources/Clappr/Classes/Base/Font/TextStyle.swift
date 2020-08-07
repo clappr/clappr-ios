@@ -49,3 +49,9 @@ public enum TextStyle {
         }
     }
 }
+
+extension TextStyle: Equatable {
+    public static func == (lhs: TextStyle, rhs: TextStyle) -> Bool {
+        lhs.key == rhs.key && lhs.value == rhs.value
+    }
+}
