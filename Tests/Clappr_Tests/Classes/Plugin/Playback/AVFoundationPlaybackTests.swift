@@ -1428,11 +1428,12 @@ class AVFoundationPlaybackTests: QuickSpec {
                     ]
 
                     playback.play()
-                    playback.changeSubtitle(style: [
+                    let didChangeSubtitleStyle = playback.applySubtitleStyle(with: [
                         .bold,
                         .font(.default)
                     ])
 
+                    expect(didChangeSubtitleStyle).to(beTrue())
                     expect(playback.player?.currentItem?.textStyleRules).toEventually(equal(expectedvalue), timeout: 2)
                 }
             }

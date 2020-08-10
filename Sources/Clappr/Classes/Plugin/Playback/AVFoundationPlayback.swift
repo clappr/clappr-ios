@@ -635,8 +635,11 @@ open class AVFoundationPlayback: Playback {
         #endif
     }
 
-    open override func changeSubtitle(style textStyle: [TextStyle]) {
-        self.player?.currentItem?.textStyle = textStyle
+    open func applySubtitleStyle(with textStyle: [TextStyle]) -> Bool {
+        guard let currentItem = player?.currentItem else { return false }
+        currentItem.textStyle = textStyle
+
+        return true
     }
 
     private var defaultSubtitleLanguage: String? {
