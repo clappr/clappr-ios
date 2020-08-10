@@ -635,6 +635,7 @@ open class AVFoundationPlayback: Playback {
         #endif
     }
 
+    @discardableResult
     open func applySubtitleStyle(with textStyle: [TextStyle]) -> Bool {
         guard let currentItem = player?.currentItem else { return false }
         currentItem.textStyle = textStyle
