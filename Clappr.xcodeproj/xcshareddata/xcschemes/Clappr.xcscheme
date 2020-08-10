@@ -64,6 +64,9 @@
                <Test
                   Identifier = "AVFoundationPlaybackTests">
                </Test>
+               <Test
+                  Identifier = "BaseObjectTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
