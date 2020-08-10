@@ -57,6 +57,14 @@
                BlueprintName = "Clappr_Tests"
                ReferencedContainer = "container:Clappr.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AVFoundationPlaybackStateMachineEventsTests">
+               </Test>
+               <Test
+                  Identifier = "AVFoundationPlaybackTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
