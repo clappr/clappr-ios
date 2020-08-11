@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Clappr"
-  s.version          = "0.51.0"
+  s.version          = "0.52.0"
   s.summary          = "An extensible media player for iOS and tvOS"
   s.homepage         = "http://clappr.io"
   s.license          = 'MIT'
