@@ -18,6 +18,7 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
     var didCallSeekToLivePosition = false
     var _playbackType: PlaybackType = .vod
     var _state: PlaybackState = .none
+    var _textStyle: [TextStyle] = []
 
     override open var state: PlaybackState {
         get {
@@ -95,6 +96,12 @@ class AVFoundationPlaybackMock: AVFoundationPlayback {
         super.seek(timeInterval)
         didCallSeek = true
         didCallSeekWithValue = timeInterval
+    }
+
+    override func applySubtitleStyle(with textStyle: [TextStyle]) -> Bool {
+        _textStyle = textStyle
+
+        return true
     }
     
     override var currentDate: Date? {
