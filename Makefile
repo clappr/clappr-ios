@@ -7,7 +7,7 @@ help: ## Show this list of commands
 
 setup: ## Install dependencies requied to start development
 	brew update
-	brew upgrade
+	-brew upgrade
 	brew cleanup
 # 	brew install rbenv carthage swiftlint
 # 	rbenv install -s
