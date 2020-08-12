@@ -9,11 +9,11 @@ setup: ## Install dependencies requied to start development
 	brew update
 	brew upgrade
 	brew cleanup
-	brew install rbenv carthage swiftlint
-	rbenv install -s
-	rbenv exec gem install bundler
-	rbenv rehash
-	$(BUNDLE) install
+# 	brew install rbenv carthage swiftlint
+# 	rbenv install -s
+# 	rbenv exec gem install bundler
+# 	rbenv rehash
+# 	$(BUNDLE) install
 
 wipe: ## Clean the Xcode temp files and kills simulators
 	killall "Simulator" || true
