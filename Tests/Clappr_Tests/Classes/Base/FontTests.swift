@@ -260,7 +260,7 @@ class FontTests: QuickSpec {
             
             context(".fontSize") {
                 it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight and the value be equal to 12") {
-                    let style: TextStyle = .fontSize(12)
+                    let style: TextStyle = .fontSizePercentage(12)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight) : 12])
                     
                     expect(style.key).to(equal(String(kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight)))
@@ -348,7 +348,7 @@ class FontTests: QuickSpec {
                         .direction(.ltr),
                         .edge(.dropShadow),
                         .font(.casual),
-                        .fontSize(12),
+                        .fontSizePercentage(12),
                         .foreground(.blue),
                         .italic,
                         .underline
