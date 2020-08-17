@@ -67,7 +67,7 @@ open class AVFoundationPlayback: Playback {
         }
         set {
             if newValue == MediaOption.offSubtitle {
-                setMediaSelectionOption(nil, characteristic: .legible)
+                turnOffSubtitle()
             } else {
                 let newOption = newValue?.avMediaSelectionOption
                 setMediaSelectionOption(newOption, characteristic: .legible)
@@ -710,6 +710,10 @@ open class AVFoundationPlayback: Playback {
 
     private func mediaSelectionGroup(_ characteristic: AVMediaCharacteristic) -> AVMediaSelectionGroup? {
         return player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
+    }
+
+    public func turnOffSubtitle() {
+        setMediaSelectionOption(nil, characteristic: .legible)
     }
 
     deinit {
