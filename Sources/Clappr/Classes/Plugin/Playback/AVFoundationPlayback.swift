@@ -309,7 +309,10 @@ open class AVFoundationPlayback: Playback {
     @objc func setupObservers() {
         guard let player = player else { return }
         observers += [
-            view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
+            view.observe(\.bounds) { [weak self] view, _ in
+                self?.maximizePlayer(within: view)
+                self?.hideSubtitleForSmallScreen()
+            },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
