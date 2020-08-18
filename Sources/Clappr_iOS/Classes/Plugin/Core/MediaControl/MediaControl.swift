@@ -184,7 +184,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
                                                  target: self, selector: #selector(hideAndStopTimer), userInfo: nil, repeats: false)
     }
 
-    func show(animated: Bool = false, completion: (() -> Void)? = nil) {
+    public func show(animated: Bool = false, completion: (() -> Void)? = nil) {
         if !canShow {
             completion?()
             return
