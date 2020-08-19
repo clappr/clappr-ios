@@ -46,6 +46,7 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                             kDefaultSubtitle: "pt"
                         ]
                         let avfoundationPlayback = AVFoundationPlayback(options: options)
+                        avfoundationPlayback.view.bounds = CGRect(x: 0, y: 0, width: 1920, height: 1080)
 
                         avfoundationPlayback.play()
 
@@ -56,9 +57,11 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                         it("sets language to off") {
                             let options = [
                                 kSourceUrl: "http://clappr.io/highline.mp4",
-                                kDefaultSubtitle: "pt"
+                                kDefaultSubtitle: "off"
                             ]
                             let avfoundationPlayback = AVFoundationPlayback(options: options)
+                            avfoundationPlayback.view.bounds = CGRect(x: 0, y: 0, width: 1920, height: 1080)
+
                             avfoundationPlayback.play()
 
                             avfoundationPlayback.selectedSubtitle = MediaOption.offSubtitle

@@ -85,9 +85,9 @@ open class AVFoundationPlayback: Playback {
             if newValue == MediaOption.offSubtitle {
                 setMediaSelectionOption(nil, characteristic: .legible)
             } else {
+                lastSelectedSubtitle = newValue
                 let newOption = newValue?.avMediaSelectionOption
                 setMediaSelectionOption(newOption, characteristic: .legible)
-                lastSelectedSubtitle = newValue
             }
 
             triggerMediaOptionSelectedEvent(option: newValue, event: .didSelectSubtitle)
