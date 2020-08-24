@@ -14,9 +14,14 @@ extension UIView {
     }
     
    @objc func constrainSize(toSizeOf view: UIView) {
-        
         widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
+    
+    func constrainSize(to size: CGSize) {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        heightAnchor.constraint(equalToConstant: size.height).isActive = true
     }
     
     @objc func constrainBounds(
@@ -29,12 +34,6 @@ extension UIView {
         trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: insets.right).isActive = true
         topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top).isActive = true
         bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: insets.bottom).isActive = true
-    }
-    
-    func setWidthAndHeight(with size: CGSize) {
-        translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(equalToConstant: size.width).isActive = true
-        heightAnchor.constraint(equalToConstant: size.height).isActive = true
     }
     
     class func fromNib<T: UIView>() -> T {

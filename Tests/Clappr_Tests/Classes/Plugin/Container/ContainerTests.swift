@@ -314,7 +314,7 @@ class ContainerTests: QuickSpec {
                         didResizeValue = userInfo?["size"] as? CGSize
                     }
 
-                    container.view.setWidthAndHeight(with: CGSize(width: 10, height: 10))
+                    container.view.constrainSize(to: CGSize(width: 10, height: 10))
                     container.view.layoutIfNeeded()
 
                     expect(didResizeTriggered).toEventually(beTrue())
