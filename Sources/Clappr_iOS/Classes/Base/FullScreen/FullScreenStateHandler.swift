@@ -54,19 +54,22 @@ struct FullscreenByPlayer: FullscreenStateHandler {
 
     func exitFullscreen() {
         guard core.isFullscreen else { return }
+
         core.trigger(Event.willExitFullscreen.rawValue)
         core.isFullscreen = false
         handleExit()
-        core.trigger(Event.didExitFullscreen.rawValue)
     }
 
     private func handleExit() {
-        core.parentView?.addSubviewMatchingConstraints(core.view)
-        core.fullscreenController?.dismiss(animated: false, completion: nil)
+        core.fullscreenController?.dismiss(animated: false) {
+            self.core.parentView?.addSubviewMatchingConstraints(self.core.view)
+            self.core.trigger(Event.didExitFullscreen.rawValue)
+        }
     }
 
     func destroy() {
         guard core.isFullscreen else { return }
+
         handleExit()
     }
 }
