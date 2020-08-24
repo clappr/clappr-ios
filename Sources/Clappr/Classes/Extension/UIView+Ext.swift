@@ -2,7 +2,7 @@ extension UIView {
     @objc public func addSubviewMatchingConstraints(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
-        constrainSize(toSizeOf: view)
+        constrainBounds(to: view)
         view.layoutIfNeeded()
     }
 
@@ -11,11 +11,6 @@ extension UIView {
         
         centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-    
-   @objc func constrainSize(toSizeOf view: UIView) {
-        widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
     
     func constrainSize(to size: CGSize) {

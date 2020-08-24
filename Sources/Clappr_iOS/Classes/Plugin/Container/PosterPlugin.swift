@@ -54,7 +54,7 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     fileprivate func configureViews() {
-        container?.view.constrainSize(toSizeOf: view)
+        container?.view.constrainBounds(to: view)
         view.addSubviewMatchingConstraints(poster)
 
         view.addSubview(playButton)

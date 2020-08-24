@@ -262,6 +262,7 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     override open func render() {
         guard let superview = view.superview else { return }
         
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mediaControlView)
         mediaControlView.constrainBounds(to: view)
         
