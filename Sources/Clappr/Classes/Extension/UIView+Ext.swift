@@ -2,11 +2,11 @@ extension UIView {
     @objc public func addSubviewMatchingConstraints(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
-        addMatchingConstraints(view)
+        constrainSize(toSizeOf: view)
         view.layoutIfNeeded()
     }
 
-    @objc func addMatchingConstraints(_ view: UIView) {
+    @objc func constrainSize(toSizeOf view: UIView) {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": view]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: ["view": view]))
     }
