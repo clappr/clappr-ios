@@ -40,10 +40,4 @@ extension UIView {
         let nib = UINib(nibName: String(describing: T.self), bundle: Bundle(for: T.self))
         return (nib.instantiate(withOwner: nil, options: nil).last as? T)!
     }
-
-    func setVerticalPoint(to point: CGFloat, duration: TimeInterval = 0) {
-        UIView.animate(withDuration: duration) {
-            self.frame.origin.y = point
-        }
-    }
 }

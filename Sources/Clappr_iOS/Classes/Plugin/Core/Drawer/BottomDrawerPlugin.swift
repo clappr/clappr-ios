@@ -57,11 +57,11 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func moveUp() {
-        view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
+        setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
-        view.setVerticalPoint(to: hiddenHeight, duration: duration)
+        setVerticalPoint(to: hiddenHeight, duration: duration)
     }
 
     private func addGesture(_ gesture: UIGestureRecognizer) {
@@ -119,5 +119,11 @@ open class BottomDrawerPlugin: DrawerPlugin {
         let canDragUp = newYCoordinate > minYToShow
         let canDragDown = initialCenterY > newYCoordinate
         return canDragUp && canDragDown
+    }
+    
+    private func setVerticalPoint(to point: CGFloat, duration: TimeInterval = 0) {
+        UIView.animate(withDuration: duration) {
+            self.view.frame.origin.y = point
+        }
     }
 }
