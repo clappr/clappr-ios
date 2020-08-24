@@ -7,11 +7,6 @@ class MediaControlViewTests: QuickSpec {
     override func spec() {
         describe("MediaControlView") {
             describe("addSubview") {
-                
-                beforeEach {
-                    didCallAnchorInCenter = false
-                }
-                
                 context("top panel") {
                     it("adds to the topLeft when position is left") {
                         let mediaControlView: MediaControlView = .fromNib()
@@ -42,12 +37,12 @@ class MediaControlViewTests: QuickSpec {
                     
                     it("centers the view (adding constraints) in the topPanel when position is center") {
                         let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIViewMock()
+                        let view = UIViewSpy()
                         
                         mediaControlView.addSubview(view, in: .top, at: .center)
                         
                         expect(mediaControlView.topPanel.subviews).to(contain(view))
-                        expect(didCallAnchorInCenter).to(beTrue())
+                        expect(view.didCallCenterInView).to(beTrue())
                     }
                 }
                 
@@ -81,12 +76,12 @@ class MediaControlViewTests: QuickSpec {
                     
                     it("centers the view (adding constraints) in the centerPanel when position is center") {
                         let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIViewMock()
+                        let view = UIViewSpy()
                         
                         mediaControlView.addSubview(view, in: .center, at: .center)
                         
                         expect(mediaControlView.centerPanel.subviews).to(contain(view))
-                        expect(didCallAnchorInCenter).to(beTrue())
+                        expect(view.didCallCenterInView).to(beTrue())
                     }
                 }
                 
@@ -120,12 +115,12 @@ class MediaControlViewTests: QuickSpec {
                     
                     it("centers the view (adding constraints) in the bottomPanel when position is center") {
                         let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIViewMock()
+                        let view = UIViewSpy()
                         
                         mediaControlView.addSubview(view, in: .bottom, at: .center)
                         
                         expect(mediaControlView.bottomPanel.subviews).to(contain(view))
-                        expect(didCallAnchorInCenter).to(beTrue())
+                        expect(view.didCallCenterInView).to(beTrue())
                     }
                 }
                 
@@ -141,12 +136,12 @@ class MediaControlViewTests: QuickSpec {
                     
                     it("centers the view (adding constraints) in the modalPanel when position is center") {
                         let mediaControlView: MediaControlView = .fromNib()
-                        let view = UIViewMock()
+                        let view = UIViewSpy()
                         
                         mediaControlView.addSubview(view, in: .modal, at: .center)
                         
                         expect(mediaControlView.modalPanel.subviews).to(contain(view))
-                        expect(didCallAnchorInCenter).to(beTrue())
+                        expect(view.didCallCenterInView).to(beTrue())
                     }
                 }
 
@@ -216,9 +211,11 @@ class MediaControlViewTests: QuickSpec {
     }
 }
 
-var didCallAnchorInCenter = false
-class UIViewMock: UIView {
-    override func anchorInCenter() {
-        didCallAnchorInCenter = true
+
+class UIViewSpy: UIView {
+    var didCallCenterInView = false
+    
+    override func center(in view: UIView) {
+        didCallCenterInView = true
     }
 }

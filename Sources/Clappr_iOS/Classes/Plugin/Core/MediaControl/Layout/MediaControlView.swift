@@ -66,6 +66,9 @@ class MediaControlView: UIView {
         case .modal:
             modalPanel.addArrangedSubview(view)
         }
-        view.anchorInCenter()
+        
+        if let superview = view.superview {
+            view.center(in: superview)
+        }
     }
 }

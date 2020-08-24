@@ -11,13 +11,11 @@ extension UIView {
         heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
 
-    @objc func anchorInCenter() {
-        if let superview = self.superview {
-            self.translatesAutoresizingMaskIntoConstraints = false
-
-            self.centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
-            self.centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
-        }
+    @objc func center(in view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     func bindFrameToSuperviewBounds(marginTop: Double = 0,
