@@ -100,16 +100,8 @@ class FullscreenButtonTests: QuickSpec {
                         expect(fullscreenButton.button).toNot(beNil())
                     }
     
-                    it("sets the constraint edges") {
-                        let constraints = fullscreenButton.view.constraints
-                        let constraintTop = constraints.first(where: { $0.firstAttribute == .top })
-                        let constraintBottom = constraints.first(where: { $0.firstAttribute == .bottom })
-                        let constraintLeading = constraints.first(where: { $0.firstAttribute == .leading })
-                        let constraintTrailing = constraints.first(where: { $0.firstAttribute == .trailing })
-                        expect(constraintTop?.constant).to(equal(0))
-                        expect(constraintBottom?.constant).to(equal(0))
-                        expect(constraintLeading?.constant).to(equal(0))
-                        expect(constraintTrailing?.constant).to(equal(0))
+                    it("sets size") {
+                        expect(fullscreenButton.view.bounds.size).to(equal(fullscreenButton.button.bounds.size))
                     }
                 }
             }

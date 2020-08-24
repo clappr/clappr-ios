@@ -16,7 +16,7 @@ open class PlayButton: MediaControl.Element {
             button.setImage(playIcon, for: .normal)
             button.imageView?.contentMode = .scaleAspectFit
             button.addTarget(self, action: #selector(togglePlayPause), for: .touchUpInside)
-            button.bindFrameToSuperviewBounds()
+            button.constrainBounds(to: view)
         }
     }
 

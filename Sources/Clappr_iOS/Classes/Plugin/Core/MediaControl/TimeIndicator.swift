@@ -99,11 +99,7 @@ open class TimeIndicator: MediaControl.Element {
 
     open var marginBottom: CGFloat = 0 {
         didSet {
-            indicator.bindFrameToSuperviewBounds(with: UIEdgeInsets(top: 0,
-                                                                    left: 0,
-                                                                    bottom: marginBottom,
-                                                                    right: 0),
-                                                 identifier: "$marginBottom$")
+            indicator.constrainBounds(to: view, withInsets: UIEdgeInsets(bottom: marginBottom))
         }
     }
 

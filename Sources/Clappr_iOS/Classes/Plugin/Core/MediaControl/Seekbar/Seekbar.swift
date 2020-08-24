@@ -17,7 +17,7 @@ open class Seekbar: MediaControl.Element {
     var containerView: UIStackView! {
         didSet {
             view.addSubview(containerView)
-            containerView.bindFrameToSuperviewBounds()
+            containerView.constrainBounds(to: view)
         }
     }
 

@@ -297,6 +297,7 @@
 		A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
 		A3C8F3ED24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
 		A3C8F3EE24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
+		A33FE67C24F44F20005FC1FF /* UIEdgeInsets+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33FE67B24F44F20005FC1FF /* UIEdgeInsets+Ext.swift */; };
 		A3C8F3EF24CF489F002CA3F5 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */; };
 		A3C8F3F024CF489F002CA3F5 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
@@ -650,6 +651,7 @@
 		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
 		A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerLayer.swift; sourceTree = "<group>"; };
 		A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerComposer.swift; sourceTree = "<group>"; };
+		A33FE67B24F44F20005FC1FF /* UIEdgeInsets+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Ext.swift"; sourceTree = "<group>"; };
 		A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
@@ -1117,6 +1119,7 @@
 				AB25CC2A22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift */,
 				C957E8292332C45B001F0612 /* PanGesture+Ext.swift */,
 				48B39E8623510FB300CE9D72 /* TimeInterval+Extensions.swift */,
+				A33FE67B24F44F20005FC1FF /* UIEdgeInsets+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2435,6 +2438,7 @@
 				4856322B220B4C9C0096CDAE /* QuickSeekMediaControlPlugin.swift in Sources */,
 				96E7D2741E786FEE0056F358 /* InternalEvent.swift in Sources */,
 				96D362CF1D41339400CCB866 /* UIObject.swift in Sources */,
+				A33FE67C24F44F20005FC1FF /* UIEdgeInsets+Ext.swift in Sources */,
 				262B490D24D8898F0049DAF7 /* UIColor+ARGB.swift in Sources */,
 				4856322E220B54B90096CDAE /* QuickSeekPlugin.swift in Sources */,
 				CD10D93D22C28D4C0096B035 /* Environment.swift in Sources */,

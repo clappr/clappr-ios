@@ -8,10 +8,16 @@ class MediaControlTests: QuickSpec {
         describe(".MediaControl") {
             var coreStub: CoreStub!
             var mediaControl: MediaControl!
+            let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+            let superview = UIView(frame: frame)
 
             beforeEach {
                 coreStub = CoreStub()
                 mediaControl = MediaControl(context: coreStub)
+            }
+            
+            afterEach {
+                superview.subviews.forEach { $0.removeFromSuperview() }
             }
 
             describe("pluginName") {
@@ -41,6 +47,8 @@ class MediaControlTests: QuickSpec {
 
             describe("#view") {
                 it("has 1 gesture recognizer") {
+                    superview.addSubview(mediaControl.view)
+                    
                     mediaControl.render()
 
                     expect(mediaControl.view.gestureRecognizers?.count).to(equal(1))
@@ -49,8 +57,9 @@ class MediaControlTests: QuickSpec {
 
             describe("#hideAndStopTimer") {
                 it("hides the mediacontrol and stop timer") {
+                    superview.addSubview(mediaControl.view)
+                    
                     mediaControl.render()
-
                     mediaControl.hideAndStopTimer()
 
                     expect(mediaControl.hideControlsTimer?.isValid).to(beNil())
@@ -59,6 +68,11 @@ class MediaControlTests: QuickSpec {
             }
 
             describe("#render") {
+                
+                beforeEach {
+                    superview.addSubview(mediaControl.view)
+                }
+                
                 it("starts hidden") {
                     mediaControl.render()
 
@@ -78,13 +92,13 @@ class MediaControlTests: QuickSpec {
                 }
                 
                 it("fills the superview") {
-                    let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-                    let superview = UIView(frame: frame)
-                    superview.addSubview(mediaControl.view)
-
                     mediaControl.render()
+                    superview.layoutIfNeeded()
 
-                    expect(superview.constraints.count).to(equal(4))
+                    guard let superviewSize = mediaControl.view.superview?.bounds.size else {
+                        return fail("MediaControl should hava a superview after render")
+                    }
+                    expect(mediaControl.view.bounds.size).to(equal(superviewSize))
                 }
 
                 it("inflates the MediaControl xib in the view") {
@@ -457,8 +471,10 @@ class MediaControlTests: QuickSpec {
                 it("triggers willShowMediaControl before showing the view") {
                     var eventTriggered = false
                     var viewWasVisible = false
-                    mediaControl.render()
+                    let superview = UIView()
+                    superview.addSubview(mediaControl.view)
                     
+                    mediaControl.render()
                     coreStub.on(Event.willShowMediaControl.rawValue) { _ in
                         eventTriggered = true
                         viewWasVisible = !mediaControl.view.isHidden

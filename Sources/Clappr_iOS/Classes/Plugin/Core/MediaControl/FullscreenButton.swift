@@ -54,7 +54,7 @@ open class FullscreenButton: MediaControl.Element {
     
     private func setupButton() {
         button = UIButton(type: .custom)
-        button.bindFrameToSuperviewBounds()
+        button.constrainBounds(to: view)
     }
     
     @objc open func toggleFullscreenButton() {

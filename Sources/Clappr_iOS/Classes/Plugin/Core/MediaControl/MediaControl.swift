@@ -260,13 +260,15 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
     
     override open func render() {
+        guard let superview = view.superview else { return }
+        
         view.addSubview(mediaControlView)
-        mediaControlView.bindFrameToSuperviewBounds()
+        mediaControlView.constrainBounds(to: view)
         
         setupGestureRecognizer()
         setupViews()
 
-        view.bindFrameToSuperviewBounds()
+        view.constrainBounds(to: superview)
     }
 
     func render(_ elements: [MediaControl.Element]) {
