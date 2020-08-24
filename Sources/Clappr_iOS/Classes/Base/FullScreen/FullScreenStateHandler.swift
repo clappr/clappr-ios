@@ -20,6 +20,7 @@ struct FullscreenByApp: FullscreenStateHandler {
 
     func set(fullscreen: Bool) {
         guard core.isFullscreen != fullscreen else { return }
+
         core.isFullscreen = fullscreen
         if fullscreen {
             core.trigger(Event.willEnterFullscreen.rawValue)
@@ -36,12 +37,13 @@ struct FullscreenByPlayer: FullscreenStateHandler {
 
     func set(fullscreen: Bool) {
         guard core.isFullscreen != fullscreen else { return }
+
         fullscreen ? enterInFullscreen() : exitFullscreen()
     }
 
     func enterInFullscreen() {
-        guard let fullscreenController = core.fullscreenController else { return }
-        guard !core.isFullscreen else { return }
+        guard let fullscreenController = core.fullscreenController, !core.isFullscreen else { return }
+
         core.trigger(Event.willEnterFullscreen.rawValue)
         core.isFullscreen = true
         fullscreenController.view.backgroundColor = UIColor.black
