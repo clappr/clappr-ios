@@ -8,7 +8,7 @@ class LayersCompositorTests: QuickSpec {
     override func spec() {
         describe(".LayersCompositor") {
             context("When LayersCompositor composes its layers") {
-                it("puts BackgroundLayer behind all other layers"){
+                it("puts BackgroundLayer as the first layer"){
                     let fakeLayer = FakeLayer()
                     let rootView = UIView()
                     rootView.addSubview(fakeLayer)
