@@ -107,11 +107,17 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open func attach(to parentView: UIView, controller: UIViewController) {
+        guard let containerView = activeContainer?.view else {
+            Logger.logError("Active container should not be nil when attaching to parent view", scope: "Core")
+            return
+        }
         parentView.addSubviewMatchingConstraints(view)
-        self.layersCompositor.compose(inside: view)
+    
+        self.layersCompositor.compose(inside: view, adding: containerView)
         
         self.parentController = controller
         self.parentView = parentView
+    
         trigger(.didAttachView)
     }
     

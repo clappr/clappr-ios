@@ -5,10 +5,12 @@ class LayersCompositor {
     private let backgroundLayer = BackgroundLayer()
     private let playbackLayer = PlaybackLayer()
     
-    func compose(inside rootView: UIView) {
+    func compose(inside rootView: UIView, adding playbackView: UIView) {
         self.rootView = rootView
         
         backgroundLayer.attach(to: rootView, at: 0)
+        
         playbackLayer.attach(to: rootView, at: 1)
+        playbackLayer.attachPlayback(playbackView)
     }
 }
