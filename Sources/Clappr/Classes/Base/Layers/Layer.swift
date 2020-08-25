@@ -1,12 +1,16 @@
 import UIKit
 
 protocol Layer: UIView {
-    func attach(to view: UIView)
+    func attach(to view: UIView, at index: Int?)
 }
 
 extension Layer {
-    func attach(to view: UIView) {
-        view.addSubview(self)
+    func attach(to view: UIView, at index: Int? = nil) {
+        if let index = index {
+            view.insertSubview(self, at: index)
+        } else {
+            view.addSubview(self)
+        }
         
         translatesAutoresizingMaskIntoConstraints = false
         

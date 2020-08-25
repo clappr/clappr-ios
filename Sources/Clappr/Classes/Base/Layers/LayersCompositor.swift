@@ -7,7 +7,6 @@ class LayersCompositor {
     func compose(inside rootView: UIView) {
         self.rootView = rootView
         
-        backgroundLayer.attach(to: rootView)
-        rootView.sendSubviewToBack(backgroundLayer)
+        backgroundLayer.attach(to: rootView, at: 0)
     }
 }
