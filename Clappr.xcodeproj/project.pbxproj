@@ -282,10 +282,10 @@
 		A32A4A2724F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2824F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2924F53FB200953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
-		A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */; };
+		A32A51E424C60FC100A00439 /* LayerComposerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayerComposerTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
-		A3C8F3ED24CF489F002CA3F5 /* LayersCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */; };
-		A3C8F3EE24CF489F002CA3F5 /* LayersCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */; };
+		A3C8F3ED24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
+		A3C8F3EE24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
 		A3C8F3EF24CF489F002CA3F5 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */; };
 		A3C8F3F024CF489F002CA3F5 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */; };
 		AB0A58DF21FA2F520075729E /* QuickSeekAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */; };
@@ -630,9 +630,9 @@
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		A32A4A2424F53F5000953E47 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayer.swift; sourceTree = "<group>"; };
-		A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersCompositorTests.swift; sourceTree = "<group>"; };
+		A32A51E324C60FC100A00439 /* LayerComposerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComposerTests.swift; sourceTree = "<group>"; };
 		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
-		A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersCompositor.swift; sourceTree = "<group>"; };
+		A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerComposer.swift; sourceTree = "<group>"; };
 		A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
@@ -1283,7 +1283,7 @@
 			isa = PBXGroup;
 			children = (
 				A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */,
-				A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */,
+				A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */,
 				A32A4A2424F53F5000953E47 /* Layer.swift */,
 				A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */,
 			);
@@ -1383,7 +1383,7 @@
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
 				96664E551BF0CBD100095E6E /* UIObjectTests.swift */,
-				A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */,
+				A32A51E324C60FC100A00439 /* LayerComposerTests.swift */,
 				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
 				262B491924D88BD60049DAF7 /* FontTests.swift */,
 			);
@@ -2132,7 +2132,7 @@
 				32E401CA1FF42372001C2096 /* UIPlugin.swift in Sources */,
 				4822B6B522158FA300D1C134 /* ClapprAnimationDuration.swift in Sources */,
 				32E401CE1FF42386001C2096 /* GradientView.swift in Sources */,
-				A3C8F3EE24CF489F002CA3F5 /* LayersCompositor.swift in Sources */,
+				A3C8F3EE24CF489F002CA3F5 /* LayerComposer.swift in Sources */,
 				32755E22215038CB0088724E /* Playback.swift in Sources */,
 				488849B122845D97004B4AD1 /* AVAsset+Ext.swift in Sources */,
 				3251114721359BD8001FEEBA /* Core.swift in Sources */,
@@ -2271,7 +2271,7 @@
 				C9EDF8522162D07D00789E2F /* CoreStub.swift in Sources */,
 				C9EDF8542162D0DD00789E2F /* AVFoundationPlaybackMock.swift in Sources */,
 				96664E6D1BF209CF00095E6E /* ContainerTests.swift in Sources */,
-				A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */,
+				A32A51E424C60FC100A00439 /* LayerComposerTests.swift in Sources */,
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */,
@@ -2403,7 +2403,7 @@
 				96D362DF1D41339400CCB866 /* SpinnerPlugin.swift in Sources */,
 				262B491724D889C60049DAF7 /* Direction.swift in Sources */,
 				C9F6D7B62182650B0055A599 /* SeekbarView.swift in Sources */,
-				A3C8F3ED24CF489F002CA3F5 /* LayersCompositor.swift in Sources */,
+				A3C8F3ED24CF489F002CA3F5 /* LayerComposer.swift in Sources */,
 				A32A4A2524F53F5000953E47 /* Layer.swift in Sources */,
 				E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */,
 				5744C05721EE1E040087D9FB /* ObjC.m in Sources */,

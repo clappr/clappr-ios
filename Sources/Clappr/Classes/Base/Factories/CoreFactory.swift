@@ -1,8 +1,8 @@
 import Foundation
 
 struct CoreFactory {
-    static func create(with options: Options, layersCompositor: LayersCompositor) -> Core {
-        let core = Core(options: options, layersCompositor: layersCompositor)
+    static func create(with options: Options, layerComposer: LayerComposer) -> Core {
+        let core = Core(options: options, layerComposer: layerComposer)
         
         let container = ContainerFactory.create(with: options)
         core.add(container: container)

@@ -1,6 +1,6 @@
 import UIKit
 
-class LayersCompositor {
+class LayerComposer {
     private weak var rootView: UIView?
     private let backgroundLayer = BackgroundLayer()
     private let playbackLayer = PlaybackLayer()

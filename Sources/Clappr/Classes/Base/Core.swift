@@ -2,7 +2,7 @@ public typealias SharedData = [String: Any]
 
 open class Core: UIObject, UIGestureRecognizerDelegate {
     
-    private var layersCompositor: LayersCompositor
+    private var layerComposer: LayerComposer
     @objc public let environment = Environment()
     @objc open var sharedData = SharedData()
 
@@ -57,16 +57,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var isFullscreen: Bool = false
     private var isChromeless: Bool { options.bool(kChromeless) }
 
-    convenience init(options: Options = [:], layersCompositor: LayersCompositor = LayersCompositor()) {
+    convenience init(options: Options = [:], layerComposer: LayerComposer = LayerComposer()) {
         self.init(options: options)
-        self.layersCompositor = layersCompositor
+        self.layerComposer = layerComposer
     }
     
     public required init(options: Options = [:]) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
-        self.layersCompositor = LayersCompositor()
+        self.layerComposer = LayerComposer()
         super.init()
         
         if !isChromeless {
@@ -113,7 +113,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
         parentView.addSubviewMatchingConstraints(view)
     
-        self.layersCompositor.compose(inside: view, adding: containerView)
+        self.layerComposer.compose(inside: view, adding: containerView)
         
         self.parentController = controller
         self.parentView = parentView
