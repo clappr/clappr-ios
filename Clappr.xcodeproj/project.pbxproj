@@ -279,6 +279,8 @@
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
 		A32A4A2524F53F5000953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
+		A32A4A2724F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
+		A32A4A2824F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2924F53FB200953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
 		A32A51E424C60FC100A00439 /* LayersCompositorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
@@ -627,6 +629,7 @@
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		A32A4A2424F53F5000953E47 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayer.swift; sourceTree = "<group>"; };
 		A32A51E324C60FC100A00439 /* LayersCompositorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersCompositorTests.swift; sourceTree = "<group>"; };
 		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
 		A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayersCompositor.swift; sourceTree = "<group>"; };
@@ -1282,6 +1285,7 @@
 				A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */,
 				A3C8F3EB24CF489F002CA3F5 /* LayersCompositor.swift */,
 				A32A4A2424F53F5000953E47 /* Layer.swift */,
+				A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -2155,6 +2159,7 @@
 				571B7B262174E324005C0942 /* AVFoundationPlayback+tvOS.swift in Sources */,
 				26211C2224DC70E7000501A4 /* Direction.swift in Sources */,
 				32E401BF1FF42321001C2096 /* MediaOptionType.swift in Sources */,
+				A32A4A2824F53FAA00953E47 /* PlaybackLayer.swift in Sources */,
 				C9177B2F21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				AB25CC2C22EB7DE500AD4759 /* AVFoundationPlayback+DVR.swift in Sources */,
 				FC7785B7200523E400EC879F /* AVFoundationNowPlayingBuilder.swift in Sources */,
@@ -2331,6 +2336,7 @@
 				EFEC757E23C51FE700FA6A52 /* PlaybackRenderProtocol.swift in Sources */,
 				48B9F9AD230D82C200CD07D5 /* OverlayPlugin.swift in Sources */,
 				C9F6D7B9218265140055A599 /* Seekbar.swift in Sources */,
+				A32A4A2724F53FAA00953E47 /* PlaybackLayer.swift in Sources */,
 				C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
