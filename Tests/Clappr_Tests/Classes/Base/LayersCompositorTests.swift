@@ -18,7 +18,7 @@ class LayersCompositorTests: QuickSpec {
                     
                     expect(rootView.subviews.first).to(
                         beAKindOf(BackgroundLayer.self),
-                        description: "BackgroundLayer should be the first subview of rootView."
+                        description: "BackgroundLayer should be the first subview of rootView, got \(String(describing: type(of: rootView.subviews.first)))"
                     )
                 }
                 it("puts PlaygroundLayer as the second layer"){
@@ -29,7 +29,7 @@ class LayersCompositorTests: QuickSpec {
                     
                     expect(rootView.subviews[1]).to(
                         beAKindOf(PlaybackLayer.self),
-                        description: "PlaybackLayer should be the first subview of rootView."
+                        description: "PlaybackLayer should be the first subview of rootView, got \(String(describing: type(of: rootView.subviews[0])))"
                     )
                 }
             }
