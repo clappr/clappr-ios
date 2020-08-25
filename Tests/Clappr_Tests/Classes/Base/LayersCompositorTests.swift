@@ -21,6 +21,17 @@ class LayersCompositorTests: QuickSpec {
                         description: "BackgroundLayer should be the first subview of rootView."
                     )
                 }
+                it("puts PlaygroundLayer as the second layer"){
+                    let rootView = UIView()
+                    let layersCompositor = LayersCompositor()
+                    
+                    layersCompositor.compose(inside: rootView)
+                    
+                    expect(rootView.subviews[1]).to(
+                        beAKindOf(PlaybackLayer.self),
+                        description: "PlaybackLayer should be the first subview of rootView."
+                    )
+                }
             }
         }
     }
