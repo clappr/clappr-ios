@@ -36,6 +36,19 @@ class LayerComposerTests: QuickSpec {
                         description: "PlaybackLayer should be the second subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
+                it("adds ContainerLayer as the third layer"){
+                    let index = 2
+                    let rootView = UIView()
+                    let layerComposer = LayerComposer()
+                    
+                    layerComposer.compose(inside: rootView)
+                    
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
+                        beAKindOf(ContainerLayer.self),
+                        description: "ContainerLayer should be the third subview of rootView, got \(String(describing: type(of: layer)))"
+                    )
+                }
             }
         }
         
