@@ -1284,6 +1284,16 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		A308B35B24F6E88A00C84AB8 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				A32A51E324C60FC100A00439 /* LayerComposerTests.swift */,
+				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
+				A32A4A2A24F544C000953E47 /* LayerTests.swift */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
 		A32A51E724C61F4600A00439 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1378,6 +1388,7 @@
 		C93466942305BBCD0062E8DE /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				A308B35B24F6E88A00C84AB8 /* Layers */,
 				C93466972305BC680062E8DE /* Factories */,
 				969703A51BEA8C7500B7F282 /* BaseObjectTests.swift */,
 				9697039F1BEA716100B7F282 /* EventHandlerTests.swift */,
@@ -1389,10 +1400,7 @@
 				96664E581BF0D58400095E6E /* PlaybackTests.swift */,
 				9603A06B1C05E6D100B55D8F /* PlayerTests.swift */,
 				96664E551BF0CBD100095E6E /* UIObjectTests.swift */,
-				A32A51E324C60FC100A00439 /* LayerComposerTests.swift */,
-				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
 				262B491924D88BD60049DAF7 /* FontTests.swift */,
-				A32A4A2A24F544C000953E47 /* LayerTests.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
