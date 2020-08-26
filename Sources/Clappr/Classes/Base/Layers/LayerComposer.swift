@@ -4,13 +4,15 @@ class LayerComposer {
     private weak var rootView: UIView?
     private let backgroundLayer = BackgroundLayer()
     private let playbackLayer = PlaybackLayer()
+    private let containerLayer = ContainerLayer()
     
-    func compose(inside rootView: UIView, adding playbackView: UIView) {
+    func compose(inside rootView: UIView, adding containerView: UIView) {
         self.rootView = rootView
         
         backgroundLayer.attach(to: rootView, at: 0)
-        
         playbackLayer.attach(to: rootView, at: 1)
-        playbackLayer.attachPlayback(playbackView)
+        
+        containerLayer.attach(to: rootView, at: 2)
+        containerLayer.attachContainer(containerView)
     }
 }
