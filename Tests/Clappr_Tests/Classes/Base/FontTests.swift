@@ -258,16 +258,26 @@ class FontTests: QuickSpec {
                 }
             }
             
-            context(".fontSize") {
+            context(".fontSizePercentage") {
                 it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight and the value be equal to 12") {
-                    let style: TextStyle = .fontSize(12)
+                    let style: TextStyle = .fontSizePercentage(12)
                     let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight) : 12])
                     
                     expect(style.key).to(equal(String(kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight)))
                     expect(style.value).to(equal(expectedValue))
                 }
             }
-            
+
+            context(".writingSizePercentage") {
+                it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_WritingDirectionSizePercentage and the value be equal to 92") {
+                    let style: TextStyle = .writingSizePercentage(92)
+                    let expectedValue = AVTextStyleRule(textMarkupAttributes: [String(kCMTextMarkupAttribute_WritingDirectionSizePercentage) : 92])
+
+                    expect(style.key).to(equal(String(kCMTextMarkupAttribute_WritingDirectionSizePercentage)))
+                    expect(style.value).to(equal(expectedValue))
+                }
+            }
+
             context(".bold") {
                 it("should the value be equal an AVTextStyleRyle with the key equal to kCMTextMarkupAttribute_BoldStyle and the value be equal to true") {
                     let style: TextStyle = .bold
@@ -348,7 +358,7 @@ class FontTests: QuickSpec {
                         .direction(.ltr),
                         .edge(.dropShadow),
                         .font(.casual),
-                        .fontSize(12),
+                        .fontSizePercentage(12),
                         .foreground(.blue),
                         .italic,
                         .underline

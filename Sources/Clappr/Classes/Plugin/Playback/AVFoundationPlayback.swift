@@ -59,6 +59,22 @@ open class AVFoundationPlayback: Playback {
         }
     }
 
+    #if os(tvOS)
+    private let minSizeToShowSubtitle = CGSize(width: 560, height: 312)
+    #else
+    private let minSizeToShowSubtitle = CGSize(width: 280, height: 156)
+    #endif
+
+    private var lastSelectedSubtitle: MediaOption?
+
+    private func hideSubtitleForSmallScreen() {
+        if view.frame.width < minSizeToShowSubtitle.width || view.frame.height < minSizeToShowSubtitle.height {
+            self.selectedSubtitle = MediaOption.offSubtitle
+        } else {
+            self.selectedSubtitle = lastSelectedSubtitle
+        }
+    }
+
     open override var selectedSubtitle: MediaOption? {
         get {
             guard subtitles?.isEmpty == false else { return nil }
@@ -69,6 +85,7 @@ open class AVFoundationPlayback: Playback {
             if newValue == MediaOption.offSubtitle {
                 setMediaSelectionOption(nil, characteristic: .legible)
             } else {
+                lastSelectedSubtitle = newValue
                 let newOption = newValue?.avMediaSelectionOption
                 setMediaSelectionOption(newOption, characteristic: .legible)
             }
@@ -292,7 +309,10 @@ open class AVFoundationPlayback: Playback {
     @objc func setupObservers() {
         guard let player = player else { return }
         observers += [
-            view.observe(\.bounds) { [weak self] view, _ in self?.maximizePlayer(within: view) },
+            view.observe(\.bounds) { [weak self] view, _ in
+                self?.maximizePlayer(within: view)
+                self?.hideSubtitleForSmallScreen()
+            },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
@@ -665,8 +685,10 @@ open class AVFoundationPlayback: Playback {
         var isFirstSelection = false
         let defaultSubtitle = defaultMediaOption(for: subtitles, with: defaultSubtitleLanguage) ?? mediaSelectionGroup(.legible)?.defaultOption
         if let selectedOption = defaultSubtitle, !selectedCharacteristics.contains(.legible) {
+            lastSelectedSubtitle = MediaOptionFactory.fromAVMediaOption(selectedOption, type: .subtitle)
             isFirstSelection = true
             setMediaSelectionOption(selectedOption, characteristic: .legible)
+            hideSubtitleForSmallScreen()
         }
         trigger(.didFindSubtitle, userInfo: ["subtitles": AvailableMediaOptions(subtitles, hasDefaultSelected: isFirstSelection)])
     }

@@ -150,6 +150,9 @@
 		48EC492122A1908300DC7A2D /* AVPlayerItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */; };
 		48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */; };
 		48F1E97423229FDC00EAD6A1 /* DrawerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */; };
+		5217467824EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217467724EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift */; };
+		5217467924EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217467724EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift */; };
+		521D893924E462D100AAA58C /* FontTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B491924D88BD60049DAF7 /* FontTests.swift */; };
 		522C8997246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */; };
 		522C8998246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */; };
 		5232A455248A73780095D174 /* UIFocusEnvironment+ExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5232A454248A73780095D174 /* UIFocusEnvironment+ExtTests.swift */; };
@@ -514,6 +517,7 @@
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
 		48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPluginTests.swift; sourceTree = "<group>"; };
 		48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPlugin.swift; sourceTree = "<group>"; };
+		5217467724EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackSubtitleTests.swift; sourceTree = "<group>"; };
 		522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStopActionTests.swift; sourceTree = "<group>"; };
 		5232A454248A73780095D174 /* UIFocusEnvironment+ExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFocusEnvironment+ExtTests.swift"; sourceTree = "<group>"; };
 		571B7B30217503BB005C0942 /* NowPlayingServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingServiceStub.swift; sourceTree = "<group>"; };
@@ -1352,6 +1356,7 @@
 				C9A1CCAF23E995D000621048 /* AVFoundationPlaybackMediaSelectionTests.swift */,
 				7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */,
 				522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */,
+				5217467724EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift */,
 			);
 			path = Playback;
 			sourceTree = "<group>";
@@ -2163,9 +2168,11 @@
 				571B7B2B2175015F005C0942 /* AVURLAssetStub.swift in Sources */,
 				C934669B2305C13F0062E8DE /* String+Ext.swift in Sources */,
 				571B7B292175013F005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
+				5217467924EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift in Sources */,
 				C9096F1F24086B05001BB2A4 /* OHTTPStubsHelper.swift in Sources */,
 				C9C8BFAF2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
+				521D893924E462D100AAA58C /* FontTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
 				486E8DFE23156A880024E6CA /* OverlayPluginTests.swift in Sources */,
 				522C8998246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift in Sources */,
@@ -2258,6 +2265,7 @@
 				48D81F1F21FA31FA00B2D52E /* QuickSeekCorePluginTests.swift in Sources */,
 				571B7B2E21750204005C0942 /* AVFoundationPlaybackTests.swift in Sources */,
 				7BD29B7F23FDDE7300C82098 /* PlayerMock.swift in Sources */,
+				5217467824EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift in Sources */,
 				EDF652221D467CCA00627C48 /* UICorePluginTests.swift in Sources */,
 				48F1E971232296F600EAD6A1 /* DrawerPluginTests.swift in Sources */,
 				C94D8CED221B1DDD00C7855D /* ContainerPluginTests.swift in Sources */,
