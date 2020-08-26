@@ -54,14 +54,6 @@ class ContainerTests: QuickSpec {
                         }
                     }
 
-                    it("set playback as subview") {
-                        expect(container.playback?.view.superview) == container.view
-                    }
-
-                    it("set playback to front of container") {
-                        expect(container.view.subviews.first) == container.playback?.view
-                    }
-
                     it("set background color to `clear`") {
                         expect(container.view.backgroundColor) == .clear
                     }
@@ -229,47 +221,24 @@ class ContainerTests: QuickSpec {
                     it("loads a valid playback") {
                         container.load(Source.valid)
 
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
+                        expect(container.playback?.pluginName) == AVFoundationPlayback.name
                     }
 
                     it("load a source with mime type") {
                         container.load(Source.valid, mimeType: "video/mp4")
 
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
+                        expect(container.playback?.pluginName) == AVFoundationPlayback.name
                     }
                 }
 
                 context("when pass a invalid resource") {
-                    beforeEach {
+                    it("set playback as a 'noop' playback") {
                         container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
                         container.load(Source.invalid)
-                    }
-
-                    it("set playback as a 'noop' playback") {
                         container.load(Source.invalid)
 
                         expect(container.playback?.pluginName) == NoOpPlayback.name
-                        expect(container.playback?.view.superview) == container.view
                     }
-
-                    it("set playback as a 'noop' playback with mimetype") {
-                        container.load(Source.valid, mimeType: "video/mp4")
-
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
-                    }
-                }
-
-                it("keep just one playback as subview at time") {
-                    Loader.shared.resetPlugins()
-                    let container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
-                    container.load("anyVideo")
-                    expect(container.view.subviews.count).to(equal(1))
-
-                    container.load("anyOtherVideo")
-                    expect(container.view.subviews.count).to(equal(1))
                 }
             }
 
