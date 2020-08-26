@@ -11,7 +11,7 @@ class LayerComposerTests: QuickSpec {
                 it("puts BackgroundLayer as the first layer"){
                     let fakeLayer = FakeLayer()
                     let rootView = UIView()
-                    rootView.addSubview(fakeLayer)
+                    rootView.insertSubview(fakeLayer, at: 0)
                     let layerComposer = LayerComposer()
                     
                     layerComposer.compose(inside: rootView)
@@ -35,6 +35,6 @@ class LayerComposerTests: QuickSpec {
             }
         }
     }
+    
+    class FakeLayer: UIView {}
 }
-
-class FakeLayer: UIView {}
