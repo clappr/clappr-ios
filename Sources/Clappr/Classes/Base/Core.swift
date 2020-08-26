@@ -57,16 +57,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var isFullscreen: Bool = false
     private var isChromeless: Bool { options.bool(kChromeless) }
 
-    convenience init(options: Options = [:], layerComposer: LayerComposer = LayerComposer()) {
-        self.init(options: options)
-        self.layerComposer = layerComposer
+    convenience init(options: Options = [:]) {
+        self.init(options: options, layerComposer: LayerComposer())
     }
     
-    public required init(options: Options = [:]) {
+    public required init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
-        self.layerComposer = LayerComposer()
+        self.layerComposer = layerComposer
         super.init()
         
         if !isChromeless {
