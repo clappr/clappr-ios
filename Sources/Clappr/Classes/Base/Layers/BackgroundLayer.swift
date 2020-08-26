@@ -1,9 +1,8 @@
 import UIKit
 
-final class BackgroundLayer: UIView, Layer {
-    init() {
-        super.init(frame: .zero)
-
+final class BackgroundLayer: Layer {
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
         backgroundColor = .black
     }
     

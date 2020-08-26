@@ -9,7 +9,7 @@ class LayerTests: QuickSpec {
                 it("resizes to match the view bounds") {
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let superview = UIView(frame: frame)
-                    let layer = TestLayer(frame: .zero)
+                    let layer = Layer(frame: .zero)
                     
                     layer.attach(to: superview)
                     superview.layoutIfNeeded()
@@ -22,7 +22,7 @@ class LayerTests: QuickSpec {
                         let frame = CGRect(x: 0, y: 0, width: 50, height: 50)
                         let biggerFrame = CGRect(x: 0, y: 0, width: 100, height: 100)
                         let rootView = UIView(frame: frame)
-                        let testLayer = TestLayer()
+                        let testLayer = Layer()
                         
                         testLayer.attach(to: rootView)
                         testLayer.layoutIfNeeded()
@@ -35,6 +35,4 @@ class LayerTests: QuickSpec {
             }
         }
     }
-    
-    class TestLayer: UIView, Layer {}
 }

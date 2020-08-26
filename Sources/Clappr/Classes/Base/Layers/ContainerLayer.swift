@@ -1,14 +1,6 @@
 import UIKit
 
-final class ContainerLayer: UIView, Layer {
-    init() {
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+final class ContainerLayer: Layer {   
     func attachContainer(_ container: UIView) {
         addSubview(container)
         
