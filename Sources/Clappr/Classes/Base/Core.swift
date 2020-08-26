@@ -2,8 +2,7 @@ public typealias SharedData = [String: Any]
 
 open class Core: UIObject, UIGestureRecognizerDelegate {
     
-    private var layersCompositor = LayersCompositor()
-
+    private var layersCompositor: LayersCompositor
     @objc public let environment = Environment()
     @objc open var sharedData = SharedData()
 
@@ -67,6 +66,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
+        self.layersCompositor = LayersCompositor()
         super.init()
         
         if !isChromeless {

@@ -1,6 +1,7 @@
 @objcMembers
 open class Player: BaseObject {
 
+    private var layersCompositor = LayersCompositor()
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     private(set) var core: Core?
@@ -92,7 +93,7 @@ open class Player: BaseObject {
     
     private func setCore(with options: Options) {
         core?.stopListening()
-        core = CoreFactory.create(with: options)
+        core = CoreFactory.create(with: options, layersCompositor: layersCompositor)
     }
 
     private func bindCoreEvents() {
