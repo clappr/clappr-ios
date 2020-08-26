@@ -278,6 +278,8 @@
 		9EED97042088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */; };
 		9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97052088E48700D1C84A /* AVPlayerStub.swift */; };
 		9EED97082088E5B800D1C84A /* AVPlayerItemStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */; };
+		A308B35D24F6E8F700C84AB8 /* PlaybackLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308B35C24F6E8F700C84AB8 /* PlaybackLayerTests.swift */; };
+		A308B35E24F6E8F700C84AB8 /* PlaybackLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308B35C24F6E8F700C84AB8 /* PlaybackLayerTests.swift */; };
 		A32A4A2524F53F5000953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
 		A32A4A2724F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2824F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
@@ -631,6 +633,7 @@
 		9EED97032088E32800D1C84A /* AVFoundationPlaybackViewPortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackViewPortTests.swift; sourceTree = "<group>"; };
 		9EED97052088E48700D1C84A /* AVPlayerStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerStub.swift; sourceTree = "<group>"; };
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
+		A308B35C24F6E8F700C84AB8 /* PlaybackLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayerTests.swift; sourceTree = "<group>"; };
 		A32A4A2424F53F5000953E47 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayer.swift; sourceTree = "<group>"; };
 		A32A4A2A24F544C000953E47 /* LayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTests.swift; sourceTree = "<group>"; };
@@ -1290,6 +1293,7 @@
 				A32A51E324C60FC100A00439 /* LayerComposerTests.swift */,
 				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
 				A32A4A2A24F544C000953E47 /* LayerTests.swift */,
+				A308B35C24F6E8F700C84AB8 /* PlaybackLayerTests.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -2197,6 +2201,7 @@
 				5217467924EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift in Sources */,
 				C9096F1F24086B05001BB2A4 /* OHTTPStubsHelper.swift in Sources */,
 				C9C8BFAF2305C9B800A8FA55 /* SimpleCorePluginTests.swift in Sources */,
+				A308B35E24F6E8F700C84AB8 /* PlaybackLayerTests.swift in Sources */,
 				32755E2421503A830088724E /* PlaybackTests.swift in Sources */,
 				521D893924E462D100AAA58C /* FontTests.swift in Sources */,
 				48A29BFA221C8F290004AD3B /* CoreStub.swift in Sources */,
@@ -2253,6 +2258,7 @@
 			files = (
 				C990DAA52194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift in Sources */,
 				96664E5E1BF0D5FB00095E6E /* PlaybackTests.swift in Sources */,
+				A308B35D24F6E8F700C84AB8 /* PlaybackLayerTests.swift in Sources */,
 				C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */,
 				5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */,
 				7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */,

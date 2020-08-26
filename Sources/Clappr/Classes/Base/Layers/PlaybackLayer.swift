@@ -1,8 +1,8 @@
 import UIKit
 
 final class PlaybackLayer: UIView, Layer {
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
     }
     
     required init?(coder: NSCoder) {
