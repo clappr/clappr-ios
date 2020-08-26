@@ -83,7 +83,7 @@ open class Container: UIObject {
             return
         }
 
-        layerComposer.attach(playbackView: playback.view)
+        layerComposer.attachPlayback(playback.view)
         
         playback.render()
         view.sendSubviewToBack(playback.view)

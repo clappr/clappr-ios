@@ -22,7 +22,7 @@ class CoreTests: QuickSpec {
         class LayerComposerSpy: LayerComposer {
             var didCallCompose = false
             
-            override func compose(inside rootView: UIView, adding playbackView: UIView) {
+            override func compose(inside rootView: UIView) {
                 didCallCompose = true
             }
         }

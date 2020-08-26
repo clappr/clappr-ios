@@ -10,12 +10,11 @@ class LayerComposerTests: QuickSpec {
             context("When LayerComposer composes its layers") {
                 it("puts BackgroundLayer as the first layer"){
                     let fakeLayer = FakeLayer()
-                    let containerView = UIView()
                     let rootView = UIView()
                     rootView.addSubview(fakeLayer)
                     let layerComposer = LayerComposer()
                     
-                    layerComposer.compose(inside: rootView, adding: containerView)
+                    layerComposer.compose(inside: rootView)
                     
                     expect(rootView.subviews.first).to(
                         beAKindOf(BackgroundLayer.self),
@@ -24,10 +23,9 @@ class LayerComposerTests: QuickSpec {
                 }
                 it("puts PlaygroundLayer as the second layer"){
                     let rootView = UIView()
-                    let containerView = UIView()
                     let layerComposer = LayerComposer()
                     
-                    layerComposer.compose(inside: rootView, adding: containerView)
+                    layerComposer.compose(inside: rootView)
                     
                     expect(rootView.subviews[1]).to(
                         beAKindOf(PlaybackLayer.self),

@@ -112,7 +112,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
         parentView.addSubviewMatchingConstraints(view)
     
-        self.layerComposer.compose(inside: view, adding: containerView)
+        layerComposer.attachContainer(containerView)
+        layerComposer.compose(inside: view)
         
         self.parentController = controller
         self.parentView = parentView
