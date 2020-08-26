@@ -15,4 +15,8 @@ public class LayerComposer {
         containerLayer.attach(to: rootView, at: 2)
         containerLayer.attachContainer(containerView)
     }
+    
+    func attach(playbackView: UIView) {
+        self.playbackLayer.attachPlayback(playbackView)
+    }
 }

@@ -83,7 +83,8 @@ open class Container: UIObject {
             return
         }
 
-        view.addSubviewMatchingConstraints(playback.view)
+        layerComposer.attach(playbackView: playback.view)
+        
         playback.render()
         view.sendSubviewToBack(playback.view)
     }
