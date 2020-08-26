@@ -1,8 +1,10 @@
 import Foundation
 
 open class Container: UIObject {
+    private let layerComposer: LayerComposer
     private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
+    
     @objc open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)
@@ -32,10 +34,15 @@ open class Container: UIObject {
     }
 
     private var boundsObservation: NSKeyValueObservation?
+    
+    convenience init(options: Options = [:]) {
+        self.init(options: options, layerComposer: LayerComposer())
+    }
 
-    public init(options: Options = [:]) {
+    public init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
+        self.layerComposer = layerComposer
 
         super.init()
 
