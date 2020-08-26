@@ -81,7 +81,7 @@ open class PlayButton: MediaControl.Element {
         changeToPlayIcon()
     }
 
-    private func onComplete() {
+    open func onComplete() {
         show()
         changeToReplayIcon()
     }
