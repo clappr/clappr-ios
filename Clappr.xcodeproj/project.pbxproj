@@ -282,6 +282,7 @@
 		A32A4A2724F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2824F53FAA00953E47 /* PlaybackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */; };
 		A32A4A2924F53FB200953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
+		A32A4A2D24F546E800953E47 /* LayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2A24F544C000953E47 /* LayerTests.swift */; };
 		A32A51E424C60FC100A00439 /* LayerComposerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayerComposerTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
 		A3B8019224F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
@@ -632,6 +633,7 @@
 		9EED97072088E5B800D1C84A /* AVPlayerItemStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemStub.swift; sourceTree = "<group>"; };
 		A32A4A2424F53F5000953E47 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayer.swift; sourceTree = "<group>"; };
+		A32A4A2A24F544C000953E47 /* LayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTests.swift; sourceTree = "<group>"; };
 		A32A51E324C60FC100A00439 /* LayerComposerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComposerTests.swift; sourceTree = "<group>"; };
 		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
 		A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerLayer.swift; sourceTree = "<group>"; };
@@ -1390,6 +1392,7 @@
 				A32A51E324C60FC100A00439 /* LayerComposerTests.swift */,
 				A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */,
 				262B491924D88BD60049DAF7 /* FontTests.swift */,
+				A32A4A2A24F544C000953E47 /* LayerTests.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2245,6 +2248,7 @@
 				C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */,
 				5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */,
 				7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */,
+				A32A4A2D24F546E800953E47 /* LayerTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
 				FC6418E12007DC2F00E81B7C /* ClapprDateFormatterTests.swift in Sources */,
 				FB3A8F1A209F8D7000CEFC3D /* FullscreenTests.swift in Sources */,
