@@ -284,6 +284,8 @@
 		A32A4A2924F53FB200953E47 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2424F53F5000953E47 /* Layer.swift */; };
 		A32A51E424C60FC100A00439 /* LayerComposerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayerComposerTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
+		A3B8019224F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
+		A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
 		A3C8F3ED24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
 		A3C8F3EE24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
 		A3C8F3EF24CF489F002CA3F5 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */; };
@@ -632,6 +634,7 @@
 		A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLayer.swift; sourceTree = "<group>"; };
 		A32A51E324C60FC100A00439 /* LayerComposerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComposerTests.swift; sourceTree = "<group>"; };
 		A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLayerTests.swift; sourceTree = "<group>"; };
+		A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerLayer.swift; sourceTree = "<group>"; };
 		A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerComposer.swift; sourceTree = "<group>"; };
 		A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
@@ -1286,6 +1289,7 @@
 				A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */,
 				A32A4A2424F53F5000953E47 /* Layer.swift */,
 				A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */,
+				A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -2142,6 +2146,7 @@
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				CD10D93E22C28D4C0096B035 /* Environment.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
+				A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
 				A3C8F3F024CF489F002CA3F5 /* BackgroundLayer.swift in Sources */,
@@ -2323,6 +2328,7 @@
 				57F1354921836EE000111BC6 /* Array+appendOrReplace.swift in Sources */,
 				96D362E81D41339400CCB866 /* BorderView.swift in Sources */,
 				96D362DC1D41339400CCB866 /* MediaOptionFactory.swift in Sources */,
+				A3B8019224F6A31A009FA0D4 /* ContainerLayer.swift in Sources */,
 				48B39E8723510FB300CE9D72 /* TimeInterval+Extensions.swift in Sources */,
 				C9B8414922E0F454009DE097 /* OrientationObserver.swift in Sources */,
 				96D362E01D41339400CCB866 /* PosterPlugin.swift in Sources */,
