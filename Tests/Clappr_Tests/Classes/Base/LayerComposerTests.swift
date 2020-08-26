@@ -8,7 +8,8 @@ class LayerComposerTests: QuickSpec {
     override func spec() {
         describe(".LayerComposer") {
             context("When LayerComposer composes its layers") {
-                it("puts BackgroundLayer as the first layer"){
+                it("adds BackgroundLayer as the first layer"){
+                    let index = 0
                     let fakeLayer = FakeLayer()
                     let rootView = UIView()
                     rootView.insertSubview(fakeLayer, at: 0)
@@ -16,24 +17,30 @@ class LayerComposerTests: QuickSpec {
                     
                     layerComposer.compose(inside: rootView)
                     
-                    expect(rootView.subviews.first).to(
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
                         beAKindOf(BackgroundLayer.self),
-                        description: "BackgroundLayer should be the first subview of rootView, got \(String(describing: type(of: rootView.subviews.first)))"
+                        description: "BackgroundLayer should be the first subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
-                it("puts PlaygroundLayer as the second layer"){
+                it("adds PlaygroundLayer as the second layer"){
+                    let index = 1
                     let rootView = UIView()
                     let layerComposer = LayerComposer()
                     
                     layerComposer.compose(inside: rootView)
                     
-                    expect(rootView.subviews[1]).to(
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
                         beAKindOf(PlaybackLayer.self),
-                        description: "PlaybackLayer should be the first subview of rootView, got \(String(describing: type(of: rootView.subviews[0])))"
                         description: "PlaybackLayer should be the second subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
             }
+        }
+        
+        func getLayer(from rootView: UIView, at index: Int) -> Layer? {
+            return rootView.subviews[index] as? Layer
         }
     }
     
