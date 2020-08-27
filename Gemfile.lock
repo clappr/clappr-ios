@@ -245,10 +245,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods
-  fastlane
+  cocoapods (~> 1.9.3)
+  fastlane (~> 2.156.1)
   fastlane-plugin-versioning
-  xcov
+  xcov (~> 1.7.4)
 
 BUNDLED WITH
    2.1.4
