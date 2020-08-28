@@ -11,6 +11,8 @@ public class QuickSeekMediaControlPlugin: QuickSeekPlugin {
     }
     
     override func removeGesture() {
+        guard let doubleTapGesture = doubleTapGesture else { return }
+        
         mediaControl?.mediaControlView.removeGestureRecognizer(doubleTapGesture)
     }
     

@@ -18,6 +18,7 @@ open class DrawerPlugin: OverlayPlugin {
 
     open var overlayViewFrame: CGRect {
         guard let overlayView = view.superview else { return .zero }
+
         return overlayView.frame
     }
 
