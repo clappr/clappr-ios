@@ -51,18 +51,10 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     private func bindCoreEvents(context: UIObject) {
-        let eventsToRender: [Event] = [.didEnterFullscreen, .didExitFullscreen, .didChangeScreenOrientation]
-
         listenTo(context, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
             guard self?.isClosed == false else { return }
 
             context.trigger(.hideDrawerPlugin)
-        }
-
-        eventsToRender.forEach {
-            listenTo(context, event: $0) { [weak self] _ in
-                self?.render()
-            }
         }
     }
 
