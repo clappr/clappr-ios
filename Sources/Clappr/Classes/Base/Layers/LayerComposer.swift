@@ -6,6 +6,8 @@ public class LayerComposer {
     private let playbackLayer = PlaybackLayer()
     private let containerLayer = ContainerLayer()
     
+    public init(){}
+    
     func compose(inside rootView: UIView) {
         self.rootView = rootView
         
