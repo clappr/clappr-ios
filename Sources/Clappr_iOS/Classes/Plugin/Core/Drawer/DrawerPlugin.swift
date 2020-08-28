@@ -16,9 +16,9 @@ open class DrawerPlugin: OverlayPlugin {
         return .zero
     }
 
-    open var coreViewFrame: CGRect {
-        guard let core = core else { return .zero }
-        return core.view.frame
+    open var overlayViewFrame: CGRect {
+        guard let overlayView = view.superview else { return .zero }
+        return overlayView.frame
     }
 
     private(set) var isClosed: Bool = true {

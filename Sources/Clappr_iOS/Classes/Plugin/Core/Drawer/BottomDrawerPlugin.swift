@@ -2,7 +2,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
     private var initialCenterY: CGFloat = .zero
 
     private var maxHeight: CGFloat {
-        return coreViewFrame.height/2
+        return overlayViewFrame.height/2
+    }
     }
 
     open var height: CGFloat {
@@ -117,7 +118,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func handleGestureEnded(for newYCoordinate: CGFloat) {
-        let isHalfWayOpen = newYCoordinate <= minYToShow
+        let isHalfWayOpen = abs(newYCoordinate - overlayViewFrame.height) >= minHeightToShow
         isHalfWayOpen ? showDrawerPlugin() : hideDrawerPlugin()
     }
 
