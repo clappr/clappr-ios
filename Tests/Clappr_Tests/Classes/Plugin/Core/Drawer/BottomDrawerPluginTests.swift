@@ -32,7 +32,7 @@ class BottomDrawerPluginTests: QuickSpec {
 
                 it("sets touches in view for UIPanGestureRecognizer") {
                     let panGestureRecognizer = plugin.view.gestureRecognizers?.first(where: {$0 is UIPanGestureRecognizer})
-                    
+
                     expect(panGestureRecognizer?.cancelsTouchesInView).to(beTrue())
                 }
 
@@ -53,26 +53,56 @@ class BottomDrawerPluginTests: QuickSpec {
                     core.view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
                 }
 
-                it("has origin x on zero and y equal to parentView height") {
-                    plugin.render()
+                context("width anchor") {
+                    it("has a width anchor") {
+                        let view = UIView(frame: .zero)
+                        view.addSubview(plugin.view)
 
-                    expect(plugin.view.frame.origin).to(equal(CGPoint(x: .zero, y: coreViewHeight)))
+                        plugin.render()
+
+                        let widthConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .width }
+                        expect(widthConstraint?.constant).to(equal(0))
+                    }
                 }
 
-                it("has a view frame size equals to his size") {
-                    plugin.render()
+                context("height anchor") {
+                    context("and the maxHeight is smaller than height") {
+                        it("has a height anchor on superview") {
+                            let view = UIView(frame: .zero)
+                            view.addSubview(plugin.view)
 
-                    expect(plugin.view.frame.size).to(equal(CGSize(width: coreViewWidth, height: coreViewHeight/2)))
+                            plugin.render()
+
+                            let heightConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .height }
+                            expect(heightConstraint?.constant).to(equal(0))
+                        }
+                    }
+
+                    context("and the maxHeight is greater than height") {
+                        it("has a height anchor on superview") {
+                            let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 2002))
+                            let pluginMock = BottomDrawerPluginMock(context: core)
+                            view.addSubview(pluginMock.view)
+
+                            pluginMock.render()
+
+                            let heightConstraint = pluginMock.view.constraints.first { $0.firstAttribute == .height }
+                            expect(heightConstraint?.constant).to(equal(1000))
+                        }
+                    }
                 }
 
                 context("when plugin request a height greater then the limit") {
                     it("uses the height limit instead") {
-                        core.view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
+                        let view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
+                        view.heightAnchor.constraint(equalToConstant: 200).isActive = true
                         let pluginMock = BottomDrawerPluginMock(context: core)
+                        view.addSubview(pluginMock.view)
 
                         pluginMock.render()
 
-                        expect(pluginMock.view.frame.size).to(equal(CGSize(width: coreViewWidth, height: coreViewHeight/2)))
+                        let heightConstraint = pluginMock.view.superview?.constraints.first { $0.firstAttribute == .height }
+                        expect(heightConstraint?.constant).to(equal(200))
                     }
                 }
             }
@@ -80,20 +110,24 @@ class BottomDrawerPluginTests: QuickSpec {
             describe("#events") {
                 var core: CoreStub!
                 var plugin: BottomDrawerPlugin!
+                var view: UIView!
 
                 beforeEach {
-                    Loader.shared.resetPlugins()
                     core = CoreStub()
-                    plugin = BottomDrawerPlugin(context: core)
+                    plugin = BottomDrawerPluginMock(context: core)
                     core.view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
+                    view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+                    view.addSubview(plugin.view)
+
                     plugin.render()
                 }
 
                 context("when the showDrawerPlugin event is triggered") {
-                    it("push up the drawer to half of core height") {
+                    it("push up the drawer to half of super view height") {
                         core.trigger(.showDrawerPlugin)
 
-                        expect(plugin.view.frame.origin.y).to(equal(coreViewHeight/2))
+                        let heightConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .top }
+                        expect(heightConstraint?.constant).to(equal(-25))
                     }
 
                     it("enables user interaction on plugin's subviews") {
@@ -108,10 +142,11 @@ class BottomDrawerPluginTests: QuickSpec {
                 }
 
                 context("when the hideDrawer event is triggered") {
-                    it("push down the drawer to core height") {
+                    it("push down the drawer to placeholder") {
                         core.trigger(.hideDrawerPlugin)
 
-                        expect(plugin.view.frame.origin.y).to(equal(coreViewHeight))
+                        let heightConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .top }
+                        expect(heightConstraint?.constant).to(equal(-18))
                     }
 
                     it("disables user interaction on plugin's subviews") {
@@ -130,8 +165,6 @@ class BottomDrawerPluginTests: QuickSpec {
 }
 
 class BottomDrawerPluginMock: BottomDrawerPlugin {
-
-    override var height: CGFloat {
-        return 1000
-    }
+    override var height: CGFloat { 1000 }
+    override var placeholder: CGFloat { 18 }
 }
