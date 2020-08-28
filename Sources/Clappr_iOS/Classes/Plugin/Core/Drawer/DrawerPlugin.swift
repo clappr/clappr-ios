@@ -86,7 +86,6 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     private func toggleIsClosed(to newValue: Bool) {
-        guard isClosed != newValue else { return }
         isClosed = newValue
     }
 
