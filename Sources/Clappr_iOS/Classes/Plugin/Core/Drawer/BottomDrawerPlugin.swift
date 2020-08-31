@@ -1,6 +1,4 @@
 open class BottomDrawerPlugin: DrawerPlugin {
-    private var initialCenterY: CGFloat = .zero
-
     private var maxHeight: CGFloat {
         return overlayViewFrame.height/2
     }
