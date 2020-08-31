@@ -83,7 +83,11 @@ open class Container: UIObject {
             return
         }
 
+        #if os(iOS)
         layerComposer.attachPlayback(playback.view)
+        #else
+        view.addSubviewMatchingConstraints(playback.view)
+        #endif
         
         playback.render()
         view.sendSubviewToBack(playback.view)
