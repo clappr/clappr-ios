@@ -29,7 +29,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
         super.init(context: context)
 
         addGesture(UITapGestureRecognizer(target: self, action: #selector(didTapView)))
-        addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)))
+        addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)), cancelsTouchesInView: true)
     }
 
     override open func render() {
@@ -57,15 +57,21 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func moveUp() {
+        enableUserInteractionOnFirstSubview(true)
         view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
+        enableUserInteractionOnFirstSubview(false)
         view.setVerticalPoint(to: hiddenHeight, duration: duration)
     }
 
-    private func addGesture(_ gesture: UIGestureRecognizer) {
-        gesture.cancelsTouchesInView = false
+    private func enableUserInteractionOnFirstSubview(_ enabled: Bool) {
+        self.view.subviews.first?.isUserInteractionEnabled = enabled
+    }
+
+    private func addGesture(_ gesture: UIGestureRecognizer, cancelsTouchesInView: Bool = false) {
+        gesture.cancelsTouchesInView = cancelsTouchesInView
         view.addGestureRecognizer(gesture)
     }
 
