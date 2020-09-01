@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HLSPersistentStreamInfoRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://apple.com/IMG/Schemas/HLSPersistentStreamInfoRoot" xsi:schemaLocation="http://apple.com/IMG/Schemas/HLSPersistentStreamInfoRoot /System/Library/Schemas/HLSPersistentStreamInfoRoot.xsd">
+  <Version>1.0</Version>
+  <BootImage>StreamInfoBoot.xml</BootImage>
+</HLSPersistentStreamInfoRoot>

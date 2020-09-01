@@ -119,13 +119,24 @@ open class AVFoundationPlayback: Playback {
 
     open override var subtitles: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(.legible) else { return [] }
-        let availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        let availableOptions: [MediaOption]
+        if let cache = asset?.assetCache, cache.isPlayableOffline {
+            availableOptions = cache.mediaSelectionOptions(in: mediaGroup).compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        } else {
+            availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
+        }
         return availableOptions + [MediaOption.offSubtitle]
     }
 
     open override var audioSources: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(.audible) else { return [] }
-        return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        let availableOptions: [MediaOption]
+        if let cache = asset?.assetCache, cache.isPlayableOffline {
+            availableOptions = cache.mediaSelectionOptions(in: mediaGroup).compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        } else {
+            availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+        }
+        return availableOptions
     }
 
     open override var duration: Double {
