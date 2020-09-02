@@ -109,6 +109,10 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		3D5AF519250026CD0020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
+		3D5AF51B250026D10020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
+		3D5AF51D2500289C0020081F /* Container+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF51C2500289C0020081F /* Container+Convenience.swift */; };
+		3D5AF51E2500289C0020081F /* Container+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF51C2500289C0020081F /* Container+Convenience.swift */; };
 		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6AE220C72AE00D1C134 /* SeekBubble.swift */; };
 		4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */; };
@@ -505,6 +509,8 @@
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		3D5AF517250026C30020081F /* Core+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Convenience.swift"; sourceTree = "<group>"; };
+		3D5AF51C2500289C0020081F /* Container+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Convenience.swift"; sourceTree = "<group>"; };
 		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClapprAnimationDuration.swift; sourceTree = "<group>"; };
@@ -1617,6 +1623,8 @@
 			children = (
 				FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */,
 				C93212462212013700F0C47B /* UIImageViewTests.swift */,
+				3D5AF517250026C30020081F /* Core+Convenience.swift */,
+				3D5AF51C2500289C0020081F /* Container+Convenience.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2215,6 +2223,7 @@
 				524B66AD242A9BEF0085789D /* AccessLogEventMock.swift in Sources */,
 				A308B36124F6FD6C00C84AB8 /* ContainerLayerTests.swift in Sources */,
 				48A29BF9221C8F1A0004AD3B /* AVFoundationPlaybackMock.swift in Sources */,
+				3D5AF51B250026D10020081F /* Core+Convenience.swift in Sources */,
 				576786C12188A4C60046508C /* Array+appendOrReplaceTests.swift in Sources */,
 				48A29BF8221C8F100004AD3B /* ContainerStub.swift in Sources */,
 				571B7B2C21750169005C0942 /* AVPlayerItemStub.swift in Sources */,
@@ -2240,6 +2249,7 @@
 				48B1F6DE2354AC6E00076C2E /* AVPlayerItemExtensionTests.swift in Sources */,
 				524B66AB242A9BE70085789D /* PlayerMock.swift in Sources */,
 				ABEBD6D723919217004FF605 /* UIPluginStub.swift in Sources */,
+				3D5AF51E2500289C0020081F /* Container+Convenience.swift in Sources */,
 				C93466952305BC440062E8DE /* EventHandlerTests.swift in Sources */,
 				C94D8CEE221B1E5400C7855D /* ContainerPluginTests.swift in Sources */,
 				FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */,
@@ -2285,6 +2295,7 @@
 				96912C3E1C21A1AF003A4AFD /* PosterPluginTests.swift in Sources */,
 				FBE6A3E42163EEAE0083C9CC /* Loader+Plugins.swift in Sources */,
 				322EA4CA20F941300018973A /* AVURLAssetStub.swift in Sources */,
+				3D5AF519250026CD0020081F /* Core+Convenience.swift in Sources */,
 				23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */,
 				C93212472212013700F0C47B /* UIImageViewTests.swift in Sources */,
 				9EED97062088E48700D1C84A /* AVPlayerStub.swift in Sources */,
@@ -2312,6 +2323,7 @@
 				262B491A24D88BD60049DAF7 /* FontTests.swift in Sources */,
 				EFEC758223C52A9A00FA6A52 /* PlaybackRendererTests.swift in Sources */,
 				48B39E8A23510FFF00CE9D72 /* TimeIntervalExtensionTests.swift in Sources */,
+				3D5AF51D2500289C0020081F /* Container+Convenience.swift in Sources */,
 				E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */,
 				7BD29B8323FDDF1900C82098 /* PlayerItemAccessLogMock.swift in Sources */,
 				C9EDF84F2162CF1600789E2F /* UINavigationControllerMock.swift in Sources */,

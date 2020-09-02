@@ -34,10 +34,6 @@ open class Container: UIObject {
     }
 
     private var boundsObservation: NSKeyValueObservation?
-    
-    convenience init(options: Options = [:]) {
-        self.init(options: options, layerComposer: LayerComposer())
-    }
 
     public init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
