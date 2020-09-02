@@ -89,6 +89,16 @@ class BottomDrawerPluginTests: QuickSpec {
 
                         expect(plugin.view.frame.origin.y).to(equal(coreViewHeight/2))
                     }
+
+                    it("enables user interaction on plugin's subviews") {
+                        let view = UIView(frame: .zero)
+                        view.isUserInteractionEnabled = false
+                        plugin.view.addSubview(view)
+
+                        core.trigger(.showDrawerPlugin)
+
+                        expect(view.isUserInteractionEnabled).to(beTrue())
+                    }
                 }
 
                 context("when the hideDrawer event is triggered") {
@@ -97,6 +107,16 @@ class BottomDrawerPluginTests: QuickSpec {
 
                         expect(plugin.view.frame.origin.y).to(equal(coreViewHeight))
                     }
+
+                    it("disables user interaction on plugin's subviews") {
+                          let view = UIView(frame: .zero)
+                          view.isUserInteractionEnabled = true
+                          plugin.view.addSubview(view)
+
+                          core.trigger(.hideDrawerPlugin)
+
+                          expect(view.isUserInteractionEnabled).to(beFalse())
+                      }
                 }
             }
         }
