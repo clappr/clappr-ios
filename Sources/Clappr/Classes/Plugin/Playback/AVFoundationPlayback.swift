@@ -50,12 +50,12 @@ open class AVFoundationPlayback: Playback {
 
     private var currentState: PlaybackState = .idle
     override open var state: PlaybackState {
+        get {
+            return currentState
+        }
         set {
             currentState = newValue
             updateAccesibilityIdentifier()
-        }
-        get {
-            return currentState
         }
     }
 
