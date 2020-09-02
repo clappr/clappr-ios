@@ -119,24 +119,19 @@ open class AVFoundationPlayback: Playback {
 
     open override var subtitles: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(.legible) else { return [] }
-        let availableOptions: [MediaOption]
-        if let cache = asset?.assetCache, cache.isPlayableOffline {
-            availableOptions = cache.mediaSelectionOptions(in: mediaGroup).compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
-        } else {
-            availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .subtitle) })
-        }
-        return availableOptions + [MediaOption.offSubtitle]
+        return extracMediaOptions(in: mediaGroup, ofType: .subtitle) + [MediaOption.offSubtitle]
     }
 
     open override var audioSources: [MediaOption]? {
         guard let mediaGroup = mediaSelectionGroup(.audible) else { return [] }
-        let availableOptions: [MediaOption]
+        return extracMediaOptions(in: mediaGroup, ofType: .audioSource)
+    }
+    
+    private func extracMediaOptions(in mediaGroup: AVMediaSelectionGroup, ofType type: MediaOptionType) -> [MediaOption] {
         if let cache = asset?.assetCache, cache.isPlayableOffline {
-            availableOptions = cache.mediaSelectionOptions(in: mediaGroup).compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
-        } else {
-            availableOptions = mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: .audioSource) })
+            return cache.mediaSelectionOptions(in: mediaGroup).compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: type) })
         }
-        return availableOptions
+        return mediaGroup.options.compactMap({ MediaOptionFactory.fromAVMediaOption($0, type: type) })
     }
 
     open override var duration: Double {
