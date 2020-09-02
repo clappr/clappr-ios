@@ -109,11 +109,17 @@ class CoreTests: QuickSpec {
             }
 
             describe("On view ready") {
+                var parentView: UIView!
+                var parentViewController: UIViewController!
+
+                beforeEach {
+                    parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                    parentViewController = UIViewController()
+                }
+
                 context("when a parentView is set") {
                     it("triggers a core ready event") {
                         let core = CoreFactory.create(with: [:], layerComposer: layerComposer)
-                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                        let parentViewController = UIViewController()
 
                         var didTriggerEvent = false
                         core.listenTo(core, eventName: Event.didAttachView.rawValue) { _ in
@@ -128,12 +134,25 @@ class CoreTests: QuickSpec {
                     it("adds all visual layers") {
                         let layerComposerSpy = LayerComposerSpy()
                         let core = CoreFactory.create(with: options, layerComposer: layerComposerSpy)
-                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                        let parentViewController = UIViewController()
                         
                         core.attach(to: parentView, controller: parentViewController)
                         
                         expect(layerComposerSpy.didCallCompose).to(beTrue())
+                    }
+
+                    context("and there isn't an active container") {
+                        it("fails to attach") {
+                            let core = Core()
+
+                            var didAttachPlayer = false
+                            core.listenTo(core, eventName: Event.didAttachView.rawValue) { _ in
+                                didAttachPlayer = true
+                            }
+
+                            core.attach(to: parentView, controller: parentViewController)
+
+                            expect(didAttachPlayer).to(beFalse())
+                        }
                     }
                 }
             }
