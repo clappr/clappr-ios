@@ -115,6 +115,8 @@ open class Player: AVPlayerViewController {
         }
     }
 
+    public private(set) var isChromelessModeEnabled = false
+
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
 
@@ -311,6 +313,12 @@ open class Player: AVPlayerViewController {
 
     private func forward(_ event: Event, userInfo: EventUserInfo) {
         baseObject.trigger(event.rawValue, userInfo: userInfo)
+    }
+
+    open func enterChromelessMode() {
+        isChromelessModeEnabled = true
+        showsPlaybackControls = false
+        trigger(InternalEvent.didEnterChromelessMode.rawValue)
     }
 
     open func destroy() {
