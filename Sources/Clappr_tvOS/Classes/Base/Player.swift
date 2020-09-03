@@ -321,6 +321,12 @@ open class Player: AVPlayerViewController {
         trigger(InternalEvent.didEnterChromelessMode.rawValue)
     }
 
+    open func exitChromelessMode() {
+        isChromelessModeEnabled = false
+        showsPlaybackControls = true
+        trigger(InternalEvent.didExitChromelessMode.rawValue)
+    }
+
     open func destroy() {
         Logger.logDebug("destroying", scope: "Player")
         baseObject.stopListening()
