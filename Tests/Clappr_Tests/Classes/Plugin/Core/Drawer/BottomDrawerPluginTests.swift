@@ -35,6 +35,12 @@ class BottomDrawerPluginTests: QuickSpec {
                     
                     expect(panGestureRecognizer?.cancelsTouchesInView).to(beTrue())
                 }
+
+                it("disables touches in view for UITapGestureRecognizer") {
+                    let tapGestureRecognizer = plugin.view.gestureRecognizers?.first(where: {$0 is UITapGestureRecognizer})
+
+                    expect(tapGestureRecognizer?.cancelsTouchesInView).to(beFalse())
+                }
             }
 
             describe("#render") {
