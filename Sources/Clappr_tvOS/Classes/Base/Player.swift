@@ -318,13 +318,13 @@ open class Player: AVPlayerViewController {
     open func enterChromelessMode() {
         isChromelessModeEnabled = true
         showsPlaybackControls = false
-        trigger(InternalEvent.didEnterChromelessMode.rawValue)
+        core?.trigger(InternalEvent.didEnterChromelessMode.rawValue)
     }
 
     open func exitChromelessMode() {
         isChromelessModeEnabled = false
         showsPlaybackControls = true
-        trigger(InternalEvent.didExitChromelessMode.rawValue)
+        core?.trigger(InternalEvent.didExitChromelessMode.rawValue)
     }
 
     open func destroy() {
