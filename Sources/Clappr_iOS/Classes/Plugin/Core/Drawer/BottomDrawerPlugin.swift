@@ -28,8 +28,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
     required public init(context: UIObject) {
         super.init(context: context)
 
-        addGesture(UITapGestureRecognizer(target: self, action: #selector(didTapView)))
-        addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)), cancelsTouchesInView: true)
+        addGesture(UITapGestureRecognizer(target: self, action: #selector(didTapView)), cancelingTouchesInView: false)
+        addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)))
     }
 
     override open func render() {
@@ -57,21 +57,21 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func moveUp() {
-        enableUserInteractionOnFirstSubview(true)
+        toggleContentInteraction(enabled: true)
         view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
     }
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
-        enableUserInteractionOnFirstSubview(false)
+        toggleContentInteraction(enabled: false)
         view.setVerticalPoint(to: hiddenHeight, duration: duration)
     }
 
-    private func enableUserInteractionOnFirstSubview(_ enabled: Bool) {
+    private func toggleContentInteraction(enabled: Bool) {
         self.view.subviews.first?.isUserInteractionEnabled = enabled
     }
 
-    private func addGesture(_ gesture: UIGestureRecognizer, cancelsTouchesInView: Bool = false) {
-        gesture.cancelsTouchesInView = cancelsTouchesInView
+    private func addGesture(_ gesture: UIGestureRecognizer, cancelingTouchesInView: Bool = true) {
+        gesture.cancelsTouchesInView = cancelingTouchesInView
         view.addGestureRecognizer(gesture)
     }
 
