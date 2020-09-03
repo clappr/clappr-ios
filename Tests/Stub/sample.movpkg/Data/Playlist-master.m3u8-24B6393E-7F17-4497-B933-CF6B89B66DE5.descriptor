@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MIME Type</key>
+	<string>application/vnd.apple.mpegURL</string>
+	<key>Size</key>
+	<integer>1090</integer>
+	<key>URL</key>
+	<string>https://vod-as-02-22.video.globo.com/h/0401598995186393610206215989951861397091391-0funy4taEVrN6Ebf4ED6w/k/app/a/A/p814/r90_360/v16/eb/45/f5/5995939_f5d79cef5585f7549744cc0ab8729a580f75fb08/5995939-RWeDCTs-manifest.ism/5995939.m3u8</string>
+	<key>Version</key>
+	<integer>1</integer>
+	<key>must-validate</key>
+	<false/>
+	<key>no-cache</key>
+	<true/>
+</dict>
+</plist>

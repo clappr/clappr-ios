@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MoviePackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://apple.com/IMG/Schemas/MoviePackage" xsi:schemaLocation="http://apple.com/IMG/Schemas/MoviePackage /System/Library/Schemas/MoviePackage.xsd">
+  <Version>1.0</Version>
+  <MoviePackageType>HLS</MoviePackageType>
+  <BootImage>boot.xml</BootImage>
+</MoviePackage>
