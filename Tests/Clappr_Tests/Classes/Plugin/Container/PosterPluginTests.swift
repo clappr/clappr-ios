@@ -8,22 +8,25 @@ class PosterPluginTests: QuickSpec {
 
         describe(".PosterPlugin") {
             var core: Core!
+            var layerComposer: LayerComposer!
             let options = [
                 kSourceUrl: "http://globo.com/video.mp4",
                 kPosterUrl: "http://clappr.io/poster.png",
             ]
 
             beforeEach {
+                layerComposer = LayerComposer()
                 Loader.shared.register(plugins: [PosterPlugin.self])
             }
 
             afterEach {
+                layerComposer = nil
                 Loader.shared.resetPlugins()
             }
 
             context("when core has no options") {
                 it("hides itself") {
-                    core = CoreFactory.create(with: [:])
+                    core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                     core.render()
 
                     let posterPlugin = self.getPosterPlugin(core.activeContainer)
@@ -34,7 +37,7 @@ class PosterPluginTests: QuickSpec {
 
             context("when core doesnt have posterUrl option") {
                 it("hides itself") {
-                    core = CoreFactory.create(with: ["anotherOption": true])
+                    core = CoreFactory.create(with: ["anotherOption": true], layerComposer: layerComposer)
                     core.render()
 
                     let posterPlugin = self.getPosterPlugin(core.activeContainer)
@@ -45,7 +48,7 @@ class PosterPluginTests: QuickSpec {
 
             context("when core has posterUrl option") {
                 it("it renders itself") {
-                    core = CoreFactory.create(with: options)
+                    core = CoreFactory.create(with: options, layerComposer: layerComposer)
                     core.render()
 
                     let posterPlugin = self.getPosterPlugin(core.activeContainer)
@@ -58,7 +61,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    core = CoreFactory.create(with: [:])
+                    core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                 }
 
                 context("to NoOpPlayback") {
@@ -108,7 +111,7 @@ class PosterPluginTests: QuickSpec {
                 var posterPlugin: PosterPlugin!
 
                 beforeEach {
-                    core = CoreFactory.create(with: options)
+                    core = CoreFactory.create(with: options, layerComposer: layerComposer)
                     core.load()
                     posterPlugin = self.getPosterPlugin(core.activeContainer)
                 }

@@ -17,7 +17,7 @@ class ContainerTests: QuickSpec {
 
                 context("with a invalid resource") {
                     it("creates a container with invalid playback") {
-                        container = ContainerFactory.create(with: Resource.invalid)
+                        container = ContainerFactory.create(with: Resource.invalid, layerComposer: LayerComposer())
 
                         container.load(Source.invalid)
 
@@ -28,7 +28,7 @@ class ContainerTests: QuickSpec {
                 context("with a valid resource") {
                     it("creates a container with valid playback") {
                         Loader.shared.register(playbacks: [AVFoundationPlayback.self])
-                        container = ContainerFactory.create(with: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid, layerComposer: LayerComposer())
 
                         container.load(Source.valid)
 
@@ -38,28 +38,20 @@ class ContainerTests: QuickSpec {
 
                 context("when resource is not empty") {
                     beforeEach {
-                        container = ContainerFactory.create(with: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid, layerComposer: LayerComposer())
                         container.load(Source.valid)
                     }
 
                     context("and add container plugins from loader") {
                         it("saves plugins on container") {
                             Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                            container = ContainerFactory.create(with: [:])
+                            container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
 
                             container.load(Source.valid)
 
                             expect(container.hasPlugin(FakeContainerPlugin.name)).to(beTrue())
                             expect(container.hasPlugin(AnotherFakeContainerPlugin.name)).to(beTrue())
                         }
-                    }
-
-                    it("set playback as subview") {
-                        expect(container.playback?.view.superview) == container.view
-                    }
-
-                    it("set playback to front of container") {
-                        expect(container.view.subviews.first) == container.playback?.view
                     }
 
                     it("set background color to `clear`") {
@@ -79,7 +71,7 @@ class ContainerTests: QuickSpec {
                         Loader.shared.register(plugins: [SpinnerPlugin.self])
 
                         let options = ["aOption": "option"]
-                        let container = ContainerFactory.create(with: options)
+                        let container = ContainerFactory.create(with: options, layerComposer: LayerComposer())
                         let option = container.options["aOption"] as! String
 
                         expect(option) == "option"
@@ -88,7 +80,7 @@ class ContainerTests: QuickSpec {
                     it("stores all plugin instances") {
                         Loader.shared.resetPlugins()
                         Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                        let container = ContainerFactory.create(with: [:])
+                        let container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
 
                         expect(container.plugins.count).to(equal(2))
                         expect(container.plugins.compactMap({ $0 as? FakeContainerPlugin })).toNot(beNil())
@@ -97,7 +89,7 @@ class ContainerTests: QuickSpec {
 
                     it("add a container context to all UIContainerPlugin") {
                         Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                        let container = ContainerFactory.create(with: [:])
+                        let container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
 
                         expect(container.plugins).toNot(beEmpty())
                         container.plugins.compactMap({ $0 as? UIContainerPlugin }).forEach { plugin in
@@ -107,7 +99,7 @@ class ContainerTests: QuickSpec {
 
                     it("add a container context to all ContainerPlugin") {
                         Loader.shared.register(plugins: [FakeContainerPlugin.self, AnotherFakeContainerPlugin.self])
-                        let container = ContainerFactory.create(with: [:])
+                        let container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
 
                         expect(container.plugins).toNot(beEmpty())
                         container.plugins.compactMap({ $0 as? ContainerPlugin }).forEach { plugin in
@@ -135,7 +127,7 @@ class ContainerTests: QuickSpec {
             describe("#Destroy") {
 
                 beforeEach {
-                    container = ContainerFactory.create(with: [:])
+                    container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
                     Loader.shared.resetPlugins()
                 }
 
@@ -190,7 +182,7 @@ class ContainerTests: QuickSpec {
 
                 it("destroy all plugins and clear plugins list") {
                     Loader.shared.register(plugins: [FakeContainerPlugin.self])
-                    let container = ContainerFactory.create(with: [:])
+                    let container = ContainerFactory.create(with: [:], layerComposer: LayerComposer() )
                     var countOfDestroyedPlugins = 0
 
                     container.plugins.forEach { plugin in
@@ -223,53 +215,30 @@ class ContainerTests: QuickSpec {
                 context("when pass a valid resource") {
                     beforeEach {
                         Loader.shared.register(playbacks: [AVFoundationPlayback.self])
-                        container = ContainerFactory.create(with: [:])
+                        container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
                     }
 
                     it("loads a valid playback") {
                         container.load(Source.valid)
 
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
+                        expect(container.playback?.pluginName) == AVFoundationPlayback.name
                     }
 
                     it("load a source with mime type") {
                         container.load(Source.valid, mimeType: "video/mp4")
 
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
+                        expect(container.playback?.pluginName) == AVFoundationPlayback.name
                     }
                 }
 
                 context("when pass a invalid resource") {
-                    beforeEach {
-                        container = ContainerFactory.create(with: [:])
-                        container.load(Source.invalid)
-                    }
-
                     it("set playback as a 'noop' playback") {
+                        container = ContainerFactory.create(with: [:], layerComposer: LayerComposer())
+                        container.load(Source.invalid)
                         container.load(Source.invalid)
 
                         expect(container.playback?.pluginName) == NoOpPlayback.name
-                        expect(container.playback?.view.superview) == container.view
                     }
-
-                    it("set playback as a 'noop' playback with mimetype") {
-                        container.load(Source.valid, mimeType: "video/mp4")
-
-                        expect(container.playback?.pluginName) == "AVPlayback"
-                        expect(container.playback?.view.superview) == container.view
-                    }
-                }
-
-                it("keep just one playback as subview at time") {
-                    Loader.shared.resetPlugins()
-                    let container = ContainerFactory.create(with: [:])
-                    container.load("anyVideo")
-                    expect(container.view.subviews.count).to(equal(1))
-
-                    container.load("anyOtherVideo")
-                    expect(container.view.subviews.count).to(equal(1))
                 }
             }
 
@@ -278,14 +247,14 @@ class ContainerTests: QuickSpec {
                 beforeEach {
                     Loader.shared.resetPlugins()
                     Loader.shared.register(playbacks: [StubPlayback.self])
-                    container = ContainerFactory.create(with: Resource.valid)
+                    container = ContainerFactory.create(with: Resource.valid, layerComposer: LayerComposer())
                     container.load(Source.valid)
                 }
 
                 it("reset startAt after first play event") {
 
                     let options = [kSourceUrl: "someUrl", kStartAt: 15.0] as Options
-                    let container = ContainerFactory.create(with: options)
+                    let container = ContainerFactory.create(with: options, layerComposer: LayerComposer())
                     container.load(Source.invalid)
 
                     expect(container.options[kStartAt] as? TimeInterval) == 15.0
@@ -315,7 +284,7 @@ class ContainerTests: QuickSpec {
             describe("Container sharedData") {
                 context("on a brand new instance") {
                     it("starts empty") {
-                        container = ContainerFactory.create(with: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid, layerComposer: LayerComposer())
 
                         expect(container.sharedData).to(beEmpty())
                     }
@@ -323,7 +292,7 @@ class ContainerTests: QuickSpec {
 
                 context("when stores a value on sharedData") {
                     it("retrieves stored value") {
-                        container = ContainerFactory.create(with: Resource.valid)
+                        container = ContainerFactory.create(with: Resource.valid, layerComposer: LayerComposer())
                         container.sharedData["testKey"] = "testValue"
 
                         expect(container.sharedData["testKey"] as? String) == "testValue"

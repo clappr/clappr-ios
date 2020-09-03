@@ -2,8 +2,7 @@ public typealias SharedData = [String: Any]
 
 open class Core: UIObject, UIGestureRecognizerDelegate {
     
-    private var layersCompositor = LayersCompositor()
-
+    private var layerComposer: LayerComposer
     @objc public let environment = Environment()
     @objc open var sharedData = SharedData()
 
@@ -57,16 +56,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     @objc open var isFullscreen: Bool = false
     private var isChromeless: Bool { options.bool(kChromeless) }
-
-    convenience init(options: Options = [:], layersCompositor: LayersCompositor = LayersCompositor()) {
-        self.init(options: options)
-        self.layersCompositor = layersCompositor
-    }
     
-    public required init(options: Options = [:]) {
+    public required init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
 
         self.options = options
+        self.layerComposer = layerComposer
         super.init()
         
         if !isChromeless {
@@ -107,11 +102,18 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open func attach(to parentView: UIView, controller: UIViewController) {
+        guard let containerView = activeContainer?.view else {
+            Logger.logError("Active container should not be nil when attaching to parent view", scope: "Core")
+            return
+        }
         parentView.addSubviewMatchingConstraints(view)
-        self.layersCompositor.compose(inside: view)
+    
+        layerComposer.attachContainer(containerView)
+        layerComposer.compose(inside: view)
         
         self.parentController = controller
         self.parentView = parentView
+    
         trigger(.didAttachView)
     }
     

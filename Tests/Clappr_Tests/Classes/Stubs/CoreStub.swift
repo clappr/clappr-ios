@@ -2,6 +2,14 @@
 
 class CoreStub: Core {
     
+    init() {
+        super.init(options: [:], layerComposer: LayerComposer())
+    }
+    
+    required init(options: Options = [:], layerComposer: LayerComposer) {
+        super.init(options: options, layerComposer: layerComposer)
+    }
+    
     override var activeContainer: Container? {
         get {
             return _container

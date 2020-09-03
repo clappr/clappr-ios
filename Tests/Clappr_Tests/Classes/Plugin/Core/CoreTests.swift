@@ -19,7 +19,7 @@ class CoreTests: QuickSpec {
             override func bindEvents() {  }
         }
         
-        class LayersCompositorSpy: LayersCompositor {
+        class LayerComposerSpy: LayerComposer {
             var didCallCompose = false
             
             override func compose(inside rootView: UIView) {
@@ -29,8 +29,10 @@ class CoreTests: QuickSpec {
 
         let options: Options = [kSourceUrl: "http//test.com"]
         var core: Core!
+        var layerComposer: LayerComposer!
 
         beforeEach {
+            layerComposer = LayerComposer()
             core = Core(options: options)
             Loader.shared.resetPlugins()
             Loader.shared.register(playbacks: [StubPlayback.self])
@@ -41,7 +43,7 @@ class CoreTests: QuickSpec {
             describe("#init") {
 
                 beforeEach {
-                    core = CoreFactory.create(with: options)
+                    core = CoreFactory.create(with: options, layerComposer: layerComposer)
                 }
 
                 it("set frame Rect to zero") {
@@ -66,7 +68,7 @@ class CoreTests: QuickSpec {
                 it("stores plugin instances") {
                     Loader.shared.register(plugins: [UICorePluginMock.self, CorePluginMock.self])
 
-                    let core = CoreFactory.create(with: options)
+                    let core = CoreFactory.create(with: options, layerComposer: layerComposer)
 
                     expect(core.plugins.count).to(equal(2))
                     expect(core.plugins.compactMap({ $0 as? UICorePluginMock })).toNot(beNil())
@@ -86,7 +88,7 @@ class CoreTests: QuickSpec {
                         CorePluginMock.self,
                     ])
 
-                    let core = CoreFactory.create(with: options)
+                    let core = CoreFactory.create(with: options, layerComposer: layerComposer)
 
                     expect(core.plugins.count).to(equal(3))
                     expect(core.plugins.first).to(beAKindOf(MockPlaceholderDrawerPluginOne.self))
@@ -107,11 +109,17 @@ class CoreTests: QuickSpec {
             }
 
             describe("On view ready") {
+                var parentView: UIView!
+                var parentViewController: UIViewController!
+
+                beforeEach {
+                    parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+                    parentViewController = UIViewController()
+                }
+
                 context("when a parentView is set") {
                     it("triggers a core ready event") {
-                        let core = CoreFactory.create(with: [:])
-                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                        let parentViewController = UIViewController()
+                        let core = CoreFactory.create(with: [:], layerComposer: layerComposer)
 
                         var didTriggerEvent = false
                         core.listenTo(core, eventName: Event.didAttachView.rawValue) { _ in
@@ -124,14 +132,27 @@ class CoreTests: QuickSpec {
                     }
                     
                     it("adds all visual layers") {
-                        let layersCompositorSpy = LayersCompositorSpy()
-                        let core = Core(layersCompositor: layersCompositorSpy)
-                        let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                        let parentViewController = UIViewController()
+                        let layerComposerSpy = LayerComposerSpy()
+                        let core = CoreFactory.create(with: options, layerComposer: layerComposerSpy)
                         
                         core.attach(to: parentView, controller: parentViewController)
                         
-                        expect(layersCompositorSpy.didCallCompose).to(beTrue())
+                        expect(layerComposerSpy.didCallCompose).to(beTrue())
+                    }
+
+                    context("and there isn't an active container") {
+                        it("fails to attach") {
+                            let core = Core()
+
+                            var didAttachPlayer = false
+                            core.listenTo(core, eventName: Event.didAttachView.rawValue) { _ in
+                                didAttachPlayer = true
+                            }
+
+                            core.attach(to: parentView, controller: parentViewController)
+
+                            expect(didAttachPlayer).to(beFalse())
+                        }
                     }
                 }
             }
@@ -139,7 +160,7 @@ class CoreTests: QuickSpec {
             describe("Core sharedData") {
                 context("on a brand new instance") {
                     it("starts empty") {
-                        core = CoreFactory.create(with: [:])
+                        core = CoreFactory.create(with: [:], layerComposer: layerComposer)
 
                         expect(core.sharedData).to(beEmpty())
                     }
@@ -147,7 +168,7 @@ class CoreTests: QuickSpec {
 
                 context("when stores a value on sharedData") {
                     beforeEach {
-                        core = CoreFactory.create(with: [:])
+                        core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                         core.sharedData["testKey"] = "testValue"
                     }
 
@@ -811,7 +832,7 @@ class CoreTests: QuickSpec {
                 }
                 
                 it("calls the mediacontrol to add the elements into the panels") {
-                    let core = CoreFactory.create(with: [:])
+                    let core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                     let mediaControlMock = MediaControlMock(context: core)
                     let mediaControlPluginMock = MediaControlElementMock(context: core)
                     
@@ -840,7 +861,7 @@ class CoreTests: QuickSpec {
             context("core position") {
                 it("is positioned in front of Container view") {
                     Loader.shared.register(plugins: [FakeCorePlugin.self])
-                    let core = CoreFactory.create(with: options)
+                    let core = CoreFactory.create(with: options, layerComposer: layerComposer)
 
                     core.render()
 
@@ -854,7 +875,7 @@ class CoreTests: QuickSpec {
                 context("when plugin is overlay") {
                     it("renders on the overlay view") {
                         Loader.shared.register(plugins: [OverlayPluginMock.self])
-                        let core = CoreFactory.create(with: [:])
+                        let core = CoreFactory.create(with: [:], layerComposer: layerComposer)
 
                         core.render()
 
@@ -864,7 +885,7 @@ class CoreTests: QuickSpec {
 
                 it("has the overlayView on top of the view stack") {
                     Loader.shared.register(plugins: [OverlayPluginMock.self, UICorePluginMock.self])
-                    let core = CoreFactory.create(with: [:])
+                    let core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                     let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
                     core.parentView = parentView
 

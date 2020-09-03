@@ -2,6 +2,7 @@ import AVKit
 
 @objcMembers
 open class Player: AVPlayerViewController {
+    private var layerComposer = LayerComposer()
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     private(set) var core: Core?
@@ -148,7 +149,7 @@ open class Player: AVPlayerViewController {
     }
 
     private func setCore(with options: Options) {
-        core = CoreFactory.create(with: options)
+        core = CoreFactory.create(with: options, layerComposer: layerComposer)
     }
 
     private func bindCoreEvents() {

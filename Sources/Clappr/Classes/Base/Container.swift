@@ -1,8 +1,10 @@
 import Foundation
 
 open class Container: UIObject {
+    private let layerComposer: LayerComposer
     private(set) var plugins: [Plugin] = []
     @objc open var sharedData = SharedData()
+    
     @objc open var options: Options {
         didSet {
             trigger(Event.didUpdateOptions)
@@ -33,9 +35,10 @@ open class Container: UIObject {
 
     private var boundsObservation: NSKeyValueObservation?
 
-    public init(options: Options = [:]) {
+    public init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
         self.options = options
+        self.layerComposer = layerComposer
 
         super.init()
 
@@ -76,7 +79,12 @@ open class Container: UIObject {
             return
         }
 
+        #if os(iOS)
+        layerComposer.attachPlayback(playback.view)
+        #else
         view.addSubviewMatchingConstraints(playback.view)
+        #endif
+        
         playback.render()
         view.sendSubviewToBack(playback.view)
     }
