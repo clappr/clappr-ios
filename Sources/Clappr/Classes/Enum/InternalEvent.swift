@@ -7,4 +7,5 @@ public enum InternalEvent: String {
     case didQuickSeek = "Clappr:didQuickSeek"
     case didDragDrawer = "Clappr:didDragDrawer"
     case requestDestroyPlayer = "Clappr:requestDestroyPlayer"
+    case didEnterChromelessMode = "Clappr:didEnterChromelessMode"
 }
