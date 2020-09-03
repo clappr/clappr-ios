@@ -282,6 +282,31 @@ class PlayerTests: QuickSpec {
                     }
                 }
             }
+
+            describe("#chromeless") {
+                context("when enter chromeless mode is call") {
+                    it("enables the chromeless mode") {
+                        let player = Player()
+
+                        player.enterChromelessMode()
+
+                        expect(player.isChromelessModeEnabled).to(beTrue())
+                    }
+
+                    it("triggers the didEnterChromelessMode event") {
+                        var didEnterChromelessModeEventCalled = false
+                        let player = Player()
+
+                        player.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
+                            didEnterChromelessModeEventCalled = true
+                        }
+
+                        player.enterChromelessMode()
+
+                        expect(didEnterChromelessModeEventCalled).to(beTrue())
+                    }
+                }
+            }
         }
     }
     
