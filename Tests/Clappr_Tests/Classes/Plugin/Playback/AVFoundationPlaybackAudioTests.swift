@@ -9,11 +9,11 @@ class AVFoundationPlaybackAudioTests: QuickSpec {
             describe("#localAsset") {
                 context("when default audio is passed") {
                     it("changes the audio source") {
-                        guard let pathAudio = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
+                        guard let path = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
                             fail("Could not load local sample")
                             return
                         }
-                        let localURL = URL(fileURLWithPath: pathAudio)
+                        let localURL = URL(fileURLWithPath: path)
                         let options = [kSourceUrl: localURL.absoluteString, kDefaultAudioSource: "por"]
                         let playback = AVFoundationPlayback(options: options)
 
