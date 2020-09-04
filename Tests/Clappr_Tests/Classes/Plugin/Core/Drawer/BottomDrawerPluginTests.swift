@@ -29,6 +29,18 @@ class BottomDrawerPluginTests: QuickSpec {
 
                     expect(plugin.size).to(equal(CGSize(width: coreViewWidth, height: coreViewHeight/2)))
                 }
+
+                it("sets touches in view for UIPanGestureRecognizer") {
+                    let panGestureRecognizer = plugin.view.gestureRecognizers?.first(where: {$0 is UIPanGestureRecognizer})
+                    
+                    expect(panGestureRecognizer?.cancelsTouchesInView).to(beTrue())
+                }
+
+                it("disables touches in view for UITapGestureRecognizer") {
+                    let tapGestureRecognizer = plugin.view.gestureRecognizers?.first(where: {$0 is UITapGestureRecognizer})
+
+                    expect(tapGestureRecognizer?.cancelsTouchesInView).to(beFalse())
+                }
             }
 
             describe("#render") {
@@ -83,6 +95,16 @@ class BottomDrawerPluginTests: QuickSpec {
 
                         expect(plugin.view.frame.origin.y).to(equal(coreViewHeight/2))
                     }
+
+                    it("enables user interaction on plugin's subviews") {
+                        let view = UIView(frame: .zero)
+                        view.isUserInteractionEnabled = false
+                        plugin.view.addSubview(view)
+
+                        core.trigger(.showDrawerPlugin)
+
+                        expect(view.isUserInteractionEnabled).to(beTrue())
+                    }
                 }
 
                 context("when the hideDrawer event is triggered") {
@@ -91,6 +113,16 @@ class BottomDrawerPluginTests: QuickSpec {
 
                         expect(plugin.view.frame.origin.y).to(equal(coreViewHeight))
                     }
+
+                    it("disables user interaction on plugin's subviews") {
+                          let view = UIView(frame: .zero)
+                          view.isUserInteractionEnabled = true
+                          plugin.view.addSubview(view)
+
+                          core.trigger(.hideDrawerPlugin)
+
+                          expect(view.isUserInteractionEnabled).to(beFalse())
+                      }
                 }
             }
         }
