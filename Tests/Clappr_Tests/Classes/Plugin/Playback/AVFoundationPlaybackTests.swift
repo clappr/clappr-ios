@@ -1419,25 +1419,18 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
                 context("for local asset") {
-                    it("changes subtitle just once") {
-                        guard let path = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
+                    it("changes subtitle source") {
+                        guard let pathSubtitle = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
                             fail("Could not load local sample")
                             return
                         }
-                        let localURL = URL(fileURLWithPath: path)
+                        let localURL = URL(fileURLWithPath: pathSubtitle)
                         let options = [kSourceUrl: localURL.absoluteString, kDefaultSubtitle: "pt"]
                         let playback = AVFoundationPlayback(options: options)
-                        var hasDefaultFromOption = false
-                        playback.on(Event.didFindSubtitle.rawValue) { userInfo in
-                            guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
-                            hasDefaultFromOption = subtitles.hasDefaultSelected
-                        }
+
                         playback.play()
-                        expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
-                        
-                        playback.selectDefaultSubtitleIfNeeded()
-                        
-                        expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 5)
+
+                        expect(playback.subtitles?.first?.name).toEventually(equal("Portuguese"), timeout: 5)
                     }
                 }
             }
@@ -1481,25 +1474,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
                 context("for local asset") {
-                    it("changes audio just once") {
-                        guard let path = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
-                            fail("Could not load local sample")
-                            return
-                        }
-                        let localURL = URL(fileURLWithPath: path)
-                        let options = [kSourceUrl: localURL.absoluteString, kDefaultAudioSource: "por"]
-                        let playback = AVFoundationPlayback(options: options)
-                        var hasDefaultFromOption = false
-                        playback.on(Event.didFindAudio.rawValue) { userInfo in
-                            guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
-                            hasDefaultFromOption = audio.hasDefaultSelected
-                        }
-                        playback.play()
-                        expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
+                    context("when default audio is passed") {
+                        it("changes the audio source") {
+                            guard let pathAudio = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
+                                fail("Could not load local sample")
+                                return
+                            }
+                            let localURL = URL(fileURLWithPath: pathAudio)
+                            let options = [kSourceUrl: localURL.absoluteString, kDefaultAudioSource: "por"]
+                            let playback = AVFoundationPlayback(options: options)
 
-                        playback.selectDefaultAudioIfNeeded()
+                            playback.play()
 
-                        expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
+                            expect(playback.audioSources?.first?.name).toEventually(equal("Portuguese"), timeout: 5)
+                        }
                     }
                 }
             }
