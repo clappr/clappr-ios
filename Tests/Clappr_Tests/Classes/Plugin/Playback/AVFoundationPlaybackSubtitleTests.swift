@@ -21,6 +21,25 @@ class AVFoundationPlaybackSubtitleTests: QuickSpec {
                     }
                 }
             }
+
+            describe("#localAsset") {
+                context("when default subtitle is passed") {
+                    it("changes subtitle source") {
+                        guard let pathSubtitle = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
+                            fail("Could not load local sample")
+                            return
+                        }
+                        let localURL = URL(fileURLWithPath: pathSubtitle)
+                        let options = [kSourceUrl: localURL.absoluteString, kDefaultSubtitle: "pt"]
+                        let playback = AVFoundationPlayback(options: options)
+
+                        playback.play()
+
+                        expect(playback.subtitles?.first?.name).toEventually(equal("Portuguese"), timeout: 5)
+                    }
+                }
+            }
         }
     }
 }
+

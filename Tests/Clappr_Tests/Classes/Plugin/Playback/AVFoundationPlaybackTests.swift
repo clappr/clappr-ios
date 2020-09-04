@@ -1418,28 +1418,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                         expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 5)
                     }
                 }
-                context("for local asset") {
-                    it("changes subtitle just once") {
-                        guard let path = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
-                            fail("Could not load local sample")
-                            return
-                        }
-                        let localURL = URL(fileURLWithPath: path)
-                        let options = [kSourceUrl: localURL.absoluteString, kDefaultSubtitle: "pt"]
-                        let playback = AVFoundationPlayback(options: options)
-                        var hasDefaultFromOption = false
-                        playback.on(Event.didFindSubtitle.rawValue) { userInfo in
-                            guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
-                            hasDefaultFromOption = subtitles.hasDefaultSelected
-                        }
-                        playback.play()
-                        expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
-                        
-                        playback.selectDefaultSubtitleIfNeeded()
-                        
-                        expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 5)
-                    }
-                }
             }
 
             describe("#changeSubtitleStyle") {
@@ -1466,28 +1444,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("for online asset") {
                     it("changes audio just once") {
                         let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultAudioSource: "pt"]
-                        let playback = AVFoundationPlayback(options: options)
-                        var hasDefaultFromOption = false
-                        playback.on(Event.didFindAudio.rawValue) { userInfo in
-                            guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
-                            hasDefaultFromOption = audio.hasDefaultSelected
-                        }
-                        playback.play()
-                        expect(hasDefaultFromOption).toEventually(beTrue(), timeout: 5)
-
-                        playback.selectDefaultAudioIfNeeded()
-
-                        expect(hasDefaultFromOption).toEventually(beFalse(), timeout: 2)
-                    }
-                }
-                context("for local asset") {
-                    it("changes audio just once") {
-                        guard let path = Bundle(for: AVFoundationPlaybackTests.self).path(forResource: "sample", ofType: "movpkg") else {
-                            fail("Could not load local sample")
-                            return
-                        }
-                        let localURL = URL(fileURLWithPath: path)
-                        let options = [kSourceUrl: localURL.absoluteString, kDefaultAudioSource: "por"]
                         let playback = AVFoundationPlayback(options: options)
                         var hasDefaultFromOption = false
                         playback.on(Event.didFindAudio.rawValue) { userInfo in
