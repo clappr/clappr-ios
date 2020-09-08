@@ -236,7 +236,7 @@ class CoreTests: QuickSpec {
 
                         core.render()
 
-                        expect(callbackWasCall).toEventually(beTrue())
+                        expect(callbackWasCall).toEventually(beTrue(), timeout: 5)
                         expect(core.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(core.fullscreenController?.view.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beTrue())

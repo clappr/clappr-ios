@@ -91,6 +91,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
     private func moveUp(with duration: TimeInterval = ClapprAnimationDuration.mediaControlShow) {
         guard let superview = view.superview else { return }
 
+        toggleContentInteraction(enabled: true)
+
         topDistanceFromBottom.constant = (overlayViewFrame.height / 2) * -1
         UIView.animate(withDuration: duration) {
             superview.layoutIfNeeded()
@@ -99,6 +101,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
         guard let superview = view.superview else { return }
+
+        toggleContentInteraction(enabled: false)
 
         topDistanceFromBottom.constant = placeholder * -1
         UIView.animate(withDuration: duration) {

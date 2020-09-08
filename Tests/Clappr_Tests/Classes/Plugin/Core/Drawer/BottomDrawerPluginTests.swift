@@ -24,12 +24,6 @@ class BottomDrawerPluginTests: QuickSpec {
                     expect(plugin.position).to(equal(.bottom))
                 }
 
-                it("has size with the same width and the half of the height from parentView") {
-                    core.view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
-
-                    expect(plugin.size).to(equal(CGSize(width: coreViewWidth, height: coreViewHeight/2)))
-                }
-
                 it("sets touches in view for UIPanGestureRecognizer") {
                     let panGestureRecognizer = plugin.view.gestureRecognizers?.first(where: {$0 is UIPanGestureRecognizer})
 
