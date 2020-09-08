@@ -11,5 +11,7 @@ final class ContainerLayer: Layer {
         
         container.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         container.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        container.layoutIfNeeded()
     }
 }
