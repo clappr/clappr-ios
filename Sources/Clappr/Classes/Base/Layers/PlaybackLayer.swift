@@ -11,5 +11,7 @@ final class PlaybackLayer: Layer {
         
         playback.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         playback.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        playback.layoutIfNeeded()
     }
 }

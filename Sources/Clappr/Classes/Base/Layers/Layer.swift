@@ -23,5 +23,7 @@ open class Layer: UIView {
         
         centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+        view.layoutIfNeeded()
     }
 }
