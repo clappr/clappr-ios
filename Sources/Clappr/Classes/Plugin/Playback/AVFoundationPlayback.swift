@@ -1,4 +1,5 @@
 import AVFoundation
+import AVKit
 
 open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     open class override var name: String { "AVPlayback" }
@@ -21,7 +22,12 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
     
     var itemInfo: AVPlayerItemInfo?
-    private var playerLayer: AVPlayerLayer!
+    private var playerLayer: AVPlayerLayer! {
+        willSet {
+            guard let layer = newValue else { return }
+            setupPictureInPicture(layer: layer)
+        }
+    }
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var isStopped = false
     private var timeObserver: Any?
@@ -203,6 +209,8 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     open override var canSeek: Bool {
         return playbackType == .live ? isDvrAvailable : !duration.isZero
     }
+
+    private var pictureInPictureController: AVPictureInPictureController!
 
     @available(*, unavailable)
     public required init?(coder _: NSCoder) {
@@ -793,5 +801,33 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         case .error:
             view.accessibilityIdentifier = "AVFoundationPlaybackError"
         }
+    }
+}
+
+extension AVFoundationPlayback: AVPictureInPictureControllerDelegate {
+    func setupPictureInPicture(layer: AVPlayerLayer) {
+        if AVPictureInPictureController.isPictureInPictureSupported() {
+            pictureInPictureController = AVPictureInPictureController(playerLayer: layer)
+            pictureInPictureController?.delegate = self
+            print("### \(#function)")
+        }
+        else {
+            print("### Picture in Picture Supported: \(AVPictureInPictureController.isPictureInPictureSupported())")
+        }
+    }
+
+    public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController,
+                                           restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
+    }
+
+    public func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("### \(#function)")
+        trigger(Event.disableMediaControl)
+    }
+
+    public func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        print("### \(#function)")
+        trigger(Event.enableMediaControl)
     }
 }
