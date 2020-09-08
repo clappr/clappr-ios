@@ -3,10 +3,6 @@ open class BottomDrawerPlugin: DrawerPlugin {
         return overlayViewFrame.height/2
     }
 
-    private var minHeightToShow: CGFloat {
-        return overlayViewFrame.height * 0.25
-    }
-
     open var height: CGFloat {
         return maxHeight
     }
@@ -14,14 +10,35 @@ open class BottomDrawerPlugin: DrawerPlugin {
     override open var position: DrawerPlugin.Position {
         return .bottom
     }
+    
+    private var closedYPosition: CGFloat {
+        return placeholder * -1
+    }
+    
+    private var openedYPosition: CGFloat {
+        return min(height, maxHeight) * -1
+    }
 
     private var topDistanceFromBottom: NSLayoutConstraint!
+    private var maxHeightConstraint: NSLayoutConstraint!
+    private var specifiedHeightConstraint: NSLayoutConstraint!
 
     required public init(context: UIObject) {
         super.init(context: context)
 
         addGestures()
         initConstraint()
+        bindEvents()
+    }
+    
+    open override func bindEvents() {
+        super.bindEvents()
+        guard let core = core else { return }
+        
+        listenTo(core, eventName: Event.didChangeScreenOrientation.rawValue) { [weak self] _ in
+            self?.hideDrawerPlugin()
+            self?.adjustHeightConstraint()
+        }
     }
 
     private func addGestures() {
@@ -33,6 +50,8 @@ open class BottomDrawerPlugin: DrawerPlugin {
         guard let superview = view.superview else { return }
 
         topDistanceFromBottom = view.topAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0)
+        specifiedHeightConstraint = view.heightAnchor.constraint(equalToConstant: height)
+        maxHeightConstraint = view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.5)
     }
 
     override open func render() {
@@ -47,6 +66,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
         addWidthConstraint()
         addHeightConstraint()
+        adjustHeightConstraint()
     }
 
     private func addWidthConstraint() {
@@ -54,20 +74,21 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
         let widthConstraint = view.widthAnchor.constraint(equalTo: superview.widthAnchor, constant: 0)
         widthConstraint.isActive = true
-        superview.addConstraint(widthConstraint)
     }
 
     private func addHeightConstraint() {
         guard let superview = view.superview else { return }
-
+        specifiedHeightConstraint = view.heightAnchor.constraint(equalToConstant: height)
+        maxHeightConstraint = view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.5)
+    }
+    
+    private func adjustHeightConstraint() {
         if height < maxHeight {
-            let heightConstraint = view.heightAnchor.constraint(equalToConstant: height)
-            heightConstraint.isActive = true
-            view.addConstraint(heightConstraint)
+            maxHeightConstraint.isActive = false
+            specifiedHeightConstraint.isActive = true
         } else {
-            let heightConstraint = view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.5)
-            heightConstraint.isActive = true
-            superview.addConstraint(heightConstraint)
+            specifiedHeightConstraint.isActive = false
+            maxHeightConstraint.isActive = true
         }
     }
 
@@ -76,8 +97,6 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
         topDistanceFromBottom = view.topAnchor.constraint(equalTo: superview.bottomAnchor, constant: placeholder * -1)
         topDistanceFromBottom.isActive = true
-
-        superview.addConstraint(topDistanceFromBottom)
     }
 
     override open func onDrawerShow() {
@@ -90,19 +109,19 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
     private func moveUp(with duration: TimeInterval = ClapprAnimationDuration.mediaControlShow) {
         toggleContentInteraction(enabled: true)
-        topDistanceFromBottom.constant = (overlayViewFrame.height / 2) * -1
+        topDistanceFromBottom.constant = openedYPosition
         refreshSuperviewLayout(with: duration)
     }
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
         toggleContentInteraction(enabled: false)
-        topDistanceFromBottom.constant = placeholder * -1
+        topDistanceFromBottom.constant = closedYPosition
         refreshSuperviewLayout(with: duration)
     }
 
     private func refreshSuperviewLayout(with duration: TimeInterval) {
         guard let superview = view.superview else { return }
-
+        
         UIView.animate(withDuration: duration) {
             superview.layoutIfNeeded()
         }
@@ -163,14 +182,17 @@ open class BottomDrawerPlugin: DrawerPlugin {
     }
 
     private func handleGestureEnded(for newYCoordinate: CGFloat) {
-        let isHalfWayOpen = abs(newYCoordinate - overlayViewFrame.height) >= minHeightToShow
-        isHalfWayOpen ? showDrawerPlugin() : hideDrawerPlugin()
+        let halfway = overlayViewFrame.height - ((min(height, maxHeight) + placeholder) * 0.5)
+        let isHalfwayOpen = newYCoordinate <= halfway
+        
+        isHalfwayOpen ? showDrawerPlugin() : hideDrawerPlugin()
     }
 
     private func canDrag(with newBottomDistance: CGFloat) -> Bool {
-        let canDragUp = abs(newBottomDistance) < maxHeight
+        let canDragUp = abs(newBottomDistance) < min(height, maxHeight)
         let canDragDown = abs(newBottomDistance) >= placeholder
 
         return canDragUp && canDragDown
     }
 }
+
