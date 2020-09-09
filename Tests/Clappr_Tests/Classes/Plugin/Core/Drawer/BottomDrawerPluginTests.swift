@@ -47,41 +47,49 @@ class BottomDrawerPluginTests: QuickSpec {
                     core.view = UIView(frame: CGRect(x: 0, y: 0, width: coreViewWidth, height: coreViewHeight))
                 }
 
-                context("width anchor") {
-                    it("has a width anchor") {
-                        let view = UIView(frame: .zero)
+                context("width size") {
+                    it("has a width with the same size as superview") {
+                        let view = UIView(frame: .init(origin: .zero, size: .init(width: coreViewWidth, height: coreViewHeight)))
                         view.addSubview(plugin.view)
 
                         plugin.render()
+                        plugin.view.layoutIfNeeded()
 
-                        let widthConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .width }
-                        expect(widthConstraint?.constant).to(equal(0))
+
+                        let width = plugin.view.frame.width
+                        expect(width).to(equal(coreViewWidth))
                     }
                 }
 
-                context("height anchor") {
-                    context("and the maxHeight is smaller than height") {
-                        it("has a height anchor on superview") {
-                            let view = UIView(frame: .zero)
-                            view.addSubview(plugin.view)
+                context("actualHeight size") {
+                    context("when the desiredHeight is greater than the default value") {
+                        it("sets actualHeight equal to default value") {
+                            let view = UIView(frame: .init(origin: .zero, size: .init(width: coreViewWidth, height: coreViewHeight)))
+                            let pluginMock = BottomDrawerPluginMock(context: core)
+                            view.addSubview(pluginMock.view)
+                            pluginMock._desiredHeight = coreViewHeight
 
-                            plugin.render()
+                            pluginMock.render()
+                            pluginMock.view.layoutIfNeeded()
 
-                            let heightConstraint = plugin.view.superview?.constraints.first { $0.firstAttribute == .height }
-                            expect(heightConstraint?.constant).to(equal(0))
+                            let height = pluginMock.view.frame.height
+                            expect(height).to(equal(coreViewHeight/2))
                         }
                     }
 
-                    context("and the maxHeight is greater than height") {
-                        it("has a height anchor on superview") {
-                            let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 2002))
+                    context("when the desiredHeight is smaller than the default value") {
+                        it("sets actualHeight equal to desiredHeight") {
+                            let view = UIView(frame: .init(origin: .zero, size: .init(width: coreViewWidth, height: coreViewHeight)))
                             let pluginMock = BottomDrawerPluginMock(context: core)
                             view.addSubview(pluginMock.view)
+                            pluginMock._desiredHeight = coreViewHeight/2 - 1
 
                             pluginMock.render()
+                            pluginMock.view.layoutIfNeeded()
 
-                            let heightConstraint = pluginMock.view.constraints.first { $0.firstAttribute == .height }
-                            expect(heightConstraint?.constant).to(equal(1000))
+                            let expectedHeight = pluginMock._desiredHeight
+                            let height = pluginMock.view.frame.height
+                            expect(height).to(equal(expectedHeight))
                         }
                     }
                 }
@@ -159,6 +167,7 @@ class BottomDrawerPluginTests: QuickSpec {
 }
 
 class BottomDrawerPluginMock: BottomDrawerPlugin {
-    override var height: CGFloat { 1000 }
+    var _desiredHeight: CGFloat = 1000
+    override var desiredHeight: CGFloat { _desiredHeight }
     override var placeholder: CGFloat { 18 }
 }
