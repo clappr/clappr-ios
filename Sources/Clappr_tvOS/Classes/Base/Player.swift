@@ -115,7 +115,7 @@ open class Player: AVPlayerViewController {
         }
     }
 
-    public private(set) var isChromelessModeEnabled = false
+    open private(set) var isChromelessModeEnabled = false
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
