@@ -229,14 +229,14 @@ class CoreTests: QuickSpec {
                         let core = Core(options: options)
                         core.parentView = UIView()
                         core.parentController = self.rootViewController()
-                        var callbackWasCall = false
+                        var callbackWasCalled = false
                         core.on(Event.didEnterFullscreen.rawValue) { _ in
-                            callbackWasCall = true
+                            callbackWasCalled = true
                         }
 
                         core.render()
 
-                        expect(callbackWasCall).toEventually(beTrue(), timeout: 5)
+                        expect(callbackWasCalled).toEventually(beTrue(), timeout: 5)
                         expect(core.parentView?.subviews.contains(core.view)).to(beFalse())
                         expect(core.fullscreenController?.view.subviews.contains(core.view)).to(beTrue())
                         expect(core.isFullscreen).to(beTrue())
