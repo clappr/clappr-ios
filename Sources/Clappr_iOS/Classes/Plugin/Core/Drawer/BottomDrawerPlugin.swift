@@ -19,7 +19,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
         min(desiredHeight, maxHeight)
     }
     
-    private var openedYPosition: CGFloat {
+    private var immersionPosition: CGFloat {
         actualHeight * -1
     }
 
@@ -87,7 +87,7 @@ open class BottomDrawerPlugin: DrawerPlugin {
 
     private func moveUp(with duration: TimeInterval = ClapprAnimationDuration.mediaControlShow) {
         toggleContentInteraction(enabled: true)
-        drawerTopConstraint.constant = openedYPosition
+        drawerTopConstraint.constant = immersionPosition
         refreshSuperviewLayout(with: duration)
     }
 
@@ -150,17 +150,19 @@ open class BottomDrawerPlugin: DrawerPlugin {
         if canDrag(with: newBottomDistance) {
             drawerTopConstraint.constant = newBottomDistance
 
-            calculateMediaControlAlpha(for: newBottomDistance)
+            let alpha = calculateMediaControlAlpha(for: newBottomDistance)
+            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": alpha])
+
         }
     }
 
-    private func calculateMediaControlAlpha(for newBottomDistance: CGFloat) {
+    private func calculateMediaControlAlpha(for newBottomDistance: CGFloat) -> CGFloat {
         let maxOpacity: CGFloat = 1.0
         let distanceFromBottom = abs(newBottomDistance)
         let portionShown = distanceFromBottom / actualHeight
         let mediaControlAlpha = maxOpacity - portionShown
 
-        core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": mediaControlAlpha])
+        return mediaControlAlpha
     }
 
     private func handleGestureEnded(for newYCoordinate: CGFloat) {
