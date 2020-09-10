@@ -57,7 +57,7 @@ class BottomDrawerPluginTests: QuickSpec {
 
 
                         let width = plugin.view.frame.width
-                        expect(width).to(equal(coreViewWidth))
+                        expect(width).to(equal(320))
                     }
                 }
 
@@ -73,7 +73,7 @@ class BottomDrawerPluginTests: QuickSpec {
                             pluginMock.view.layoutIfNeeded()
 
                             let height = pluginMock.view.frame.height
-                            expect(height).to(equal(coreViewHeight/2))
+                            expect(height).to(equal(50))
                         }
                     }
 
@@ -87,9 +87,8 @@ class BottomDrawerPluginTests: QuickSpec {
                             pluginMock.render()
                             pluginMock.view.layoutIfNeeded()
 
-                            let expectedHeight = pluginMock._desiredHeight
                             let height = pluginMock.view.frame.height
-                            expect(height).to(equal(expectedHeight))
+                            expect(height).to(equal(49))
                         }
                     }
                 }
