@@ -297,7 +297,7 @@ class PlayerTests: QuickSpec {
                         var didEnterChromelessModeEventCalled = false
                         let player = Player()
 
-                        player.core?.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
+                        player.activeContainer?.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
                             didEnterChromelessModeEventCalled = true
                         }
 
@@ -321,7 +321,7 @@ class PlayerTests: QuickSpec {
                         var didExitChromelessModeEventCalled = false
                         let player = Player()
 
-                        player.core?.on(InternalEvent.didExitChromelessMode.rawValue) { _ in
+                        player.activeContainer?.on(InternalEvent.didExitChromelessMode.rawValue) { _ in
                             didExitChromelessModeEventCalled = true
                         }
 
