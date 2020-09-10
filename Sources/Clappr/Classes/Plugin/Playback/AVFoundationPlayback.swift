@@ -260,7 +260,8 @@ open class AVFoundationPlayback: Playback {
         if let player = player as? AVQueuePlayer {
             playerLooper = AVPlayerLooper(player: player, templateItem: item)
         }
-        player?.allowsExternalPlayback = true
+        
+        player?.allowsExternalPlayback = !options.bool(kDisableExternalPlayback, orElse: false)
         player?.appliesMediaSelectionCriteriaAutomatically = false
     }
 
