@@ -7,6 +7,8 @@ public class QuickSeekCorePlugin: QuickSeekPlugin {
     }
     
     override func removeGesture() {
+        guard let doubleTapGesture = doubleTapGesture else { return }
+
         core?.view.removeGestureRecognizer(doubleTapGesture)
     }
     

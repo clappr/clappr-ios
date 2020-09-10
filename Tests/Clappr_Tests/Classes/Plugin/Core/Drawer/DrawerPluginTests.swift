@@ -58,15 +58,6 @@ class DrawerPluginTests: QuickSpec {
                     }
                 }
 
-                context("when drawer is closed") {
-                    it("doesn't trigger willHide and didHide events") {
-                        core.trigger(.hideDrawerPlugin)
-
-                        expect(plugin.isClosed).to(beTrue())
-                        expect(triggeredEvents).to(equal([]))
-                    }
-                }
-                
                 context("when showDrawerPlugin is triggered") {
                     it("opens the drawer") {
                         core.trigger(.showDrawerPlugin)
@@ -81,7 +72,7 @@ class DrawerPluginTests: QuickSpec {
                         core.trigger(.hideDrawerPlugin)
 
                         expect(plugin.isClosed).to(beTrue())
-                        expect(triggeredEvents).to(beEmpty())
+                        expect(triggeredEvents).to(equal([.willHideDrawerPlugin, .didHideDrawerPlugin]))
                     }
                 }
 
@@ -174,39 +165,6 @@ class DrawerPluginTests: QuickSpec {
 
                         expect(plugin.placeholder).to(equal(.zero))
                         expect(didCallRequestPadding).to(beFalse())
-                    }
-                }
-
-                context("when enter on fullscreen") {
-                    it("calls render") {
-                        let core = CoreStub()
-                        let plugin = MockDrawerPlugin(context: core)
-
-                        core.trigger(.didEnterFullscreen)
-
-                        expect(plugin.didCallRender).to(beTrue())
-                    }
-                }
-
-                context("when exit fullscreen") {
-                    it("calls render") {
-                        let core = CoreStub()
-                        let plugin = MockDrawerPlugin(context: core)
-
-                        core.trigger(.didExitFullscreen)
-
-                        expect(plugin.didCallRender).to(beTrue())
-                    }
-                }
-
-                context("when changes the orientation") {
-                    it("calls render") {
-                        let core = CoreStub()
-                        let plugin = MockDrawerPlugin(context: core)
-
-                        core.trigger(.didChangeScreenOrientation)
-
-                        expect(plugin.didCallRender).to(beTrue())
                     }
                 }
             }

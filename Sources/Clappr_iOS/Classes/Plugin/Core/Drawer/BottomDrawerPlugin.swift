@@ -1,51 +1,80 @@
 open class BottomDrawerPlugin: DrawerPlugin {
-    private var initialCenterY: CGFloat = .zero
-
     private var maxHeight: CGFloat {
-        return coreViewFrame.height/2
+        overlayViewFrame.height/2
     }
 
-    open var height: CGFloat {
-        return maxHeight
+    open var desiredHeight: CGFloat {
+        maxHeight
     }
 
     override open var position: DrawerPlugin.Position {
-        return .bottom
+        .bottom
+    }
+    
+    private var hintPosition: CGFloat {
+        placeholder * -1
     }
 
-    override var size: CGSize {
-        return CGSize(width: coreViewFrame.width, height: min(maxHeight, height))
+    private var actualHeight: CGFloat {
+        min(desiredHeight, maxHeight)
+    }
+    
+    private var immersionPosition: CGFloat {
+        actualHeight * -1
     }
 
-    private var minYToShow: CGFloat {
-        return coreViewFrame.height * 0.75
-    }
-
-    private var hiddenHeight: CGFloat {
-        return coreViewFrame.height - placeholder
-    }
+    private var drawerTopConstraint: NSLayoutConstraint!
+    private var maxHeightConstraint: NSLayoutConstraint!
+    private var desiredHeightConstraint: NSLayoutConstraint!
 
     required public init(context: UIObject) {
         super.init(context: context)
+        addGestures()
+        bindEvents()
+    }
+    
+    open override func bindEvents() {
+        super.bindEvents()
+        guard let core = core else { return }
+        
+        listenTo(core, eventName: Event.didChangeScreenOrientation.rawValue) { [weak self] _ in
+            self?.hideDrawerPlugin()
+            self?.adjustHeightConstraint()
+        }
+    }
 
+    private func addGestures() {
         addGesture(UITapGestureRecognizer(target: self, action: #selector(didTapView)), cancelingTouchesInView: false)
         addGesture(UIPanGestureRecognizer(target: self, action: #selector(onDragView)))
     }
 
     override open func render() {
         super.render()
-
-        adjustSize()
-        moveDown(with: .zero)
-        adjustInitialPosition()
+        setupConstraints()
     }
 
-    private func adjustSize() {
-        view.frame.size = size
+    private func setupConstraints() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        guard let superview = view.superview else { return }
+        view.widthAnchor.constraint(equalTo: superview.widthAnchor, constant: 0).isActive = true
+
+        drawerTopConstraint = view.topAnchor.constraint(equalTo: superview.bottomAnchor, constant: hintPosition)
+        drawerTopConstraint.isActive = true
+
+        desiredHeightConstraint = view.heightAnchor.constraint(equalToConstant: desiredHeight)
+        maxHeightConstraint = view.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 0.5)
+
+        adjustHeightConstraint()
     }
 
-    private func adjustInitialPosition() {
-        initialCenterY = view.center.y
+    private func adjustHeightConstraint() {
+        if desiredHeight < maxHeight {
+            maxHeightConstraint.isActive = false
+            desiredHeightConstraint.isActive = true
+        } else {
+            desiredHeightConstraint.isActive = false
+            maxHeightConstraint.isActive = true
+        }
     }
 
     override open func onDrawerShow() {
@@ -56,14 +85,24 @@ open class BottomDrawerPlugin: DrawerPlugin {
         moveDown()
     }
 
-    private func moveUp() {
+    private func moveUp(with duration: TimeInterval = ClapprAnimationDuration.mediaControlShow) {
         toggleContentInteraction(enabled: true)
-        view.setVerticalPoint(to: size.height, duration: ClapprAnimationDuration.mediaControlShow)
+        drawerTopConstraint.constant = immersionPosition
+        refreshSuperviewLayout(with: duration)
     }
 
     private func moveDown(with duration: TimeInterval = ClapprAnimationDuration.mediaControlHide) {
         toggleContentInteraction(enabled: false)
-        view.setVerticalPoint(to: hiddenHeight, duration: duration)
+        drawerTopConstraint.constant = hintPosition
+        refreshSuperviewLayout(with: duration)
+    }
+
+    private func refreshSuperviewLayout(with duration: TimeInterval) {
+        guard let superview = view.superview else { return }
+        
+        UIView.animate(withDuration: duration) {
+            superview.layoutIfNeeded()
+        }
     }
 
     private func toggleContentInteraction(enabled: Bool) {
@@ -105,25 +144,38 @@ open class BottomDrawerPlugin: DrawerPlugin {
     private func handleGestureChange(with gesture: UIPanGestureRecognizer) {
         guard let view = gesture.view else { return }
 
-        if canDrag(with: gesture.newYCoordinate) {
-            let portionShown = initialCenterY - gesture.newYCoordinate
-            let mediaControlAlpha = hiddenHeight / portionShown * 0.08
+        let translation = gesture.translation(in: view)
+        let newBottomDistance = drawerTopConstraint.constant + translation.y
 
-            view.center.y = gesture.newYCoordinate
-            view.alpha = 1
+        if canDrag(with: newBottomDistance) {
+            drawerTopConstraint.constant = newBottomDistance
 
-            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": mediaControlAlpha])
+            let alpha = calculateMediaControlAlpha(for: newBottomDistance)
+            core?.trigger(InternalEvent.didDragDrawer.rawValue, userInfo: ["alpha": alpha])
+
         }
     }
 
-    private func handleGestureEnded(for newYCoordinate: CGFloat) {
-        let isHalfWayOpen = newYCoordinate <= minYToShow
-        isHalfWayOpen ? showDrawerPlugin() : hideDrawerPlugin()
+    private func calculateMediaControlAlpha(for newBottomDistance: CGFloat) -> CGFloat {
+        let maxOpacity: CGFloat = 1.0
+        let distanceFromBottom = abs(newBottomDistance)
+        let portionShown = distanceFromBottom / actualHeight
+        let mediaControlAlpha = maxOpacity - portionShown
+
+        return mediaControlAlpha
     }
 
-    private func canDrag(with newYCoordinate: CGFloat) -> Bool {
-        let canDragUp = newYCoordinate > minYToShow
-        let canDragDown = initialCenterY > newYCoordinate
+    private func handleGestureEnded(for newYCoordinate: CGFloat) {
+        let halfway = overlayViewFrame.height - ((actualHeight + placeholder) * 0.5)
+        let isHalfwayOpen = newYCoordinate <= halfway
+        
+        isHalfwayOpen ? showDrawerPlugin() : hideDrawerPlugin()
+    }
+
+    private func canDrag(with newBottomDistance: CGFloat) -> Bool {
+        let canDragUp = abs(newBottomDistance) < actualHeight
+        let canDragDown = abs(newBottomDistance) >= placeholder
+
         return canDragUp && canDragDown
     }
 }
