@@ -305,6 +305,14 @@ class PlayerTests: QuickSpec {
 
                         expect(didEnterChromelessModeEventCalled).to(beTrue())
                     }
+
+                    it("disables the user interaction") {
+                        let player = Player()
+
+                        player.enterChromelessMode()
+
+                        expect(player.view.isUserInteractionEnabled).to(beFalse())
+                    }
                 }
 
                 context("when exit chromeless mode is call") {
@@ -328,6 +336,15 @@ class PlayerTests: QuickSpec {
                         player.exitChromelessMode()
 
                         expect(didExitChromelessModeEventCalled).to(beTrue())
+                    }
+
+                    it("enables the user interaction") {
+                        let player = Player()
+                        player.enterChromelessMode()
+
+                        player.exitChromelessMode()
+
+                        expect(player.view.isUserInteractionEnabled).to(beTrue())
                     }
                 }
             }
