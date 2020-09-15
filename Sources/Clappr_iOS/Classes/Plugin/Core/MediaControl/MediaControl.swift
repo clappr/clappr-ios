@@ -147,6 +147,8 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     private func onDrawerDragged(info: EventUserInfo) {
         guard let alpha = info?["alpha"] as? CGFloat else { return }
 
+        keepVisible()
+        view.isHidden = false
         view.alpha = alpha
     }
     

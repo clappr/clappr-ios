@@ -16,9 +16,10 @@ open class DrawerPlugin: OverlayPlugin {
         return .zero
     }
 
-    open var coreViewFrame: CGRect {
-        guard let core = core else { return .zero }
-        return core.view.frame
+    open var overlayViewFrame: CGRect {
+        guard let overlayView = view.superview else { return .zero }
+
+        return overlayView.frame
     }
 
     private(set) var isClosed: Bool = true {
@@ -51,18 +52,10 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     private func bindCoreEvents(context: UIObject) {
-        let eventsToRender: [Event] = [.didEnterFullscreen, .didExitFullscreen, .didChangeScreenOrientation]
-
         listenTo(context, eventName: InternalEvent.didTappedCore.rawValue) { [weak self] _ in
             guard self?.isClosed == false else { return }
 
             context.trigger(.hideDrawerPlugin)
-        }
-
-        eventsToRender.forEach {
-            listenTo(context, event: $0) { [weak self] _ in
-                self?.render()
-            }
         }
     }
 
@@ -94,7 +87,6 @@ open class DrawerPlugin: OverlayPlugin {
     }
 
     private func toggleIsClosed(to newValue: Bool) {
-        guard isClosed != newValue else { return }
         isClosed = newValue
     }
 
