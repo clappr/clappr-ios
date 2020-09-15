@@ -284,7 +284,7 @@ class PlayerTests: QuickSpec {
             }
 
             describe("#chromeless") {
-                context("when enter chromeless mode is call") {
+                context("when enterChromelessMode is called") {
                     it("enables the chromeless mode") {
                         let player = Player()
 
@@ -307,7 +307,7 @@ class PlayerTests: QuickSpec {
                     }
                 }
 
-                context("when exit chromeless mode is call") {
+                context("when exitChromelessMode is called") {
                     it("disables the chromeless mode") {
                         let player = Player()
                         player.enterChromelessMode()
