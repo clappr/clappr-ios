@@ -146,7 +146,7 @@ class PlayerTests: QuickSpec {
             }
             
             describe("Player chromeless") {
-                context("when in chromeless mode") {
+                context("when in chromeless mode by options") {
                     it("hide playback controls") {
                         let player = Player(options:[kChromeless: true])
                         
@@ -166,6 +166,53 @@ class PlayerTests: QuickSpec {
                         NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
                         
                         expect(playback?.didCallPlay).toEventually(beTrue())
+                    }
+                }
+
+                context("when chromelessMode property is true") {
+                    it("triggers the didEnterChromelessMode event") {
+                        var didEnterChromelessModeEventCalled = false
+                        let player = Player()
+
+                        player.activeContainer?.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
+                            didEnterChromelessModeEventCalled = true
+                        }
+
+                        player.chromelessMode = true
+
+                        expect(didEnterChromelessModeEventCalled).to(beTrue())
+                    }
+
+                    it("disables the user interaction") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.view.isUserInteractionEnabled).to(beFalse())
+                    }
+                }
+
+                context("when chromelessMode property is false") {
+                    it("triggers the didExitChromelessMode event") {
+                        var didExitChromelessModeEventCalled = false
+                        let player = Player()
+
+                        player.activeContainer?.on(InternalEvent.didExitChromelessMode.rawValue) { _ in
+                            didExitChromelessModeEventCalled = true
+                        }
+
+                        player.chromelessMode = false
+
+                        expect(didExitChromelessModeEventCalled).to(beTrue())
+                    }
+
+                    it("enables the user interaction") {
+                        let player = Player()
+                        player.chromelessMode = true
+
+                        player.chromelessMode = false
+
+                        expect(player.view.isUserInteractionEnabled).to(beTrue())
                     }
                 }
             }
@@ -279,72 +326,6 @@ class PlayerTests: QuickSpec {
                             let focusedView = player.preferredFocusEnvironments.first as? UIView
                             expect(focusedView).to(be(button))
                         }
-                    }
-                }
-            }
-
-            describe("#chromeless") {
-                context("when enterChromelessMode is called") {
-                    it("enables the chromeless mode") {
-                        let player = Player()
-
-                        player.enterChromelessMode()
-
-                        expect(player.isChromelessModeEnabled).to(beTrue())
-                    }
-
-                    it("triggers the didEnterChromelessMode event") {
-                        var didEnterChromelessModeEventCalled = false
-                        let player = Player()
-
-                        player.activeContainer?.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
-                            didEnterChromelessModeEventCalled = true
-                        }
-
-                        player.enterChromelessMode()
-
-                        expect(didEnterChromelessModeEventCalled).to(beTrue())
-                    }
-                }
-
-                context("when exitChromelessMode is called") {
-                    it("disables the user interaction") {
-                        let player = Player()
-
-                        player.enterChromelessMode()
-
-                        expect(player.view.isUserInteractionEnabled).to(beFalse())
-                    }
-
-                    it("disables the chromeless mode") {
-                        let player = Player()
-                        player.enterChromelessMode()
-
-                        player.exitChromelessMode()
-
-                        expect(player.isChromelessModeEnabled).to(beFalse())
-                    }
-
-                    it("triggers the didExitChromelessMode event") {
-                        var didExitChromelessModeEventCalled = false
-                        let player = Player()
-
-                        player.activeContainer?.on(InternalEvent.didExitChromelessMode.rawValue) { _ in
-                            didExitChromelessModeEventCalled = true
-                        }
-
-                        player.exitChromelessMode()
-
-                        expect(didExitChromelessModeEventCalled).to(beTrue())
-                    }
-
-                    it("enables the user interaction") {
-                        let player = Player()
-                        player.enterChromelessMode()
-
-                        player.exitChromelessMode()
-
-                        expect(player.view.isUserInteractionEnabled).to(beTrue())
                     }
                 }
             }

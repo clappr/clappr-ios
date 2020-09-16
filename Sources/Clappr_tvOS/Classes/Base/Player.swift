@@ -115,7 +115,15 @@ open class Player: AVPlayerViewController {
         }
     }
 
-    open private(set) var isChromelessModeEnabled = false
+    public var chromelessMode = false {
+        willSet {
+            if newValue {
+                enterChromelessMode()
+            } else {
+                exitChromelessMode()
+            }
+        }
+    }
 
     public init(options: Options = [:], externalPlugins: [Plugin.Type] = []) {
         super.init(nibName: nil, bundle: nil)
@@ -315,15 +323,13 @@ open class Player: AVPlayerViewController {
         baseObject.trigger(event.rawValue, userInfo: userInfo)
     }
 
-    open func enterChromelessMode() {
-        isChromelessModeEnabled = true
+    private func enterChromelessMode() {
         showsPlaybackControls = false
         view.isUserInteractionEnabled = false
         activeContainer?.trigger(InternalEvent.didEnterChromelessMode.rawValue)
     }
 
-    open func exitChromelessMode() {
-        isChromelessModeEnabled = false
+    private func exitChromelessMode() {
         showsPlaybackControls = true
         view.isUserInteractionEnabled = true
         activeContainer?.trigger(InternalEvent.didExitChromelessMode.rawValue)
