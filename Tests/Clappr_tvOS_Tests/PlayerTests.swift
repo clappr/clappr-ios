@@ -190,6 +190,14 @@ class PlayerTests: QuickSpec {
 
                         expect(player.view.isUserInteractionEnabled).to(beFalse())
                     }
+
+                    it("hides media control") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.showsPlaybackControls).to(beFalse())
+                    }
                 }
 
                 context("when chromelessMode property is false") {
@@ -213,6 +221,15 @@ class PlayerTests: QuickSpec {
                         player.chromelessMode = false
 
                         expect(player.view.isUserInteractionEnabled).to(beTrue())
+                    }
+
+                    it("enables media control") {
+                        let player = Player()
+                        player.chromelessMode = true
+
+                        player.chromelessMode = false
+
+                        expect(player.showsPlaybackControls).to(beTrue())
                     }
                 }
             }
