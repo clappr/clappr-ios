@@ -154,6 +154,12 @@ class PlayerTests: QuickSpec {
                         
                         expect(player.showsPlaybackControls).to(beFalse())
                     }
+
+                    it("the chromelessMode value will be true") {
+                        let player = Player(options:[kChromeless: true])
+
+                        expect(player.chromelessMode).to(beTrue())
+                    }
                     
                     it("autoplay when app returns from background") {
                         Loader.shared.resetPlaybacks()

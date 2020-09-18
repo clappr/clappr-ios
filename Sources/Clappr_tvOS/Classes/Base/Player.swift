@@ -8,7 +8,18 @@ open class Player: AVPlayerViewController {
     private(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
     private let baseObject = BaseObject()
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+
+    public var chromelessMode: Bool {
+        get { core?.options.bool(kChromeless) ?? false }
+        set {
+            if newValue {
+                enterChromelessMode()
+            } else {
+                exitChromelessMode()
+            }
+        }
+    }
+
     private var nextFocusViewTag: Int?
 
     private var nextFocusEnvironment: UIFocusEnvironment? {
@@ -21,7 +32,7 @@ open class Player: AVPlayerViewController {
         super.viewDidLoad()
         core?.parentView = view
 
-        if isChromeless {
+        if chromelessMode {
             showsPlaybackControls = false
         }
 
@@ -43,7 +54,7 @@ open class Player: AVPlayerViewController {
     }
 
     @objc private func willEnterForeground() {
-        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled || isChromeless {
+        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled || chromelessMode {
             Logger.logDebug("forced play after return from background", scope: "Player")
             playback.play()
         }
@@ -112,16 +123,6 @@ open class Player: AVPlayerViewController {
         }
         set {
             activePlayback?.selectedAudioSource = newValue
-        }
-    }
-
-    public var chromelessMode = false {
-        willSet {
-            if newValue {
-                enterChromelessMode()
-            } else {
-                exitChromelessMode()
-            }
         }
     }
 
@@ -324,12 +325,14 @@ open class Player: AVPlayerViewController {
     }
 
     private func enterChromelessMode() {
+        core?.options[kChromeless] = true
         showsPlaybackControls = false
         view.isUserInteractionEnabled = false
         activeContainer?.trigger(InternalEvent.didEnterChromelessMode.rawValue)
     }
 
     private func exitChromelessMode() {
+        core?.options[kChromeless] = false
         showsPlaybackControls = true
         view.isUserInteractionEnabled = true
         activeContainer?.trigger(InternalEvent.didExitChromelessMode.rawValue)
