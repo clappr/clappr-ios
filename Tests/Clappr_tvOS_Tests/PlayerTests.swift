@@ -176,17 +176,17 @@ class PlayerTests: QuickSpec {
                 }
 
                 context("when chromelessMode property is true") {
-                    it("triggers the didEnterChromelessMode event") {
-                        var didEnterChromelessModeEventCalled = false
+                    it("triggers the didUpdateOptions event") {
+                        var didUpdateOptionsEventCalled = false
                         let player = Player()
 
-                        player.activeContainer?.on(InternalEvent.didEnterChromelessMode.rawValue) { _ in
-                            didEnterChromelessModeEventCalled = true
+                        player.activeContainer?.on(Event.didUpdateOptions.rawValue) { _ in
+                            didUpdateOptionsEventCalled = true
                         }
 
                         player.chromelessMode = true
 
-                        expect(didEnterChromelessModeEventCalled).to(beTrue())
+                        expect(didUpdateOptionsEventCalled).to(beTrue())
                     }
 
                     it("disables the user interaction") {
@@ -207,17 +207,17 @@ class PlayerTests: QuickSpec {
                 }
 
                 context("when chromelessMode property is false") {
-                    it("triggers the didExitChromelessMode event") {
-                        var didExitChromelessModeEventCalled = false
+                    it("triggers the didUpdateOptions event") {
+                        var didUpdateOptionsEventCalled = false
                         let player = Player()
 
-                        player.activeContainer?.on(InternalEvent.didExitChromelessMode.rawValue) { _ in
-                            didExitChromelessModeEventCalled = true
+                        player.activeContainer?.on(Event.didUpdateOptions.rawValue) { _ in
+                            didUpdateOptionsEventCalled = true
                         }
 
                         player.chromelessMode = false
 
-                        expect(didExitChromelessModeEventCalled).to(beTrue())
+                        expect(didUpdateOptionsEventCalled).to(beTrue())
                     }
 
                     it("enables the user interaction") {
