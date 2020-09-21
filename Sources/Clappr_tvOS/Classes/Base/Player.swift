@@ -12,6 +12,8 @@ open class Player: AVPlayerViewController {
     public var chromelessMode: Bool {
         get { core?.options.bool(kChromeless) ?? false }
         set {
+            core?.options[kChromeless] = newValue
+
             if newValue {
                 enterChromelessMode()
             } else {
@@ -33,7 +35,7 @@ open class Player: AVPlayerViewController {
         core?.parentView = view
 
         if chromelessMode {
-            showsPlaybackControls = false
+            enterChromelessMode()
         }
 
         if isMediaControlEnabled {
