@@ -173,6 +173,14 @@ class PlayerTests: QuickSpec {
                         
                         expect(playback?.didCallPlay).toEventually(beTrue())
                     }
+
+                    it("hides contentOverlayView") {
+                        let player = Player(options: [kChromeless: true])
+
+                        player.viewDidLoad()
+
+                        expect(player.contentOverlayView?.isHidden).to(beTrue())
+                    }
                 }
 
                 context("when chromelessMode property is true") {
@@ -203,6 +211,14 @@ class PlayerTests: QuickSpec {
                         player.chromelessMode = true
 
                         expect(player.showsPlaybackControls).to(beFalse())
+                    }
+
+                    it("hides contentOverlayView") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.contentOverlayView?.isHidden).to(beTrue())
                     }
                 }
 
@@ -236,6 +252,14 @@ class PlayerTests: QuickSpec {
                         player.chromelessMode = false
 
                         expect(player.showsPlaybackControls).to(beTrue())
+                    }
+
+                    it("show contentOverlayView") {
+                        let player = Player()
+
+                        player.chromelessMode = false
+
+                        expect(player.contentOverlayView?.isHidden).to(beFalse())
                     }
                 }
             }

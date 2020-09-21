@@ -329,11 +329,13 @@ open class Player: AVPlayerViewController {
     private func enterChromelessMode() {
         showsPlaybackControls = false
         view.isUserInteractionEnabled = false
+        contentOverlayView?.isHidden = true
     }
 
     private func exitChromelessMode() {
         showsPlaybackControls = true
         view.isUserInteractionEnabled = true
+        contentOverlayView?.isHidden = false
     }
 
     open func destroy() {
