@@ -28,6 +28,11 @@ open class AVFoundationPlayback: Playback {
     private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
     private var lastBitrate: Double?
+    
+    private var isExternalPlaybackEnabled: Bool {
+        let disableExternalPlayback = options.bool(kDisableExternalPlayback)
+        return !disableExternalPlayback
+    }
 
     private var observers = [NSKeyValueObservation]()
 
@@ -261,7 +266,7 @@ open class AVFoundationPlayback: Playback {
             playerLooper = AVPlayerLooper(player: player, templateItem: item)
         }
         
-        player?.allowsExternalPlayback = !options.bool(kDisableExternalPlayback, orElse: false)
+        player?.allowsExternalPlayback = isExternalPlaybackEnabled
         player?.appliesMediaSelectionCriteriaAutomatically = false
     }
 
