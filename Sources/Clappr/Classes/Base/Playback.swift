@@ -109,6 +109,7 @@ open class Playback: UIObject, NamedType {
 
     @objc open func destroy() {
         Logger.logDebug("destroying", scope: "Playback")
+        stop()
         Logger.logDebug("destroying ui elements", scope: "Playback")
         view.removeFromSuperview()
         Logger.logDebug("destroying listeners", scope: "Playback")
