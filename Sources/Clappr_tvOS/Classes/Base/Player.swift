@@ -8,7 +8,20 @@ open class Player: AVPlayerViewController {
     private(set) var core: Core?
     static var hasAlreadyRegisteredPlaybacks = false
     private let baseObject = BaseObject()
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
+
+    public var chromelessMode: Bool {
+        get { core?.options.bool(kChromeless) ?? false }
+        set {
+            core?.options[kChromeless] = newValue
+
+            if newValue {
+                enterChromelessMode()
+            } else {
+                exitChromelessMode()
+            }
+        }
+    }
+
     private var nextFocusViewTag: Int?
 
     private var nextFocusEnvironment: UIFocusEnvironment? {
@@ -21,8 +34,8 @@ open class Player: AVPlayerViewController {
         super.viewDidLoad()
         core?.parentView = view
 
-        if isChromeless {
-            showsPlaybackControls = false
+        if chromelessMode {
+            enterChromelessMode()
         }
 
         if isMediaControlEnabled {
@@ -43,7 +56,7 @@ open class Player: AVPlayerViewController {
     }
 
     @objc private func willEnterForeground() {
-        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled || isChromeless {
+        if let playback = activePlayback as? AVFoundationPlayback, !isMediaControlEnabled || chromelessMode {
             Logger.logDebug("forced play after return from background", scope: "Player")
             playback.play()
         }
@@ -311,6 +324,18 @@ open class Player: AVPlayerViewController {
 
     private func forward(_ event: Event, userInfo: EventUserInfo) {
         baseObject.trigger(event.rawValue, userInfo: userInfo)
+    }
+
+    private func enterChromelessMode() {
+        showsPlaybackControls = false
+        view.isUserInteractionEnabled = false
+        contentOverlayView?.isHidden = true
+    }
+
+    private func exitChromelessMode() {
+        showsPlaybackControls = true
+        view.isUserInteractionEnabled = true
+        contentOverlayView?.isHidden = false
     }
 
     open func destroy() {

@@ -146,13 +146,19 @@ class PlayerTests: QuickSpec {
             }
             
             describe("Player chromeless") {
-                context("when in chromeless mode") {
+                context("when in chromeless mode by options") {
                     it("hide playback controls") {
                         let player = Player(options:[kChromeless: true])
                         
                         player.viewDidLoad()
                         
                         expect(player.showsPlaybackControls).to(beFalse())
+                    }
+
+                    it("the chromelessMode value will be true") {
+                        let player = Player(options:[kChromeless: true])
+
+                        expect(player.chromelessMode).to(beTrue())
                     }
                     
                     it("autoplay when app returns from background") {
@@ -166,6 +172,94 @@ class PlayerTests: QuickSpec {
                         NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
                         
                         expect(playback?.didCallPlay).toEventually(beTrue())
+                    }
+
+                    it("hides contentOverlayView") {
+                        let player = Player(options: [kChromeless: true])
+
+                        player.viewDidLoad()
+
+                        expect(player.contentOverlayView?.isHidden).to(beTrue())
+                    }
+                }
+
+                context("when chromelessMode property is true") {
+                    it("triggers the didUpdateOptions event") {
+                        var didUpdateOptionsEventCalled = false
+                        let player = Player()
+
+                        player.activeContainer?.on(Event.didUpdateOptions.rawValue) { _ in
+                            didUpdateOptionsEventCalled = true
+                        }
+
+                        player.chromelessMode = true
+
+                        expect(didUpdateOptionsEventCalled).to(beTrue())
+                    }
+
+                    it("disables the user interaction") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.view.isUserInteractionEnabled).to(beFalse())
+                    }
+
+                    it("hides media control") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.showsPlaybackControls).to(beFalse())
+                    }
+
+                    it("hides contentOverlayView") {
+                        let player = Player()
+
+                        player.chromelessMode = true
+
+                        expect(player.contentOverlayView?.isHidden).to(beTrue())
+                    }
+                }
+
+                context("when chromelessMode property is false") {
+                    it("triggers the didUpdateOptions event") {
+                        var didUpdateOptionsEventCalled = false
+                        let player = Player()
+
+                        player.activeContainer?.on(Event.didUpdateOptions.rawValue) { _ in
+                            didUpdateOptionsEventCalled = true
+                        }
+
+                        player.chromelessMode = false
+
+                        expect(didUpdateOptionsEventCalled).to(beTrue())
+                    }
+
+                    it("enables the user interaction") {
+                        let player = Player()
+                        player.chromelessMode = true
+
+                        player.chromelessMode = false
+
+                        expect(player.view.isUserInteractionEnabled).to(beTrue())
+                    }
+
+                    it("enables media control") {
+                        let player = Player()
+                        player.chromelessMode = true
+
+                        player.chromelessMode = false
+
+                        expect(player.showsPlaybackControls).to(beTrue())
+                    }
+
+                    it("show contentOverlayView") {
+                        let player = Player()
+
+                        player.chromelessMode = false
+
+                        expect(player.contentOverlayView?.isHidden).to(beFalse())
                     }
                 }
             }
