@@ -25,4 +25,8 @@ public class LayerComposer {
     func attachPlayback(_ view: UIView) {
         playbackLayer.attachPlayback(view)
     }
+
+    func attachUICorePlugin(_ plugin: UICorePlugin) {
+        coreLayer.attachPlugin(plugin)
+    }
 }
