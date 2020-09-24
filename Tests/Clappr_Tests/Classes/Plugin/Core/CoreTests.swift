@@ -21,9 +21,14 @@ class CoreTests: QuickSpec {
         
         class LayerComposerSpy: LayerComposer {
             var didCallCompose = false
-            
+            var didCallAttachUICorePlugin = false
+
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
+            }
+
+            override func attachUICorePlugin(_ plugin: UICorePlugin) {
+                didCallAttachUICorePlugin = true
             }
         }
 
@@ -786,16 +791,6 @@ class CoreTests: QuickSpec {
             }
 
             describe("#render") {
-                it("add plugin as subview after rendered") {
-                    let core = Core()
-                    let plugin = FakeCorePlugin(context: core)
-                    
-                    core.addPlugin(plugin)
-                    core.render()
-
-                    expect(plugin.view.superview).to(equal(core.view))
-                }
-                
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlElement") {
                     let core = Core()
@@ -856,16 +851,44 @@ class CoreTests: QuickSpec {
                     expectation.fulfill()
                     QuickSpec.current.waitForExpectations(timeout: 1)
                 }
+
+                describe("#UICorePlugins") {
+                    context("when render UICorePlugin") {
+                        it("calls render on Plugin") {
+                            Loader.shared.resetPlugins()
+                            Loader.shared.register(plugins: [UICorePluginStub.self])
+                            let layerComposer = LayerComposerSpy()
+                            let core = CoreFactory.create(with: options, layerComposer: layerComposer)
+
+                            core.render()
+
+                            expect(layerComposer.didCallAttachUICorePlugin).to(beTrue())
+                        }
+
+                        it("calls render on Plugin") {
+                            Loader.shared.resetPlugins()
+                            Loader.shared.register(plugins: [UICorePluginStub.self])
+                            let layerComposer = LayerComposer()
+                            let core = CoreFactory.create(with: options, layerComposer: layerComposer)
+                            let uiCorePlugin = core.plugins.first { $0.pluginName == "UICorePluginStub"} as? UICorePluginStub
+
+                            core.render()
+
+                            expect(uiCorePlugin?.didCallRender).to(beTrue())
+                        }
+                    }
+                }
             }
 
             context("core position") {
                 it("is positioned in front of Container view") {
+                    Loader.shared.resetPlugins()
                     Loader.shared.register(plugins: [FakeCorePlugin.self])
                     let core = CoreFactory.create(with: options, layerComposer: layerComposer)
 
                     core.render()
 
-                    expect(core.view.subviews.count).to(equal(3))
+                    expect(core.view.subviews.count).to(equal(2))
                     expect(core.view.subviews.first?.accessibilityIdentifier).to(equal("Container"))
                     expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
