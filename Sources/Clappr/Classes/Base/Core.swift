@@ -119,10 +119,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     private func setupMediaControlLayer() {
+        #if os(iOS)
         let mediaControl = plugins.first { $0 is MediaControl } as? MediaControl
         if let mediaControlView = mediaControl?.view {
             layerComposer.attachMediaControl(mediaControlView)
         }
+        #endif
     }
     
     open override func render() {
