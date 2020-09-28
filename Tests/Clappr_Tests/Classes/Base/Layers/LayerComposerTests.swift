@@ -59,7 +59,7 @@ class LayerComposerTests: QuickSpec {
                     let layer = getLayer(from: rootView, at: index)
                     expect(layer).to(
                         beAKindOf(MediaControlLayer.self),
-                        description: "MediaControlLayer should be the third subview of rootView, got \(String(describing: type(of: layer)))"
+                        description: "MediaControlLayer should be the fourth subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
             }
