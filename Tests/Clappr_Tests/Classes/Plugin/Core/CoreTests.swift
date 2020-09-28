@@ -160,6 +160,7 @@ class CoreTests: QuickSpec {
                         }
                     }
 
+                    #if os(iOS)
                     context("when calls attach") {
                         it("should calls the attachMediaControl on LayerComposer") {
                             let layerComposerSpy = LayerComposerSpy()
@@ -172,6 +173,7 @@ class CoreTests: QuickSpec {
                             expect(layerComposerSpy.didCallAttachMediaControl).to(beTrue())
                         }
                     }
+                    #endif
                 }
             }
 

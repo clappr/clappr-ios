@@ -109,6 +109,7 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		3D1EE05E25228D4800870828 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		3D5AF519250026CD0020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
 		3D5AF51B250026D10020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
 		3D5AF51D2500289C0020081F /* Container+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF51C2500289C0020081F /* Container+Convenience.swift */; };
@@ -2186,6 +2187,7 @@
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				CD10D93E22C28D4C0096B035 /* Environment.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
+				3D1EE05E25228D4800870828 /* MediaControlLayer.swift in Sources */,
 				A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
