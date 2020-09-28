@@ -1,3 +1,5 @@
+import UIKit
+
 final class MediaControlLayer: Layer {
     func attachMediaControl(_ mediaControl: UIView) {
         addSubview(mediaControl)
