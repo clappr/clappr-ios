@@ -22,6 +22,7 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                     let avfoundationPlayback = AVFoundationPlayback(options: [:])
                     avfoundationPlayback.player = PlayerMock()
                     avfoundationPlayback.addObservers()
+                    avfoundationPlayback.state = .playing
                     
                     avfoundationPlayback.stop()
                     
@@ -35,6 +36,7 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                         let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         avfoundationPlayback.player = PlayerMock()
                         avfoundationPlayback.addObservers()
+                        avfoundationPlayback.state = .playing
                         baseObject.listenTo(avfoundationPlayback, event: .willStop) { _ in
                             didCallWillStop = true
                         }
@@ -50,6 +52,7 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                         let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         avfoundationPlayback.player = PlayerMock()
                         avfoundationPlayback.addObservers()
+                        avfoundationPlayback.state = .playing
                         baseObject.listenTo(avfoundationPlayback, event: .didStop) { _ in
                             didCallDidStop = true
                         }

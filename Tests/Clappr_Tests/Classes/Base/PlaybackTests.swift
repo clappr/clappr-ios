@@ -87,6 +87,14 @@ class PlaybackTests: QuickSpec {
 
                 expect(callbackWasCalled) == false
             }
+            
+            it("calls stop when destroy is called") {
+                let playbackSpy = PlaybackSpy(options: options)
+                
+                playbackSpy.destroy()
+                
+                expect(playbackSpy.didCallStop).to(beTrue())
+            }
 
             it("has a class function to check if a source can be played with default value false") {
                 let canPlay = Playback.canPlay([:])
@@ -168,6 +176,14 @@ class PlaybackTests: QuickSpec {
                 }
             }
         }
+    }
+}
+
+class PlaybackSpy: Playback {
+    var didCallStop = false
+    
+    override func stop() {
+        didCallStop = true
     }
 }
 

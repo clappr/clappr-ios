@@ -1622,6 +1622,20 @@ class AVFoundationPlaybackTests: QuickSpec {
                             expect(playback.state).toEventually(equal(.paused), timeout: 3)
                         }
                     }
+                    context("when stop is called") {
+                        it("does not trigger didStop event") {
+                            let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
+                            let playback = AVFoundationPlayback(options: options)
+                            var didStopWasTriggered = false
+                            playback.on(Event.didStop.rawValue) { _ in
+                                didStopWasTriggered = true
+                            }
+                            
+                            playback.stop()
+                            
+                            expect(didStopWasTriggered).to(beFalse())
+                        }
+                    }
                 }
 
                 describe("#playing") {
