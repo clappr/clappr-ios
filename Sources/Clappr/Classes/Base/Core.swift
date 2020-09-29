@@ -109,22 +109,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         parentView.addSubviewMatchingConstraints(view)
     
         layerComposer.attachContainer(containerView)
-        setupMediaControlLayer()
         layerComposer.compose(inside: view)
         
         self.parentController = controller
         self.parentView = parentView
     
         trigger(.didAttachView)
-    }
-    
-    private func setupMediaControlLayer() {
-        #if os(iOS)
-        let mediaControl = plugins.first { $0 is MediaControl } as? MediaControl
-        if let mediaControlView = mediaControl?.view {
-            layerComposer.attachMediaControl(mediaControlView)
-        }
-        #endif
     }
     
     open override func render() {
@@ -171,10 +161,19 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #if os(iOS)
     private func renderCorePlugins() {
-        plugins
-            .filter { $0.isNotMediaControlElement }
-            .filter { $0.isNotOverlayPlugin}
-            .forEach(render)
+        plugins.filter { plugin in
+            switch plugin {
+            case let (mediaControl as MediaControl):
+                layerComposer.attachMediaControl(mediaControl.view)
+                render(mediaControl)
+                return false
+            case is OverlayPlugin, is MediaControl.Element:
+                return false
+            default:
+                return true
+            }
+        }
+        .forEach(render)
     }
 
     private func renderMediaControlElements() {
@@ -291,16 +290,6 @@ fileprivate extension Plugin {
             return false
         #endif
     }
-
-    #if os(iOS)
-    var isNotMediaControlElement: Bool {
-        return !(self is MediaControl.Element)
-    }
-
-    var isNotOverlayPlugin: Bool {
-        return !(self is OverlayPlugin)
-    }
-    #endif
 
     func safeDestroy() {
         do {
