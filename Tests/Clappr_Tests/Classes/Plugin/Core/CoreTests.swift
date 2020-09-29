@@ -169,7 +169,8 @@ class CoreTests: QuickSpec {
 
                             core.addPlugin(mediaControlMock)
                             core.attach(to: .init(), controller: .init())
-
+                            core.render()
+                            
                             expect(layerComposerSpy.didCallAttachMediaControl).to(beTrue())
                         }
                     }
