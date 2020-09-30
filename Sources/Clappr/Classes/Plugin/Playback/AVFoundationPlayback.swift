@@ -210,19 +210,10 @@ open class AVFoundationPlayback: Playback {
         return playbackType == .live ? isDvrAvailable : !duration.isZero
     }
 
-    fileprivate func configureAudioSession() {
-        if !isExternalPlaybackEnabled && isAirplayOn {
-            setAudioSessionCategory(to: .playback, with: [.mixWithOthers])
-        } else {
-            setAudioSessionCategory(to: .playback)
-        }
-    }
-    
     public required init(options: Options) {
         super.init(options: options)
         asset = createAsset(from: options[kSourceUrl] as? String)
-        
-        configureAudioSession()
+        setAudioSessionCategory(to: .playback)
     }
 
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
@@ -251,12 +242,6 @@ open class AVFoundationPlayback: Playback {
         updateInitialStateIfNeeded()
     }
 
-    private var isAirplayOn: Bool {
-        let outputs = AVAudioSession.sharedInstance().currentRoute.outputs
-        let airPlayPort = outputs.first { port -> Bool in port.portType == .airPlay }
-        return airPlayPort != nil
-    }
-    
     private func updateInitialStateIfNeeded() {
         guard player?.currentItem?.isPlaybackLikelyToKeepUp == true else { return }
         updateState(.stalling)
