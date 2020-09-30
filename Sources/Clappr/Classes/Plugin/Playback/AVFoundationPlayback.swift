@@ -467,7 +467,7 @@ open class AVFoundationPlayback: Playback {
     
     private func setAudioSessionCategory(to category: AVAudioSession.Category, with options: AVAudioSession.CategoryOptions = []) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: options)
+            try AVAudioSession.sharedInstance().setCategory(category, mode: .moviePlayback, options: options)
         } catch {
             Logger.logError("It was not possible to set the audio session category")
         }
