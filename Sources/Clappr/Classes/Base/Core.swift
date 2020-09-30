@@ -149,7 +149,9 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     private func renderContainer(_ container: Container) {
+        #if os(tvOS)
         view.addSubviewMatchingConstraints(container.view)
+        #endif
         container.render()
     }
 
