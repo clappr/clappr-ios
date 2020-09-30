@@ -24,7 +24,6 @@ open class AVFoundationPlayback: Playback {
     private var isStopped = false
     private var timeObserver: Any?
     private var asset: AVURLAsset?
-    private var audioSessionCategoryBackup: AVAudioSession.Category?
     private var canTriggerWillPause = true
     private(set) var loopObserver: NSKeyValueObservation?
     private var lastBitrate: Double?
@@ -463,25 +462,9 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func updateAirplayStatus(from player: AVPlayer) {
-        if player.isExternalPlaybackActive {
-            enableBackgroundSession()
-        } else {
-            restoreBackgroundSession()
-        }
         trigger(.didUpdateAirPlayStatus, userInfo: ["externalPlaybackActive": player.isExternalPlaybackActive])
     }
-
-    private func enableBackgroundSession() {
-        audioSessionCategoryBackup = AVAudioSession.sharedInstance().category
-        setAudioSessionCategory(to: .playback, with: [.allowAirPlay])
-    }
-
-    private func restoreBackgroundSession() {
-        if let backgroundSession = audioSessionCategoryBackup {
-            setAudioSessionCategory(to: backgroundSession)
-        }
-    }
-
+    
     private func setAudioSessionCategory(to category: AVAudioSession.Category, with options: AVAudioSession.CategoryOptions = []) {
         do {
             try AVAudioSession.sharedInstance().setCategory(category, mode: .default, options: options)
