@@ -126,6 +126,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                 name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
                             )
+                            avfoundationPlayback.state = .playing
                             
                             avfoundationPlayback.stop()
                             

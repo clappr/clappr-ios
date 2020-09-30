@@ -83,10 +83,11 @@ open class Container: UIObject {
         layerComposer.attachPlayback(playback.view)
         #else
         view.addSubviewMatchingConstraints(playback.view)
+        view.sendSubviewToBack(playback.view)
         #endif
         
         playback.render()
-        view.sendSubviewToBack(playback.view)
+        
     }
 
     fileprivate func renderPlugin(_ plugin: Plugin) {

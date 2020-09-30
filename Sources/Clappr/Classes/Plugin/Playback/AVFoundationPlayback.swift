@@ -523,6 +523,8 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func stop() {
+        guard state != .idle else { return }
+        
         isStopped = true
         trigger(.willStop)
         updateState(.idle)
