@@ -858,6 +858,7 @@ class CoreTests: QuickSpec {
                 }
             }
 
+            #if os(tvOS)
             context("core position") {
                 it("is positioned in front of Container view") {
                     Loader.shared.register(plugins: [FakeCorePlugin.self])
@@ -870,6 +871,7 @@ class CoreTests: QuickSpec {
                     expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
                 }
             }
+            #endif
 
             describe("rendering") {
                 context("when plugin is overlay") {
