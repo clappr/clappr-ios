@@ -175,8 +175,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         guard let mediaControl = plugins.first(where: { $0 is MediaControl }) as? MediaControl else {
             return
         }
-        let mediaControlView = mediaControl.view
-        layerComposer.attachMediaControl(mediaControlView)
+
+        layerComposer.attachMediaControl(mediaControl.view)
         mediaControl.safeRender()
     }
 
