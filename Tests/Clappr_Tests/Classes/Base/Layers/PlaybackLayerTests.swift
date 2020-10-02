@@ -12,7 +12,6 @@ class PlaybackLayerTests: QuickSpec {
                     let layer = PlaybackLayer(frame: frame)
                     
                     layer.attachPlayback(playbackView)
-                    layer.layoutIfNeeded()
                     
                     expect(playbackView.center).to(equal(layer.center))
                     expect(playbackView.bounds.size).to(equal(layer.bounds.size))
@@ -26,7 +25,6 @@ class PlaybackLayerTests: QuickSpec {
                         let playbackLayer = PlaybackLayer(frame: smallFrame)
                         
                         playbackLayer.attachPlayback(playbackView)
-                        playbackLayer.layoutIfNeeded()
                         playbackLayer.bounds = bigFrame
                         playbackLayer.layoutIfNeeded()
                         
