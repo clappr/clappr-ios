@@ -109,10 +109,13 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		3D1EE05E25228D4800870828 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		3D5AF519250026CD0020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
 		3D5AF51B250026D10020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
 		3D5AF51D2500289C0020081F /* Container+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF51C2500289C0020081F /* Container+Convenience.swift */; };
 		3D5AF51E2500289C0020081F /* Container+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF51C2500289C0020081F /* Container+Convenience.swift */; };
+		3DDDF42425221E5100AAA9CD /* MediaControlLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDDF42325221E5100AAA9CD /* MediaControlLayerTests.swift */; };
+		3DDDF42525221E5100AAA9CD /* MediaControlLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDDF42325221E5100AAA9CD /* MediaControlLayerTests.swift */; };
 		4822B6AD220B6F7200D1C134 /* Core+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48563228220B47B10096CDAE /* Core+Ext.swift */; };
 		4822B6AF220C72AE00D1C134 /* SeekBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6AE220C72AE00D1C134 /* SeekBubble.swift */; };
 		4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */; };
@@ -203,6 +206,7 @@
 		7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
 		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
 		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
+		90988E2F25192EA4008CC9E9 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		96036D671CBD89500022CCCA /* PlaybackFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */; };
 		9603A06C1C05E6D100B55D8F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9603A06B1C05E6D100B55D8F /* PlayerTests.swift */; };
 		963B19981E4B827700A0A6BA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963B19971E4B827700A0A6BA /* Event.swift */; };
@@ -513,6 +517,7 @@
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		3D5AF517250026C30020081F /* Core+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Convenience.swift"; sourceTree = "<group>"; };
 		3D5AF51C2500289C0020081F /* Container+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Convenience.swift"; sourceTree = "<group>"; };
+		3DDDF42325221E5100AAA9CD /* MediaControlLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlLayerTests.swift; sourceTree = "<group>"; };
 		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClapprAnimationDuration.swift; sourceTree = "<group>"; };
@@ -565,6 +570,7 @@
 		7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackQualityMetricsTests.swift; sourceTree = "<group>"; };
 		7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHTTPStubsHelper.swift; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlLayer.swift; sourceTree = "<group>"; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
 		963B19971E4B827700A0A6BA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -1308,6 +1314,7 @@
 				A32A4A2A24F544C000953E47 /* LayerTests.swift */,
 				A308B35C24F6E8F700C84AB8 /* PlaybackLayerTests.swift */,
 				A308B35F24F6FD6C00C84AB8 /* ContainerLayerTests.swift */,
+				3DDDF42325221E5100AAA9CD /* MediaControlLayerTests.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -1320,6 +1327,7 @@
 				A32A4A2424F53F5000953E47 /* Layer.swift */,
 				A32A4A2624F53FAA00953E47 /* PlaybackLayer.swift */,
 				A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */,
+				90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -2179,6 +2187,7 @@
 				32DA341A1FFBD02A00484C90 /* Loader.swift in Sources */,
 				CD10D93E22C28D4C0096B035 /* Environment.swift in Sources */,
 				AB24DCD62152ED0E002D4660 /* AvailableMediaOptions.swift in Sources */,
+				3D1EE05E25228D4800870828 /* MediaControlLayer.swift in Sources */,
 				A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */,
 				C94D8CF1221B22C300C7855D /* ContainerPlugin.swift in Sources */,
 				FBD47AAD21AD6733003265AF /* CoreFactory.swift in Sources */,
@@ -2236,6 +2245,7 @@
 				32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */,
 				48A29C09221DEF6A0004AD3B /* CorePluginTests.swift in Sources */,
 				7BCD8EE123073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */,
+				3DDDF42525221E5100AAA9CD /* MediaControlLayerTests.swift in Sources */,
 				FC7785C1200526D500EC879F /* AVFoundationNowPlayingBuilderTests.swift in Sources */,
 				571B7B2A21750157005C0942 /* HTTPStub.swift in Sources */,
 				524B66AE242A9C070085789D /* PlayerItemAccessLogMock.swift in Sources */,
@@ -2282,6 +2292,7 @@
 				A308B35D24F6E8F700C84AB8 /* PlaybackLayerTests.swift in Sources */,
 				C92F1C9A216F8F000059D860 /* UIViewExtensionTests.swift in Sources */,
 				5753591C2187486900A88BE2 /* Array+appendOrReplaceTests.swift in Sources */,
+				3DDDF42425221E5100AAA9CD /* MediaControlLayerTests.swift in Sources */,
 				7BCD8EE023073A8900FBE5A2 /* SimpleContainerPluginTests.swift in Sources */,
 				A32A4A2D24F546E800953E47 /* LayerTests.swift in Sources */,
 				96A9CE391C973A0600C21E80 /* LoaderTests.swift in Sources */,
@@ -2388,6 +2399,7 @@
 				C9177B2E21664D1C001D0292 /* UIImage+Ext.swift in Sources */,
 				4822B6B1220C72D100D1C134 /* SeekBubbleSide.swift in Sources */,
 				96D362E11D41339400CCB866 /* UIContainerPlugin.swift in Sources */,
+				90988E2F25192EA4008CC9E9 /* MediaControlLayer.swift in Sources */,
 				96D362E41D41339400CCB866 /* NoOpPlayback.swift in Sources */,
 				48A29C0B221DEFC10004AD3B /* CorePlugin.swift in Sources */,
 				AB16350D215AC9FC00635233 /* MediaControlView.swift in Sources */,

@@ -21,9 +21,14 @@ class CoreTests: QuickSpec {
         
         class LayerComposerSpy: LayerComposer {
             var didCallCompose = false
+            var didCallAttachMediaControl = false
             
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
+            }
+
+            override func attachMediaControl(_ view: UIView) {
+                didCallAttachMediaControl = true
             }
         }
 
@@ -154,6 +159,22 @@ class CoreTests: QuickSpec {
                             expect(didAttachPlayer).to(beFalse())
                         }
                     }
+
+                    #if os(iOS)
+                    context("when attach is called") {
+                        it("should attach the MediaControl layer on LayerComposer") {
+                            let layerComposerSpy = LayerComposerSpy()
+                            let core = CoreFactory.create(with: [:], layerComposer: layerComposerSpy)
+                            let mediaControlMock = MediaControlMock(context: core)
+
+                            core.addPlugin(mediaControlMock)
+                            core.attach(to: .init(), controller: .init())
+                            core.render()
+                            
+                            expect(layerComposerSpy.didCallAttachMediaControl).to(beTrue())
+                        }
+                    }
+                    #endif
                 }
             }
 
