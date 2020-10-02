@@ -161,8 +161,8 @@ class CoreTests: QuickSpec {
                     }
 
                     #if os(iOS)
-                    context("when calls attach") {
-                        it("should calls the attachMediaControl on LayerComposer") {
+                    context("when attach is called") {
+                        it("should attach the MediaControl layer on LayerComposer") {
                             let layerComposerSpy = LayerComposerSpy()
                             let core = CoreFactory.create(with: [:], layerComposer: layerComposerSpy)
                             let mediaControlMock = MediaControlMock(context: core)
