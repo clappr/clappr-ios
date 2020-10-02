@@ -15,6 +15,7 @@ public let kMinDvrSize = "minDvrSize"
 public let kMediaControl = "mediaControl"
 public let kMediaControlAlwaysVisible = "mediaControlAlwaysVisible"
 public let kChromeless = "chromeless"
+public let kDisableExternalPlayback = "disableExternalPlayback"
 
 // List of MediaControl Elements
 public let kMediaControlElements = "mediaControlElements"
