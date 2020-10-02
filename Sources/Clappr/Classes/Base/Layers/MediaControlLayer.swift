@@ -12,7 +12,7 @@ final class MediaControlLayer: Layer {
         mediaControl.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         mediaControl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
-        mediaControl.layoutIfNeeded()
+        layoutIfNeeded()
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

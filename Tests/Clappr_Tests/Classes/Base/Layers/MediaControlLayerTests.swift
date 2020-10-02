@@ -12,8 +12,7 @@ class MediaControlLayerTests: QuickSpec {
                     let layer = MediaControlLayer(frame: frame)
 
                     layer.attachMediaControl(mediaControlView)
-                    layer.layoutIfNeeded()
-
+                    
                     expect(mediaControlView.center).to(equal(layer.center))
                     expect(mediaControlView.bounds.size).to(equal(layer.bounds.size))
 
@@ -26,7 +25,6 @@ class MediaControlLayerTests: QuickSpec {
                         let mediaControlLayer = MediaControlLayer(frame: smallFrame)
 
                         mediaControlLayer.attachMediaControl(mediaControlView)
-                        mediaControlLayer.layoutIfNeeded()
                         mediaControlLayer.bounds = bigFrame
                         mediaControlLayer.layoutIfNeeded()
 
