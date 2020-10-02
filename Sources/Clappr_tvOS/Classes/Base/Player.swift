@@ -318,7 +318,7 @@ open class Player: AVPlayerViewController {
         Loader.shared.register(playbacks: playbacks)
     }
 
-    private class func register(plugins: [Plugin.Type]) {
+    open class func register(plugins: [Plugin.Type]) {
         Loader.shared.register(plugins: plugins)
     }
 
