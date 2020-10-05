@@ -14,7 +14,6 @@ class ContainerLayerTests: QuickSpec {
                     let expectedCenter = layer.center
                     
                     layer.attachContainer(containerView)
-                    layer.layoutIfNeeded()
                     
                     expect(containerView.center).to(equal(expectedCenter))
                     expect(containerView.bounds.size).to(equal(expectedSize))
@@ -29,7 +28,6 @@ class ContainerLayerTests: QuickSpec {
                         let expectedSize = bigFrame.size
                         
                         containerLayer.attachContainer(containerView)
-                        containerLayer.layoutIfNeeded()
                         containerLayer.bounds = bigFrame
                         containerLayer.layoutIfNeeded()
                         

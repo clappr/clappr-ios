@@ -82,6 +82,22 @@ class QuickSeekMediaControlPluginTests: QuickSpec {
                     
                     context("and it collides with that plugin") {
                         it("does not seek") {
+                            let coreStub: CoreStub = CoreStub()
+                            let quickSeekPlugin: QuickSeekMediaControlPlugin = QuickSeekMediaControlPlugin(context: coreStub)
+                            let mediaControl: MediaControl = MediaControl(context: coreStub)
+                            let playButton: PlayButton = PlayButton(context: coreStub)
+                            let rootView: UIView = UIView(frame: .init(origin: .zero, size: .init(width: 320, height: 200)))
+                            
+                            coreStub.playbackMock?.videoDuration = 60.0
+                            coreStub.addPlugin(mediaControl)
+                            coreStub.addPlugin(quickSeekPlugin)
+                            coreStub.addPlugin(playButton)
+                            
+                            coreStub.attach(to: rootView, controller: UIViewController())
+                            coreStub.render()
+                            
+                            rootView.layoutIfNeeded()
+                            
                             let playButtonCenterInMediaControlCoordinate = playButton.view.convert(playButton.view.center, to: mediaControl.mediaControlView)
                             
                             let shouldSeek = quickSeekPlugin.shouldSeek(point: playButtonCenterInMediaControlCoordinate)

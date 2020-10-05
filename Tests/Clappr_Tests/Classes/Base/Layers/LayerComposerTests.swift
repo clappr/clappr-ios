@@ -62,6 +62,19 @@ class LayerComposerTests: QuickSpec {
                         description: "ContainerLayer should be the fourth subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
+                it("adds MediaControlLayer as the fourth layer"){
+                    let index = 3
+                    let rootView = UIView()
+                    let layerComposer = LayerComposer()
+                    
+                    layerComposer.compose(inside: rootView)
+                    
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
+                        beAKindOf(MediaControlLayer.self),
+                        description: "MediaControlLayer should be the fourth subview of rootView, got \(String(describing: type(of: layer)))"
+                    )
+                }
             }
         }
         

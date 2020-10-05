@@ -149,7 +149,9 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     private func renderContainer(_ container: Container) {
+        #if os(tvOS)
         view.addSubviewMatchingConstraints(container.view)
+        #endif
         container.render()
     }
 
@@ -161,16 +163,25 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     #if os(iOS)
     private func renderCorePlugins() {
-        plugins.filter { plugin -> Bool in
-            plugin.isNotOverlayPlugin &&
-            plugin.isNotMediaControlElement &&
-            plugin.isNotMediaControl
+        attachMediaControlLayer()
+        plugins
+            .filter { $0.isNotMediaControlElement }
+            .filter { $0.isNotOverlayPlugin }
+            .filter { $0.isNotMediaControl }
+            .compactMap { $0 as? UICorePlugin }
+            .forEach { plugin in
+                layerComposer.attachUICorePlugin(plugin)
+                plugin.safeRender()
         }
-        .compactMap { $0 as? UICorePlugin }
-        .forEach { plugin in
-            layerComposer.attachUICorePlugin(plugin)
-            plugin.safeRender()
+    }
+    
+    private func attachMediaControlLayer() {
+        guard let mediaControl = plugins.first(where: { $0 is MediaControl }) as? MediaControl else {
+            return
         }
+
+        layerComposer.attachMediaControl(mediaControl.view)
+        mediaControl.safeRender()
     }
 
     private func renderMediaControlElements() {

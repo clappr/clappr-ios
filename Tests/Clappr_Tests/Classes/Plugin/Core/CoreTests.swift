@@ -22,13 +22,18 @@ class CoreTests: QuickSpec {
         class LayerComposerSpy: LayerComposer {
             var didCallCompose = false
             var didCallAttachUICorePlugin = false
-
+            var didCallAttachMediaControl = false
+            
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
             }
 
             override func attachUICorePlugin(_ plugin: UICorePlugin) {
                 didCallAttachUICorePlugin = true
+            }
+            
+            override func attachMediaControl(_ view: UIView) {
+                didCallAttachMediaControl = true
             }
         }
 
@@ -159,6 +164,22 @@ class CoreTests: QuickSpec {
                             expect(didAttachPlayer).to(beFalse())
                         }
                     }
+
+                    #if os(iOS)
+                    context("when attach is called") {
+                        it("should attach the MediaControl layer on LayerComposer") {
+                            let layerComposerSpy = LayerComposerSpy()
+                            let core = CoreFactory.create(with: [:], layerComposer: layerComposerSpy)
+                            let mediaControlMock = MediaControlMock(context: core)
+
+                            core.addPlugin(mediaControlMock)
+                            core.attach(to: .init(), controller: .init())
+                            core.render()
+                            
+                            expect(layerComposerSpy.didCallAttachMediaControl).to(beTrue())
+                        }
+                    }
+                    #endif
                 }
             }
 
@@ -791,6 +812,21 @@ class CoreTests: QuickSpec {
             }
 
             describe("#render") {
+                #if os(tvOS)
+                context("core position") {
+                    it("is positioned in front of Container view") {
+                        Loader.shared.register(plugins: [FakeCorePlugin.self])
+                        let core = CoreFactory.create(with: options, layerComposer: layerComposer)
+
+                        core.render()
+
+                        expect(core.view.subviews.count).to(equal(3))
+                        expect(core.view.subviews.first?.accessibilityIdentifier).to(equal("Container"))
+                        expect(core.view.subviews[1].accessibilityIdentifier).to(beNil())
+                    }
+                }
+                #endif
+                
                 #if os(iOS)
                 it("doesnt add plugin as subview if it is a MediaControlElement") {
                     let core = Core()
@@ -881,6 +917,7 @@ class CoreTests: QuickSpec {
                 }
                 #endif
             }
+            #endif
 
             describe("rendering") {
                 context("when plugin is overlay") {
