@@ -16,8 +16,8 @@ public class LayerComposer {
         backgroundLayer.attach(to: rootView, at: 0)
         playbackLayer.attach(to: rootView, at: 1)
         containerLayer.attach(to: rootView, at: 2)
-        coreLayer.attach(to: rootView, at: 3)
-        mediaControlLayer.attach(to: rootView, at: 4)
+        mediaControlLayer.attach(to: rootView, at: 3)
+        coreLayer.attach(to: rootView, at: 4)
     }
     
     func attachContainer(_ view: UIView) {
@@ -27,7 +27,6 @@ public class LayerComposer {
     func attachPlayback(_ view: UIView) {
         playbackLayer.attachPlayback(view)
     }
-
 
     func attachUICorePlugin(_ plugin: UICorePlugin) {
         coreLayer.attachPlugin(plugin)

@@ -873,22 +873,7 @@ class CoreTests: QuickSpec {
                     
                     expect(mediaControlMock.didCallRenderElements).to(beTrue())
                 }
-                #endif
-
-                it("protect the main thread when plugin crashes in render") {
-                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
-                    UICorePluginMock.crashOnRender = true
-                    let core = Core()
-                    let plugin = UICorePluginMock(context: core)
-                    core.addPlugin(plugin)
-
-                    core.render()
-
-                    expectation.fulfill()
-                    QuickSpec.current.waitForExpectations(timeout: 1)
-                }
-
-                #if os(iOS)
+                
                 describe("#UICorePlugins") {
                     context("when render UICorePlugin") {
                         it("calls render on Plugin") {
@@ -915,9 +900,22 @@ class CoreTests: QuickSpec {
                         }
                     }
                 }
+                
                 #endif
+
+                it("protect the main thread when plugin crashes in render") {
+                    let expectation = QuickSpec.current.expectation(description: "doesn't crash")
+                    UICorePluginMock.crashOnRender = true
+                    let core = Core()
+                    let plugin = UICorePluginMock(context: core)
+                    core.addPlugin(plugin)
+
+                    core.render()
+
+                    expectation.fulfill()
+                    QuickSpec.current.waitForExpectations(timeout: 1)
+                }
             }
-            #endif
 
             describe("rendering") {
                 context("when plugin is overlay") {

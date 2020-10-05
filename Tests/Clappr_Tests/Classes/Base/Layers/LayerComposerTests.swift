@@ -36,21 +36,8 @@ class LayerComposerTests: QuickSpec {
                         description: "PlaybackLayer should be the second subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
-                it("adds CoreLayer as the third layer"){
-                    let index = 2
-                    let rootView = UIView()
-                    let layerComposer = LayerComposer()
-
-                    layerComposer.compose(inside: rootView)
-
-                    let layer = getLayer(from: rootView, at: index)
-                    expect(layer).to(
-                        beAKindOf(CoreLayer.self),
-                        description: "CoreLayer should be the third subview of rootView, got \(String(describing: type(of: layer)))"
-                    )
-                }
                 it("adds ContainerLayer as the third layer"){
-                    let index = 3
+                    let index = 2
                     let rootView = UIView()
                     let layerComposer = LayerComposer()
                     
@@ -59,7 +46,7 @@ class LayerComposerTests: QuickSpec {
                     let layer = getLayer(from: rootView, at: index)
                     expect(layer).to(
                         beAKindOf(ContainerLayer.self),
-                        description: "ContainerLayer should be the fourth subview of rootView, got \(String(describing: type(of: layer)))"
+                        description: "ContainerLayer should be the third subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
                 it("adds MediaControlLayer as the fourth layer"){
@@ -75,6 +62,20 @@ class LayerComposerTests: QuickSpec {
                         description: "MediaControlLayer should be the fourth subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
+                it("adds CoreLayer as the fifth layer"){
+                    let index = 4
+                    let rootView = UIView()
+                    let layerComposer = LayerComposer()
+
+                    layerComposer.compose(inside: rootView)
+
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
+                        beAKindOf(CoreLayer.self),
+                        description: "CoreLayer should be the fifth subview of rootView, got \(String(describing: type(of: layer)))"
+                    )
+                }
+
             }
         }
         
