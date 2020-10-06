@@ -875,8 +875,8 @@ class CoreTests: QuickSpec {
                 }
                 
                 describe("#UICorePlugins") {
-                    context("when render UICorePlugin") {
-                        it("calls render on Plugin") {
+                    context("when rendering UICorePlugins") {
+                        it("uses LayerComposer") {
                             Loader.shared.resetPlugins()
                             Loader.shared.register(plugins: [UICorePluginStub.self])
                             let layerComposer = LayerComposerSpy()
