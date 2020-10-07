@@ -168,7 +168,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
             .filter { $0.isNotMediaControlElement }
             .filter { $0.isNotOverlayPlugin }
             .filter { $0.isNotMediaControl }
-            .forEach(render)
+            .compactMap { $0 as? UICorePlugin }
+            .forEach { plugin in
+                layerComposer.attachUICorePlugin(plugin)
+                plugin.safeRender()
+        }
     }
     
     private func attachMediaControlLayer() {
@@ -296,16 +300,16 @@ fileprivate extension Plugin {
     }
 
     #if os(iOS)
+    var isNotMediaControl: Bool {
+        return !(self is MediaControl)
+    }
+
     var isNotMediaControlElement: Bool {
         return !(self is MediaControl.Element)
     }
 
     var isNotOverlayPlugin: Bool {
         return !(self is OverlayPlugin)
-    }
-    
-    var isNotMediaControl: Bool {
-        return !(self is MediaControl)
     }
     #endif
 
