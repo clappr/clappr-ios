@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15D1281C253E20CB00A3B2B9 /* OverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D1281B253E20CB00A3B2B9 /* OverlayLayer.swift */; };
 		23EDF916224D819600FB0D96 /* SwiftVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */; };
 		23EDF918224D83FD00FB0D96 /* Clappr.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D8810057D2C05E1F7A2759D7 /* Clappr.podspec */; };
 		23EDF91B224E8EB900FB0D96 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 23EDF91A224E8EB800FB0D96 /* .swift-version */; };
@@ -303,6 +304,7 @@
 		A32A4A2D24F546E800953E47 /* LayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A4A2A24F544C000953E47 /* LayerTests.swift */; };
 		A32A51E424C60FC100A00439 /* LayerComposerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E324C60FC100A00439 /* LayerComposerTests.swift */; };
 		A32A51E624C61BDF00A00439 /* BackgroundLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A51E524C61BDF00A00439 /* BackgroundLayerTests.swift */; };
+		A35568772547669900CFBC04 /* OverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D1281B253E20CB00A3B2B9 /* OverlayLayer.swift */; };
 		A3B8019224F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
 		A3B8019324F6A31A009FA0D4 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B8019124F6A31A009FA0D4 /* ContainerLayer.swift */; };
 		A3C8F3ED24CF489F002CA3F5 /* LayerComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */; };
@@ -479,6 +481,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15D1281B253E20CB00A3B2B9 /* OverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLayer.swift; sourceTree = "<group>"; };
 		23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVersionTests.swift; sourceTree = "<group>"; };
 		23EDF91A224E8EB800FB0D96 /* .swift-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".swift-version"; sourceTree = SOURCE_ROOT; };
 		23EDF91D224EAF9A00FB0D96 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -1339,6 +1342,7 @@
 				A32A4A2424F53F5000953E47 /* Layer.swift */,
 				A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */,
 				90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */,
+				15D1281B253E20CB00A3B2B9 /* OverlayLayer.swift */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -2164,6 +2168,7 @@
 				32E401C81FF42351001C2096 /* UIContainerPlugin.swift in Sources */,
 				26211C2024DC70CE000501A4 /* Font.swift in Sources */,
 				26211C1F24DC70C6000501A4 /* EdgeStyle.swift in Sources */,
+				A35568772547669900CFBC04 /* OverlayLayer.swift in Sources */,
 				571B7B252174DBDD005C0942 /* AVFoundationPlayback.swift in Sources */,
 				5733D1C021BAA6EE002107D2 /* Dictionary+Ext.swift in Sources */,
 				26211C2124DC70D5000501A4 /* Alignment.swift in Sources */,
@@ -2458,6 +2463,7 @@
 				262B490C24D8898F0049DAF7 /* AVPlayerItem+Style.swift in Sources */,
 				9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */,
 				C92747E7220DD4E0009465A7 /* UIImageView+Ext.swift in Sources */,
+				15D1281C253E20CB00A3B2B9 /* OverlayLayer.swift in Sources */,
 				96D362CC1D41339400CCB866 /* Options.swift in Sources */,
 				48563229220B47B10096CDAE /* Core+Ext.swift in Sources */,
 				9EED97012088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */,
