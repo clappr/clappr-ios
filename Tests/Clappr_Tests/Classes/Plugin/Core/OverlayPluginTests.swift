@@ -47,7 +47,8 @@ class OverlayPluginTests: QuickSpec {
                     it("fits the parentView bounds") {
                         let core = CoreStub()
                         let parentView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-                        core.parentView = parentView
+                        core.attach(to: parentView, controller: UIViewController())
+                        
                         let plugin = OverlayPluginMock(context: core)
                         plugin._isModal = true
                         plugin.view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
