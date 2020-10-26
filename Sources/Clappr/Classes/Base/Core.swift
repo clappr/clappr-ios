@@ -192,7 +192,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins
             .compactMap { $0 as? OverlayPlugin }
             .forEach(render)
-        view.bringSubviewToFront(overlayView)
     }
     #endif
 
