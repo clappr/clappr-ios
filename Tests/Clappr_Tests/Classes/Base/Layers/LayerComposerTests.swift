@@ -75,7 +75,19 @@ class LayerComposerTests: QuickSpec {
                         description: "CoreLayer should be the fifth subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
+                it("adds OverlayLayer as the sixth layer"){
+                    let index = 5
+                    let rootView = UIView()
+                    let layerComposer = LayerComposer()
 
+                    layerComposer.compose(inside: rootView)
+
+                    let layer = getLayer(from: rootView, at: index)
+                    expect(layer).to(
+                        beAKindOf(OverlayLayer.self),
+                        description: "OverlayLayer should be the sixth subview of rootView, got \(String(describing: type(of: layer)))"
+                    )
+                }
             }
         }
         
