@@ -6,7 +6,7 @@ class ContainerLayerTests: QuickSpec {
     override func spec() {
         describe(".ContainerLayer") {
             context("When a Container is attached") {
-                it("resizes to match the layer bounds") {
+                it("resizes to match the layer frame") {
                     let containerView = UIView(frame: .zero)
                     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
                     let layer = ContainerLayer(frame: frame)
@@ -16,11 +16,11 @@ class ContainerLayerTests: QuickSpec {
                     layer.attachContainer(containerView)
                     
                     expect(containerView.center).to(equal(expectedCenter))
-                    expect(containerView.bounds.size).to(equal(expectedSize))
+                    expect(containerView.frame.size).to(equal(expectedSize))
                     
                 }
                 context("and the view size changes") {
-                    it("resizes to match the view bounds") {
+                    it("resizes to match the view frame") {
                         let smallFrame = CGRect(x: 0, y: 0, width: 50, height: 50)
                         let bigFrame = CGRect(x: 0, y: 0, width: 100, height: 100)
                         let containerView = UIView(frame: .zero)
@@ -28,10 +28,10 @@ class ContainerLayerTests: QuickSpec {
                         let expectedSize = bigFrame.size
                         
                         containerLayer.attachContainer(containerView)
-                        containerLayer.bounds = bigFrame
+                        containerLayer.frame = bigFrame
                         containerLayer.layoutIfNeeded()
                         
-                        expect(containerView.bounds.size).to(equal(expectedSize))
+                        expect(containerView.frame.size).to(equal(expectedSize))
                     }
                 }
             }
