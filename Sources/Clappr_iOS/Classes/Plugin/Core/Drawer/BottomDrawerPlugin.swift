@@ -38,7 +38,9 @@ open class BottomDrawerPlugin: DrawerPlugin {
         guard let core = core else { return }
         
         listenTo(core, eventName: Event.didChangeScreenOrientation.rawValue) { [weak self] _ in
-            self?.hideDrawerPlugin()
+            if let isClosed = self?.isClosed, !isClosed {
+                self?.hideDrawerPlugin()
+            }
             self?.adjustHeightConstraint()
         }
     }
