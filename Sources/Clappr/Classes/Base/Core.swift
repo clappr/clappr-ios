@@ -109,6 +109,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         parentView.addSubviewMatchingConstraints(view)
     
         layerComposer.attachContainer(containerView)
+        layerComposer.attachOverlay(overlayView)
         layerComposer.compose(inside: view)
         
         self.parentController = controller
@@ -118,11 +119,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open override func render() {
-        view.addSubviewMatchingConstraints(overlayView)
         containers.forEach(renderContainer)
         addToContainer()
-        view.bringSubviewToFront(overlayView)
-        overlayView.clipsToBounds = true
     }
 
     private func addToContainer() {
@@ -194,7 +192,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugins
             .compactMap { $0 as? OverlayPlugin }
             .forEach(render)
-        view.bringSubviewToFront(overlayView)
     }
     #endif
 

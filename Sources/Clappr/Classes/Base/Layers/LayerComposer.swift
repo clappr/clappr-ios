@@ -4,9 +4,10 @@ public class LayerComposer {
     private weak var rootView: UIView?
     private let backgroundLayer = BackgroundLayer()
     private let playbackLayer = PlaybackLayer()
-    private let coreLayer = CoreLayer()
     private let containerLayer = ContainerLayer()
     private let mediaControlLayer = MediaControlLayer()
+    private let coreLayer = CoreLayer()
+    private let overlayLayer = OverlayLayer()
 
     public init() { }
     
@@ -18,6 +19,7 @@ public class LayerComposer {
         containerLayer.attach(to: rootView, at: 2)
         mediaControlLayer.attach(to: rootView, at: 3)
         coreLayer.attach(to: rootView, at: 4)
+        overlayLayer.attach(to: rootView, at: 5)
     }
     
     func attachContainer(_ view: UIView) {
@@ -34,5 +36,9 @@ public class LayerComposer {
     
     func attachMediaControl(_ view: UIView) {
         mediaControlLayer.attachMediaControl(view)
+    }
+
+    func attachOverlay(_ view: UIView) {
+        overlayLayer.attachOverlay(view)
     }
 }
