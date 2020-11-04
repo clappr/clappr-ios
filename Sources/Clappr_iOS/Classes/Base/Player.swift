@@ -4,7 +4,7 @@ open class Player: BaseObject {
     private var layerComposer = LayerComposer()
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
-    private(set) var core: Core?
+    public private(set) var core: Core?
     private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     static var hasAlreadyRegisteredPlugins = false
