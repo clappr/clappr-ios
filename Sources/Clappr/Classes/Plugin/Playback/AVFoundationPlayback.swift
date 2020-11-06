@@ -809,10 +809,6 @@ extension AVFoundationPlayback: AVPictureInPictureControllerDelegate {
         if AVPictureInPictureController.isPictureInPictureSupported() {
             pictureInPictureController = AVPictureInPictureController(playerLayer: layer)
             pictureInPictureController?.delegate = self
-            print("### \(#function)")
-        }
-        else {
-            print("### Picture in Picture Supported: \(AVPictureInPictureController.isPictureInPictureSupported())")
         }
     }
 
@@ -822,12 +818,10 @@ extension AVFoundationPlayback: AVPictureInPictureControllerDelegate {
     }
 
     public func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        print("### \(#function)")
         trigger(Event.disableMediaControl)
     }
 
     public func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
-        print("### \(#function)")
         trigger(Event.enableMediaControl)
     }
 }
