@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -77,7 +75,6 @@
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1d2-PC-Gjs">
                                     <rect key="frame" x="0.0" y="93" width="20" height="20.5"/>
-                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" placeholderIntrinsicWidth="78.5" placeholderIntrinsicHeight="20.5" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g3u-YP-Zws">
                                     <rect key="frame" x="452.5" y="93" width="78.5" height="20.5"/>
@@ -107,6 +104,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="531" height="341"/>
                 </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="78G-Xh-tuQ"/>
             <constraints>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="bottom" secondItem="78G-Xh-tuQ" secondAttribute="bottom" id="F4w-fC-1R5"/>
                 <constraint firstItem="rxJ-bk-Ll1" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="I1w-LF-O8G"/>
@@ -126,7 +124,6 @@
                 <constraint firstItem="VEM-5Y-Fai" firstAttribute="top" secondItem="78G-Xh-tuQ" secondAttribute="top" id="vva-aS-DZd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="78G-Xh-tuQ"/>
             <connections>
                 <outlet property="bottomLeft" destination="1d2-PC-Gjs" id="OkD-kn-ZXI"/>
                 <outlet property="bottomNone" destination="5Gc-7D-dUG" id="lvH-VR-DCV"/>
