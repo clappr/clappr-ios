@@ -1,4 +1,4 @@
 github "Quick/Quick" == 3.0.0
 github "Quick/Nimble" == 8.1.1
 github "AliSoftware/OHHTTPStubs" == 8.0.0
-github "httpswift/swifter" == 1.4.7
+github "httpswift/swifter" == 1.5.0
