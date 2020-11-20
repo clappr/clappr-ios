@@ -99,7 +99,7 @@ class AVFoundationPlaybackStateMachineEventsTests: QuickSpec {
                             playback.seek(playback.duration)
                         }
 
-                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 12)
+                        expect(triggeredEvents).toEventually(equal(expectedEvents), timeout: 15)
                     }
                 }
 

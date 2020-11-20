@@ -163,9 +163,9 @@ class PlayButtonTests: QuickSpec {
                 }
 
                 describe("button") {
-//                    it("adds it in the view") {
-//                        expect(playButton.view.subviews).to(contain(playButton.button))
-//                    }
+                    it("adds it in the view") {
+                        expect(playButton.view.subviews).to(contain(playButton.button!))
+                    }
 
                     it("has scaleAspectFit content mode") {
                         expect(playButton.button?.imageView?.contentMode).to(equal(UIView.ContentMode.scaleAspectFit))

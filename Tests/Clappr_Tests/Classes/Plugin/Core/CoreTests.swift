@@ -407,11 +407,11 @@ class CoreTests: QuickSpec {
                             expect(core.parentView?.subviews).to(contain(core.view))
                         }
 
-//                        it("removes core as subview of fullscreenController") {
-//                            core.setFullscreen(false)
-//
-//                            expect(core.fullscreenController?.view.subviews).toNot(contain(core))
-//                        }
+                        it("removes core as subview of fullscreenController") {
+                            core.setFullscreen(false)
+
+                            expect(core.fullscreenController?.view.subviews).toNot(contain(core.view))
+                        }
 
                         it("only set core as subview of parentView once") {
                             core.setFullscreen(false)
