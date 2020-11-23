@@ -78,6 +78,46 @@ class LayerComposerTests: QuickSpec {
             }
         }
         
+        context("When LayerComposer changes its layers visibility") {
+            it("show all visual layers") {
+                let rootView = UIView()
+                let layerComposer = LayerComposer()
+                layerComposer.compose(inside: rootView)
+
+                layerComposer.showViews()
+
+                let containerLayer = getLayer(from: rootView, at: 2)
+                let mediaControlLayer = getLayer(from: rootView, at: 3)
+                let coreLayer = getLayer(from: rootView, at: 4)
+                let overlayLayer = getLayer(from: rootView, at: 5)
+
+                expect(containerLayer?.isHidden).to(beFalse())
+                expect(mediaControlLayer?.isHidden).to(beFalse())
+                expect(coreLayer?.isHidden).to(beFalse())
+                expect(overlayLayer?.isHidden).to(beFalse())
+
+            }
+
+            it("hides all visual layers") {
+                let rootView = UIView()
+                let layerComposer = LayerComposer()
+                layerComposer.compose(inside: rootView)
+
+                layerComposer.hideViews()
+
+                let containerLayer = getLayer(from: rootView, at: 2)
+                let mediaControlLayer = getLayer(from: rootView, at: 3)
+                let coreLayer = getLayer(from: rootView, at: 4)
+                let overlayLayer = getLayer(from: rootView, at: 5)
+
+                expect(containerLayer?.isHidden).to(beTrue())
+                expect(mediaControlLayer?.isHidden).to(beTrue())
+                expect(coreLayer?.isHidden).to(beTrue())
+                expect(overlayLayer?.isHidden).to(beTrue())
+
+            }
+        }
+        
         func getLayer(from rootView: UIView, at index: Int) -> Layer? {
             return rootView.subviews[index] as? Layer
         }

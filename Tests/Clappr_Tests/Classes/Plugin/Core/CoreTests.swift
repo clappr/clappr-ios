@@ -23,6 +23,8 @@ class CoreTests: QuickSpec {
             var didCallCompose = false
             var didCallAttachUICorePlugin = false
             var didCallAttachMediaControl = false
+            var didCallShowViews = false
+            var didCallHideViews = false
             
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
@@ -34,6 +36,14 @@ class CoreTests: QuickSpec {
             
             override func attachMediaControl(_ view: UIView) {
                 didCallAttachMediaControl = true
+            }
+            
+            override func showViews() {
+                didCallShowViews = true
+            }
+
+            override func hideViews() {
+                didCallHideViews = true
             }
         }
 
@@ -929,6 +939,32 @@ class CoreTests: QuickSpec {
                     }
                 }
             }
+            
+            #if os(iOS)
+            describe("#chromelessMode") {
+                let layerComposer = LayerComposerSpy()
+                
+                context("when in chromeless mode by options") {
+                    let core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: true], layerComposer: layerComposer)
+                    
+                    it("hides LayerComposer layers") {
+                        core.enterChromelessMode()
+                        
+                        expect(layerComposer.didCallHideViews).to(beTrue())
+                    }
+                }
+                
+                context("when is not in chromeless mode by options") {
+                    let core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: false], layerComposer: layerComposer)
+                    
+                    it("shows LayerComposer layers") {
+                        core.exitChromelessMode()
+                        
+                        expect(layerComposer.didCallHideViews).to(beTrue())
+                    }
+                }
+            }
+            #endif
         }
     }
 
