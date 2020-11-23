@@ -11,10 +11,6 @@ open class PosterPlugin: OverlayPlugin {
     open override func render() {
         guard let core = core else { return }
         
-        if isChromeless {
-            view.isHidden = true
-        }
-        
         if let urlString = core.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
@@ -56,6 +52,10 @@ open class PosterPlugin: OverlayPlugin {
         view.addSubviewMatchingConstraints(poster)
 
         view.addSubview(playButton)
+
+        let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerX,
+                                                   relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        view.addConstraint(xCenterConstraint)
         playButton.anchorInCenter()
     }
 
@@ -67,7 +67,7 @@ open class PosterPlugin: OverlayPlugin {
         listenTo(container, event: .requestPosterUpdate) { [weak self] info in self?.updatePoster(info) }
         listenTo(container, event: .didUpdateOptions) { [weak self] _ in self?.updatePoster(container.options) }
     }
-
+    
     override open func onDidChangePlayback() {
         guard let playback = activePlayback else { return }
         
