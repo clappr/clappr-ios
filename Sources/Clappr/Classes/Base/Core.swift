@@ -55,7 +55,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     @objc open var isFullscreen: Bool = false
-    private var isChromeless: Bool { options.bool(kChromeless) }
+    public var chromelessMode: Bool = false
     
     public required init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
@@ -63,8 +63,9 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         self.options = options
         self.layerComposer = layerComposer
         super.init()
-        
-        if !isChromeless {
+        self.updateChromelessMode(with: options)
+
+        if !chromelessMode {
             addTapGestures()
         }
         
@@ -91,6 +92,24 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         if activeContainer != container {
             activeContainer = container
         }
+    }
+    
+    public func updateChromelessMode(with option: Options) {
+        if let chromelessMode = options[kChromeless] as? Bool {
+            self.chromelessMode = chromelessMode
+        }
+    }
+    
+    public func enterChromelessMode() {
+        #if os(iOS)
+        layerComposer.hideViews()
+        #endif
+    }
+
+    public func exitChromelessMode() {
+        #if os(iOS)
+        layerComposer.showViews()
+        #endif
     }
 
     private func bindEventListeners() {

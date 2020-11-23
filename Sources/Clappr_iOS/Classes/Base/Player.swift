@@ -5,8 +5,13 @@ open class Player: BaseObject {
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     public private(set) var core: Core?
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
-
+    public var chromelessMode: Bool {
+        get { core?.chromelessMode ?? false }
+        set {
+            core?.chromelessMode = newValue
+            updateChromelessModeVisibility()
+        }
+    }
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
 
@@ -87,7 +92,8 @@ open class Player: BaseObject {
         bindMediaControlEvents()
         bindPlaybackEvents()
         bindNotifications()
-
+        core?.updateChromelessMode(with: options)
+        updateChromelessModeVisibility()
         core?.load()
     }
     
@@ -124,10 +130,26 @@ open class Player: BaseObject {
     }
     
     @objc private func willEnterForeground() {
-        if isChromeless {
+        if chromelessMode {
             Logger.logDebug("forced play after return from background", scope: "Player")
             play()
         }
+    }
+    
+    private func updateChromelessModeVisibility() {
+        if chromelessMode {
+            enterChromelessMode()
+        } else {
+            exitChromelessMode()
+        }
+    }
+    
+    public func enterChromelessMode() {
+        core?.enterChromelessMode()
+    }
+
+    public func exitChromelessMode() {
+        core?.exitChromelessMode()
     }
     
     open func presentFullscreenIn(_ controller: UIViewController) {
@@ -154,6 +176,8 @@ open class Player: BaseObject {
 
     open func configure(options: Options) {
         core?.options = options
+        core?.updateChromelessMode(with: options)
+        updateChromelessModeVisibility()
         core?.load()
     }
 

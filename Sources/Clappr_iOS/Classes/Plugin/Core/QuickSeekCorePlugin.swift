@@ -1,7 +1,8 @@
 import UIKit
 
 public class QuickSeekCorePlugin: QuickSeekPlugin {
-    
+    private var chromelessMode: Bool { core?.chromelessMode ?? false }
+
     open class override var name: String {
         return "QuickSeekCorePlugin"
     }
@@ -23,6 +24,10 @@ public class QuickSeekCorePlugin: QuickSeekPlugin {
     }
     
     override func shouldSeek(point: CGPoint) -> Bool {
+        if chromelessMode {
+            return false
+        }
+        
         let pluginColidingWithGesture = activeContainer?.plugins
             .compactMap({ $0 as? UIContainerPlugin })
             .first(where: {
