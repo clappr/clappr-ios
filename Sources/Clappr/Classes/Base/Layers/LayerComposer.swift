@@ -4,7 +4,6 @@ public class LayerComposer {
     private weak var rootView: UIView?
     private let backgroundLayer = BackgroundLayer()
     private let playbackLayer = PlaybackLayer()
-    private let containerLayer = ContainerLayer()
     private let mediaControlLayer = MediaControlLayer()
     private let coreLayer = CoreLayer()
     private let overlayLayer = OverlayLayer()
