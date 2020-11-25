@@ -1,16 +1,16 @@
 import UIKit
 
 final class PlaybackLayer: Layer {
-    func attachPlayback(_ playback: UIView) {
-        addSubview(playback)
+    func attach(_ view: UIView) {
+        addSubview(view)
         
-        playback.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
         
-        playback.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        playback.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        view.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        view.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         
-        playback.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        playback.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        view.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
         layoutIfNeeded()
     }
