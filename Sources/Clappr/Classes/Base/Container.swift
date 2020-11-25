@@ -78,16 +78,10 @@ open class Container: UIObject {
         guard let playback = playback else {
             return
         }
-
-        #if os(iOS)
-        layerComposer.attachPlayback(playback.view)
-        #else
         view.addSubviewMatchingConstraints(playback.view)
         view.sendSubviewToBack(playback.view)
-        #endif
         
         playback.render()
-        
     }
 
     fileprivate func renderPlugin(_ plugin: Plugin) {
