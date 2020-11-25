@@ -960,7 +960,7 @@ class CoreTests: QuickSpec {
                     it("shows LayerComposer layers") {
                         core.exitChromelessMode()
                         
-                        expect(layerComposer.didCallHideViews).to(beTrue())
+                        expect(layerComposer.didCallShowViews).to(beTrue())
                     }
                 }
             }
