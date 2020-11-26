@@ -1,7 +1,7 @@
-open class PosterPlugin: UIContainerPlugin {
+open class PosterPlugin: OverlayPlugin {
     var poster = UIImageView(frame: CGRect.zero)
     fileprivate var playButton = UIButton(frame: CGRect.zero)
-    private var isChromeless: Bool { container?.options.bool(kChromeless) ?? false }
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     open override class var name: String {
         return "poster"
@@ -14,17 +14,17 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     open override func render() {
-        guard let container = container else { return }
+        guard let core = core else { return }
         
         if isChromeless {
             view.isHidden = true
         }
         
-        if let urlString = container.options[kPosterUrl] as? String {
+        if let urlString = core.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
             view.isHidden = true
-            container.mediaControlEnabled = false
+            core.activeContainer?.mediaControlEnabled = false
         }
 
         configurePlayButton()
@@ -49,12 +49,12 @@ open class PosterPlugin: UIContainerPlugin {
     }
 
     @objc func playTouched() {
-        playback?.seek(0)
-        playback?.play()
+        activePlayback?.seek(0)
+        activePlayback?.play()
     }
 
     fileprivate func configureViews() {
-        container?.view.addMatchingConstraints(view)
+        core?.overlayView.addMatchingConstraints(view)
         view.addSubviewMatchingConstraints(poster)
 
         view.addSubview(playButton)
@@ -68,28 +68,22 @@ open class PosterPlugin: UIContainerPlugin {
         view.addConstraint(yCenterConstraint)
     }
 
-    override open func bindEvents() {
-        guard !isChromeless else { return }
-        bindContainerEvents()
-        bindPlaybackEvents()
-    }
+    override open func bindEvents() {}
 
-    private func bindPlaybackEvents() {
-        if let playback = playback {
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
-            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
-        }
-    }
-
-    private func bindContainerEvents() {
-        guard let container = container else { return }
+    override open func onDidChangeActiveContainer() {
+        guard let container = activeContainer else { return }
         listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
         listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] _ in self?.updatePoster(container.options) }
     }
 
     override open func onDidChangePlayback() {
-        if isNoOpPlayback {
-            view.isHidden = true
+        if let playback = activePlayback {
+            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
+            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
+            
+            if playback is NoOpPlayback {
+                view.isHidden = true
+            }
         }
     }
 
