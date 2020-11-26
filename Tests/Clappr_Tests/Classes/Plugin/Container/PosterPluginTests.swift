@@ -132,6 +132,20 @@ class PosterPluginTests: QuickSpec {
                     }
                 }
             }
+            
+            context("When play button is pressed") {
+                it("starts the video at the beginning") {
+                    let core = CoreStub()
+                    core.render()
+                    
+                    let posterPlugin = self.getPosterPlugin(core)
+                    posterPlugin.playTouched()
+                    
+                    expect(core.playbackMock?.didCallPlay).to(beTrue())
+                    expect(core.playbackMock?.didCallSeek).to(beTrue())
+                    expect(core.playbackMock?.didCallSeekWithValue).to(equal(0))
+                }
+            }
         }
     }
 
