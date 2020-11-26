@@ -32,6 +32,8 @@ open class SpinnerPlugin: OverlayPlugin {
     }
 
     override open func onDidChangePlayback() {
+        updateVisibility()
+        
         guard let playback = core?.activePlayback else { return }
         
         listenTo(playback, event: .playing) { [weak self] _ in self?.stopAnimating() }
