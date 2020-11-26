@@ -1,6 +1,7 @@
 open class SpinnerPlugin: OverlayPlugin {
 
     fileprivate var spinningWheel: UIActivityIndicatorView!
+    private let loadingStates: [PlaybackState] = [.none, .stalling]
 
     @objc var isAnimating: Bool {
         return spinningWheel.isAnimating
@@ -18,7 +19,12 @@ open class SpinnerPlugin: OverlayPlugin {
         view.accessibilityIdentifier = "SpinnerPlugin"
     }
     
-    open override func bindEvents() {}
+    open override func bindEvents() {
+        guard let core = core else { return }
+        
+        listenTo(core, event: .willShowModal) { [weak self] _ in self?.stopAnimating() }
+        listenTo(core, event: .willHideModal) { [weak self] _ in self?.updateVisibility() }
+    }
 
     open override func render() {
         view.addMatchingConstraints(spinningWheel)
@@ -36,7 +42,17 @@ open class SpinnerPlugin: OverlayPlugin {
         listenTo(playback, event: .didPause) { [weak self] _ in self?.stopAnimating() }
         listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
     }
-
+    
+    private func updateVisibility() {
+        let playbackState = core?.activePlayback?.state ?? .error
+        
+        if loadingStates.contains(playbackState) {
+            startAnimating()
+        } else {
+            stopAnimating()
+        }
+    }
+    
     private func startAnimating() {
         view.isHidden = false
         spinningWheel.startAnimating()
