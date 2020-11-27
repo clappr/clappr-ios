@@ -29,7 +29,7 @@ class PosterPluginTests: QuickSpec {
                     core = CoreFactory.create(with: [:], layerComposer: layerComposer)
                     core.render()
 
-                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
+                    let posterPlugin = self.getPosterPlugin(core)
 
                     expect(posterPlugin.view.isHidden).to(beTrue())
                 }
@@ -40,7 +40,7 @@ class PosterPluginTests: QuickSpec {
                     core = CoreFactory.create(with: ["anotherOption": true], layerComposer: layerComposer)
                     core.render()
 
-                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
+                    let posterPlugin = self.getPosterPlugin(core)
 
                     expect(posterPlugin.view.isHidden).to(beTrue())
                 }
@@ -51,9 +51,9 @@ class PosterPluginTests: QuickSpec {
                     core = CoreFactory.create(with: options, layerComposer: layerComposer)
                     core.render()
 
-                    let posterPlugin = self.getPosterPlugin(core.activeContainer)
+                    let posterPlugin = self.getPosterPlugin(core)
 
-                    expect(posterPlugin.view.superview).to(equal(core.activeContainer?.view))
+                    expect(posterPlugin.view.superview).to(equal(core.overlayView))
                 }
             }
 
@@ -67,7 +67,7 @@ class PosterPluginTests: QuickSpec {
                 context("to NoOpPlayback") {
                     beforeEach {
                         core.activeContainer?.playback = NoOpPlayback(options: [:])
-                        posterPlugin = self.getPosterPlugin(core.activeContainer)
+                        posterPlugin = self.getPosterPlugin(core)
                     }
 
                     it("hides itself") {
@@ -75,13 +75,13 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("isNoOpPlayback is true") {
-                        expect(posterPlugin.isNoOpPlayback).to(beTrue())
+                        expect(posterPlugin.activePlayback).to(beAKindOf(NoOpPlayback.self))
                     }
 
                     context("and change again to another playback") {
                         beforeEach {
                             core.activeContainer?.playback = AVFoundationPlayback(options: [:])
-                            posterPlugin = self.getPosterPlugin(core.activeContainer)
+                            posterPlugin = self.getPosterPlugin(core)
                         }
 
                         it("hides itself") {
@@ -94,7 +94,7 @@ class PosterPluginTests: QuickSpec {
 
                     beforeEach {
                         core.activeContainer?.playback = AVFoundationPlayback(options: [:])
-                        posterPlugin = self.getPosterPlugin(core.activeContainer)
+                        posterPlugin = self.getPosterPlugin(core)
                     }
 
                     it("reveal itself") {
@@ -102,7 +102,7 @@ class PosterPluginTests: QuickSpec {
                     }
 
                     it("isNoOpPlayback is false") {
-                        expect(posterPlugin.isNoOpPlayback).to(beFalse())
+                        expect(posterPlugin).toNot(beAKindOf(NoOpPlayback.self))
                     }
                 }
             }
@@ -113,7 +113,7 @@ class PosterPluginTests: QuickSpec {
                 beforeEach {
                     core = CoreFactory.create(with: options, layerComposer: layerComposer)
                     core.load()
-                    posterPlugin = self.getPosterPlugin(core.activeContainer)
+                    posterPlugin = self.getPosterPlugin(core)
                 }
 
                 context("when playback trigger a play event") {
@@ -132,10 +132,24 @@ class PosterPluginTests: QuickSpec {
                     }
                 }
             }
+            
+            context("When play button is pressed") {
+                it("starts the video at the beginning") {
+                    let core = CoreStub()
+                    core.render()
+                    
+                    let posterPlugin = self.getPosterPlugin(core)
+                    posterPlugin.playTouched()
+                    
+                    expect(core.playbackMock?.didCallPlay).to(beTrue())
+                    expect(core.playbackMock?.didCallSeek).to(beTrue())
+                    expect(core.playbackMock?.didCallSeekWithValue).to(equal(0))
+                }
+            }
         }
     }
 
-    private func getPosterPlugin(_ container: Container?) -> PosterPlugin {
-        return container?.plugins.first { $0.pluginName == PosterPlugin.name } as! PosterPlugin
+    private func getPosterPlugin(_ core: Core?) -> PosterPlugin {
+        return core?.plugins.first { $0.pluginName == PosterPlugin.name } as! PosterPlugin
     }
 }

@@ -1,107 +1,93 @@
-open class PosterPlugin: UIContainerPlugin {
-    var poster = UIImageView(frame: CGRect.zero)
-    fileprivate var playButton = UIButton(frame: CGRect.zero)
-    private var isChromeless: Bool { container?.options.bool(kChromeless) ?? false }
+open class PosterPlugin: OverlayPlugin {
+    
+    private var poster = UIImageView(frame: CGRect.zero)
+    private var playButton = UIButton(frame: CGRect.zero)
+    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
 
     open override class var name: String {
         return "poster"
     }
 
-    public required init(context: UIObject) {
-        super.init(context: context)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        poster.contentMode = .scaleAspectFit
-    }
-
     open override func render() {
-        guard let container = container else { return }
+        guard let core = core else { return }
         
         if isChromeless {
             view.isHidden = true
         }
         
-        if let urlString = container.options[kPosterUrl] as? String {
+        if let urlString = core.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
         } else {
             view.isHidden = true
-            container.mediaControlEnabled = false
+            activeContainer?.mediaControlEnabled = false
         }
 
         configurePlayButton()
-        configureViews()
+        configureContraints()
     }
 
-    fileprivate typealias PosterUrl = String
-    fileprivate func setPosterImage(with urlString: PosterUrl) {
+    private func setPosterImage(with urlString: String) {
         if let url = URL(string: urlString) {
             poster.setImage(from: url)
+            poster.contentMode = .scaleAspectFit
         } else {
             Logger.logWarn("invalid URL.", scope: pluginName)
         }
     }
 
-    fileprivate func configurePlayButton() {
+    private func configurePlayButton() {
         let image = UIImage(named: "poster-play", in: Bundle(for: PosterPlugin.self),
                             compatibleWith: nil)
         playButton.setBackgroundImage(image, for: UIControl.State())
-        playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), for: .touchUpInside)
     }
 
     @objc func playTouched() {
-        playback?.seek(0)
-        playback?.play()
+        activePlayback?.seek(0)
+        activePlayback?.play()
     }
 
-    fileprivate func configureViews() {
-        container?.view.addMatchingConstraints(view)
+    private func configureContraints() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        poster.translatesAutoresizingMaskIntoConstraints = false
+        
+        core?.overlayView.addMatchingConstraints(view)
         view.addSubviewMatchingConstraints(poster)
 
         view.addSubview(playButton)
-
-        let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerX,
-                                                   relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        view.addConstraint(xCenterConstraint)
-
-        let yCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerY,
-                                                   relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
-        view.addConstraint(yCenterConstraint)
+        playButton.anchorInCenter()
     }
 
-    override open func bindEvents() {
-        guard !isChromeless else { return }
-        bindContainerEvents()
-        bindPlaybackEvents()
-    }
+    override open func bindEvents() {}
 
-    private func bindPlaybackEvents() {
-        if let playback = playback {
-            listenTo(playback, eventName: Event.playing.rawValue) { [weak self] _ in self?.playbackStarted() }
-            listenTo(playback, eventName: Event.stalling.rawValue) { [weak self] _ in self?.playbackStalled() }
-        }
-    }
-
-    private func bindContainerEvents() {
-        guard let container = container else { return }
-        listenTo(container, eventName: Event.requestPosterUpdate.rawValue) { [weak self] info in self?.updatePoster(info) }
-        listenTo(container, eventName: Event.didUpdateOptions.rawValue) { [weak self] _ in self?.updatePoster(container.options) }
+    override open func onDidChangeActiveContainer() {
+        guard let container = activeContainer else { return }
+        
+        listenTo(container, event: .requestPosterUpdate) { [weak self] info in self?.updatePoster(info) }
+        listenTo(container, event: .didUpdateOptions) { [weak self] _ in self?.updatePoster(container.options) }
     }
 
     override open func onDidChangePlayback() {
-        if isNoOpPlayback {
+        guard let playback = activePlayback else { return }
+        
+        listenTo(playback, event: .playing) { [weak self] _ in self?.playbackStarted() }
+        listenTo(playback, event: .stalling) { [weak self] _ in self?.playbackStalled() }
+        
+        if playback is NoOpPlayback {
             view.isHidden = true
         }
     }
 
-    fileprivate func playbackStalled() {
+    private func playbackStalled() {
         playButton.isHidden = true
     }
 
-    fileprivate func playbackStarted() {
+    private func playbackStarted() {
         view.isHidden = true
     }
     
-    fileprivate func updatePoster(_ info: EventUserInfo) {
+    private func updatePoster(_ info: EventUserInfo) {
         Logger.logInfo("Updating poster", scope: pluginName)
         guard let posterUrl = info?[kPosterUrl] as? String else {
             Logger.logWarn("Unable to update poster, no url was found", scope: pluginName)
