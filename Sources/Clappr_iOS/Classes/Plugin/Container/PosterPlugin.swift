@@ -2,8 +2,7 @@ open class PosterPlugin: OverlayPlugin {
     
     private var poster = UIImageView(frame: CGRect.zero)
     private var playButton = UIButton(frame: CGRect.zero)
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
-
+    
     open override class var name: String {
         return "poster"
     }
