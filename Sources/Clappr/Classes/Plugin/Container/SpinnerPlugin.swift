@@ -1,6 +1,7 @@
-open class SpinnerPlugin: UIContainerPlugin {
+open class SpinnerPlugin: OverlayPlugin {
 
     fileprivate var spinningWheel: UIActivityIndicatorView!
+    private let loadingStates: [PlaybackState] = [.none, .stalling]
 
     @objc var isAnimating: Bool {
         return spinningWheel.isAnimating
@@ -17,37 +18,23 @@ open class SpinnerPlugin: UIContainerPlugin {
         view.isUserInteractionEnabled = false
         view.accessibilityIdentifier = "SpinnerPlugin"
     }
-
-    override open func bindEvents() {
-        bindPlaybackEvents()
+    
+    open override func bindEvents() {
+        guard let core = core else { return }
+        
+        listenTo(core, event: .willShowModal) { [weak self] _ in self?.stopAnimating() }
+        listenTo(core, event: .willHideModal) { [weak self] _ in self?.updateVisibility() }
     }
 
     open override func render() {
-        addCenteringConstraints()
+        view.addMatchingConstraints(spinningWheel)
+        view.anchorInCenter()
     }
 
-    private func addCenteringConstraints() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal,
-                                                 toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: spinningWheel.frame.width)
-        view.addConstraint(widthConstraint)
-
-        let heightConstraint = NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal,
-                                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: spinningWheel.frame.height)
-        view.addConstraint(heightConstraint)
-
-        let xCenterConstraint = NSLayoutConstraint(item: view, attribute: .centerX,
-                                                   relatedBy: .equal, toItem: container?.view, attribute: .centerX, multiplier: 1, constant: 0)
-        container?.view.addConstraint(xCenterConstraint)
-
-        let yCenterConstraint = NSLayoutConstraint(item: view, attribute: .centerY,
-                                                   relatedBy: .equal, toItem: container?.view, attribute: .centerY, multiplier: 1, constant: 0)
-        container?.view.addConstraint(yCenterConstraint)
-    }
-
-    private func bindPlaybackEvents() {
-        guard let playback = playback else { return }
+    override open func onDidChangePlayback() {
+        updateVisibility()
+        
+        guard let playback = core?.activePlayback else { return }
         
         listenTo(playback, event: .playing) { [weak self] _ in self?.stopAnimating() }
         listenTo(playback, event: .stalling) { [weak self] _ in self?.startAnimating() }
@@ -57,7 +44,17 @@ open class SpinnerPlugin: UIContainerPlugin {
         listenTo(playback, event: .didPause) { [weak self] _ in self?.stopAnimating() }
         listenTo(playback, event: .didStop) { [weak self] _ in self?.stopAnimating() }
     }
-
+    
+    private func updateVisibility() {
+        let playbackState = core?.activePlayback?.state ?? .error
+        
+        if loadingStates.contains(playbackState) {
+            startAnimating()
+        } else {
+            stopAnimating()
+        }
+    }
+    
     private func startAnimating() {
         view.isHidden = false
         spinningWheel.startAnimating()
