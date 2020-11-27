@@ -23,7 +23,7 @@ class LayerComposerTests: QuickSpec {
                         description: "BackgroundLayer should be the first subview of rootView, got \(String(describing: type(of: layer)))"
                     )
                 }
-                it("adds PlaygroundLayer as the second layer"){
+                it("adds PlaybackLayer as the second layer"){
                     let index = 1
                     let rootView = UIView()
                     let layerComposer = LayerComposer()
@@ -86,12 +86,10 @@ class LayerComposerTests: QuickSpec {
 
                 layerComposer.showViews()
 
-                let containerLayer = getLayer(from: rootView, at: 2)
-                let mediaControlLayer = getLayer(from: rootView, at: 3)
-                let coreLayer = getLayer(from: rootView, at: 4)
-                let overlayLayer = getLayer(from: rootView, at: 5)
+                let mediaControlLayer = getLayer(from: rootView, at: 2)
+                let coreLayer = getLayer(from: rootView, at: 3)
+                let overlayLayer = getLayer(from: rootView, at: 4)
 
-                expect(containerLayer?.isHidden).to(beFalse())
                 expect(mediaControlLayer?.isHidden).to(beFalse())
                 expect(coreLayer?.isHidden).to(beFalse())
                 expect(overlayLayer?.isHidden).to(beFalse())
@@ -105,12 +103,10 @@ class LayerComposerTests: QuickSpec {
 
                 layerComposer.hideViews()
 
-                let containerLayer = getLayer(from: rootView, at: 2)
-                let mediaControlLayer = getLayer(from: rootView, at: 3)
-                let coreLayer = getLayer(from: rootView, at: 4)
-                let overlayLayer = getLayer(from: rootView, at: 5)
+                let mediaControlLayer = getLayer(from: rootView, at: 2)
+                let coreLayer = getLayer(from: rootView, at: 3)
+                let overlayLayer = getLayer(from: rootView, at: 4)
 
-                expect(containerLayer?.isHidden).to(beTrue())
                 expect(mediaControlLayer?.isHidden).to(beTrue())
                 expect(coreLayer?.isHidden).to(beTrue())
                 expect(overlayLayer?.isHidden).to(beTrue())

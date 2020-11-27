@@ -40,13 +40,11 @@ public class LayerComposer {
         mediaControlLayer.isHidden = false
         coreLayer.isHidden = false
         overlayLayer.isHidden = false
-        containerLayer.isHidden = false
     }
 
     func hideViews() {
         mediaControlLayer.isHidden = true
         coreLayer.isHidden = true
         overlayLayer.isHidden = true
-        containerLayer.isHidden = true
     }
 }
