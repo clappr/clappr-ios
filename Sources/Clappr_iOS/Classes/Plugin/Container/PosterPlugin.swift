@@ -51,10 +51,6 @@ open class PosterPlugin: OverlayPlugin {
         view.addSubviewMatchingConstraints(poster)
 
         view.addSubview(playButton)
-
-        let xCenterConstraint = NSLayoutConstraint(item: playButton, attribute: .centerX,
-                                                   relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        view.addConstraint(xCenterConstraint)
         playButton.anchorInCenter()
     }
 
