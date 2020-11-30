@@ -402,7 +402,7 @@ class PlayerTests: QuickSpec {
                                         kChromeless: true]
                 Loader.shared.resetPlugins()
                 Player.register(playbacks: [StubPlayback.self])
-                let player = StubPlayer(options: options)
+                let player = Player(options: options)
                 let playback = player.activePlayback as? StubPlayback
                 
                 it("auto play when come from background") {
@@ -416,17 +416,13 @@ class PlayerTests: QuickSpec {
                 it("sets chromeless mode property to true") {
                     expect(player.chromelessMode).to(beTrue())
                 }
-
-                it("calls enterChromelessMode") {
-                    expect(player.didCallEnterChromelessMode).to(beTrue())
-                }
             }
             
             context("when not in Chromeless mode") {
                 let options: Options = [kSourceUrl: "http://sitedoesnotexist.com.br/"]
                 Loader.shared.resetPlugins()
                 Player.register(playbacks: [StubPlayback.self])
-                let player = StubPlayer(options: options)
+                let player = Player(options: options)
                 let playback = player.activePlayback as? StubPlayback
                 
                 it("does not auto play when come from background") {
@@ -440,27 +436,8 @@ class PlayerTests: QuickSpec {
                 it("sets chromeless mode property to false") {
                     expect(player.chromelessMode).to(beFalse())
                 }
-
-                it("calls exitChromelessMode") {
-                    player.chromelessMode = false
-                    expect(player.didCallExitChromelessMode).to(beTrue())
-                }
             }
         }
-    }
-    
-    class StubPlayer: Player {
-        var didCallEnterChromelessMode = false
-        var didCallExitChromelessMode = false
-
-        override func enterChromelessMode() {
-            didCallEnterChromelessMode = true
-        }
-
-        override func exitChromelessMode() {
-            didCallExitChromelessMode = true
-        }
-
     }
 
     class StubPlayback: Playback {
