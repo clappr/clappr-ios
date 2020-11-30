@@ -84,7 +84,7 @@ class LayerComposerTests: QuickSpec {
                 let layerComposer = LayerComposer()
                 layerComposer.compose(inside: rootView)
 
-                layerComposer.showViews()
+                layerComposer.showUI()
 
                 let mediaControlLayer = getLayer(from: rootView, at: 2)
                 let coreLayer = getLayer(from: rootView, at: 3)
@@ -101,7 +101,7 @@ class LayerComposerTests: QuickSpec {
                 let layerComposer = LayerComposer()
                 layerComposer.compose(inside: rootView)
 
-                layerComposer.hideViews()
+                layerComposer.hideUI()
 
                 let mediaControlLayer = getLayer(from: rootView, at: 2)
                 let coreLayer = getLayer(from: rootView, at: 3)

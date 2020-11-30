@@ -36,13 +36,13 @@ public class LayerComposer {
         overlayLayer.attachOverlay(view)
     }
     
-    func showViews() {
+    func showUI() {
         mediaControlLayer.isHidden = false
         coreLayer.isHidden = false
         overlayLayer.isHidden = false
     }
 
-    func hideViews() {
+    func hideUI() {
         mediaControlLayer.isHidden = true
         coreLayer.isHidden = true
         overlayLayer.isHidden = true

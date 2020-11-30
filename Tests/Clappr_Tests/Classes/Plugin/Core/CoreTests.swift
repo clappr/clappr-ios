@@ -23,8 +23,8 @@ class CoreTests: QuickSpec {
             var didCallCompose = false
             var didCallAttachUICorePlugin = false
             var didCallAttachMediaControl = false
-            var didCallShowViews = false
-            var didCallHideViews = false
+            var didCallShowUI = false
+            var didCallHideUI = false
             
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
@@ -38,12 +38,12 @@ class CoreTests: QuickSpec {
                 didCallAttachMediaControl = true
             }
             
-            override func showViews() {
-                didCallShowViews = true
+            override func showUI() {
+                didCallShowUI = true
             }
 
-            override func hideViews() {
-                didCallHideViews = true
+            override func hideUI() {
+                didCallHideUI = true
             }
         }
 
@@ -950,7 +950,7 @@ class CoreTests: QuickSpec {
                     it("hides LayerComposer layers") {
                         core.enterChromelessMode()
                         
-                        expect(layerComposer.didCallHideViews).to(beTrue())
+                        expect(layerComposer.didCallHideUI).to(beTrue())
                     }
                 }
                 
@@ -960,7 +960,7 @@ class CoreTests: QuickSpec {
                     it("shows LayerComposer layers") {
                         core.exitChromelessMode()
                         
-                        expect(layerComposer.didCallShowViews).to(beTrue())
+                        expect(layerComposer.didCallShowUI).to(beTrue())
                     }
                 }
             }

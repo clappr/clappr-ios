@@ -102,13 +102,13 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     
     public func enterChromelessMode() {
         #if os(iOS)
-        layerComposer.hideViews()
+        layerComposer.hideUI()
         #endif
     }
 
     public func exitChromelessMode() {
         #if os(iOS)
-        layerComposer.showViews()
+        layerComposer.showUI()
         #endif
     }
 
