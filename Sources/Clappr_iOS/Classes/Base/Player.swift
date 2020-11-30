@@ -9,7 +9,6 @@ open class Player: BaseObject {
         get { core?.chromelessMode ?? false }
         set {
             core?.chromelessMode = newValue
-            updateChromelessModeVisibility()
         }
     }
     static var hasAlreadyRegisteredPlugins = false
@@ -92,8 +91,6 @@ open class Player: BaseObject {
         bindMediaControlEvents()
         bindPlaybackEvents()
         bindNotifications()
-        core?.updateChromelessMode(with: options)
-        updateChromelessModeVisibility()
         core?.load()
     }
     
@@ -136,13 +133,7 @@ open class Player: BaseObject {
         }
     }
     
-    private func updateChromelessModeVisibility() {
-        if chromelessMode {
-            enterChromelessMode()
-        } else {
-            exitChromelessMode()
-        }
-    }
+    
     
     public func enterChromelessMode() {
         core?.enterChromelessMode()
@@ -176,8 +167,6 @@ open class Player: BaseObject {
 
     open func configure(options: Options) {
         core?.options = options
-        core?.updateChromelessMode(with: options)
-        updateChromelessModeVisibility()
         core?.load()
     }
 

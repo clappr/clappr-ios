@@ -9,6 +9,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
+            updateChromelessMode()
             trigger(Event.didUpdateOptions)
         }
     }
@@ -55,7 +56,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     @objc open var isFullscreen: Bool = false
-    public var chromelessMode: Bool = false
+    public var chromelessMode: Bool = false {
+        didSet {
+            updateChromelessModeVisibility()
+        }
+    }
     
     public required init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
@@ -63,8 +68,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         self.options = options
         self.layerComposer = layerComposer
         super.init()
-        self.updateChromelessMode(with: options)
-
+        self.updateChromelessMode()
+        
         if !chromelessMode {
             addTapGestures()
         }
@@ -94,7 +99,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
     
-    public func updateChromelessMode(with option: Options) {
+    private func updateChromelessModeVisibility() {
+        if chromelessMode {
+            enterChromelessMode()
+        } else {
+            exitChromelessMode()
+        }
+    }
+    
+    private func updateChromelessMode() {
         if let chromelessMode = options[kChromeless] as? Bool {
             self.chromelessMode = chromelessMode
         }
