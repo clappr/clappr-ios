@@ -58,7 +58,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var isFullscreen: Bool = false
     public var chromelessMode: Bool = false {
         didSet {
-            updateChromelessModeVisibility()
+            updateLayersVisibility()
             updateGestureRecognizersState()
         }
     }
@@ -97,33 +97,22 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         }
     }
     
-    private func updateChromelessModeVisibility() {
-        chromelessMode ? enterChromelessMode() : exitChromelessMode()
+    private func updateLayersVisibility() {
+        #if os(iOS)
+        chromelessMode ? layerComposer.hideUI() : layerComposer.showUI()
+        #endif
     }
     
     private func updateGestureRecognizersState() {
         #if os(iOS)
         view.gestureRecognizers?.forEach { $0.isEnabled = !chromelessMode }
         #endif
-
     }
     
     private func updateChromelessMode() {
         if let chromelessMode = options[kChromeless] as? Bool {
             self.chromelessMode = chromelessMode
         }
-    }
-    
-    private func enterChromelessMode() {
-        #if os(iOS)
-        layerComposer.hideUI()
-        #endif
-    }
-
-    private func exitChromelessMode() {
-        #if os(iOS)
-        layerComposer.showUI()
-        #endif
     }
 
     private func bindEventListeners() {
