@@ -59,6 +59,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     public var chromelessMode: Bool = false {
         didSet {
             updateChromelessModeVisibility()
+            updateGestureRecognizersState()
         }
     }
     
@@ -100,11 +101,11 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     private func updateChromelessModeVisibility() {
-        if chromelessMode {
-            enterChromelessMode()
-        } else {
-            exitChromelessMode()
-        }
+        chromelessMode ? enterChromelessMode() : exitChromelessMode()
+    }
+    
+    private func updateGestureRecognizersState() {
+        view.gestureRecognizers?.forEach { $0.isEnabled = !chromelessMode }
     }
     
     private func updateChromelessMode() {
