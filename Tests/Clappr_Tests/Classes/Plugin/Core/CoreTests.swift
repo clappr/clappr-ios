@@ -64,6 +64,7 @@ class CoreTests: QuickSpec {
 
                 beforeEach {
                     core = CoreFactory.create(with: options, layerComposer: layerComposer)
+                    core.render()
                 }
 
                 it("set frame Rect to zero") {
@@ -945,21 +946,17 @@ class CoreTests: QuickSpec {
                 let layerComposer = LayerComposerSpy()
                 
                 context("when in chromeless mode by options") {
-                    let core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: true], layerComposer: layerComposer)
+                    core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: true], layerComposer: layerComposer)
                     
                     it("hides LayerComposer layers") {
-                        core.enterChromelessMode()
-                        
                         expect(layerComposer.didCallHideUI).to(beTrue())
                     }
                 }
                 
                 context("when is not in chromeless mode by options") {
-                    let core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: false], layerComposer: layerComposer)
+                    core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: false], layerComposer: layerComposer)
                     
                     it("shows LayerComposer layers") {
-                        core.exitChromelessMode()
-                        
                         expect(layerComposer.didCallShowUI).to(beTrue())
                     }
                 }
