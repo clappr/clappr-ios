@@ -7,9 +7,7 @@ open class Player: BaseObject {
     public private(set) var core: Core?
     public var chromelessMode: Bool {
         get { core?.chromelessMode ?? false }
-        set {
-            core?.chromelessMode = newValue
-        }
+        set { core?.chromelessMode = newValue }
     }
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
@@ -131,16 +129,6 @@ open class Player: BaseObject {
             Logger.logDebug("forced play after return from background", scope: "Player")
             play()
         }
-    }
-    
-    
-    
-    public func enterChromelessMode() {
-        core?.enterChromelessMode()
-    }
-
-    public func exitChromelessMode() {
-        core?.exitChromelessMode()
     }
     
     open func presentFullscreenIn(_ controller: UIViewController) {
