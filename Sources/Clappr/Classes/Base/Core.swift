@@ -69,7 +69,8 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         self.options = options
         self.layerComposer = layerComposer
         super.init()
-        addTapGestures()
+        
+        updateChromelessMode()
         
         bindEventListeners()
         
@@ -151,9 +152,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open override func render() {
+        addTapGestures()
         containers.forEach(renderContainer)
         addToContainer()
-        updateChromelessMode()
+        updateGestureRecognizersState()
     }
 
     private func addToContainer() {
