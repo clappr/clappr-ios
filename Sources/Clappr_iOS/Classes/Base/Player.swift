@@ -5,8 +5,10 @@ open class Player: BaseObject {
     open var playbackEventsToListen: [String] = []
     private var playbackEventsListenIds: [String] = []
     public private(set) var core: Core?
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
-
+    public var chromelessMode: Bool {
+        get { core?.chromelessMode ?? false }
+        set { core?.chromelessMode = newValue }
+    }
     static var hasAlreadyRegisteredPlugins = false
     static var hasAlreadyRegisteredPlaybacks = false
 
@@ -87,7 +89,6 @@ open class Player: BaseObject {
         bindMediaControlEvents()
         bindPlaybackEvents()
         bindNotifications()
-
         core?.load()
     }
     
@@ -124,7 +125,7 @@ open class Player: BaseObject {
     }
     
     @objc private func willEnterForeground() {
-        if isChromeless {
+        if chromelessMode {
             Logger.logDebug("forced play after return from background", scope: "Player")
             play()
         }

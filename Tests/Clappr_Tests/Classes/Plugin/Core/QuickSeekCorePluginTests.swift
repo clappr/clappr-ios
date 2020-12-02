@@ -23,6 +23,7 @@ class QuickSeekCorePluginTests: QuickSpec {
                     eventTrigger = true
                     eventParams = userInfo
                 }
+                core.render()
             }
             
             describe("pluginName") {

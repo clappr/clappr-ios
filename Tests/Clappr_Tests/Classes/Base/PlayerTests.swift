@@ -412,6 +412,10 @@ class PlayerTests: QuickSpec {
                     
                     expect(playback?.didCallPlay).to(beTrue())
                 }
+                
+                it("sets chromeless mode property to true") {
+                    expect(player.chromelessMode).to(beTrue())
+                }
             }
             
             context("when not in Chromeless mode") {
@@ -427,6 +431,10 @@ class PlayerTests: QuickSpec {
                     NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
                     
                     expect(playback?.didCallPlay).to(beFalse())
+                }
+                
+                it("sets chromeless mode property to false") {
+                    expect(player.chromelessMode).to(beFalse())
                 }
             }
         }

@@ -9,6 +9,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var options: Options {
         didSet {
             containers.forEach { $0.options = options }
+            updateChromelessMode()
             trigger(Event.didUpdateOptions)
         }
     }
@@ -55,7 +56,12 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
 
     @objc open var isFullscreen: Bool = false
-    private var isChromeless: Bool { options.bool(kChromeless) }
+    public var chromelessMode: Bool = false {
+        didSet {
+            updateLayersVisibility()
+            updateGestureRecognizersState()
+        }
+    }
     
     public required init(options: Options = [:], layerComposer: LayerComposer) {
         Logger.logDebug("loading with \(options)", scope: "\(type(of: self))")
@@ -64,9 +70,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         self.layerComposer = layerComposer
         super.init()
         
-        if !isChromeless {
-            addTapGestures()
-        }
+        updateChromelessMode()
         
         bindEventListeners()
         
@@ -90,6 +94,24 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     public func setActive(container: Container) {
         if activeContainer != container {
             activeContainer = container
+        }
+    }
+    
+    private func updateLayersVisibility() {
+        #if os(iOS)
+        chromelessMode ? layerComposer.hideUI() : layerComposer.showUI()
+        #endif
+    }
+    
+    private func updateGestureRecognizersState() {
+        #if os(iOS)
+        view.gestureRecognizers?.forEach { $0.isEnabled = !chromelessMode }
+        #endif
+    }
+    
+    private func updateChromelessMode() {
+        if let chromelessMode = options[kChromeless] as? Bool {
+            self.chromelessMode = chromelessMode
         }
     }
 
@@ -119,8 +141,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     }
     
     open override func render() {
+        addTapGestures()
         containers.forEach(renderContainer)
         addToContainer()
+        updateGestureRecognizersState()
     }
 
     private func addToContainer() {

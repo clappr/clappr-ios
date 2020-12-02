@@ -2,18 +2,13 @@ open class PosterPlugin: OverlayPlugin {
     
     private var poster = UIImageView(frame: CGRect.zero)
     private var playButton = UIButton(frame: CGRect.zero)
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
-
+    
     open override class var name: String {
         return "poster"
     }
 
     open override func render() {
         guard let core = core else { return }
-        
-        if isChromeless {
-            view.isHidden = true
-        }
         
         if let urlString = core.options[kPosterUrl] as? String {
             setPosterImage(with: urlString)
@@ -67,7 +62,7 @@ open class PosterPlugin: OverlayPlugin {
         listenTo(container, event: .requestPosterUpdate) { [weak self] info in self?.updatePoster(info) }
         listenTo(container, event: .didUpdateOptions) { [weak self] _ in self?.updatePoster(container.options) }
     }
-
+    
     override open func onDidChangePlayback() {
         guard let playback = activePlayback else { return }
         

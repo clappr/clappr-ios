@@ -23,6 +23,8 @@ class CoreTests: QuickSpec {
             var didCallCompose = false
             var didCallAttachUICorePlugin = false
             var didCallAttachMediaControl = false
+            var didCallShowUI = false
+            var didCallHideUI = false
             
             override func compose(inside rootView: UIView) {
                 didCallCompose = true
@@ -34,6 +36,14 @@ class CoreTests: QuickSpec {
             
             override func attachMediaControl(_ view: UIView) {
                 didCallAttachMediaControl = true
+            }
+            
+            override func showUI() {
+                didCallShowUI = true
+            }
+
+            override func hideUI() {
+                didCallHideUI = true
             }
         }
 
@@ -54,6 +64,7 @@ class CoreTests: QuickSpec {
 
                 beforeEach {
                     core = CoreFactory.create(with: options, layerComposer: layerComposer)
+                    core.render()
                 }
 
                 it("set frame Rect to zero") {
@@ -929,6 +940,28 @@ class CoreTests: QuickSpec {
                     }
                 }
             }
+            
+            #if os(iOS)
+            describe("#chromelessMode") {
+                let layerComposer = LayerComposerSpy()
+                
+                context("when in chromeless mode by options") {
+                    core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: true], layerComposer: layerComposer)
+                    
+                    it("hides LayerComposer layers") {
+                        expect(layerComposer.didCallHideUI).to(beTrue())
+                    }
+                }
+                
+                context("when is not in chromeless mode by options") {
+                    core = CoreFactory.create(with: [kSourceUrl: "http//test.com", kChromeless: false], layerComposer: layerComposer)
+                    
+                    it("shows LayerComposer layers") {
+                        expect(layerComposer.didCallShowUI).to(beTrue())
+                    }
+                }
+            }
+            #endif
         }
     }
 

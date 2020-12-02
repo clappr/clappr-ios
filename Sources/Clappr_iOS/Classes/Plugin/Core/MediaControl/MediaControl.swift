@@ -16,7 +16,6 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     
     var options: Options? { core?.options }
     private var alwaysVisible: Bool { core?.options.bool(kMediaControlAlwaysVisible) ?? false }
-    private var isChromeless: Bool { core?.options.bool(kChromeless) ?? false }
     private var isDrawerActive = false
     private var controlsEnabled = true
     private let statesToKeepVisible: [PlaybackState] = [.paused, .idle]
@@ -26,10 +25,10 @@ open class MediaControl: UICorePlugin, UIGestureRecognizerDelegate {
     }
     
     private var canHide: Bool { animationState != .hiding && !alwaysVisible }
-    private var canShow: Bool { !isChromeless
-        && animationState != .showing
-        && !isDrawerActive
-        && controlsEnabled
+    private var canShow: Bool {
+        animationState != .showing &&
+        !isDrawerActive &&
+        controlsEnabled
     }
 
     override open func bindEvents() {
