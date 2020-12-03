@@ -35,6 +35,7 @@ open class PosterPlugin: OverlayPlugin {
                             compatibleWith: nil)
         playButton.setBackgroundImage(image, for: UIControl.State())
         playButton.addTarget(self, action: #selector(PosterPlugin.playTouched), for: .touchUpInside)
+        playButton.accessibilityIdentifier = "PlayPosterButton"
     }
 
     @objc func playTouched() {
