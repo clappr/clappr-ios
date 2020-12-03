@@ -29,7 +29,7 @@ class PlaybackTests: QuickSpec {
             context("when video plays") {
                 it("enters stalling and then playing state") {
                     dashboardInteractor.startVideo()
-                    playerInteractor.tapOnContainer()
+                    playerInteractor.tapOnPlayPosterButton()
 
                     expect(app.isVideoIn(state: .playing)).to(beTrue())
                 }
