@@ -210,10 +210,12 @@ open class AVFoundationPlayback: Playback {
         return playbackType == .live ? isDvrAvailable : !duration.isZero
     }
 
+    @available(*, unavailable)
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @available(*, unavailable)
     public required init(context _: UIObject) {
         fatalError("init(context:) has not been implemented")
     }
