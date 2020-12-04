@@ -210,12 +210,20 @@ open class AVFoundationPlayback: Playback {
         return playbackType == .live ? isDvrAvailable : !duration.isZero
     }
 
+    public required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    public required init(context _: UIObject) {
+        fatalError("init(context:) has not been implemented")
+    }
+    
     public required init(options: Options) {
         super.init(options: options)
         asset = createAsset(from: options[kSourceUrl] as? String)
         setAudioSessionCategory(to: .playback)
     }
-
+    
     private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
         guard let urlString = sourceUrl, let url = URL(string: urlString) else { return nil }
         return AVURLAssetWithCookiesBuilder(url: url).asset
@@ -223,14 +231,6 @@ open class AVFoundationPlayback: Playback {
 
     @objc public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
         asset?.resourceLoader.setDelegate(delegate, queue: DispatchQueue(label: "\(String(describing: asset?.url))-delegateQueue"))
-    }
-
-    public required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public required init(context _: UIObject) {
-        fatalError("init(context:) has not been implemented")
     }
 
     open override func play() {
