@@ -223,10 +223,15 @@ open class AVFoundationPlayback: Playback {
     public required init(options: Options) {
         super.init(options: options)
         
-        asset = createAsset(from: options[kSourceUrl] as? String)
+        if let asset = createAsset(from: options[kSourceUrl] as? String) {
+            self.asset = asset
+            observe(asset: asset)
+        }
+        
         player = createAVPlayer(with: asset, shouldLoop: options[kLoop] as? Bool ?? false)
         player.allowsExternalPlayback = isExternalPlaybackEnabled
         player.appliesMediaSelectionCriteriaAutomatically = false
+        observe(player: player)
         
         
         setAudioSessionCategory(to: .playback)
@@ -283,6 +288,49 @@ open class AVFoundationPlayback: Playback {
         
         return player
     }
+    
+    private func observe(asset: AVAsset) {
+        asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
+        asset.wait(for: .duration, then: durationAvailable)
+    }
+    
+    private func observe(player: AVPlayer) {
+        observers += [
+            view.observe(\.bounds) { [weak self] view, _ in
+                self?.maximizePlayer(within: view)
+                self?.hideSubtitleForSmallScreen()
+            },
+            player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
+            player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
+            player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
+            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp) { [weak self] player, _ in self?.handlePlaybackLikelyToKeepUp(player) },
+            player.observe(\.currentItem?.isPlaybackBufferEmpty) { [weak self] player, _ in self?.handlePlaybackBufferEmpty(player) },
+            player.observe(\.isExternalPlaybackActive) { [weak self] player, _ in self?.updateAirplayStatus(from: player) },
+            player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
+            player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
+        ]
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playbackDidEnd),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onAccessLogEntry),
+            name: .AVPlayerItemNewAccessLogEntry,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onFailedToPlayToEndTime),
+            name: .AVPlayerItemFailedToPlayToEndTime,
+            object: nil
+        )
+    }
 
     private func triggerSetupError() {
         trigger(.error)
@@ -299,10 +347,8 @@ open class AVFoundationPlayback: Playback {
         playerLayer.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
 
-        asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
-        asset.wait(for: .duration, then: durationAvailable)
-        setupObservers()
-        addObservers()
+        observe(asset: asset)
+        observe(player: player)
     }
 
     private func durationAvailable() {
@@ -331,46 +377,6 @@ open class AVFoundationPlayback: Playback {
         }
     }
     #endif
-
-    @objc func setupObservers() {
-        observers += [
-            view.observe(\.bounds) { [weak self] view, _ in
-                self?.maximizePlayer(within: view)
-                self?.hideSubtitleForSmallScreen()
-            },
-            player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
-            player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
-            player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
-            player.observe(\.currentItem?.isPlaybackLikelyToKeepUp) { [weak self] player, _ in self?.handlePlaybackLikelyToKeepUp(player) },
-            player.observe(\.currentItem?.isPlaybackBufferEmpty) { [weak self] player, _ in self?.handlePlaybackBufferEmpty(player) },
-            player.observe(\.isExternalPlaybackActive) { [weak self] player, _ in self?.updateAirplayStatus(from: player) },
-            player.observe(\.timeControlStatus) { [weak self] player, _ in self?.triggerStallingIfNeeded(player) },
-            player.observe(\.rate, options: .prior) { [weak self] player, changes in self?.handlePlayerRateChanged(player, changes) },
-        ]
-    }
-
-    @objc func addObservers() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playbackDidEnd),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player.currentItem
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(onAccessLogEntry),
-            name: .AVPlayerItemNewAccessLogEntry,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(onFailedToPlayToEndTime),
-            name: .AVPlayerItemFailedToPlayToEndTime,
-            object: nil
-        )
-    }
 
     @objc func playbackDidEnd(notification: NSNotification?) {
         guard didFinishedItem(from: notification) else { return }
