@@ -249,7 +249,6 @@ open class AVFoundationPlayback: Playback {
 
     open override func play() {
         guard canPlay else { return }
-        setupPlayerIfNeeded()
         trigger(.willPlay)
         if state == .stalling { trigger(.stalling) }
         player.play()
@@ -336,20 +335,6 @@ open class AVFoundationPlayback: Playback {
     private func triggerSetupError() {
         trigger(.error)
         Logger.logError("could not setup player", scope: pluginName)
-    }
-
-    private func setupPlayerIfNeeded() {
-        guard player == nil else { return }
-        guard let asset = asset else { return triggerSetupError() }
-
-        player = createAVPlayer(with: asset, shouldLoop: shouldLoop)
-        playerLayer = AVPlayerLayer(player: player)
-        view.layer.addSublayer(playerLayer)
-        playerLayer.frame = view.bounds
-        setupMaxResolution(for: playerLayer.frame.size)
-
-        observe(asset: asset)
-        observe(player: player)
     }
 
     private func durationAvailable() {
