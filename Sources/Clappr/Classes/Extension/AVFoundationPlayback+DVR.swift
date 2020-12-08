@@ -8,7 +8,7 @@ extension AVFoundationPlayback {
     open override var isDvrInUse: Bool {
         if state == .paused && isDvrAvailable { return true }
         guard let end = dvrWindowEnd, playbackType == .live else { return false }
-        guard let currentTime = player?.currentTime().seconds else { return false }
+        guard let currentTime = player.currentItem?.currentTime().seconds else { return false }
         return end - liveHeadTolerance > currentTime
     }
     
@@ -18,7 +18,7 @@ extension AVFoundationPlayback {
     }
     
     open override var currentDate: Date? {
-        return player?.currentItem?.currentDate()
+        return player.currentItem?.currentDate()
     }
 
     open override var currentLiveDate: Date? {
@@ -29,12 +29,12 @@ extension AVFoundationPlayback {
     }
     
     open override var seekableTimeRanges: [NSValue] {
-        guard let ranges = player?.currentItem?.seekableTimeRanges else { return [] }
+        guard let ranges = player.currentItem?.seekableTimeRanges else { return [] }
         return ranges
     }
     
     open override var loadedTimeRanges: [NSValue] {
-        guard let ranges = player?.currentItem?.loadedTimeRanges else { return [] }
+        guard let ranges = player.currentItem?.loadedTimeRanges else { return [] }
         return ranges
     }
     
