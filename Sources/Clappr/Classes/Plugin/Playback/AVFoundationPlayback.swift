@@ -233,6 +233,7 @@ open class AVFoundationPlayback: Playback {
         player.appliesMediaSelectionCriteriaAutomatically = false
         observe(player: player)
         
+        playerLayer = AVPlayerLayer(player: player)
         
         setAudioSessionCategory(to: .playback)
     }
@@ -779,10 +780,15 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override func render() {
-        super.render()
+        view.layer.addSublayer(playerLayer)
+        playerLayer?.frame = view.bounds
+        setupMaxResolution(for: playerLayer.frame.size)
+        
         if asset != nil {
             trigger(.ready)
         }
+        
+        super.render()
     }
 
     private func updateAccesibilityIdentifier() {
