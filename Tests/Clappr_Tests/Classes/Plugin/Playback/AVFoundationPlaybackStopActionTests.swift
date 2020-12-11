@@ -17,17 +17,6 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                     expect(avfoundationPlayback.state).to(equal(.idle))
                 }
 
-                it("changes player instance to nil") {
-                    let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                    avfoundationPlayback.player = PlayerMock()
-                    avfoundationPlayback.addObservers()
-                    avfoundationPlayback.state = .playing
-                    
-                    avfoundationPlayback.stop()
-                    
-                    expect(avfoundationPlayback.player).to(beNil())
-                }
-
                 context("#events") {
                     it("triggers willStop event") {
                         var didCallWillStop = false

@@ -353,14 +353,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 describe("#seekableTimeRanges") {
-                    context("when player is nil") {
-                        it("is empty") {
-                            playback.player = nil
-
-                            expect(playback.seekableTimeRanges).to(beEmpty())
-                        }
-                    }
-
                     context("when video has seekableTimeRanges") {
                         it("returns an array with NSValue") {
                             item.setSeekableTimeRange(with: 60)
@@ -390,14 +382,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                 }
 
                 describe("#loadedTimeRanges") {
-                    context("when player is nil") {
-                        it("is empty") {
-                            playback.player = nil
-
-                            expect(playback.loadedTimeRanges).to(beEmpty())
-                        }
-                    }
-
                     context("when video has loadedTimeRanges") {
                         it("returns an array with NSValue") {
                             item.setLoadedTimeRanges(with: 60)
