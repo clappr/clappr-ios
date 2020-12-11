@@ -34,7 +34,6 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         accessLog.setObservedBitrate(13.0)
                         let player = PlayerMock(accessLogEvent: accessLog)
                         avfoundationPlayback.player = player
-                        avfoundationPlayback.addObservers()
 
                         NotificationCenter.default.post(
                             name: .AVPlayerItemNewAccessLogEntry,
@@ -53,7 +52,6 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                             accessLog.setDroppedFrames(2)
                             let player = PlayerMock(accessLogEvent: accessLog)
                             avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
                             
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
@@ -70,7 +68,6 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                 accessLog.setDroppedFrames(2)
                                 let player = PlayerMock(accessLogEvent: accessLog)
                                 avfoundationPlayback.player = player
-                                avfoundationPlayback.addObservers()
                                 
                                 NotificationCenter.default.post(
                                     name: .AVPlayerItemNewAccessLogEntry,
@@ -94,7 +91,6 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                     accessLog.setDroppedFrames(31)
                                     let player = PlayerMock(accessLogEvent: accessLog)
                                     avfoundationPlayback.player = player
-                                    avfoundationPlayback.addObservers()
                                     
                                     NotificationCenter.default.post(
                                         name: .AVPlayerItemNewAccessLogEntry,
@@ -121,7 +117,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                             accessLog.setDroppedFrames(24)
                             let player = PlayerMock(accessLogEvent: accessLog)
                             avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
+
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
@@ -141,7 +137,6 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                             accessLog.setDroppedFrames(76)
                             let player = PlayerMock(accessLogEvent: accessLog, isFinished: true)
                             avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
                             
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
