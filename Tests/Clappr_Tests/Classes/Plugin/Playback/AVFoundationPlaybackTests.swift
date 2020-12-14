@@ -1546,7 +1546,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             subtitleOption = userInfo?["mediaOption"] as? MediaOption
                         }
 
-                        avFoundationPlayback.selectedSubtitle = avFoundationPlayback.subtitles?[0]
+                        avFoundationPlayback.selectedSubtitle = avFoundationPlayback.subtitles?.first
 
                         expect(subtitleOption).toEventuallyNot(beNil())
                         expect(subtitleOption).toEventually(beAKindOf(MediaOption.self))
