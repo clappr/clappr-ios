@@ -14,7 +14,7 @@ open class AVFoundationPlayback: Playback {
     @objc dynamic var player: AVPlayer!
     @objc dynamic private var playerLooper: AVPlayerLooper? {
         didSet {
-            loopObserver = observe(\.playerLooper?.loopCount) { [weak self] _, _ in
+            loopObserver = playerLooper?.observe(\.loopCount) { [weak self] _, _ in
                 self?.trigger(.didLoop)
             }
         }
