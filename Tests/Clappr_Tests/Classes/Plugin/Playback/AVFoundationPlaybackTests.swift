@@ -140,15 +140,15 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video is live") {
 
                         beforeEach {
-                            playback.render()
                             asset.set(duration: .indefinite)
                         }
 
                         context("video has dvr") {
                             context("when dvr is being used") {
                                 it("triggers didChangeDvrStatus with inUse true") {
-                                    player.set(currentTime: CMTime(seconds: 54, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
+                                    item.set(currentTime: CMTime(seconds: 54, preferredTimescale: 1))
+
                                     var usingDVR: Bool?
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["inUse"] as? Bool {
@@ -1322,8 +1322,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("returns true") {
                         asset.set(duration: .indefinite)
                         item.setSeekableTimeRange(with: 160)
-                        player.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
-
+                        item.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
                         player.play()
 
                         expect(playback.isDvrInUse).toEventually(beTrue())
