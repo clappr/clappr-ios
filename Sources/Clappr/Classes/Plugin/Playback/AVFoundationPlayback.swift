@@ -223,15 +223,11 @@ open class AVFoundationPlayback: Playback {
     public required init(options: Options) {
         super.init(options: options)
         
-        if let asset = createAsset(from: options[kSourceUrl] as? String) {
-            self.asset = asset
-            observe(asset: asset)
-        }
+        asset = createAsset(from: options[kSourceUrl] as? String)
         
         player = createAVPlayer(with: asset, shouldLoop: options[kLoop] as? Bool ?? false)
         player.allowsExternalPlayback = isExternalPlaybackEnabled
         player.appliesMediaSelectionCriteriaAutomatically = false
-        observe(player: player)
         
         playerLayer = AVPlayerLayer(player: player)
         
@@ -768,6 +764,11 @@ open class AVFoundationPlayback: Playback {
         view.layer.addSublayer(playerLayer)
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
+        
+        if let asset = asset {
+            observe(asset: asset)
+        }
+        observe(player: player)
         
         if asset != nil {
             trigger(.ready)
