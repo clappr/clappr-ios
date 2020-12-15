@@ -28,6 +28,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 playback = AVFoundationPlayback(options: [:])
                 playback.player = player
+                playback.render()
 
                 stub(condition: isHost("clappr.sample") || isHost("clappr.io")) { result in
                     if result.url?.path == "/master.m3u8" {
@@ -91,7 +92,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("stops observing loopCount") {
                             let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.stop()
 
@@ -138,6 +140,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video is live") {
 
                         beforeEach {
+                            playback.render()
                             asset.set(duration: .indefinite)
                         }
 
@@ -695,7 +698,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when did change bounds") {
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
-
+                        playback.render()
+                        
                         playback.play()
                         playback.view.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
                         let playerSize = playback.view.bounds.size
@@ -723,6 +727,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     #if os(iOS)
                     it("sets preferredMaximumResolution according to playback bounds size") {
                         let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
+                        playback.render()
+                        
                         playback.view.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
                         let playerSize = playback.view.bounds.size
                         let mainScale = UIScreen.main.scale
@@ -1071,7 +1077,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                 it("works properly") {
                     let observer = KVOStub()
                     let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.io/slack.mp4"])
-
+                    playback.render()
+                    
                     playback.addObserver(observer, forKeyPath: "player", options: [.old, .new], context: nil)
                     playback.play()
 
@@ -1370,6 +1377,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("triggers didFindAudio event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
+                            playback.render()
+                            
                             var hasDefaultFromOption = true
                             playback.on(Event.didFindAudio.rawValue) { userInfo in
                                 guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
@@ -1389,6 +1398,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("changes subtitle just once") {
                         let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
                         let playback = AVFoundationPlayback(options: options)
+                        playback.render()
+                        
                         var hasDefaultFromOption = false
                         playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                             guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
@@ -1444,6 +1455,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("changes audio just once") {
                         let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultAudioSource: "pt"]
                         let playback = AVFoundationPlayback(options: options)
+                        playback.render()
+                        
                         var hasDefaultFromOption = false
                         playback.on(Event.didFindAudio.rawValue) { userInfo in
                             guard let audio = userInfo?["audios"] as? AvailableMediaOptions else { return }
@@ -1482,6 +1495,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("triggers didFindSubtitle event with hasDefaultFromOption true") {
                             let options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kDefaultSubtitle: "pt"]
                             let playback = AVFoundationPlayback(options: options)
+                            playback.render()
                             var hasDefaultFromOption = false
                             playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
@@ -1498,6 +1512,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("triggers didFindSubtitle event with hasDefaultFromOption false") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
+                            playback.render()
                             var hasDefaultFromOption = true
                             playback.on(Event.didFindSubtitle.rawValue) { userInfo in
                                 guard let subtitles = userInfo?["subtitles"] as? AvailableMediaOptions else { return }
@@ -1589,7 +1604,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes isPlaying to true") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
 
                             expect(playback.state).toEventually(equal(.playing), timeout: 10)
@@ -1639,7 +1655,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("keeps playing") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.seek(10)
 
@@ -1675,7 +1692,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
 
                             expect(playback.state).to(equal(.stalling))
@@ -1688,7 +1706,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes isPlaying to true") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.pause()
                             playback.play()
@@ -1727,7 +1746,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes state to stalling") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.pause()
                             playback.play()
@@ -1742,7 +1762,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("keeps stalling state") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.seek(10)
 
@@ -1754,7 +1775,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes state to paused") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.pause()
 
@@ -1766,7 +1788,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("changes state to idle") {
                             let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                             let playback = AVFoundationPlayback(options: options)
-
+                            playback.render()
+                            
                             playback.play()
                             playback.stop()
 
@@ -1781,6 +1804,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("triggers event assetAvailable") {
                         let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
                         let playback = AVFoundationPlayback(options: options)
+                        playback.render()
                         var didTriggerAssetReady = false
 
                         playback.on(Event.assetReady.rawValue) { _ in
@@ -1802,6 +1826,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     let playback = AVFoundationPlayback(options: [kSourceUrl: source])
                     playback.player = AVPlayer(playerItem: playerItem)
+                    playback.render()
                     return playback
                 }
 
@@ -1838,6 +1863,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback = AVFoundationPlayback(options: options)
                         playback.nowPlayingService = nowPlayingService
 
+                        playback.render()
                         playback.play()
 
                         expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
