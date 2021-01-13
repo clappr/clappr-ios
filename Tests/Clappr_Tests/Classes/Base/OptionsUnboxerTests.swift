@@ -19,24 +19,18 @@ class OptionsUnboxerTests: QuickSpec {
                     expect(optionsUnboxer.fullscreen).to(beFalse())
                 }
 
-                it("returns `false` for `kFullscreenByApp`") {
-                    expect(optionsUnboxer.fullscreenControledByApp).to(beFalse())
-                }
             }
 
             context("when options is passed") {
 
                 beforeEach {
-                    optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true, kFullscreenByApp: true])
+                    optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true])
                 }
 
                 it("returns correct value for `fullscreen`") {
                     expect(optionsUnboxer.fullscreen).to(beTrue())
                 }
 
-                it("returns correct value for `kFullscreenByApp`") {
-                    expect(optionsUnboxer.fullscreenControledByApp).to(beTrue())
-                }
             }
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X5F-KS-Cdq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X5F-KS-Cdq">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,13 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fullscreen controlled by app" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5g-dh-ZqY">
-                                <rect key="frame" x="16" y="84" width="231" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tY3-dQ-IX8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tY3-dQ-IX8">
                                 <rect key="frame" x="40" y="316" width="240" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration" identifier="StartVideo"/>
@@ -55,42 +49,32 @@
                                     <action selector="startVideo:" destination="b2n-EE-xfA" eventType="touchUpInside" id="SWj-4F-87t"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jcb-bi-KKQ">
-                                <rect key="frame" x="255" y="76.5" width="51" height="31"/>
-                                <accessibility key="accessibilityConfiguration" identifier="FullscreenControledByApp"/>
-                            </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start player as fullscreen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOy-Tl-w1v">
-                                <rect key="frame" x="16" y="140" width="231" height="16"/>
+                                <rect key="frame" x="16" y="62" width="231" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yI1-Wk-Mdf">
-                                <rect key="frame" x="255" y="132.5" width="51" height="31"/>
+                                <rect key="frame" x="255" y="54.5" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="StartAsFullscreen"/>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Jcb-bi-KKQ" secondAttribute="trailing" constant="16" id="5dJ-ue-yzY"/>
-                            <constraint firstItem="D5g-dh-ZqY" firstAttribute="top" secondItem="mZa-R5-Qwk" secondAttribute="bottom" constant="40" id="DLz-88-U3Z"/>
-                            <constraint firstAttribute="trailing" secondItem="yI1-Wk-Mdf" secondAttribute="trailing" constant="16" id="Fb3-9l-2hl"/>
-                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="top" secondItem="D5g-dh-ZqY" secondAttribute="bottom" constant="40" id="M60-2S-z2W"/>
-                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leading" constant="16" id="TGA-uw-N8H"/>
+                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="top" secondItem="mZa-R5-Qwk" secondAttribute="bottom" constant="10.5" id="0eq-12-TDn"/>
+                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="centerY" secondItem="yI1-Wk-Mdf" secondAttribute="centerY" id="MYG-0W-Lvp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tY3-dQ-IX8" secondAttribute="trailing" constant="24" id="Yng-hp-jaA"/>
-                            <constraint firstItem="Jcb-bi-KKQ" firstAttribute="leading" secondItem="D5g-dh-ZqY" secondAttribute="trailing" constant="8" id="fyG-94-ARv"/>
-                            <constraint firstItem="D5g-dh-ZqY" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leading" constant="16" id="gdj-4X-2oi"/>
-                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="leading" secondItem="LOy-Tl-w1v" secondAttribute="trailing" constant="8" id="ihT-g0-zFR"/>
-                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="centerY" secondItem="LOy-Tl-w1v" secondAttribute="centerY" id="jof-V1-oCb"/>
+                            <constraint firstItem="LOy-Tl-w1v" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leadingMargin" id="f4h-Sy-OEH"/>
+                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="leading" secondItem="LOy-Tl-w1v" secondAttribute="trailing" constant="8" id="gsQ-y2-mfi"/>
+                            <constraint firstItem="yI1-Wk-Mdf" firstAttribute="trailing" secondItem="KNV-CV-WeC" secondAttribute="trailingMargin" id="pDX-Lz-hH4"/>
                             <constraint firstItem="tY3-dQ-IX8" firstAttribute="leading" secondItem="KNV-CV-WeC" secondAttribute="leadingMargin" constant="24" id="vGF-mn-fFH"/>
                             <constraint firstItem="2pD-ht-Ixh" firstAttribute="top" secondItem="tY3-dQ-IX8" secondAttribute="bottom" constant="120" id="wvC-ZK-gPU"/>
-                            <constraint firstItem="Jcb-bi-KKQ" firstAttribute="centerY" secondItem="D5g-dh-ZqY" secondAttribute="centerY" id="x2q-b4-hVE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2H6-cX-44I"/>
                     <connections>
                         <outlet property="switchFullscreen" destination="yI1-Wk-Mdf" id="I5w-Qt-MwA"/>
-                        <outlet property="switchFullscreenControledByApp" destination="Jcb-bi-KKQ" id="UMY-ZK-BgU"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="startVideo" id="kqb-41-0Yy"/>
                     </connections>
                 </viewController>
@@ -111,7 +95,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-hA-IRs" userLabel="Player Container">
-                                <rect key="frame" x="0.0" y="44" width="320" height="288"/>
+                                <rect key="frame" x="0.0" y="50" width="320" height="288"/>
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="30R-xP-Ym2"/>
@@ -123,7 +107,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="As1-2m-zPj">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="As1-2m-zPj">
                                 <rect key="frame" x="41" y="372" width="239" height="44"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration" identifier="StartVideo"/>

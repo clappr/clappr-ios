@@ -8,10 +8,6 @@ class ViewController: UIViewController {
     @objc var player: Player!
     @objc var options: Options = [:]
 
-    @objc var fullscreenByApp: Bool {
-        return options[kFullscreenByApp] as? Bool ?? false
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         createPlayer()
@@ -56,7 +52,6 @@ class ViewController: UIViewController {
     }
 
     @objc func onRequestFullscreen() {
-        guard fullscreenByApp else { return }
         fullscreenController.modalPresentationStyle = .overFullScreen
         present(fullscreenController, animated: false) {
             self.player.setFullscreen(true)
@@ -65,7 +60,6 @@ class ViewController: UIViewController {
     }
 
     @objc func onExitFullscreen() {
-        guard fullscreenByApp else { return }
         fullscreenController.dismiss(animated: false) {
             self.player.setFullscreen(false)
         }
