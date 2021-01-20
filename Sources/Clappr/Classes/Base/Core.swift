@@ -156,6 +156,9 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         renderCorePlugins()
         renderMediaControlElements()
         renderOverlayPlugins()
+        if optionsUnboxer.fullscreen {
+            trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+        }
         #else
         renderPlugins()
         #endif
