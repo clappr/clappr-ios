@@ -358,6 +358,28 @@ open class AVFoundationPlayback: Playback {
             name: .AVPlayerItemFailedToPlayToEndTime,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func willEnterForeground() {
+        playerLayer?.player = player
+    }
+    
+    @objc private func didEnterBackground() {
+        playerLayer?.player = nil
     }
 
     @objc func playbackDidEnd(notification: NSNotification?) {
