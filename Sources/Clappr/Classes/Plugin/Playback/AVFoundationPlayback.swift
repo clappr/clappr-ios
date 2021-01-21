@@ -376,10 +376,13 @@ open class AVFoundationPlayback: Playback {
     
     @objc private func willEnterForeground() {
         playerLayer?.player = player
+        guard state != .paused else { return }
+        play()
     }
     
     @objc private func didEnterBackground() {
         playerLayer?.player = nil
+        pause()
     }
 
     @objc func playbackDidEnd(notification: NSNotification?) {
