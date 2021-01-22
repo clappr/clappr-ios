@@ -155,8 +155,8 @@ open class AVFoundationPlayback: Playback {
 
     open override var position: Double {
         if isDvrAvailable, let start = dvrWindowStart,
-            let position = player.currentItem?.currentTime().seconds {
-            return position - start
+            let currentTime = player.currentItem?.currentTime().seconds {
+            return currentTime - start
         }
         guard playbackType == .vod else { return 0 }
         return CMTimeGetSeconds(player.currentTime())
