@@ -252,7 +252,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     private func updateInitialStateIfNeeded() {
-        guard player.currentItem?.isPlaybackLikelyToKeepUp == true else { return }
+        guard let item = player.currentItem, item.isPlaybackLikelyToKeepUp else { return }
         updateState(.stalling)
     }
 
