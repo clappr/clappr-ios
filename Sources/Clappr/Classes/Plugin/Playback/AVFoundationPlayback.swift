@@ -256,10 +256,6 @@ open class AVFoundationPlayback: Playback {
         updateState(.stalling)
     }
 
-    private var shouldLoop: Bool {
-        return options.bool(kLoop, orElse: false)
-    }
-
     private var canStartAt: Bool {
         return startAt != 0.0 && playbackType == .vod
     }
