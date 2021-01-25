@@ -7,21 +7,30 @@ import OHHTTPStubs
 class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
     override func spec() {
         describe(".AVFoundationPlaybackQualityMetricsTests") {
+            
+            var avFoundationPlayback: AVFoundationPlayback!
+            var accessLog: AccessLogEventMock!
+            
             context("when receives AVPlayerItemNewAccessLogEntry event") {
+                
+                beforeEach {
+                    avFoundationPlayback = AVFoundationPlayback(options: [:])
+                    avFoundationPlayback.render()
+                    accessLog = AccessLogEventMock()
+                }
+                
                 context("with new indicatedBitrate value") {
                     it("changes the bitrate") {
                         let baseObject = BaseObject()
                         var bitrate: Double?
-                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                        let accessLog = AccessLogEventMock()
                         let player = PlayerMock(accessLogEvent: accessLog)
                         accessLog.setIndicatedBitrate(7)
-                        avfoundationPlayback.player = player
-                        baseObject.listenToOnce(avfoundationPlayback, eventName: Event.didUpdateBitrate.rawValue) { userInfo in
+                        avFoundationPlayback.player = player
+                        baseObject.listenToOnce(avFoundationPlayback, eventName: Event.didUpdateBitrate.rawValue) { userInfo in
                             bitrate = userInfo?["bitrate"] as? Double
                         }
 
-                        avfoundationPlayback.onAccessLogEntry(notification: nil)
+                        avFoundationPlayback.onAccessLogEntry(notification: nil)
                         
                         expect(bitrate).toEventually(equal(7))
                     }
@@ -29,48 +38,39 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                 
                 context("with new observedBitrate value") {
                     it("changes the bandwidth") {
-                        let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                        let accessLog = AccessLogEventMock()
                         accessLog.setObservedBitrate(13.0)
                         let player = PlayerMock(accessLogEvent: accessLog)
-                        avfoundationPlayback.player = player
-                        avfoundationPlayback.addObservers()
+                        avFoundationPlayback.player = player
 
                         NotificationCenter.default.post(
                             name: .AVPlayerItemNewAccessLogEntry,
                             object: player.currentItem
                         )
 
-                        expect(avfoundationPlayback.bandwidth).toEventually(equal(13.0))
+                        expect(avFoundationPlayback.bandwidth).toEventually(equal(13.0))
                     }
                 }
 
                 describe("droppedFrames") {
                     context("with new numberOfDroppedVideoFrames value") {
                         it("changes the droppedFrames") {
-                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                            let accessLog = AccessLogEventMock()
                             accessLog.setDroppedFrames(2)
                             let player = PlayerMock(accessLogEvent: accessLog)
-                            avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
+                            avFoundationPlayback.player = player
                             
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
                             )
                             
-                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(2))
+                            expect(avFoundationPlayback.droppedFrames).toEventually(equal(2))
                         }
                         
                         context("when occurs another AVPlayerItemNewAccessLogEntry event") {
                             it("changes the droppedFrames to an accumulated value") {
-                                let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                                let accessLog = AccessLogEventMock()
                                 accessLog.setDroppedFrames(2)
                                 let player = PlayerMock(accessLogEvent: accessLog)
-                                avfoundationPlayback.player = player
-                                avfoundationPlayback.addObservers()
+                                avFoundationPlayback.player = player
                                 
                                 NotificationCenter.default.post(
                                     name: .AVPlayerItemNewAccessLogEntry,
@@ -84,17 +84,14 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                     object: player.currentItem
                                 )
                                 
-                                expect(avfoundationPlayback.droppedFrames).toEventually(equal(5))
+                                expect(avFoundationPlayback.droppedFrames).toEventually(equal(5))
                             }
                             
                             context("when value is negative") {
                                 it("doesn't change the droppedFrames accumulated value") {
-                                    let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                                    let accessLog = AccessLogEventMock()
                                     accessLog.setDroppedFrames(31)
                                     let player = PlayerMock(accessLogEvent: accessLog)
-                                    avfoundationPlayback.player = player
-                                    avfoundationPlayback.addObservers()
+                                    avFoundationPlayback.player = player
                                     
                                     NotificationCenter.default.post(
                                         name: .AVPlayerItemNewAccessLogEntry,
@@ -108,7 +105,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                         object: player.currentItem
                                     )
                                     
-                                    expect(avfoundationPlayback.droppedFrames).toEventually(equal(31))
+                                    expect(avFoundationPlayback.droppedFrames).toEventually(equal(31))
                                 }
                             }
                         }
@@ -116,32 +113,27 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                     
                     context("when call stop") {
                         it("clears droppedFrames value") {
-                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                            let accessLog = AccessLogEventMock()
                             accessLog.setDroppedFrames(24)
                             let player = PlayerMock(accessLogEvent: accessLog)
-                            avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
+                            avFoundationPlayback.player = player
+
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
                                 object: player.currentItem
                             )
-                            avfoundationPlayback.state = .playing
+                            avFoundationPlayback.state = .playing
                             
-                            avfoundationPlayback.stop()
+                            avFoundationPlayback.stop()
                             
-                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(0))
+                            expect(avFoundationPlayback.droppedFrames).toEventually(equal(0))
                         }
                     }
                     
                     context("when playback did end") {
                         it("clears droppedFrames value") {
-                            let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                            let accessLog = AccessLogEventMock()
                             accessLog.setDroppedFrames(76)
                             let player = PlayerMock(accessLogEvent: accessLog, isFinished: true)
-                            avfoundationPlayback.player = player
-                            avfoundationPlayback.addObservers()
+                            avFoundationPlayback.player = player
                             
                             NotificationCenter.default.post(
                                 name: .AVPlayerItemNewAccessLogEntry,
@@ -153,7 +145,7 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                                 object: player.currentItem
                             )
                             
-                            expect(avfoundationPlayback.droppedFrames).toEventually(equal(0))
+                            expect(avFoundationPlayback.droppedFrames).toEventually(equal(0))
                         }
                     }
                 }
@@ -181,9 +173,10 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         kSourceUrl: "http://clappr.io/highline.mp4"
                     ]
 
-                    let avfoundationPlayback = AVFoundationPlayback(options: options)
+                    avFoundationPlayback = AVFoundationPlayback(options: options)
+                    avFoundationPlayback.render()
 
-                    expect(avfoundationPlayback.domainHost).toEventually(equal("clappr.io"))
+                    expect(avFoundationPlayback.domainHost).toEventually(equal("clappr.io"))
                 }
 
                 it("makes available the decoded frames value") {
@@ -191,9 +184,10 @@ class AVFoundationPlaybackQualityMetricsTests: QuickSpec {
                         kSourceUrl: "http://clappr.io/highline.mp4"
                     ]
 
-                    let avfoundationPlayback = AVFoundationPlayback(options: options)
+                    avFoundationPlayback = AVFoundationPlayback(options: options)
+                    avFoundationPlayback.render()
 
-                    expect(avfoundationPlayback.decodedFrames).toEventually(equal(-1))
+                    expect(avFoundationPlayback.decodedFrames).toEventually(equal(-1))
                 }
             }
         }

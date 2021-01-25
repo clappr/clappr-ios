@@ -10,23 +10,11 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                 it("updates state to idle") {
                     let avfoundationPlayback = AVFoundationPlayback(options: [:])
                     avfoundationPlayback.player = PlayerMock()
-                    avfoundationPlayback.addObservers()
                     avfoundationPlayback.state = .playing
                     
                     avfoundationPlayback.stop()
                     
                     expect(avfoundationPlayback.state).to(equal(.idle))
-                }
-
-                it("changes player instance to nil") {
-                    let avfoundationPlayback = AVFoundationPlayback(options: [:])
-                    avfoundationPlayback.player = PlayerMock()
-                    avfoundationPlayback.addObservers()
-                    avfoundationPlayback.state = .playing
-                    
-                    avfoundationPlayback.stop()
-                    
-                    expect(avfoundationPlayback.player).to(beNil())
                 }
 
                 context("#events") {
@@ -35,7 +23,6 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                         let baseObject = BaseObject()
                         let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         avfoundationPlayback.player = PlayerMock()
-                        avfoundationPlayback.addObservers()
                         avfoundationPlayback.state = .playing
                         baseObject.listenTo(avfoundationPlayback, event: .willStop) { _ in
                             didCallWillStop = true
@@ -51,7 +38,6 @@ class AVFoundationPlaybackStopActionTests: QuickSpec {
                         let baseObject = BaseObject()
                         let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         avfoundationPlayback.player = PlayerMock()
-                        avfoundationPlayback.addObservers()
                         avfoundationPlayback.state = .playing
                         baseObject.listenTo(avfoundationPlayback, event: .didStop) { _ in
                             didCallDidStop = true

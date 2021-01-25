@@ -32,7 +32,8 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                             kDefaultSubtitle: "off"
                         ]
                         let avfoundationPlayback = AVFoundationPlayback(options: options)
-
+                        avfoundationPlayback.render()
+                        
                         avfoundationPlayback.play()
 
                         expect(avfoundationPlayback.selectedSubtitle?.language).toEventually(equal("off"))
@@ -47,6 +48,7 @@ class AVFoundationPlaybackMediaSelectionTests: QuickSpec {
                         ]
                         let avfoundationPlayback = AVFoundationPlayback(options: options)
                         avfoundationPlayback.view.bounds = CGRect(x: 0, y: 0, width: 1920, height: 1080)
+                        avfoundationPlayback.render()
 
                         avfoundationPlayback.play()
 

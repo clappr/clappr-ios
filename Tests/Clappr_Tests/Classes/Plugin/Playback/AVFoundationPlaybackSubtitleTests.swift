@@ -11,7 +11,6 @@ class AVFoundationPlaybackSubtitleTests: QuickSpec {
                     it("sets subtitle to off") {
                         let avfoundationPlayback = AVFoundationPlayback(options: [:])
                         avfoundationPlayback.player = PlayerMock()
-                        avfoundationPlayback.setupObservers()
 
                         avfoundationPlayback.selectedSubtitle = MediaOption.mockedSubtitle
 
