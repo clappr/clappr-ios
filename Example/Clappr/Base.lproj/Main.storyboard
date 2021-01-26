@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -50,13 +51,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start player as fullscreen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOy-Tl-w1v">
-                                <rect key="frame" x="16" y="62" width="231" height="16"/>
+                                <rect key="frame" x="16" y="68" width="231" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yI1-Wk-Mdf">
-                                <rect key="frame" x="255" y="54.5" width="51" height="31"/>
+                                <rect key="frame" x="255" y="60.5" width="51" height="31"/>
                                 <accessibility key="accessibilityConfiguration" identifier="StartAsFullscreen"/>
                             </switch>
                         </subviews>
@@ -95,11 +96,21 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-hA-IRs" userLabel="Player Container">
-                                <rect key="frame" x="0.0" y="50" width="320" height="288"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="288"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WqR-OI-meH">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="288"/>
+                                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="30R-xP-Ym2"/>
                                     <constraint firstAttribute="height" constant="288" id="Gsm-7W-Dup"/>
+                                    <constraint firstItem="WqR-OI-meH" firstAttribute="top" secondItem="5zE-hA-IRs" secondAttribute="top" id="IgQ-FL-C20"/>
+                                    <constraint firstItem="WqR-OI-meH" firstAttribute="centerX" secondItem="5zE-hA-IRs" secondAttribute="centerX" id="RpN-CM-SE0"/>
+                                    <constraint firstItem="WqR-OI-meH" firstAttribute="leading" secondItem="5zE-hA-IRs" secondAttribute="leading" id="he9-0I-zY7"/>
+                                    <constraint firstItem="WqR-OI-meH" firstAttribute="centerY" secondItem="5zE-hA-IRs" secondAttribute="centerY" id="jXH-91-XJz"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -122,19 +133,29 @@
                                     <action selector="startVideo:" destination="b2n-EE-xfA" eventType="touchUpInside" id="n69-hm-d66"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG7-LU-5tT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="OG7-LU-5tT" firstAttribute="leading" secondItem="5zE-hA-IRs" secondAttribute="leading" id="0iA-gr-RjW"/>
                             <constraint firstItem="5zE-hA-IRs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="19J-W3-snx"/>
                             <constraint firstAttribute="trailing" secondItem="5zE-hA-IRs" secondAttribute="trailing" id="1IQ-ll-rwC"/>
                             <constraint firstItem="5zE-hA-IRs" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="2V5-15-1vR"/>
                             <constraint firstItem="As1-2m-zPj" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="41" id="9WP-3D-sIK"/>
                             <constraint firstAttribute="trailing" secondItem="As1-2m-zPj" secondAttribute="trailing" constant="40" id="ICc-gl-vAJ"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="As1-2m-zPj" secondAttribute="bottom" constant="64" id="WDx-zs-LBJ"/>
+                            <constraint firstItem="OG7-LU-5tT" firstAttribute="bottom" secondItem="kh9-bI-dsS" secondAttribute="bottomMargin" id="n4g-iI-I7D"/>
+                            <constraint firstItem="OG7-LU-5tT" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="q8s-Dv-H1m"/>
+                            <constraint firstItem="OG7-LU-5tT" firstAttribute="trailing" secondItem="5zE-hA-IRs" secondAttribute="trailing" id="yHj-dF-z6v"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="fullscreenView" destination="OG7-LU-5tT" id="y1d-yh-ZYH"/>
                         <outlet property="playerContainer" destination="5zE-hA-IRs" id="kph-yi-dQP"/>
+                        <outlet property="playerView" destination="WqR-OI-meH" id="nbw-kX-t5V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -142,4 +163,9 @@
             <point key="canvasLocation" x="496.875" y="246.25"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

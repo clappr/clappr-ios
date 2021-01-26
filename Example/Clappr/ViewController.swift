@@ -5,6 +5,8 @@ class ViewController: UIViewController {
 
     @objc var fullscreenController = UIViewController()
     @IBOutlet weak var playerContainer: UIView!
+    @IBOutlet weak var fullscreenView: UIView!
+    @IBOutlet weak var playerView: UIView!
     @objc var player: Player!
     @objc var options: Options = [:]
 
@@ -52,18 +54,42 @@ class ViewController: UIViewController {
     }
 
     @objc func onRequestFullscreen() {
-        fullscreenController.modalPresentationStyle = .overFullScreen
-        present(fullscreenController, animated: false) {
-            self.player.setFullscreen(true)
-        }
-        player.presentFullscreenIn(fullscreenController)
+        setOrientation(orientation: .landscapeRight)
+        setFullscreen(true)
+        setFullscreenConstraints()
     }
 
     @objc func onExitFullscreen() {
-        fullscreenController.dismiss(animated: false) {
-            self.player.setFullscreen(false)
-        }
-        player.fitParentView()
+        setOrientation(orientation: .portrait)
+        setFullscreen(false)
+        setPlayerContainerConstraints()
+    }
+    
+    private func setOrientation(orientation: UIInterfaceOrientation) {
+        UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
+    
+    private func setFullscreen(_ fullscreen: Bool) {
+        player.setFullscreen(fullscreen)
+        fullscreenView.isHidden = !fullscreen
+        navigationController?.setNavigationBarHidden(fullscreen, animated: true)
+    }
+    
+    private func setFullscreenConstraints() {
+        fullscreenView.addSubviewMatchingConstraints(playerView)
+        NSLayoutConstraint.activate([
+            fullscreenView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            fullscreenView.topAnchor.constraint(equalTo: view.topAnchor),
+            fullscreenView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            fullscreenView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        fullscreenView.layoutIfNeeded()
+    }
+    
+    private func setPlayerContainerConstraints() {
+        playerContainer.addSubviewMatchingConstraints(playerView)
+        playerContainer.layoutIfNeeded()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -89,7 +115,7 @@ class ViewController: UIViewController {
 
         listenToPlayerEvents()
 
-        player.attachTo(playerContainer, controller: self)
+        player.attachTo(playerView, controller: self)
     }
     
     @IBAction func recreatePlayer(_ sender: Any) {
