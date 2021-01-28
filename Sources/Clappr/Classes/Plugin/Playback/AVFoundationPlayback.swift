@@ -139,18 +139,15 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var duration: Double {
-        var durationTime: Double = 0
-        guard let assetDuration = player.currentItem?.asset.duration else { return durationTime }
-
-        if playbackType == .vod {
-            durationTime = CMTimeGetSeconds(assetDuration)
+        if playbackType == .vod, let assetDuration = player.currentItem?.duration {
+            return CMTimeGetSeconds(assetDuration)
         } else if playbackType == .live {
-            durationTime = seekableTimeRanges.reduce(0.0, { previous, current in
+            return seekableTimeRanges.reduce(0.0) { previous, current in
                 previous + current.timeRangeValue.duration.seconds
-            })
+            }
         }
 
-        return durationTime
+        return .zero
     }
 
     open override var position: Double {
