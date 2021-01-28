@@ -163,7 +163,7 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var playbackType: PlaybackType {
-        guard let duration = player.currentItem?.asset.duration else { return .unknown }
+        guard let duration = player.currentItem?.duration else { return .unknown }
         return duration == CMTime.indefinite ? .live : .vod
     }
 
