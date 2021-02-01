@@ -220,7 +220,7 @@ class CoreTests: QuickSpec {
                 var options: Options!
                 
                 beforeEach {
-                    options = [kFullscreen: false]
+                    options = [kStartInFullscreen: false]
                 }
                 
                 context("when kFullscreen is false") {
@@ -238,7 +238,7 @@ class CoreTests: QuickSpec {
                 context("when kFullscreen is true") {
                     
                     it("start as embed video when `kFullscreenByApp: true`") {
-                        let options: Options = [kFullscreen: true]
+                        let options: Options = [kStartInFullscreen: true]
                         let core = Core(options: options)
                         core.parentView = UIView()
                         

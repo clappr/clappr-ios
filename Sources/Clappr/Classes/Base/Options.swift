@@ -2,8 +2,8 @@ public typealias Options = [String: Any]
 
 public let kPosterUrl = "posterUrl"
 public let kSourceUrl = "sourceUrl"
-public let kFullscreen = "fullscreen"
-public let kFullscreenDisabled = "fullscreenDisabled"
+public let kStartInFullscreen = "startInFullscreen"
+public let kDisableFullscreenButton = "disableFullscreenButton"
 public let kStartAt = "startAt"
 public let kLiveStartTime = "liveStartTime"
 public let kPlaybackNotSupportedMessage = "playbackNotSupportedMessage"
@@ -33,6 +33,6 @@ public let kMetaDataArtwork = "mdArtwork"
 struct OptionsUnboxer {
     let options: Options
 
-    var fullscreen: Bool { options.bool(kFullscreen, orElse: false) }
-    var fullscreenDisabled: Bool { options.bool(kFullscreenDisabled, orElse: false) }
+    var startInFullscreen: Bool { options.bool(kStartInFullscreen, orElse: false) }
+    var disableFullscreenButton: Bool { options.bool(kDisableFullscreenButton, orElse: false) }
 }

@@ -121,7 +121,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     
     private func onUserRequestExitFullscreen() {
         #if os(iOS)
-        if optionsUnboxer.fullscreenDisabled {
+        if optionsUnboxer.disableFullscreenButton {
             trigger(InternalEvent.requestDestroyPlayer.rawValue)
         }
         #endif
@@ -156,7 +156,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         renderCorePlugins()
         renderMediaControlElements()
         renderOverlayPlugins()
-        if optionsUnboxer.fullscreen {
+        if optionsUnboxer.startInFullscreen {
             trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
         }
         #else

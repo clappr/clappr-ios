@@ -16,7 +16,7 @@ class OptionsUnboxerTests: QuickSpec {
                 }
 
                 it("returns `false` for `fullscreen`") {
-                    expect(optionsUnboxer.fullscreen).to(beFalse())
+                    expect(optionsUnboxer.startInFullscreen).to(beFalse())
                 }
 
             }
@@ -24,11 +24,11 @@ class OptionsUnboxerTests: QuickSpec {
             context("when options is passed") {
 
                 beforeEach {
-                    optionsUnboxer = OptionsUnboxer(options: [kFullscreen: true])
+                    optionsUnboxer = OptionsUnboxer(options: [kStartInFullscreen: true])
                 }
 
                 it("returns correct value for `fullscreen`") {
-                    expect(optionsUnboxer.fullscreen).to(beTrue())
+                    expect(optionsUnboxer.startInFullscreen).to(beTrue())
                 }
 
             }
