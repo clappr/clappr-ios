@@ -54,18 +54,18 @@ class ViewController: UIViewController {
     }
 
     @objc func onRequestFullscreen() {
-        setOrientation(orientation: .landscapeRight)
+        setOrientation(.landscapeRight)
         setFullscreen(true)
         setFullscreenConstraints()
     }
 
     @objc func onExitFullscreen() {
-        setOrientation(orientation: .portrait)
+        setOrientation(.portrait)
         setFullscreen(false)
         setPlayerContainerConstraints()
     }
     
-    private func setOrientation(orientation: UIInterfaceOrientation) {
+    private func setOrientation(_ orientation: UIInterfaceOrientation) {
         UIDevice.current.setValue(orientation.rawValue, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
     }

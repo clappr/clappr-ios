@@ -21,7 +21,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var overlayView = PassthroughView()
 
     #if os(iOS)
-    lazy var fullscreenHandler: FullscreenStateHandler? = FullscreenByApp(core: self)
+    lazy var fullscreenHandler: FullscreenStateHandler? = FullscreenHandler(core: self)
     private var orientationObserver: OrientationObserver?
     #endif
 
@@ -114,18 +114,10 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
-        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.onUserRequestExitFullscreen() }
+//        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.onUserRequestExitFullscreen() }
         orientationObserver = OrientationObserver(core: self)
         #endif
     }
-    
-    private func onUserRequestExitFullscreen() {
-        #if os(iOS)
-        if optionsUnboxer.disableFullscreenButton {
-            trigger(InternalEvent.requestDestroyPlayer.rawValue)
-        }
-        #endif
-    } 
     
     open func attach(to parentView: UIView, controller: UIViewController) {
         guard let containerView = activeContainer?.view else {

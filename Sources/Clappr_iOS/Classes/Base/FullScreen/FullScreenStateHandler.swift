@@ -15,7 +15,7 @@ extension FullscreenStateHandler {
     func destroy() { }
 }
 
-struct FullscreenByApp: FullscreenStateHandler {
+struct FullscreenHandler: FullscreenStateHandler {
     var core: Core
 
     func set(fullscreen: Bool) {
