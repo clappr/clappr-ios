@@ -120,7 +120,7 @@ open class Playback: UIObject, NamedType {
 
 // MARK: - DVR
 extension Playback {
-    @objc var minDvrSize: Double {
+    @objc open var minDvrSize: Double {
         return 0
     }
 
