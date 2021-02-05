@@ -12,7 +12,7 @@ open class FullscreenButton: MediaControl.Element {
             button.contentHorizontalAlignment = .fill
             
             button.addTarget(self, action: #selector(toggleFullscreenButton), for: .touchUpInside)
-            view.isHidden = core?.options[kFullscreenDisabled] as? Bool ?? false
+            view.isHidden = core?.options[kDisableFullscreenButton] as? Bool ?? false
             view.addSubview(button)
         }
     }

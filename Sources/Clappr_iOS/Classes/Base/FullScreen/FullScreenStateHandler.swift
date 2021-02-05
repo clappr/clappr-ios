@@ -15,58 +15,16 @@ extension FullscreenStateHandler {
     func destroy() { }
 }
 
-struct FullscreenByApp: FullscreenStateHandler {
+struct FullscreenHandler: FullscreenStateHandler {
     var core: Core
 
     func set(fullscreen: Bool) {
         guard core.isFullscreen != fullscreen else { return }
         core.isFullscreen = fullscreen
         if fullscreen {
-            core.trigger(Event.willEnterFullscreen.rawValue)
             core.trigger(Event.didEnterFullscreen.rawValue)
         } else {
-            core.trigger(Event.willExitFullscreen.rawValue)
             core.trigger(Event.didExitFullscreen.rawValue)
         }
-    }
-}
-
-struct FullscreenByPlayer: FullscreenStateHandler {
-    var core: Core
-
-    func set(fullscreen: Bool) {
-        guard core.isFullscreen != fullscreen else { return }
-        fullscreen ? enterInFullscreen() : exitFullscreen()
-    }
-
-    func enterInFullscreen() {
-        guard let fullscreenController = core.fullscreenController else { return }
-        guard !core.isFullscreen else { return }
-        core.trigger(Event.willEnterFullscreen.rawValue)
-        core.isFullscreen = true
-        fullscreenController.view.backgroundColor = UIColor.black
-        fullscreenController.modalPresentationStyle = .overFullScreen
-        core.parentController?.present(fullscreenController, animated: false) {
-            fullscreenController.view.addSubviewMatchingConstraints(self.core.view)
-            self.core.trigger(Event.didEnterFullscreen.rawValue)
-        }
-    }
-
-    func exitFullscreen() {
-        guard core.isFullscreen else { return }
-        core.trigger(Event.willExitFullscreen.rawValue)
-        core.isFullscreen = false
-        handleExit()
-        core.trigger(Event.didExitFullscreen.rawValue)
-    }
-
-    private func handleExit() {
-        core.parentView?.addSubviewMatchingConstraints(core.view)
-        core.fullscreenController?.dismiss(animated: false, completion: nil)
-    }
-
-    func destroy() {
-        guard core.isFullscreen else { return }
-        handleExit()
     }
 }

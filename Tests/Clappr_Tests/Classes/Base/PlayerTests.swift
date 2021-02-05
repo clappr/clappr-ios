@@ -231,16 +231,6 @@ class PlayerTests: QuickSpec {
                         
                         expect(callbackWasCalled).to(beTrue())
                     }
-                    
-                    it("triggers a didDestroy event when requestDestroyPlayer was listened") {
-                        player.on(.didDestroy) { _ in
-                            callbackWasCalled = true
-                        }
-
-                        player.core?.trigger(InternalEvent.requestDestroyPlayer.rawValue)
-
-                        expect(callbackWasCalled).to(beTrue())
-                    }
                 }
 
                 context("core dependency") {
