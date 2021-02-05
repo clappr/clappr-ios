@@ -19,7 +19,8 @@ class DashboardViewController: UIViewController {
         let options: Options = [
             kSourceUrl: "http://clappr.io/highline.mp4",
             kPosterUrl: "http://clappr.io/poster.png",
-            kStartInFullscreen: switchFullscreen.isOn
+            kFullscreen: switchFullscreen.isOn,
+            kFullscreenByApp: switchFullscreenControledByApp.isOn
         ]
         viewController?.options = options
     }

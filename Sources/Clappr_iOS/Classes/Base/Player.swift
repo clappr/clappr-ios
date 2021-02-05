@@ -107,6 +107,9 @@ open class Player: BaseObject {
         }
         listenTo(core, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] userInfo in self?.trigger(.exitFullscreen, userInfo: userInfo)
         }
+        listenTo(core, eventName: InternalEvent.requestDestroyPlayer.rawValue) { [weak self] _ in
+            self?.destroy()
+        }
     }
     
     private func bindMediaControlEvents() {

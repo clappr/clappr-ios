@@ -2,8 +2,9 @@ public typealias Options = [String: Any]
 
 public let kPosterUrl = "posterUrl"
 public let kSourceUrl = "sourceUrl"
-public let kStartInFullscreen = "startInFullscreen"
-public let kDisableFullscreenButton = "disableFullscreenButton"
+public let kFullscreen = "fullscreen"
+public let kFullscreenDisabled = "fullscreenDisabled"
+public let kFullscreenByApp = "fullscreenByApp"
 public let kStartAt = "startAt"
 public let kLiveStartTime = "liveStartTime"
 public let kPlaybackNotSupportedMessage = "playbackNotSupportedMessage"
@@ -29,3 +30,11 @@ public let kMetaDataTitle = "mdTitle"
 public let kMetaDataDescription = "mdDescription"
 public let kMetaDataDate = "mdDate"
 public let kMetaDataArtwork = "mdArtwork"
+
+struct OptionsUnboxer {
+    let options: Options
+
+    var fullscreenControledByApp: Bool { options.bool(kFullscreenByApp, orElse: false)}
+    var fullscreen: Bool { options.bool(kFullscreen, orElse: false) }
+    var fullscreenDisabled: Bool { options.bool(kFullscreenDisabled, orElse: false) }
+}
