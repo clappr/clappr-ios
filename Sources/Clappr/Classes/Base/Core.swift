@@ -25,8 +25,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private var orientationObserver: OrientationObserver?
     #endif
 
-    lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
-
     @objc open weak var activeContainer: Container? {
 
         willSet {
@@ -114,7 +112,6 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
-//        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.onUserRequestExitFullscreen() }
         orientationObserver = OrientationObserver(core: self)
         #endif
     }
@@ -148,7 +145,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         renderCorePlugins()
         renderMediaControlElements()
         renderOverlayPlugins()
-        if optionsUnboxer.startInFullscreen {
+        if options.bool(kStartInFullscreen, orElse: false) {
             trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
         }
         #else

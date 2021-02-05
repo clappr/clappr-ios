@@ -29,10 +29,3 @@ public let kMetaDataTitle = "mdTitle"
 public let kMetaDataDescription = "mdDescription"
 public let kMetaDataDate = "mdDate"
 public let kMetaDataArtwork = "mdArtwork"
-
-struct OptionsUnboxer {
-    let options: Options
-
-    var startInFullscreen: Bool { options.bool(kStartInFullscreen, orElse: false) }
-    var disableFullscreenButton: Bool { options.bool(kDisableFullscreenButton, orElse: false) }
-}
