@@ -274,7 +274,6 @@
 		9E1613FE2051D3DD006E95F2 /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1613FD2051D3DC006E95F2 /* Swifter.framework */; };
 		9E1EB321208E3511005714D1 /* cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E1EB320208E3511005714D1 /* cover.png */; };
 		9E26CFF32016149600AE92B7 /* FullScreenStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E26CFF12016149600AE92B7 /* FullScreenStateHandler.swift */; };
-		9E2F9B191F9F8C2400A07786 /* FullscreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E121F9F8A54006510BE /* FullscreenUITests.swift */; };
 		9E2F9B1A1F9F8C2600A07786 /* XCTWaiter+WaitFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E141F9F8A54006510BE /* XCTWaiter+WaitFor.swift */; };
 		9E2F9B1B1F9F8C2A00A07786 /* DashboardViewElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E101F9F8A53006510BE /* DashboardViewElements.swift */; };
 		9E2F9B1C1F9F8C2C00A07786 /* DashboardViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E692E111F9F8A54006510BE /* DashboardViewInteractor.swift */; };
@@ -645,7 +644,6 @@
 		9E692E0F1F9F8A53006510BE /* PlayerViewElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewElements.swift; sourceTree = "<group>"; };
 		9E692E101F9F8A53006510BE /* DashboardViewElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewElements.swift; sourceTree = "<group>"; };
 		9E692E111F9F8A54006510BE /* DashboardViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewInteractor.swift; sourceTree = "<group>"; };
-		9E692E121F9F8A54006510BE /* FullscreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenUITests.swift; sourceTree = "<group>"; };
 		9E692E131F9F8A54006510BE /* PlayerViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewInteractor.swift; sourceTree = "<group>"; };
 		9E692E141F9F8A54006510BE /* XCTWaiter+WaitFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTWaiter+WaitFor.swift"; sourceTree = "<group>"; };
 		9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -1282,7 +1280,6 @@
 				9E692E0E1F9F8A53006510BE /* Info.plist */,
 				9E692E161F9F8A6E006510BE /* Player */,
 				9E692E151F9F8A63006510BE /* Dashboard */,
-				9E692E121F9F8A54006510BE /* FullscreenUITests.swift */,
 				32580AE82049F087002D49B2 /* PlaybackTests.swift */,
 				9E692E141F9F8A54006510BE /* XCTWaiter+WaitFor.swift */,
 			);
@@ -2479,7 +2476,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E2F9B1A1F9F8C2600A07786 /* XCTWaiter+WaitFor.swift in Sources */,
-				9E2F9B191F9F8C2400A07786 /* FullscreenUITests.swift in Sources */,
 				32580AE92049F087002D49B2 /* PlaybackTests.swift in Sources */,
 				32580AEF2049FA37002D49B2 /* XCUIApplicationExtension.swift in Sources */,
 				9E2F9B1E1F9F8C3100A07786 /* PlayerViewInteractor.swift in Sources */,
@@ -2737,6 +2733,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=appletvsimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2793,6 +2791,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=appletvsimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2986,6 +2986,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Clappr_Example;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -3019,6 +3020,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Clappr_Example;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
