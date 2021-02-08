@@ -10,7 +10,7 @@ enum VideoState: String {
 extension XCUIApplication {
 
     func isVideoIn(state: VideoState) -> Bool {
-        return XCTWaiter().waitFor(element: otherElements[state.rawValue])
+        return XCTWaiter().waitFor(element: otherElements[state.rawValue], timeout: 10)
     }
 }
 
