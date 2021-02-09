@@ -581,8 +581,9 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     open override func seekToLivePosition() {
         guard canSeek else { return }
+        guard let range = player.currentItem?.seekableTimeRanges.last?.timeRangeValue else { return }
         play()
-        seek(.infinity)
+        seek(range.end.seconds)
     }
 
     open override func mute(_ enabled: Bool) {
