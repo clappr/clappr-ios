@@ -6,27 +6,15 @@ protocol AVPlayerItemInfoDelegate: AnyObject {
 }
 
 class AVPlayerItemInfo {
-    var item: AVPlayerItem
-    weak var delegate: AVPlayerItemInfoDelegate?
-    var assetInfo: AVAssetInfo
+    private var item: AVPlayerItem
+    private unowned var delegate: AVPlayerItemInfoDelegate
+    private var assetInfo: AVAssetInfo
     
-    var durationLoaded: Bool {
+    private var durationLoaded: Bool {
         item.status == .readyToPlay
     }
     
     private var observers = [NSKeyValueObservation]()
-    
-    init(item: AVPlayerItem, delegate: AVPlayerItemInfoDelegate) {
-        self.item = item
-        self.delegate = delegate
-        self.assetInfo = AVAssetInfo(asset: item.asset)
-        setupObservers()
-    }
-    
-    func setupObservers() {
-        waitForDuration()
-        waitForCharacteristics()
-    }
     
     var playbackType: PlaybackType {
         guard durationLoaded else {
@@ -47,6 +35,18 @@ class AVPlayerItemInfo {
         }
     }
     
+    init(item: AVPlayerItem, delegate: AVPlayerItemInfoDelegate) {
+        self.item = item
+        self.delegate = delegate
+        self.assetInfo = AVAssetInfo(asset: item.asset)
+        setupObservers()
+    }
+    
+    private func setupObservers() {
+        waitForDuration()
+        waitForCharacteristics()
+    }
+    
     func update(item: AVPlayerItem?) {
         guard let newItem = item else { return }
         self.item = newItem
@@ -59,15 +59,15 @@ class AVPlayerItemInfo {
     */
     func waitForDuration() {
         observers = [
-            item.observe(\.status) { [weak self] item, _ in
+            item.observe(\.status) { [weak delegate] item, _ in
                 if item.status == .readyToPlay {
-                    self?.delegate?.didLoadDuration()
+                    delegate?.didLoadDuration()
                 }
             }
         ]
     }
     
     func waitForCharacteristics() {
-        assetInfo.wait(for: .characteristics) { [weak self] in self?.delegate?.didLoadCharacteristics() }
+        assetInfo.wait(for: .characteristics) { [weak delegate] in delegate?.didLoadCharacteristics() }
     }
 }
