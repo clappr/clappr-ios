@@ -290,6 +290,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
                 self?.maximizePlayer(within: view)
                 self?.hideSubtitleForSmallScreen()
             },
+            player.observe(\.currentItem) { [weak itemInfo] player, _ in itemInfo?.update(item: player.currentItem) },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },

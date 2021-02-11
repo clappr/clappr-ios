@@ -47,6 +47,11 @@ class AVPlayerItemInfo {
         }
     }
     
+    func update(item: AVPlayerItem?) {
+        guard let newItem = item else { return }
+        self.item = newItem
+    }
+    
     /*
      The only way to definitely know if a video is VOD or LIVE is to wait for the AVPlayerItem status
      to become `readyToPlay` and then check it's duration. If the duration, at that moment, is
