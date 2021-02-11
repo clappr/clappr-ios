@@ -125,7 +125,7 @@ class SeekbarTests: QuickSpec {
                         it("sets the video duration in the seekbarView") {
                             coreStub.playbackMock?.videoDuration = 100
 
-                            coreStub.activePlayback?.trigger(Event.ready.rawValue)
+                            coreStub.activePlayback?.trigger(Event.assetReady.rawValue)
 
                             expect(seekbar.seekbarView.videoDuration).to(equal(100))
                         }
@@ -136,7 +136,7 @@ class SeekbarTests: QuickSpec {
                             seekbar.seekbarView.isLive = true
                             coreStub.playbackMock?.videoDuration = 100
 
-                            coreStub.activePlayback?.trigger(Event.ready.rawValue)
+                            coreStub.activePlayback?.trigger(Event.assetReady.rawValue)
 
                             expect(seekbar.seekbarView.videoDuration).to(equal(100))
                         }
