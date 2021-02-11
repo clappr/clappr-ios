@@ -81,8 +81,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 didLoopTriggered = true
                             }
 
+                            playback.on(Event.assetReady.rawValue) { _ in
+                                playback.seek(playback.duration)
+                            }
+                            
                             playback.play()
-                            playback.seek(playback.duration)
 
                             expect(didLoopTriggered).toEventually(beTrue(), timeout: 4)
                         }
@@ -140,7 +143,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video is live") {
 
                         beforeEach {
-                            asset.set(duration: .indefinite)
+                            item._duration = CMTime.indefinite
                         }
 
                         context("video has dvr") {
@@ -148,8 +151,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 it("triggers didChangeDvrStatus with inUse true") {
                                     item.setSeekableTimeRange(with: 60)
                                     item.set(currentTime: CMTime(seconds: 54, preferredTimescale: 1))
+                                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                                    playback.itemInfo = itemInfo
 
-                                    var usingDVR: Bool?
+                                    var usingDVR = false
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["inUse"] as? Bool {
                                             usingDVR = enabled
@@ -167,7 +172,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 it("triggers didChangeDvrStatus with inUse false") {
                                     player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
-                                    var usingDVR: Bool?
+                                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                                    playback.itemInfo = itemInfo
+                                    var usingDVR = false
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["inUse"] as? Bool {
                                             usingDVR = enabled
@@ -203,13 +210,15 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 describe("#pause") {
                     beforeEach {
-                        asset.set(duration: .indefinite)
+                        item._duration = CMTime.indefinite
+                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                        playback.itemInfo = itemInfo
                     }
 
                     context("video has dvr") {
-                        it("triggers usinDVR with enabled true") {
-                            player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
+                       it("triggers usinDVR with enabled true") {
                             item.setSeekableTimeRange(with: 60)
+                            player.setStatus(to: .readyToPlay)
                             var didChangeDvrStatusTriggered = false
                             playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                 didChangeDvrStatusTriggered = true
@@ -223,7 +232,6 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("whe video does not have dvr") {
                         it("doesn't trigger usingDVR event") {
-                            player.set(currentTime: CMTime(seconds: 59, preferredTimescale: 1))
                             var didChangeDvrStatusTriggered = false
                             playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                 didChangeDvrStatusTriggered = true
@@ -245,13 +253,16 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     func setupTest(minDvrSize: Double, seekableTimeRange: Double, duration: CMTime = .indefinite) {
                         playback = AVFoundationPlayback(options: [kMinDvrSize: minDvrSize])
-                        playerAsset.set(duration: duration)
                         playerItem = AVPlayerItemStub(asset: playerAsset)
+                        playerItem!._duration = duration
                         playerItem!.setSeekableTimeRange(with: seekableTimeRange)
                         let player = AVPlayerStub()
                         player.set(currentItem: playerItem!)
                         playback.player = player
                         player.setStatus(to: .readyToPlay)
+                        
+                        let itemInfo = AVPlayerItemInfo(item: playerItem!, delegate: playback)
+                        playback.itemInfo = itemInfo
 
                         playback.on(Event.didChangeDvrAvailability.rawValue) { info in
                             didCallChangeDvrAvailability = true
@@ -269,7 +280,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         context("and lastDvrAvailability is nil") {
                             context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
                                 it("calls didChangeDvrAvailability event with available false") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0, duration: .indefinite)
                                     playback.lastDvrAvailability = nil
 
                                     playback.handleDvrAvailabilityChange()
@@ -281,7 +292,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
                                 it("calls didChangeDvrAvailability event with available true") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0, duration: .indefinite)
                                     playback.lastDvrAvailability = nil
 
                                     playback.handleDvrAvailabilityChange()
@@ -295,7 +306,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         context("and lastDvrAvailability is true") {
                             context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
                                 it("calls didChangeDvrAvailability event with available false") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0, duration: .indefinite)
                                     playback.lastDvrAvailability = true
 
                                     playback.handleDvrAvailabilityChange()
@@ -307,7 +318,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
                                 it("does not call didChangeDvrAvailability") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 85.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 85.0, duration: .indefinite)
                                     playback.lastDvrAvailability = true
 
                                     playback.handleDvrAvailabilityChange()
@@ -320,7 +331,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         context("and lastDvrAvailability is false") {
                             context("and seekableTime duration its lower than minDvrSize (dvr not available)") {
                                 it("does not call didChangeDvrAvailability") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 35.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 35.0, duration: .indefinite)
                                     playback.lastDvrAvailability = false
 
                                     playback.handleDvrAvailabilityChange()
@@ -331,7 +342,7 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                             context("and seekableTime duration its higher(or equal) than minDvrSize (dvr available)") {
                                 it("calls didChangeDvrAvailability event with available true") {
-                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0)
+                                    setupTest(minDvrSize: 60.0, seekableTimeRange: 75.0, duration: .indefinite)
                                     playback.lastDvrAvailability = false
 
                                     playback.handleDvrAvailabilityChange()
@@ -346,6 +357,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("video is not live") {
                         it("does not call didChangeDvrAvailability") {
                             setupTest(minDvrSize: 60.0, seekableTimeRange: 45.0, duration: CMTime(seconds: 60, preferredTimescale: 1))
+                            
                             playback.lastDvrAvailability = nil
 
                             playback.handleDvrAvailabilityChange()
@@ -373,11 +385,16 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#epochDvrWindowStart") {
                     it("returns the epoch time corresponding to the DVR start") {
                         let now = Date()
-                        asset.set(duration: .indefinite)
+                        player.setStatus(to: .readyToPlay)
+                        item._duration = .indefinite
                         item.setSeekableTimeRange(with: 200)
                         item.setWindow(start: 100, end: 160)
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
+                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                        playback.itemInfo = itemInfo
+                        
                         item.set(currentDate: now)
+                        
 
                         let dvrStart = now.addingTimeInterval(-25).timeIntervalSince1970
                         expect(playback.epochDvrWindowStart).to(equal(dvrStart))
@@ -387,6 +404,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#loadedTimeRanges") {
                     context("when video has loadedTimeRanges") {
                         it("returns an array with NSValue") {
+                            player.setStatus(to: .readyToPlay)
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
+
                             item.setLoadedTimeRanges(with: 60)
 
                             expect(playback.loadedTimeRanges).toNot(beEmpty())
@@ -394,6 +415,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     context("when video does not have loadedTimeRanges") {
                         it("is empty") {
+                            player.setStatus(to: .readyToPlay)
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
+
                             expect(playback.loadedTimeRanges).to(beEmpty())
                         }
                     }
@@ -410,7 +435,11 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when video is live") {
                         it("returns true") {
-                            asset.set(duration: .indefinite)
+                            player.setStatus(to: .readyToPlay)
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
+                            
+                            item._duration = .indefinite
                             item.setSeekableTimeRange(with: 60)
 
                             expect(playback.isDvrAvailable).to(beTrue())
@@ -422,7 +451,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when live") {
                         context("and DVR is available") {
                             it("returns the position inside the DVR window") {
-                                asset.set(duration: .indefinite)
+                                player.setStatus(to: .readyToPlay)
+                                let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                                playback.itemInfo = itemInfo
+                                item._duration =  .indefinite
                                 item.setSeekableTimeRange(with: 200)
                                 item.setWindow(start: 100, end: 160)
                                 item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
@@ -442,7 +474,10 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                     context("when vod") {
                         it("returns current time") {
-                            asset.set(duration: CMTime(seconds: 160, preferredTimescale: 1))
+                            player.setStatus(to: .readyToPlay)
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
+                            item._duration = CMTime(seconds: 160, preferredTimescale: 1)
                             player.set(currentTime: CMTime(seconds: 125, preferredTimescale: 1))
 
                             expect(playback.position).to(equal(125))
@@ -519,10 +554,12 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when video is vod") {
                     it("returns different from zero") {
-                        asset.set(duration: CMTime(seconds: 60, preferredTimescale: 1))
-                        player.set(currentItem: item)
-
                         player.setStatus(to: .readyToPlay)
+                        item._duration = CMTime(seconds: 60, preferredTimescale: 1)
+                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                        playback.itemInfo = itemInfo
+                        
+                        player.set(currentItem: item)
 
                         expect(playback.duration).to(equal(60))
                     }
@@ -530,8 +567,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                 context("when video is live") {
                     context("when has dvr enabled") {
                         it("returns different from zero") {
-                            asset.set(duration: .indefinite)
+                            item._duration = .indefinite
                             item.setSeekableTimeRange(with: 60)
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
 
                             player.setStatus(to: .readyToPlay)
 
@@ -540,7 +579,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                     context("when doesn't have dvr enabled") {
                         it("returns zero") {
-                            asset.set(duration: .indefinite)
+                            item._duration = .indefinite
                             player.setStatus(to: .readyToPlay)
 
                             expect(playback.duration).to(equal(0))
@@ -777,9 +816,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                             playback = AVFoundationPlayback(options: [kMinDvrSize: 0, kLiveStartTime: liveStartTime])
                             
                             asset = AVURLAssetStub(url: URL(string:"globo.com")!)
-                            asset.set(duration: .indefinite)
                             
                             item = AVPlayerItemStub(asset: asset)
+                            item._duration = .indefinite
                             let dvrWindowSize = dvrWindowEnd - dvrWindowStart
                             item.setWindow(start: 0, end: dvrWindowSize)
                             item.set(currentTime: CMTime(seconds: dvrWindowSize, preferredTimescale: 1))
@@ -788,7 +827,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                             player = AVPlayerStub()
                             player.set(currentItem: item)
                             
+                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            playback.itemInfo = itemInfo
                             playback.player = player
+                            
                             player.setStatus(to: .readyToPlay)
                         }
                         
@@ -1117,11 +1159,13 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when DVR is available") {
                     it("seeks to the correct time inside the DVR window") {
-                        asset.set(duration: .indefinite)
+                        item._duration = .indefinite
                         item.setSeekableTimeRange(with: 60)
                         item.setWindow(start: 60, end: 120)
-
+                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                        playback.itemInfo = itemInfo
                         player.setStatus(to: .readyToPlay)
+                        
                         playback.seek(20)
 
                         expect(item.didCallSeekWithTime?.seconds).to(equal(80))
@@ -1279,6 +1323,10 @@ class AVFoundationPlaybackTests: QuickSpec {
                     playerItem.setSeekableTimeRange(with: 45)
                     let player = AVPlayerStub()
                     player.set(currentItem: playerItem)
+                   
+                    let itemInfo = AVPlayerItemInfo(item: playerItem, delegate: playback)
+                    playback.itemInfo = itemInfo
+                    
                     playback.player = player
                     player.setStatus(to: .readyToPlay)
                 }
@@ -1307,11 +1355,18 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             describe("#isDvrInUse") {
+                beforeEach {
+                    item._duration = .indefinite
+                    item.setSeekableTimeRange(with: 160)
+                    
+                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                    playback.itemInfo = itemInfo
+                    
+                    player.setStatus(to: .readyToPlay)
+
+                }
                 context("when video is paused") {
                     it("returns true") {
-                        asset.set(duration: .indefinite)
-                        item.setSeekableTimeRange(with: 160)
-
                         playback.pause()
 
                         expect(playback.isDvrInUse).to(beTrue())
@@ -1320,9 +1375,8 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when currentTime is lower then dvrWindowEnd - liveHeadTolerance") {
                     it("returns true") {
-                        asset.set(duration: .indefinite)
-                        item.setSeekableTimeRange(with: 160)
                         item.set(currentTime: CMTime(seconds: 154, preferredTimescale: 1))
+                        
                         player.play()
 
                         expect(playback.isDvrInUse).toEventually(beTrue())
@@ -1331,8 +1385,6 @@ class AVFoundationPlaybackTests: QuickSpec {
 
                 context("when currentTime is higher or equal then dvrWindowEnd - liveHeadTolerance") {
                     it("returns false") {
-                        asset.set(duration: .indefinite)
-                        item.setSeekableTimeRange(with: 160)
                         player.set(currentTime: CMTime(seconds: 156, preferredTimescale: 1))
 
                         player.play()
