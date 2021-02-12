@@ -6,7 +6,7 @@ protocol AVPlayerItemInfoDelegate: AnyObject {
 }
 
 class AVPlayerItemInfo {
-    private var item: AVPlayerItem
+    private unowned var item: AVPlayerItem
     private unowned var delegate: AVPlayerItemInfoDelegate
     private var assetInfo: AVAssetInfo
     
@@ -69,5 +69,10 @@ class AVPlayerItemInfo {
     
     func waitForCharacteristics() {
         assetInfo.wait(for: .characteristics) { [weak delegate] in delegate?.didLoadCharacteristics() }
+    }
+    
+    deinit {
+        observers.forEach { $0.invalidate() }
+        observers.removeAll()
     }
 }

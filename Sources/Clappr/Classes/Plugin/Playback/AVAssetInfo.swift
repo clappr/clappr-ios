@@ -6,7 +6,7 @@ public enum AVAssetProperty: String {
 }
 
 class AVAssetInfo {
-    var asset: AVAsset
+    private var asset: AVAsset
     
     init(asset: AVAsset) {
         self.asset = asset
