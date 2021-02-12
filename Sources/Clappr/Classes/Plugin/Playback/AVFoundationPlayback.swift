@@ -511,15 +511,14 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         trigger(.willStop)
         updateState(.idle)
         player.pause()
-        releaseResources()
         resetPlaybackProperties()
         trigger(.didStop)
     }
 
     @objc func releaseResources() {
         removeObservers()
+        itemInfo = nil
         playerLayer.removeFromSuperlayer()
-        player.replaceCurrentItem(with: nil)
     }
 
     private func resetPlaybackProperties() {
