@@ -6,7 +6,12 @@ protocol AVPlayerItemInfoDelegate: AnyObject {
 }
 
 class AVPlayerItemInfo {
-    private unowned var item: AVPlayerItem
+    private unowned var item: AVPlayerItem {
+        didSet {
+            setupObservers()
+            
+        }
+    }
     private unowned var delegate: AVPlayerItemInfoDelegate
     private var assetInfo: AVAssetInfo
     
