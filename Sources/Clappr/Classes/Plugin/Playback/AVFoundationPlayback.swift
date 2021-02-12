@@ -145,12 +145,16 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     open override var position: Double {
-        if let start = dvrWindowStart,
-            let currentTime = player.currentItem?.currentTime().seconds {
-            return currentTime - start
+        guard let currentItem = player.currentItem else { return .zero }
+              
+        let timeInSeconds = currentItem.currentTime().seconds
+        
+        if let start = dvrWindowStart {
+            return timeInSeconds - start
+        } else if playbackType == .vod {
+            return timeInSeconds
         }
-        guard playbackType == .vod else { return 0 }
-        return CMTimeGetSeconds(player.currentTime())
+        return .zero
     }
 
     open override var playbackType: PlaybackType {
