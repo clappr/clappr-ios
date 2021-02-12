@@ -91,14 +91,14 @@ class AVFoundationPlaybackTests: QuickSpec {
                         }
                     }
 
-                    context("on stop") {
+                    context("on destroy") {
                         it("stops observing loopCount") {
                             let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
                             let playback = AVFoundationPlayback(options: options)
                             playback.render()
                             
                             playback.play()
-                            playback.stop()
+                            playback.destroy()
 
                             expect(playback.loopObserver).to(beNil())
                         }
@@ -478,7 +478,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
                             playback.itemInfo = itemInfo
                             item._duration = CMTime(seconds: 160, preferredTimescale: 1)
-                            player.set(currentTime: CMTime(seconds: 125, preferredTimescale: 1))
+                            item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
 
                             expect(playback.position).to(equal(125))
                         }
@@ -793,19 +793,19 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     context("with startAt") {
-                        it("triggers didUpdatePosition") {
+                        it("triggers didSeek") {
                             let playback = AVFoundationPlayback(options: [kSourceUrl: "http://clappr.sample/master.m3u8", kStartAt: 10])
-                            var didCallUpdatePosition = false
+                            var didSeek = false
                             var startAtValue: Double = 0
                             playback.render()
-                            playback.on(Event.didUpdatePosition.rawValue) { userInfo in
-                                didCallUpdatePosition = true
+                            playback.on(Event.didSeek.rawValue) { userInfo in
+                                didSeek = true
                                 startAtValue = userInfo!["position"] as! Double
                             }
 
                             playback.play()
 
-                            expect(didCallUpdatePosition).toEventually(beTrue())
+                            expect(didSeek).toEventually(beTrue())
                             expect(startAtValue).toEventually(beCloseTo(10, within: 0.1))
                         }
                     }
