@@ -70,6 +70,30 @@ class AVPlayerItemInfoTests: QuickSpec {
                     }
                 }
             }
+            
+            context("when the item info is created by the playback"){
+                it("setup observers for changes on item status") {
+                    let player = AVPlayerStub()
+                    let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
+                    let playback = AVFoundationPlaybackMock(options: options)
+                    playback.player = player
+
+                    playback.play()
+                    
+                    var callDidUpdateDuration = false
+                    playback.on(Event.didUpdateDuration.rawValue) { userInfo in
+                        callDidUpdateDuration = true
+                    }
+                    
+                    var callAssetReady = false
+                    playback.on(Event.assetReady.rawValue) { userInfo in
+                        callAssetReady = true
+                    }
+
+                    expect(callDidUpdateDuration).toEventually(beTrue(), timeout: 5)
+                    expect(callAssetReady).toEventually(beTrue(), timeout: 5)
+                }
+            }
         }
     }
     
