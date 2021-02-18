@@ -8,8 +8,8 @@ protocol AVPlayerItemInfoDelegate: AnyObject {
 class AVPlayerItemInfo {
     private unowned var item: AVPlayerItem {
         didSet {
+            clearObservers()
             setupObservers()
-            
         }
     }
     private unowned var delegate: AVPlayerItemInfoDelegate
@@ -76,8 +76,12 @@ class AVPlayerItemInfo {
         assetInfo.wait(for: .characteristics) { [weak delegate] in delegate?.didLoadCharacteristics() }
     }
     
-    deinit {
+    private func clearObservers() {
         observers.forEach { $0.invalidate() }
         observers.removeAll()
+    }
+    
+    deinit {
+        clearObservers()
     }
 }
