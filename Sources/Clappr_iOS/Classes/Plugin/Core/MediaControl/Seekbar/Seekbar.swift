@@ -34,7 +34,7 @@ open class Seekbar: MediaControl.Element {
 
     private func bindPlaybackEvents() {
         if let playback = activePlayback {
-            listenTo(playback, eventName: Event.ready.rawValue) { [weak self] _ in
+            listenTo(playback, eventName: Event.assetReady.rawValue) { [weak self] _ in
                 self?.setVideoProperties()
                 self?.setSeekbarViewLive()
             }

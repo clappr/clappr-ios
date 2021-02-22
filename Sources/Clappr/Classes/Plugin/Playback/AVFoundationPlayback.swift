@@ -1,6 +1,6 @@
 import AVFoundation
 
-open class AVFoundationPlayback: Playback {
+open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     open class override var name: String { "AVPlayback" }
 
     private static let mimeTypes = [
@@ -19,6 +19,8 @@ open class AVFoundationPlayback: Playback {
             }
         }
     }
+    
+    var itemInfo: AVPlayerItemInfo?
     private var playerLayer: AVPlayerLayer!
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var isStopped = false
@@ -139,32 +141,24 @@ open class AVFoundationPlayback: Playback {
     }
 
     open override var duration: Double {
-        var durationTime: Double = 0
-        guard let assetDuration = player.currentItem?.asset.duration else { return durationTime }
-
-        if playbackType == .vod {
-            durationTime = CMTimeGetSeconds(assetDuration)
-        } else if playbackType == .live {
-            durationTime = seekableTimeRanges.reduce(0.0, { previous, current in
-                previous + current.timeRangeValue.duration.seconds
-            })
-        }
-
-        return durationTime
+        return itemInfo?.duration ?? .zero
     }
 
     open override var position: Double {
-        if let start = dvrWindowStart,
-            let currentTime = player.currentItem?.currentTime().seconds {
-            return currentTime - start
+        guard let currentItem = player.currentItem else { return .zero }
+              
+        let timeInSeconds = currentItem.currentTime().seconds
+        
+        if let start = dvrWindowStart {
+            return timeInSeconds - start
+        } else if playbackType == .vod {
+            return timeInSeconds
         }
-        guard playbackType == .vod else { return 0 }
-        return CMTimeGetSeconds(player.currentTime())
+        return .zero
     }
 
     open override var playbackType: PlaybackType {
-        guard let duration = player.currentItem?.asset.duration else { return .unknown }
-        return duration == CMTime.indefinite ? .live : .vod
+        return itemInfo?.playbackType ?? .unknown
     }
 
     open override class func canPlay(_ options: Options) -> Bool {
@@ -269,6 +263,8 @@ open class AVFoundationPlayback: Playback {
         
         if let asset = asset {
             let item = AVPlayerItem(asset: asset)
+            itemInfo = AVPlayerItemInfo(item: item, delegate: self)
+            
             player = shouldLoop ? AVQueuePlayer(playerItem: item): AVPlayer(playerItem: item)
             
             if let player = player as? AVQueuePlayer {
@@ -281,9 +277,15 @@ open class AVFoundationPlayback: Playback {
         return player
     }
     
-    private func observe(asset: AVAsset) {
-        asset.wait(for: .characteristics, then: selectDefaultMediaOptionIfNeeded)
-        asset.wait(for: .duration, then: durationAvailable)
+    func didLoadDuration() {
+        trigger(.didUpdateDuration, userInfo: ["duration": duration])
+        trigger(.assetReady)
+        seekToStartAtIfNeeded()
+    }
+    
+    func didLoadCharacteristics() {
+        selectDefaultAudioIfNeeded()
+        selectDefaultSubtitleIfNeeded()
     }
     
     private func observe(player: AVPlayer) {
@@ -292,6 +294,7 @@ open class AVFoundationPlayback: Playback {
                 self?.maximizePlayer(within: view)
                 self?.hideSubtitleForSmallScreen()
             },
+            player.observe(\.currentItem) { [weak itemInfo] player, _ in itemInfo?.update(item: player.currentItem) },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
@@ -327,11 +330,6 @@ open class AVFoundationPlayback: Playback {
     private func triggerSetupError() {
         trigger(.error)
         Logger.logError("could not setup player", scope: pluginName)
-    }
-
-    private func durationAvailable() {
-        trigger(.assetReady)
-        seekToStartAtIfNeeded()
     }
 
     private func seekToStartAtIfNeeded() {
@@ -513,15 +511,14 @@ open class AVFoundationPlayback: Playback {
         trigger(.willStop)
         updateState(.idle)
         player.pause()
-        releaseResources()
         resetPlaybackProperties()
         trigger(.didStop)
     }
 
     @objc func releaseResources() {
         removeObservers()
+        itemInfo = nil
         playerLayer.removeFromSuperlayer()
-        player.replaceCurrentItem(with: nil)
     }
 
     private func resetPlaybackProperties() {
@@ -639,7 +636,6 @@ open class AVFoundationPlayback: Playback {
     private func readyToPlay() {
         seekOnReadyIfNeeded()
         addTimeElapsedCallback()
-        trigger(.didUpdateDuration, userInfo: ["duration": duration])
         #if os(tvOS)
         loadMetadata()
         #endif
@@ -663,11 +659,6 @@ open class AVFoundationPlayback: Playback {
 
     private func defaultMediaOption(for source: [MediaOption], with language: String?) -> AVMediaSelectionOption? {
         source.first { $0.language == language }?.avMediaSelectionOption
-    }
-
-    func selectDefaultMediaOptionIfNeeded() {
-        selectDefaultAudioIfNeeded()
-        selectDefaultSubtitleIfNeeded()
     }
     
     func selectDefaultSubtitleIfNeeded() {
@@ -761,9 +752,6 @@ open class AVFoundationPlayback: Playback {
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
         
-        if let asset = asset {
-            observe(asset: asset)
-        }
         observe(player: player)
         
         if asset != nil {
