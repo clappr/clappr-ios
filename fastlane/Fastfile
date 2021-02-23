@@ -17,7 +17,7 @@ before_all do
   # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   # cocoapods
   Dir.chdir("..") do
-    sh("./carthage.sh bootstrap --use-xcframeworks --platform iOS,tvOS")
+    sh("./carthage.sh bootstrap --use-xcframeworks --platform iOS,tvOS --cache-builds")
   end
 end
 
