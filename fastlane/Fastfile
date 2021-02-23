@@ -14,12 +14,7 @@
 fastlane_version "2.131.0"
 
 before_all do
-  # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-  # cocoapods
-  carthage(
-    platform: 'iOS,tvOS',
-    cache_builds: true
-  )
+  cocoapods(try_repo_update_on_error: true)
 end
 
 desc "Runs all the tests"
