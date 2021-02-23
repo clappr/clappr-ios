@@ -16,10 +16,9 @@ fastlane_version "2.131.0"
 before_all do
   # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   # cocoapods
-  carthage(
-    platform: 'iOS,tvOS',
-    cache_builds: true
-  )
+  Dir.chdir("..") do
+    sh("./carthage.sh bootstrap --use-xcframeworks --platform iOS,tvOS")
+  end
 end
 
 desc "Runs all the tests"

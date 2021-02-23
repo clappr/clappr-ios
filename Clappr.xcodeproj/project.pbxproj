@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -211,6 +211,14 @@
 		7BD29B8523FDDF5300C82098 /* AccessLogEventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */; };
 		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
 		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
+		903D971625E48708003D16CD /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971225E48707003D16CD /* Nimble.xcframework */; };
+		903D971825E48708003D16CD /* Quick.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971325E48708003D16CD /* Quick.xcframework */; };
+		903D971A25E48708003D16CD /* Swifter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971425E48708003D16CD /* Swifter.xcframework */; };
+		903D971C25E48708003D16CD /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971525E48708003D16CD /* OHHTTPStubs.xcframework */; };
+		903D972F25E4872B003D16CD /* Swifter.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971425E48708003D16CD /* Swifter.xcframework */; };
+		903D973125E4872B003D16CD /* Quick.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971325E48708003D16CD /* Quick.xcframework */; };
+		903D973325E4872B003D16CD /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971525E48708003D16CD /* OHHTTPStubs.xcframework */; };
+		903D973525E4872B003D16CD /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903D971225E48707003D16CD /* Nimble.xcframework */; };
 		90988E2F25192EA4008CC9E9 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		90D56B4A25DADE9C00E30770 /* AVPlayerItemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */; };
 		90D56B4B25DADE9C00E30770 /* AVPlayerItemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */; };
@@ -282,8 +290,6 @@
 		9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */; };
 		9E692E0A1F9F89B3006510BE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		9E692E0B1F9F89B3006510BE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
-		9E692E0C1F9F89BF006510BE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9E692E0D1F9F89BF006510BE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EDD88C01F7C5E1200DAD927 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */; };
 		9EED97012088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */; };
 		9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */; };
@@ -459,8 +465,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9E692E0C1F9F89BF006510BE /* Quick.framework in CopyFiles */,
-				9E692E0D1F9F89BF006510BE /* Nimble.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +582,14 @@
 		7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackQualityMetricsTests.swift; sourceTree = "<group>"; };
 		7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHTTPStubsHelper.swift; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9014B77725E54F5300D61C36 /* Nimble.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nimble.xcframework; path = Carthage/Build/Nimble.xcframework; sourceTree = "<group>"; };
+		9014B77825E54F5300D61C36 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
+		9014B77925E54F5300D61C36 /* Swifter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swifter.xcframework; path = Carthage/Build/Swifter.xcframework; sourceTree = "<group>"; };
+		9014B77A25E54F5300D61C36 /* Quick.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Quick.xcframework; path = Carthage/Build/Quick.xcframework; sourceTree = "<group>"; };
+		903D971225E48707003D16CD /* Nimble.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nimble.xcframework; path = Carthage/Build/Nimble.xcframework; sourceTree = "<group>"; };
+		903D971325E48708003D16CD /* Quick.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Quick.xcframework; path = Carthage/Build/Quick.xcframework; sourceTree = "<group>"; };
+		903D971425E48708003D16CD /* Swifter.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swifter.xcframework; path = Carthage/Build/Swifter.xcframework; sourceTree = "<group>"; };
+		903D971525E48708003D16CD /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
 		90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlLayer.swift; sourceTree = "<group>"; };
 		90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemInfoTests.swift; sourceTree = "<group>"; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
@@ -744,6 +756,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				903D973525E4872B003D16CD /* Nimble.xcframework in Frameworks */,
+				903D972F25E4872B003D16CD /* Swifter.xcframework in Frameworks */,
+				903D973125E4872B003D16CD /* Quick.xcframework in Frameworks */,
+				903D973325E4872B003D16CD /* OHHTTPStubs.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +797,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				903D971A25E48708003D16CD /* Swifter.xcframework in Frameworks */,
+				903D971625E48708003D16CD /* Nimble.xcframework in Frameworks */,
+				903D971C25E48708003D16CD /* OHHTTPStubs.xcframework in Frameworks */,
+				903D971825E48708003D16CD /* Quick.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +997,10 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				9014B77725E54F5300D61C36 /* Nimble.xcframework */,
+				9014B77825E54F5300D61C36 /* OHHTTPStubs.xcframework */,
+				9014B77A25E54F5300D61C36 /* Quick.xcframework */,
+				9014B77925E54F5300D61C36 /* Swifter.xcframework */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				96D362041D41156A00CCB866 /* Example */,
 				321781B01FED945400EDD678 /* Sources */,
@@ -1591,6 +1615,10 @@
 		D9A0DBC9D3DEA84C86432E68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				903D971225E48707003D16CD /* Nimble.xcframework */,
+				903D971525E48708003D16CD /* OHHTTPStubs.xcframework */,
+				903D971325E48708003D16CD /* Quick.xcframework */,
+				903D971425E48708003D16CD /* Swifter.xcframework */,
 				9E1613FD2051D3DC006E95F2 /* Swifter.framework */,
 				57351C6920248F08007DEBBE /* OHHTTPStubs.framework */,
 				3283BF032024D52F00F2B826 /* OHHTTPStubs.framework */,
@@ -1769,7 +1797,6 @@
 				32E402061FF43262001C2096 /* Sources */,
 				32E402071FF43262001C2096 /* Frameworks */,
 				32E402081FF43262001C2096 /* Resources */,
-				32E402151FF43277001C2096 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1807,7 +1834,6 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				B46D05AE1DB7FF1C0004B23F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1827,7 +1853,6 @@
 				96D362781D41337600CCB866 /* Frameworks */,
 				96D362791D41337600CCB866 /* Headers */,
 				96D3627A1D41337600CCB866 /* Resources */,
-				96D362F21D41346300CCB866 /* Carthage Copy Script */,
 				247AED771EA4FF5D00027168 /* Swiftlint */,
 			);
 			buildRules = (
@@ -2075,54 +2100,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		32E402151FF43277001C2096 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Swifter.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		96D362F21D41346300CCB866 /* Carthage Copy Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Carthage Copy Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		B46D05AE1DB7FF1C0004B23F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Swifter.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		FC7785C02005264F00EC879F /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2590,7 +2567,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
 				PRODUCT_NAME = Clappr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2631,7 +2612,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-tvOS";
 				PRODUCT_NAME = Clappr;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2669,7 +2654,11 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2703,7 +2692,11 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr_tvOS_Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2816,7 +2809,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2834,7 +2828,10 @@
 				);
 				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2854,7 +2851,10 @@
 				);
 				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2876,7 +2876,11 @@
 				);
 				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2895,7 +2899,11 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2923,7 +2931,11 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
 				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
@@ -2953,7 +2965,11 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.clappr.Clappr;
 				PRODUCT_NAME = Clappr;
 				SKIP_INSTALL = YES;
@@ -2990,7 +3006,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3026,7 +3046,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.clappr.Clappr-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -3055,7 +3079,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -3084,7 +3111,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Example/Clappr_tvOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.Clappr-tvOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
