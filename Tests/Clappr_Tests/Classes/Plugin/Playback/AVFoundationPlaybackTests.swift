@@ -1347,8 +1347,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
 
                     playback.seekToLivePosition()
+                    let endPosition = playback.seekableTimeRanges.last?.timeRangeValue.end.seconds
 
-                    expect(updatedPosition).to(equal(Double.infinity))
+                    expect(updatedPosition).to(equal(endPosition))
                 }
             }
 
