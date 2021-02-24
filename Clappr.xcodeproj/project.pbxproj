@@ -110,6 +110,7 @@
 		32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E4021D1FF43534001C2096 /* Nimble.framework */; };
 		32FC971B20B7257800ABA0C2 /* AVURLAssetWithCookiesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C561FB0DD0D000A239E /* AVURLAssetWithCookiesBuilder.swift */; };
 		32FC971C20B72C4200ABA0C2 /* AVURLAssetWithCookiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57937C581FB0DD27000A239E /* AVURLAssetWithCookiesTests.swift */; };
+		333CB756904DDB83A6EE04D7 /* Pods_Clappr_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B90B0EC3673BF060E00E27 /* Pods_Clappr_tvOS.framework */; };
 		3D1EE05E25228D4800870828 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		3D5AF519250026CD0020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
 		3D5AF51B250026D10020081F /* Core+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5AF517250026C30020081F /* Core+Convenience.swift */; };
@@ -212,6 +213,7 @@
 		7BD29B8723FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */; };
 		7BD29B8923FDE27000C82098 /* OHTTPStubsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */; };
 		901DCEC825E5489C00204E7D /* AVFoundationNowPlayingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901DCEC725E5489C00204E7D /* AVFoundationNowPlayingTests.swift */; };
+		8EC17352B8E21136C6A7E9FE /* Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB2812FA2A357328844ADC5 /* Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework */; };
 		90988E2F25192EA4008CC9E9 /* MediaControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */; };
 		90D56B4A25DADE9C00E30770 /* AVPlayerItemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */; };
 		90D56B4B25DADE9C00E30770 /* AVPlayerItemInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */; };
@@ -283,8 +285,6 @@
 		9E5226791FBA207C008C4A15 /* NoOpPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5226781FBA207C008C4A15 /* NoOpPlaybackTests.swift */; };
 		9E692E0A1F9F89B3006510BE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; };
 		9E692E0B1F9F89B3006510BE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; };
-		9E692E0C1F9F89BF006510BE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B46D05A71DB7DBD60004B23F /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9E692E0D1F9F89BF006510BE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B46D05A51DB7DBC50004B23F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EDD88C01F7C5E1200DAD927 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDD88BF1F7C5E1200DAD927 /* DashboardViewController.swift */; };
 		9EED97012088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */; };
 		9EED97022088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EED97002088E2F400D1C84A /* AVFoundationPlayback+ViewPort.swift */; };
@@ -362,10 +362,13 @@
 		CD57FCF122949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF222949BB300AB24CF /* SimpleContainerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCF022949BB300AB24CF /* SimpleContainerPlugin.swift */; };
 		CD57FCF322949BBB00AB24CF /* SimpleCorePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD57FCEE22949B0F00AB24CF /* SimpleCorePlugin.swift */; };
+		CEF7244553F524FB408BC90F /* Pods_Clappr_Clappr_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F15785A597F5EFDEA3298E /* Pods_Clappr_Clappr_UITests.framework */; };
 		D748B8EA25CB47B4000DAA5C /* AVPlayerItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D748B8E925CB47B3000DAA5C /* AVPlayerItemInfo.swift */; };
 		D748B8EB25CB47B4000DAA5C /* AVPlayerItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D748B8E925CB47B3000DAA5C /* AVPlayerItemInfo.swift */; };
 		D748B8F925CC2F31000DAA5C /* AVAssetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D748B8F825CC2F31000DAA5C /* AVAssetInfo.swift */; };
 		D748B8FA25CC2F31000DAA5C /* AVAssetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D748B8F825CC2F31000DAA5C /* AVAssetInfo.swift */; };
+		DAEF3E9ED22C59D2D319129B /* Pods_Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CB093619DC24FA9578CDFC /* Pods_Clappr.framework */; };
+		DF456F2F1BB56165ACF7EFE7 /* Pods_Clappr_tvOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805BEB45438DAC0E4A9A378F /* Pods_Clappr_tvOS_Example.framework */; };
 		E7BEEB59217506C100B8F7FA /* TimeIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */; };
 		E7BEEB5C21751EE600B8F7FA /* TimeIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */; };
 		E7C6E891219225B900A74149 /* SeekbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */; };
@@ -382,6 +385,7 @@
 		EFFC35CC24858D9E00A18E90 /* UIFocusEnvironment+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFC35CB24858D9E00A18E90 /* UIFocusEnvironment+Ext.swift */; };
 		F16E2A9524FDA14100C0B220 /* sample.movpkg in Resources */ = {isa = PBXBuildFile; fileRef = F16E2A9424FDA14000C0B220 /* sample.movpkg */; };
 		F16E2A9624FDA14100C0B220 /* sample.movpkg in Resources */ = {isa = PBXBuildFile; fileRef = F16E2A9424FDA14000C0B220 /* sample.movpkg */; };
+		F7CB23871A0B33EF168195C9 /* Pods_Clappr_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C168F843D95B224A33184B83 /* Pods_Clappr_Example.framework */; };
 		FB0A223C2175492E00D2180F /* Loader+Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE6A3E32163EEAE0083C9CC /* Loader+Plugins.swift */; };
 		FB0A223F21754CBD00D2180F /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0A223D21754C1700D2180F /* PlayerTests.swift */; };
 		FB46260121AC8D2B008D9A25 /* CoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46260021AC8D2B008D9A25 /* CoreFactory.swift */; };
@@ -402,6 +406,7 @@
 		FC7785E820052CB800EC879F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC7785E720052CB800EC879F /* Assets.xcassets */; };
 		FC7785ED20052EB300EC879F /* Clappr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; };
 		FC7785EE20052EB300EC879F /* Clappr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 321781A81FED90CC00EDD678 /* Clappr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FCF32F3ABC123471080B2F37 /* Pods_Clappr_Clappr_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938FFC5A056E76B0E479867F /* Pods_Clappr_Clappr_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -454,17 +459,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9E692E091F9F89A1006510BE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				9E692E0C1F9F89BF006510BE /* Quick.framework in CopyFiles */,
-				9E692E0D1F9F89BF006510BE /* Nimble.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FC7785F120052EB300EC879F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +473,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A6070DBD056697AE0665482 /* Pods-Clappr_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.debug.xcconfig"; path = "Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		15D1281B253E20CB00A3B2B9 /* OverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLayer.swift; sourceTree = "<group>"; };
 		23EDF915224D819600FB0D96 /* SwiftVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVersionTests.swift; sourceTree = "<group>"; };
 		23EDF91A224E8EB800FB0D96 /* .swift-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".swift-version"; sourceTree = SOURCE_ROOT; };
@@ -491,6 +486,7 @@
 		262B491224D889C50049DAF7 /* Direction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		262B491324D889C60049DAF7 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		262B491924D88BD60049DAF7 /* FontTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTests.swift; sourceTree = "<group>"; };
+		2DD38777D4FDFF296067FE7E /* Pods-Clappr_tvOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS_Tests/Pods-Clappr_tvOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		320A7A0E216D45A9006D2B24 /* PlayButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonTests.swift; sourceTree = "<group>"; };
 		320A7A14216FBF89006D2B24 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		321781A81FED90CC00EDD678 /* Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -522,9 +518,12 @@
 		32E4020E1FF43262001C2096 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E4021C1FF43533001C2096 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		32E4021D1FF43534001C2096 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		350D64B1C6E7F538C2F2EA9C /* Pods-Clappr-Clappr_UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-Clappr_UITests.release.xcconfig"; path = "Target Support Files/Pods-Clappr-Clappr_UITests/Pods-Clappr-Clappr_UITests.release.xcconfig"; sourceTree = "<group>"; };
+		3D2054D5C8CFE2A366D9A645 /* Pods-Clappr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr.release.xcconfig"; path = "Target Support Files/Pods-Clappr/Pods-Clappr.release.xcconfig"; sourceTree = "<group>"; };
 		3D5AF517250026C30020081F /* Core+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core+Convenience.swift"; sourceTree = "<group>"; };
 		3D5AF51C2500289C0020081F /* Container+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Convenience.swift"; sourceTree = "<group>"; };
 		3DDDF42325221E5100AAA9CD /* MediaControlLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlLayerTests.swift; sourceTree = "<group>"; };
+		43E529E9EAB976CA69C6CEA1 /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS-Clappr_tvOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS-Clappr_tvOS_Tests/Pods-Clappr_tvOS-Clappr_tvOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4822B6AE220C72AE00D1C134 /* SeekBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubble.swift; sourceTree = "<group>"; };
 		4822B6B0220C72D100D1C134 /* SeekBubbleSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekBubbleSide.swift; sourceTree = "<group>"; };
 		4822B6B32214961900D1C134 /* ClapprAnimationDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClapprAnimationDuration.swift; sourceTree = "<group>"; };
@@ -547,6 +546,7 @@
 		48EC491F22A1908300DC7A2D /* AVPlayerItem+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerItem+Ext.swift"; sourceTree = "<group>"; };
 		48F1E970232296F600EAD6A1 /* DrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPluginTests.swift; sourceTree = "<group>"; };
 		48F1E97323229FDC00EAD6A1 /* DrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerPlugin.swift; sourceTree = "<group>"; };
+		4E2EBCEF7A3EFFB16EB14566 /* Pods-Clappr_tvOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS_Tests/Pods-Clappr_tvOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5217467724EAE54D00BDBC43 /* AVFoundationPlaybackSubtitleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackSubtitleTests.swift; sourceTree = "<group>"; };
 		522C8996246D938B008F5856 /* AVFoundationPlaybackStopActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStopActionTests.swift; sourceTree = "<group>"; };
 		5232A454248A73780095D174 /* UIFocusEnvironment+ExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFocusEnvironment+ExtTests.swift"; sourceTree = "<group>"; };
@@ -568,6 +568,10 @@
 		607FACD01AFB9204008FA782 /* Clappr_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clappr_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Clappr_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clappr_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60DC79DC0C92E2B47A1A0A48 /* Pods-Clappr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr.debug.xcconfig"; path = "Target Support Files/Pods-Clappr/Pods-Clappr.debug.xcconfig"; sourceTree = "<group>"; };
+		65CB093619DC24FA9578CDFC /* Pods_Clappr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DC225FA6AF0CF43A5387AD6 /* Pods-Clappr_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_Example.release.xcconfig"; path = "Target Support Files/Pods-Clappr_Example/Pods-Clappr_Example.release.xcconfig"; sourceTree = "<group>"; };
+		74CE64800B6C299BF698FA30 /* Pods-Clappr_tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS.release.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS/Pods-Clappr_tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		7B51DF0B230B58A800C2B045 /* MediaControlElementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlElementTests.swift; sourceTree = "<group>"; };
 		7B5EBDE923297D4E00B2FBBC /* BottomDrawerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPluginTests.swift; sourceTree = "<group>"; };
 		7B5EBDEB23297EFE00B2FBBC /* BottomDrawerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomDrawerPlugin.swift; sourceTree = "<group>"; };
@@ -578,10 +582,13 @@
 		7BD29B8423FDDF5300C82098 /* AccessLogEventMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLogEventMock.swift; sourceTree = "<group>"; };
 		7BD29B8623FDE20000C82098 /* AVFoundationPlaybackQualityMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackQualityMetricsTests.swift; sourceTree = "<group>"; };
 		7BD29B8823FDE27000C82098 /* OHTTPStubsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHTTPStubsHelper.swift; sourceTree = "<group>"; };
+		805BEB45438DAC0E4A9A378F /* Pods_Clappr_tvOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_tvOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BEB1F12AAA435159C5915FA /* Pods-Clappr_tvOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS_Example.release.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS_Example/Pods-Clappr_tvOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8F3389F0416A5259ADD1C31F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		901DCEC725E5489C00204E7D /* AVFoundationNowPlayingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationNowPlayingTests.swift; sourceTree = "<group>"; };
 		90988E2E25192EA4008CC9E9 /* MediaControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlLayer.swift; sourceTree = "<group>"; };
 		90D56B4925DADE9C00E30770 /* AVPlayerItemInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemInfoTests.swift; sourceTree = "<group>"; };
+		938FFC5A056E76B0E479867F /* Pods_Clappr_Clappr_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Clappr_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96036D651CBD88B60022CCCA /* PlaybackFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackFactoryTests.swift; sourceTree = "<group>"; };
 		9603A06B1C05E6D100B55D8F /* PlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
 		963B19971E4B827700A0A6BA /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -666,6 +673,9 @@
 		A3B041B725484B79001A35F4 /* OverlayLayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLayerTests.swift; sourceTree = "<group>"; };
 		A3C8F3EB24CF489F002CA3F5 /* LayerComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerComposer.swift; sourceTree = "<group>"; };
 		A3C8F3EC24CF489F002CA3F5 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
+		A876EA89699111BFE9FFA06F /* Pods-Clappr_tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS/Pods-Clappr_tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A9B90B0EC3673BF060E00E27 /* Pods_Clappr_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB0921AA8A7A1C3D6EEA1A1F /* Pods-Clappr-Clappr_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-Clappr_Tests.release.xcconfig"; path = "Target Support Files/Pods-Clappr-Clappr_Tests/Pods-Clappr-Clappr_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		AB0A58DE21FA2F520075729E /* QuickSeekAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSeekAnimation.swift; sourceTree = "<group>"; };
 		AB163505215AB97800635233 /* MediaControlElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaControlElement.swift; sourceTree = "<group>"; };
 		AB16350A215AC9FC00635233 /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaControlView.swift; sourceTree = "<group>"; };
@@ -675,6 +685,10 @@
 		ABAFEBA52152C25B007BA497 /* AvailableMediaOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableMediaOptions.swift; sourceTree = "<group>"; };
 		B46D05A51DB7DBC50004B23F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		B46D05A71DB7DBD60004B23F /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		BCB2812FA2A357328844ADC5 /* Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C11142F0A93E51696C0B384A /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS-Clappr_tvOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS-Clappr_tvOS_Tests/Pods-Clappr_tvOS-Clappr_tvOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C168F843D95B224A33184B83 /* Pods_Clappr_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7F15785A597F5EFDEA3298E /* Pods_Clappr_Clappr_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clappr_Clappr_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C905869222132046009D2FA0 /* poster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poster.png; sourceTree = "<group>"; };
 		C9177B2D21664D1C001D0292 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		C92747E6220DD4E0009465A7 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
@@ -682,7 +696,9 @@
 		C93212462212013700F0C47B /* UIImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewTests.swift; sourceTree = "<group>"; };
 		C94D8CEC221B1DDD00C7855D /* ContainerPluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPluginTests.swift; sourceTree = "<group>"; };
 		C94D8CEF221B22C300C7855D /* ContainerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerPlugin.swift; sourceTree = "<group>"; };
+		C951F1947B5680B770FCB5B3 /* Pods-Clappr_tvOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr_tvOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-Clappr_tvOS_Example/Pods-Clappr_tvOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C957E8292332C45B001F0612 /* PanGesture+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PanGesture+Ext.swift"; sourceTree = "<group>"; };
+		C960302D65A5CDF8A4EE8171 /* Pods-Clappr-Clappr_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-Clappr_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Clappr-Clappr_Tests/Pods-Clappr-Clappr_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C98C014B2166B50E009DFE0A /* FullscreenButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenButtonTests.swift; sourceTree = "<group>"; };
 		C990DAA42194B17D00EB6FFA /* AVFoundationPlaybackStateMachineEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackStateMachineEventsTests.swift; sourceTree = "<group>"; };
 		C9A1CCAF23E995D000621048 /* AVFoundationPlaybackMediaSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationPlaybackMediaSelectionTests.swift; sourceTree = "<group>"; };
@@ -707,6 +723,7 @@
 		D748B8E925CB47B3000DAA5C /* AVPlayerItemInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerItemInfo.swift; sourceTree = "<group>"; };
 		D748B8F825CC2F31000DAA5C /* AVAssetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAssetInfo.swift; sourceTree = "<group>"; };
 		D8810057D2C05E1F7A2759D7 /* Clappr.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = Clappr.podspec; sourceTree = "<group>"; };
+		E6BE7D44C3F98AD362F074AA /* Pods-Clappr-Clappr_UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clappr-Clappr_UITests.debug.xcconfig"; path = "Target Support Files/Pods-Clappr-Clappr_UITests/Pods-Clappr-Clappr_UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7BEEB58217506C100B8F7FA /* TimeIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicator.swift; sourceTree = "<group>"; };
 		E7BEEB5A21751D9600B8F7FA /* TimeIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIndicatorTests.swift; sourceTree = "<group>"; };
 		E7C6E88F2192239500A74149 /* SeekbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekbarViewTests.swift; sourceTree = "<group>"; };
@@ -746,6 +763,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				333CB756904DDB83A6EE04D7 /* Pods_Clappr_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +775,7 @@
 				3283BF042024D52F00F2B826 /* OHHTTPStubs.framework in Frameworks */,
 				32E4021F1FF43534001C2096 /* Nimble.framework in Frameworks */,
 				32E4020F1FF43263001C2096 /* Clappr.framework in Frameworks */,
+				8EC17352B8E21136C6A7E9FE /* Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +784,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96D362831D41337600CCB866 /* Clappr.framework in Frameworks */,
+				F7CB23871A0B33EF168195C9 /* Pods_Clappr_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +796,7 @@
 				B46D05AA1DB7DE4B0004B23F /* Quick.framework in Frameworks */,
 				57351C6A20248F08007DEBBE /* OHHTTPStubs.framework in Frameworks */,
 				9E1613FE2051D3DD006E95F2 /* Swifter.framework in Frameworks */,
+				FCF32F3ABC123471080B2F37 /* Pods_Clappr_Clappr_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +804,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAEF3E9ED22C59D2D319129B /* Pods_Clappr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +814,7 @@
 			files = (
 				9E692E0A1F9F89B3006510BE /* Nimble.framework in Frameworks */,
 				9E692E0B1F9F89B3006510BE /* Quick.framework in Frameworks */,
+				CEF7244553F524FB408BC90F /* Pods_Clappr_Clappr_UITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,12 +823,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC7785ED20052EB300EC879F /* Clappr.framework in Frameworks */,
+				DF456F2F1BB56165ACF7EFE7 /* Pods_Clappr_tvOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		084BAC65F7D8164B85D7858C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				60DC79DC0C92E2B47A1A0A48 /* Pods-Clappr.debug.xcconfig */,
+				3D2054D5C8CFE2A366D9A645 /* Pods-Clappr.release.xcconfig */,
+				C960302D65A5CDF8A4EE8171 /* Pods-Clappr-Clappr_Tests.debug.xcconfig */,
+				AB0921AA8A7A1C3D6EEA1A1F /* Pods-Clappr-Clappr_Tests.release.xcconfig */,
+				E6BE7D44C3F98AD362F074AA /* Pods-Clappr-Clappr_UITests.debug.xcconfig */,
+				350D64B1C6E7F538C2F2EA9C /* Pods-Clappr-Clappr_UITests.release.xcconfig */,
+				0A6070DBD056697AE0665482 /* Pods-Clappr_Example.debug.xcconfig */,
+				6DC225FA6AF0CF43A5387AD6 /* Pods-Clappr_Example.release.xcconfig */,
+				A876EA89699111BFE9FFA06F /* Pods-Clappr_tvOS.debug.xcconfig */,
+				74CE64800B6C299BF698FA30 /* Pods-Clappr_tvOS.release.xcconfig */,
+				C11142F0A93E51696C0B384A /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.debug.xcconfig */,
+				43E529E9EAB976CA69C6CEA1 /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.release.xcconfig */,
+				C951F1947B5680B770FCB5B3 /* Pods-Clappr_tvOS_Example.debug.xcconfig */,
+				8BEB1F12AAA435159C5915FA /* Pods-Clappr_tvOS_Example.release.xcconfig */,
+				4E2EBCEF7A3EFFB16EB14566 /* Pods-Clappr_tvOS_Tests.debug.xcconfig */,
+				2DD38777D4FDFF296067FE7E /* Pods-Clappr_tvOS_Tests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		262B490E24D8899C0049DAF7 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -986,6 +1033,7 @@
 				323DF27A1FF4399600ECA3F3 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				D9A0DBC9D3DEA84C86432E68 /* Frameworks */,
+				084BAC65F7D8164B85D7858C /* Pods */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -1601,6 +1649,13 @@
 				B46D05A71DB7DBD60004B23F /* Quick.framework */,
 				B46D05A51DB7DBC50004B23F /* Nimble.framework */,
 				32E4021C1FF43533001C2096 /* Quick.framework */,
+				65CB093619DC24FA9578CDFC /* Pods_Clappr.framework */,
+				938FFC5A056E76B0E479867F /* Pods_Clappr_Clappr_Tests.framework */,
+				C7F15785A597F5EFDEA3298E /* Pods_Clappr_Clappr_UITests.framework */,
+				C168F843D95B224A33184B83 /* Pods_Clappr_Example.framework */,
+				A9B90B0EC3673BF060E00E27 /* Pods_Clappr_tvOS.framework */,
+				805BEB45438DAC0E4A9A378F /* Pods_Clappr_tvOS_Example.framework */,
+				BCB2812FA2A357328844ADC5 /* Pods_Clappr_tvOS_Clappr_tvOS_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1750,6 +1805,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 321781AF1FED90CC00EDD678 /* Build configuration list for PBXNativeTarget "Clappr_tvOS" */;
 			buildPhases = (
+				1817E07F4014EF638C885389 /* [CP] Check Pods Manifest.lock */,
 				321781A31FED90CC00EDD678 /* Sources */,
 				321781A41FED90CC00EDD678 /* Frameworks */,
 				321781A51FED90CC00EDD678 /* Headers */,
@@ -1769,10 +1825,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 32E402141FF43263001C2096 /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Tests" */;
 			buildPhases = (
+				10D04E40B760D844430DFE1E /* [CP] Check Pods Manifest.lock */,
 				32E402061FF43262001C2096 /* Sources */,
 				32E402071FF43262001C2096 /* Frameworks */,
 				32E402081FF43262001C2096 /* Resources */,
-				32E402151FF43277001C2096 /* ShellScript */,
+				7086B1314DA26535B9E8B1F6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1788,6 +1845,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Clappr_Example" */;
 			buildPhases = (
+				D29F87B38E6FEC4FFBC60E7E /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -1807,10 +1865,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Clappr_Tests" */;
 			buildPhases = (
+				4C28196C85DE20A19DF55C23 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				B46D05AE1DB7FF1C0004B23F /* ShellScript */,
+				E9A56191528257323DC395C2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1826,11 +1885,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96D362851D41337600CCB866 /* Build configuration list for PBXNativeTarget "Clappr" */;
 			buildPhases = (
+				72FCF0BFD2DB62ADD461632C /* [CP] Check Pods Manifest.lock */,
 				96D362771D41337600CCB866 /* Sources */,
 				96D362781D41337600CCB866 /* Frameworks */,
 				96D362791D41337600CCB866 /* Headers */,
 				96D3627A1D41337600CCB866 /* Resources */,
-				96D362F21D41346300CCB866 /* Carthage Copy Script */,
 				247AED771EA4FF5D00027168 /* Swiftlint */,
 			);
 			buildRules = (
@@ -1846,10 +1905,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E692E061F9F898F006510BE /* Build configuration list for PBXNativeTarget "Clappr_UITests" */;
 			buildPhases = (
+				655C5896D6A7F98D362F2332 /* [CP] Check Pods Manifest.lock */,
 				9E692DFB1F9F898F006510BE /* Sources */,
 				9E692DFC1F9F898F006510BE /* Frameworks */,
 				9E692DFD1F9F898F006510BE /* Resources */,
-				9E692E091F9F89A1006510BE /* CopyFiles */,
+				40605E75F7B08E71B744AAC7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1865,6 +1925,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FC7785EC20052CB800EC879F /* Build configuration list for PBXNativeTarget "Clappr_tvOS_Example" */;
 			buildPhases = (
+				893D1C91B0A5438380C3AD8C /* [CP] Check Pods Manifest.lock */,
 				FC7785DA20052CB800EC879F /* Sources */,
 				FC7785DB20052CB800EC879F /* Frameworks */,
 				FC7785DC20052CB800EC879F /* Resources */,
@@ -2065,6 +2126,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		10D04E40B760D844430DFE1E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr_tvOS-Clappr_tvOS_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1817E07F4014EF638C885389 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr_tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		247AED771EA4FF5D00027168 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2079,53 +2184,187 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		32E402151FF43277001C2096 /* ShellScript */ = {
+		40605E75F7B08E71B744AAC7 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Swifter.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Clappr-Clappr_UITests/Pods-Clappr-Clappr_UITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs-iOS/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/Swifter-iOS/Swifter.framework",
 			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Clappr-Clappr_UITests/Pods-Clappr-Clappr_UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		96D362F21D41346300CCB866 /* Carthage Copy Script */ = {
+		4C28196C85DE20A19DF55C23 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "Carthage Copy Script";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr-Clappr_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		B46D05AE1DB7FF1C0004B23F /* ShellScript */ = {
+		655C5896D6A7F98D362F2332 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr-Clappr_UITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7086B1314DA26535B9E8B1F6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Swifter.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Clappr_tvOS-Clappr_tvOS_Tests/Pods-Clappr_tvOS-Clappr_tvOS_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble-tvOS/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs-tvOS/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick-tvOS/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/Swifter-tvOS/Swifter.framework",
 			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Clappr_tvOS-Clappr_tvOS_Tests/Pods-Clappr_tvOS-Clappr_tvOS_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		72FCF0BFD2DB62ADD461632C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		893D1C91B0A5438380C3AD8C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr_tvOS_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D29F87B38E6FEC4FFBC60E7E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clappr_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9A56191528257323DC395C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Clappr-Clappr_Tests/Pods-Clappr-Clappr_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Nimble-iOS/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs-iOS/OHHTTPStubs.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick-iOS/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/Swifter-iOS/Swifter.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Clappr-Clappr_Tests/Pods-Clappr-Clappr_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		FC7785C02005264F00EC879F /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2570,6 +2809,7 @@
 /* Begin XCBuildConfiguration section */
 		321781AD1FED90CC00EDD678 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A876EA89699111BFE9FFA06F /* Pods-Clappr_tvOS.debug.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2612,6 +2852,7 @@
 		};
 		321781AE1FED90CC00EDD678 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74CE64800B6C299BF698FA30 /* Pods-Clappr_tvOS.release.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2652,6 +2893,7 @@
 		};
 		32E402121FF43263001C2096 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C11142F0A93E51696C0B384A /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2667,10 +2909,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2687,6 +2925,7 @@
 		};
 		32E402131FF43263001C2096 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43E529E9EAB976CA69C6CEA1 /* Pods-Clappr_tvOS-Clappr_tvOS_Tests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2701,10 +2940,6 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_tvOS_Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2828,14 +3063,11 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A6070DBD056697AE0665482 /* Pods-Clappr_Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2848,14 +3080,11 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DC225FA6AF0CF43A5387AD6 /* Pods-Clappr_Example.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Example/Clappr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2868,12 +3097,12 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C960302D65A5CDF8A4EE8171 /* Pods-Clappr-Clappr_Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2891,12 +3120,12 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB0921AA8A7A1C3D6EEA1A1F /* Pods-Clappr-Clappr_Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = Tests/Clappr_Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2909,6 +3138,7 @@
 		};
 		96D362861D41337600CCB866 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60DC79DC0C92E2B47A1A0A48 /* Pods-Clappr.debug.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2920,10 +3150,6 @@
 				DYLIB_CURRENT_VERSION = 0.33.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2941,6 +3167,7 @@
 		};
 		96D362871D41337600CCB866 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D2054D5C8CFE2A366D9A645 /* Pods-Clappr.release.xcconfig */;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2950,10 +3177,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 0.33.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -2971,6 +3194,7 @@
 		};
 		9E692E071F9F898F006510BE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6BE7D44C3F98AD362F074AA /* Pods-Clappr-Clappr_UITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2987,10 +3211,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3008,6 +3228,7 @@
 		};
 		9E692E081F9F898F006510BE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 350D64B1C6E7F538C2F2EA9C /* Pods-Clappr-Clappr_UITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -3023,10 +3244,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/Clappr_UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3042,6 +3259,7 @@
 		};
 		FC7785EA20052CB800EC879F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C951F1947B5680B770FCB5B3 /* Pods-Clappr_tvOS_Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3072,6 +3290,7 @@
 		};
 		FC7785EB20052CB800EC879F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BEB1F12AAA435159C5915FA /* Pods-Clappr_tvOS_Example.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;

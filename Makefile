@@ -15,6 +15,14 @@ setup: ## Install dependencies requied to start development
 	rbenv rehash
 	$(BUNDLE) install
 
+clear_cache:
+	rm -rf "Pods/"
+	rm -rf "${HOME}/Library/Caches/CocoaPods"
+	rm -rf Podfile.lock
+
+install_dependencies: ## Install dependencies. Similar but better than `pod install`.
+	$(FASTLANE) run cocoapods try_repo_update_on_error:true
+
 wipe: ## Clean the Xcode temp files and kills simulators
 	killall "Simulator" || true
 	rm -rf ~/Library/Developer/Xcode/{DerivedData,Archives,Products}
