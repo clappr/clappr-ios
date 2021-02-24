@@ -18,7 +18,7 @@ class AVPlayerItemInfoTests: QuickSpec {
             
             beforeEach {
                 delegateSpy = AVPlayerItemInfoDelegateSpy()
-                let url = URL(string: "http://test.com")
+                let url = URL(string: "http://clappr.io/highline.mp4")
                 playerItem = AVPlayerItemStub(url: url!)
                 itemInfo = AVPlayerItemInfo(item: playerItem, delegate: delegateSpy)
             }
@@ -75,10 +75,11 @@ class AVPlayerItemInfoTests: QuickSpec {
                 it("setup observers for changes on item status") {
                     let player = AVPlayerStub()
                     let options: Options = [kSourceUrl: "http://clappr.io/highline.mp4", kLoop: true]
-                    let playback = AVFoundationPlaybackMock(options: options)
+                    let playback = AVFoundationPlayback(options: options)
+                    playerItem._status = .readyToPlay
+                    player.set(currentItem: playerItem)
                     playback.player = player
 
-                    playback.play()
                     
                     var callDidUpdateDuration = false
                     playback.on(Event.didUpdateDuration.rawValue) { userInfo in
@@ -89,9 +90,12 @@ class AVPlayerItemInfoTests: QuickSpec {
                     playback.on(Event.assetReady.rawValue) { userInfo in
                         callAssetReady = true
                     }
+                    playback.render()
+                    playback.play()
+                    
 
                     expect(callDidUpdateDuration).toEventually(beTrue(), timeout: 5)
-                    expect(callAssetReady).toEventually(beTrue(), timeout: 5)
+                    expect(callAssetReady).toEventually(beTrue(),timeout: 5)
                 }
             }
         }

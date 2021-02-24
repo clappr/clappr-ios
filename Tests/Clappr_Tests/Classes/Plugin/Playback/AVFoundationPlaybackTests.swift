@@ -2,9 +2,6 @@ import Quick
 import Nimble
 import AVFoundation
 import OHHTTPStubs
-#if os(tvOS)
-import AVKit
-#endif
 
 @testable import Clappr
 
@@ -17,6 +14,7 @@ class AVFoundationPlaybackTests: QuickSpec {
             var item: AVPlayerItemStub!
             var player: AVPlayerStub!
             var playback: AVFoundationPlayback!
+            var itemInfo: AVPlayerItemInfo!
 
             beforeEach {
                 OHHTTPStubs.removeAllStubs()
@@ -29,6 +27,9 @@ class AVFoundationPlaybackTests: QuickSpec {
                 playback = AVFoundationPlayback(options: [:])
                 playback.player = player
                 playback.render()
+                itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                playback.itemInfo = itemInfo
+
 
                 stub(condition: isHost("clappr.sample") || isHost("clappr.io")) { result in
                     if result.url?.path == "/master.m3u8" {
@@ -46,6 +47,13 @@ class AVFoundationPlaybackTests: QuickSpec {
 
             afterEach {
                 playback.stop()
+                itemInfo = nil
+                asset = nil
+                item = nil
+                player = nil
+                playback = nil
+                itemInfo = nil
+                OHHTTPStubs.removeAllStubs()
             }
 
             describe("#init") {
@@ -73,7 +81,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video finishes") {
                         it("triggers didLoop event") {
                             let options: Options = [kSourceUrl: "http://clappr.sample/sample.m3u8", kLoop: true]
-                            let playback = AVFoundationPlayback(options: options)
+                            playback = AVFoundationPlayback(options: options)
+                            playback.render()
 
                             var didLoopTriggered = false
 
@@ -87,7 +96,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             
                             playback.play()
 
-                            expect(didLoopTriggered).toEventually(beTrue(), timeout: 4)
+                            expect(didLoopTriggered).toEventually(beTrue(), timeout: 10)
                         }
                     }
 
@@ -151,9 +160,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 it("triggers didChangeDvrStatus with inUse true") {
                                     item.setSeekableTimeRange(with: 60)
                                     item.set(currentTime: CMTime(seconds: 54, preferredTimescale: 1))
-                                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                                    playback.itemInfo = itemInfo
-
+                                    itemInfo.update(item: item)
                                     var usingDVR = false
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["inUse"] as? Bool {
@@ -172,8 +179,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                 it("triggers didChangeDvrStatus with inUse false") {
                                     player.set(currentTime: CMTime(seconds: 60, preferredTimescale: 1))
                                     item.setSeekableTimeRange(with: 60)
-                                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                                    playback.itemInfo = itemInfo
+                                    itemInfo.update(item: item)
                                     var usingDVR = false
                                     playback.on(Event.didChangeDvrStatus.rawValue) { info in
                                         if let enabled = info?["inUse"] as? Bool {
@@ -211,8 +217,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                 describe("#pause") {
                     beforeEach {
                         item._duration = CMTime.indefinite
-                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                        playback.itemInfo = itemInfo
+                        itemInfo.update(item: item)
                     }
 
                     context("video has dvr") {
@@ -261,7 +266,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         playback.player = player
                         player.setStatus(to: .readyToPlay)
                         
-                        let itemInfo = AVPlayerItemInfo(item: playerItem!, delegate: playback)
+                        itemInfo = AVPlayerItemInfo(item: playerItem!, delegate: playback)
                         playback.itemInfo = itemInfo
 
                         playback.on(Event.didChangeDvrAvailability.rawValue) { info in
@@ -390,8 +395,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         item.setSeekableTimeRange(with: 200)
                         item.setWindow(start: 100, end: 160)
                         item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
-                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                        playback.itemInfo = itemInfo
+                        itemInfo.update(item: item)
                         
                         item.set(currentDate: now)
                         
@@ -405,8 +409,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video has loadedTimeRanges") {
                         it("returns an array with NSValue") {
                             player.setStatus(to: .readyToPlay)
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                            playback.itemInfo = itemInfo
+                            itemInfo.update(item: item)
 
                             item.setLoadedTimeRanges(with: 60)
 
@@ -416,8 +419,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video does not have loadedTimeRanges") {
                         it("is empty") {
                             player.setStatus(to: .readyToPlay)
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                            playback.itemInfo = itemInfo
+                            itemInfo.update(item: item)
 
                             expect(playback.loadedTimeRanges).to(beEmpty())
                         }
@@ -436,8 +438,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when video is live") {
                         it("returns true") {
                             player.setStatus(to: .readyToPlay)
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                            playback.itemInfo = itemInfo
+                            itemInfo.update(item: item)
                             
                             item._duration = .indefinite
                             item.setSeekableTimeRange(with: 60)
@@ -452,8 +453,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         context("and DVR is available") {
                             it("returns the position inside the DVR window") {
                                 player.setStatus(to: .readyToPlay)
-                                let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                                playback.itemInfo = itemInfo
+                                itemInfo.update(item: item)
                                 item._duration =  .indefinite
                                 item.setSeekableTimeRange(with: 200)
                                 item.setWindow(start: 100, end: 160)
@@ -475,11 +475,11 @@ class AVFoundationPlaybackTests: QuickSpec {
                     context("when vod") {
                         it("returns current time") {
                             player.setStatus(to: .readyToPlay)
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                            playback.itemInfo = itemInfo
                             item._duration = CMTime(seconds: 160, preferredTimescale: 1)
                             item._currentTime = CMTime(seconds: 125, preferredTimescale: 1)
-
+                            
+                            itemInfo.update(item: item)
+                            
                             expect(playback.position).to(equal(125))
                         }
                     }
@@ -556,9 +556,8 @@ class AVFoundationPlaybackTests: QuickSpec {
                     it("returns different from zero") {
                         player.setStatus(to: .readyToPlay)
                         item._duration = CMTime(seconds: 60, preferredTimescale: 1)
-                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                        itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
                         playback.itemInfo = itemInfo
-                        
                         player.set(currentItem: item)
 
                         expect(playback.duration).to(equal(60))
@@ -569,7 +568,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         it("returns different from zero") {
                             item._duration = .indefinite
                             item.setSeekableTimeRange(with: 60)
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
                             playback.itemInfo = itemInfo
 
                             player.setStatus(to: .readyToPlay)
@@ -827,7 +826,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                             player = AVPlayerStub()
                             player.set(currentItem: item)
                             
-                            let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
+                            itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
                             playback.itemInfo = itemInfo
                             playback.player = player
                             
@@ -1162,8 +1161,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                         item._duration = .indefinite
                         item.setSeekableTimeRange(with: 60)
                         item.setWindow(start: 60, end: 120)
-                        let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                        playback.itemInfo = itemInfo
+                        itemInfo.update(item: item)
                         player.setStatus(to: .readyToPlay)
                         
                         playback.seek(20)
@@ -1324,7 +1322,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     let player = AVPlayerStub()
                     player.set(currentItem: playerItem)
                    
-                    let itemInfo = AVPlayerItemInfo(item: playerItem, delegate: playback)
+                    itemInfo = AVPlayerItemInfo(item: playerItem, delegate: playback)
                     playback.itemInfo = itemInfo
                     
                     playback.player = player
@@ -1359,8 +1357,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                     item._duration = .indefinite
                     item.setSeekableTimeRange(with: 160)
                     
-                    let itemInfo = AVPlayerItemInfo(item: item, delegate: playback)
-                    playback.itemInfo = itemInfo
+                    itemInfo.update(item: item)
                     
                     player.setStatus(to: .readyToPlay)
 
@@ -1841,117 +1838,6 @@ class AVFoundationPlaybackTests: QuickSpec {
                     }
                 }
             }
-
-            #if os(tvOS)
-            describe("#loadMetadata") {
-                func getPlayback(with source: String) -> AVFoundationPlayback {
-                    let asset = AVAsset(url: URL(string: source)!)
-                    let playerItem = AVPlayerItem(asset: asset)
-
-                    let playback = AVFoundationPlayback(options: [kSourceUrl: source])
-                    playback.player = AVPlayer(playerItem: playerItem)
-                    playback.render()
-                    return playback
-                }
-
-                context("when avplayer has playerItem") {
-                    let playback = getPlayback(with: "https://clappr.io/highline.mp4")
-
-                    it("calls setItemsToPlayerItem of AVFoundationNowPlaying") {
-                        let nowPlayingService = NowPlayingServiceStub()
-                        playback.nowPlayingService = nowPlayingService
-
-                        playback.loadMetadata()
-
-                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
-                    }
-                }
-
-                context("when AVPlayer don't have playerItem") {
-                    let playback = AVFoundationPlayback(options: [:])
-
-                    it("doesn't call setItemsToPlayerItem of AVFoundationNowPlaying") {
-                        let nowPlayingService = NowPlayingServiceStub()
-                        playback.nowPlayingService = nowPlayingService
-
-                        playback.loadMetadata()
-
-                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(0))
-                    }
-                }
-
-                context("when avplayer has playerItem and is ready to play") {
-                    it("calls loadMetadata") {
-                        let options = [kSourceUrl: "http://clappr.sample/master.m3u8"]
-                        let nowPlayingService = NowPlayingServiceStub()
-                        playback = AVFoundationPlayback(options: options)
-                        playback.nowPlayingService = nowPlayingService
-
-                        playback.render()
-                        playback.play()
-
-                        expect(nowPlayingService.countOfCallsOfSetItems).toEventually(equal(1))
-                    }
-                }
-            }
-
-            describe("#playerViewController") {
-                var avFoundationPlayback: AVFoundationPlayback!
-                var controller: AVPlayerViewController!
-                let fromTime = CMTimeMakeWithSeconds(0, preferredTimescale: Int32(NSEC_PER_SEC))
-                let toTime = CMTimeMakeWithSeconds(10, preferredTimescale: Int32(NSEC_PER_SEC))
-
-                beforeEach {
-                    controller = AVPlayerViewController()
-
-                    stub(condition: isHost("clappr.sample")) { _ in
-                        let stubPath = OHPathForFile("sample.m3u8", type(of: self))
-                        return fixture(filePath: stubPath!, headers: ["Content-Type":"application/vnd.apple.mpegURL; charset=utf-8"])
-                    }
-                    avFoundationPlayback = AVFoundationPlayback(options: [kSourceUrl: "https://clappr.sample/sample.m3u8"])
-
-                    avFoundationPlayback.play()
-                }
-
-                context("when seek will begin") {
-                    it("triggers will seek") {
-                        waitUntil { done in
-                            avFoundationPlayback.on(Event.willSeek.rawValue) { _ in
-                                done()
-                            }
-
-                            _ = avFoundationPlayback.playerViewController(controller, timeToSeekAfterUserNavigatedFrom: fromTime, to: toTime)
-                        }
-                    }
-
-                    it("triggers didSeek") {
-                        waitUntil { done in
-                            avFoundationPlayback.on(Event.didSeek.rawValue) { _ in
-                                done()
-                            }
-
-                            _ = avFoundationPlayback.playerViewController(controller, willResumePlaybackAfterUserNavigatedFrom: fromTime, to: toTime)
-                        }
-                    }
-                }
-
-                context("when subtitle is selected") {
-                    it("triggers subtitle selected event") {
-                        waitUntil { done in
-                            avFoundationPlayback.on(Event.didSelectSubtitle.rawValue) { _ in
-                                done()
-                            }
-
-                            let group = avFoundationPlayback.player?.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic(rawValue: AVMediaCharacteristic.legible.rawValue))
-
-                            let option = avFoundationPlayback.player?.currentItem?.currentMediaSelection.selectedMediaOption(in: group!)
-
-                            _ = avFoundationPlayback.playerViewController(controller, didSelect: option, in: group!)
-                        }
-                    }
-                }
-            }
-            #endif
             
             describe("#mute") {
                 context("when mute is enabled") {
