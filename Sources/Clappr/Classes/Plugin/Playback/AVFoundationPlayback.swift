@@ -288,13 +288,25 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         selectDefaultSubtitleIfNeeded()
     }
     
+    private func updateAssetIfNeeded(_ player: AVPlayer) {
+        if self.asset == nil,
+           let url: URL = (player.currentItem?.asset as? AVURLAsset)?.url,
+           let asset = self.createAsset(from: url.absoluteString) {
+            self.asset = asset
+            self.trigger(.ready)
+        }
+    }
+    
     private func observe(player: AVPlayer) {
         observers += [
             view.observe(\.bounds) { [weak self] view, _ in
                 self?.maximizePlayer(within: view)
                 self?.hideSubtitleForSmallScreen()
             },
-            player.observe(\.currentItem) { [weak itemInfo] player, _ in itemInfo?.update(item: player.currentItem) },
+            player.observe(\.currentItem) { [weak self] player, _ in
+                self?.updateAssetIfNeeded(player)
+                self?.itemInfo?.update(item: player.currentItem)
+            },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
