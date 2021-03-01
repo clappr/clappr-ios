@@ -57,6 +57,25 @@ class AVFoundationPlaybackTests: QuickSpec {
             }
 
             describe("#init") {
+                context("without current item") {
+                    it("it should call update asset if needed when current item is set") {
+                        var didCallEventReady = false
+                        playback = AVFoundationPlayback(options: [:])
+                        playback.render()
+                        expect(playback.itemInfo).to(beNil())
+                        expect(playback.player.currentItem).to(beNil())
+
+                        playback.on(Event.ready.rawValue) { _ in
+                            didCallEventReady = true
+                        }
+                        playback.player.replaceCurrentItem(with: item)
+                        playback.play()
+
+                        expect(playback.itemInfo).toNot(beNil())
+                        expect(playback.player.currentItem).toNot(beNil())
+                        expect(didCallEventReady).toEventually(beTrue(), timeout: 5)
+                    }
+                }
                 context("without kLoop option") {
                     it("instantiates player as an instance of AVPlayer") {
                         let options = [kSourceUrl: "http://clappr.io/highline.mp4"]
