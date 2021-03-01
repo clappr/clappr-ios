@@ -288,11 +288,13 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         selectDefaultSubtitleIfNeeded()
     }
     
-    private func updateAssetIfNeeded(_ player: AVPlayer) {
+    private func updateAssetIfNeeded(_ item: AVPlayerItem?) {
         if self.asset == nil,
-           let url: URL = (player.currentItem?.asset as? AVURLAsset)?.url,
+           let item = item,
+           let url: URL = (item.asset as? AVURLAsset)?.url,
            let asset = self.createAsset(from: url.absoluteString) {
             self.asset = asset
+            itemInfo = AVPlayerItemInfo(item: item, delegate: self)
             self.trigger(.ready)
         }
     }
@@ -304,7 +306,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
                 self?.hideSubtitleForSmallScreen()
             },
             player.observe(\.currentItem) { [weak self] player, _ in
-                self?.updateAssetIfNeeded(player)
+                self?.updateAssetIfNeeded(player.currentItem)
                 self?.itemInfo?.update(item: player.currentItem)
             },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
