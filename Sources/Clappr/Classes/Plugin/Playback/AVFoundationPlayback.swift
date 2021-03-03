@@ -216,8 +216,9 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     
     public required init(options: Options) {
         super.init(options: options)
-        
-        asset = createAsset(from: options[kSourceUrl] as? String)
+        if let urlString = options[kSourceUrl] as? String, let url = URL(string: urlString) {
+            asset = AVURLAssetWithCookiesBuilder(url: url).asset
+        }
         
         player = createAVPlayer(with: asset, shouldLoop: options[kLoop] as? Bool ?? false)
         player.allowsExternalPlayback = isExternalPlaybackEnabled
@@ -226,11 +227,6 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         playerLayer = AVPlayerLayer(player: player)
         
         setAudioSessionCategory(to: .playback)
-    }
-    
-    private func createAsset(from sourceUrl: String?) -> AVURLAsset? {
-        guard let urlString = sourceUrl, let url = URL(string: urlString) else { return nil }
-        return AVURLAssetWithCookiesBuilder(url: url).asset
     }
 
     @objc public func setDelegate(_ delegate: AVAssetResourceLoaderDelegate) {
@@ -288,13 +284,30 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         selectDefaultSubtitleIfNeeded()
     }
     
+    private func initializePlaybackResources(with asset: AVURLAsset, and item: AVPlayerItem) {
+        self.asset = asset
+        self.itemInfo = AVPlayerItemInfo(item: item, delegate: self)
+    }
+    
     private func observe(player: AVPlayer) {
         observers += [
             view.observe(\.bounds) { [weak self] view, _ in
                 self?.maximizePlayer(within: view)
                 self?.hideSubtitleForSmallScreen()
             },
-            player.observe(\.currentItem) { [weak itemInfo] player, _ in itemInfo?.update(item: player.currentItem) },
+            player.observe(\.currentItem) { [weak self] player, _ in
+                guard let self = self else { return }
+                
+                if self.asset == nil,
+                   let item = player.currentItem,
+                   let url: URL = (item.asset as? AVURLAsset)?.url,
+                   let asset = AVURLAssetWithCookiesBuilder(url: url).asset {
+                    self.initializePlaybackResources(with: asset, and: item)
+                    self.trigger(.ready)
+                } else {
+                    self.itemInfo?.update(item: player.currentItem)
+                }
+            },
             player.observe(\.currentItem?.status) { [weak self] player, _ in self?.handleStatusChangedEvent(player) },
             player.observe(\.currentItem?.loadedTimeRanges) { [weak self] player, _ in self?.triggerDidUpdateBuffer(with: player) },
             player.observe(\.currentItem?.seekableTimeRanges) { [weak self] player, _ in self?.handleSeekableTimeRangesEvent(player) },
