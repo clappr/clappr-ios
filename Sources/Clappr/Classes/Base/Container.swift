@@ -45,6 +45,21 @@ open class Container: UIObject {
         view.backgroundColor = .clear
         view.accessibilityIdentifier = "Container"
     }
+    
+    private func bindPlaybackEvents() {
+        guard let playback = playback else { return }
+        
+        listenTo(playback, event: Event.error) { (userInfo) in
+            guard let error = userInfo?["error"] as? NSError else { return }
+            switch error.code {
+            case 13:
+                guard let fallbackUrl = self.options[kFallbackSourceUrl] as? String else { return }
+                self.load(fallbackUrl)
+            default:
+                break
+            }
+        }
+    }
 
     @objc open func load(_ source: String, mimeType: String? = nil) {
         trigger(Event.willLoadSource.rawValue)
