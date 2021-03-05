@@ -85,7 +85,7 @@ open class Container: UIObject {
         plugins.forEach(renderPlugin)
 
         renderPlayback()
-
+        bindPlaybackEvents()
         observeWhenViewChangeBounds()
     }
 
