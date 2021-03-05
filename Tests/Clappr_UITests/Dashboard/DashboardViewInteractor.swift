@@ -10,12 +10,20 @@ class DashboardViewInteractor {
         }
     }
 
+    var fullscreenControledByApp: Bool {
+        didSet {
+            elements.fullscreenControledByApp.changeTo(state: fullscreenControledByApp)
+        }
+    }
+
     init(app: XCUIApplication) {
         elements = DashboardViewElements(app: app)
 
         startAsFullscreen = true
+        fullscreenControledByApp = true
 
         elements.startAsFullscreen.changeTo(state: true)
+        elements.fullscreenControledByApp.changeTo(state: true)
     }
 
     func startVideo() {

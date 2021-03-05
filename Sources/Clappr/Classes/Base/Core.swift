@@ -21,9 +21,15 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open var overlayView = PassthroughView()
 
     #if os(iOS)
-    lazy var fullscreenHandler: FullscreenStateHandler? = FullscreenHandler(core: self)
+    @objc private (set) var fullscreenController: FullscreenController? = FullscreenController(nibName: nil, bundle: nil)
+
+    lazy var fullscreenHandler: FullscreenStateHandler? = {
+        return self.optionsUnboxer.fullscreenControledByApp ? FullscreenByApp(core: self) : FullscreenByPlayer(core: self) as FullscreenStateHandler
+    }()
     private var orientationObserver: OrientationObserver?
     #endif
+
+    lazy var optionsUnboxer: OptionsUnboxer = OptionsUnboxer(options: self.options)
 
     @objc open weak var activeContainer: Container? {
 
@@ -112,6 +118,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     private func bindEventListeners() {
         #if os(iOS)
         listenTo(self, eventName: InternalEvent.userRequestEnterInFullscreen.rawValue) { [weak self] _ in self?.fullscreenHandler?.enterInFullscreen() }
+        listenTo(self, eventName: InternalEvent.userRequestExitFullscreen.rawValue) { [weak self] _ in self?.onUserRequestExitFullscreen() }
         orientationObserver = OrientationObserver(core: self)
         #endif
     }
@@ -142,15 +149,24 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
 
     private func addToContainer() {
         #if os(iOS)
-        renderCorePlugins()
-        renderMediaControlElements()
-        renderOverlayPlugins()
-        if options.bool(kStartInFullscreen, orElse: false) {
-            trigger(InternalEvent.userRequestEnterInFullscreen.rawValue)
+        if shouldEnterInFullScreen {
+            renderCorePlugins()
+            renderMediaControlElements()
+            fullscreenHandler?.enterInFullscreen()
+        } else {
+            renderInContainerView()
+            renderCorePlugins()
+            renderMediaControlElements()
         }
+        renderOverlayPlugins()
         #else
+        renderInContainerView()
         renderPlugins()
         #endif
+    }
+    
+    private func renderInContainerView() {
+        isFullscreen = false
         parentView?.addSubviewMatchingConstraints(view)
     }
 
@@ -221,6 +237,14 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         plugin.safeRender()
     }
 
+    private var shouldEnterInFullScreen: Bool {
+        return optionsUnboxer.fullscreen && !optionsUnboxer.fullscreenControledByApp
+    }
+
+    private var isFullscreenButtonDisable: Bool { optionsUnboxer.fullscreenDisabled }
+    private var isFullscreenControlledByPlayer: Bool { !optionsUnboxer.fullscreenControledByApp }
+    private var shouldDestroyPlayer: Bool { isFullscreenButtonDisable && isFullscreenControlledByPlayer }
+
     open func addPlugin(_ plugin: Plugin) {
         let containsPluginWithPlaceholder = plugins.contains(where: { $0.hasPlaceholder })
 
@@ -232,6 +256,16 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
     @objc open func setFullscreen(_ fullscreen: Bool) {
         #if os(iOS)
         fullscreenHandler?.set(fullscreen: fullscreen)
+        #endif
+    }
+
+    private func onUserRequestExitFullscreen() {
+        #if os(iOS)
+        if shouldDestroyPlayer {
+            trigger(InternalEvent.requestDestroyPlayer.rawValue)
+        } else {
+            fullscreenHandler?.exitFullscreen()
+        }
         #endif
     }
 
@@ -255,6 +289,7 @@ open class Core: UIObject, UIGestureRecognizerDelegate {
         #if os(iOS)
         fullscreenHandler?.destroy()
         fullscreenHandler = nil
+        fullscreenController = nil
         orientationObserver = nil
         #endif
         view.removeFromSuperview()
