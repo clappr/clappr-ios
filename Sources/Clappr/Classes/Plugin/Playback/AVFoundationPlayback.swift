@@ -11,7 +11,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     private(set) var seekToTimeWhenReadyToPlay: TimeInterval?
     private var selectedCharacteristics: [AVMediaCharacteristic] = []
 
-    @objc dynamic var player: AVPlayer!
+    @objc dynamic var avPlayer: AVPlayer!
     @objc dynamic private var playerLooper: AVPlayerLooper? {
         didSet {
             loopObserver = playerLooper?.observe(\.loopCount) { [weak self] _, _ in
@@ -37,7 +37,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     private var observers = [NSKeyValueObservation]()
 
-    private var lastLogEvent: AVPlayerItemAccessLogEvent? { player.currentItem?.accessLog()?.events.last }
+    private var lastLogEvent: AVPlayerItemAccessLogEvent? { avPlayer.currentItem?.accessLog()?.events.last }
     private var numberOfDroppedVideoFrames: Int? { lastLogEvent?.numberOfDroppedVideoFrames }
     
     open var bitrate: Double? { lastLogEvent?.indicatedBitrate }
@@ -145,7 +145,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     open override var position: Double {
-        guard let currentItem = player.currentItem else { return .zero }
+        guard let currentItem = avPlayer.currentItem else { return .zero }
               
         let timeInSeconds = currentItem.currentTime().seconds
         
@@ -220,11 +220,11 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
             asset = AVURLAssetWithCookiesBuilder(url: url).asset
         }
         
-        player = createAVPlayer(with: asset, shouldLoop: options[kLoop] as? Bool ?? false)
-        player.allowsExternalPlayback = isExternalPlaybackEnabled
-        player.appliesMediaSelectionCriteriaAutomatically = false
+        avPlayer = createAVPlayer(with: asset, shouldLoop: options[kLoop] as? Bool ?? false)
+        avPlayer.allowsExternalPlayback = isExternalPlaybackEnabled
+        avPlayer.appliesMediaSelectionCriteriaAutomatically = false
         
-        playerLayer = AVPlayerLayer(player: player)
+        playerLayer = AVPlayerLayer(player: avPlayer)
         
         setAudioSessionCategory(to: .playback)
     }
@@ -237,12 +237,12 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         guard canPlay else { return }
         trigger(.willPlay)
         if state == .stalling { trigger(.stalling) }
-        player.play()
+        avPlayer.play()
         updateInitialStateIfNeeded()
     }
 
     private func updateInitialStateIfNeeded() {
-        guard let item = player.currentItem, item.isPlaybackLikelyToKeepUp else { return }
+        guard let item = avPlayer.currentItem, item.isPlaybackLikelyToKeepUp else { return }
         updateState(.stalling)
     }
 
@@ -425,7 +425,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
     
     private var hasEnoughBufferToPlay: Bool {
-        return player.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
+        return avPlayer.currentItem?.isPlaybackLikelyToKeepUp == true && state == .stalling
     }
     
     private func handlePlaybackBufferEmpty(_ player: AVPlayer) {
@@ -503,7 +503,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     private func didFinishedItem(from notification: NSNotification?) -> Bool {
         guard let object = notification?.object as? AVPlayerItem,
-            let item = player.currentItem,
+            let item = avPlayer.currentItem,
             object == item,
             item.isFinished() else { return false }
         return true
@@ -513,7 +513,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         guard canPause else { return }
         triggerWillPause()
         if state == .stalling { trigger(.stalling) }
-        player.pause()
+        avPlayer.pause()
         updateState(.paused)
     }
 
@@ -523,7 +523,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         isStopped = true
         trigger(.willStop)
         updateState(.idle)
-        player.pause()
+        avPlayer.pause()
         resetPlaybackProperties()
         trigger(.didStop)
     }
@@ -540,7 +540,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     @objc var isReadyToPlay: Bool {
-        return player.currentItem?.status == .readyToPlay
+        return avPlayer.currentItem?.status == .readyToPlay
     }
 
     open override func seek(_ timeInterval: TimeInterval) {
@@ -571,7 +571,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
         trigger(.willSeek, userInfo: userInfo)
 
-        player.currentItem?.seek(to: timeInterval) { [weak self] in
+        avPlayer.currentItem?.seek(to: timeInterval) { [weak self] in
             self?.trigger(.didUpdatePosition, userInfo: userInfo)
             self?.trigger(.didSeek, userInfo: userInfo)
             self?.triggerStateEvents()
@@ -594,7 +594,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     open override func seekToLivePosition() {
         play()
-        if canSeek, let liveCurrentSeekableTimeRange = player.currentItem?.seekableTimeRanges.last {
+        if canSeek, let liveCurrentSeekableTimeRange = avPlayer.currentItem?.seekableTimeRanges.last {
             let livePosition = liveCurrentSeekableTimeRange.timeRangeValue.end.seconds
             seek(livePosition) { [weak self] in
                 self?.triggerDvrStatusIfNeeded()
@@ -603,7 +603,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     open override func mute(_ enabled: Bool) {
-        player.volume = enabled ? .zero : 1.0
+        avPlayer.volume = enabled ? .zero : 1.0
     }
 
     private func updateState(_ newState: PlaybackState) {
@@ -660,7 +660,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     @discardableResult
     open func applySubtitleStyle(with textStyle: [TextStyle]) -> Bool {
-        guard let currentItem = player.currentItem else { return false }
+        guard let currentItem = avPlayer.currentItem else { return false }
         currentItem.textStyle = textStyle
 
         return true
@@ -704,13 +704,13 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
 
     private func addTimeElapsedCallback() {
         let interval = CMTimeMakeWithSeconds(0.2, preferredTimescale: 600)
-        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: nil) { [weak self] time in
+        timeObserver = avPlayer.addPeriodicTimeObserver(forInterval: interval, queue: nil) { [weak self] time in
             self?.timeUpdated(time)
         }
     }
 
     private func timeUpdated(_ time: CMTime) {
-        if player.rate != 0.0 {
+        if avPlayer.rate != 0.0 {
             updateState(.playing)
             trigger(.didUpdatePosition, userInfo: ["position": CMTimeGetSeconds(time)])
         }
@@ -719,17 +719,17 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     private func setMediaSelectionOption(_ option: AVMediaSelectionOption?, characteristic: AVMediaCharacteristic) {
         if let group = mediaSelectionGroup(characteristic) {
             selectedCharacteristics.append(characteristic)
-            player.currentItem?.select(option, in: group)
+            avPlayer.currentItem?.select(option, in: group)
         }
     }
 
     private func getSelectedMediaOptionWithCharacteristic(_ characteristic: AVMediaCharacteristic) -> AVMediaSelectionOption? {
         guard let group = mediaSelectionGroup(characteristic) else { return nil }
-        return player.currentItem?.selectedMediaOption(in: group)
+        return avPlayer.currentItem?.selectedMediaOption(in: group)
     }
 
     private func mediaSelectionGroup(_ characteristic: AVMediaCharacteristic) -> AVMediaSelectionGroup? {
-        return player.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
+        return avPlayer.currentItem?.asset.mediaSelectionGroup(forMediaCharacteristic: characteristic)
     }
 
     deinit {
@@ -738,7 +738,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     private func removeObservers() {
-        guard player.observationInfo != nil else { return }
+        guard avPlayer.observationInfo != nil else { return }
 
         removeTimeObserver()
         loopObserver = nil
@@ -748,7 +748,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     private func removeTimeObserver() {
         guard let timeObserver = timeObserver else { return }
 
-        player.removeTimeObserver(timeObserver)
+        avPlayer.removeTimeObserver(timeObserver)
         self.timeObserver = nil
     }
 
@@ -769,7 +769,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         playerLayer?.frame = view.bounds
         setupMaxResolution(for: playerLayer.frame.size)
         
-        observe(player: player)
+        observe(player: avPlayer)
         
         if asset != nil {
             trigger(.ready)
