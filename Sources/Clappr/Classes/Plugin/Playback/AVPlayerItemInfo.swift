@@ -14,6 +14,7 @@ class AVPlayerItemInfo {
     }
     private unowned var delegate: AVPlayerItemInfoDelegate
     private var assetInfo: AVAssetInfo
+    private var becameReady = false
     
     private var durationLoaded: Bool {
         item.status == .readyToPlay
@@ -64,9 +65,11 @@ class AVPlayerItemInfo {
     */
     func waitForDuration() {
         observers = [
-            item.observe(\.status) { [weak delegate] item, _ in
-                if item.status == .readyToPlay {
-                    delegate?.didLoadDuration()
+            item.observe(\.status) { [weak self] item, _ in
+                guard let self = self else { return }
+                if item.status == .readyToPlay && !self.becameReady {
+                    self.becameReady.toggle()
+                    self.delegate.didLoadDuration()
                 }
             }
         ]
@@ -77,6 +80,7 @@ class AVPlayerItemInfo {
     }
     
     private func clearObservers() {
+        becameReady = false
         observers.forEach { $0.invalidate() }
         observers.removeAll()
     }
