@@ -346,9 +346,11 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
 
     private func seekToStartAtIfNeeded() {
-        guard canStartAt else { return }
-        
-        seek(startAt)
+        if canLiveStartAtTime {
+            seekToLiveStartTime()
+        } else if canStartAt {
+            seek(startAt)
+        }
     }
     
     private func seekToLiveStartTime() {
@@ -632,10 +634,6 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         if dvrAvailabilityChanged {
             trigger(.didChangeDvrAvailability, userInfo: ["available": isDvrAvailable])
             lastDvrAvailability = isDvrAvailable
-            
-            if canLiveStartAtTime {
-                seekToLiveStartTime()
-            }
         }
     }
 
