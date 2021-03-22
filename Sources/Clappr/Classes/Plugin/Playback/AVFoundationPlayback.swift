@@ -22,12 +22,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     }
     
     var itemInfo: AVPlayerItemInfo?
-    private var playerLayer: AVPlayerLayer! {
-        willSet {
-            guard let layer = newValue else { return }
-            setupPictureInPicture(layer: layer)
-        }
-    }
+    private var playerLayer: AVPlayerLayer!
     private var playerStatus: AVPlayerItem.Status = .unknown
     private var isStopped = false
     private var timeObserver: Any?
@@ -233,6 +228,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         player.appliesMediaSelectionCriteriaAutomatically = false
         
         playerLayer = AVPlayerLayer(player: player)
+        setupPictureInPicture(layer: playerLayer)
         
         setAudioSessionCategory(to: .playback)
     }
