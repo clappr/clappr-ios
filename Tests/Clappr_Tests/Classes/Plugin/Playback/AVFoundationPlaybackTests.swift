@@ -867,7 +867,7 @@ class AVFoundationPlaybackTests: QuickSpec {
                                         positionToSeek = userInfo!["position"] as! Double
                                     }
                                     
-                                    playback.handleDvrAvailabilityChange()
+                                    playback.didLoadDuration()
                                     
                                     expect(didCallUpdatePosition).toEventually(beTrue())
                                     expect(positionToSeek).toEventually(equal(expectedPositionToSeek))
