@@ -3,7 +3,7 @@ class SeekBubble: UIView {
     private var images: [UIImageView] = []
     private var text: String!
     
-    private weak var parentView: UIView!
+    private weak var parentView: UIView?
     
     var bubbleHeight = NSLayoutConstraint()
     var bubbleWidth = NSLayoutConstraint()
@@ -27,6 +27,8 @@ class SeekBubble: UIView {
     }
     
     private func animateBubble() {
+        guard let parentView = parentView else { return }
+        
         parentView.bringSubviewToFront(self)
         bubbleWidth.constant = parentView.frame.width
         bubbleHeight.constant = parentView.frame.height * 1.8
@@ -34,28 +36,28 @@ class SeekBubble: UIView {
         UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleShow, animations: {
             self.alpha = 1.0
             self.addRoundedBorder(with: self.bubbleHeight.constant / 2)
-            self.parentView.layoutSubviews()
+            self.parentView?.layoutSubviews()
         }, completion: { _ in
             UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleHide, delay: ClapprAnimationDuration.seekBubbleVisibility, animations: {
                 self.alpha = 0.0
-                self.parentView.layoutSubviews()
+                self.parentView?.layoutSubviews()
             }, completion: { _ in
                 self.bubbleHeight.constant = 0
                 self.bubbleWidth.constant = 0
-                self.parentView.layoutSubviews()
+                self.parentView?.layoutSubviews()
             })
         })
     }
     
     private func animateLabel() {
-        parentView.bringSubviewToFront(label)
+        parentView?.bringSubviewToFront(label)
         UIView.animate(withDuration: ClapprAnimationDuration.seekLabelShow, animations: {
             self.label.alpha = 1.0
-            self.parentView.layoutSubviews()
+            self.parentView?.layoutSubviews()
         }, completion: { _ in
             UIView.animate(withDuration: ClapprAnimationDuration.seekLabelHide, delay: ClapprAnimationDuration.seekLabelVisibility, animations: {
                 self.label.alpha = 0.0
-                self.parentView.layoutSubviews()
+                self.parentView?.layoutSubviews()
             })
         })
     }
@@ -71,19 +73,21 @@ class SeekBubble: UIView {
     }
     
     private func animate(_ image: UIImageView, delay: TimeInterval) {
-        parentView.bringSubviewToFront(image)
+        parentView?.bringSubviewToFront(image)
         UIView.animate(withDuration: ClapprAnimationDuration.seekImageShow, delay: delay, animations: {
             image.alpha = 1.0
-            self.parentView.layoutSubviews()
+            self.parentView?.layoutSubviews()
         }, completion: { _ in
             UIView.animate(withDuration: ClapprAnimationDuration.seekImageHide, delay: ClapprAnimationDuration.seekImageVisibility, animations: {
                 image.alpha = 0.0
-                self.parentView.layoutSubviews()
+                self.parentView?.layoutSubviews()
             })
         })
     }
     
     private func setupImages(_ numberOfIndicators: Int) {
+        guard let parentView = parentView else { return }
+        
         let positionModifier: CGFloat = -14.0
         var currentPosition = positionModifier
         for _ in 0..<numberOfIndicators {
