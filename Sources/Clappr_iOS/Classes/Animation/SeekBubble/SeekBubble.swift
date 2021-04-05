@@ -36,15 +36,15 @@ class SeekBubble: UIView {
         UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleShow, animations: {
             self.alpha = 1.0
             self.addRoundedBorder(with: self.bubbleHeight.constant / 2)
-            self.parentView?.layoutSubviews()
+            parentView.layoutSubviews()
         }, completion: { _ in
             UIView.animate(withDuration: ClapprAnimationDuration.seekBubbleHide, delay: ClapprAnimationDuration.seekBubbleVisibility, animations: {
                 self.alpha = 0.0
-                self.parentView?.layoutSubviews()
+                parentView.layoutSubviews()
             }, completion: { _ in
                 self.bubbleHeight.constant = 0
                 self.bubbleWidth.constant = 0
-                self.parentView?.layoutSubviews()
+                parentView.layoutSubviews()
             })
         })
     }
