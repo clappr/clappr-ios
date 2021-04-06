@@ -1,3 +1,6 @@
+# DEPRECATED
+⛔️  This is no longer supported, please consider using `0.70.3` instead.
+
 # Clappr for iOS and tvOS
 
 ![image](https://cloud.githubusercontent.com/assets/1156242/16349649/54f233e2-3a30-11e6-98e4-42eb5284b730.png)
