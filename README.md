@@ -1,5 +1,5 @@
 # DEPRECATED
-⛔️  This is no longer supported, please consider using `0.70.3` instead.
+⛔️  This project is no longer supported.
 
 # Clappr for iOS and tvOS
 
