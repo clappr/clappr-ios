@@ -1,4 +1,5 @@
 import AVFoundation
+import AVKit
 
 open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
     open class override var name: String { "AVPlayback" }
@@ -204,6 +205,8 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         return playbackType == .live ? isDvrAvailable : !duration.isZero
     }
 
+    private var pictureInPictureController: AVPictureInPictureController!
+
     @available(*, unavailable)
     public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -225,6 +228,7 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         player.appliesMediaSelectionCriteriaAutomatically = false
         
         playerLayer = AVPlayerLayer(player: player)
+        setupPictureInPicture(layer: playerLayer)
         
         setAudioSessionCategory(to: .playback)
     }
@@ -791,5 +795,27 @@ open class AVFoundationPlayback: Playback, AVPlayerItemInfoDelegate {
         case .error:
             view.accessibilityIdentifier = "AVFoundationPlaybackError"
         }
+    }
+}
+
+extension AVFoundationPlayback: AVPictureInPictureControllerDelegate {
+    func setupPictureInPicture(layer: AVPlayerLayer) {
+        if AVPictureInPictureController.isPictureInPictureSupported() {
+            pictureInPictureController = AVPictureInPictureController(playerLayer: layer)
+            pictureInPictureController?.delegate = self
+        }
+    }
+
+    public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController,
+                                           restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
+    }
+
+    public func pictureInPictureControllerWillStartPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        trigger(Event.disableMediaControl)
+    }
+
+    public func pictureInPictureControllerDidStopPictureInPicture(_ pictureInPictureController: AVPictureInPictureController) {
+        trigger(Event.enableMediaControl)
     }
 }
